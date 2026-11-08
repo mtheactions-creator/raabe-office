@@ -1,0 +1,6461 @@
+{
+ "formats": {
+  "cases": [
+   "plain",
+   "crop",
+   "lum",
+   "grayscale",
+   "bw",
+   "washout",
+   "transparentColor",
+   "transparency",
+   "brightnessContrast",
+   "saturation",
+   "temperature",
+   "sharpen",
+   "soften",
+   "artistic",
+   "rotate30",
+   "flipH",
+   "flipV",
+   "line",
+   "shadowOuter",
+   "shadowInner",
+   "glow",
+   "softEdge",
+   "reflection",
+   "bevel",
+   "rotation3d",
+   "oval",
+   "roundRect",
+   "altText",
+   "noAspect",
+   "hidden",
+   "group"
+  ],
+  "errors": {}
+ },
+ "ui": {
+  "tab": {
+   "name": "Bildformat",
+   "key": "Alt, J P"
+  },
+  "controls": [
+   {
+    "type": "Button",
+    "name": "Kommentare",
+    "key": "Alt, Z C",
+    "enabled": true
+   },
+   {
+    "type": "Pane",
+    "name": "Unteres Menüband",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Bildformat",
+    "key": "Alt, J P",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Anpassen",
+    "key": "Alt, J P, Z T",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "In Zelle",
+    "key": "Alt, J P, Y",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Freistellen",
+    "key": "Alt, J P, T 1",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Korrekturen",
+    "key": "Alt, J P, O",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Farbe",
+    "key": "Alt, J P, F",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Künstlerische Effekte",
+    "key": "Alt, J P, Ü",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Transparenz",
+    "key": "Alt, J P, T 2",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bilder komprimieren...",
+    "key": "Alt, J P, L",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bild ändern",
+    "key": "Alt, J P, Q 1",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Bild zurücksetzen",
+    "key": "Alt, J P, U",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bild zurücksetzen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, U",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Bildformatvorlagen",
+    "key": "Alt, J P, Z S",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Schnellformatvorlagen",
+    "key": "Alt, J P, S",
+    "enabled": true
+   },
+   {
+    "type": "Pane",
+    "name": "Schnellformatvorlagen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "DataGrid",
+    "name": "Schnellformatvorlagen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schnellformatvorlagen",
+    "key": "Alt, J P, S",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Bildrahmen",
+    "key": "Alt, J P, V",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bildrahmen Dunkelblaugrün, Akzent 1",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, V",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bildeffekte",
+    "key": "Alt, J P, E",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bildlayout",
+    "key": "Alt, J P, A 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bild...",
+    "key": "Alt, J P, P",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Barrierefreiheit",
+    "key": "Alt, J P, Z 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Alternativtext",
+    "key": "Alt, J P, A T",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Anordnen",
+    "key": "Alt, J P, Z A",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Ebene nach vorne",
+    "key": "Alt, J P, G E",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Ebene nach vorne",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, G E",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Ebene nach hinten",
+    "key": "Alt, J P, G H",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Ebene nach hinten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, G H",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Auswahlbereich...",
+    "key": "Alt, J P, Q 2",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Ausrichten",
+    "key": "Alt, J P, D A",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Gruppieren",
+    "key": "Alt, J P, G R",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Drehen",
+    "key": "Alt, J P, D R",
+    "enabled": true
+   },
+   {
+    "type": "Group",
+    "name": "Größe",
+    "key": "Alt, J P, Z Z",
+    "enabled": true
+   },
+   {
+    "type": "SplitButton",
+    "name": "Zuschneiden",
+    "key": "Alt, J P, C",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zuschneiden",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, C",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Formenhöhe",
+    "key": "Alt, J P, H",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Spinner",
+    "name": "Formenbreite",
+    "key": "Alt, J P, R R",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Größe und Eigenschaften...",
+    "key": "Alt, J P, ß",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Menüband-Anzeigeoptionen",
+    "key": "Alt, Z R",
+    "enabled": true
+   }
+  ],
+  "groups": [
+   "Bildformat",
+   "Anpassen",
+   "Bildformatvorlagen",
+   "Schnellformatvorlagen",
+   "Barrierefreiheit",
+   "Anordnen",
+   "Größe"
+  ],
+  "menus": {
+   "Korrekturen": [
+    {
+     "type": "Button",
+     "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Normal",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seitenlayout",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Umbruchvorschau",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zoom 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Weichzeichnen: 50 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Weichzeichnen: 25 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Schärfen: 0 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Schärfen: 25 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Schärfen: 50 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Helligkeit/Kontrast",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: -40 % Kontrast: -40 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: -20 % Kontrast: -40 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: 0 % (Normal) Kontrast: -40 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: +20 % Kontrast: -40 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: +40 % Kontrast: -40 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: -40 % Kontrast: -20 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: -20 % Kontrast: -20 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: 0 % (Normal) Kontrast: -20 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: +20 % Kontrast: -20 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: +40 % Kontrast: -20 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: -40 % Kontrast: 0 % (Normal)",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: -20 % Kontrast: 0 % (Normal)",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: 0 % (Normal) Kontrast: 0 % (Normal)",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: +20 % Kontrast: 0 % (Normal)",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: +40 % Kontrast: 0 % (Normal)",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: -40 % Kontrast: +20 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: -20 % Kontrast: +20 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: 0 % (Normal) Kontrast: +20 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: +20 % Kontrast: +20 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: +40 % Kontrast: +20 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: -40 % Kontrast: +40 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: -20 % Kontrast: +40 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: 0 % (Normal) Kontrast: +40 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: +20 % Kontrast: +40 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Helligkeit: +40 % Kontrast: +40 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Bildkorrekturoptionen...",
+     "key": "Alt, J P, O, K",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Diagonal liegende Ecken schneiden, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Moderater Rahmen, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Gedreht, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektivischer Schatten, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektive oberhalb, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Oval mit weichen Kanten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägtes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Perspektive rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive links, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, schwarz",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes abgerundetes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes Oval",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach links",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Copilot Chat",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Nach links scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Nach rechts scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Blatt hinzufügen",
+     "key": "",
+     "enabled": true
+    }
+   ],
+   "Farbe": [
+    {
+     "type": "Button",
+     "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Normal",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seitenlayout",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Umbruchvorschau",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zoom 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Sättigung: 0 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Sättigung: 33 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Sättigung: 66 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Sättigung: 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Sättigung: 200 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Sättigung: 300 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Sättigung: 400 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Farbton",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Temperatur: 4700 K",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Temperatur: 5300 K",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Temperatur: 5900 K",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Temperatur: 6500 K",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Temperatur: 7200 K",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Temperatur: 8800 K",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Temperatur: 11200 K",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": "Neu einfärben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Keine Neueinfärbung",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Graustufe",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Sepia",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Ausgeblichen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Schwarzweiß: 25 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Schwarzweiß: 50 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Schwarzweiß: 75 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Dunkelblau, Textfarbe 2 dunkel",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Dunkelblaugrün, Akzentfarbe 1 dunkel",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Orange, Akzentfarbe 2 dunkel",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Dunkelgrün, Akzentfarbe 3 dunkel",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Türkis, Akzentfarbe 4 dunkel",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Pflaume, Akzentfarbe 5 dunkel",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Grün, Akzentfarbe 6 dunkel",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Hellgrau, Hintergrundfarbe 2 hell",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Dunkelblaugrün, Akzentfarbe 1 hell",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Orange, Akzentfarbe 2 hell",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Dunkelgrün, Akzentfarbe 3 hell",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Türkis, Akzentfarbe 4 hell",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Pflaume, Akzentfarbe 5 hell",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Grün, Akzentfarbe 6 hell",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Varianten",
+     "key": "Alt, J P, F, W",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Transparente Farbe bestimmen",
+     "key": "Alt, J P, F, T",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Bildfarboptionen...",
+     "key": "Alt, J P, F, B",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Diagonal liegende Ecken schneiden, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Moderater Rahmen, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Gedreht, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektivischer Schatten, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektive oberhalb, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Oval mit weichen Kanten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägtes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Perspektive rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive links, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, schwarz",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes abgerundetes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes Oval",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach links",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Copilot Chat",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Nach links scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Nach rechts scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Blatt hinzufügen",
+     "key": "",
+     "enabled": true
+    }
+   ],
+   "Künstlerische Effekte": [
+    {
+     "type": "Button",
+     "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Normal",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seitenlayout",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Umbruchvorschau",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zoom 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Kreideskizze",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Farbstriche",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Pinsel",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Leuchteffekt: diffus",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Weichzeichnen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Heller Bildschirm",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Wasserfarbe: Schwamm",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Filmkörnung",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Mosaik: Tupfen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Glas",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Zement",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Strukturierung",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Kreuzschraffur: Radierung",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Pastellkreide: weich",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Plastikfolie",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Silhouette",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Fotokopie",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Leuchteffekt: Ränder",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Optionen für künstlerische Effekte...",
+     "key": "Alt, J P, Ü, O",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Diagonal liegende Ecken schneiden, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Moderater Rahmen, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Gedreht, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektivischer Schatten, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektive oberhalb, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Oval mit weichen Kanten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägtes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Perspektive rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive links, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, schwarz",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes abgerundetes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes Oval",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach links",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Copilot Chat",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Nach links scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Nach rechts scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Blatt hinzufügen",
+     "key": "",
+     "enabled": true
+    }
+   ],
+   "Transparenz": [
+    {
+     "type": "Button",
+     "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Normal",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seitenlayout",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Umbruchvorschau",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zoom 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Optionen für die Bildtransparenz...",
+     "key": "Alt, J P, T 2, B",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Diagonal liegende Ecken schneiden, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Moderater Rahmen, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Gedreht, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektivischer Schatten, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektive oberhalb, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Oval mit weichen Kanten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägtes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Perspektive rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive links, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, schwarz",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes abgerundetes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes Oval",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach links",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Copilot Chat",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Nach links scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Nach rechts scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Blatt hinzufügen",
+     "key": "",
+     "enabled": true
+    }
+   ],
+   "Bild ändern": [
+    {
+     "type": "Button",
+     "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Normal",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seitenlayout",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Umbruchvorschau",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zoom 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Aus Onlinequellen...",
+     "key": "Alt, J P, Q 1, O",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Aus Piktogrammen...",
+     "key": "Alt, J P, Q 1, P",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Aus Zwischenablage...",
+     "key": "Alt, J P, Q 1, Z",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Diagonal liegende Ecken schneiden, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Moderater Rahmen, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Gedreht, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektivischer Schatten, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektive oberhalb, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Oval mit weichen Kanten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägtes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Perspektive rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive links, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, schwarz",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes abgerundetes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes Oval",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach links",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Copilot Chat",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Nach links scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Nach rechts scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Blatt hinzufügen",
+     "key": "",
+     "enabled": true
+    }
+   ],
+   "Weitere Optionen": [
+    {
+     "type": "Button",
+     "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Normal",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seitenlayout",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Umbruchvorschau",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zoom 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Bild und Größe zurücksetzen",
+     "key": "Alt, J P, U, G",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Diagonal liegende Ecken schneiden, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Moderater Rahmen, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Gedreht, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektivischer Schatten, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektive oberhalb, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Oval mit weichen Kanten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägtes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Perspektive rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive links, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, schwarz",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes abgerundetes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes Oval",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach links",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Copilot Chat",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Nach links scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Nach rechts scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Blatt hinzufügen",
+     "key": "",
+     "enabled": true
+    }
+   ],
+   "Bildeffekte": [
+    {
+     "type": "Button",
+     "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Normal",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seitenlayout",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Umbruchvorschau",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zoom 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Diagonal liegende Ecken schneiden, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Moderater Rahmen, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Gedreht, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektivischer Schatten, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektive oberhalb, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Oval mit weichen Kanten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägtes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Perspektive rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive links, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, schwarz",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes abgerundetes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes Oval",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach links",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Copilot Chat",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Nach links scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Nach rechts scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Blatt hinzufügen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "In Zelle",
+     "key": "Alt+Umschalt+F10",
+     "enabled": true
+    }
+   ],
+   "Bildlayout": [
+    {
+     "type": "Button",
+     "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Normal",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seitenlayout",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Umbruchvorschau",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zoom 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Diagonal liegende Ecken schneiden, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Moderater Rahmen, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Gedreht, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektivischer Schatten, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektive oberhalb, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Oval mit weichen Kanten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägtes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Perspektive rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive links, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, schwarz",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes abgerundetes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes Oval",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Umgebrochene Bildbeschriftung",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Umgebrochener halbtransparenter Bildtext",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Umgebrochene Bildblöcke",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Umgebrochene Bildbeschriftungsliste",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Titelbildblöcke",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Bildraster",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Bildakzentblöcke",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Bildstreifen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Alternierende Bildblöcke",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Aufsteigender Prozess mit Bildakzenten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Alternierende Bildkreise",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Titelbildanordnung",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Bildanordnung",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Umrahmte Textgrafik",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Sechseckcluster",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Blasenbildliste",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Bilderhierarchie mit Kreisakzent",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Horizontale Bildliste",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Fortlaufende Bildliste",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Vertikale Bildliste",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Vertikale Bildakzentliste",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Umgebrochene Bildakzentliste",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Bildakzentliste",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Bildakzentprozess",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Das Team kennenlernen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Karte zum Kennenlernen des Teams",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Vertikale Karte zum Kennenlernen des Teams",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Ovale Karte zum Kennenlernen des Teams",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Textkarte Seitenlinien-Symbol",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Textkarte Seitenlinie Breites Bild",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach links",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Copilot Chat",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Nach links scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Nach rechts scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Blatt hinzufügen",
+     "key": "",
+     "enabled": true
+    }
+   ],
+   "Ausrichten": [
+    {
+     "type": "Button",
+     "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Normal",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seitenlayout",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Umbruchvorschau",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zoom 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Diagonal liegende Ecken schneiden, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Moderater Rahmen, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Gedreht, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektivischer Schatten, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektive oberhalb, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Oval mit weichen Kanten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägtes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Perspektive rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive links, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, schwarz",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes abgerundetes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes Oval",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Oben ausrichten",
+     "key": "Alt, J P, D A, O",
+     "enabled": false
+    },
+    {
+     "type": "MenuItem",
+     "name": "Vertikal zentrieren",
+     "key": "Alt, J P, D A, V",
+     "enabled": false
+    },
+    {
+     "type": "MenuItem",
+     "name": "Unten ausrichten",
+     "key": "Alt, J P, D A, U",
+     "enabled": false
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Horizontal verteilen",
+     "key": "Alt, J P, D A, I",
+     "enabled": false
+    },
+    {
+     "type": "MenuItem",
+     "name": "Vertikal verteilen",
+     "key": "Alt, J P, D A, K",
+     "enabled": false
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Am Raster ausrichten",
+     "key": "Alt, J P, D A, M",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "An Form ausrichten",
+     "key": "Alt, J P, D A, F",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Gitternetzlinien anzeigen",
+     "key": "Alt, J P, D A, G",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach links",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Copilot Chat",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Nach links scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Nach rechts scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Blatt hinzufügen",
+     "key": "",
+     "enabled": true
+    }
+   ],
+   "Gruppieren": [
+    {
+     "type": "Button",
+     "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Normal",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seitenlayout",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Umbruchvorschau",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zoom 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Diagonal liegende Ecken schneiden, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Moderater Rahmen, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Gedreht, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektivischer Schatten, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektive oberhalb, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Oval mit weichen Kanten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägtes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Perspektive rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive links, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, schwarz",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes abgerundetes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes Oval",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Gruppierung aufheben",
+     "key": "Alt, J P, G R, G",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach links",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Copilot Chat",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Nach links scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Nach rechts scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Blatt hinzufügen",
+     "key": "",
+     "enabled": true
+    }
+   ],
+   "Drehen": [
+    {
+     "type": "Button",
+     "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Normal",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seitenlayout",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Umbruchvorschau",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zoom 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Diagonal liegende Ecken schneiden, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Moderater Rahmen, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Gedreht, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektivischer Schatten, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektive oberhalb, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Oval mit weichen Kanten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägtes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Perspektive rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive links, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, schwarz",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes abgerundetes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes Oval",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Linksdrehung 90 Grad",
+     "key": "ALT+L",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Vertikal umdrehen",
+     "key": "ALT+V",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Horizontal spiegeln",
+     "key": "ALT+z",
+     "enabled": true
+    },
+    {
+     "type": "Group",
+     "name": " ",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Drehungsoptionen...",
+     "key": "Alt, J P, D R, W",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach links",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Copilot Chat",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Nach links scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Nach rechts scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Blatt hinzufügen",
+     "key": "",
+     "enabled": true
+    }
+   ],
+   "Menüband-Anzeigeoptionen": [
+    {
+     "type": "Button",
+     "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Normal",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seitenlayout",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Umbruchvorschau",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Verkleinern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Vergrößern",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zoom 100 %",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Diagonal liegende Ecken schneiden, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Moderater Rahmen, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Gedreht, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektivischer Schatten, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Perspektive oberhalb, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Oval mit weichen Kanten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägtes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Perspektive rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Abgeschrägte Perspektive links, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, schwarz",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Reflektierte Abschrägung, weiß",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes abgerundetes Rechteck",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "ListItem",
+     "name": "Metallenes Oval",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach oben",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Zeile nach unten",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach links",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Seite nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Spalte nach rechts",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Nach links scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Nach rechts scrollen",
+     "key": "",
+     "enabled": false
+    },
+    {
+     "type": "Button",
+     "name": "Blatt hinzufügen",
+     "key": "",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "In Zelle",
+     "key": "Alt+Umschalt+F10",
+     "enabled": true
+    },
+    {
+     "type": "Button",
+     "name": "Copilot Chat",
+     "key": "",
+     "enabled": true
+    }
+   ]
+  },
+  "styles": [
+   "Einfacher Rahmen, weiß",
+   "Abgeschrägt matt, weiß",
+   "Metallrahmen",
+   "Schlagschattenrechteck",
+   "Reflektiertes abgerundetes Rechteck",
+   "Rechteck mit weichen Kanten",
+   "Doppelrahmen, schwarz",
+   "Dick matt, schwarz",
+   "Einfacher Rahmen, schwarz",
+   "Abgeschrägtes Oval, schwarz",
+   "Verbundrahmen, schwarz",
+   "Moderater Rahmen, schwarz",
+   "Schattenrechteck zentriert",
+   "Abgerundete diagonale Ecken, weiß",
+   "Diagonal liegende Ecken schneiden, weiß",
+   "Moderater Rahmen, weiß",
+   "Gedreht, weiß",
+   "Perspektivischer Schatten, weiß",
+   "Perspektive oberhalb, weiß",
+   "Oval mit weichen Kanten",
+   "Abgeschrägtes Rechteck",
+   "Abgeschrägte Perspektive",
+   "Reflektierte Perspektive rechts",
+   "Abgeschrägte Perspektive links, weiß",
+   "Reflektierte Abschrägung, schwarz",
+   "Reflektierte Abschrägung, weiß",
+   "Metallenes abgerundetes Rechteck",
+   "Metallenes Oval"
+  ]
+ },
+ "menus": {
+  "Zuschneiden": [
+   {
+    "type": "MenuItem",
+    "name": "Auf Form zuschneiden",
+    "key": "Alt, J P, C, S",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Seitenverhältnis",
+    "key": "Alt, J P, C, T",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Ausfüllen",
+    "key": "Alt, J P, C, E",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Einpassen",
+    "key": "Alt, J P, C, E",
+    "enabled": true
+   }
+  ],
+  "Zuschneiden > Auf Form zuschneiden": [
+   {
+    "type": "Button",
+    "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Normal",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seitenlayout",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Umbruchvorschau",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Verkleinern",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Verkleinern",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Vergrößern",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Vergrößern",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zoom 100 %",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Automatisches Speichern",
+    "key": "Alt, 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Speichern",
+    "key": "Alt, 2",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Rückgängig",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, 3",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Wiederholen",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, 4",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Anpassen der Symbolleiste für den Schnellzugriff",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "‪Mappe1‬  -  Excel",
+    "key": "Alt, B",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "[Beschreibung]",
+    "key": "Alt, M",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Plan aktualisieren",
+    "key": "Alt, U 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Minimieren",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Maximieren",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Registerkarte \"Datei\"",
+    "key": "Alt, D",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Kommentare",
+    "key": "Alt, Z C",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Freigeben",
+    "key": "Alt, Z S",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "In Zelle",
+    "key": "Alt, J P, Y",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Freistellen",
+    "key": "Alt, J P, T 1",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Korrekturen",
+    "key": "Alt, J P, O",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Farbe",
+    "key": "Alt, J P, F",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Künstlerische Effekte",
+    "key": "Alt, J P, Ü",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Transparenz",
+    "key": "Alt, J P, T 2",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bilder komprimieren...",
+    "key": "Alt, J P, L",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bild ändern",
+    "key": "Alt, J P, Q 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bild zurücksetzen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, U",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Einfacher Rahmen, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägt matt, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Metallrahmen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Schlagschattenrechteck",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Reflektiertes abgerundetes Rechteck",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Rechteck mit weichen Kanten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Doppelrahmen, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dick matt, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Einfacher Rahmen, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägtes Oval, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Verbundrahmen, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Moderater Rahmen, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Schattenrechteck zentriert",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgerundete diagonale Ecken, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Diagonal liegende Ecken schneiden, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Moderater Rahmen, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Gedreht, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Perspektivischer Schatten, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Perspektive oberhalb, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Oval mit weichen Kanten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägtes Rechteck",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägte Perspektive",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Reflektierte Perspektive rechts",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägte Perspektive links, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Reflektierte Abschrägung, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Reflektierte Abschrägung, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Metallenes abgerundetes Rechteck",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Metallenes Oval",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schnellformatvorlagen",
+    "key": "Alt, J P, S",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bildrahmen Dunkelblaugrün, Akzent 1",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, V",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bildeffekte",
+    "key": "Alt, J P, E",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bildlayout",
+    "key": "Alt, J P, A 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bild...",
+    "key": "Alt, J P, P",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Alternativtext",
+    "key": "Alt, J P, A T",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Ebene nach vorne",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, G E",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Ebene nach hinten",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, G H",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Auswahlbereich...",
+    "key": "Alt, J P, Q 2",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Ausrichten",
+    "key": "Alt, J P, D A",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Gruppieren",
+    "key": "Alt, J P, G R",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Drehen",
+    "key": "Alt, J P, D R",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zuschneiden",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, C",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Größe und Eigenschaften...",
+    "key": "Alt, J P, ß",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Menüband-Anzeigeoptionen",
+    "key": "Alt, Z R",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Öffnen",
+    "key": "Alt+Nach-Unten-Taste",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach oben",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach oben",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach unten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach unten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Spalte nach links",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach links",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Spalte nach rechts",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Copilot Chat",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Nach links scrollen",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Nach rechts scrollen",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Blatt hinzufügen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Systemmenü",
+    "key": "Leertaste",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Minimieren",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Maximieren",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "key": "",
+    "enabled": true
+   }
+  ],
+  "Bildrahmen": [
+   {
+    "type": "Button",
+    "name": "Bildrahmen Keine Kontur",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Nur hoher Kontrast",
+    "key": "Alt, J P, V, N",
+    "enabled": false
+   },
+   {
+    "type": "ListItem",
+    "name": "Automatisch",
+    "key": "ALT+A",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Weiß, Hintergrund 1",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Schwarz, Text 1",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Hellgrau, Hintergrund 2",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblau, Text 2",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblaugrün, Akzent 1",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Orange, Akzent 2",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelgrün, Akzent 3",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Türkis, Akzent 4",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Pflaume, Akzent 5",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Grün, Akzent 6",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Weiß, Hintergrund 1, dunkler 5%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Schwarz, Text 1, heller 50%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Hellgrau, Hintergrund 2, dunkler 10%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblau, Text 2, heller 90%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblaugrün, Akzent 1, heller 80%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Orange, Akzent 2, heller 80%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelgrün, Akzent 3, heller 80%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Türkis, Akzent 4, heller 80%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Pflaume, Akzent 5, heller 80%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Grün, Akzent 6, heller 80%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Weiß, Hintergrund 1, dunkler 15%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Schwarz, Text 1, heller 35%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Hellgrau, Hintergrund 2, dunkler 25%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblau, Text 2, heller 75%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblaugrün, Akzent 1, heller 60%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Orange, Akzent 2, heller 60%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelgrün, Akzent 3, heller 60%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Türkis, Akzent 4, heller 60%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Pflaume, Akzent 5, heller 60%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Grün, Akzent 6, heller 60%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Weiß, Hintergrund 1, dunkler 25%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Schwarz, Text 1, heller 25%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Hellgrau, Hintergrund 2, dunkler 50%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblau, Text 2, heller 50%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblaugrün, Akzent 1, heller 40%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Orange, Akzent 2, heller 40%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelgrün, Akzent 3, heller 40%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Türkis, Akzent 4, heller 40%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Pflaume, Akzent 5, heller 40%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Grün, Akzent 6, heller 40%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Weiß, Hintergrund 1, dunkler 35%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Schwarz, Text 1, heller 15%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Hellgrau, Hintergrund 2, dunkler 75%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblau, Text 2, heller 25%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblaugrün, Akzent 1, dunkler 25%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Orange, Akzent 2, dunkler 25%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelgrün, Akzent 3, dunkler 25%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Türkis, Akzent 4, dunkler 25%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Pflaume, Akzent 5, dunkler 25%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Grün, Akzent 6, dunkler 25%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Weiß, Hintergrund 1, dunkler 50%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Schwarz, Text 1, heller 5%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Hellgrau, Hintergrund 2, dunkler 90%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblau, Text 2, heller 10%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblaugrün, Akzent 1, dunkler 50%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Orange, Akzent 2, dunkler 50%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelgrün, Akzent 3, dunkler 50%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Türkis, Akzent 4, dunkler 50%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Pflaume, Akzent 5, dunkler 50%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Grün, Akzent 6, dunkler 50%",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelrot",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Rot",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Orange",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Gelb",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Hellgrün",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Grün",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Hellblau",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Blau",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dunkelblau",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Lila",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Keine Kontur",
+    "key": "ALT+K",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Konturfarben...",
+    "key": "Alt, J P, V, W",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Stärke",
+    "key": "Alt, J P, V, S",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Skizziert",
+    "key": "Alt, J P, V, S",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Striche",
+    "key": "Alt, J P, V, T",
+    "enabled": true
+   }
+  ],
+  "Bildrahmen > Stärke": [
+   {
+    "type": "Button",
+    "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Normal",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seitenlayout",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Umbruchvorschau",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Verkleinern",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Verkleinern",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Vergrößern",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Vergrößern",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zoom 100 %",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Automatisches Speichern",
+    "key": "Alt, 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Speichern",
+    "key": "Alt, 2",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Rückgängig",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, 3",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Wiederholen",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, 4",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Anpassen der Symbolleiste für den Schnellzugriff",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "‪Mappe1‬  -  Excel",
+    "key": "Alt, B",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "[Beschreibung]",
+    "key": "Alt, M",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Plan aktualisieren",
+    "key": "Alt, U 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Minimieren",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Maximieren",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Registerkarte \"Datei\"",
+    "key": "Alt, D",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Kommentare",
+    "key": "Alt, Z C",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Freigeben",
+    "key": "Alt, Z S",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "In Zelle",
+    "key": "Alt, J P, Y",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Freistellen",
+    "key": "Alt, J P, T 1",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Korrekturen",
+    "key": "Alt, J P, O",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Farbe",
+    "key": "Alt, J P, F",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Künstlerische Effekte",
+    "key": "Alt, J P, Ü",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Transparenz",
+    "key": "Alt, J P, T 2",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bilder komprimieren...",
+    "key": "Alt, J P, L",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bild ändern",
+    "key": "Alt, J P, Q 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bild zurücksetzen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, U",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Einfacher Rahmen, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägt matt, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Metallrahmen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Schlagschattenrechteck",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Reflektiertes abgerundetes Rechteck",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Rechteck mit weichen Kanten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Doppelrahmen, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dick matt, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Einfacher Rahmen, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägtes Oval, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Verbundrahmen, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Moderater Rahmen, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Schattenrechteck zentriert",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgerundete diagonale Ecken, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Diagonal liegende Ecken schneiden, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Moderater Rahmen, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Gedreht, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Perspektivischer Schatten, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Perspektive oberhalb, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Oval mit weichen Kanten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägtes Rechteck",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägte Perspektive",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Reflektierte Perspektive rechts",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägte Perspektive links, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Reflektierte Abschrägung, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Reflektierte Abschrägung, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Metallenes abgerundetes Rechteck",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Metallenes Oval",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schnellformatvorlagen",
+    "key": "Alt, J P, S",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, V",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bildeffekte",
+    "key": "Alt, J P, E",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bildlayout",
+    "key": "Alt, J P, A 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bild...",
+    "key": "Alt, J P, P",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Alternativtext",
+    "key": "Alt, J P, A T",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Ebene nach vorne",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, G E",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Ebene nach hinten",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, G H",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Auswahlbereich...",
+    "key": "Alt, J P, Q 2",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Ausrichten",
+    "key": "Alt, J P, D A",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Gruppieren",
+    "key": "Alt, J P, G R",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Drehen",
+    "key": "Alt, J P, D R",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zuschneiden",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, C",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Größe und Eigenschaften...",
+    "key": "Alt, J P, ß",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Menüband-Anzeigeoptionen",
+    "key": "Alt, Z R",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Öffnen",
+    "key": "Alt+Nach-Unten-Taste",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach oben",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach oben",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach unten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach unten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Spalte nach links",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach links",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Spalte nach rechts",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Copilot Chat",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Nach links scrollen",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Nach rechts scrollen",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Blatt hinzufügen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Systemmenü",
+    "key": "Leertaste",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Minimieren",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Maximieren",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "key": "",
+    "enabled": true
+   }
+  ],
+  "Ebene nach vorne": [
+   {
+    "type": "Button",
+    "name": "Bildrahmen Keine Kontur",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "In den Vordergrund",
+    "key": "Alt, J P, G E, E",
+    "enabled": false
+   }
+  ],
+  "Ebene nach hinten": [
+   {
+    "type": "Button",
+    "name": "Bildrahmen Keine Kontur",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "In den Hintergrund",
+    "key": "Alt, J P, G H, R",
+    "enabled": false
+   }
+  ],
+  "Drehen": [
+   {
+    "type": "Button",
+    "name": "Bildrahmen Keine Kontur",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Rechtsdrehung 90 Grad",
+    "key": "ALT+s",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Linksdrehung 90 Grad",
+    "key": "ALT+L",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Vertikal umdrehen",
+    "key": "ALT+V",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Horizontal spiegeln",
+    "key": "ALT+z",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Drehungsoptionen...",
+    "key": "Alt, J P, D R, W",
+    "enabled": true
+   }
+  ],
+  "Ausrichten": [
+   {
+    "type": "Button",
+    "name": "Bildrahmen Keine Kontur",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Linksbündig",
+    "key": "Alt, J P, D A, L",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Horizontal zentrieren",
+    "key": "Alt, J P, D A, H",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Rechtsbündig",
+    "key": "Alt, J P, D A, R",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Oben ausrichten",
+    "key": "Alt, J P, D A, O",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Vertikal zentrieren",
+    "key": "Alt, J P, D A, V",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Unten ausrichten",
+    "key": "Alt, J P, D A, U",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Horizontal verteilen",
+    "key": "Alt, J P, D A, I",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Vertikal verteilen",
+    "key": "Alt, J P, D A, K",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Am Raster ausrichten",
+    "key": "Alt, J P, D A, M",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "An Form ausrichten",
+    "key": "Alt, J P, D A, F",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Gitternetzlinien anzeigen",
+    "key": "Alt, J P, D A, G",
+    "enabled": true
+   }
+  ],
+  "Bildeffekte": [
+   {
+    "type": "Button",
+    "name": "Bildrahmen Keine Kontur",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Voreinstellung",
+    "key": "Alt, J P, E, V",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Schatten",
+    "key": "Alt, J P, E, C",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Spiegelung",
+    "key": "Alt, J P, E, S",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Leuchteffekt",
+    "key": "Alt, J P, E, L",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weiche Kanten",
+    "key": "Alt, J P, E, E",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Abschrägung",
+    "key": "Alt, J P, E, B",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "3D-Drehung",
+    "key": "Alt, J P, E, 3",
+    "enabled": true
+   }
+  ],
+  "Bildeffekte > Voreinstellung": [
+   {
+    "type": "Button",
+    "name": "Makroaufzeichnung Wird nicht aufgezeichnet",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Barrierefreiheitsprüfung Barrierefreiheit: Untersuchen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Normal",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seitenlayout",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Umbruchvorschau",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Verkleinern",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Verkleinern",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Vergrößern",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Vergrößern",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zoom 100 %",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Automatisches Speichern",
+    "key": "Alt, 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Speichern",
+    "key": "Alt, 2",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Rückgängig",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, 3",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Wiederholen",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, 4",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Anpassen der Symbolleiste für den Schnellzugriff",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "‪Mappe1‬  -  Excel",
+    "key": "Alt, B",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "[Beschreibung]",
+    "key": "Alt, M",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Plan aktualisieren",
+    "key": "Alt, U 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Minimieren",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Maximieren",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Registerkarte \"Datei\"",
+    "key": "Alt, D",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Kommentare",
+    "key": "Alt, Z C",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Freigeben",
+    "key": "Alt, Z S",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "In Zelle",
+    "key": "Alt, J P, Y",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Freistellen",
+    "key": "Alt, J P, T 1",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Korrekturen",
+    "key": "Alt, J P, O",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Farbe",
+    "key": "Alt, J P, F",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Künstlerische Effekte",
+    "key": "Alt, J P, Ü",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Transparenz",
+    "key": "Alt, J P, T 2",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bilder komprimieren...",
+    "key": "Alt, J P, L",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bild ändern",
+    "key": "Alt, J P, Q 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bild zurücksetzen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, U",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Einfacher Rahmen, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägt matt, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Metallrahmen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Schlagschattenrechteck",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Reflektiertes abgerundetes Rechteck",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Rechteck mit weichen Kanten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Doppelrahmen, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Dick matt, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Einfacher Rahmen, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägtes Oval, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Verbundrahmen, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Moderater Rahmen, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Schattenrechteck zentriert",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgerundete diagonale Ecken, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Diagonal liegende Ecken schneiden, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Moderater Rahmen, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Gedreht, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Perspektivischer Schatten, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Perspektive oberhalb, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Oval mit weichen Kanten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägtes Rechteck",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägte Perspektive",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Reflektierte Perspektive rechts",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Abgeschrägte Perspektive links, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Reflektierte Abschrägung, schwarz",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Reflektierte Abschrägung, weiß",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Metallenes abgerundetes Rechteck",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "ListItem",
+    "name": "Metallenes Oval",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schnellformatvorlagen",
+    "key": "Alt, J P, S",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, V",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bildeffekte",
+    "key": "Alt, J P, E",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Bildlayout",
+    "key": "Alt, J P, A 1",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bild...",
+    "key": "Alt, J P, P",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Alternativtext",
+    "key": "Alt, J P, A T",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Ebene nach vorne",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, G E",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Ebene nach hinten",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, G H",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Auswahlbereich...",
+    "key": "Alt, J P, Q 2",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Ausrichten",
+    "key": "Alt, J P, D A",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Gruppieren",
+    "key": "Alt, J P, G R",
+    "enabled": false
+   },
+   {
+    "type": "MenuItem",
+    "name": "Drehen",
+    "key": "Alt, J P, D R",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zuschneiden",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Weitere Optionen",
+    "key": "Alt, J P, C",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Mehr",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Weniger",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Größe und Eigenschaften...",
+    "key": "Alt, J P, ß",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Menüband-Anzeigeoptionen",
+    "key": "Alt, Z R",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Öffnen",
+    "key": "Alt+Nach-Unten-Taste",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach oben",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach oben",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach unten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Zeile nach unten",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Spalte nach links",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach links",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Spalte nach rechts",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Copilot Chat",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Nach links scrollen",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Nach rechts scrollen",
+    "key": "",
+    "enabled": false
+   },
+   {
+    "type": "Button",
+    "name": "Blatt hinzufügen",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Systemmenü",
+    "key": "Leertaste",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Minimieren",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Maximieren",
+    "key": "",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Schließen",
+    "key": "",
+    "enabled": true
+   }
+  ],
+  "Bild zurücksetzen": [
+   {
+    "type": "MenuItem",
+    "name": "Bild und Größe zurücksetzen",
+    "key": "Alt, J P, U, G",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bildrahmen Keine Kontur",
+    "key": "",
+    "enabled": true
+   }
+  ],
+  "Bild ändern": [
+   {
+    "type": "MenuItem",
+    "name": "Dieses Gerät...",
+    "key": "Alt, J P, Q 1, G",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Aus Archivbildern...",
+    "key": "Alt, J P, Q 1, A",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Aus Onlinequellen...",
+    "key": "Alt, J P, Q 1, O",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Aus Piktogrammen...",
+    "key": "Alt, J P, Q 1, P",
+    "enabled": true
+   },
+   {
+    "type": "MenuItem",
+    "name": "Aus Zwischenablage...",
+    "key": "Alt, J P, Q 1, Z",
+    "enabled": true
+   },
+   {
+    "type": "Button",
+    "name": "Bildrahmen Keine Kontur",
+    "key": "",
+    "enabled": true
+   }
+  ]
+ }
+}

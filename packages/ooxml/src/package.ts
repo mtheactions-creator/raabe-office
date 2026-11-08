@@ -103,6 +103,7 @@ export function relativeTarget(from: string, part: string): string {
 const MIME_EXT: Record<string, string> = {
   "image/png": "png", "image/jpeg": "jpeg", "image/gif": "gif", "image/bmp": "bmp", "image/svg+xml": "svg",
   "image/tiff": "tiff", "image/x-emf": "emf", "image/x-wmf": "wmf", "image/webp": "webp",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
 };
 
 export function mimeOf(path: string): string {

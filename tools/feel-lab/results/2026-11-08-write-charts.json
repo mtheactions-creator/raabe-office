@@ -38,5 +38,88 @@
    "check": "same page count",
    "ok": true
   }
- ]
+ ],
+ "insert": {
+  "checks": [
+   {
+    "check": "Word finds 2 new charts",
+    "ok": true
+   },
+   {
+    "check": "first is Gruppierte Säulen (51)",
+    "ok": true
+   },
+   {
+    "check": "second is Kreis (5)",
+    "ok": true
+   },
+   {
+    "check": "pie has the edited values",
+    "ok": true
+   },
+   {
+    "check": "column has Word's sample",
+    "ok": true
+   },
+   {
+    "check": "two embedded workbooks",
+    "ok": true
+   }
+  ],
+  "word": [
+   {
+    "type": 51,
+    "series": [
+     {
+      "name": "Datenreihe 1",
+      "values": [
+       4.3,
+       2.5,
+       3.5,
+       4.5
+      ]
+     },
+     {
+      "name": "Datenreihe 2",
+      "values": [
+       2.4,
+       4.4,
+       1.8,
+       2.8
+      ]
+     },
+     {
+      "name": "Datenreihe 3",
+      "values": [
+       2.0,
+       2.0,
+       3.0,
+       5.0
+      ]
+     }
+    ]
+   },
+   {
+    "type": 5,
+    "series": [
+     {
+      "name": "Nudeln",
+      "values": [
+       30.0,
+       42.0,
+       25.0
+      ]
+     },
+     {
+      "name": "Pizza",
+      "values": [
+       51.0,
+       38.0,
+       47.0
+      ]
+     }
+    ]
+   }
+  ]
+ }
 }

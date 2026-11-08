@@ -14,8 +14,70 @@ fn db() -> &'static fontdb::Database {
     DB.get_or_init(|| {
         let mut db = fontdb::Database::new();
         db.load_system_fonts();
+        // Office's cloud fonts (Aptos, Aptos Narrow, Aptos Display …) are not Windows fonts: Office keeps them per
+        // user in its font cache. They are this user's own fonts, used here only (D-089).
+        if let Some(dir) = cloud_dir() {
+            db.load_fonts_dir(dir);
+        }
         db
     })
+}
+
+/// Office's per-user cloud font cache, when there is one.
+fn cloud_dir() -> Option<std::path::PathBuf> {
+    let base = std::env::var_os("LOCALAPPDATA")?;
+    let dir = std::path::PathBuf::from(base).join("Microsoft").join("FontCache").join("4").join("CloudFonts");
+    dir.is_dir().then_some(dir)
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CloudFace {
+    /// The family names of the face (typographic and Windows family, e.g. "Aptos Narrow").
+    families: Vec<String>,
+    weight: u16,
+    italic: bool,
+    /// What `cloud_font` takes to give the file's bytes.
+    id: String,
+}
+
+/// The faces of Office's cloud fonts, for the page to register the families the browser does not know.
+#[tauri::command]
+pub fn cloud_fonts() -> Vec<CloudFace> {
+    let Some(dir) = cloud_dir() else { return Vec::new() };
+    db().faces()
+        .filter_map(|f| match &f.source {
+            fontdb::Source::File(p) if p.starts_with(&dir) => Some(CloudFace {
+                // Office files a face under its folder's name ("Aptos Display", "Aptos Narrow"), while the font's own
+                // typographic family is "Aptos": both count.
+                families: {
+                    let mut names: Vec<String> = f.families.iter().map(|(n, _)| n.clone()).collect();
+                    if let Some(folder) = p.strip_prefix(&dir).ok().and_then(|r| r.components().next()).map(|c| c.as_os_str().to_string_lossy().into_owned()) {
+                        if !names.iter().any(|n| n.eq_ignore_ascii_case(&folder)) {
+                            names.insert(0, folder);
+                        }
+                    }
+                    names
+                },
+                weight: f.weight.0,
+                italic: f.style != fontdb::Style::Normal,
+                id: p.strip_prefix(&dir).ok()?.to_string_lossy().into_owned(),
+            }),
+            _ => None,
+        })
+        .collect()
+}
+
+/// The bytes of one cloud font file (only files inside the cloud font cache).
+#[tauri::command]
+pub fn cloud_font(id: String) -> Result<tauri::ipc::Response, String> {
+    let dir = cloud_dir().ok_or("no cloud fonts")?;
+    let path = dir.join(&id);
+    let canon = path.canonicalize().map_err(|e| e.to_string())?;
+    if !canon.starts_with(dir.canonicalize().map_err(|e| e.to_string())?) {
+        return Err("not a cloud font".into());
+    }
+    std::fs::read(&canon).map(tauri::ipc::Response::new).map_err(|e| e.to_string())
 }
 
 /// Starts loading the font database in the background so the first request is fast.

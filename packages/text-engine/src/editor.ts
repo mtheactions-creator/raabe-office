@@ -2333,6 +2333,24 @@ export class Editor {
     this.update({ scroll: true });
   }
 
+  /** Inserts an object (a chart …) in the line at the caret, selected afterwards. One undo step. */
+  insertInlineObject(obj: InlineObject): void {
+    this.snapshot();
+    const [from, to] = this.range();
+    const end = E.insertObject(this.doc, from, to, obj, this.typingProps());
+    this.setSel({ p: end.p, o: end.o - 1 }, end);
+    this.update({ scroll: true });
+  }
+
+  /** Changes the selected object in the line (Daten bearbeiten of a chart). One undo step. */
+  replaceSelectedObject(change: (o: InlineObject) => InlineObject): void {
+    const img = this.selectedImage();
+    if (!img || img.kind !== "inline") return;
+    this.snapshot();
+    this.replaceObject(img.p, img.o, change(img.obj));
+    this.update();
+  }
+
   /** Inserts a picture in the line at the caret, scaled down to fit the text width. */
   insertImage(image: ImageData, width: number, height: number): void {
     this.snapshot();

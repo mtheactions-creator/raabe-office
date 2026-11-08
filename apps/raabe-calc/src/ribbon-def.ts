@@ -29,6 +29,7 @@ export interface RibbonContext {
     freeze: MenuEntry[]; calcOptions: MenuEntry[]; notes: MenuEntry[]; names: MenuEntry[];
     fnLogical: MenuEntry[]; fnText: MenuEntry[]; fnDate: MenuEntry[]; fnLookup: MenuEntry[]; fnMath: MenuEntry[]; fnFinancial: MenuEntry[]; fnMore: MenuEntry[]; fnRecent: MenuEntry[];
     chartColumn: MenuEntry[]; chartLine: MenuEntry[]; chartPie: MenuEntry[]; chartScatter: MenuEntry[]; chartStat: MenuEntry[];
+    chartHierarchy: MenuEntry[]; chartOther: MenuEntry[]; chartCombo: MenuEntry[];
     fitWidth: MenuEntry[]; fitHeight: MenuEntry[];
     /** Anordnen: built when opened (what is enabled depends on the selected objects). */
     align(): MenuEntry[]; rotate: MenuEntry[]; group: MenuEntry[];
@@ -146,9 +147,9 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           launcher: { cmd: "insert.chartRecommended", key: "K2" },
           controls: [b("insert.chartRecommended", "LM", "large"), {
             type: "rows", rows: [
-              [dd("insert.chartColumn", "D", "small", m.chartColumn), dd("insert.chartHierarchy", "E", "small", []), dd("insert.chartStat", "SA", "small", m.chartStat)],
+              [dd("insert.chartColumn", "D", "small", m.chartColumn), dd("insert.chartHierarchy", "E", "small", m.chartHierarchy), dd("insert.chartStat", "SA", "small", m.chartStat)],
               [dd("insert.chartLine", "IL", "small", m.chartLine), dd("insert.chartPie", "KK", "small", m.chartPie), dd("insert.chartScatter", "PU", "small", m.chartScatter)],
-              [dd("insert.chartOther", "W1", "small", []), dd("insert.chartCombo", "N1", "small", []), b("insert.maps", "K1")],
+              [dd("insert.chartOther", "W1", "small", m.chartOther), dd("insert.chartCombo", "N1", "small", m.chartCombo), b("insert.maps", "K1")],
             ],
           }, b("insert.pivotChart", "II", "large")],
         },

@@ -1,0 +1,4910 @@
+{
+ "data": [
+  [
+   3,
+   5,
+   -2,
+   8,
+   4
+  ],
+  [
+   1,
+   null,
+   4,
+   -3,
+   6
+  ],
+  [
+   2,
+   7,
+   7,
+   1,
+   5
+  ]
+ ],
+ "dates": [
+  "2026-01-01",
+  "2026-01-02",
+  "2026-01-05",
+  "2026-01-06",
+  "2026-01-12"
+ ],
+ "cases": {
+  "line": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{C848D627-2FD2-490A-A419-A6982E26CF56}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>line!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>line!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>line!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "column": {
+   "groups": [
+    {
+     "type": 2,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup type=\"column\" displayEmptyCellsAs=\"gap\" xr2:uid=\"{FB9C1914-5F55-4873-8F68-24BB0603227A}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>column!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>column!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>column!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "winloss": {
+   "groups": [
+    {
+     "type": 3,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup type=\"stacked\" displayEmptyCellsAs=\"gap\" negative=\"1\" xr2:uid=\"{78C0F3D7-548C-45AF-B3A6-2FA7656B5E90}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>winloss!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>winloss!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>winloss!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "single": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 1,
+     "location": "F1",
+     "source": "A1:E1",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{F05AD95B-9A94-42C5-838E-C1AD5769E859}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>single!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "bycolumn": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 5,
+     "location": "A5:E5",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{B83E4820-5A8C-491A-94B8-69DA4DC66EEC}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>bycolumn!A1:A3</xm:f><xm:sqref>A5</xm:sqref></x14:sparkline><x14:sparkline><xm:f>bycolumn!B1:B3</xm:f><xm:sqref>B5</xm:sqref></x14:sparkline><x14:sparkline><xm:f>bycolumn!C1:C3</xm:f><xm:sqref>C5</xm:sqref></x14:sparkline><x14:sparkline><xm:f>bycolumn!D1:D3</xm:f><xm:sqref>D5</xm:sqref></x14:sparkline><x14:sparkline><xm:f>bycolumn!E1:E3</xm:f><xm:sqref>E5</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "show-Highpoint": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" high=\"1\" xr2:uid=\"{F846D6CF-6D9A-4E64-80E6-F2EB333AB51D}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'show-Highpoint'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-Highpoint'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-Highpoint'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "show-Lowpoint": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" low=\"1\" xr2:uid=\"{1695157B-A184-4820-B4AC-4DCD0FA8C44D}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'show-Lowpoint'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-Lowpoint'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-Lowpoint'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "show-Firstpoint": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" first=\"1\" xr2:uid=\"{805418AD-E1F6-4F76-A5D1-F3D0F7A5B5C0}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'show-Firstpoint'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-Firstpoint'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-Firstpoint'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "show-Lastpoint": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" last=\"1\" xr2:uid=\"{BBCAEA52-B719-4690-A198-29B785A62BE6}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'show-Lastpoint'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-Lastpoint'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-Lastpoint'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "show-Negative": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" negative=\"1\" xr2:uid=\"{AB5F4240-40A4-4F8A-952D-459C4F8FA3A7}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'show-Negative'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-Negative'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-Negative'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "show-Markers": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" markers=\"1\" xr2:uid=\"{B5434FFB-0D09-4692-B952-359C01B0CF72}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'show-Markers'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-Markers'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-Markers'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "show-all": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" markers=\"1\" high=\"1\" low=\"1\" first=\"1\" last=\"1\" negative=\"1\" xr2:uid=\"{BFC7BBFC-5D8A-4922-B87E-A5C3813319B0}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'show-all'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-all'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'show-all'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "everything": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 2.25,
+     "blanks": 3,
+     "hidden": true,
+     "series": {
+      "rgb": "#0B3040",
+      "theme": 5,
+      "tint": -0.499985
+     },
+     "Highpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": true,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": true,
+      "rtl": true,
+      "minType": 3,
+      "maxType": 1,
+      "min": -1.5,
+      "max": 0.0
+     },
+     "dateRange": "A7:E7"
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup manualMin=\"-1.5\" lineWeight=\"2.25\" dateAxis=\"1\" displayEmptyCellsAs=\"span\" markers=\"1\" high=\"1\" low=\"1\" first=\"1\" last=\"1\" negative=\"1\" displayXAxis=\"1\" displayHidden=\"1\" minAxisType=\"custom\" maxAxisType=\"group\" rightToLeft=\"1\" xr2:uid=\"{E67AF395-03C2-43B1-A288-4FA8AC02D87B}\"><x14:colorSeries theme=\"4\" tint=\"-0.499984740745262\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><xm:f>everything!A7:E7</xm:f><x14:sparklines><x14:sparkline><xm:f>everything!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>everything!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>everything!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "column-negative": {
+   "groups": [
+    {
+     "type": 2,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup type=\"column\" displayEmptyCellsAs=\"gap\" negative=\"1\" xr2:uid=\"{F06BF4F3-D3D5-4F27-9950-00A8197811AA}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'column-negative'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'column-negative'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'column-negative'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "series-rgb": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#FFC000",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{5E94A8D6-F84D-4A23-B81A-37071FC13085}\"><x14:colorSeries rgb=\"FFFFC000\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'series-rgb'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'series-rgb'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'series-rgb'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "series-theme": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#E97132",
+      "theme": 6,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{ABA263FD-1E3B-4BA6-AB16-748408E00B8B}\"><x14:colorSeries theme=\"5\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'series-theme'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'series-theme'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'series-theme'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "series-theme-tint": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#D86DCD",
+      "theme": 9,
+      "tint": 0.399945
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{45FBF1F0-3190-4DEB-BBEF-063571C4E7FE}\"><x14:colorSeries theme=\"8\" tint=\"0.39994506668294322\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'series-theme-tint'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'series-theme-tint'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'series-theme-tint'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "high-rgb": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#00FF00",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" high=\"1\" xr2:uid=\"{EA4C3D81-1068-4E65-829A-CC8EB6F6EBA3}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FF00FF00\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'high-rgb'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'high-rgb'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'high-rgb'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "markers-theme": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": true,
+      "color": {
+       "rgb": "#104861",
+       "theme": 5,
+       "tint": -0.249977
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" markers=\"1\" xr2:uid=\"{49B8C417-ECA7-4CE2-96F5-DA8BF2FA6B68}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers theme=\"4\" tint=\"-0.249977111117893\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'markers-theme'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'markers-theme'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'markers-theme'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "weight-0.25": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.25,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup lineWeight=\"0.25\" displayEmptyCellsAs=\"gap\" xr2:uid=\"{9DF54B82-C6B0-48BD-BB07-95B82E8A7D8E}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'weight-0.25'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-0.25'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-0.25'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "weight-0.5": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.5,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup lineWeight=\"0.5\" displayEmptyCellsAs=\"gap\" xr2:uid=\"{EBFB87D8-E510-4A16-90C2-8962BA3748E1}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'weight-0.5'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-0.5'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-0.5'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "weight-1": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 1.0,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup lineWeight=\"1\" displayEmptyCellsAs=\"gap\" xr2:uid=\"{370D5465-A494-4AAB-B1D7-01CC481279B8}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'weight-1'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-1'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-1'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "weight-1.5": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 1.5,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup lineWeight=\"1.5\" displayEmptyCellsAs=\"gap\" xr2:uid=\"{C51DE799-F6D3-44D2-A7FF-88A1D038E92E}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'weight-1.5'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-1.5'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-1.5'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "weight-2.25": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 2.25,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup lineWeight=\"2.25\" displayEmptyCellsAs=\"gap\" xr2:uid=\"{50427A9A-51E4-40B5-8DDE-C5E72B417BE1}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'weight-2.25'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-2.25'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-2.25'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "weight-3": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 3.0,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup lineWeight=\"3\" displayEmptyCellsAs=\"gap\" xr2:uid=\"{C0B3E20D-C5F4-40BC-9313-7FC5A987AFFD}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'weight-3'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-3'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-3'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "weight-4.5": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 4.5,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup lineWeight=\"4.5\" displayEmptyCellsAs=\"gap\" xr2:uid=\"{EAED5127-C62F-44C2-A13F-AFA9037AEDE8}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'weight-4.5'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-4.5'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-4.5'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "weight-6": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 6.0,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup lineWeight=\"6\" displayEmptyCellsAs=\"gap\" xr2:uid=\"{1373CE32-D019-4847-8779-053CD4012DEC}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'weight-6'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-6'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'weight-6'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "blanks-zero": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 2,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup xr2:uid=\"{0EC5D818-8BA2-4946-B62F-8F92B02C9775}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'blanks-zero'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'blanks-zero'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'blanks-zero'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "blanks-span": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 3,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"span\" xr2:uid=\"{EE5AB3BE-0FF8-4D06-AE48-45ABC9F0DD29}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'blanks-span'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'blanks-span'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'blanks-span'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "hidden": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": true,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" displayHidden=\"1\" xr2:uid=\"{477E61CB-A980-4E98-B21A-4E4C82D7B499}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>hidden!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>hidden!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>hidden!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "axis": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": true,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" displayXAxis=\"1\" xr2:uid=\"{295E7EA5-B310-4919-A21A-49FB166AF09C}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>axis!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>axis!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>axis!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "axis-color": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": true,
+      "color": {
+       "rgb": "#0000FF",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" displayXAxis=\"1\" xr2:uid=\"{E2DD2E8F-47E3-4428-AF5A-504BD40512CF}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF0000FF\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'axis-color'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'axis-color'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'axis-color'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "rtl": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": true,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" rightToLeft=\"1\" xr2:uid=\"{B8C978CF-9890-404E-A1E4-1DB027A0822B}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>rtl!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>rtl!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>rtl!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "min-group": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 1,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" minAxisType=\"group\" xr2:uid=\"{F433DE36-3CD7-4E33-8960-2E62D6CFD8CC}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'min-group'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'min-group'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'min-group'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "max-group": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 1,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" maxAxisType=\"group\" xr2:uid=\"{60DCDE3B-483A-4649-967B-1A281C27C634}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'max-group'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'max-group'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'max-group'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "min-custom": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 3,
+      "maxType": 2,
+      "min": -5.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup manualMin=\"-5\" displayEmptyCellsAs=\"gap\" minAxisType=\"custom\" xr2:uid=\"{CDA92065-0BB0-48F6-A777-784D8E4DD2FE}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'min-custom'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'min-custom'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'min-custom'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "max-custom": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 3,
+      "min": 0.0,
+      "max": 10.5
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup manualMax=\"10.5\" displayEmptyCellsAs=\"gap\" maxAxisType=\"custom\" xr2:uid=\"{6146B8B5-C5DD-4272-B7B3-39150A846A72}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'max-custom'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'max-custom'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'max-custom'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "min-max-custom": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 3,
+      "maxType": 3,
+      "min": 0.0,
+      "max": 10.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup manualMax=\"10\" manualMin=\"0\" displayEmptyCellsAs=\"gap\" minAxisType=\"custom\" maxAxisType=\"custom\" xr2:uid=\"{888851A2-5A89-47F7-8F14-95DCE3A29A4C}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'min-max-custom'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'min-max-custom'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'min-max-custom'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "date-axis": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": true,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     },
+     "dateRange": "A7:E7"
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup dateAxis=\"1\" displayEmptyCellsAs=\"gap\" xr2:uid=\"{4AE4F729-B56A-483B-ABA4-3DDC04FE5E89}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><xm:f>'date-axis'!A7:E7</xm:f><x14:sparklines><x14:sparkline><xm:f>'date-axis'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'date-axis'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'date-axis'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "type-change": {
+   "groups": [
+    {
+     "type": 2,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup type=\"column\" displayEmptyCellsAs=\"gap\" xr2:uid=\"{721F37D6-FA55-41B4-A25D-DB54AF4F4D76}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'type-change'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'type-change'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'type-change'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "modify-group": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "G1:G3",
+     "source": "B1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{AA6BBAA9-3A7D-4D7C-AB2A-EDA27F81FB80}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'modify-group'!B1:E1</xm:f><xm:sqref>G1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'modify-group'!B2:E2</xm:f><xm:sqref>G2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'modify-group'!B3:E3</xm:f><xm:sqref>G3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "modify-one": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1,F2,F3",
+     "source": "A1:E1;A2:C2;A3:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{4F771C2B-DB20-487A-A83A-EA27A4452F81}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'modify-one'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'modify-one'!A2:C2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'modify-one'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "two-groups": {
+   "groups": [
+    {
+     "type": 2,
+     "count": 1,
+     "location": "F3",
+     "source": "A3:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#FF0000",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    },
+    {
+     "type": 1,
+     "count": 2,
+     "location": "F1:F2",
+     "source": "A1:E2",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup type=\"column\" displayEmptyCellsAs=\"gap\" high=\"1\" xr2:uid=\"{082F6294-4729-4889-9ED1-1D2AC9BC59D9}\"><x14:colorSeries rgb=\"FFFF0000\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'two-groups'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{B4BBA8C2-90EE-412B-855A-28407E11AFB6}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'two-groups'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'two-groups'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "group": {
+   "groups": [
+    {
+     "type": 2,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#FF0000",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup type=\"column\" displayEmptyCellsAs=\"gap\" high=\"1\" xr2:uid=\"{C8DF5753-8031-4EC3-97B2-375412A853B5}\"><x14:colorSeries rgb=\"FFFF0000\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>group!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>group!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>group!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "group-first": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 3,
+     "location": "F1:F3",
+     "source": "A1:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{A27B2BED-6CE8-4CB2-B01C-588167D528E6}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'group-first'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'group-first'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'group-first'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "ungroup": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 1,
+     "location": "F3",
+     "source": "A3:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    },
+    {
+     "type": 1,
+     "count": 1,
+     "location": "F2",
+     "source": "A2:E2",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    },
+    {
+     "type": 1,
+     "count": 1,
+     "location": "F1",
+     "source": "A1:E1",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" high=\"1\" xr2:uid=\"{0790665C-68A1-4EEA-A254-D7FD79A43840}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>ungroup!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup><x14:sparklineGroup displayEmptyCellsAs=\"gap\" high=\"1\" xr2:uid=\"{932B1E6C-DD1A-464E-8E45-28477C278FF2}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>ungroup!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup><x14:sparklineGroup displayEmptyCellsAs=\"gap\" high=\"1\" xr2:uid=\"{135D5EB3-92FB-4FA6-BC8B-00F24BE62F9E}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>ungroup!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "ungroup-one": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 1,
+     "location": "F2",
+     "source": "A2:E2",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    },
+    {
+     "type": 1,
+     "count": 2,
+     "location": "F1,F3",
+     "source": "A1:E1;A3:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{2A780578-BA01-4F9F-BDBD-4103B4B2CAA5}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'ungroup-one'!A2:E2</xm:f><xm:sqref>F2</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{C55DE830-C7F2-47A3-8AC4-42ACE11F7F6F}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'ungroup-one'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'ungroup-one'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "clear-one": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 2,
+     "location": "F1,F3",
+     "source": "A1:E1;A3:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{12DFFD64-A55E-44F2-996D-F5A846DCD3C2}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'clear-one'!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline><x14:sparkline><xm:f>'clear-one'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "clear-group": {
+   "groups": [
+    {
+     "type": 2,
+     "count": 1,
+     "location": "F3",
+     "source": "A3:E3",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#FF0000",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": true,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup type=\"column\" displayEmptyCellsAs=\"gap\" high=\"1\" xr2:uid=\"{430448DE-5013-40B0-91E2-20207AF3259C}\"><x14:colorSeries rgb=\"FFFF0000\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>'clear-group'!A3:E3</xm:f><xm:sqref>F3</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  },
+  "other-sheet": {
+   "groups": [
+    {
+     "type": 1,
+     "count": 1,
+     "location": "F1",
+     "source": "Daten!A1:E1",
+     "lineWeight": 0.75,
+     "blanks": 1,
+     "hidden": false,
+     "series": {
+      "rgb": "#376092",
+      "theme": 0,
+      "tint": 0.0
+     },
+     "Highpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lowpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Firstpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Lastpoint": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Negative": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "Markers": {
+      "visible": false,
+      "color": {
+       "rgb": "#D00000",
+       "theme": 0,
+       "tint": 0.0
+      }
+     },
+     "axis": {
+      "visible": false,
+      "color": {
+       "rgb": "#000000",
+       "theme": 0,
+       "tint": 0.0
+      },
+      "date": false,
+      "rtl": false,
+      "minType": 2,
+      "maxType": 2,
+      "min": 0.0,
+      "max": 0.0
+     }
+    }
+   ],
+   "xml": "<x14:sparklineGroups xmlns:xm=\"http://schemas.microsoft.com/office/excel/2006/main\"><x14:sparklineGroup displayEmptyCellsAs=\"gap\" xr2:uid=\"{F892D8F0-B3C4-4B9F-B571-A92582F6D86E}\"><x14:colorSeries rgb=\"FF376092\"/><x14:colorNegative rgb=\"FFD00000\"/><x14:colorAxis rgb=\"FF000000\"/><x14:colorMarkers rgb=\"FFD00000\"/><x14:colorFirst rgb=\"FFD00000\"/><x14:colorLast rgb=\"FFD00000\"/><x14:colorHigh rgb=\"FFD00000\"/><x14:colorLow rgb=\"FFD00000\"/><x14:sparklines><x14:sparkline><xm:f>Daten!A1:E1</xm:f><xm:sqref>F1</xm:sqref></x14:sparkline></x14:sparklines></x14:sparklineGroup></x14:sparklineGroups>"
+  }
+ },
+ "theme": {
+  "dk1": "000000",
+  "lt1": "FFFFFF",
+  "dk2": "0E2841",
+  "lt2": "E8E8E8",
+  "accent1": "156082",
+  "accent2": "E97132",
+  "accent3": "196B24",
+  "accent4": "0F9ED5",
+  "accent5": "A02B93",
+  "accent6": "4EA72E",
+  "hlink": "467886",
+  "folHlink": "96607D"
+ },
+ "styles": [
+  {
+   "name": "Dunkelblaugrün, Sparklineformat Akzent 1, 50% dunkler",
+   "cell": "H1",
+   "colors": {
+    "colorSeries": "theme=\"4\" tint=\"-0.499984740745262\"",
+    "colorNegative": "theme=\"5\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"4\" tint=\"-0.499984740745262\"",
+    "colorFirst": "theme=\"4\" tint=\"0.39997558519241921\"",
+    "colorLast": "theme=\"4\" tint=\"0.39997558519241921\"",
+    "colorHigh": "theme=\"4\"",
+    "colorLow": "theme=\"4\""
+   }
+  },
+  {
+   "name": "Braun, Sparklineformat Akzent 2, 50% dunkler",
+   "cell": "H2",
+   "colors": {
+    "colorSeries": "theme=\"5\" tint=\"-0.499984740745262\"",
+    "colorNegative": "theme=\"6\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"5\" tint=\"-0.499984740745262\"",
+    "colorFirst": "theme=\"5\" tint=\"0.39997558519241921\"",
+    "colorLast": "theme=\"5\" tint=\"0.39997558519241921\"",
+    "colorHigh": "theme=\"5\"",
+    "colorLow": "theme=\"5\""
+   }
+  },
+  {
+   "name": "Dunkelgrün, Sparklineformat Akzent 3, 50% dunkler",
+   "cell": "H3",
+   "colors": {
+    "colorSeries": "theme=\"6\" tint=\"-0.499984740745262\"",
+    "colorNegative": "theme=\"7\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"6\" tint=\"-0.499984740745262\"",
+    "colorFirst": "theme=\"6\" tint=\"0.39997558519241921\"",
+    "colorLast": "theme=\"6\" tint=\"0.39997558519241921\"",
+    "colorHigh": "theme=\"6\"",
+    "colorLow": "theme=\"6\""
+   }
+  },
+  {
+   "name": "Dunkelblaugrün, Sparklineformat Akzent 4, 50% dunkler",
+   "cell": "H4",
+   "colors": {
+    "colorSeries": "theme=\"7\" tint=\"-0.499984740745262\"",
+    "colorNegative": "theme=\"8\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"7\" tint=\"-0.499984740745262\"",
+    "colorFirst": "theme=\"7\" tint=\"0.39997558519241921\"",
+    "colorLast": "theme=\"7\" tint=\"0.39997558519241921\"",
+    "colorHigh": "theme=\"7\"",
+    "colorLow": "theme=\"7\""
+   }
+  },
+  {
+   "name": "Pflaume, Sparklineformat Akzent 5, 50% dunkler",
+   "cell": "H5",
+   "colors": {
+    "colorSeries": "theme=\"8\" tint=\"-0.499984740745262\"",
+    "colorNegative": "theme=\"9\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"8\" tint=\"-0.499984740745262\"",
+    "colorFirst": "theme=\"8\" tint=\"0.39997558519241921\"",
+    "colorLast": "theme=\"8\" tint=\"0.39997558519241921\"",
+    "colorHigh": "theme=\"8\"",
+    "colorLow": "theme=\"8\""
+   }
+  },
+  {
+   "name": "Dunkelgrün, Sparklineformat Akzent 6, 50% dunkler",
+   "cell": "H6",
+   "colors": {
+    "colorSeries": "theme=\"9\" tint=\"-0.499984740745262\"",
+    "colorNegative": "theme=\"4\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"9\" tint=\"-0.499984740745262\"",
+    "colorFirst": "theme=\"9\" tint=\"0.39997558519241921\"",
+    "colorLast": "theme=\"9\" tint=\"0.39997558519241921\"",
+    "colorHigh": "theme=\"9\"",
+    "colorLow": "theme=\"9\""
+   }
+  },
+  {
+   "name": "Dunkelblaugrün, Sparklineformat Akzent 1, 25% dunkler",
+   "cell": "H7",
+   "colors": {
+    "colorSeries": "theme=\"4\" tint=\"-0.249977111117893\"",
+    "colorNegative": "theme=\"5\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"5\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"5\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"5\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"5\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"5\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Braun, Sparklineformat Akzent 2, 25% dunkler",
+   "cell": "H8",
+   "colors": {
+    "colorSeries": "theme=\"5\" tint=\"-0.249977111117893\"",
+    "colorNegative": "theme=\"6\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"6\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"6\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"6\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"6\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"6\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Dunkelgrün, Sparklineformat Akzent 3, 25% dunkler",
+   "cell": "H9",
+   "colors": {
+    "colorSeries": "theme=\"6\" tint=\"-0.249977111117893\"",
+    "colorNegative": "theme=\"7\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"7\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"7\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"7\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"7\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"7\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Türkis, Sparklineformat Akzent 4, 25% dunkler",
+   "cell": "H10",
+   "colors": {
+    "colorSeries": "theme=\"7\" tint=\"-0.249977111117893\"",
+    "colorNegative": "theme=\"8\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"8\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"8\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"8\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"8\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"8\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Pflaume, Sparklineformat Akzent 5, 25% dunkler",
+   "cell": "H11",
+   "colors": {
+    "colorSeries": "theme=\"8\" tint=\"-0.249977111117893\"",
+    "colorNegative": "theme=\"9\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"9\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"9\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"9\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"9\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"9\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Dunkelgrün, Sparklineformat Akzent 6, 25% dunkler",
+   "cell": "H12",
+   "colors": {
+    "colorSeries": "theme=\"9\" tint=\"-0.249977111117893\"",
+    "colorNegative": "theme=\"4\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"4\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"4\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"4\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"4\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"4\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Dunkelblaugrün, Sparklineformat Akzent 1, (weder dunkel noch hell)",
+   "cell": "H13",
+   "colors": {
+    "colorSeries": "theme=\"4\"",
+    "colorNegative": "theme=\"5\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"4\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"4\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"4\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"4\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"4\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Orange, Sparklineformat Akzent 2, (weder dunkel noch hell)",
+   "cell": "H14",
+   "colors": {
+    "colorSeries": "theme=\"5\"",
+    "colorNegative": "theme=\"6\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"5\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"5\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"5\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"5\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"5\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Dunkelgrün, Sparklineformat Akzent 3, (weder dunkel noch hell)",
+   "cell": "H15",
+   "colors": {
+    "colorSeries": "theme=\"6\"",
+    "colorNegative": "theme=\"7\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"6\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"6\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"6\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"6\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"6\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Türkis, Sparklineformat Akzent 4, (weder dunkel noch hell)",
+   "cell": "H16",
+   "colors": {
+    "colorSeries": "theme=\"7\"",
+    "colorNegative": "theme=\"8\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"7\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"7\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"7\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"7\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"7\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Pflaume, Sparklineformat Akzent 5, (weder dunkel noch hell)",
+   "cell": "H17",
+   "colors": {
+    "colorSeries": "theme=\"8\"",
+    "colorNegative": "theme=\"9\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"8\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"8\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"8\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"8\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"8\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Grün, Sparklineformat Akzent 6, (weder dunkel noch hell)",
+   "cell": "H18",
+   "colors": {
+    "colorSeries": "theme=\"9\"",
+    "colorNegative": "theme=\"4\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"9\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"9\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"9\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"9\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"9\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Türkis, Sparklineformat Akzent 1, 40% heller",
+   "cell": "H19",
+   "colors": {
+    "colorSeries": "theme=\"4\" tint=\"0.39997558519241921\"",
+    "colorNegative": "theme=\"0\" tint=\"-0.499984740745262\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"4\" tint=\"0.79998168889431442\"",
+    "colorFirst": "theme=\"4\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"4\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"4\" tint=\"-0.499984740745262\"",
+    "colorLow": "theme=\"4\" tint=\"-0.499984740745262\""
+   }
+  },
+  {
+   "name": "Hellorange, Sparklineformat Akzent 2, 40% heller",
+   "cell": "H20",
+   "colors": {
+    "colorSeries": "theme=\"5\" tint=\"0.39997558519241921\"",
+    "colorNegative": "theme=\"0\" tint=\"-0.499984740745262\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"5\" tint=\"0.79998168889431442\"",
+    "colorFirst": "theme=\"5\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"5\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"5\" tint=\"-0.499984740745262\"",
+    "colorLow": "theme=\"5\" tint=\"-0.499984740745262\""
+   }
+  },
+  {
+   "name": "Grün, Sparklineformat Akzent 3, 40% heller",
+   "cell": "H21",
+   "colors": {
+    "colorSeries": "theme=\"6\" tint=\"0.39997558519241921\"",
+    "colorNegative": "theme=\"0\" tint=\"-0.499984740745262\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"6\" tint=\"0.79998168889431442\"",
+    "colorFirst": "theme=\"6\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"6\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"6\" tint=\"-0.499984740745262\"",
+    "colorLow": "theme=\"6\" tint=\"-0.499984740745262\""
+   }
+  },
+  {
+   "name": "Türkis, Sparklineformat Akzent 4, 40% heller",
+   "cell": "H22",
+   "colors": {
+    "colorSeries": "theme=\"7\" tint=\"0.39997558519241921\"",
+    "colorNegative": "theme=\"0\" tint=\"-0.499984740745262\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"7\" tint=\"0.79998168889431442\"",
+    "colorFirst": "theme=\"7\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"7\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"7\" tint=\"-0.499984740745262\"",
+    "colorLow": "theme=\"7\" tint=\"-0.499984740745262\""
+   }
+  },
+  {
+   "name": "Rosa, Sparklineformat Akzent 5, 40% heller",
+   "cell": "H23",
+   "colors": {
+    "colorSeries": "theme=\"8\" tint=\"0.39997558519241921\"",
+    "colorNegative": "theme=\"0\" tint=\"-0.499984740745262\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"8\" tint=\"0.79998168889431442\"",
+    "colorFirst": "theme=\"8\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"8\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"8\" tint=\"-0.499984740745262\"",
+    "colorLow": "theme=\"8\" tint=\"-0.499984740745262\""
+   }
+  },
+  {
+   "name": "Grün, Sparklineformat Akzent 6, 40% heller",
+   "cell": "H24",
+   "colors": {
+    "colorSeries": "theme=\"9\" tint=\"0.39997558519241921\"",
+    "colorNegative": "theme=\"0\" tint=\"-0.499984740745262\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"9\" tint=\"0.79998168889431442\"",
+    "colorFirst": "theme=\"9\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"9\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"9\" tint=\"-0.499984740745262\"",
+    "colorLow": "theme=\"9\" tint=\"-0.499984740745262\""
+   }
+  },
+  {
+   "name": "Blau, Sparklineformat dunkel #1",
+   "cell": "H25",
+   "colors": {
+    "colorSeries": "theme=\"3\" tint=\"0.499984740745262\"",
+    "colorNegative": "theme=\"1\" tint=\"0.249977111117893\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"1\" tint=\"0.249977111117893\"",
+    "colorFirst": "theme=\"1\" tint=\"0.249977111117893\"",
+    "colorLast": "theme=\"1\" tint=\"0.249977111117893\"",
+    "colorHigh": "theme=\"1\" tint=\"0.249977111117893\"",
+    "colorLow": "theme=\"1\" tint=\"0.249977111117893\""
+   }
+  },
+  {
+   "name": "Blau, Sparklineformat dunkel #2",
+   "cell": "H26",
+   "colors": {
+    "colorSeries": "theme=\"3\" tint=\"0.34998626667073579\"",
+    "colorNegative": "theme=\"0\" tint=\"-0.249977111117893\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"0\" tint=\"-0.249977111117893\"",
+    "colorFirst": "theme=\"0\" tint=\"-0.249977111117893\"",
+    "colorLast": "theme=\"0\" tint=\"-0.249977111117893\"",
+    "colorHigh": "theme=\"0\" tint=\"-0.249977111117893\"",
+    "colorLow": "theme=\"0\" tint=\"-0.249977111117893\""
+   }
+  },
+  {
+   "name": "Dunkelgrau, Sparklineformat dunkel #3",
+   "cell": "H27",
+   "colors": {
+    "colorSeries": "rgb=\"FF323232\"",
+    "colorNegative": "rgb=\"FFD00000\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "rgb=\"FFD00000\"",
+    "colorFirst": "rgb=\"FFD00000\"",
+    "colorLast": "rgb=\"FFD00000\"",
+    "colorHigh": "rgb=\"FFD00000\"",
+    "colorLow": "rgb=\"FFD00000\""
+   }
+  },
+  {
+   "name": "Schwarz, Sparklineformat dunkel #4",
+   "cell": "H28",
+   "colors": {
+    "colorSeries": "rgb=\"FF000000\"",
+    "colorNegative": "rgb=\"FF0070C0\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "rgb=\"FF0070C0\"",
+    "colorFirst": "rgb=\"FF0070C0\"",
+    "colorLast": "rgb=\"FF0070C0\"",
+    "colorHigh": "rgb=\"FF0070C0\"",
+    "colorLow": "rgb=\"FF0070C0\""
+   }
+  },
+  {
+   "name": "Blau, Sparklineformat dunkel #5",
+   "cell": "H29",
+   "colors": {
+    "colorSeries": "rgb=\"FF376092\"",
+    "colorNegative": "rgb=\"FFD00000\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "rgb=\"FFD00000\"",
+    "colorFirst": "rgb=\"FFD00000\"",
+    "colorLast": "rgb=\"FFD00000\"",
+    "colorHigh": "rgb=\"FFD00000\"",
+    "colorLow": "rgb=\"FFD00000\""
+   }
+  },
+  {
+   "name": "Dunkelblau, Sparklineformat dunkel #6",
+   "cell": "H30",
+   "colors": {
+    "colorSeries": "rgb=\"FF0070C0\"",
+    "colorNegative": "rgb=\"FF000000\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "rgb=\"FF000000\"",
+    "colorFirst": "rgb=\"FF000000\"",
+    "colorLast": "rgb=\"FF000000\"",
+    "colorHigh": "rgb=\"FF000000\"",
+    "colorLow": "rgb=\"FF000000\""
+   }
+  },
+  {
+   "name": "Dunkelgrau, Sparklineformat farbig #1",
+   "cell": "H31",
+   "colors": {
+    "colorSeries": "rgb=\"FF5F5F5F\"",
+    "colorNegative": "rgb=\"FFFFB620\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "rgb=\"FFD70077\"",
+    "colorFirst": "rgb=\"FF5687C2\"",
+    "colorLast": "rgb=\"FF359CEB\"",
+    "colorHigh": "rgb=\"FF56BE79\"",
+    "colorLow": "rgb=\"FFFF5055\""
+   }
+  },
+  {
+   "name": "Blau, Sparklineformat farbig #2",
+   "cell": "H32",
+   "colors": {
+    "colorSeries": "rgb=\"FF5687C2\"",
+    "colorNegative": "rgb=\"FFFFB620\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "rgb=\"FFD70077\"",
+    "colorFirst": "rgb=\"FF777777\"",
+    "colorLast": "rgb=\"FF359CEB\"",
+    "colorHigh": "rgb=\"FF56BE79\"",
+    "colorLow": "rgb=\"FFFF5055\""
+   }
+  },
+  {
+   "name": "Hellgrün, Sparklineformat farbig #3",
+   "cell": "H33",
+   "colors": {
+    "colorSeries": "rgb=\"FFC6EFCE\"",
+    "colorNegative": "rgb=\"FFFFC7CE\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "rgb=\"FF8CADD6\"",
+    "colorFirst": "rgb=\"FFFFDC47\"",
+    "colorLast": "rgb=\"FFFFEB9C\"",
+    "colorHigh": "rgb=\"FF60D276\"",
+    "colorLow": "rgb=\"FFFF5367\""
+   }
+  },
+  {
+   "name": "Dunkelgrün, Sparklineformat farbig #4",
+   "cell": "H34",
+   "colors": {
+    "colorSeries": "rgb=\"FF00B050\"",
+    "colorNegative": "rgb=\"FFFF0000\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "rgb=\"FF0070C0\"",
+    "colorFirst": "rgb=\"FFFFC000\"",
+    "colorLast": "rgb=\"FFFFC000\"",
+    "colorHigh": "rgb=\"FF00B050\"",
+    "colorLow": "rgb=\"FFFF0000\""
+   }
+  },
+  {
+   "name": "Dunkelblau, Sparklineformat farbig #5",
+   "cell": "H35",
+   "colors": {
+    "colorSeries": "theme=\"3\"",
+    "colorNegative": "theme=\"9\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"8\"",
+    "colorFirst": "theme=\"4\"",
+    "colorLast": "theme=\"5\"",
+    "colorHigh": "theme=\"6\"",
+    "colorLow": "theme=\"7\""
+   }
+  },
+  {
+   "name": "Dunkelblau, Sparklineformat farbig #6",
+   "cell": "H36",
+   "colors": {
+    "colorSeries": "theme=\"3\"",
+    "colorNegative": "theme=\"4\"",
+    "colorAxis": "rgb=\"FF000000\"",
+    "colorMarkers": "theme=\"9\"",
+    "colorFirst": "theme=\"5\"",
+    "colorLast": "theme=\"6\"",
+    "colorHigh": "theme=\"7\"",
+    "colorLow": "theme=\"8\""
+   }
+  }
+ ]
+}

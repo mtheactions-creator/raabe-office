@@ -100,5 +100,67 @@ def main() -> None:
     (HERE / "results" / f"{datetime.date.today().isoformat()}-write-charts.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
 
 
+TABLE = {"categories": ["Mo", "Di", "Mi"], "series": [{"name": "Nudeln", "values": [30, 42, 25]}, {"name": "Pizza", "values": [51, 38, 47]}]}
+
+
+def part2() -> None:
+    """Einfügen > Diagramm (Step 7b part 2): RaabeWrite inserts a column chart and a pie whose data are then changed
+    (Daten bearbeiten), saves; Word must find both charts with their types and values, and the embedded workbooks."""
+    import zipfile
+    import win32com.client
+    out = TMP / "write-charts-new.docx"
+    if out.exists():
+        out.unlink()
+    side = RaabeSide()
+    try:
+        side.open(ROOT / "packages/ooxml/test/fixtures/word-formatting.docx")
+        t = side.t
+        t.js("(() => { const e = __app.editor(); const n = e.doc.paras.length - 1; e.setSel({ p: n, o: e.doc.paras[n].text.length }, { p: n, o: e.doc.paras[n].text.length }); })()")
+        t.js('__app.insertChart("column")')
+        # The new chart is selected (Word too): typing or inserting would replace it, so the caret goes behind it.
+        t.js("(() => { const e = __app.editor(); const [, to] = e.range(); e.setSel(to, to); })()")
+        t.js('__app.insertChart("pie")')
+        t.js(f"__app.setChartData({json.dumps(TABLE)})")
+        print("objects before saving:", t.js("__app.editor().doc.paras.flatMap(p => (p.objects || []).filter(o => o.chart).map(o => !!o.chart.workbook))"))
+        t.js(f"(async () => await __app.saveTo({str(out)!r}))()")
+        deadline = time.perf_counter() + 20
+        while time.perf_counter() < deadline and not out.exists():
+            time.sleep(0.2)
+        time.sleep(1)
+    finally:
+        side.t.close()
+    with zipfile.ZipFile(out) as z:
+        names = z.namelist()
+    embedded = [n for n in names if n.startswith("word/embeddings/") and n.endswith(".xlsx")]
+    app = win32com.client.DispatchEx("Word.Application")
+    app.Visible = False
+    got = []
+    try:
+        d = app.Documents.Open(str(out), ReadOnly=True)
+        for s in d.InlineShapes:
+            if s.HasChart:
+                ch = s.Chart
+                got.append({"type": int(ch.ChartType), "series": [{"name": ch.SeriesCollection(i).Name, "values": list(ch.SeriesCollection(i).Values)}
+                                                                  for i in range(1, ch.SeriesCollection().Count + 1)]})
+        d.Close(0)
+    finally:
+        app.Quit(0)
+    checks = [("Word finds 2 new charts", len(got) == 2), ("first is Gruppierte Säulen (51)", bool(got) and got[0]["type"] == 51),
+              ("second is Kreis (5)", len(got) > 1 and got[1]["type"] == 5),
+              ("pie has the edited values", len(got) > 1 and [round(v) for v in got[1]["series"][0]["values"]] == [30, 42, 25]),
+              ("column has Word's sample", bool(got) and [round(v, 1) for v in got[0]["series"][0]["values"]] == [4.3, 2.5, 3.5, 4.5]),
+              ("two embedded workbooks", len(embedded) == 2)]
+    for n, ok in checks:
+        print("part2", n, ok)
+    path = HERE / "results" / f"{datetime.date.today().isoformat()}-write-charts.json"
+    rep = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    rep["insert"] = {"checks": [{"check": n, "ok": ok} for n, ok in checks], "word": got}
+    path.write_text(json.dumps(rep, ensure_ascii=False, indent=1), encoding="utf-8", newline=chr(10))
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+    if "--insert" in sys.argv:
+        part2()
+    else:
+        main()

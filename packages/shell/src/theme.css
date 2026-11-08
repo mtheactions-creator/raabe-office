@@ -1140,3 +1140,15 @@ body.taskpane-open .calc-main { margin-right: 300px; }
 .tp-select, .tp-text { height: 24px; border: 1px solid #c8c6c4; border-radius: 2px; font: 12px var(--font); min-width: 110px; }
 .tp-btn, .tp-reset { height: 24px; padding: 0 10px; border: 1px solid #c8c6c4; background: #fff; border-radius: 2px; font: 12px var(--font); cursor: pointer; }
 .tp-btn:hover, .tp-reset:hover:not(:disabled) { background: var(--hover); }
+
+/* Diagramm einfügen and Daten bearbeiten (RaabeWrite, D-088). */
+.chart-types { display: flex; flex-direction: column; gap: 6px; max-height: 560px; overflow-y: auto; }
+.chart-type-tiles { display: flex; gap: 6px; flex-wrap: wrap; }
+.chart-type { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 4px; border: 1px solid #d1d1d1; background: #fff; }
+.chart-type.on { border-color: #ed1c24; }
+.chart-type:hover { background: #f3f3f3; }
+.chart-data-table { border-collapse: collapse; }
+.chart-data-table th, .chart-data-table td { border: 1px solid #d4d4d4; padding: 1px; }
+.chart-data-table input { border: 0; font: inherit; }
+.chart-data-buttons { display: flex; gap: 6px; margin-top: 8px; }
+

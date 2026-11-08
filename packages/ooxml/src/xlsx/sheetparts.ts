@@ -6,7 +6,7 @@ import { MAX_COLS, MAX_ROWS, fromXlsxFormula, parseRange, rangeName, toXlsxFormu
 import { resolveColor, type ColorContext } from "./colors";
 import { canon, readDxf, type StylesWriter } from "./styles";
 import { attrs, child, children, decodeX, encodeX, esc, escText, local, outer, root, setAttrs, text, unesc, type El } from "./xml";
-import type { SparklineGroup, Validation } from "@raabe/sheet-engine";
+import type { SparkColor, SparkColorKey, SparklineGroup, Validation } from "@raabe/sheet-engine";
 
 /** Excel's built-in names for a sheet's print area and AutoFilter range. */
 export const PRINT_AREA = "_xlnm.Print_Area";
@@ -561,45 +561,123 @@ export function ownRange(ref: string, sheet: string): Rect | null {
 }
 
 // ----- Sparklines ---------------------------------------------------------------------------
-// x14:sparklineGroups in the sheet's extLst (Excel's place for them).
+// x14:sparklineGroups in the sheet's extLst (Excel's place for them). Every attribute and colour of
+// x14:sparklineGroup is read into the model (D-085); a group the user did not change is written back as
+// Excel wrote it, a new or changed one as Excel writes it (attribute order of the schema, recorded in
+// probe_excel_sparklines.py).
 
 export const SL_EXT = "{05C60535-1F16-4fd2-B633-F4F36F0B64E0}";
 
-const rgbOf = (tag: string | undefined) => {
-  const m = tag ? /rgb="(?:FF)?([0-9A-Fa-f]{6})"/.exec(tag) : null;
-  return m ? `#${m[1].toUpperCase()}` : undefined;
-};
+/** The colour elements of a group in the file's order, by model key. */
+const SPARK_COLORS: [SparkColorKey, string][] = [["series", "colorSeries"], ["negative", "colorNegative"], ["axis", "colorAxis"], ["markers", "colorMarkers"],
+  ["first", "colorFirst"], ["last", "colorLast"], ["high", "colorHigh"], ["low", "colorLow"]];
 
-/** The sparkline groups of a sheet's extLst (none: empty). */
-export function readSparklines(ext: string | undefined): SparklineGroup[] {
+/** The colours Excel gives a new group (Einfügen > Sparklines, recorded). */
+export function defaultSparkColors(): Record<SparkColorKey, SparkColor> {
+  return { series: { rgb: "#376092" }, negative: { rgb: "#D00000" }, axis: { rgb: "#000000" }, markers: { rgb: "#D00000" },
+    first: { rgb: "#D00000" }, last: { rgb: "#D00000" }, high: { rgb: "#D00000" }, low: { rgb: "#D00000" } };
+}
+
+const attrsOf = (s: string): Record<string, string> => Object.fromEntries([...s.matchAll(/([\w:]+)="([^"]*)"/g)].map((m) => [m[1], m[2]]));
+const unX = (s: string) => s.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
+const axisType = (v: string | undefined) => (v === "group" || v === "custom" ? v : undefined);
+
+/** One sparkline colour element's attributes in the model (rgb resolved, a design colour kept as reference). */
+function sparkColor(a: Record<string, string> | undefined, ctx: ColorContext, fallback: string): SparkColor {
+  if (!a) return { rgb: fallback };
+  const rgb = resolveColor(a, ctx) ?? fallback;
+  return a.theme !== undefined && !a.rgb ? { rgb, theme: { t: Number(a.theme), ...(a.tint && Number(a.tint) ? { tint: Number(a.tint) } : {}) } } : { rgb };
+}
+
+/**
+ * The sparkline groups of a sheet's extLst (none: empty). `keep` receives each group's JSON with the XML it
+ * was read from, so that unchanged groups are written back verbatim.
+ */
+export function readSparklines(ext: string | undefined, ctx: ColorContext = { theme: {}, indexed: [] }, keep?: [string, string][]): SparklineGroup[] {
   const out: SparklineGroup[] = [];
   if (!ext) return out;
   for (const g of ext.matchAll(/<x14:sparklineGroup\b([^>]*)>([\s\S]*?)<\/x14:sparklineGroup>/g)) {
-    const t = /\btype="(\w+)"/.exec(g[1])?.[1];
+    const a = attrsOf(g[1]);
+    const body = g[2];
     const items: SparklineGroup["items"] = [];
-    for (const sp of g[2].matchAll(/<x14:sparkline>([\s\S]*?)<\/x14:sparkline>/g)) {
+    const list = /<x14:sparklines>([\s\S]*?)<\/x14:sparklines>/.exec(body)?.[1] ?? "";
+    for (const sp of list.matchAll(/<x14:sparkline>([\s\S]*?)<\/x14:sparkline>/g)) {
       const f = /<xm:f>([\s\S]*?)<\/xm:f>/.exec(sp[1])?.[1];
       const at = parseRange(/<xm:sqref>([\s\S]*?)<\/xm:sqref>/.exec(sp[1])?.[1] ?? "");
-      if (f && at) items.push({ f: f.replace(/&amp;/g, "&").replace(/&apos;/g, "'"), row: at.r0, col: at.c0 });
+      if (f && at) items.push({ f: unX(f), row: at.r0, col: at.c0 });
     }
-    out.push({ type: t === "column" ? "column" : t === "stacked" ? "stacked" : "line", color: rgbOf(/<x14:colorSeries\b[^>]*>/.exec(g[2])?.[0]) ?? "#376092",
-      negative: rgbOf(/<x14:colorNegative\b[^>]*>/.exec(g[2])?.[0]), items });
+    const colors = defaultSparkColors();
+    for (const [key, tag] of SPARK_COLORS) {
+      const el = new RegExp(`<x14:${tag}\\b([^>]*?)/?>`).exec(body);
+      colors[key] = sparkColor(el ? attrsOf(el[1]) : undefined, ctx, colors[key].rgb);
+    }
+    const on = (k: string) => a[k] === "1" || a[k] === "true";
+    const num = (k: string) => (a[k] !== undefined && a[k] !== "" && Number.isFinite(Number(a[k])) ? Number(a[k]) : undefined);
+    const empty = a.displayEmptyCellsAs;
+    const grp: SparklineGroup = {
+      type: a.type === "column" ? "column" : a.type === "stacked" ? "stacked" : "line", colors,
+      displayEmptyCellsAs: empty === "gap" || empty === "span" ? empty : "zero", items,
+    };
+    for (const k of ["markers", "high", "low", "first", "last", "negative", "displayXAxis", "displayHidden", "rightToLeft"] as const) if (on(k)) grp[k] = true;
+    const lw = num("lineWeight");
+    if (lw !== undefined && lw !== 0.75) grp.lineWeight = lw;
+    const minT = axisType(a.minAxisType), maxT = axisType(a.maxAxisType);
+    if (minT) grp.minAxisType = minT;
+    if (maxT) grp.maxAxisType = maxT;
+    const lo = num("manualMin"), hi = num("manualMax");
+    if (lo !== undefined) grp.manualMin = lo;
+    if (hi !== undefined) grp.manualMax = hi;
+    if (on("dateAxis")) {
+      const cut = body.indexOf("<x14:sparklines>");
+      const df = /<xm:f>([\s\S]*?)<\/xm:f>/.exec(cut < 0 ? body : body.slice(0, cut))?.[1];
+      if (df) grp.dateRange = unX(df);
+    }
+    out.push(grp);
+    keep?.push([JSON.stringify(grp), g[0]]);
   }
   return out;
 }
 
-/** The sheet's extLst with the sparkline groups written as Excel writes new ones (others kept). */
-export function sparklinesExt(old: string | undefined, groups: SparklineGroup[]): string | null {
-  const re = new RegExp(`<ext\\b[^>]*uri="${SL_EXT.replace(/[{}]/g, "\\$&")}"[^>]*>[\\s\\S]*?</ext>`);
-  const rgb = (c: string) => `FF${c.replace("#", "").toUpperCase()}`;
-  const entry = groups.length ? `<ext uri="${SL_EXT}" xmlns:x14="${X14_NS}"><x14:sparklineGroups xmlns:xm="${XM_NS}">` + groups.map((g) =>
-    `<x14:sparklineGroup${g.type === "line" ? "" : ` type="${g.type}"`} displayEmptyCellsAs="gap"${g.type === "stacked" ? ' negative="1"' : ""}>` +
-    `<x14:colorSeries rgb="${rgb(g.color)}"/><x14:colorNegative rgb="${rgb(g.negative ?? "#D00000")}"/><x14:colorAxis rgb="FF000000"/><x14:colorMarkers rgb="FFD00000"/>` +
-    `<x14:colorFirst rgb="FFD00000"/><x14:colorLast rgb="FFD00000"/><x14:colorHigh rgb="FFD00000"/><x14:colorLow rgb="FFD00000"/><x14:sparklines>` +
+const numText = (v: number) => String(v);
+
+/** One group as Excel writes a new one. */
+export function sparklineGroupXml(g: SparklineGroup): string {
+  const at: string[] = [];
+  if (g.manualMax !== undefined) at.push(`manualMax="${numText(g.manualMax)}"`);
+  if (g.manualMin !== undefined) at.push(`manualMin="${numText(g.manualMin)}"`);
+  if (g.lineWeight !== undefined && g.lineWeight !== 0.75) at.push(`lineWeight="${numText(g.lineWeight)}"`);
+  if (g.type !== "line") at.push(`type="${g.type}"`);
+  if (g.dateRange) at.push('dateAxis="1"');
+  if (g.displayEmptyCellsAs !== "zero") at.push(`displayEmptyCellsAs="${g.displayEmptyCellsAs}"`);
+  for (const k of ["markers", "high", "low", "first", "last", "negative", "displayXAxis", "displayHidden"] as const) if (g[k]) at.push(`${k}="1"`);
+  if (g.minAxisType && g.minAxisType !== "individual") at.push(`minAxisType="${g.minAxisType}"`);
+  if (g.maxAxisType && g.maxAxisType !== "individual") at.push(`maxAxisType="${g.maxAxisType}"`);
+  if (g.rightToLeft) at.push('rightToLeft="1"');
+  const color = (tag: string, c: SparkColor) => c.theme
+    ? `<x14:${tag} theme="${c.theme.t}"${c.theme.tint ? ` tint="${numText(c.theme.tint)}"` : ""}/>`
+    : `<x14:${tag} rgb="FF${c.rgb.replace("#", "").toUpperCase()}"/>`;
+  return `<x14:sparklineGroup${at.map((x) => " " + x).join("")}>` + SPARK_COLORS.map(([k, tag]) => color(tag, g.colors[k])).join("") +
+    (g.dateRange ? `<xm:f>${esc(g.dateRange)}</xm:f>` : "") + "<x14:sparklines>" +
     g.items.map((i) => `<x14:sparkline><xm:f>${esc(i.f)}</xm:f><xm:sqref>${rangeName({ r0: i.row, c0: i.col, r1: i.row, c1: i.col })}</xm:sqref></x14:sparkline>`).join("") +
-    "</x14:sparklines></x14:sparklineGroup>").join("") + "</x14:sparklineGroups></ext>" : "";
+    "</x14:sparklines></x14:sparklineGroup>";
+}
+
+/**
+ * The sheet's extLst with the sparkline groups (other entries kept): groups found unchanged in `kept` (from
+ * readSparklines) as they were read, the others as Excel writes them.
+ */
+export function sparklinesExt(old: string | undefined, groups: SparklineGroup[], kept: [string, string][] = []): string | null {
+  const re = new RegExp(`<ext\\b[^>]*uri="${SL_EXT.replace(/[{}]/g, "\\$&")}"[^>]*>[\\s\\S]*?</ext>`);
+  const left = [...kept];
+  const xmlOf = (g: SparklineGroup) => {
+    const j = JSON.stringify(g);
+    const i = left.findIndex(([k]) => k === j);
+    return i >= 0 ? left.splice(i, 1)[0][1] : sparklineGroupXml(g);
+  };
+  const oldEntry = old ? re.exec(old)?.[0] : undefined;
+  const head = oldEntry ? /^<ext\b[^>]*>\s*<x14:sparklineGroups\b[^>]*>/.exec(oldEntry)?.[0] : undefined;
+  const entry = groups.length ? (head ?? `<ext uri="${SL_EXT}" xmlns:x14="${X14_NS}"><x14:sparklineGroups xmlns:xm="${XM_NS}">`) + groups.map(xmlOf).join("") + "</x14:sparklineGroups></ext>" : "";
   if (!old) return entry ? `<extLst>${entry}</extLst>` : null;
-  const oldEntry = re.exec(old)?.[0];
-  const out = oldEntry ? old.replace(oldEntry, entry) : entry ? old.replace(/<\/extLst>$/, `${entry}</extLst>`) : old;
+  const out = oldEntry ? old.replace(oldEntry, () => entry) : entry ? old.replace(/<\/extLst>$/, () => `${entry}</extLst>`) : old;
   return /^<extLst\b[^>]*>\s*<\/extLst>$/.test(out) ? null : out;
 }

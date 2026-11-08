@@ -16,6 +16,7 @@ import { MDW, widthFromBase, widthFromFile } from "./units";
 import { readCharts, readPictures, type DrawingRaw } from "./drawing";
 import { readPivots } from "./pivots";
 import { readTables } from "./tables";
+import { readConsolidate, readScenarios } from "./scenarios";
 import { RT_PERSON, RT_THREADS, readPersons, readThreads } from "./threads";
 import { FILTER_DB, PRINT_AREA, PRINT_TITLES, ownRange, readSparklines, readTitles, readAutoFilter, readConditional, readPage, readValidations, type CfRaw, type DvRaw } from "./sheetparts";
 import { attrs, child, children, decodeX, element, outer, root, split, text, unesc, type El, type Split } from "./xml";
@@ -88,10 +89,14 @@ export interface SheetRaw {
   dv?: DvRaw;
   /** The pictures as read (picturesKey), to see whether they changed. */
   pics?: string;
-  /** Sparklines as read (a snapshot). */
+  /** Sparklines as read (a snapshot) and each group's JSON with the XML it was read from (written back unchanged). */
   spark?: string;
+  sparkXml?: [string, string][];
   /** Kommentare as read: their part and a snapshot. */
   threads?: { part: string; snap: string };
+  /** Szenario-Manager and Konsolidieren as read (snapshots): the elements stay as they were while unchanged. */
+  scen?: string;
+  cons?: string;
   snap: { view: string; cols: string; merges: string; tab: string; defaults: string; notes: string; links: string; filter: string; cf: string; page: string; dv: string; prot: string };
 }
 
@@ -284,6 +289,7 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   const raw: SheetRaw = { part: c.part, sheetId: 0, attrs: {}, xml: sp, hyperlinks: [], snap: { view: "", cols: "", merges: "", tab: "", defaults: "", notes: "", links: "", filter: "", cf: "", page: "", dv: "", prot: "" } };
 
   const prEl = get("sheetPr");
+  if (prEl && attrs(xml, prEl).filterMode === "1") sheet.filterMode = true;
   const tab = prEl && child(xml, prEl, "tabColor");
   if (tab) sheet.tabColor = resolveColor(attrs(xml, tab), c.ctx);
 
@@ -383,6 +389,12 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   // Blatt schützen: the attributes as they are (sheet="1" when on, the password hash, what is allowed).
   const prot = get("sheetProtection");
   if (prot) sheet.protection = attrs(xml, prot);
+  const scen = get("scenarios");
+  if (scen) sheet.scenarios = readScenarios(xml, scen);
+  raw.scen = canon([sheet.scenarios ?? null]);
+  const cons = get("dataConsolidate");
+  if (cons) sheet.consolidate = readConsolidate(xml, cons);
+  raw.cons = canon([sheet.consolidate ?? null]);
   const cfs = els.filter((e) => e.name === "conditionalFormatting");
   if (cfs.length) {
     raw.cf = { xml: [], rules: [] };
@@ -390,7 +402,8 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   }
   const dvs = get("dataValidations");
   const ext = get("extLst");
-  const spark = readSparklines(ext ? outer(xml, ext) : undefined);
+  raw.sparkXml = [];
+  const spark = readSparklines(ext ? outer(xml, ext) : undefined, c.ctx, raw.sparkXml);
   if (spark.length) sheet.sparklines = spark;
   raw.spark = JSON.stringify(sheet.sparklines ?? []);
   if (dvs || (ext && text(xml, ext).includes("x14:dataValidation"))) {
@@ -401,7 +414,7 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   sheet.page = readPage(sp.parts);
 
   const charts = readCharts(c.files, sheet, c.part, rels);
-  raw.pics = readPictures(c.files, sheet, c.part, rels);
+  raw.pics = readPictures(c.files, sheet, c.part, rels, c.ctx.theme);
   readPivots(c.files, sheet, c.part, rels);
   readTables(c.files, sheet, c.part, rels);
   // Excel writes [@Note] as Tabelle1[[#This Row],[Note]]; the model keeps what Excel shows.
@@ -440,7 +453,7 @@ export function sheetSnap(s: Sheet): SheetRaw["snap"] {
   return {
     view: canon(s.view), cols: canon([...s.cols].sort((a, b) => a[0] - b[0])), merges: canon(s.merges), tab: canon([s.tabColor ?? null]),
     defaults: canon([s.defaultColWidth ?? null, s.defaultRowHeight]), notes: canon(notes), links: canon(links),
-    filter: canon([s.autoFilter ?? null]), cf: canon(s.conditional ?? []), page: canon([s.page ?? null]), dv: canon(s.validations ?? []), prot: canon([s.protection ?? null]),
+    filter: canon([s.autoFilter ?? null, !!s.filterMode]), cf: canon(s.conditional ?? []), page: canon([s.page ?? null]), dv: canon(s.validations ?? []), prot: canon([s.protection ?? null]),
   };
 }
 

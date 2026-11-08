@@ -1,0 +1,47 @@
+{
+ "app": "excel",
+ "documents": [
+  {
+   "name": "notenliste",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    14.92
+   ],
+   "coarse": [
+    12.3
+   ],
+   "mean": 14.92,
+   "mean_coarse": 12.3
+  },
+  {
+   "name": "stundenplan",
+   "pages_office": 1,
+   "pages_raabe": 1,
+   "diff": [
+    11.48
+   ],
+   "coarse": [
+    10.06
+   ],
+   "mean": 11.48,
+   "mean_coarse": 10.06
+  }
+ ],
+ "summary": {
+  "documents": 2,
+  "same_page_count": 2,
+  "mean_diff": 13.2,
+  "mean_coarse": 11.18,
+  "worst": [
+   [
+    12.3,
+    "notenliste"
+   ],
+   [
+    10.06,
+    "stundenplan"
+   ]
+  ]
+ }
+}

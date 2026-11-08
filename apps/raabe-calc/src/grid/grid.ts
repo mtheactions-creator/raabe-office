@@ -278,7 +278,7 @@ export class Grid {
       marqueePhase: this.marqueePhase, ghost: this.ghost, insertLine: this.insertLine, refs: this.refHighlights(), showGrid: this.view.showGrid,
       showHeaders: this.view.showHeaders, textCache: this.previewState ? new Map() : this.textCache, cond: this.condEval(), showFormulas: this.host.showFormulas(),
       preview: this.previewState, arrows: this.host.arrows?.(), circles: this.host.circles?.(), pageBreaks: this.host.pageBreaks?.(),
-      tableStyle: this.sheet.tables?.length && this.host.tableStyle ? (r, c, x) => this.host.tableStyle!(r, c, x) : undefined,
+      tableStyle: this.sheet.tables?.length && this.host.tableStyle ? (r, c, x) => this.host.tableStyle!(r, c, x) : undefined, book: this.wb,
     };
     draw(this.ctx, st);
     if (this.editing && !this.editing.viaBar) this.placeEditor();

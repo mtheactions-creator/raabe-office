@@ -267,11 +267,39 @@ export interface ThreadComment { id: string; author: string; personId?: string; 
 /** A Kommentar thread on a cell: the first comment, its replies, and whether it is resolved. */
 export interface CommentThread extends ThreadComment { row: number; col: number; replies: ThreadComment[]; done?: boolean }
 
-/** Sparklines: a group of small charts in cells, each drawn from a range ("Tabelle1!A2:E2"). */
+/** A sparkline colour: "#RRGGBB", and the design colour it was picked as (it follows the design). */
+export interface SparkColor { rgb: string; theme?: ThemeRef }
+
+/** The eight colours of a sparkline group, as x14:sparklineGroup has them (colorSeries … colorLow). */
+export type SparkColorKey = "series" | "negative" | "axis" | "markers" | "first" | "last" | "high" | "low";
+
+/**
+ * Sparklines (D-085): a group of small charts in cells, each drawn from a range ("Tabelle1!A2:E2"); every
+ * setting belongs to the group, as in Excel (x14:sparklineGroup). Absent flags are off; absent values are
+ * Excel's defaults (lineWeight 0.75, axis types "individual").
+ */
 export interface SparklineGroup {
   type: "line" | "column" | "stacked";
-  color: string;
-  negative?: string;
+  colors: Record<SparkColorKey, SparkColor>;
+  /** Anzeigen: Datenpunkte (markers, lines only), Höchstpunkt, Tiefpunkt, Erster Punkt, Letzter Punkt, Negative Punkte. */
+  markers?: boolean; high?: boolean; low?: boolean; first?: boolean; last?: boolean; negative?: boolean;
+  /** Achse anzeigen (the horizontal axis at zero). */
+  displayXAxis?: boolean;
+  /** Leere Zellen anzeigen als: Lücken, Null, Datenpunkte mit einer Linie verbinden (the file's default is "zero"). */
+  displayEmptyCellsAs: "gap" | "zero" | "span";
+  /** Daten in ausgeblendeten Zeilen und Spalten anzeigen. */
+  displayHidden?: boolean;
+  /** Stärke of the line in pt. */
+  lineWeight?: number;
+  /** Vertical axis: Automatisch für jede Sparkline (individual), Identisch für alle Sparklines (group), Benutzerdefinierter Wert. */
+  minAxisType?: "individual" | "group" | "custom";
+  maxAxisType?: "individual" | "group" | "custom";
+  manualMin?: number;
+  manualMax?: number;
+  /** Daten von rechts nach links darstellen. */
+  rightToLeft?: boolean;
+  /** Datumsachsentyp: the range holding the dates ("Tabelle1!A7:E7"), x14:sparklineGroup dateAxis with its xm:f. */
+  dateRange?: string;
   items: { f: string; row: number; col: number }[];
 }
 
@@ -338,6 +366,30 @@ export interface SheetPicture {
   name?: string;
   /** The anchor's XML as the file had it (kept as it is while the picture is not moved). */
   raw?: string;
+  /**
+   * Bildformat (D-087): text-engine's PictureFormat (crop, colour settings, rotation, line,
+   * effects, frame shape), as read from the picture's DrawingML.
+   */
+  format?: object;
+  /** Alternativtext (cNvPr descr, title); Ausgeblendet in the Auswahlbereich (hidden="1"). */
+  alt?: string;
+  title?: string;
+  hidden?: boolean;
+  /** Seitenverhältnis sperren (picLocks noChangeAspect="1"). */
+  lockAspect?: boolean;
+  /**
+   * The Office 2010 effects (Korrekturen, Sättigung, Farbton) already worked into an image, as
+   * a key (JSON of those settings), and that image when it is not `src` (Excel stores pictures
+   * with the effects applied and draws them as stored).
+   */
+  baked?: string;
+  bakedSrc?: string;
+  /** The file's relationships for the picture (blip, a14 image layer) and the image they hold. */
+  media?: { rid: string; layer?: string; src: string };
+  /** What the settings above were when read: the anchor is rewritten only when they change. */
+  lookKey?: string;
+  /** A picture inside a group (grpSp): its box as shares of the group's anchored box; the group is kept as it is. */
+  group?: { x: number; y: number; w: number; h: number };
 }
 
 export interface CondFormat {
@@ -407,11 +459,53 @@ export interface PageSetup {
   titleCols?: [number, number];
 }
 
+/**
+ * Szenario-Manager: one scenario of a sheet (SpreadsheetML's CT_Scenario). The values are kept as
+ * the file holds them, the text typed into Szenariowerte (German Excel writes "0,25"); Anzeigen
+ * enters them as if typed.
+ */
+export interface Scenario {
+  name: string;
+  /** Veränderbare Zellen in the file's order (they need not be next to each other), with their values. */
+  cells: { row: number; col: number; val: string; numFmtId?: number; deleted?: boolean; undone?: boolean }[];
+  comment?: string;
+  /** The author as the file has it (Excel's user name). */
+  user?: string;
+  /** Schutz: Änderungen verhindern (Excel's default) and Ausblenden; they count while the sheet is protected. */
+  locked?: boolean;
+  hidden?: boolean;
+}
+
+/** A sheet's scenarios (CT_Scenarios): the list, the one selected and the one shown last, the last Ergebniszellen. */
+export interface Scenarios {
+  list: Scenario[];
+  current?: number;
+  show?: number;
+  sqref?: Rect[];
+}
+
+/** Konsolidieren's function as the file names it (CT_DataConsolidate function; absent: sum). */
+export type ConsolidateFunction = "average" | "count" | "countNums" | "max" | "min" | "product" | "stdDev" | "stdDevp" | "sum" | "var" | "varp";
+
+/** Konsolidieren's settings, kept by Excel in the destination sheet (CT_DataConsolidate) for the dialog's next use. */
+export interface Consolidation {
+  fn?: ConsolidateFunction;
+  /** Beschriftung aus: Oberster Zeile, Linker Spalte; Verknüpfungen mit Quelldaten. */
+  top?: boolean;
+  left?: boolean;
+  link?: boolean;
+  startLabels?: boolean;
+  /** Vorhandene Verweise: a range on a sheet (A1 form without $), or a defined name. */
+  refs: { ref?: string; sheet?: string; name?: string; rid?: string }[];
+}
+
 export class Sheet {
   cells = new Map<number, Cell>();
   cols = new Map<number, ColInfo>();
   rows = new Map<number, RowInfo>();
   merges: Rect[] = [];
+  /** The sheet is filtered by a Spezialfilter in place (sheetPr filterMode; an AutoFilter says so itself). */
+  filterMode?: boolean;
   /** Width of columns without their own, in characters of the default font (Excel: 8.43). */
   defaultColWidth?: number;
   /** Height of rows without their own, in points (Calibri 11: 15). */
@@ -441,6 +535,10 @@ export class Sheet {
   conditional?: CondFormat[];
   /** Datenüberprüfung, in the file's order (the first one covering a cell applies). */
   validations?: Validation[];
+  /** Szenario-Manager: the sheet's scenarios. */
+  scenarios?: Scenarios;
+  /** Konsolidieren: the settings last used with this sheet as the destination. */
+  consolidate?: Consolidation;
   /** Seite einrichten (pageSetup, pageMargins, printOptions, the print area). */
   page?: PageSetup;
   /** The .xlsx layer's parts of the sheet it does not model, written back unchanged. */

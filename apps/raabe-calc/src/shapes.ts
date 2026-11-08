@@ -687,6 +687,9 @@ export function shapesFeature(app: CalcApp) {
   // ----- Auswahlbereich -------------------------------------------------------------------------
 
   let selPaneOn = false;
+  /** Further objects of the sheet listed in the Auswahlbereich (the pictures, D-087), frontmost first. */
+  type PaneRow = { name: string; hidden: boolean; on: boolean; pick: () => void; toggle: () => void; rename: (v: string) => void };
+  let extra: { rows: () => PaneRow[]; all: (hidden: boolean) => void } | null = null;
 
   /** Auswahlbereich: the sheet's shapes, frontmost first, with Anzeigen/Ausblenden and renaming. */
   function selectionPane(): void {
@@ -714,13 +717,14 @@ export function shapesFeature(app: CalcApp) {
       const list = app.sheet.shapes ?? [];
       const box = h("div", { class: "sel-pane" });
       const top = h("div", { class: "sel-pane-top" },
-        h("button", { type: "button", class: "link", onclick: () => setHidden(list.filter((q) => q.hidden), false) }, "Alle anzeigen"),
-        h("button", { type: "button", class: "link", onclick: () => setHidden(list.filter((q) => !q.hidden), true) }, "Alle ausblenden"),
+        h("button", { type: "button", class: "link", onclick: () => { setHidden(list.filter((q) => q.hidden), false); extra?.all(false); refreshSelectionPane(); } }, "Alle anzeigen"),
+        h("button", { type: "button", class: "link", onclick: () => { setHidden(list.filter((q) => !q.hidden), true); extra?.all(true); refreshSelectionPane(); } }, "Alle ausblenden"),
         h("span", { style: "flex:1" }),
         h("button", { type: "button", class: "icon", "aria-label": "Nach vorne", "data-tip": "Nach vorne", onclick: () => { reorder("Ebene nach vorne", "forward"); refreshSelectionPane(); } }, icon("arrow-up")),
         h("button", { type: "button", class: "icon", "aria-label": "Nach hinten", "data-tip": "Nach hinten", onclick: () => { reorder("Ebene nach hinten", "backward"); refreshSelectionPane(); } }, icon("arrow-down")));
       box.append(top);
-      if (!list.length) box.append(h("div", { class: "sel-pane-empty" }, "Auf diesem Blatt gibt es keine Formen."));
+      const more = extra?.rows() ?? [];
+      if (!list.length && !more.length) box.append(h("div", { class: "sel-pane-empty" }, "Auf diesem Blatt gibt es keine Formen."));
       for (const q of [...list].reverse()) {
         const on = q === selected || others.includes(q);
         const name = h("span", { class: "sel-pane-name" }, q.name ?? "Form");
@@ -747,6 +751,23 @@ export function shapesFeature(app: CalcApp) {
             shown = undefined;
             refreshSelectionPane();
           };
+          input.addEventListener("keydown", (e) => { e.stopPropagation(); if (e.key === "Enter") done(true); else if (e.key === "Escape") done(false); });
+          input.addEventListener("blur", () => done(true));
+        });
+        box.append(row);
+      }
+      for (const r of more) {
+        const name = h("span", { class: "sel-pane-name" }, r.name);
+        const row = h("div", { class: `sel-pane-row${r.on ? " on" : ""}${r.hidden ? " off" : ""}` }, name,
+          h("button", { type: "button", class: "icon", "aria-label": r.hidden ? "Anzeigen" : "Ausblenden", "data-tip": r.hidden ? "Anzeigen" : "Ausblenden",
+            onclick: (e: MouseEvent) => { e.stopPropagation(); r.toggle(); refreshSelectionPane(); } }, icon(r.hidden ? "eye-off" : "eye")));
+        row.addEventListener("click", () => { if (!r.hidden) { if (selected) select(null); r.pick(); selPaneOn = true; refreshSelectionPane(); } });
+        row.addEventListener("dblclick", () => {
+          const input = h("input", { type: "text", value: r.name, class: "sel-pane-edit" }) as HTMLInputElement;
+          name.replaceWith(input);
+          input.focus();
+          input.select();
+          const done = (keep: boolean) => { const v = input.value.trim(); if (keep && v && v !== r.name) r.rename(v); refreshSelectionPane(); };
           input.addEventListener("keydown", (e) => { e.stopPropagation(); if (e.key === "Enter") done(true); else if (e.key === "Escape") done(false); });
           input.addEventListener("blur", () => done(true));
         });
@@ -981,7 +1002,9 @@ export function shapesFeature(app: CalcApp) {
     place, startDraw, gallery, openPane, arrange, rotateMenu,
     selected: (): SheetShape | null => selected,
     count: (): number => picked().length,
-    grouping, selectionPane,
+    grouping, selectionPane, refreshSelectionPane,
+    /** Pictures in the Auswahlbereich (pictures.ts). */
+    setPaneExtra: (e: { rows: () => PaneRow[]; all: (hidden: boolean) => void }) => { extra = e; },
     deselect: (): void => { if (selected) select(null); },
     setFill: (hex: string | null) => edit("Fülleffekt", (q) => ({ ...q, fill: hex === null ? { type: "none" } : { type: "solid", color: hex } })),
     setLine: (hex: string | null) => edit("Formkontur", (q) => ({ ...q, line: hex === null ? { type: "none" } : { type: "solid", ...q.line, color: hex } })),

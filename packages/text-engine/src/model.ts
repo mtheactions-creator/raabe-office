@@ -509,6 +509,8 @@ export interface InlineObject {
   readonly font?: string;
   /** Pictures: Bildformat settings (corrections, colour, crop, border, effects …). */
   readonly pic?: PictureFormat;
+  /** A chart (Diagramm, Step 7b): its chart part and, for a chart made or changed here, its embedded workbook. */
+  readonly chart?: { readonly xml: string; readonly workbook?: Uint8Array };
   /** Pictures: Alternativtext. */
   readonly alt?: AltText;
   /** Shapes in line with the text (wps:wsp in wp:inline). */

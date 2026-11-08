@@ -5,7 +5,7 @@
 // Breite). Gallery entries and presets were recorded from Word (picture-presets.ts).
 
 import { closePopup, colorGrid, h, showDialog, showMenu, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
-import { imageInfo, imageUrl, naturalSizePt, previewElement, type PictureFormat } from "@raabe/text-engine";
+import { imageInfo, imageUrl, naturalSizePt, previewElement, removeBackground, type PictureFormat } from "@raabe/text-engine";
 import { DEFAULT_THEME_COLORS, pictureFromSpPr } from "@raabe/ooxml";
 import { CM, fmtCm, parseNum, type AppApi } from "./api";
 import { GROUP_MENU } from "./groups";
@@ -464,48 +464,4 @@ function pagePreview(x?: string, y?: string): HTMLElement {
   const top = y === "top" ? 4 : y === "center" ? 16 : y === "bottom" ? 28 : 16;
   box.append(h("div", { style: `position:absolute;left:${left}px;top:${top}px;width:12px;height:12px;background:#5b9bd5` }));
   return box;
-}
-
-/** Freistellen: pixels connected to the edges and close to the edge colour become transparent. */
-async function removeBackground(bytes: Uint8Array, type: string): Promise<Uint8Array | null> {
-  const url = URL.createObjectURL(new Blob([bytes as BlobPart], { type }));
-  try {
-    const img = await new Promise<HTMLImageElement>((resolve, reject) => { const i = new Image(); i.onload = () => resolve(i); i.onerror = reject; i.src = url; });
-    const w = img.naturalWidth, hgt = img.naturalHeight;
-    const cv = document.createElement("canvas");
-    cv.width = w; cv.height = hgt;
-    const g = cv.getContext("2d")!;
-    g.drawImage(img, 0, 0);
-    const data = g.getImageData(0, 0, w, hgt);
-    const px = data.data;
-    // The background colour: the average of the border pixels.
-    let r = 0, gg = 0, b = 0, n = 0;
-    for (let x = 0; x < w; x++) for (const y of [0, hgt - 1]) { const i = (y * w + x) * 4; r += px[i]; gg += px[i + 1]; b += px[i + 2]; n++; }
-    for (let y = 0; y < hgt; y++) for (const x of [0, w - 1]) { const i = (y * w + x) * 4; r += px[i]; gg += px[i + 1]; b += px[i + 2]; n++; }
-    r /= n; gg /= n; b /= n;
-    const near = (i: number) => Math.abs(px[i] - r) + Math.abs(px[i + 1] - gg) + Math.abs(px[i + 2] - b) < 90;
-    const seen = new Uint8Array(w * hgt);
-    const stack: number[] = [];
-    for (let x = 0; x < w; x++) { stack.push(x, (hgt - 1) * w + x); }
-    for (let y = 0; y < hgt; y++) { stack.push(y * w, y * w + w - 1); }
-    while (stack.length) {
-      const p = stack.pop()!;
-      if (seen[p]) continue;
-      seen[p] = 1;
-      if (!near(p * 4)) continue;
-      px[p * 4 + 3] = 0;
-      const x = p % w, y = (p / w) | 0;
-      if (x > 0) stack.push(p - 1);
-      if (x < w - 1) stack.push(p + 1);
-      if (y > 0) stack.push(p - w);
-      if (y < hgt - 1) stack.push(p + w);
-    }
-    g.putImageData(data, 0, 0);
-    const blob = await new Promise<Blob | null>((resolve) => cv.toBlob(resolve, "image/png"));
-    return blob ? new Uint8Array(await blob.arrayBuffer()) : null;
-  } catch {
-    return null;
-  } finally {
-    URL.revokeObjectURL(url);
-  }
 }

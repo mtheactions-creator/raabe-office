@@ -75,6 +75,9 @@ export interface Platform {
   openExternal?(target: string): Promise<void>;
   /** Installed font families (for the Schriftart box). */
   listFonts(): Promise<string[]>;
+  /** Office's cloud fonts on this PC (Aptos …): faces and their bytes, for families the browser does not know. */
+  cloudFonts?(): Promise<{ families: string[]; weight: number; italic: boolean; id: string }[]>;
+  cloudFont?(id: string): Promise<ArrayBuffer>;
   /** The characters a font has, as code point ranges; symbol fonts (Symbol, Wingdings) use U+F020-U+F0FF. */
   fontChars?(family: string): Promise<{ found: boolean; symbol: boolean; ranges: [number, number][] }>;
   /** Vertical font metrics from the font files (hhea table), keyed by family name. */

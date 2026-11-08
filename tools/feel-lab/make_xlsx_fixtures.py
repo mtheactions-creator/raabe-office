@@ -538,13 +538,15 @@ ALL = {"values": values, "formulas": formulas, "styles": styles, "numfmt": numfm
        "date1904": date1904, "blank": blank, "validation": validation, "protection": protection}
 
 
-def anonymize(path: Path) -> None:
+def anonymize(path: Path, user: str = "") -> None:
     """Excel writes the signed-in Office user as the last author whatever the document
-    properties say: set it to the neutral name (the only change to Excel's file)."""
+    properties say, and as the author of notes: set it to the neutral name."""
     with zipfile.ZipFile(path) as z:
         items = [(info, z.read(info)) for info in z.infolist()]
     out = []
     for info, data in items:
+        if user and info.filename.endswith((".xml", ".vml")):
+            data = data.replace(user.encode("utf-8"), NEUTRAL.encode("utf-8"))
         if info.filename == "docProps/core.xml":
             text = data.decode("utf-8")
             text = re.sub(r"<cp:lastModifiedBy>[^<]*</cp:lastModifiedBy>", f"<cp:lastModifiedBy>{NEUTRAL}</cp:lastModifiedBy>", text)
@@ -582,8 +584,8 @@ def main() -> None:
     user = ""
     try:
         user = str(x.app.UserName)
-        # Notes record Excel's user name as their author.
-        x.set_option("UserName", NEUTRAL)
+        # Notes record Excel's user name as their author: the files are anonymized afterwards (the shared
+        # UserName option is not changed, CLAUDE.md).
         with tempfile.TemporaryDirectory() as td:
             tmp = Path(td)
             b = Builder(x, tmp)
@@ -595,7 +597,7 @@ def main() -> None:
     finally:
         x.close()
     for f in sorted(OUT.glob("xlsx-*.xlsx")):
-        anonymize(f)
+        anonymize(f, user)
         check_private(f, user)
     print("no private text in the fixtures")
 

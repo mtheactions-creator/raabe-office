@@ -3,6 +3,8 @@
 // them while the charts are unchanged; pictures and shapes in the drawing are always kept.
 
 import { shapeFromXml, shapeKey, shapeToXml } from "./shapes";
+import { bakedKey, lookKey, pictureAnchorXml, readPictureLook, rootDecls } from "./pictures";
+import type { PictureFormat } from "@raabe/text-engine";
 import { strFromU8 } from "fflate";
 import type { ChartModel } from "@raabe/charts";
 import type { Sheet } from "@raabe/sheet-engine";
@@ -89,6 +91,41 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
   // its model (or dropped); new charts come last.
   const slots: { xml: string; chart?: ChartRead }[] = [];
   let head = "", tail = "";
+  const keptPics = pics.filter((p) => p.raw && !p.group && old?.includes(p.raw));
+  let nextPic = 0;
+  // A picture's image: the media part it has (same picture) or a new one.
+  const imageRid = (src: string, p: NonNullable<Sheet["pictures"]>[number] | null, at: string): string | undefined => {
+    if (p?.media && p.media.src === src && p.media.rid) return p.media.rid;
+    const m = /^data:([^;]+);base64,(.*)$/.exec(src);
+    if (!m) return undefined;
+    const bin = atob(m[2]);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    const media = pw.addMedia(bytes, m[1], "xl/media/image");
+    return pw.link(at, IMAGE_REL_TYPE, media);
+  };
+  /** A picture with its Bildformat as Excel writes it; `fresh`: one not read from this drawing. */
+  const formatted = (p: NonNullable<Sheet["pictures"]>[number], id: number, fresh: boolean, at: string): string | undefined => {
+    const f = p.format as PictureFormat | undefined;
+    const fx = bakedKey(f);
+    let image = p.src, keepFx = false;
+    if (fx && p.baked === fx) { image = p.bakedSrc ?? p.src; keepFx = !fresh && !p.bakedSrc && !!p.media && p.media.src === p.src; }
+    const rid = imageRid(image, fresh ? null : p, at);
+    if (!rid) return undefined;
+    const ext = p.raw ? /<a:xfrm\b[^>]*>\s*<a:off\b[^>]*\/>\s*<a:ext cx="(\d+)" cy="(\d+)"/.exec(p.raw) : null;
+    const size = p.size ?? (ext ? { w: Number(ext[1]) / EMU_PER_PX, h: Number(ext[2]) / EMU_PER_PX } : { w: 100, h: 100 });
+    return pictureAnchorXml(fresh ? { ...p, lockAspect: p.lockAspect ?? true } : p, id, rid, size, { keepFx });
+  };
+  const pictureXml = (p: NonNullable<Sheet["pictures"]>[number]): string => {
+    const ax = p.raw!;
+    if (lookKey(p) !== p.lookKey && part) {
+      const sid = Number(/<xdr:cNvPr\b[^>]*\bid="(\d+)"/.exec(ax)?.[1] ?? 2);
+      const xml = formatted(p, sid, false, part);
+      if (xml) return xml;
+    }
+    const moved = canon([p.from, p.to ?? null]) !== canon([point(ax, "from") ?? null, p.to ? point(ax, "to") ?? null : null]);
+    return moved ? movedPicture(p) : ax;
+  };
   if (old) {
     const r = root(old);
     const kids = children(old, r.open, r.close);
@@ -96,12 +133,15 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
     tail = old.slice(kids.length ? kids[kids.length - 1].end : r.close);
     for (const a of kids) {
       const ax = outer(old, a);
-      // Pictures: kept as they are, with new corners when moved, gone when deleted.
-      if (/<xdr:pic\b/.test(ax)) {
-        const p = pics.find((q) => q.raw === ax);
-        if (!p) { if (!readRaws.has(ax)) slots.push({ xml: ax }); continue; }
-        const moved = canon([p.from, p.to ?? null]) !== canon([point(ax, "from") ?? null, p.to ? point(ax, "to") ?? null : null]);
-        slots.push({ xml: moved ? movedPicture(p) : ax });
+      // Pictures: kept as they are, with new corners when moved, with Excel's DrawingML when their
+      // Bildformat changed, gone when deleted; the model's order fills the pictures' places (Ebene
+      // nach vorne / nach hinten).
+      // A group holding pictures: kept as it is (its pictures are shown, not changed on their own).
+      if (/<xdr:grpSp\b/.test(ax) && pics.some((q) => q.raw === ax && q.group)) { slots.push({ xml: ax }); continue; }
+      if (/<xdr:pic\b/.test(ax) && !/<xdr:grpSp\b/.test(ax)) {
+        if (!pics.some((q) => q.raw === ax)) { if (!readRaws.has(ax)) slots.push({ xml: ax }); continue; }
+        const p = keptPics[nextPic++];
+        if (p) slots.push({ xml: pictureXml(p) });
         continue;
       }
       // Shapes: the model's version (the same XML while unchanged), gone when deleted.
@@ -148,14 +188,10 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
   }
   // New pictures: their image as a media part of the package.
   for (const p of fresh) {
-    const m = /^data:([^;]+);base64,(.*)$/.exec(p.src);
-    if (!m) continue;
-    const bin = atob(m[2]);
-    const bytes = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-    const media = pw.addMedia(bytes, m[1], "xl/media/image");
-    const rId = pw.link(part, IMAGE_REL_TYPE, media);
-    added.push(newPicture(p, id++, rId));
+    const xml = formatted(p, id, true, part);
+    if (!xml) continue;
+    id++;
+    added.push(xml);
   }
   // New shapes and text boxes.
   for (const s of freshShapes) added.push(shapeToXml({ ...s, raw: undefined }, id++, s.size ?? { w: 120, h: 80 }));
@@ -192,7 +228,7 @@ function point(ax: string, tag: string): { col: number; row: number; x: number; 
 /** What decides whether the drawing's pictures changed (their places, names and identity, not the image data). */
 export function picturesKey(sheet: Sheet): string {
   return canon([
-    ...(sheet.pictures ?? []).map((p) => ({ from: p.from, to: p.to ?? null, size: p.size ?? null, name: p.name ?? null, raw: p.raw ?? null })),
+    ...(sheet.pictures ?? []).map((p) => ({ from: p.from, to: p.to ?? null, size: p.size ?? null, name: p.name ?? null, raw: p.raw ?? null, look: lookKey(p) })),
     ...(sheet.shapes ?? []).map((s) => ({ shape: shapeKey(s), raw: s.raw ?? null })),
   ]);
 }
@@ -210,16 +246,7 @@ function movedPicture(p: NonNullable<Sheet["pictures"]>[number]): string {
   return x;
 }
 
-/** A new picture's anchor (Excel's form for an inserted picture: two cells, sized with them). */
-function newPicture(p: NonNullable<Sheet["pictures"]>[number], id: number, rId: string): string {
-  const w = Math.round((p.size?.w ?? 100) * EMU_PER_PX), h = Math.round((p.size?.h ?? 100) * EMU_PER_PX);
-  const name = p.name ?? `Grafik ${id - 1}`;
-  return `<xdr:twoCellAnchor editAs="oneCell">${pointXml("from", p.from)}${pointXml("to", p.to ?? p.from)}<xdr:pic><xdr:nvPicPr><xdr:cNvPr id="${id}" name="${name.replace(/[<&"]/g, "")}"/><xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr>` +
-    `<xdr:blipFill><a:blip xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:embed="${rId}"/><a:stretch><a:fillRect/></a:stretch></xdr:blipFill>` +
-    `<xdr:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="${w}" cy="${h}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/></xdr:twoCellAnchor>`;
-}
-
-export function readPictures(files: Record<string, Uint8Array>, sheet: Sheet, sheetPart: string, sheetRels: Rels): string {
+export function readPictures(files: Record<string, Uint8Array>, sheet: Sheet, sheetPart: string, sheetRels: Rels, theme: Record<string, string> = {}): string {
   const rel = sheetRels.list.find((r) => isRel(r.type, DRAWING_REL_TYPE));
   if (!rel) return picturesKey(sheet);
   const part = resolveTarget(sheetPart, rel.target);
@@ -227,6 +254,7 @@ export function readPictures(files: Record<string, Uint8Array>, sheet: Sheet, sh
   const xml = strFromU8(files[part]);
   const rels = new Rels(files[relsPath(part)] ? strFromU8(files[relsPath(part)]) : null);
   const r = root(xml);
+  const decls = rootDecls(xml);
   const out: NonNullable<Sheet["pictures"]> = [];
   const shapes: NonNullable<Sheet["shapes"]> = [];
   for (const a of children(xml, r.open, r.close)) {
@@ -240,20 +268,43 @@ export function readPictures(files: Record<string, Uint8Array>, sheet: Sheet, sh
     }
     if (!/<xdr:pic\b/.test(ax)) continue;
     const from = point(ax, "from");
-    const embed = /<a:blip\b[^>]*r:embed="([^"]*)"/.exec(ax)?.[1];
-    const target = embed ? rels.get(embed) : undefined;
-    if (!from || !target) continue;
-    const media = resolveTarget(part, target.target);
-    const bytes = files[media];
-    const ext = media.split(".").pop()?.toLowerCase() ?? "";
-    if (!bytes || !MIME[ext] || ext === "emf" || ext === "wmf") continue;
-    let bin = "";
-    for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
-    const src = `data:${MIME[ext]};base64,${btoa(bin)}`;
+    if (!from) continue;
     const to = point(ax, "to");
     const extEl = /<xdr:ext\b[^>]*cx="(\d+)"[^>]*cy="(\d+)"/.exec(ax);
-    const name = /<xdr:cNvPr\b[^>]*name="([^"]*)"/.exec(ax)?.[1];
-    out.push({ from, to: a.name === "xdr:twoCellAnchor" ? to : undefined, size: a.name !== "xdr:twoCellAnchor" && extEl ? { w: Number(extEl[1]) / EMU_PER_PX, h: Number(extEl[2]) / EMU_PER_PX } : undefined, src, name, raw: ax });
+    const size = a.name !== "xdr:twoCellAnchor" && extEl ? { w: Number(extEl[1]) / EMU_PER_PX, h: Number(extEl[2]) / EMU_PER_PX } : undefined;
+    // A group holding pictures: each picture is shown in its place inside the group's box (as part
+    // of the group: not selected on its own); the group's anchor stays as the file has it.
+    const group = /<xdr:grpSp\b/.test(ax);
+    const units = group ? [...ax.matchAll(/<xdr:pic\b[\s\S]*?<\/xdr:pic>/g)].map((m) => m[0]) : [ax];
+    const g = group ? /<xdr:grpSpPr\b[\s\S]*?<a:chOff x="(-?\d+)" y="(-?\d+)"\/>\s*<a:chExt cx="(\d+)" cy="(\d+)"\/>/.exec(ax) : null;
+    for (const unit of units) {
+      const embed = /<a:blip\b[^>]*r:embed="([^"]*)"/.exec(unit)?.[1];
+      const target = embed ? rels.get(embed) : undefined;
+      if (!target) continue;
+      const media = resolveTarget(part, target.target);
+      const bytes = files[media];
+      const ext = media.split(".").pop()?.toLowerCase() ?? "";
+      if (!bytes || !MIME[ext] || ext === "emf" || ext === "wmf") continue;
+      let bin = "";
+      for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+      const src = `data:${MIME[ext]};base64,${btoa(bin)}`;
+      const name = /<xdr:cNvPr\b[^>]*name="([^"]*)"/.exec(unit)?.[1];
+      const pic: NonNullable<Sheet["pictures"]>[number] = { from, to: a.name === "xdr:twoCellAnchor" ? to : undefined, size, src, name, raw: ax };
+      if (group) {
+        const off = /<a:xfrm\b[^>]*>\s*<a:off x="(-?\d+)" y="(-?\d+)"\/>\s*<a:ext cx="(\d+)" cy="(\d+)"\/>/.exec(unit);
+        if (!g || !off) continue;
+        const [cx, cy, cw, ch] = g.slice(1).map(Number);
+        pic.group = { x: (Number(off[1]) - cx) / (cw || 1), y: (Number(off[2]) - cy) / (ch || 1), w: Number(off[3]) / (cw || 1), h: Number(off[4]) / (ch || 1) };
+      }
+      // Bildformat (D-087): the picture's DrawingML as text-engine's format.
+      const { embed: _e, ...look } = readPictureLook(group ? `<xdr:oneCellAnchor>${unit}</xdr:oneCellAnchor>` : ax, decls, theme);
+      void _e;
+      Object.assign(pic, look);
+      if (pic.media) pic.media.src = src;
+      if (pic.name) pic.name = pic.name.replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+      pic.lookKey = lookKey(pic);
+      out.push(pic);
+    }
   }
   if (out.length) sheet.pictures = out;
   if (shapes.length) sheet.shapes = shapes;

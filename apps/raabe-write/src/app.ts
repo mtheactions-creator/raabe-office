@@ -2,7 +2,7 @@
 // Each open document is a tab with its own editor. Files are .docx (D-004); content the
 // editor cannot change yet is preserved verbatim and written back unchanged (D-024).
 
-import { Doc as TextDoc, Editor, Fonts, PT, seqToLatex, seqToLinear, type CharProps, type CopiedFormat, type DocState, type LineRule, type Para, type ParaProps } from "@raabe/text-engine";
+import { Doc as TextDoc, Editor, Fonts, PT, setCloudFonts, seqToLatex, seqToLinear, type CharProps, type CopiedFormat, type DocState, type LineRule, type Para, type ParaProps } from "@raabe/text-engine";
 import { ommlToSeq, ommlToWordHtml, readDocx, seqToOmml, wordHtmlMath, writeDocx, type DocxPackage } from "@raabe/ooxml";
 import {
   Backstage, Commands, Keytips, Ribbon, StatusBar, TitleBar, baseName, dirName, h, icon, installTooltips, messageBox,
@@ -44,6 +44,7 @@ import { editorPaneFeature, type Issue } from "./features/editor-pane";
 import { grammarFeature } from "./features/grammar";
 import { contextFeature, CONTEXT_COMMANDS } from "./features/context";
 import { shapesFeature, SHAPE_COMMANDS } from "./features/shapes";
+import { chartsFeature } from "./features/charts";
 import { tablesFeature, TABLE_COMMANDS } from "./features/tables";
 import { GALLERY, miniToolbar, ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { applyTips } from "./tooltips";
@@ -132,6 +133,8 @@ export class WriteApp {
   private find!: ReturnType<typeof findFeature>;
 
   constructor(private platform: Platform, initial?: Partial<DocState>) {
+    // Office's cloud fonts (Aptos …) for documents that use them (D-089).
+    if (platform.cloudFonts && platform.cloudFont) setCloudFonts({ list: platform.cloudFonts.bind(platform), bytes: platform.cloudFont.bind(platform) });
     this.fonts = new Fonts((families) => platform.fontMetrics(families));
     this.fonts.onChange(() => { for (const d of this.docs) d.editor.relayout(); });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
@@ -303,6 +306,7 @@ export class WriteApp {
       hf: headerFooterFeature(api),
       pictures: picturesFeature(api),
       shapes: shapesFeature(api),
+      charts: chartsFeature(api),
       spell,
       refs: referencesFeature(api),
       math,
@@ -1494,6 +1498,9 @@ export class WriteApp {
     return {
       docs: () => this.docs.map((d) => ({ name: d.name, path: d.path, dirty: this.isDirty(d), unsupported: d.partial, active: d === this.active })),
       openPath: (path: string) => this.openPath(path),
+      /** Diagramm without dialogs (check_write_charts.py, Step 7b). */
+      insertChart: (kind: import("@raabe/charts").ChartKind, table?: import("./features/charts").ChartTable) => this.features.charts.insertChart(kind, table),
+      setChartData: (table: import("./features/charts").ChartTable) => this.features.charts.setData(table),
       /** Als PDF exportieren into a given file (the look corpus, D-080). */
       exportPdf: (path: string) => this.exportPdf(path),
       /** Opens a document from bytes (development platform, which has no file system). */

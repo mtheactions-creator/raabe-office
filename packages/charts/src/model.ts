@@ -3,9 +3,20 @@
 // refer to cells in the file's form ("Tabelle1!$B$2:$B$6") and carry the values last read
 // (Excel's caches), so a chart draws without its workbook (Present, Write).
 
+import { isChartExKind, kindInfo } from "./kinds";
+
 export type ChartKind =
   | "column" | "columnStacked" | "bar" | "barStacked" | "line" | "lineMarkers" | "area"
-  | "pie" | "doughnut" | "scatter" | "scatterSmooth" | "scatterLines" | "histogram";
+  | "pie" | "doughnut" | "scatter" | "scatterSmooth" | "scatterLines" | "histogram"
+  // Every other type of Excel 365's Einfügen > Diagramme except the map (D-086); see kinds.ts.
+  | "columnStacked100" | "barStacked100" | "lineStacked" | "lineStacked100" | "lineMarkersStacked" | "lineMarkersStacked100"
+  | "areaStacked" | "areaStacked100"
+  | "column3DClustered" | "column3DStacked" | "column3DStacked100" | "column3D" | "bar3DClustered" | "bar3DStacked" | "bar3DStacked100"
+  | "line3D" | "area3D" | "area3DStacked" | "area3DStacked100" | "pie3D" | "pieOfPie" | "barOfPie"
+  | "radar" | "radarMarkers" | "radarFilled" | "bubble" | "bubble3D" | "scatterSmoothMarkers" | "scatterLinesNoMarkers"
+  | "stockHLC" | "stockOHLC" | "stockVHLC" | "stockVOHLC"
+  | "surface3D" | "surfaceWireframe" | "surfaceContour" | "surfaceContourWireframe"
+  | "waterfall" | "funnel" | "treemap" | "sunburst" | "boxWhisker" | "pareto";
 
 /** Legend position as in the file (c:legendPos), or no legend. */
 export type LegendPos = "b" | "t" | "l" | "r" | "none";
@@ -152,7 +163,18 @@ export interface ChartSeries {
   /** Sekundärachse (Datenreihe zeichnen auf). */
   secondary?: boolean;
   errorBars?: ErrorBars;
+  /** Verbund (combo charts): the series' own chart type when it differs from the chart's. */
+  kind?: ChartKind;
+  /** Blasengröße of bubble charts. */
+  size?: ChartData<number | null>;
+  /** Category levels of Treemap and Sunburst, outermost first (each as long as the values). */
+  levels?: (string | null)[][];
+  /** Wasserfall: the points shown as Summe (Als Summe festlegen). */
+  totals?: number[];
 }
+
+/** The 3-D view (Diagrammbereich formatieren > 3D-Drehung) of 3-D charts. */
+export interface View3D { rotX: number; rotY: number; depthPercent?: number; rAngAx: boolean; perspective?: number }
 
 /** A corner of the chart: a cell and the offset into it in px at 100 % (twoCellAnchor). */
 export interface CellAnchor { col: number; row: number; x: number; y: number }
@@ -177,6 +199,13 @@ export interface ChartModel {
   /** Winkel des ersten Kreissegments (pies), Innenringgröße (doughnuts, %). */
   firstSliceAngle?: number;
   holeSize?: number;
+  /** 3-D view of 3-D charts as read; undefined: the type's default (kinds.ts). */
+  view3D?: View3D;
+  /** Kreis aus Kreis / Balken aus Kreis: Werte im zweiten Zeichnungsbereich (the last n points) and its size in %. */
+  splitCount?: number;
+  secondSize?: number;
+  /** Blasengröße skalieren (%). */
+  bubbleScale?: number;
   /** Diagrammformatvorlage (Excel's style number, 201 the default) and Farben ändern (colour scheme, 10 the default). */
   style?: number;
   colors?: number;
@@ -252,23 +281,30 @@ export function lum(hex: string, mod: number, off: number): string {
   return "#" + rgb.map((v) => Math.round(v * 255).toString(16).padStart(2, "0")).join("").toUpperCase();
 }
 
-export const isPie = (k: ChartKind) => k === "pie" || k === "doughnut";
-export const isScatter = (k: ChartKind) => k === "scatter" || k === "scatterSmooth" || k === "scatterLines";
-export const isBar = (k: ChartKind) => k === "bar" || k === "barStacked";
-export const isStacked = (k: ChartKind) => k === "columnStacked" || k === "barStacked";
+/** Kinds whose legend lists the points (Kreis, Ring and their variants). */
+export const isPie = (k: ChartKind) => { const f = kindInfo(k).family; return f === "pie" || f === "doughnut" || f === "ofPie"; };
+/** XY charts (Punkt and Blase): both axes are value axes. */
+export const isScatter = (k: ChartKind) => { const f = kindInfo(k).family; return f === "scatter" || f === "bubble"; };
+/** Horizontal bars. */
+export const isBar = (k: ChartKind) => kindInfo(k).dir === "bar";
+/** Stacked (not 100 %) columns and bars. */
+export const isStacked = (k: ChartKind) => kindInfo(k).family === "bar" && kindInfo(k).grouping === "stacked";
 
 /** The title as shown: its own text, else the series name for one series (pies: the first), else "Diagrammtitel". */
 export function titleText(m: ChartModel): string {
   if (m.title.text !== undefined) return m.title.text;
-  if (m.kind === "histogram") return DEFAULT_TITLE;
+  if (isChartExKind(m.kind)) return DEFAULT_TITLE;
   const one = isPie(m.kind) ? m.series[0] : m.series.length === 1 ? m.series[0] : undefined;
   return one?.name?.text || DEFAULT_TITLE;
 }
 
-/** The legend Excel gives a new chart: pies always (bottom), others with more than one series. */
+/** The legend Excel gives a new chart: pies always (bottom), others with more than one series (recorded per type). */
 export function defaultLegend(kind: ChartKind, seriesCount: number): LegendPos {
-  if (kind === "histogram") return "none";
-  if (isPie(kind)) return "b";
+  const f = kindInfo(kind).family;
+  if (f === "waterfall" || f === "treemap") return "t";
+  if (isChartExKind(kind) || f === "bubble") return "none";
+  if (f === "radar") return "t";
+  if (isPie(kind) || f === "stock" || f === "surface") return "b";
   return seriesCount > 1 ? "b" : "none";
 }
 
