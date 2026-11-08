@@ -315,6 +315,9 @@ def cases(ui: Ui, run: Run, saved: dict) -> None:
                 ensure(ui, "elements")
         if ui.js("!!document.querySelector('.cb-sub')"):
             ui.key("Escape", "Escape", 27)
+    # The state the side menus left, saved: Excel must open it with the same elements.
+    ui.js(f"__calc.save({json.dumps(str(TMP / 'elements.xlsx'))})")
+    saved["elements"] = {}
     # Weitere Optionen... opens the Format pane of the element.
     idx = [r[0] for r in flyout_rows(ui)].index("Legende")
     x, y, w, h = ui.center(".cb-fly .cb-row", idx)
@@ -642,7 +645,12 @@ def excel_side(run: Run, saved: dict) -> None:
             if not path.exists():
                 run.check(f"Excel: {name}.xlsx saved", False, "missing")
                 continue
-            wb = app.Workbooks.Open(str(path))
+            try:
+                wb = app.Workbooks.Open(str(path))
+            except Exception as ex:  # noqa: BLE001
+                run.check(f"Excel opens {name}.xlsx", False, str(ex)[:200])
+                continue
+            run.check(f"Excel opens {name}.xlsx", True)
             try:
                 ch = wb.Worksheets(1).ChartObjects(1).Chart
                 if name == "filtered":
@@ -652,6 +660,15 @@ def excel_side(run: Run, saved: dict) -> None:
                     run.check("Excel opens the filtered chart: Süd filtered (Series.IsFiltered)", got == want["series"], got)
                     run.check("Excel opens the filtered chart: Mrz filtered (FullCategoryCollection)", cats == want["cats"], cats)
                     run.check("Excel shows 2 series", ch.SeriesCollection().Count == 2, ch.SeriesCollection().Count)
+                elif name == "elements":
+                    s1 = ch.FullSeriesCollection(1)
+                    got = {"title": bool(ch.HasTitle) and not bool(ch.ChartTitle.IncludeInLayout), "legend": ch.Legend.Position if ch.HasLegend else None,
+                           "table": bool(ch.HasDataTable) and not bool(ch.DataTable.ShowLegendKey), "valAxis": bool(ch.GetHasAxis(2, 1)),
+                           "catGrids": [bool(ch.Axes(1).HasMajorGridlines), bool(ch.Axes(1).HasMinorGridlines)], "catTitle": bool(ch.Axes(1).HasTitle),
+                           "labels": bool(s1.HasDataLabels) and s1.DataLabels().Position == -4108, "errorBars": bool(s1.HasErrorBars)}
+                    want2 = {"title": True, "legend": -4152, "table": True, "valAxis": False, "catGrids": [True, True], "catTitle": True, "labels": True, "errorBars": True}
+                    for k2 in want2:
+                        run.check(f"Excel opens the elements chart: {k2}", got[k2] == want2[k2], got[k2])
                 elif name == "styled":
                     run.check(f"Excel opens the styled chart (style {want['style']})", True)
                 elif name == "selectdata":
@@ -662,6 +679,8 @@ def excel_side(run: Run, saved: dict) -> None:
                     fc = ch.ChartGroups(1).FullCategoryCollection()
                     cats = [bool(fc(i).IsFiltered) for i in range(1, fc.Count + 1)]
                     run.check("Excel: Apr filtered", cats == want["cats"], cats)
+            except Exception as ex:  # noqa: BLE001
+                run.check(f"Excel reads {name}.xlsx", False, str(ex)[:200])
             finally:
                 wb.Close(False)
     finally:

@@ -1,0 +1,616 @@
+{
+ "passed": 122,
+ "total": 122,
+ "cases": [
+  {
+   "case": "click selects the chart",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "three buttons beside the chart",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "buttons at Excel's size and place (±2 px)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente lists Excel's entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente's ticks as Excel's (Achsen, Diagrammtitel, Gitternetzlinien, Legende)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Achsen ticked/cleared and back",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Achsentitel ticked/cleared and back",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Diagrammtitel ticked/cleared and back",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Datenbeschriftungen ticked/cleared and back",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Datentabelle ticked/cleared and back",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Fehlerindikatoren ticked/cleared and back",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Gitternetzlinien ticked/cleared and back",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Legende ticked/cleared and back",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Trendlinie asks for the series (Trendlinie hinzufügen)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Trendlinie on the chosen series only",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Strg+Z takes the trendline away",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Achsen: entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Achsen > Primär vertikal",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Achsentitel: entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Achsentitel > Primär horizontal",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Diagrammtitel: entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Diagrammtitel > Zentriert überlagert",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Datenbeschriftungen: entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Datenbeschriftungen > Innerhalb Ende",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Datenbeschriftungen > Zentriert",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Datentabelle: entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Datentabelle > Ohne Legendensymbole",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Fehlerindikatoren: entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Fehlerindikatoren > Prozentsatz",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Gitternetzlinien: entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Gitternetzlinien > Primäres Hauptgitter vertikal",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Gitternetzlinien > Primäres Hilfsgitter vertikal",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Legende: entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Legende > Oben",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "side menu Legende > Rechts",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Weitere Optionen... opens Legende formatieren",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Esc closes the flyout",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammformatvorlagen: tabs Formatvorlage / Farbe",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Formatvorlage: 14 styles for a column chart (Excel's gallery)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Livevorschau: hovering a style redraws the chart, leaving restores it, nothing changes",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Formatvorlage 2 applied (Excel's style 202)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Formatvorlage 6 applied (Excel's style 207)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Formatvorlage 9 applied (Excel's style 210)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Formatvorlage 14 applied (Excel's style 340)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Strg+Z puts the previous style back",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Farbe: Bunt / Einfarbig with Excel's 17 palettes",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Monochrome Palette 3 applied (scheme 16)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammfilter: tabs Werte / Namen",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammfilter: Excel's rows (Alle auswählen, series, categories)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammfilter: groups Datenreihe and Kategorien",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammfilter: Anwenden and Daten auswählen...",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "hovering Süd fades Nord and West",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "hovering Mrz fades the other categories' columns",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "nothing changes before Anwenden",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Anwenden hides Süd (filtered) and Mrz",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "the chart draws 2 series of 3 categories (6 columns)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "legend without Süd, axis without Mrz",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Strg+Z shows everything again (one undo step)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "(Alle auswählen) cleared and Anwenden hides every series",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Namen: Zeile 1 / (Keine), Spalte A / (Keine)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Namen > (Keine): the series lose their names (Reihe1 …)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Daten auswählen... opens Datenquelle auswählen",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammdatenbereich shows =Tabelle1!$A$1:$D$5",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "the dialog's buttons as Excel names them",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "series list Nord, Süd, West; categories Jan … Apr",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Dialog reduzieren shrinks the dialog to the field",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "pointing at A1:C5 writes =Tabelle1!$A$1:$C$5",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "the chart follows the dialog (2 series x 4 categories)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "the button grows the dialog again",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Zeile/Spalte tauschen: series are the months",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Hinzufügen opens Datenreihe bearbeiten",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Datenreihe bearbeiten: Reihenname and Reihenwerte",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "pointing fills Reihenname =Tabelle1!$F$1 and Reihenwerte =Tabelle1!$F$2:$F$5",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "the previews show = Ost and = 1; 2; 3; 4",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Ost added to the series list",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Bearbeiten (typed name) and Nach oben",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Ausgeblendete und leere Zellen: Lücken, Null, verbinden, #NV, ausgeblendete Daten",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "OK keeps the series, ranges, Null, ausgeblendete Daten and the hidden category",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Strg+Z undoes the whole dialog in one step",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Abbrechen keeps all three series",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "selected chart: names, categories and values framed (red, purple, blue)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "frames cover B1:D1, A2:A5, B2:D5",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "dragging the values' corner to D4 shrinks the data to A1:D4",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "a selected series frames only its own ranges",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "moving the series' values frame one column right: =Tabelle1!$C$2:$C$5",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "context menu of title: Excel's entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "context menu of legend: Excel's entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "context menu of series:0: Excel's entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "right-click on the title opens its menu again",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "context menu > Löschen removes the title",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "contextual tabs Diagrammentwurf and Format",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammentwurf's groups",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelement hinzufügen: the inventory's entries",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Legende submenu: Keine, Rechts, Oben, Links, Unten, Weitere Legendenoptionen...",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Legende > Links",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Schnelllayout: 11 layouts, Layout 5 with Datentabelle",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Farben ändern: Bunt / Einfarbig",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammformatvorlagen gallery in the ribbon",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Zeile/Spalte tauschen: four series (Jan … Apr)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Format's groups as Excel's",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Größe shows 7,62 x 12,7 cm (Excel's new chart)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Breite 15 cm",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens elements.xlsx",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens the elements chart: title",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens the elements chart: legend",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens the elements chart: table",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens the elements chart: valAxis",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens the elements chart: catGrids",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens the elements chart: catTitle",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens the elements chart: labels",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens the elements chart: errorBars",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens styled.xlsx",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens the styled chart (style 340)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens filtered.xlsx",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens the filtered chart: Süd filtered (Series.IsFiltered)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens the filtered chart: Mrz filtered (FullCategoryCollection)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel shows 2 series",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel opens selectdata.xlsx",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel reads the three series' formulas",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel: Leere Zellen als Null",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel: Daten in ausgeblendeten Zeilen und Spalten anzeigen",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Excel: Apr filtered",
+   "passed": true,
+   "detail": ""
+  }
+ ]
+}
