@@ -1,9 +1,10 @@
 // RaabePresent entry point.
 
-import { browserPlatform, isTauri, tauriPlatform } from "@raabe/shell";
+import { browserPlatform, installLostMouseUp, isTauri, tauriPlatform } from "@raabe/shell";
 import "./present.css";
 import { PresentApp } from "./app";
 
+installLostMouseUp();
 const app = new PresentApp(isTauri() ? tauriPlatform() : browserPlatform());
 const feel = (window as unknown as { __FEEL?: string }).__FEEL;
 // The dev server and feel-lab runs expose the app for tests and the browser pane.

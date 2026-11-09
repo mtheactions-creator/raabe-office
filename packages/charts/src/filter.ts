@@ -29,6 +29,12 @@ export function visibleModel(m: ChartModel, accents?: string[]): { model: ChartM
     if (s.cat) v.cat = { ...s.cat, cache: keep(s.cat.cache)! };
     if (s.size) v.size = { ...s.size, cache: keep(s.size.cache)! };
     if (s.levels) v.levels = s.levels.map((l) => keep(l)!);
+    // Benutzerdefinierte Fehlerindikatoren follow their points.
+    if (s.errorBars && (s.errorBars.plus || s.errorBars.minus)) {
+      v.errorBars = { ...s.errorBars };
+      if (s.errorBars.plus) v.errorBars.plus = { ...s.errorBars.plus, cache: keep(s.errorBars.plus.cache)! };
+      if (s.errorBars.minus) v.errorBars.minus = { ...s.errorBars.minus, cache: keep(s.errorBars.minus.cache)! };
+    }
     delete v.filtered;
     series.push(v);
   });

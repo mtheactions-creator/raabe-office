@@ -1,0 +1,2136 @@
+{
+ "column3D": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": -4100,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": true,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 15.41,
+   "Top": 33.09,
+   "Width": 300.71,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 108.45,
+   "Top": 189.12,
+   "Width": 135.11,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 17.0,
+    "Top": 163.0,
+    "Width": 246.0,
+    "Height": 18.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 2.0,
+    "Top": 76.0,
+    "Width": 14.0,
+    "Height": 87.0,
+    "min": 0.0,
+    "max": 5.0,
+    "major": 1.0
+   },
+   "ser": {
+    "Left": 263.0,
+    "Top": 124.0,
+    "Width": 85.0,
+    "Height": 38.0,
+    "min": null,
+    "max": null,
+    "major": null
+   }
+  },
+  "points": [
+   [
+    {
+     "Left": 36.72,
+     "Top": 78.82,
+     "Width": 26.42,
+     "Height": 79.89
+    },
+    {
+     "Left": 85.93,
+     "Top": 110.13,
+     "Width": 26.42,
+     "Height": 48.58
+    },
+    {
+     "Left": 135.15,
+     "Top": 92.73,
+     "Width": 26.42,
+     "Height": 65.97
+    },
+    {
+     "Left": 184.37,
+     "Top": 75.34,
+     "Width": 26.42,
+     "Height": 83.36
+    },
+    {
+     "Left": 233.59,
+     "Top": 97.95,
+     "Width": 26.42,
+     "Height": 60.75
+    }
+   ],
+   [
+    {
+     "Left": 53.55,
+     "Top": 99.13,
+     "Width": 26.42,
+     "Height": 46.84
+    },
+    {
+     "Left": 102.77,
+     "Top": 64.34,
+     "Width": 26.42,
+     "Height": 81.63
+    },
+    {
+     "Left": 151.98,
+     "Top": 109.56,
+     "Width": 26.42,
+     "Height": 36.4
+    },
+    {
+     "Left": 201.2,
+     "Top": 92.17,
+     "Width": 26.42,
+     "Height": 53.8
+    },
+    {
+     "Left": 250.42,
+     "Top": 78.26,
+     "Width": 26.42,
+     "Height": 67.71
+    }
+   ],
+   [
+    {
+     "Left": 70.38,
+     "Top": 93.35,
+     "Width": 26.42,
+     "Height": 39.88
+    },
+    {
+     "Left": 119.6,
+     "Top": 93.35,
+     "Width": 26.42,
+     "Height": 39.88
+    },
+    {
+     "Left": 168.82,
+     "Top": 75.95,
+     "Width": 26.42,
+     "Height": 57.27
+    },
+    {
+     "Left": 218.04,
+     "Top": 41.17,
+     "Width": 26.42,
+     "Height": 92.06
+    },
+    {
+     "Left": 267.25,
+     "Top": 58.56,
+     "Width": 26.42,
+     "Height": 74.67
+    }
+   ]
+  ],
+  "walls": {
+   "fill": -1,
+   "line": -1
+  },
+  "floor": {
+   "fill": -1,
+   "line": -1
+  }
+ },
+ "column3DClustered": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": 54,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": true,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 22.21,
+   "Top": 33.09,
+   "Width": 322.79,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 108.45,
+   "Top": 189.12,
+   "Width": 135.11,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 32.0,
+    "Top": 164.0,
+    "Width": 291.0,
+    "Height": 18.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 10.0,
+    "Top": 44.0,
+    "Width": 21.0,
+    "Height": 120.0,
+    "min": 0.0,
+    "max": 5.0,
+    "major": 0.5
+   }
+  },
+  "points": [
+   [
+    {
+     "Left": 44.74,
+     "Top": 55.17,
+     "Width": 17.38,
+     "Height": 106.48
+    },
+    {
+     "Left": 103.01,
+     "Top": 98.34,
+     "Width": 17.38,
+     "Height": 63.31
+    },
+    {
+     "Left": 161.29,
+     "Top": 74.36,
+     "Width": 17.38,
+     "Height": 87.29
+    },
+    {
+     "Left": 219.57,
+     "Top": 50.37,
+     "Width": 17.38,
+     "Height": 111.27
+    },
+    {
+     "Left": 277.84,
+     "Top": 81.55,
+     "Width": 17.38,
+     "Height": 80.1
+    }
+   ],
+   [
+    {
+     "Left": 57.69,
+     "Top": 100.74,
+     "Width": 17.38,
+     "Height": 60.91
+    },
+    {
+     "Left": 115.96,
+     "Top": 52.77,
+     "Width": 17.38,
+     "Height": 108.88
+    },
+    {
+     "Left": 174.24,
+     "Top": 115.13,
+     "Width": 17.38,
+     "Height": 46.52
+    },
+    {
+     "Left": 232.52,
+     "Top": 91.14,
+     "Width": 17.38,
+     "Height": 70.5
+    },
+    {
+     "Left": 290.8,
+     "Top": 71.96,
+     "Width": 17.38,
+     "Height": 89.69
+    }
+   ],
+   [
+    {
+     "Left": 70.64,
+     "Top": 110.33,
+     "Width": 17.38,
+     "Height": 51.32
+    },
+    {
+     "Left": 128.91,
+     "Top": 110.33,
+     "Width": 17.38,
+     "Height": 51.32
+    },
+    {
+     "Left": 187.19,
+     "Top": 86.35,
+     "Width": 17.38,
+     "Height": 75.3
+    },
+    {
+     "Left": 245.47,
+     "Top": 38.38,
+     "Width": 17.38,
+     "Height": 123.27
+    },
+    {
+     "Left": 303.75,
+     "Top": 62.36,
+     "Width": 17.38,
+     "Height": 99.28
+    }
+   ]
+  ],
+  "walls": {
+   "fill": -1,
+   "line": -1
+  },
+  "floor": {
+   "fill": -1,
+   "line": -1
+  }
+ },
+ "column3DStacked": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": 55,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": true,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 19.97,
+   "Top": 33.09,
+   "Width": 325.03,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 108.45,
+   "Top": 189.12,
+   "Width": 135.11,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 33.0,
+    "Top": 164.0,
+    "Width": 279.0,
+    "Height": 18.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 14.0,
+    "Top": 50.0,
+    "Width": 19.0,
+    "Height": 114.0,
+    "min": 0.0,
+    "max": 14.0,
+    "major": 2.0
+   }
+  },
+  "points": [
+   [
+    {
+     "Left": 55.24,
+     "Top": 119.1,
+     "Width": 29.96,
+     "Height": 40.8
+    },
+    {
+     "Left": 111.05,
+     "Top": 133.76,
+     "Width": 29.96,
+     "Height": 26.14
+    },
+    {
+     "Left": 166.86,
+     "Top": 125.61,
+     "Width": 29.96,
+     "Height": 34.29
+    },
+    {
+     "Left": 222.67,
+     "Top": 117.47,
+     "Width": 29.96,
+     "Height": 42.43
+    },
+    {
+     "Left": 278.48,
+     "Top": 128.06,
+     "Width": 29.96,
+     "Height": 31.84
+    }
+   ],
+   [
+    {
+     "Left": 55.24,
+     "Top": 99.55,
+     "Width": 29.96,
+     "Height": 25.33
+    },
+    {
+     "Left": 111.05,
+     "Top": 97.92,
+     "Width": 29.96,
+     "Height": 41.62
+    },
+    {
+     "Left": 166.86,
+     "Top": 110.95,
+     "Width": 29.96,
+     "Height": 20.44
+    },
+    {
+     "Left": 222.67,
+     "Top": 94.66,
+     "Width": 29.96,
+     "Height": 28.59
+    },
+    {
+     "Left": 278.48,
+     "Top": 98.73,
+     "Width": 29.96,
+     "Height": 35.1
+    }
+   ],
+   [
+    {
+     "Left": 55.24,
+     "Top": 83.26,
+     "Width": 29.96,
+     "Height": 22.07
+    },
+    {
+     "Left": 111.05,
+     "Top": 81.63,
+     "Width": 29.96,
+     "Height": 22.07
+    },
+    {
+     "Left": 166.86,
+     "Top": 86.51,
+     "Width": 29.96,
+     "Height": 30.22
+    },
+    {
+     "Left": 222.67,
+     "Top": 53.93,
+     "Width": 29.96,
+     "Height": 46.51
+    },
+    {
+     "Left": 278.48,
+     "Top": 66.15,
+     "Width": 29.96,
+     "Height": 38.36
+    }
+   ]
+  ],
+  "walls": {
+   "fill": -1,
+   "line": -1
+  },
+  "floor": {
+   "fill": -1,
+   "line": -1
+  }
+ },
+ "column3DStacked100": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": 56,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": true,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 30.96,
+   "Top": 33.09,
+   "Width": 314.04,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 108.45,
+   "Top": 189.12,
+   "Width": 135.11,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 43.0,
+    "Top": 164.0,
+    "Width": 271.0,
+    "Height": 18.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 13.0,
+    "Top": 50.0,
+    "Width": 30.0,
+    "Height": 115.0,
+    "min": 0.0,
+    "max": 1.0,
+    "major": 0.2
+   }
+  },
+  "points": [
+   [
+    {
+     "Left": 64.45,
+     "Top": 97.83,
+     "Width": 29.08,
+     "Height": 62.25
+    },
+    {
+     "Left": 118.63,
+     "Top": 122.28,
+     "Width": 29.08,
+     "Height": 37.8
+    },
+    {
+     "Left": 172.81,
+     "Top": 106.15,
+     "Width": 29.08,
+     "Height": 53.93
+    },
+    {
+     "Left": 226.99,
+     "Top": 112.55,
+     "Width": 29.08,
+     "Height": 47.53
+    },
+    {
+     "Left": 281.17,
+     "Top": 120.52,
+     "Width": 29.08,
+     "Height": 39.56
+    }
+   ],
+   [
+    {
+     "Left": 64.45,
+     "Top": 66.22,
+     "Width": 29.08,
+     "Height": 37.22
+    },
+    {
+     "Left": 118.63,
+     "Top": 65.63,
+     "Width": 29.08,
+     "Height": 62.26
+    },
+    {
+     "Left": 172.81,
+     "Top": 81.3,
+     "Width": 29.08,
+     "Height": 30.46
+    },
+    {
+     "Left": 226.99,
+     "Top": 86.46,
+     "Width": 29.08,
+     "Height": 31.69
+    },
+    {
+     "Left": 281.17,
+     "Top": 82.32,
+     "Width": 29.08,
+     "Height": 43.81
+    }
+   ],
+   [
+    {
+     "Left": 64.45,
+     "Top": 39.88,
+     "Width": 29.08,
+     "Height": 31.95
+    },
+    {
+     "Left": 118.63,
+     "Top": 39.88,
+     "Width": 29.08,
+     "Height": 31.36
+    },
+    {
+     "Left": 172.81,
+     "Top": 39.88,
+     "Width": 29.08,
+     "Height": 47.03
+    },
+    {
+     "Left": 226.99,
+     "Top": 39.88,
+     "Width": 29.08,
+     "Height": 52.19
+    },
+    {
+     "Left": 281.17,
+     "Top": 39.88,
+     "Width": 29.08,
+     "Height": 48.05
+    }
+   ]
+  ],
+  "walls": {
+   "fill": -1,
+   "line": -1
+  },
+  "floor": {
+   "fill": -1,
+   "line": -1
+  }
+ },
+ "bar3DClustered": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": 60,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": true,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 25.24,
+   "Top": 33.09,
+   "Width": 317.48,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 108.45,
+   "Top": 189.12,
+   "Width": 135.11,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 8.0,
+    "Top": 40.0,
+    "Width": 24.0,
+    "Height": 125.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 32.0,
+    "Top": 164.0,
+    "Width": 298.0,
+    "Height": 18.0,
+    "min": 0.0,
+    "max": 5.0,
+    "major": 1.0
+   }
+  },
+  "points": [
+   [
+    {
+     "Left": 33.43,
+     "Top": 151.92,
+     "Width": 258.02,
+     "Height": 6.97
+    },
+    {
+     "Left": 33.43,
+     "Top": 127.0,
+     "Width": 150.8,
+     "Height": 6.97
+    },
+    {
+     "Left": 33.43,
+     "Top": 102.08,
+     "Width": 210.37,
+     "Height": 6.97
+    },
+    {
+     "Left": 33.43,
+     "Top": 77.16,
+     "Width": 269.93,
+     "Height": 6.97
+    },
+    {
+     "Left": 33.43,
+     "Top": 52.23,
+     "Width": 192.5,
+     "Height": 6.97
+    }
+   ],
+   [
+    {
+     "Left": 33.43,
+     "Top": 146.38,
+     "Width": 144.85,
+     "Height": 6.97
+    },
+    {
+     "Left": 33.43,
+     "Top": 121.46,
+     "Width": 263.97,
+     "Height": 6.97
+    },
+    {
+     "Left": 33.43,
+     "Top": 96.54,
+     "Width": 109.11,
+     "Height": 6.97
+    },
+    {
+     "Left": 33.43,
+     "Top": 71.62,
+     "Width": 168.67,
+     "Height": 6.97
+    },
+    {
+     "Left": 33.43,
+     "Top": 46.7,
+     "Width": 216.32,
+     "Height": 6.97
+    }
+   ],
+   [
+    {
+     "Left": 33.43,
+     "Top": 140.85,
+     "Width": 121.02,
+     "Height": 6.97
+    },
+    {
+     "Left": 33.43,
+     "Top": 115.92,
+     "Width": 121.02,
+     "Height": 6.97
+    },
+    {
+     "Left": 33.43,
+     "Top": 91.0,
+     "Width": 180.59,
+     "Height": 6.97
+    },
+    {
+     "Left": 33.43,
+     "Top": 66.08,
+     "Width": 299.71,
+     "Height": 6.97
+    },
+    {
+     "Left": 33.43,
+     "Top": 41.16,
+     "Width": 240.15,
+     "Height": 6.97
+    }
+   ]
+  ],
+  "walls": {
+   "fill": -1,
+   "line": -1
+  },
+  "floor": {
+   "fill": -1,
+   "line": -1
+  }
+ },
+ "bar3DStacked": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": 61,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": true,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 25.24,
+   "Top": 33.09,
+   "Width": 315.2,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 108.45,
+   "Top": 189.12,
+   "Width": 135.11,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 9.0,
+    "Top": 42.0,
+    "Width": 24.0,
+    "Height": 122.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 33.0,
+    "Top": 164.0,
+    "Width": 290.0,
+    "Height": 18.0,
+    "min": 0.0,
+    "max": 14.0,
+    "major": 2.0
+   }
+  },
+  "points": [
+   [
+    {
+     "Left": 35.75,
+     "Top": 142.67,
+     "Width": 92.26,
+     "Height": 12.29
+    },
+    {
+     "Left": 35.75,
+     "Top": 118.27,
+     "Width": 55.04,
+     "Height": 12.29
+    },
+    {
+     "Left": 35.75,
+     "Top": 93.87,
+     "Width": 75.71,
+     "Height": 12.29
+    },
+    {
+     "Left": 35.75,
+     "Top": 69.47,
+     "Width": 96.39,
+     "Height": 12.29
+    },
+    {
+     "Left": 35.75,
+     "Top": 45.07,
+     "Width": 69.51,
+     "Height": 12.29
+    }
+   ],
+   [
+    {
+     "Left": 124.67,
+     "Top": 142.67,
+     "Width": 52.97,
+     "Height": 12.29
+    },
+    {
+     "Left": 87.44,
+     "Top": 118.27,
+     "Width": 94.33,
+     "Height": 12.29
+    },
+    {
+     "Left": 108.12,
+     "Top": 93.87,
+     "Width": 40.56,
+     "Height": 12.29
+    },
+    {
+     "Left": 128.8,
+     "Top": 69.47,
+     "Width": 61.24,
+     "Height": 12.29
+    },
+    {
+     "Left": 101.92,
+     "Top": 45.07,
+     "Width": 77.78,
+     "Height": 12.29
+    }
+   ],
+   [
+    {
+     "Left": 174.3,
+     "Top": 142.67,
+     "Width": 44.7,
+     "Height": 12.29
+    },
+    {
+     "Left": 178.43,
+     "Top": 118.27,
+     "Width": 44.7,
+     "Height": 12.29
+    },
+    {
+     "Left": 145.34,
+     "Top": 93.87,
+     "Width": 65.38,
+     "Height": 12.29
+    },
+    {
+     "Left": 186.7,
+     "Top": 69.47,
+     "Width": 106.73,
+     "Height": 12.29
+    },
+    {
+     "Left": 176.36,
+     "Top": 45.07,
+     "Width": 86.05,
+     "Height": 12.29
+    }
+   ]
+  ],
+  "walls": {
+   "fill": -1,
+   "line": -1
+  },
+  "floor": {
+   "fill": -1,
+   "line": -1
+  }
+ },
+ "bar3DStacked100": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": 62,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": true,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 25.24,
+   "Top": 33.09,
+   "Width": 309.7,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 108.45,
+   "Top": 189.12,
+   "Width": 135.11,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 9.0,
+    "Top": 42.0,
+    "Width": 24.0,
+    "Height": 122.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 33.0,
+    "Top": 164.0,
+    "Width": 285.0,
+    "Height": 18.0,
+    "min": 0.0,
+    "max": 1.0,
+    "major": 0.2
+   }
+  },
+  "points": [
+   [
+    {
+     "Left": 35.45,
+     "Top": 142.69,
+     "Width": 144.02,
+     "Height": 12.29
+    },
+    {
+     "Left": 35.45,
+     "Top": 118.27,
+     "Width": 83.29,
+     "Height": 12.29
+    },
+    {
+     "Left": 35.45,
+     "Top": 93.86,
+     "Width": 123.36,
+     "Height": 12.29
+    },
+    {
+     "Left": 35.45,
+     "Top": 69.44,
+     "Width": 107.47,
+     "Height": 12.29
+    },
+    {
+     "Left": 35.45,
+     "Top": 45.02,
+     "Width": 87.67,
+     "Height": 12.29
+    }
+   ],
+   [
+    {
+     "Left": 176.12,
+     "Top": 142.69,
+     "Width": 81.86,
+     "Height": 12.29
+    },
+    {
+     "Left": 115.4,
+     "Top": 118.27,
+     "Width": 144.05,
+     "Height": 12.29
+    },
+    {
+     "Left": 155.47,
+     "Top": 93.86,
+     "Width": 65.07,
+     "Height": 12.29
+    },
+    {
+     "Left": 139.58,
+     "Top": 69.44,
+     "Width": 68.13,
+     "Height": 12.29
+    },
+    {
+     "Left": 119.78,
+     "Top": 45.02,
+     "Width": 98.21,
+     "Height": 12.29
+    }
+   ],
+   [
+    {
+     "Left": 254.64,
+     "Top": 142.69,
+     "Width": 68.77,
+     "Height": 12.29
+    },
+    {
+     "Left": 256.11,
+     "Top": 118.27,
+     "Width": 67.3,
+     "Height": 12.29
+    },
+    {
+     "Left": 217.2,
+     "Top": 93.86,
+     "Width": 106.22,
+     "Height": 12.29
+    },
+    {
+     "Left": 204.37,
+     "Top": 69.44,
+     "Width": 119.04,
+     "Height": 12.29
+    },
+    {
+     "Left": 214.66,
+     "Top": 45.02,
+     "Width": 108.76,
+     "Height": 12.29
+    }
+   ]
+  ],
+  "walls": {
+   "fill": -1,
+   "line": -1
+  },
+  "floor": {
+   "fill": -1,
+   "line": -1
+  }
+ },
+ "line3D": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": -4101,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": false,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 15.41,
+   "Top": 33.09,
+   "Width": 300.71,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 108.45,
+   "Top": 189.12,
+   "Width": 135.11,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 41.0,
+    "Top": 134.0,
+    "Width": 233.0,
+    "Height": 48.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 21.0,
+    "Top": 53.0,
+    "Width": 20.0,
+    "Height": 81.0,
+    "min": 0.0,
+    "max": 5.0,
+    "major": 1.0
+   },
+   "ser": {
+    "Left": 274.0,
+    "Top": 119.0,
+    "Width": 53.0,
+    "Height": 45.0,
+    "min": null,
+    "max": null,
+    "major": null
+   }
+  },
+  "points": [
+   [
+    {
+     "Left": 45.48,
+     "Top": 51.69,
+     "Width": 0.0,
+     "Height": 0.0
+    },
+    {
+     "Left": 105.62,
+     "Top": 99.51,
+     "Width": 0.0,
+     "Height": 0.0
+    },
+    {
+     "Left": 165.77,
+     "Top": 72.94,
+     "Width": 0.0,
+     "Height": 0.0
+    },
+    {
+     "Left": 225.91,
+     "Top": 46.37,
+     "Width": 0.0,
+     "Height": 0.0
+    },
+    {
+     "Left": 286.05,
+     "Top": 80.91,
+     "Width": 0.0,
+     "Height": 0.0
+    }
+   ],
+   [
+    {
+     "Left": 45.48,
+     "Top": 102.17,
+     "Width": 0.0,
+     "Height": 0.0
+    },
+    {
+     "Left": 105.62,
+     "Top": 49.03,
+     "Width": 0.0,
+     "Height": 0.0
+    },
+    {
+     "Left": 165.77,
+     "Top": 118.11,
+     "Width": 0.0,
+     "Height": 0.0
+    },
+    {
+     "Left": 225.91,
+     "Top": 91.54,
+     "Width": 0.0,
+     "Height": 0.0
+    },
+    {
+     "Left": 286.05,
+     "Top": 70.28,
+     "Width": 0.0,
+     "Height": 0.0
+    }
+   ],
+   [
+    {
+     "Left": 45.48,
+     "Top": 112.79,
+     "Width": 0.0,
+     "Height": 0.0
+    },
+    {
+     "Left": 105.62,
+     "Top": 112.79,
+     "Width": 0.0,
+     "Height": 0.0
+    },
+    {
+     "Left": 165.77,
+     "Top": 86.22,
+     "Width": 0.0,
+     "Height": 0.0
+    },
+    {
+     "Left": 225.91,
+     "Top": 33.09,
+     "Width": 0.0,
+     "Height": 0.0
+    },
+    {
+     "Left": 286.05,
+     "Top": 59.66,
+     "Width": 0.0,
+     "Height": 0.0
+    }
+   ]
+  ],
+  "walls": {
+   "fill": -1,
+   "line": -1
+  },
+  "floor": {
+   "fill": -1,
+   "line": -1
+  }
+ },
+ "area3D": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": -4098,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": false,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 15.41,
+   "Top": 33.09,
+   "Width": 300.71,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 108.45,
+   "Top": 189.12,
+   "Width": 135.11,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 25.0,
+    "Top": 127.0,
+    "Width": 266.0,
+    "Height": 52.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 5.0,
+    "Top": 58.0,
+    "Width": 20.0,
+    "Height": 68.0,
+    "min": 0.0,
+    "max": 5.0,
+    "major": 1.0
+   },
+   "ser": {
+    "Left": 291.0,
+    "Top": 110.0,
+    "Width": 51.0,
+    "Height": 49.0,
+    "min": null,
+    "max": null,
+    "major": null
+   }
+  },
+  "points": [
+   [
+    {
+     "Left": 15.41,
+     "Top": 51.69,
+     "Width": 0.0,
+     "Height": 114.24
+    },
+    {
+     "Left": 90.59,
+     "Top": 99.51,
+     "Width": 0.0,
+     "Height": 66.42
+    },
+    {
+     "Left": 165.77,
+     "Top": 72.94,
+     "Width": 0.0,
+     "Height": 92.99
+    },
+    {
+     "Left": 240.94,
+     "Top": 46.37,
+     "Width": 0.0,
+     "Height": 119.55
+    },
+    {
+     "Left": 316.12,
+     "Top": 80.91,
+     "Width": 0.0,
+     "Height": 85.02
+    }
+   ],
+   [
+    {
+     "Left": 15.41,
+     "Top": 102.17,
+     "Width": 0.0,
+     "Height": 63.76
+    },
+    {
+     "Left": 90.59,
+     "Top": 49.03,
+     "Width": 0.0,
+     "Height": 116.9
+    },
+    {
+     "Left": 165.77,
+     "Top": 118.11,
+     "Width": 0.0,
+     "Height": 47.82
+    },
+    {
+     "Left": 240.94,
+     "Top": 91.54,
+     "Width": 0.0,
+     "Height": 74.39
+    },
+    {
+     "Left": 316.12,
+     "Top": 70.28,
+     "Width": 0.0,
+     "Height": 95.64
+    }
+   ],
+   [
+    {
+     "Left": 15.41,
+     "Top": 112.79,
+     "Width": 0.0,
+     "Height": 53.13
+    },
+    {
+     "Left": 90.59,
+     "Top": 112.79,
+     "Width": 0.0,
+     "Height": 53.13
+    },
+    {
+     "Left": 165.77,
+     "Top": 86.22,
+     "Width": 0.0,
+     "Height": 79.7
+    },
+    {
+     "Left": 240.94,
+     "Top": 33.09,
+     "Width": 0.0,
+     "Height": 132.84
+    },
+    {
+     "Left": 316.12,
+     "Top": 59.66,
+     "Width": 0.0,
+     "Height": 106.27
+    }
+   ]
+  ],
+  "walls": {
+   "fill": -1,
+   "line": -1
+  },
+  "floor": {
+   "fill": -1,
+   "line": -1
+  }
+ },
+ "area3DStacked": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": 78,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": false,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 19.97,
+   "Top": 33.09,
+   "Width": 318.0,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 108.45,
+   "Top": 189.12,
+   "Width": 135.11,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 40.0,
+    "Top": 129.0,
+    "Width": 270.0,
+    "Height": 53.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 14.0,
+    "Top": 42.0,
+    "Width": 26.0,
+    "Height": 88.0,
+    "min": 0.0,
+    "max": 15.0,
+    "major": 5.0
+   }
+  },
+  "points": [
+   [
+    {
+     "Left": 19.97,
+     "Top": 127.85,
+     "Width": 0.0,
+     "Height": 38.08
+    },
+    {
+     "Left": 99.47,
+     "Top": 143.79,
+     "Width": 0.0,
+     "Height": 22.14
+    },
+    {
+     "Left": 178.97,
+     "Top": 134.93,
+     "Width": 0.0,
+     "Height": 31.0
+    },
+    {
+     "Left": 258.47,
+     "Top": 126.08,
+     "Width": 0.0,
+     "Height": 39.85
+    },
+    {
+     "Left": 337.96,
+     "Top": 137.59,
+     "Width": 0.0,
+     "Height": 28.34
+    }
+   ],
+   [
+    {
+     "Left": 19.97,
+     "Top": 106.59,
+     "Width": 0.0,
+     "Height": 21.25
+    },
+    {
+     "Left": 99.47,
+     "Top": 104.82,
+     "Width": 0.0,
+     "Height": 38.97
+    },
+    {
+     "Left": 178.97,
+     "Top": 118.99,
+     "Width": 0.0,
+     "Height": 15.94
+    },
+    {
+     "Left": 258.47,
+     "Top": 101.28,
+     "Width": 0.0,
+     "Height": 24.8
+    },
+    {
+     "Left": 337.96,
+     "Top": 105.71,
+     "Width": 0.0,
+     "Height": 31.88
+    }
+   ],
+   [
+    {
+     "Left": 19.97,
+     "Top": 88.88,
+     "Width": 0.0,
+     "Height": 17.71
+    },
+    {
+     "Left": 99.47,
+     "Top": 87.11,
+     "Width": 0.0,
+     "Height": 17.71
+    },
+    {
+     "Left": 178.97,
+     "Top": 92.42,
+     "Width": 0.0,
+     "Height": 26.57
+    },
+    {
+     "Left": 258.47,
+     "Top": 57.0,
+     "Width": 0.0,
+     "Height": 44.28
+    },
+    {
+     "Left": 337.96,
+     "Top": 70.28,
+     "Width": 0.0,
+     "Height": 35.42
+    }
+   ]
+  ],
+  "walls": {
+   "fill": -1,
+   "line": -1
+  },
+  "floor": {
+   "fill": -1,
+   "line": -1
+  }
+ },
+ "area3DStacked100": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": 79,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": false,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 30.96,
+   "Top": 33.09,
+   "Width": 307.0,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 108.45,
+   "Top": 189.12,
+   "Width": 135.11,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 49.0,
+    "Top": 130.0,
+    "Width": 263.0,
+    "Height": 52.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 13.0,
+    "Top": 42.0,
+    "Width": 36.0,
+    "Height": 89.0,
+    "min": 0.0,
+    "max": 1.0,
+    "major": 0.2
+   }
+  },
+  "points": [
+   [
+    {
+     "Left": 30.96,
+     "Top": 100.27,
+     "Width": 0.0,
+     "Height": 65.65
+    },
+    {
+     "Left": 107.71,
+     "Top": 128.61,
+     "Width": 0.0,
+     "Height": 37.31
+    },
+    {
+     "Left": 184.46,
+     "Top": 109.91,
+     "Width": 0.0,
+     "Height": 56.02
+    },
+    {
+     "Left": 261.21,
+     "Top": 117.33,
+     "Width": 0.0,
+     "Height": 48.6
+    },
+    {
+     "Left": 337.96,
+     "Top": 126.57,
+     "Width": 0.0,
+     "Height": 39.36
+    }
+   ],
+   [
+    {
+     "Left": 30.96,
+     "Top": 63.63,
+     "Width": 0.0,
+     "Height": 36.64
+    },
+    {
+     "Left": 107.71,
+     "Top": 62.94,
+     "Width": 0.0,
+     "Height": 65.67
+    },
+    {
+     "Left": 184.46,
+     "Top": 81.1,
+     "Width": 0.0,
+     "Height": 28.81
+    },
+    {
+     "Left": 261.21,
+     "Top": 87.09,
+     "Width": 0.0,
+     "Height": 30.24
+    },
+    {
+     "Left": 337.96,
+     "Top": 82.29,
+     "Width": 0.0,
+     "Height": 44.28
+    }
+   ],
+   [
+    {
+     "Left": 30.96,
+     "Top": 33.09,
+     "Width": 0.0,
+     "Height": 30.54
+    },
+    {
+     "Left": 107.71,
+     "Top": 33.09,
+     "Width": 0.0,
+     "Height": 29.85
+    },
+    {
+     "Left": 184.46,
+     "Top": 33.09,
+     "Width": 0.0,
+     "Height": 48.01
+    },
+    {
+     "Left": 261.21,
+     "Top": 33.09,
+     "Width": 0.0,
+     "Height": 54.0
+    },
+    {
+     "Left": 337.96,
+     "Top": 33.09,
+     "Width": 0.0,
+     "Height": 49.2
+    }
+   ]
+  ],
+  "walls": {
+   "fill": -1,
+   "line": -1
+  },
+  "floor": {
+   "fill": -1,
+   "line": -1
+  }
+ },
+ "surface3D": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": 83,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": false,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 24.53,
+   "Top": 33.09,
+   "Width": 310.84,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 115.69,
+   "Top": 189.12,
+   "Width": 122.12,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 61.0,
+    "Top": 135.0,
+    "Width": 216.0,
+    "Height": 46.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 33.0,
+    "Top": 63.0,
+    "Width": 28.0,
+    "Height": 73.0,
+    "min": 0.0,
+    "max": 150.0,
+    "major": 50.0
+   },
+   "ser": {
+    "Left": 277.0,
+    "Top": 102.0,
+    "Width": 44.0,
+    "Height": 62.0,
+    "min": null,
+    "max": null,
+    "major": null
+   }
+  },
+  "points": [
+   [],
+   [],
+   [],
+   [],
+   []
+  ],
+  "walls": {
+   "fill": 0,
+   "line": 0
+  },
+  "floor": {
+   "fill": 0,
+   "line": 0
+  }
+ },
+ "surfaceWireframe": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": 84,
+  "view": {
+   "Elevation": 15,
+   "Rotation": 20,
+   "Perspective": 30,
+   "RightAngleAxes": false,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 24.53,
+   "Top": 33.09,
+   "Width": 310.84,
+   "Height": 132.84
+  },
+  "title": {
+   "Left": 132.35,
+   "Top": 2.0,
+   "Width": 87.29,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 115.69,
+   "Top": 189.12,
+   "Width": 122.12,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "Left": 61.0,
+    "Top": 135.0,
+    "Width": 216.0,
+    "Height": 46.0,
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "Left": 33.0,
+    "Top": 63.0,
+    "Width": 28.0,
+    "Height": 73.0,
+    "min": 0.0,
+    "max": 150.0,
+    "major": 50.0
+   },
+   "ser": {
+    "Left": 277.0,
+    "Top": 102.0,
+    "Width": 44.0,
+    "Height": 62.0,
+    "min": null,
+    "max": null,
+    "major": null
+   }
+  },
+  "points": [
+   [],
+   [],
+   [],
+   [],
+   []
+  ],
+  "walls": {
+   "fill": 0,
+   "line": 0
+  },
+  "floor": {
+   "fill": 0,
+   "line": 0
+  }
+ },
+ "pie3D": {
+  "chartArea": {
+   "w": 360.0,
+   "h": 216.0
+  },
+  "type": -4102,
+  "view": {
+   "Elevation": 30,
+   "Rotation": 0,
+   "Perspective": 30,
+   "RightAngleAxes": false,
+   "DepthPercent": 100,
+   "GapDepth": 150,
+   "HeightPercent": 100,
+   "AutoScaling": true
+  },
+  "plotArea": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "plotInside": {
+   "Left": 7.0,
+   "Top": 33.09,
+   "Width": 338.0,
+   "Height": 145.03
+  },
+  "title": {
+   "Left": 151.78,
+   "Top": 2.0,
+   "Width": 48.44,
+   "Height": 20.09
+  },
+  "legend": {
+   "Left": 96.06,
+   "Top": 189.12,
+   "Width": 159.89,
+   "Height": 16.88
+  },
+  "axes": {
+   "cat": {
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "val": {
+    "min": null,
+    "max": null,
+    "major": null
+   },
+   "ser": {
+    "min": null,
+    "max": null,
+    "major": null
+   }
+  },
+  "points": [
+   [
+    {
+     "Left": -4.0,
+     "Top": -4.01,
+     "Width": 0.01,
+     "Height": 0.01
+    },
+    {
+     "Left": -4.0,
+     "Top": -4.0,
+     "Width": 0.01,
+     "Height": 0.01
+    },
+    {
+     "Left": -4.01,
+     "Top": -4.0,
+     "Width": 0.01,
+     "Height": 0.01
+    },
+    {
+     "Left": -4.01,
+     "Top": -4.01,
+     "Width": 0.01,
+     "Height": 0.01
+    },
+    {
+     "Left": -4.0,
+     "Top": -4.01,
+     "Width": 0.0,
+     "Height": 0.01
+    }
+   ]
+  ],
+  "walls": {
+   "fill": -1,
+   "line": -1
+  },
+  "floor": {
+   "fill": -1,
+   "line": -1
+  }
+ }
+}

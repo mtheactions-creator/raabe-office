@@ -131,7 +131,7 @@ function trendline(s: ChartSeries, i: number): string {
 }
 
 function errBars(s: ChartSeries, scatter: boolean): string {
-  return s.errorBars ? errBarsXml(s.errorBars, scatter, `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln>`) : "";
+  return s.errorBars ? errBarsXml(s.errorBars, scatter, `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln>`, numData) : "";
 }
 
 const MARKER_NONE = '<c:marker><c:symbol val="none"/></c:marker>';
@@ -859,6 +859,10 @@ function plainChartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellAnc
       if (val(xml, find(xml, eb, "c:noEndCap")) === "1") e.noEndCap = true;
       const v = val(xml, find(xml, eb, "c:val"));
       if (v !== undefined) e.value = Number(v);
+      for (const side of ["plus", "minus"] as const) {
+        const d = readData(xml, find(xml, eb, `c:${side}`));
+        if (d) e[side] = { ref: d.ref, cache: d.cache.map((x) => (typeof x === "number" ? x : null)), format: d.format };
+      }
       out.errorBars = e;
     }
     if (val(xml, find(xml, s, "c:dLbls", "c:showVal")) === "1") dataLabels = true;

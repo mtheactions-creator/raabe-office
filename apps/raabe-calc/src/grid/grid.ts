@@ -1138,7 +1138,100 @@ export class Grid {
 
   // ----- events ---------------------------------------------------------------------------------
 
+  /**
+   * The vertical scroll bar's mouse handling, as Excel's (D-127): the browser's own scroll bar drag takes
+   * at most one pointer move per frame and drops the last one when two come in a frame, so a fast
+   * move could leave the thumb short of the pointer. A transparent layer over the bar takes the mouse;
+   * the bar itself still draws the thumb. Arrows scroll a row (repeating while held), the track a
+   * screen towards the pointer, the thumb follows the pointer and goes back to where it was while the
+   * pointer is far beside the bar (Windows' scroll bars).
+   */
+  private installScrollBar(): void {
+    const ARROW = 17;
+    const hit = h("div", { class: "vscroll-hit" });
+    this.el.append(hit);
+    new MutationObserver(() => { hit.style.top = this.vscroll.style.top; hit.hidden = this.vscroll.hidden; })
+      .observe(this.vscroll, { attributes: true, attributeFilter: ["style", "hidden"] });
+    const geo = () => {
+      const v = this.vscroll, r = v.getBoundingClientRect();
+      const track = Math.max(0, v.clientHeight - 2 * ARROW);
+      const range = Math.max(0, v.scrollHeight - v.clientHeight);
+      const len = range ? Math.max(17, (track * v.clientHeight) / v.scrollHeight) : track;
+      const top = r.top + ARROW + (range ? (v.scrollTop / range) * (track - len) : 0);
+      return { r, track, range, len, top };
+    };
+    const rowStep = (n: number) => {
+      const top = Math.max(this.view.freeze?.row ?? 0, this.rows.step(this.view.top, n > 0 ? 1 : -1));
+      if (top === this.view.top) return;
+      this.view.top = top;
+      this.updateScrollbars();
+      this.invalidate();
+    };
+    const page = (dir: number) => {
+      const p = this.panes().at(-1)!;
+      let top = this.view.top;
+      const span = Math.max(1, p.h / this.zoom);
+      const target = this.rows.pos(top) + dir * span;
+      if (dir > 0) while (this.rows.pos(top) < target - 0.5) top = this.rows.step(top, 1);
+      else while (top > 0 && this.rows.pos(top) > target + 0.5) top = this.rows.step(top, -1);
+      this.view.top = Math.max(this.view.freeze?.row ?? 0, top);
+      this.updateScrollbars();
+      this.invalidate();
+    };
+    hit.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      e.stopPropagation();
+      hit.setPointerCapture(e.pointerId);
+      const g = geo();
+      const y = e.clientY;
+      let timer = 0;
+      const repeat = (fn: () => boolean) => {
+        if (!fn()) return;
+        timer = window.setTimeout(function again() { if (fn()) timer = window.setTimeout(again, 50); }, 400);
+      };
+      let pointerY = y;
+      const end = () => {
+        clearTimeout(timer);
+        hit.removeEventListener("pointermove", move);
+        hit.removeEventListener("pointerup", end);
+        hit.removeEventListener("pointercancel", end);
+        hit.removeEventListener("lostpointercapture", end);
+      };
+      let move = (ev: PointerEvent) => { pointerY = ev.clientY; };
+      if (y < g.r.top + ARROW) repeat(() => { rowStep(-1); return true; });
+      else if (y > g.r.bottom - ARROW) repeat(() => { rowStep(1); return true; });
+      else if (y >= g.top && y <= g.top + g.len) {
+        const grab = y - g.top, start = this.vscroll.scrollTop;
+        move = (ev: PointerEvent) => {
+          const now = geo();
+          // Far beside or beyond the bar, the thumb goes back to where it was (Windows: 8 and 3 bar widths).
+          const far = ev.clientX < now.r.left - 8 * ARROW || ev.clientX > now.r.right + 8 * ARROW
+            || ev.clientY < now.r.top - 3 * ARROW || ev.clientY > now.r.bottom + 3 * ARROW;
+          if (far) { this.vscroll.scrollTop = start; return; }
+          if (!now.range || now.track <= now.len) return;
+          const t = Math.max(0, Math.min(now.track - now.len, ev.clientY - grab - now.r.top - ARROW));
+          this.vscroll.scrollTop = (t / (now.track - now.len)) * now.range;
+        };
+      } else {
+        // The track: a screen at a time towards the pointer, until the thumb is under it.
+        const dir = y < g.top ? -1 : 1;
+        repeat(() => {
+          const now = geo();
+          if (dir < 0 ? pointerY >= now.top : pointerY <= now.top + now.len) return false;
+          page(dir);
+          return true;
+        });
+      }
+      hit.addEventListener("pointermove", move);
+      hit.addEventListener("pointerup", end);
+      hit.addEventListener("pointercancel", end);
+      hit.addEventListener("lostpointercapture", end);
+    });
+  }
+
   private installEvents(): void {
+    this.installScrollBar();
     this.vscroll.addEventListener("scroll", () => {
       if (this.suppressScroll) return;
       this.view.top = Math.max(this.view.freeze?.row ?? 0, this.rows.at(this.vscroll.scrollTop / this.zoom + 0.5));
@@ -1178,6 +1271,10 @@ export class Grid {
     this.canvas.addEventListener("pointerdown", (e) => this.onDown(e));
     this.canvas.addEventListener("pointermove", (e) => this.onMove(e));
     this.canvas.addEventListener("pointerup", (e) => this.onUp(e));
+    // The pointer taken away (another window came to the front): the drag ends where it is, and the
+    // auto-scroll with it (D-127).
+    this.canvas.addEventListener("pointercancel", () => { if (!this.touch) this.cancelDrag(); });
+    this.canvas.addEventListener("lostpointercapture", () => { if (this.drag && !this.touch) this.cancelDrag(); });
     this.canvas.addEventListener("dblclick", (e) => this.onDouble(e));
     this.canvas.addEventListener("contextmenu", (e) => {
       e.preventDefault();
@@ -1481,7 +1578,11 @@ export class Grid {
       return;
     }
     const d = this.drag;
-    this.autoScroll(p);
+    // A move without the button: its release never came (D-127).
+    if (!e.buttons && e.pointerType === "mouse" && !this.touch) { this.onUp(e); return; }
+    // Excel scrolls while the pointer is beyond the cells' edge, but not while it sizes a column or row (D-127).
+    this.lastDrag = e;
+    if (d.kind !== "resizeCol" && d.kind !== "resizeRow") this.autoScroll(p);
     const hit = this.hit(Math.max(this.headerW() + 1, Math.min(this.width - 1, p.x)), Math.max(this.headerH() + 1, Math.min(this.height - 1, p.y)));
     switch (d.kind) {
       case "point":
@@ -1658,6 +1759,25 @@ export class Grid {
 
   private liveSize: { kind: "col" | "row"; i: number; size: number } | null = null;
 
+  /** The drag ends without effect (the pointer was taken away, D-127). */
+  private cancelDrag(): void {
+    if (!this.drag) return;
+    this.drag = null;
+    this.stopAutoScroll();
+    delete this.canvas.dataset.tip;
+    this.ghost = null;
+    this.insertLine = null;
+    if (this.liveSize) {
+      this.liveSize = null;
+      this.liveBefore = [];
+      const a = sheetAxes(this.sheet);
+      this.rows = a.rows;
+      this.cols = a.cols;
+      this.updateScrollbars();
+    }
+    this.invalidate();
+  }
+
   private onUp(e: PointerEvent): void {
     if (this.touch && e.pointerId === this.touch.id) { this.onTouchUp(e); return; }
     const d = this.drag;
@@ -1679,6 +1799,16 @@ export class Grid {
     if (d.kind === "resizeCol" || d.kind === "resizeRow") {
       const live = this.liveSize;
       this.liveSize = null;
+      if (live && (e.clientX < 0 || e.clientY < 0 || e.clientX >= innerWidth || e.clientY >= innerHeight)) {
+        // Let go outside the window: the column or row keeps its size (Excel; D-127).
+        this.liveBefore = [];
+        const a = sheetAxes(this.sheet);
+        this.rows = a.rows;
+        this.cols = a.cols;
+        this.updateScrollbars();
+        this.invalidate();
+        return;
+      }
       if (live) {
         const kind = d.kind === "resizeCol" ? "cols" : "rows";
         const sel = this.selection.at(-1)!;
@@ -1742,6 +1872,13 @@ export class Grid {
       this.invalidate();
       return;
     }
+    if (d.kind === "move" && this.ghost && (e.clientX < 0 || e.clientY < 0 || e.clientX >= innerWidth || e.clientY >= innerHeight)) {
+      // Let go outside the window: Excel hands the cells to the system's drag and drop there, and nothing moves
+      // when nothing takes them (D-127).
+      this.ghost = null;
+      this.invalidate();
+      return;
+    }
     if (d.kind === "move" && this.ghost) {
       const g = this.ghost;
       this.ghost = null;
@@ -1785,16 +1922,23 @@ export class Grid {
   }
 
   private scrollTimer = 0;
+  private scrollDir = { dx: 0, dy: 0 };
+  private lastDrag: PointerEvent | null = null;
   private autoScroll(p: { x: number; y: number }): void {
     const hw = this.headerW(), hh = this.headerH();
     const dy = p.y > this.height ? 1 : p.y < hh ? -1 : 0;
     const dx = p.x > this.width ? 1 : p.x < hw ? -1 : 0;
     if (!dx && !dy) { this.stopAutoScroll(); return; }
+    // The direction follows the pointer (it may go from below to the right without coming back in).
+    this.scrollDir = { dx, dy };
     if (this.scrollTimer) return;
     this.scrollTimer = window.setInterval(() => {
-      if (dy) this.view.top = Math.max(this.view.freeze?.row ?? 0, this.rows.step(this.view.top, dy as 1 | -1));
-      if (dx) this.view.left = Math.max(this.view.freeze?.col ?? 0, this.cols.step(this.view.left, dx as 1 | -1));
+      const { dx: sx, dy: sy } = this.scrollDir;
+      if (sy) this.view.top = Math.max(this.view.freeze?.row ?? 0, this.rows.step(this.view.top, sy as 1 | -1));
+      if (sx) this.view.left = Math.max(this.view.freeze?.col ?? 0, this.cols.step(this.view.left, sx as 1 | -1));
       this.updateScrollbars();
+      // What is dragged goes on with the cells that scrolled in, though the pointer stands still (Excel; D-127).
+      if (this.drag && this.lastDrag) this.onMove(this.lastDrag);
       this.invalidate();
     }, 50);
   }
@@ -1802,6 +1946,7 @@ export class Grid {
   private stopAutoScroll(): void {
     clearInterval(this.scrollTimer);
     this.scrollTimer = 0;
+    this.lastDrag = null;
   }
 
   private onDouble(e: MouseEvent): void {

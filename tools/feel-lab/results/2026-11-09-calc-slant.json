@@ -1,0 +1,57 @@
+{
+ "checks": [
+  {
+   "check": "B2 (45 degrees): the left border runs along the text (3/3 points)",
+   "ok": true,
+   "detail": {
+    "hits": 3,
+    "box": [
+     120.0,
+     30.0,
+     240.0,
+     60.0
+    ],
+    "size": [
+     960,
+     120
+    ]
+   }
+  },
+  {
+   "check": "B2 (45 degrees): no upright left border in the middle",
+   "ok": true,
+   "detail": 0
+  },
+  {
+   "check": "F2 (-45 degrees): the left border runs along the text (3/3 points)",
+   "ok": true,
+   "detail": {
+    "hits": 3,
+    "box": [
+     600.0,
+     30.0,
+     720.0,
+     60.0
+    ],
+    "size": [
+     960,
+     120
+    ]
+   }
+  },
+  {
+   "check": "F2 (-45 degrees): no upright left border in the middle",
+   "ok": true,
+   "detail": 0
+  },
+  {
+   "check": "D2 (no border): stays a rectangle, no fill beyond its right edge",
+   "ok": true,
+   "detail": [
+    235,
+    235,
+    235
+   ]
+  }
+ ]
+}
