@@ -1,0 +1,4489 @@
+{
+ "summary": {
+  "cases": 83,
+  "compared": 82,
+  "passed": 54,
+  "seconds": 537,
+  "baseDifferences": [
+   "/cells/B2/NumberFormat",
+   "/cells/B2/Style",
+   "/cells/B2/Text",
+   "/cells/B3/NumberFormat",
+   "/cells/B3/Style",
+   "/cells/B3/Text",
+   "/cells/B4/NumberFormat",
+   "/cells/B4/Style",
+   "/cells/B4/Text",
+   "/cells/B5/NumberFormat",
+   "/cells/B5/Style",
+   "/cells/B5/Text"
+  ]
+ },
+ "results": [
+  {
+   "name": "Fett",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Fett",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Fett auf gemischter Auswahl",
+   "selection": "A1:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Fett",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Kursiv",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Kursiv",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Unterstreichen",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Unterstreichen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Doppelt unterstreichen",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Unterstreichen ▾",
+     true,
+     null
+    ],
+    [
+     "UDoppelt unterstreichen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Schriftgrad vergrößern",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Schriftgrad vergrößern",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Schriftgrad verkleinern",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Schriftgrad verkleinern",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Schriftgrad 16",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Schriftgrad",
+     true,
+     null
+    ],
+    [
+     "16",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Schriftart Arial",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Schriftart",
+     true,
+     null
+    ],
+    [
+     "Arial",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Rahmenlinie unten",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie unten",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Rahmenlinie oben",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie oben",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Rahmenlinie links",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie links",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Rahmenlinie rechts",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie rechts",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Alle Rahmenlinien",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Alle Rahmenlinien",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Rahmenlinien außen",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinien außen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Dicke Rahmenlinie außen",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Dicke Rahmenlinie außen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Doppelte Rahmenlinien unten",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Doppelte Rahmenlinien unten",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Dicke Rahmenlinie unten",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Dicke Rahmenlinie unten",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Rahmenlinie oben und unten",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie oben und unten",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Rahmenlinie oben und dicke unten",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie oben und dicke unten",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Rahmenlinie oben und doppelte unten",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie oben und doppelte unten",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Kein Rahmen nach Alle",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Alle Rahmenlinien",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Kein Rahmen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Oben ausrichten",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Oben ausrichten",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Zentriert ausrichten",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Zentriert ausrichten",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Linksbündig",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Linksbündig",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Zentriert",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Zentriert",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Rechtsbündig",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Rechtsbündig",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Einzug vergrößern",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Einzug vergrößern",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Einzug vergrößern und verkleinern",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Einzug vergrößern",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Einzug vergrößern",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Einzug verkleinern",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Textumbruch",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Textumbruch",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Verbinden und zentrieren",
+   "selection": "A1:D1",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Verbinden und zentrieren",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Verbinden über",
+   "selection": "A2:C3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Verbinden und zentrieren ▾",
+     true,
+     null
+    ],
+    [
+     "Verbinden über",
+     true,
+     null
+    ]
+   ],
+   "diff": [
+    "/cells/C2/NumberFormat: 'General' -> 'm/d/yyyy'",
+    "/cells/C3/NumberFormat: 'General' -> 'm/d/yyyy'"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Zellen verbinden",
+   "selection": "C1:D2",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Verbinden und zentrieren ▾",
+     true,
+     null
+    ],
+    [
+     "Zellen verbinden",
+     true,
+     null
+    ]
+   ],
+   "diff": [
+    "/cells/C2/Font: ('Calibri', 11.0, True, False, -4142, False, False, False, 0.0) -> ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0)",
+    "/cells/C2/NumberFormat: 'General' -> 'm/d/yyyy'",
+    "/cells/D2/Font: ('Calibri', 11.0, True, False, -4142, False, False, False, 0.0) -> ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0)"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Gegen den Uhrzeigersinn drehen",
+   "selection": "A1:D1",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Ausrichtung",
+     true,
+     null
+    ],
+    [
+     "Gegen den Uhrzeigersinn drehen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Text nach oben drehen",
+   "selection": "A1:D1",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Ausrichtung",
+     true,
+     null
+    ],
+    [
+     "Text nach oben drehen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Prozentformat",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|Prozentformat",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "1.000er-Trennzeichen",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|1.000er-Trennzeichen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Dezimalstelle hinzufügen",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|Dezimalstelle hinzufügen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Dezimalstelle entfernen",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|Dezimalstelle entfernen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Dezimalstelle hinzufügen Standard",
+   "selection": "D2:D5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|Dezimalstelle hinzufügen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Buchhaltungszahlenformat",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|Buchhaltungszahlenformat",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Zahlenformat Währung",
+   "selection": "D2:D5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|Zahlenformat",
+     true,
+     null
+    ],
+    [
+     "Währung",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Zahlenformat Prozent",
+   "selection": "D2:D5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|Zahlenformat",
+     true,
+     null
+    ],
+    [
+     "Prozent",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Zahlenformat Datum lang",
+   "selection": "C2:C5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|Zahlenformat",
+     true,
+     null
+    ],
+    [
+     "Datum, lang",
+     true,
+     null
+    ]
+   ],
+   "diff": [
+    "/cells/C2/NumberFormat: '[$-F800]dddd, d/ mmmm yyyy' -> '[$-F800]dddd, mmmm dd, yyyy'",
+    "/cells/C2/Text: 'Sonntag, 1. März 2026' -> '##########'",
+    "/cells/C3/NumberFormat: '[$-F800]dddd, d/ mmmm yyyy' -> '[$-F800]dddd, mmmm dd, yyyy'",
+    "/cells/C3/Text: 'Sonntag, 15. März 2026' -> '##########'",
+    "/cells/C4/NumberFormat: '[$-F800]dddd, d/ mmmm yyyy' -> '[$-F800]dddd, mmmm dd, yyyy'",
+    "/cells/C4/Text: 'Donnerstag, 2. April 2026' -> '##########'",
+    "/cells/C5/NumberFormat: '[$-F800]dddd, d/ mmmm yyyy' -> '[$-F800]dddd, mmmm dd, yyyy'",
+    "/cells/C5/Text: 'Montag, 20. April 2026' -> '##########'",
+    "/cols/2/0: 21.27 -> 10.27"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Zahlenformat Text",
+   "selection": "D2:D5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|Zahlenformat",
+     true,
+     null
+    ],
+    [
+     "Text",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Alle löschen",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Löschen",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|Löschen'): not found",
+   "diff": [
+    "/cells/A2/Formula: '' -> 'Anna'",
+    "/cells/A2/Text: '' -> 'Anna'",
+    "/cells/A2/Value2: None -> 'Anna'",
+    "/cells/A3/Formula: '' -> 'Ben'",
+    "/cells/A3/Text: '' -> 'Ben'",
+    "/cells/A3/Value2: None -> 'Ben'",
+    "/cells/A4/Formula: '' -> 'Cem'",
+    "/cells/A4/Text: '' -> 'Cem'",
+    "/cells/A4/Value2: None -> 'Cem'",
+    "/cells/B2/Formula: '' -> '12'",
+    "/cells/B2/Value2: None -> 12.0",
+    "/cells/B3/Formula: '' -> '7.5'",
+    "/cells/B3/Value2: None -> 7.5",
+    "/cells/B4/Formula: '' -> '15'",
+    "/cells/B4/Value2: None -> 15.0",
+    "/cells/B6/Text: '9' -> '43,5'",
+    "/cells/B6/Value2: 9.0 -> 43.5"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Formate löschen",
+   "selection": "A1:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Löschen",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|Löschen'): not found",
+   "diff": [
+    "/cells/A1/Font: ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0) -> ('Calibri', 11.0, True, False, -4142, False, False, False, 0.0)",
+    "/cells/B1/Font: ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0) -> ('Calibri', 11.0, True, False, -4142, False, False, False, 0.0)"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Inhalte löschen",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Löschen",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|Löschen'): not found",
+   "diff": [
+    "/cells/A2/Formula: '' -> 'Anna'",
+    "/cells/A2/Text: '' -> 'Anna'",
+    "/cells/A2/Value2: None -> 'Anna'",
+    "/cells/A3/Formula: '' -> 'Ben'",
+    "/cells/A3/Text: '' -> 'Ben'",
+    "/cells/A3/Value2: None -> 'Ben'",
+    "/cells/A4/Formula: '' -> 'Cem'",
+    "/cells/A4/Text: '' -> 'Cem'",
+    "/cells/A4/Value2: None -> 'Cem'",
+    "/cells/B2/Formula: '' -> '12'",
+    "/cells/B2/Value2: None -> 12.0",
+    "/cells/B3/Formula: '' -> '7.5'",
+    "/cells/B3/Value2: None -> 7.5",
+    "/cells/B4/Formula: '' -> '15'",
+    "/cells/B4/Value2: None -> 15.0",
+    "/cells/B6/Text: '9' -> '43,5'",
+    "/cells/B6/Value2: 9.0 -> 43.5"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Ausfüllen unten",
+   "selection": "A2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Ausfüllen",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|Ausfüllen'): not found",
+   "diff": [
+    "/cells/A3/Formula: 'Anna' -> 'Ben'",
+    "/cells/A3/Text: 'Anna' -> 'Ben'",
+    "/cells/A3/Value2: 'Anna' -> 'Ben'",
+    "/cells/A4/Formula: 'Anna' -> 'Cem'",
+    "/cells/A4/Text: 'Anna' -> 'Cem'",
+    "/cells/A4/Value2: 'Anna' -> 'Cem'",
+    "/cells/A5/Formula: 'Anna' -> 'Dora'",
+    "/cells/A5/Text: 'Anna' -> 'Dora'",
+    "/cells/A5/Value2: 'Anna' -> 'Dora'",
+    "/cells/B3/Formula: '12' -> '7.5'",
+    "/cells/B3/Value2: 12.0 -> 7.5",
+    "/cells/B4/Formula: '12' -> '15'",
+    "/cells/B4/Value2: 12.0 -> 15.0",
+    "/cells/B5/Formula: '12' -> '9'",
+    "/cells/B5/Value2: 12.0 -> 9.0",
+    "/cells/B6/Text: '48' -> '43,5'",
+    "/cells/B6/Value2: 48.0 -> 43.5"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Ausfüllen rechts",
+   "selection": "B2:D3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Ausfüllen",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|Ausfüllen'): not found",
+   "diff": [
+    "/cells/C2/Formula: '12' -> '46082'",
+    "/cells/C2/NumberFormat: '_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)' -> 'm/d/yyyy'",
+    "/cells/C2/Style: 'Comma' -> 'Normal'",
+    "/cells/C2/Text: '           12,00 ' -> '01.03.2026'",
+    "/cells/C2/Value2: 12.0 -> 46082.0",
+    "/cells/C3/Formula: '7.5' -> '46096'",
+    "/cells/C3/NumberFormat: '_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)' -> 'm/d/yyyy'",
+    "/cells/C3/Style: 'Comma' -> 'Normal'",
+    "/cells/C3/Text: '              7,50 ' -> '15.03.2026'",
+    "/cells/C3/Value2: 7.5 -> 46096.0",
+    "/cells/D2/Formula: '12' -> '2'",
+    "/cells/D2/NumberFormat: '_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)' -> 'General'",
+    "/cells/D2/Style: 'Comma' -> 'Normal'",
+    "/cells/D2/Text: '           12,00 ' -> '2'",
+    "/cells/D2/Value2: 12.0 -> 2.0",
+    "/cells/D3/Formula: '7.5' -> '4'",
+    "/cells/D3/NumberFormat: '_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)' -> 'General'",
+    "/cells/D3/Style: 'Comma' -> 'Normal'",
+    "/cells/D3/Text: '              7,50 ' -> '4'",
+    "/cells/D3/Value2: 7.5 -> 4.0"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Ausfüllen oben",
+   "selection": "A2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Ausfüllen",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|Ausfüllen'): not found",
+   "diff": [
+    "/cells/A2/Formula: 'Dora' -> 'Anna'",
+    "/cells/A2/Text: 'Dora' -> 'Anna'",
+    "/cells/A2/Value2: 'Dora' -> 'Anna'",
+    "/cells/A3/Formula: 'Dora' -> 'Ben'",
+    "/cells/A3/Text: 'Dora' -> 'Ben'",
+    "/cells/A3/Value2: 'Dora' -> 'Ben'",
+    "/cells/A4/Formula: 'Dora' -> 'Cem'",
+    "/cells/A4/Text: 'Dora' -> 'Cem'",
+    "/cells/A4/Value2: 'Dora' -> 'Cem'",
+    "/cells/B2/Formula: '9' -> '12'",
+    "/cells/B2/Value2: 9.0 -> 12.0",
+    "/cells/B3/Formula: '9' -> '7.5'",
+    "/cells/B3/Value2: 9.0 -> 7.5",
+    "/cells/B4/Formula: '9' -> '15'",
+    "/cells/B4/Value2: 9.0 -> 15.0",
+    "/cells/B6/Text: '36' -> '43,5'",
+    "/cells/B6/Value2: 36.0 -> 43.5"
+   ],
+   "pass": false
+  },
+  {
+   "name": "AutoSumme unter Spalte",
+   "selection": "D6",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|AutoSumme",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|AutoSumme'): not found",
+   "diff": [
+    "/cells/D6/Formula: '=SUM(D2:D5)' -> ''",
+    "/cells/D6/Text: '10' -> ''",
+    "/cells/D6/Value2: 10.0 -> None"
+   ],
+   "pass": false
+  },
+  {
+   "name": "AutoSumme Auswahl",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|AutoSumme",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|AutoSumme'): not found",
+   "diff": [
+    "/window/Selection: 'B2:B6' -> 'B2:B5'"
+   ],
+   "pass": false
+  },
+  {
+   "name": "AutoSumme Mittelwert",
+   "selection": "D2:D5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|AutoSumme ▾",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|AutoSumme ▾'): not found",
+   "diff": [
+    "/cells/D6/Formula: '=AVERAGE(D2:D5)' -> ''",
+    "/cells/D6/Text: '2,5' -> ''",
+    "/cells/D6/Value2: 2.5 -> None"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Von A bis Z sortieren",
+   "selection": "B3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Sortieren und Filtern",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|Sortieren und Filtern'): not found",
+   "diff": [
+    "/cells/A2/Formula: 'Ben' -> 'Anna'",
+    "/cells/A2/Text: 'Ben' -> 'Anna'",
+    "/cells/A2/Value2: 'Ben' -> 'Anna'",
+    "/cells/A3/Formula: 'Dora' -> 'Ben'",
+    "/cells/A3/Text: 'Dora' -> 'Ben'",
+    "/cells/A3/Value2: 'Dora' -> 'Ben'",
+    "/cells/A4/Formula: 'Anna' -> 'Cem'",
+    "/cells/A4/Text: 'Anna' -> 'Cem'",
+    "/cells/A4/Value2: 'Anna' -> 'Cem'",
+    "/cells/A5/Formula: 'Cem' -> 'Dora'",
+    "/cells/A5/Text: 'Cem' -> 'Dora'",
+    "/cells/A5/Value2: 'Cem' -> 'Dora'",
+    "/cells/B2/Formula: '7.5' -> '12'",
+    "/cells/B2/Value2: 7.5 -> 12.0",
+    "/cells/B3/Formula: '9' -> '7.5'",
+    "/cells/B3/Value2: 9.0 -> 7.5",
+    "/cells/B4/Formula: '12' -> '15'",
+    "/cells/B4/Value2: 12.0 -> 15.0",
+    "/cells/B5/Formula: '15' -> '9'",
+    "/cells/B5/Value2: 15.0 -> 9.0",
+    "/cells/C2/Formula: '46096' -> '46082'",
+    "/cells/C2/Text: '15.03.2026' -> '01.03.2026'",
+    "/cells/C2/Value2: 46096.0 -> 46082.0",
+    "/cells/C3/Formula: '46132' -> '46096'",
+    "/cells/C3/Text: '20.04.2026' -> '15.03.2026'",
+    "/cells/C3/Value2: 46132.0 -> 46096.0",
+    "/cells/C4/Formula: '46082' -> '46114'",
+    "/cells/C4/Text: '01.03.2026' -> '02.04.2026'",
+    "/cells/C4/Value2: 46082.0 -> 46114.0",
+    "/cells/C5/Formula: '46114' -> '46132'",
+    "/cells/C5/Text: '02.04.2026' -> '20.04.2026'",
+    "/cells/C5/Value2: 46114.0 -> 46132.0",
+    "/cells/D2/Formula: '4' -> '2'",
+    "/cells/D2/Text: '4' -> '2'",
+    "/cells/D2/Value2: 4.0 -> 2.0",
+    "/cells/D3/Formula: '3' -> '4'",
+    "/cells/D3/Text: '3' -> '4'",
+    "/cells/D3/Value2: 3.0 -> 4.0",
+    "/cells/D4/Formula: '2' -> '1'",
+    "/cells/D4/Text: '2' -> '1'",
+    "/cells/D4/Value2: 2.0 -> 1.0",
+    "/cells/D5/Formula: '1' -> '3'",
+    "/cells/D5/Text: '1' -> '3'",
+    "/cells/D5/Value2: 1.0 -> 3.0"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Von Z bis A sortieren",
+   "selection": "A3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Sortieren und Filtern",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|Sortieren und Filtern'): not found",
+   "diff": [
+    "/cells/A2/Formula: 'Summe' -> 'Anna'",
+    "/cells/A2/Text: 'Summe' -> 'Anna'",
+    "/cells/A2/Value2: 'Summe' -> 'Anna'",
+    "/cells/A3/Formula: 'Dora' -> 'Ben'",
+    "/cells/A3/Text: 'Dora' -> 'Ben'",
+    "/cells/A3/Value2: 'Dora' -> 'Ben'",
+    "/cells/A5/Formula: 'Ben' -> 'Dora'",
+    "/cells/A5/Text: 'Ben' -> 'Dora'",
+    "/cells/A5/Value2: 'Ben' -> 'Dora'",
+    "/cells/A6/Formula: 'Anna' -> 'Summe'",
+    "/cells/A6/Text: 'Anna' -> 'Summe'",
+    "/cells/A6/Value2: 'Anna' -> 'Summe'",
+    "/cells/B2/Formula: '=SUM(B1:B1)' -> '12'",
+    "/cells/B2/Value2: 0.0 -> 12.0",
+    "/cells/B3/Formula: '9' -> '7.5'",
+    "/cells/B3/Value2: 9.0 -> 7.5",
+    "/cells/B5/Formula: '7.5' -> '9'",
+    "/cells/B5/Value2: 7.5 -> 9.0",
+    "/cells/B6/Formula: '12' -> '=SUM(B2:B5)'",
+    "/cells/B6/NumberFormat: '_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)' -> 'General'",
+    "/cells/B6/Style: 'Comma' -> 'Normal'",
+    "/cells/B6/Text: '           12,00 ' -> '43,5'",
+    "/cells/B6/Value2: 12.0 -> 43.5",
+    "/cells/C2/Formula: '' -> '46082'",
+    "/cells/C2/NumberFormat: 'General' -> 'm/d/yyyy'",
+    "/cells/C2/Text: '' -> '01.03.2026'",
+    "/cells/C2/Value2: None -> 46082.0",
+    "/cells/C3/Formula: '46132' -> '46096'",
+    "/cells/C3/Text: '20.04.2026' -> '15.03.2026'",
+    "/cells/C3/Value2: 46132.0 -> 46096.0",
+    "/cells/C5/Formula: '46096' -> '46132'",
+    "/cells/C5/Text: '15.03.2026' -> '20.04.2026'",
+    "/cells/C5/Value2: 46096.0 -> 46132.0",
+    "/cells/C6/Formula: '46082' -> ''",
+    "/cells/C6/NumberFormat: 'm/d/yyyy' -> 'General'",
+    "/cells/C6/Text: '01.03.2026' -> ''",
+    "/cells/C6/Value2: 46082.0 -> None",
+    "/cells/D2/Formula: '' -> '2'",
+    "/cells/D2/Text: '' -> '2'",
+    "/cells/D2/Value2: None -> 2.0",
+    "/cells/D3/Formula: '3' -> '4'",
+    "/cells/D3/Text: '3' -> '4'",
+    "/cells/D3/Value2: 3.0 -> 4.0",
+    "/cells/D5/Formula: '4' -> '3'",
+    "/cells/D5/Text: '4' -> '3'",
+    "/cells/D5/Value2: 4.0 -> 3.0",
+    "/cells/D6/Formula: '2' -> ''",
+    "/cells/D6/Text: '2' -> ''",
+    "/cells/D6/Value2: 2.0 -> None"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Filtern",
+   "selection": "B3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Sortieren und Filtern",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|Sortieren und Filtern'): not found",
+   "diff": [
+    "/autofilter/0: True -> False",
+    "/autofilter/1: 'A1:D6' -> None"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Blattzeilen einfügen",
+   "selection": "A3:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zellen|Einfügen ▾",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Zellen|Einfügen ▾'): not found",
+   "diff": [
+    "/cells/A3/Formula: '' -> 'Ben'",
+    "/cells/A3/Text: '' -> 'Ben'",
+    "/cells/A3/Value2: None -> 'Ben'",
+    "/cells/A4/Formula: '' -> 'Cem'",
+    "/cells/A4/Text: '' -> 'Cem'",
+    "/cells/A4/Value2: None -> 'Cem'",
+    "/cells/A5/Formula: 'Ben' -> 'Dora'",
+    "/cells/A5/Text: 'Ben' -> 'Dora'",
+    "/cells/A5/Value2: 'Ben' -> 'Dora'",
+    "/cells/A6/Formula: 'Cem' -> 'Summe'",
+    "/cells/A6/Text: 'Cem' -> 'Summe'",
+    "/cells/A6/Value2: 'Cem' -> 'Summe'",
+    "/cells/A7/Formula: 'Dora' -> ''",
+    "/cells/A7/Text: 'Dora' -> ''",
+    "/cells/A7/Value2: 'Dora' -> None",
+    "/cells/A8/Formula: 'Summe' -> ''",
+    "/cells/A8/Text: 'Summe' -> ''",
+    "/cells/A8/Value2: 'Summe' -> None",
+    "/cells/B3/Formula: '' -> '7.5'",
+    "/cells/B3/Value2: None -> 7.5",
+    "/cells/B4/Formula: '' -> '15'",
+    "/cells/B4/Value2: None -> 15.0",
+    "/cells/B5/Formula: '7.5' -> '9'",
+    "/cells/B5/Value2: 7.5 -> 9.0",
+    "/cells/B6/Formula: '15' -> '=SUM(B2:B5)'",
+    "/cells/B6/NumberFormat: '_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)' -> 'General'",
+    "/cells/B6/Style: 'Comma' -> 'Normal'",
+    "/cells/B6/Text: '           15,00 ' -> '43,5'",
+    "/cells/B6/Value2: 15.0 -> 43.5",
+    "/cells/B7/Formula: '9' -> ''",
+    "/cells/B7/NumberFormat: '_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)' -> 'General'",
+    "/cells/B7/Style: 'Comma' -> 'Normal'",
+    "/cells/B7/Text: '              9,00 ' -> ''",
+    "/cells/B7/Value2: 9.0 -> None",
+    "/cells/B8/Formula: '=SUM(B2:B7)' -> ''",
+    "/cells/B8/Text: '43,5' -> ''",
+    "/cells/B8/Value2: 43.5 -> None",
+    "/cells/C3/Formula: '' -> '46096'",
+    "/cells/C3/Text: '' -> '15.03.2026'",
+    "/cells/C3/Value2: None -> 46096.0",
+    "/cells/C4/Formula: '' -> '46114'",
+    "/cells/C4/Text: '' -> '02.04.2026'",
+    "/cells/C4/Value2: None -> 46114.0",
+    "/cells/C5/Formula: '46096' -> '46132'",
+    "/cells/C5/Text: '15.03.2026' -> '20.04.2026'",
+    "/cells/C5/Value2: 46096.0 -> 46132.0",
+    "/cells/C6/Formula: '46114' -> ''",
+    "/cells/C6/NumberFormat: 'm/d/yyyy' -> 'General'",
+    "/cells/C6/Text: '02.04.2026' -> ''",
+    "/cells/C6/Value2: 46114.0 -> None",
+    "/cells/C7/Formula: '46132' -> ''",
+    "/cells/C7/NumberFormat: 'm/d/yyyy' -> 'General'",
+    "/cells/C7/Text: '20.04.2026' -> ''",
+    "/cells/C7/Value2: 46132.0 -> None",
+    "/cells/D3/Formula: '' -> '4'",
+    "/cells/D3/Text: '' -> '4'",
+    "/cells/D3/Value2: None -> 4.0",
+    "/cells/D4/Formula: '' -> '1'",
+    "/cells/D4/Text: '' -> '1'",
+    "/cells/D4/Value2: None -> 1.0",
+    "/cells/D5/Formula: '4' -> '3'",
+    "/cells/D5/Text: '4' -> '3'",
+    "/cells/D5/Value2: 4.0 -> 3.0",
+    "/cells/D6/Formula: '1' -> ''",
+    "/cells/D6/Text: '1' -> ''",
+    "/cells/D6/Value2: 1.0 -> None",
+    "/cells/D7/Formula: '3' -> ''",
+    "/cells/D7/Text: '3' -> ''",
+    "/cells/D7/Value2: 3.0 -> None"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Blattspalten einfügen",
+   "selection": "B3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zellen|Einfügen ▾",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Zellen|Einfügen ▾'): not found",
+   "diff": [
+    "/cells/B1/Formula: '' -> 'Punkte'",
+    "/cells/B1/Text: '' -> 'Punkte'",
+    "/cells/B1/Value2: None -> 'Punkte'",
+    "/cells/B2/Formula: '' -> '12'",
+    "/cells/B2/Value2: None -> 12.0",
+    "/cells/B3/Formula: '' -> '7.5'",
+    "/cells/B3/Value2: None -> 7.5",
+    "/cells/B4/Formula: '' -> '15'",
+    "/cells/B4/Value2: None -> 15.0",
+    "/cells/B5/Formula: '' -> '9'",
+    "/cells/B5/Value2: None -> 9.0",
+    "/cells/B6/Formula: '' -> '=SUM(B2:B5)'",
+    "/cells/B6/Text: '' -> '43,5'",
+    "/cells/B6/Value2: None -> 43.5",
+    "/cells/C1/Formula: 'Punkte' -> 'Datum'",
+    "/cells/C1/Text: 'Punkte' -> 'Datum'",
+    "/cells/C1/Value2: 'Punkte' -> 'Datum'",
+    "/cells/C2/Formula: '12' -> '46082'",
+    "/cells/C2/NumberFormat: '_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)' -> 'm/d/yyyy'",
+    "/cells/C2/Style: 'Comma' -> 'Normal'",
+    "/cells/C2/Text: '           12,00 ' -> '01.03.2026'",
+    "/cells/C2/Value2: 12.0 -> 46082.0",
+    "/cells/C3/Formula: '7.5' -> '46096'",
+    "/cells/C3/NumberFormat: '_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)' -> 'm/d/yyyy'",
+    "/cells/C3/Style: 'Comma' -> 'Normal'",
+    "/cells/C3/Text: '              7,50 ' -> '15.03.2026'",
+    "/cells/C3/Value2: 7.5 -> 46096.0",
+    "/cells/C4/Formula: '15' -> '46114'",
+    "/cells/C4/NumberFormat: '_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)' -> 'm/d/yyyy'",
+    "/cells/C4/Style: 'Comma' -> 'Normal'",
+    "/cells/C4/Text: '           15,00 ' -> '02.04.2026'",
+    "/cells/C4/Value2: 15.0 -> 46114.0",
+    "/cells/C5/Formula: '9' -> '46132'",
+    "/cells/C5/NumberFormat: '_(* #,##0.00_);_(* (#,##0.00);_(* \"-\"??_);_(@_)' -> 'm/d/yyyy'",
+    "/cells/C5/Style: 'Comma' -> 'Normal'",
+    "/cells/C5/Text: '              9,00 ' -> '20.04.2026'",
+    "/cells/C5/Value2: 9.0 -> 46132.0",
+    "/cells/C6/Formula: '=SUM(C2:C5)' -> ''",
+    "/cells/C6/Text: '43,5' -> ''",
+    "/cells/C6/Value2: 43.5 -> None",
+    "/cells/D1/Formula: 'Datum' -> 'Note'",
+    "/cells/D1/Text: 'Datum' -> 'Note'",
+    "/cells/D1/Value2: 'Datum' -> 'Note'",
+    "/cells/D2/Formula: '46082' -> '2'",
+    "/cells/D2/NumberFormat: 'm/d/yyyy' -> 'General'",
+    "/cells/D2/Text: '01.03.2026' -> '2'",
+    "/cells/D2/Value2: 46082.0 -> 2.0",
+    "/cells/D3/Formula: '46096' -> '4'",
+    "/cells/D3/NumberFormat: 'm/d/yyyy' -> 'General'",
+    "/cells/D3/Text: '15.03.2026' -> '4'",
+    "/cells/D3/Value2: 46096.0 -> 4.0",
+    "/cells/D4/Formula: '46114' -> '1'",
+    "/cells/D4/NumberFormat: 'm/d/yyyy' -> 'General'",
+    "/cells/D4/Text: '02.04.2026' -> '1'",
+    "/cells/D4/Value2: 46114.0 -> 1.0",
+    "/cells/D5/Formula: '46132' -> '3'",
+    "/cells/D5/NumberFormat: 'm/d/yyyy' -> 'General'",
+    "/cells/D5/Text: '20.04.2026' -> '3'",
+    "/cells/D5/Value2: 46132.0 -> 3.0",
+    "/cells/E1/Font: ('Calibri', 11.0, True, False, -4142, False, False, False, 0.0) -> ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0)",
+    "/cells/E1/Formula: 'Note' -> ''",
+    "/cells/E1/Text: 'Note' -> ''",
+    "/cells/E1/Value2: 'Note' -> None",
+    "/cells/E2/Formula: '2' -> ''",
+    "/cells/E2/Text: '2' -> ''",
+    "/cells/E2/Value2: 2.0 -> None",
+    "/cells/E3/Formula: '4' -> ''",
+    "/cells/E3/Text: '4' -> ''",
+    "/cells/E3/Value2: 4.0 -> None",
+    "/cells/E4/Formula: '1' -> ''",
+    "/cells/E4/Text: '1' -> ''",
+    "/cells/E4/Value2: 1.0 -> None",
+    "/cells/E5/Formula: '3' -> ''",
+    "/cells/E5/Text: '3' -> ''",
+    "/cells/E5/Value2: 3.0 -> None"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Blattzeilen löschen",
+   "selection": "A3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zellen|Löschen ▾",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Zellen|Löschen ▾'): not found",
+   "diff": [
+    "/cells/A3/Formula: 'Cem' -> 'Ben'",
+    "/cells/A3/Text: 'Cem' -> 'Ben'",
+    "/cells/A3/Value2: 'Cem' -> 'Ben'",
+    "/cells/A4/Formula: 'Dora' -> 'Cem'",
+    "/cells/A4/Text: 'Dora' -> 'Cem'",
+    "/cells/A4/Value2: 'Dora' -> 'Cem'",
+    "/cells/A5/Formula: 'Summe' -> 'Dora'",
+    "/cells/A5/Text: 'Summe' -> 'Dora'",
+    "/cells/A5/Value2: 'Summe' -> 'Dora'",
+    "/cells/A6/Formula: '' -> 'Summe'",
+    "/cells/A6/Text: '' -> 'Summe'",
+    "/cells/A6/Value2: None -> 'Summe'",
+    "/cells/B3/Formula: '15' -> '7.5'",
+    "/cells/B3/Value2: 15.0 -> 7.5",
+    "/cells/B4/Formula: '9' -> '15'",
+    "/cells/B4/Value2: 9.0 -> 15.0",
+    "/cells/B5/Formula: '=SUM(B2:B4)' -> '9'",
+    "/cells/B5/Value2: 36.0 -> 9.0",
+    "/cells/B6/Formula: '' -> '=SUM(B2:B5)'",
+    "/cells/B6/Text: '' -> '43,5'",
+    "/cells/B6/Value2: None -> 43.5",
+    "/cells/C3/Formula: '46114' -> '46096'",
+    "/cells/C3/Text: '02.04.2026' -> '15.03.2026'",
+    "/cells/C3/Value2: 46114.0 -> 46096.0",
+    "/cells/C4/Formula: '46132' -> '46114'",
+    "/cells/C4/Text: '20.04.2026' -> '02.04.2026'",
+    "/cells/C4/Value2: 46132.0 -> 46114.0",
+    "/cells/C5/Formula: '' -> '46132'",
+    "/cells/C5/NumberFormat: 'General' -> 'm/d/yyyy'",
+    "/cells/C5/Text: '' -> '20.04.2026'",
+    "/cells/C5/Value2: None -> 46132.0",
+    "/cells/D3/Formula: '1' -> '4'",
+    "/cells/D3/Text: '1' -> '4'",
+    "/cells/D3/Value2: 1.0 -> 4.0",
+    "/cells/D4/Formula: '3' -> '1'",
+    "/cells/D4/Text: '3' -> '1'",
+    "/cells/D4/Value2: 3.0 -> 1.0",
+    "/cells/D5/Formula: '' -> '3'",
+    "/cells/D5/Text: '' -> '3'",
+    "/cells/D5/Value2: None -> 3.0"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Blattspalten löschen",
+   "selection": "C2",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zellen|Löschen ▾",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Zellen|Löschen ▾'): not found",
+   "diff": [
+    "/cells/C1/Formula: 'Note' -> 'Datum'",
+    "/cells/C1/Text: 'Note' -> 'Datum'",
+    "/cells/C1/Value2: 'Note' -> 'Datum'",
+    "/cells/C2/Formula: '2' -> '46082'",
+    "/cells/C2/NumberFormat: 'General' -> 'm/d/yyyy'",
+    "/cells/C2/Text: '2' -> '01.03.2026'",
+    "/cells/C2/Value2: 2.0 -> 46082.0",
+    "/cells/C3/Formula: '4' -> '46096'",
+    "/cells/C3/NumberFormat: 'General' -> 'm/d/yyyy'",
+    "/cells/C3/Text: '4' -> '15.03.2026'",
+    "/cells/C3/Value2: 4.0 -> 46096.0",
+    "/cells/C4/Formula: '1' -> '46114'",
+    "/cells/C4/NumberFormat: 'General' -> 'm/d/yyyy'",
+    "/cells/C4/Text: '1' -> '02.04.2026'",
+    "/cells/C4/Value2: 1.0 -> 46114.0",
+    "/cells/C5/Formula: '3' -> '46132'",
+    "/cells/C5/NumberFormat: 'General' -> 'm/d/yyyy'",
+    "/cells/C5/Text: '3' -> '20.04.2026'",
+    "/cells/C5/Value2: 3.0 -> 46132.0",
+    "/cells/D1/Font: ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0) -> ('Calibri', 11.0, True, False, -4142, False, False, False, 0.0)",
+    "/cells/D1/Formula: '' -> 'Note'",
+    "/cells/D1/Text: '' -> 'Note'",
+    "/cells/D1/Value2: None -> 'Note'",
+    "/cells/D2/Formula: '' -> '2'",
+    "/cells/D2/Text: '' -> '2'",
+    "/cells/D2/Value2: None -> 2.0",
+    "/cells/D3/Formula: '' -> '4'",
+    "/cells/D3/Text: '' -> '4'",
+    "/cells/D3/Value2: None -> 4.0",
+    "/cells/D4/Formula: '' -> '1'",
+    "/cells/D4/Text: '' -> '1'",
+    "/cells/D4/Value2: None -> 1.0",
+    "/cells/D5/Formula: '' -> '3'",
+    "/cells/D5/Text: '' -> '3'",
+    "/cells/D5/Value2: None -> 3.0"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Spaltenbreite automatisch anpassen",
+   "selection": "A1:D6",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zellen|Format",
+     true,
+     null
+    ],
+    [
+     "Spaltenbreite automatisch anpassen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Spaltenbreite 20",
+   "selection": "B2",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zellen|Format",
+     true,
+     null
+    ],
+    [
+     "Spaltenbreite...",
+     true,
+     null
+    ],
+    [
+     "Spaltenbreite:",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Zeilenhöhe 30",
+   "selection": "B2",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zellen|Format",
+     true,
+     null
+    ],
+    [
+     "Zeilenhöhe...",
+     true,
+     null
+    ],
+    [
+     "Zeilenhöhe:",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Zeilen ausblenden",
+   "selection": "A3:A4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zellen|Format",
+     true,
+     null
+    ],
+    [
+     "Ausblenden & Einblenden",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('item', 'Ausblenden & Einblenden'): not found",
+   "diff": [
+    "/rows/2/0: 0.0 -> 14.5",
+    "/rows/2/1: True -> False",
+    "/rows/3/0: 0.0 -> 14.5",
+    "/rows/3/1: True -> False"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Spalten ausblenden",
+   "selection": "C3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zellen|Format",
+     true,
+     null
+    ],
+    [
+     "Ausblenden & Einblenden",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('item', 'Ausblenden & Einblenden'): not found",
+   "diff": [
+    "/cells/C2/Text: '' -> '01.03.2026'",
+    "/cells/C3/Text: '' -> '15.03.2026'",
+    "/cells/C4/Text: '' -> '02.04.2026'",
+    "/cells/C5/Text: '' -> '20.04.2026'",
+    "/cols/2/0: 0.0 -> 10.27",
+    "/cols/2/1: True -> False"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Zellenformatvorlage Gut",
+   "selection": "A2:A4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Zellenformatvorlagen",
+     true,
+     null
+    ],
+    [
+     "Gut",
+     true,
+     null
+    ]
+   ],
+   "diff": [
+    "/cells/A2/Font: ('Aptos Narrow', 11.0, False, False, -4142, False, False, False, 24832.0) -> ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0)",
+    "/cells/A2/Style: 'Gut' -> 'Normal'",
+    "/cells/A3/Font: ('Aptos Narrow', 11.0, False, False, -4142, False, False, False, 24832.0) -> ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0)",
+    "/cells/A3/Style: 'Gut' -> 'Normal'",
+    "/cells/A4/Font: ('Aptos Narrow', 11.0, False, False, -4142, False, False, False, 24832.0) -> ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0)",
+    "/cells/A4/Style: 'Gut' -> 'Normal'"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Zellenformatvorlage Überschrift 1",
+   "selection": "A1:D1",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Zellenformatvorlagen",
+     true,
+     null
+    ],
+    [
+     "Überschrift 1",
+     true,
+     null
+    ]
+   ],
+   "diff": [
+    "/cells/A1/Border bottom/2: 8544277.0 -> 12874308.0",
+    "/cells/A1/Font: ('Aptos Narrow', 15.0, True, False, -4142, False, False, False, 4270094.0) -> ('Calibri', 15.0, True, False, -4142, False, False, False, 0.0)",
+    "/cells/A1/Style: 'Überschrift 1' -> 'Normal'",
+    "/cells/A2/Border top/2: 8544277.0 -> 12874308.0",
+    "/cells/B1/Border bottom/2: 8544277.0 -> 12874308.0",
+    "/cells/B1/Font: ('Aptos Narrow', 15.0, True, False, -4142, False, False, False, 4270094.0) -> ('Calibri', 15.0, True, False, -4142, False, False, False, 0.0)",
+    "/cells/B1/Style: 'Überschrift 1' -> 'Normal'",
+    "/cells/B2/Border top/2: 8544277.0 -> 12874308.0",
+    "/cells/C1/Border bottom/2: 8544277.0 -> 12874308.0",
+    "/cells/C1/Font: ('Aptos Narrow', 15.0, True, False, -4142, False, False, False, 4270094.0) -> ('Calibri', 15.0, True, False, -4142, False, False, False, 0.0)",
+    "/cells/C1/Style: 'Überschrift 1' -> 'Normal'",
+    "/cells/C2/Border top/2: 8544277.0 -> 12874308.0",
+    "/cells/D1/Border bottom/2: 8544277.0 -> 12874308.0",
+    "/cells/D1/Font: ('Aptos Narrow', 15.0, True, False, -4142, False, False, False, 4270094.0) -> ('Calibri', 15.0, True, False, -4142, False, False, False, 0.0)",
+    "/cells/D1/Style: 'Überschrift 1' -> 'Normal'",
+    "/cells/D2/Border top/2: 8544277.0 -> 12874308.0"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Bedingte Formatierung größer als",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Regeln zum Hervorheben von Zellen",
+     true,
+     null
+    ],
+    [
+     "› Größer als...",
+     true,
+     null
+    ],
+    [
+     "",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "diff": [
+    "/cf/0/4: 0.0 -> 13551615.0",
+    "/cf/0/5: None -> 393372.0"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Formeln anzeigen",
+   "selection": "A1",
+   "steps": [
+    [
+     "Formeln",
+     true,
+     null
+    ],
+    [
+     "Formelüberwachung|Formeln anzeigen",
+     true,
+     null
+    ]
+   ],
+   "diff": [
+    "/cells/B6/Text: '=SUMME(B2:B5)' -> '43,5'",
+    "/cells/C2/Text: '46082' -> '01.03.2026'",
+    "/cells/C3/Text: '46096' -> '15.03.2026'",
+    "/cells/C4/Text: '46114' -> '02.04.2026'",
+    "/cells/C5/Text: '46132' -> '20.04.2026'"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Fenster fixieren",
+   "selection": "B3",
+   "steps": [
+    [
+     "Ansicht",
+     true,
+     null
+    ],
+    [
+     "Fenster|Fenster fixieren",
+     true,
+     null
+    ],
+    [
+     "Fenster fixieren",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Oberste Zeile fixieren",
+   "selection": "B3",
+   "steps": [
+    [
+     "Ansicht",
+     true,
+     null
+    ],
+    [
+     "Fenster|Fenster fixieren",
+     true,
+     null
+    ],
+    [
+     "Oberste Zeile fixieren",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Erste Spalte fixieren",
+   "selection": "B3",
+   "steps": [
+    [
+     "Ansicht",
+     true,
+     null
+    ],
+    [
+     "Fenster|Fenster fixieren",
+     true,
+     null
+    ],
+    [
+     "Erste Spalte fixieren",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Querformat",
+   "selection": "A1",
+   "steps": [
+    [
+     "Seitenlayout",
+     true,
+     null
+    ],
+    [
+     "Seite einrichten|Ausrichtung",
+     true,
+     null
+    ],
+    [
+     "Querformat",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Druckbereich festlegen",
+   "selection": "A1:B4",
+   "steps": [
+    [
+     "Seitenlayout",
+     true,
+     null
+    ],
+    [
+     "Seite einrichten|Druckbereich",
+     true,
+     null
+    ],
+    [
+     "Druckbereich festlegen",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Gruppieren Zeilen",
+   "selection": "A2:A4",
+   "steps": [
+    [
+     "Daten",
+     true,
+     null
+    ],
+    [
+     "Gliederung|Gruppieren",
+     true,
+     null
+    ]
+   ],
+   "dialog": "Gruppieren",
+   "diff": [
+    "/rows/1/2: 2.0 -> 1.0",
+    "/rows/2/2: 2.0 -> 1.0",
+    "/rows/3/2: 2.0 -> 1.0"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Zelle sperren aus",
+   "selection": "A2",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zellen|Format",
+     true,
+     null
+    ],
+    [
+     "Zelle sperren",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Zellen formatieren Ausfüllen gemischt",
+   "selection": "A1:B3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|Zellennummer formatieren",
+     true,
+     null
+    ],
+    [
+     "Ausfüllen",
+     true,
+     null
+    ],
+    [
+     "12",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "excel": "no reference (checked by its own expectation)",
+   "ours": {
+    "A1": {
+     "Formula": "Name",
+     "Value2": "Name",
+     "NumberFormat": "General",
+     "Text": "Name",
+     "Font": [
+      "Calibri",
+      11.0,
+      true,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "B1": {
+     "Formula": "Punkte",
+     "Value2": "Punkte",
+     "NumberFormat": "General",
+     "Text": "Punkte",
+     "Font": [
+      "Calibri",
+      11.0,
+      true,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "C1": {
+     "Formula": "Datum",
+     "Value2": "Datum",
+     "NumberFormat": "General",
+     "Text": "Datum",
+     "Font": [
+      "Calibri",
+      11.0,
+      true,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "D1": {
+     "Formula": "Note",
+     "Value2": "Note",
+     "NumberFormat": "General",
+     "Text": "Note",
+     "Font": [
+      "Calibri",
+      11.0,
+      true,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "E1": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "F1": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "A2": {
+     "Formula": "Anna",
+     "Value2": "Anna",
+     "NumberFormat": "General",
+     "Text": "Anna",
+     "Font": [
+      "Calibri",
+      11.0,
+      true,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "B2": {
+     "Formula": "12",
+     "Value2": 12.0,
+     "NumberFormat": "General",
+     "Text": "12",
+     "Font": [
+      "Calibri",
+      11.0,
+      true,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "C2": {
+     "Formula": "46082",
+     "Value2": 46082.0,
+     "NumberFormat": "m/d/yyyy",
+     "Text": "01.03.2026",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "D2": {
+     "Formula": "2",
+     "Value2": 2.0,
+     "NumberFormat": "General",
+     "Text": "2",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "E2": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "F2": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "A3": {
+     "Formula": "Ben",
+     "Value2": "Ben",
+     "NumberFormat": "General",
+     "Text": "Ben",
+     "Font": [
+      "Calibri",
+      11.0,
+      true,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "B3": {
+     "Formula": "7.5",
+     "Value2": 7.5,
+     "NumberFormat": "General",
+     "Text": "7,5",
+     "Font": [
+      "Calibri",
+      11.0,
+      true,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "C3": {
+     "Formula": "46096",
+     "Value2": 46096.0,
+     "NumberFormat": "m/d/yyyy",
+     "Text": "15.03.2026",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "D3": {
+     "Formula": "4",
+     "Value2": 4.0,
+     "NumberFormat": "General",
+     "Text": "4",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "E3": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "F3": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "A4": {
+     "Formula": "Cem",
+     "Value2": "Cem",
+     "NumberFormat": "General",
+     "Text": "Cem",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "B4": {
+     "Formula": "15",
+     "Value2": 15.0,
+     "NumberFormat": "_-* #,##0.00 _€_-;-* #,##0.00 _€_-;_-* \"-\"?? _€_-;_-@_-",
+     "Text": "         15,00   ",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "C4": {
+     "Formula": "46114",
+     "Value2": 46114.0,
+     "NumberFormat": "m/d/yyyy",
+     "Text": "02.04.2026",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "D4": {
+     "Formula": "1",
+     "Value2": 1.0,
+     "NumberFormat": "General",
+     "Text": "1",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "E4": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "F4": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "A5": {
+     "Formula": "Dora",
+     "Value2": "Dora",
+     "NumberFormat": "General",
+     "Text": "Dora",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "B5": {
+     "Formula": "9",
+     "Value2": 9.0,
+     "NumberFormat": "_-* #,##0.00 _€_-;-* #,##0.00 _€_-;_-* \"-\"?? _€_-;_-@_-",
+     "Text": "            9,00   ",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "C5": {
+     "Formula": "46132",
+     "Value2": 46132.0,
+     "NumberFormat": "m/d/yyyy",
+     "Text": "20.04.2026",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "D5": {
+     "Formula": "3",
+     "Value2": 3.0,
+     "NumberFormat": "General",
+     "Text": "3",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "E5": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "F5": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "A6": {
+     "Formula": "Summe",
+     "Value2": "Summe",
+     "NumberFormat": "General",
+     "Text": "Summe",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "B6": {
+     "Formula": "=SUM(B2:B5)",
+     "Value2": 43.5,
+     "NumberFormat": "General",
+     "Text": "43,5",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "C6": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "D6": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "E6": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "F6": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "A7": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "B7": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "C7": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "D7": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "E7": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "F7": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "A8": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "B8": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "C8": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "D8": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "E8": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    },
+    "F8": {
+     "Formula": "",
+     "Value2": null,
+     "NumberFormat": "General",
+     "Text": "",
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ],
+     "Align": [
+      1,
+      -4107,
+      false,
+      0,
+      -4128,
+      false
+     ],
+     "Protection": [
+      true,
+      false
+     ],
+     "Merge": null,
+     "Style": "Normal",
+     "HasArray": false,
+     "Array": null,
+     "Border left": null,
+     "Border top": null,
+     "Border bottom": null,
+     "Border right": null,
+     "Border diagonal_down": null,
+     "Border diagonal_up": null
+    }
+   }
+  },
+  {
+   "name": "Zellen formatieren OK ohne Änderung",
+   "selection": "A1:B3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|Zellennummer formatieren",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "diff": [
+    "/cells/A2/Font: ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0) -> ('Calibri', 11.0, True, False, -4142, False, False, False, 0.0)",
+    "/cells/A3/Font: ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0) -> ('Calibri', 11.0, True, False, -4142, False, False, False, 0.0)",
+    "/cells/B2/Font: ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0) -> ('Calibri', 11.0, True, False, -4142, False, False, False, 0.0)",
+    "/cells/B3/Font: ('Calibri', 11.0, False, False, -4142, False, False, False, 0.0) -> ('Calibri', 11.0, True, False, -4142, False, False, False, 0.0)"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Zellen formatieren Zeilenumbruch",
+   "selection": "A2:A4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Zellenausrichtung formatieren",
+     true,
+     null
+    ],
+    [
+     "Zeilenumbruch",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Zellen formatieren Fett Kursiv",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Schriftschnitt:",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Zellen formatieren Zahl 2 Dezimalstellen",
+   "selection": "D2:D5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Zahl|Zellennummer formatieren",
+     true,
+     null
+    ],
+    [
+     "Kategorie:",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Sortieren mit Formeln",
+   "selection": "B3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Sortieren und Filtern",
+     false,
+     "not found"
+    ]
+   ],
+   "failed": "('ctrl', 'Bearbeiten|Sortieren und Filtern'): not found",
+   "diff": [
+    "/cells/A2/Formula: 'Ben' -> 'Anna'",
+    "/cells/A2/Text: 'Ben' -> 'Anna'",
+    "/cells/A2/Value2: 'Ben' -> 'Anna'",
+    "/cells/A3/Formula: 'Dora' -> 'Ben'",
+    "/cells/A3/Text: 'Dora' -> 'Ben'",
+    "/cells/A3/Value2: 'Dora' -> 'Ben'",
+    "/cells/A4/Formula: 'Anna' -> 'Cem'",
+    "/cells/A4/Text: 'Anna' -> 'Cem'",
+    "/cells/A4/Value2: 'Anna' -> 'Cem'",
+    "/cells/A5/Formula: 'Cem' -> 'Dora'",
+    "/cells/A5/Text: 'Cem' -> 'Dora'",
+    "/cells/A5/Value2: 'Cem' -> 'Dora'",
+    "/cells/B2/Formula: '7.5' -> '12'",
+    "/cells/B2/Value2: 7.5 -> 12.0",
+    "/cells/B3/Formula: '9' -> '7.5'",
+    "/cells/B3/Value2: 9.0 -> 7.5",
+    "/cells/B4/Formula: '12' -> '15'",
+    "/cells/B4/Value2: 12.0 -> 15.0",
+    "/cells/B5/Formula: '15' -> '9'",
+    "/cells/B5/Value2: 15.0 -> 9.0",
+    "/cells/C2/Formula: '46096' -> '46082'",
+    "/cells/C2/Text: '15.03.2026' -> '01.03.2026'",
+    "/cells/C2/Value2: 46096.0 -> 46082.0",
+    "/cells/C3/Formula: '46132' -> '46096'",
+    "/cells/C3/Text: '20.04.2026' -> '15.03.2026'",
+    "/cells/C3/Value2: 46132.0 -> 46096.0",
+    "/cells/C4/Formula: '46082' -> '46114'",
+    "/cells/C4/Text: '01.03.2026' -> '02.04.2026'",
+    "/cells/C4/Value2: 46082.0 -> 46114.0",
+    "/cells/C5/Formula: '46114' -> '46132'",
+    "/cells/C5/Text: '02.04.2026' -> '20.04.2026'",
+    "/cells/C5/Value2: 46114.0 -> 46132.0",
+    "/cells/D2/NumberFormat: 'General' -> '_-* #,##0.00 _€_-;-* #,##0.00 _€_-;_-* \"-\"?? _€_-;_-@_-'",
+    "/cells/D2/Text: '15' -> '         24,00   '",
+    "/cells/D2/Value2: 15.0 -> 24.0",
+    "/cells/D3/NumberFormat: 'General' -> '_-* #,##0.00 _€_-;-* #,##0.00 _€_-;_-* \"-\"?? _€_-;_-@_-'",
+    "/cells/D3/Text: '18' -> '         15,00   '",
+    "/cells/D3/Value2: 18.0 -> 15.0",
+    "/cells/D4/NumberFormat: 'General' -> '_-* #,##0.00 _€_-;-* #,##0.00 _€_-;_-* \"-\"?? _€_-;_-@_-'",
+    "/cells/D4/Text: '24' -> '         30,00   '",
+    "/cells/D4/Value2: 24.0 -> 30.0",
+    "/cells/D5/NumberFormat: 'General' -> '_-* #,##0.00 _€_-;-* #,##0.00 _€_-;_-* \"-\"?? _€_-;_-@_-'",
+    "/cells/D5/Text: '30' -> '         18,00   '",
+    "/cells/D5/Value2: 30.0 -> 18.0"
+   ],
+   "pass": false
+  }
+ ]
+}

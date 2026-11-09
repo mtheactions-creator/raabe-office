@@ -111,9 +111,17 @@ export function clearAll(ctx: Ctx, sheet: Sheet, ranges: Rect[], what: "all" | "
 /** Changes the format of every cell in the ranges (whole columns/rows: their own format too). */
 export function format(ctx: Ctx, sheet: Sheet, ranges: Rect[], change: (s: CellStyle) => void): void {
   const ids = new Map<number | undefined, number>();
+  // A colour set without a design reference of its own is a plain colour: the cell's old reference
+  // (Text 1 of the standard font) must not replace it when the file is written (D-142).
+  const guarded = (s: CellStyle) => {
+    const color = s.font.color, theme = JSON.stringify(s.font.theme ?? null), fill = s.fill, fillTheme = JSON.stringify(s.fillTheme ?? null);
+    change(s);
+    if (s.font.color !== color && JSON.stringify(s.font.theme ?? null) === theme) delete s.font.theme;
+    if (s.fill !== fill && JSON.stringify(s.fillTheme ?? null) === fillTheme) delete s.fillTheme;
+  };
   const derive = (id: number | undefined) => {
     let n = ids.get(id);
-    if (n === undefined) { n = ctx.wb.styles.derive(id, change); ids.set(id, n); }
+    if (n === undefined) { n = ctx.wb.styles.derive(id, guarded); ids.set(id, n); }
     return n;
   };
   for (const r of ranges) {

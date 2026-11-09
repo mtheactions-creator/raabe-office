@@ -204,14 +204,14 @@ export function printFeature(app: CalcApp) {
     for (const [r, hgt] of autoRows(sheet, screen.cols, rowStd)) if (!sheet.rows.get(r)?.hidden) rx.set(r, hgt);
     rows.set(rx, rows.def);
     // Without a Druckbereich: the used cells and the cells under drawing objects (Excel prints those too).
-    let area: Rect | null = p.printArea ?? sheet.usedRange();
-    if (!p.printArea) for (const d of drawings(sheet)) {
+    let area: Rect | null = selectionArea ?? p.printArea ?? sheet.usedRange();
+    if (!p.printArea && !selectionArea) for (const d of drawings(sheet)) {
       const end = endOf(d, screen);
       const r = { r0: d.from.row, c0: d.from.col, r1: end.row, c1: end.col };
       area = area ? { r0: Math.min(area.r0, r.r0), c0: Math.min(area.c0, r.c0), r1: Math.max(area.r1, r.r1), c1: Math.max(area.c1, r.c1) } : r;
     }
     // Excel prints from A1, whatever cell the used range starts at (recorded: a table from B2 keeps column A and row 1).
-    if (area && !p.printArea) area = { ...area, r0: 0, c0: 0 };
+    if (area && !p.printArea && !selectionArea) area = { ...area, r0: 0, c0: 0 };
     const sz = paper(p);
     const m = p.margins ?? MARGINS["Normale Seitenränder"];
     const pw = (sz.w - m.left - m.right) * 96, ph = (sz.h - m.top - m.bottom) * 96;
@@ -396,10 +396,26 @@ export function printFeature(app: CalcApp) {
     return h("div", { style: `position:absolute;left:${bx}px;top:${by}px;width:${bw}px;height:${bh}px` }, el);
   }
 
+  /** Datei > Drucken's choices for this printing (not saved, as in Excel): what and which pages. */
+  const job: { what: "active" | "book" | "selection"; from?: number; to?: number } = { what: "active" };
+  /** "Auswahl drucken": the selection stands in for the Druckbereich while the pages are made. */
+  let selectionArea: Rect | null = null;
+
   function pages(): HTMLElement[] {
-    const sheet = app.sheet;
-    const g = geometry(sheet);
-    return paginate(sheet, g).map((pg) => renderPage(sheet, pg, g));
+    const sheets = job.what === "book" ? app.wb.sheets.filter((s) => !s.hidden) : [app.sheet];
+    const out: HTMLElement[] = [];
+    for (const sheet of sheets) {
+      selectionArea = job.what === "selection" && sheet === app.sheet ? app.grid.selection.at(-1)! : null;
+      try {
+        const g = geometry(sheet);
+        out.push(...paginate(sheet, g).map((pg) => renderPage(sheet, pg, g)));
+      } finally {
+        selectionArea = null;
+      }
+    }
+    // Seiten von … bis: the pages of the whole job, counted from 1.
+    const from = Math.max(1, job.from ?? 1), to = Math.min(out.length, job.to ?? out.length);
+    return from > 1 || to < out.length ? out.slice(from - 1, Math.max(from - 1, to)) : out;
   }
 
   async function exportPdf(to?: string): Promise<void> {
@@ -455,10 +471,43 @@ export function printFeature(app: CalcApp) {
       h("option", { value: "portrait", selected: p.orientation !== "landscape" || undefined }, "Hochformat"), h("option", { value: "landscape", selected: p.orientation === "landscape" || undefined }, "Querformat"));
     const paperSel = h("select", { onchange: (e: Event) => { setPage("Format", (x) => { x.paperSize = Number((e.target as HTMLSelectElement).value); }); app.commands.run("file.print"); } },
       ...PAPERS.map((x) => h("option", { value: String(x.code), selected: (p.paperSize ?? 9) === x.code || undefined }, `${x.name} (${(x.w * 2.54).toFixed(1).replace(".", ",")} x ${(x.h * 2.54).toFixed(1).replace(".", ",")} cm)`)));
+    // Excel's other settings on this page (D-142): what to print and which pages (for this printing only),
+    // Seitenränder and Skalierung (the sheet's page setup, as on the Seitenlayout tab).
+    const refresh = () => void app.commands.run("file.print");
+    const whatSel = h("select", { "aria-label": "Druckbereich", onchange: (e: Event) => { job.what = (e.target as HTMLSelectElement).value as typeof job.what; refresh(); } },
+      ...([["active", "Aktive Blätter drucken"], ["book", "Gesamte Arbeitsmappe drucken"], ["selection", "Auswahl drucken"]] as const)
+        .map(([v, l]) => h("option", { value: v, selected: job.what === v || undefined }, l)));
+    const pageNo = (v: number | undefined, set: (n: number | undefined) => void, label: string) => {
+      const input = h("input", { type: "number", min: "1", value: v ? String(v) : "", style: "width:52px", "aria-label": label }) as HTMLInputElement;
+      input.onchange = () => { const n = Math.round(Number(input.value)); set(n >= 1 ? n : undefined); refresh(); };
+      return input;
+    };
+    const fromTo = h("div", { class: "print-pages", style: "display:flex;gap:6px;align-items:center" }, h("span", null, "Seiten:"), pageNo(job.from, (n) => { job.from = n; }, "Seiten von"),
+      h("span", null, "bis"), pageNo(job.to, (n) => { job.to = n; }, "Seiten bis"));
+    const curMargins = Object.entries(MARGINS).find(([, mm]) => JSON.stringify(mm) === JSON.stringify(p.margins ?? MARGINS["Normale Seitenränder"]))?.[0] ?? "";
+    const marginSel = h("select", { "aria-label": "Seitenränder", onchange: (e: Event) => {
+      const v = (e.target as HTMLSelectElement).value;
+      if (v === "custom") return void pageSetupDialog().then(refresh);
+      setPage("Seitenränder", (x) => { x.margins = { ...MARGINS[v] }; });
+      refresh();
+    } }, ...Object.keys(MARGINS).map((k) => h("option", { value: k, selected: curMargins === k || undefined }, k)),
+      h("option", { value: "custom", selected: !curMargins || undefined }, "Benutzerdefinierte Seitenränder"));
+    const fit = p.fitWidth === 1 && p.fitHeight === 1 ? "sheet" : p.fitWidth === 1 && !p.fitHeight ? "cols" : !p.fitWidth && p.fitHeight === 1 ? "rows" : !p.fitWidth && !p.fitHeight && (p.scale ?? 100) === 100 ? "none" : "custom";
+    const scaleSel = h("select", { "aria-label": "Skalierung", onchange: (e: Event) => {
+      const v = (e.target as HTMLSelectElement).value;
+      if (v === "custom") return void pageSetupDialog().then(refresh);
+      setPage("Skalierung", (x) => {
+        x.scale = undefined;
+        x.fitWidth = v === "sheet" || v === "cols" ? 1 : undefined;
+        x.fitHeight = v === "sheet" || v === "rows" ? 1 : undefined;
+      });
+      refresh();
+    } }, ...([["none", "Keine Skalierung"], ["sheet", "Blatt auf einer Seite darstellen"], ["cols", "Alle Spalten auf einer Seite darstellen"], ["rows", "Alle Zeilen auf einer Seite darstellen"], ["custom", "Benutzerdefinierte Skalierungsoptionen..."]] as const)
+      .map(([v, l]) => h("option", { value: v, selected: fit === v || undefined }, l)));
     return h("div", { class: "print-layout" },
       h("div", { class: "print-settings" }, h("h1", null, "Drucken"),
         h("button", { class: "bigbtn", onclick: printNow }, icon("print", "l"), "Drucken"),
-        h("h2", null, "Einstellungen"), orient, paperSel,
+        h("h2", null, "Einstellungen"), whatSel, fromTo, orient, paperSel, marginSel, scaleSel,
         h("button", { onclick: () => void pageSetupDialog() }, "Seite einrichten")),
       h("div", { class: "print-right" }, preview,
         h("div", { class: "print-nav" }, h("button", { onclick: () => { if (i > 0) { i--; show(); } } }, "◀"), label, h("button", { onclick: () => { if (i < list.length - 1) { i++; show(); } } }, "▶"))));

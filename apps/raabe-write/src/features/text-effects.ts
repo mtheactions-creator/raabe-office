@@ -4,7 +4,7 @@
 // (text-effects.gen.ts, recorded with probe_word_texteffects.py); the rest (Kontur colours and
 // widths, Leuchten colours, the pane's settings) changes those elements as Word does.
 
-import { closePopup, colorGrid, h, hoverPreview, icon, type MenuEntry } from "@raabe/shell";
+import { closePopup, colorDialog, colorGrid, h, hoverPreview, icon, type MenuEntry } from "@raabe/shell";
 import { fxColor, fxColorXml, fxNumbers, fxParts, fxSet, outlineXml, textFxCss, type TextFxPart } from "@raabe/text-engine";
 import type { AppApi } from "./api";
 import type { Dock } from "./dock";
@@ -15,7 +15,8 @@ const DASHES: [string, string][] = [["solid", "Durchgezogen"], ["sysDot", "Runde
   ["dashDot", "Strich-Punkt"], ["lgDash", "Langer Strich"], ["lgDashDot", "Langer Strich-Punkt"], ["lgDashDotDot", "Langer Strich-Punkt-Punkt"]];
 const NUMBER_FORMS: [string, string | null, string | null][] = [["Standard", null, null], ["Proportionale Lineatur", "lining", "proportional"],
   ["Tabularische Lineatur", "lining", "tabular"], ["Proportional Old-Formatvorlage", "oldStyle", "proportional"], ["Tabellarisch Old-Formatvorlage", "oldStyle", "tabular"]];
-const LIGATURES: [string, string | null][] = [["Keine", null], ["Nur Standard", "standard"], ["Standard und kontextbezogen", "standardContextual"],
+// "Keine" is written as w14:val="none" (Word), so it also switches off ligatures the style turns on (D-134).
+const LIGATURES: [string, string][] = [["Keine", "none"], ["Nur Standard", "standard"], ["Standard und kontextbezogen", "standardContextual"],
   ["Historisch und frei", "historicalDiscretional"], ["Alle Ligaturen", "all"]];
 
 /** Word's WordArt menus for the Formformat tab (filled in by the feature). */
@@ -105,13 +106,8 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
     })) },
   ];
 
-  const pickColor = (done: (hex: string) => void) => {
-    const input = h("input", { type: "color", style: "position:fixed;opacity:0;width:0;height:0" }) as HTMLInputElement;
-    document.body.append(input);
-    input.addEventListener("change", () => { done(input.value.slice(1).toUpperCase()); input.remove(); });
-    input.addEventListener("blur", () => setTimeout(() => input.remove(), 500));
-    input.click();
-  };
+  // Weitere Farben...: Office's Farben dialog (D-134).
+  const pickColor = (done: (hex: string) => void) => { void colorDialog().then((c) => { if (c) done(c); }); };
 
   // ----- Schatten, Spiegelung, Leuchten ------------------------------------------------------------------
   const gallery = (sections: { heading: string; items: { name: string; xml: string | null }[] }[], part: TextFxPart, cols: number, footer: MenuEntry[]) => () => {
@@ -147,8 +143,8 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
     run: () => { const e = ed(); if (!e) return; e.setTextFx((fx) => fxSet(fxSet(fx, "numForm", form ? `<w14:numForm w14:val="${form}"/>` : null), "numSpacing", spacing ? `<w14:numSpacing w14:val="${spacing}"/>` : null)); api.refresh(); },
   }));
   const ligatureMenu = (): MenuEntry[] => LIGATURES.map(([label, v]): MenuEntry => ({
-    label, get checked() { return (current("ligatures") ? /w14:val="([^"]*)"/.exec(current("ligatures")!)?.[1] ?? null : null) === v; },
-    run: () => change("ligatures", v ? `<w14:ligatures w14:val="${v}"/>` : null),
+    label, get checked() { return ((current("ligatures") ? /w14:val="([^"]*)"/.exec(current("ligatures")!)?.[1] : null) ?? "none") === v; },
+    run: () => change("ligatures", `<w14:ligatures w14:val="${v}"/>`),
   }));
   const styleSetMenu = (): MenuEntry[] => [
     { label: "Standard", get checked() { return !current("stylisticSets"); }, run: () => change("stylisticSets", null) },

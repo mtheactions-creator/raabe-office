@@ -26,11 +26,15 @@ interface Step {
   label: string;
   before: SheetState[];
   after: SheetState[];
-  sheetsBefore?: { list: Sheet[]; active: number; protection?: Record<string, string>; design?: Design };
-  sheetsAfter?: { list: Sheet[]; active: number; protection?: Record<string, string>; design?: Design };
+  sheetsBefore?: { list: Sheet[]; props?: SheetProps[]; active: number; protection?: Record<string, string>; design?: Design };
+  sheetsAfter?: { list: Sheet[]; props?: SheetProps[]; active: number; protection?: Record<string, string>; design?: Design };
   /** Selection to restore with undo/redo. */
   selBefore?: { sheet: number; sel: Rect[]; active: { row: number; col: number } };
   selAfter?: { sheet: number; sel: Rect[]; active: { row: number; col: number } };
+  /** The defined names before and after, when the step changed them (Namen definieren, Spezialfilter …, D-142). */
+  namesBefore?: Workbook["names"];
+  namesAfter?: Workbook["names"];
+  namesAt?: string;
 }
 
 /** What a step changed: the cells per sheet, or `structural` when only a full recalculation will do. */
@@ -68,7 +72,7 @@ export class History {
   /** Runs `fn` as one undo step. Nested calls join the outer step. */
   step<T>(label: string, fn: () => T): T {
     const outer = this.open === null;
-    if (outer) this.open = { label, before: [], after: [], selBefore: this.selection() };
+    if (outer) this.open = { label, before: [], after: [], selBefore: this.selection(), namesAt: JSON.stringify(this.wb.names ?? []) };
     this.depth++;
     try {
       return fn();
@@ -79,12 +83,13 @@ export class History {
         this.open = null;
         st.selAfter = this.selection();
         st.after = st.before.map((b) => this.capture(b));
-        if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], active: this.wb.active, protection: this.wb.protection, design: st.sheetsBefore.design ? this.designNow() : undefined };
-        if (st.before.length || st.sheetsBefore) {
+        if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], props: sheetProps(this.wb.sheets), active: this.wb.active, protection: this.wb.protection, design: st.sheetsBefore.design ? this.designNow() : undefined };
+        this.namesOf(st);
+        if (st.before.length || st.sheetsBefore || st.namesBefore) {
           this.undoStack.push(st);
           if (this.undoStack.length > 100) this.undoStack.shift();
           this.redoStack = [];
-          this.onChange(changeOf(st.before, !!st.sheetsBefore));
+          this.onChange(changeOf(st.before, !!st.sheetsBefore || !!st.namesBefore));
         }
       }
     }
@@ -98,7 +103,7 @@ export class History {
     // The synchronous step stays open until the macro has finished: its writes (sync, inside) join it.
     const outer = this.open === null;
     if (!outer) { await fn(); return; }
-    this.open = { label, before: [], after: [], selBefore: this.selection() };
+    this.open = { label, before: [], after: [], selBefore: this.selection(), namesAt: JSON.stringify(this.wb.names ?? []) };
     this.depth++;
     try {
       inner = fn();
@@ -109,12 +114,13 @@ export class History {
       this.open = null;
       st.selAfter = this.selection();
       st.after = st.before.map((b) => this.capture(b));
-      if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], active: this.wb.active, protection: this.wb.protection, design: st.sheetsBefore.design ? this.designNow() : undefined };
-      if (st.before.length || st.sheetsBefore) {
+      if (st.sheetsBefore) st.sheetsAfter = { list: [...this.wb.sheets], props: sheetProps(this.wb.sheets), active: this.wb.active, protection: this.wb.protection, design: st.sheetsBefore.design ? this.designNow() : undefined };
+      this.namesOf(st);
+      if (st.before.length || st.sheetsBefore || st.namesBefore) {
         this.undoStack.push(st);
         if (this.undoStack.length > 100) this.undoStack.shift();
         this.redoStack = [];
-        this.onChange(changeOf(st.before, !!st.sheetsBefore));
+        this.onChange(changeOf(st.before, !!st.sheetsBefore || !!st.namesBefore));
       }
       done();
     }
@@ -215,7 +221,7 @@ export class History {
   /** Records the list of sheets (insert, delete, move, rename …). */
   sheets(): void {
     if (!this.open) throw new Error("change outside an undo step");
-    if (!this.open.sheetsBefore) this.open.sheetsBefore = { list: [...this.wb.sheets], active: this.wb.active, protection: this.wb.protection };
+    if (!this.open.sheetsBefore) this.open.sheetsBefore = { list: [...this.wb.sheets], props: sheetProps(this.wb.sheets), active: this.wb.active, protection: this.wb.protection };
   }
 
   private capture(b: SheetState): SheetState {
@@ -273,14 +279,25 @@ export class History {
     }
   }
 
+  /** Notes the defined names before and after the step when it changed them. */
+  private namesOf(st: Step): void {
+    const now = JSON.stringify(this.wb.names ?? []);
+    if (st.namesAt !== undefined && now !== st.namesAt) {
+      st.namesBefore = JSON.parse(st.namesAt);
+      st.namesAfter = JSON.parse(now);
+    }
+    st.namesAt = undefined;
+  }
+
   undo(): boolean {
     const st = this.undoStack.pop();
     if (!st) return false;
     this.apply(st.before);
-    if (st.sheetsBefore) { this.wb.sheets = [...st.sheetsBefore.list]; this.wb.active = st.sheetsBefore.active; this.wb.protection = st.sheetsBefore.protection; this.setDesign(st.sheetsBefore.design); }
+    if (st.namesBefore) this.wb.names = structuredClone(st.namesBefore);
+    if (st.sheetsBefore) { this.wb.sheets = [...st.sheetsBefore.list]; restoreProps(st.sheetsBefore); this.wb.active = st.sheetsBefore.active; this.wb.protection = st.sheetsBefore.protection; this.setDesign(st.sheetsBefore.design); }
     this.restoreSel(st.selBefore);
     this.redoStack.push(st);
-    this.onChange(changeOf(st.before, !!st.sheetsBefore));
+    this.onChange(changeOf(st.before, !!st.sheetsBefore || !!st.namesBefore));
     return true;
   }
 
@@ -288,10 +305,11 @@ export class History {
     const st = this.redoStack.pop();
     if (!st) return false;
     this.apply(st.after);
-    if (st.sheetsAfter) { this.wb.sheets = [...st.sheetsAfter.list]; this.wb.active = st.sheetsAfter.active; this.wb.protection = st.sheetsAfter.protection; this.setDesign(st.sheetsAfter.design); }
+    if (st.namesAfter) this.wb.names = structuredClone(st.namesAfter);
+    if (st.sheetsAfter) { this.wb.sheets = [...st.sheetsAfter.list]; restoreProps(st.sheetsAfter); this.wb.active = st.sheetsAfter.active; this.wb.protection = st.sheetsAfter.protection; this.setDesign(st.sheetsAfter.design); }
     this.restoreSel(st.selAfter);
     this.undoStack.push(st);
-    this.onChange(changeOf(st.after, !!st.sheetsAfter));
+    this.onChange(changeOf(st.after, !!st.sheetsAfter || !!st.namesAfter));
     return true;
   }
 
@@ -317,8 +335,19 @@ function clone<T>(v: T): T {
   return c;
 }
 
+/** What a step on the sheet list keeps of each sheet: renaming, hiding and the tab colour undo with it (D-142). */
+type SheetProps = { name: string; hidden: Sheet["hidden"]; tabColor: Sheet["tabColor"] };
+
+function sheetProps(list: Sheet[]): SheetProps[] {
+  return list.map((s) => ({ name: s.name, hidden: s.hidden, tabColor: s.tabColor }));
+}
+
+function restoreProps(at: { list: Sheet[]; props?: SheetProps[] }): void {
+  at.props?.forEach((p, i) => { const s = at.list[i]; s.name = p.name; s.hidden = p.hidden; s.tabColor = p.tabColor; });
+}
+
 /** Sheet settings a whole-sheet step restores besides the cells (page setup, filter, rules …). */
-const SETTINGS = ["page", "autoFilter", "conditional", "validations", "protection", "threads", "pictures", "shapes", "pivots", "tables", "tabColor", "sparklines", "scenarios", "consolidate", "timelines"] as const;
+const SETTINGS = ["page", "autoFilter", "filterMode", "conditional", "validations", "protection", "threads", "pictures", "shapes", "pivots", "tables", "tabColor", "sparklines", "scenarios", "consolidate", "timelines"] as const;
 type Settings = Partial<Pick<Sheet, (typeof SETTINGS)[number]>>;
 
 function snapshot(s: Sheet) {

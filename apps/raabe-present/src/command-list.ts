@@ -98,8 +98,9 @@ export const COMMANDS: Command[] = [
   cmd("arrange.back", "In den Hintergrund", "send-backward"),
   cmd("arrange.forward", "Ebene nach vorne", "bring-forward"),
   cmd("arrange.backward", "Ebene nach hinten", "send-backward"),
-  cmd("arrange.group", "Gruppieren", "group-objects", { shortcut: "Strg+G" }),
-  cmd("arrange.ungroup", "Gruppierung aufheben", "ungroup-objects", { shortcut: "Strg+Umschalt+G" }),
+  // German PowerPoint groups with Strg+Umschalt+G and ungroups with Strg+Umschalt+H (measured; Strg+G does nothing).
+  cmd("arrange.group", "Gruppieren", "group-objects", { shortcut: "Strg+Umschalt+G" }),
+  cmd("arrange.ungroup", "Gruppierung aufheben", "ungroup-objects", { shortcut: "Strg+Umschalt+H" }),
   cmd("arrange.regroup", "Gruppierung wiederherstellen", "group-objects"),
   cmd("arrange.align", "Ausrichten", "align-objects"),
   cmd("arrange.alignLeft", "Linksbündig", "align-left"),

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { countWords, nextTokenStart, prevTokenStart, sentenceAt, tokenAt } from "../src/words";
+import { allCapitals, countWords, nextTokenStart, prevTokenStart, sentenceAt, tokenAt, wordCase } from "../src/words";
 import { Doc } from "../src/doc";
 import { makePara, validPara } from "../src/model";
 
@@ -67,5 +67,27 @@ describe("Doc", () => {
     d.mapChars({ p: 0, o: 0 }, { p: 0, o: 15 }, (o) => ({ ...o, bold: undefined }));
     expect(d.paras[0].runs.length).toBe(1);
     expect(d.paras.every(validPara)).toBe(true);
+  });
+});
+
+describe("Groß-/Kleinschreibung as Word (recorded 2026-11-09, D-135)", () => {
+  const run = (text: string, mode: "sentence" | "title", sentenceStart = false) => wordCase(text, mode, { sentenceStart, allCaps: allCapitals(text) });
+  it("Satzanfang groß keeps the capitals of nouns and lowers nothing else", () => {
+    expect(run("weitere Beobachtungen aus dem Schulgarten. neue satz", "sentence")).toBe("weitere Beobachtungen aus dem Schulgarten. Neue satz");
+    expect(run("weitere BEOBACHTUNGEN aus Dem. neue Satz", "sentence")).toBe("weitere BEOBACHTUNGEN aus Dem. Neue Satz");
+    expect(run("Weitere beobachtungen. neue", "sentence")).toBe("Weitere beobachtungen. Neue");
+  });
+  it("text all in capitals is lowered, words with inner capitals too", () => {
+    expect(run("WEITERE BEOBACHTUNGEN. NEUE SATZ", "sentence")).toBe("weitere beobachtungen. Neue satz");
+    expect(run("ein iPhone und McDonald. ok", "sentence")).toBe("ein iphone und mcdonald. Ok");
+  });
+  it("Jedes Wort groß raises each first letter and keeps the rest unless the word is irregular", () => {
+    expect(run("WEITERE BEOBACHTUNGEN. NEUE SATZ", "title")).toBe("Weitere Beobachtungen. Neue Satz");
+    expect(run("weitere BEOBACHTUNGEN aus Dem. neue Satz", "title")).toBe("Weitere BEOBACHTUNGEN Aus Dem. Neue Satz");
+    expect(run("Weitere beobachtungen. neue", "title")).toBe("Weitere Beobachtungen. Neue");
+    expect(run("ein iPhone und McDonald. ok", "title")).toBe("Ein Iphone Und Mcdonald. Ok");
+  });
+  it("a selection that starts a sentence gets its capital", () => {
+    expect(run("hallo welt", "sentence", true)).toBe("Hallo welt");
   });
 });

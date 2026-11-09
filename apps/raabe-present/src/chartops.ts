@@ -24,8 +24,13 @@ function edit(app: PresentApp, label: string, fn: (m: ChartModel) => void): void
   if (!xml) return;
   const m = chartFromXml(xml);
   fn(m);
-  app.editor.edit(label, () => app.deck.pptx.put(path, chartToXml(m)));
+  // The chart's own part belongs to the undo step (by hand, D-137: Strg+Z left every chart change in place, as the
+  // step held only the slide).
+  const slide = app.slidePath();
+  app.deck.change(label, slide ? [slide, path] : [path], () => app.deck.pptx.put(path, chartToXml(m)));
   app.deck.markChanged([path]);
+  app.editor.render();
+  app.selectionChanged();
 }
 
 export const CHART_KINDS: [string, ChartKind][] = [["Gruppierte Säulen", "column"], ["Gestapelte Säulen", "columnStacked"], ["Gruppierte Balken", "bar"], ["Gestapelte Balken", "barStacked"],

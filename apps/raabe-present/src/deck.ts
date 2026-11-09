@@ -14,6 +14,13 @@ interface Snapshot {
   sections: string | null;
 }
 
+function sameSnapshot(a: Snapshot, b: Snapshot): boolean {
+  if (a.sections !== b.sections || a.slides.length !== b.slides.length || a.slides.some((s, i) => s.path !== b.slides[i].path || s.id !== b.slides[i].id)) return false;
+  for (const [k, v] of a.parts) if (b.parts.get(k) !== v) return false;
+  for (const [k, v] of a.rels) if (b.rels.get(k) !== v) return false;
+  return a.parts.size === b.parts.size && a.rels.size === b.rels.size;
+}
+
 interface Step {
   label: string;
   before: Snapshot;
@@ -105,6 +112,10 @@ export class Deck {
     for (const p of paths) this.pptx.touch(p);
     this.pptx.touch(this.pptx.presPath);
     const after = this.snap(paths);
+    // A change that changed nothing is no undo step (by hand, D-137: a number typed into the Format pane and confirmed
+    // with Enter was written again when the field was left, so the first Strg+Z seemed to do nothing).
+    // (Drawn again all the same: work may have touched a part outside `paths`.)
+    if (sameSnapshot(before, after)) { this.changed(paths); return; }
     const last = this.undoStack[this.undoStack.length - 1];
     const now = Date.now();
     if (merge && last?.merge === merge && now - last.time < 4000 && [...after.parts.keys()].every((k) => last.after.parts.has(k))) {
@@ -129,6 +140,28 @@ export class Deck {
       this.redoStack = [];
       this.changed(paths);
     }
+  }
+
+  /**
+   * Several changes made by `fn` as one undo step (Folien aus Gliederung: every slide it makes, as PowerPoint takes them
+   * back with one Strg+Z, D-137): the first state of each part before, the last one after.
+   */
+  group(label: string, fn: () => void): void {
+    const start = this.undoStack.length;
+    fn();
+    const steps = this.undoStack.splice(start);
+    if (!steps.length) return;
+    const join = (snaps: Snapshot[], slides: SlideRef[]): Snapshot => {
+      const parts = new Map<string, string | null>(), rels = new Map<string, string | null>();
+      for (const s of snaps) {
+        for (const [k, v] of s.parts) if (!parts.has(k)) parts.set(k, v);
+        for (const [k, v] of s.rels) if (!rels.has(k)) rels.set(k, v);
+      }
+      return { slides, parts, rels, sections: snaps[0].sections };
+    };
+    const before = join(steps.map((s) => s.before), steps[0].before.slides);
+    const after = join(steps.map((s) => s.after).reverse(), steps[steps.length - 1].after.slides);
+    this.undoStack.push({ label, before, after, time: Date.now() });
   }
 
   /** Ends typing's merging (a click, a command). */

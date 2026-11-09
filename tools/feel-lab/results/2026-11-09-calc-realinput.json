@@ -1,0 +1,78 @@
+{
+ "summary": {
+  "cases": 14,
+  "passed": 14
+ },
+ "results": [
+  {
+   "name": "Schriftart: Liste öffnen, Arial wählen",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Schriftgrad: tippen und Enter",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Füllfarbe: Palette, Gelb",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Füllfarbe: Keine Füllung",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Schriftfarbe: Palette, Rot",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Zellenformatvorlagen: Gut",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Rahmen: Alle Rahmenlinien",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Bedingte Formatierung: Untermenü, Größer als, Wert, Enter",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Zellen formatieren: Strg+1, Tab bleibt im Dialog, Esc",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Zellen formatieren: Esc schließt",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Blattregister: Kontextmenü, Registerfarbe",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Skalierung: Drehfeld Mehr",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Sortieren: Spalte markiert, Sortierwarnung, Enter erweitert",
+   "pass": true,
+   "errors": []
+  },
+  {
+   "name": "Rückgängig: Strg+Z nach dem Sortieren",
+   "pass": true,
+   "errors": []
+  }
+ ]
+}

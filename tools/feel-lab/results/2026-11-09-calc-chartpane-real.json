@@ -1,0 +1,71 @@
+{
+ "date": "2026-11-09",
+ "passed": 12,
+ "total": 12,
+ "steps": [
+  {
+   "step": "element list: Vertikal (Wert) Achse",
+   "ok": true,
+   "detail": "Vertikal (Wert) Achse"
+  },
+  {
+   "step": "radio Einfarbige Linie",
+   "ok": true,
+   "detail": {
+    "type": "solid",
+    "color": "#BFBFBF",
+    "width": 0.75
+   }
+  },
+  {
+   "step": "colour palette: Farbe, a swatch",
+   "ok": true,
+   "detail": "#D6DCE5"
+  },
+  {
+   "step": "slider Transparenz dragged",
+   "ok": true,
+   "detail": 98
+  },
+  {
+   "step": "spin button Stärke Höher",
+   "ok": true,
+   "detail": 1
+  },
+  {
+   "step": "typed Stärke 3 + Enter",
+   "ok": true,
+   "detail": 3
+  },
+  {
+   "step": "Strg+Z after typing",
+   "ok": true,
+   "detail": "3 -> 1"
+  },
+  {
+   "step": "dropdown Strichtyp (opened, arrow down, Enter)",
+   "ok": true,
+   "detail": "sysDot"
+  },
+  {
+   "step": "dropdown Haupttyp Außen (tick marks drawn)",
+   "ok": true,
+   "detail": "out"
+  },
+  {
+   "step": "radio Farbverlauf",
+   "ok": true,
+   "detail": "ok"
+  },
+  {
+   "step": "gradient stop dragged",
+   "ok": true,
+   "detail": "[0, 74, 83, 100] -> [0, 10, 83, 100]"
+  },
+  {
+   "step": "Farbverlaufstopp hinzufügen (+)",
+   "ok": true,
+   "detail": "4 -> 5"
+  }
+ ]
+}

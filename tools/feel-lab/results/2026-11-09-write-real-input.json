@@ -1,0 +1,81 @@
+{
+ "passed": 15,
+ "total": 15,
+ "cases": [
+  {
+   "name": "Schriftgrad list opens and 14 applies",
+   "ok": true,
+   "detail": "opened 1 size 14"
+  },
+  {
+   "name": "a list's arrow clicked again closes it",
+   "ok": true,
+   "detail": "0"
+  },
+  {
+   "name": "gallery entry Überschrift 1 applies to the paragraph",
+   "ok": true,
+   "detail": "Überschrift 1"
+  },
+  {
+   "name": "Schriftfarbe palette: Rot",
+   "ok": true,
+   "detail": "FF0000"
+  },
+  {
+   "name": "Weitere Farben...: Farben dialog, Hex #00B050, OK",
+   "ok": true,
+   "detail": "dialog Farben color 00B050"
+  },
+  {
+   "name": "Einzug Links spinner: two steps up",
+   "ok": true,
+   "detail": "indLeft 5.6693 steps ['Mehr', 'Weniger', 'Mehr', 'Weniger']"
+  },
+  {
+   "name": "Einzug Links: typing 2 cm and Enter",
+   "ok": true,
+   "detail": "indLeft 56.693"
+  },
+  {
+   "name": "Absatz dialog: Tab keeps the focus inside and moves on",
+   "ok": true,
+   "detail": "[\"SELECT:LinksZentriertRechtsBlocksatz\", \"INPUT:\", \"SELECT:(ohne)Erste ZeileHängend\", \"INPUT:(ohne)Erste ZeileHängend\"]"
+  },
+  {
+   "name": "dialog follows a drag of its title bar",
+   "ok": true,
+   "detail": "382,365 -> 482,425"
+  },
+  {
+   "name": "Tabelle einfügen grid: 3 x 2 by hovering and clicking",
+   "ok": true,
+   "detail": "cells 80 table cells 15"
+  },
+  {
+   "name": "context menu opens at the mouse",
+   "ok": true,
+   "detail": "{'left': 480, 'top': 475}"
+  },
+  {
+   "name": "keytips Alt R 1 (Fett)",
+   "ok": true,
+   "detail": "True"
+  },
+  {
+   "name": "zoom slider follows a drag",
+   "ok": true,
+   "detail": "1 -> 4.8"
+  },
+  {
+   "name": "mouse wheel scrolls the document",
+   "ok": true,
+   "detail": "362 -> 662"
+  },
+  {
+   "name": "Schriftart dialog: 16 from the Schriftgrad list, Enter",
+   "ok": true,
+   "detail": "opt {'x': 878.3333549499512, 'y': 527.8333740234375} size 16"
+  }
+ ]
+}

@@ -813,7 +813,9 @@ export function styleXml(s: StyleDef, opts: WriteOptions): string {
 function stylesXml(state: DocState, opts: WriteOptions): string {
   const st = state.styles;
   const defs = [...st.styles.values()].map((s) => styleXml(s, opts)).join("");
-  return `${XML_HEAD}<w:styles xmlns:w="${W}"><w:docDefaults>` +
+  // w14 for text effects and ligatures in the defaults and styles (a new document took them over from "Als Standard
+  // festlegen" and Word called the file damaged, D-134).
+  return `${XML_HEAD}<w:styles xmlns:w="${W}" xmlns:w14="${W14}"><w:docDefaults>` +
     `<w:rPrDefault>${writeRPr(st.defaultsR, opts) || "<w:rPr/>"}</w:rPrDefault>` +
     `<w:pPrDefault>${writePPr(st.defaultsP, {}, opts) || "<w:pPr/>"}</w:pPrDefault></w:docDefaults>${defs}</w:styles>`;
 }

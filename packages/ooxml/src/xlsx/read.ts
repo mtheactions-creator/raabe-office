@@ -497,6 +497,7 @@ function readView(xml: string, el: El, sheet: Sheet, raw: SheetRaw): void {
   const v: View = {
     active: { row: 0, col: 0 }, selection: [], top: tl.row, left: tl.col, zoom: Number(a.zoomScale ?? 100) || 100,
     showGrid: a.showGridLines !== "0" && a.showGridLines !== "false", showHeaders: a.showRowColHeaders !== "0" && a.showRowColHeaders !== "false",
+    ...(a.showFormulas === "1" || a.showFormulas === "true" ? { showFormulas: true } : {}),
   };
   if (pane && (pa.state === "frozen" || pa.state === "frozenSplit")) {
     const ys = Number(pa.ySplit ?? 0), xs = Number(pa.xSplit ?? 0);

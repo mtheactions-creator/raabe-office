@@ -210,6 +210,13 @@ export function startMathEdit(app: PresentApp, id: number, o: { isNew?: boolean;
         if (k === "x" || k === "X") me.backspace();
       }
     }
+    else if (ctrl && !shift && (k === "z" || k === "Z")) {
+      // Strg+Z while editing (by hand, D-137: it did nothing): the editing ends and the presentation's undo takes the
+      // last step back: a new equation still empty goes again, an edited one returns to what it was before.
+      const v = me.value();
+      finish(!(o.isNew && !v.length));
+      return;
+    }
     else if (k === "Enter" && shift) me.newLine();
     else if (k.length === 1 && !ctrl && !e.altKey) { me.type(k); column = null; }
     else if (k === "Tab") { /* stays in the equation */ }

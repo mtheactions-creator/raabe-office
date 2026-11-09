@@ -1,0 +1,150 @@
+{
+ "Farbskalen": [
+  {
+   "name": "Grün-Gelb-Rot-Farbskala",
+   "count": 1,
+   "colors": [
+    "#F8696B",
+    "#FFEB84",
+    "#63BE7B"
+   ]
+  },
+  {
+   "name": "Rot-Gelb-Grün-Farbskala",
+   "count": 1,
+   "colors": [
+    "#63BE7B",
+    "#FFEB84",
+    "#F8696B"
+   ]
+  },
+  {
+   "name": "Grün-Weiß-Rot-Farbskala",
+   "count": 1,
+   "colors": [
+    "#F8696B",
+    "#FCFCFF",
+    "#63BE7B"
+   ]
+  },
+  {
+   "name": "Rot-Weiß-Grün-Farbskala",
+   "count": 1,
+   "colors": [
+    "#63BE7B",
+    "#FCFCFF",
+    "#F8696B"
+   ]
+  },
+  {
+   "name": "Blau-Weiß-Rot-Farbskala",
+   "count": 1,
+   "colors": [
+    "#F8696B",
+    "#FCFCFF",
+    "#5A8AC6"
+   ]
+  },
+  {
+   "name": "Rot-Weiß-Blau-Farbskala",
+   "count": 1,
+   "colors": [
+    "#5A8AC6",
+    "#FCFCFF",
+    "#F8696B"
+   ]
+  },
+  {
+   "name": "Weiß-Rot-Farbskala",
+   "count": 1,
+   "colors": [
+    "#F8696B",
+    "#FCFCFF"
+   ]
+  },
+  {
+   "name": "Rot-Weiß-Farbskala",
+   "count": 1,
+   "colors": [
+    "#FCFCFF",
+    "#F8696B"
+   ]
+  },
+  {
+   "name": "Grün-Weiß-Farbskala",
+   "count": 1,
+   "colors": [
+    "#FCFCFF",
+    "#63BE7B"
+   ]
+  },
+  {
+   "name": "Weiß-Grün-Farbskala",
+   "count": 1,
+   "colors": [
+    "#63BE7B",
+    "#FCFCFF"
+   ]
+  },
+  {
+   "name": "Grün-Gelb-Farbskala",
+   "count": 1,
+   "colors": [
+    "#FFEF9C",
+    "#63BE7B"
+   ]
+  },
+  {
+   "name": "Gelb-Grün-Farbskala",
+   "count": 1,
+   "colors": [
+    "#63BE7B",
+    "#FFEF9C"
+   ]
+  }
+ ],
+ "Datenbalken": [
+  {
+   "name": "Blauer Datenbalken",
+   "count": 1,
+   "color": "#638EC6",
+   "fill": 1,
+   "border": 1
+  },
+  {
+   "name": "Grüner Datenbalken",
+   "count": 1,
+   "color": "#63C384",
+   "fill": 1,
+   "border": 1
+  },
+  {
+   "name": "Roter Datenbalken",
+   "count": 1,
+   "color": "#FF555A",
+   "fill": 1,
+   "border": 1
+  },
+  {
+   "name": "Orangefarbener Datenbalken",
+   "count": 1,
+   "color": "#FFB628",
+   "fill": 1,
+   "border": 1
+  },
+  {
+   "name": "Hellblauer Datenbalken",
+   "count": 1,
+   "color": "#008AEF",
+   "fill": 1,
+   "border": 1
+  },
+  {
+   "name": "Lilafarbener Datenbalken",
+   "count": 1,
+   "color": "#D6007B",
+   "fill": 1,
+   "border": 1
+  }
+ ]
+}

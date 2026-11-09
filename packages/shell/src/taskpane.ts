@@ -27,6 +27,16 @@ export type PaneControl =
   | { type: "heading"; label: string }
   /** Several controls on one row (Breite / Höhe …). */
   | { type: "row"; items: PaneControl[] }
+  /**
+   * Farbverlaufsstopps: the gradient bar with a handle per stop, Farbverlaufstopp hinzufügen /
+   * entfernen; the chosen stop's Farbe, Position, Transparenz follow as ordinary controls.
+   */
+  | {
+      type: "gradient"; label: string; stops: () => { pos: number; color: string; transparency?: number }[]; selected: () => number;
+      select: (i: number) => void; add: () => void; remove: () => void; move: (i: number, pos: number) => void;
+    }
+  /** Musterfüllung: a grid of patterns (each drawn by `draw` as an SVG path in an 8 x 8 cell grid). */
+  | { type: "pattern"; label: string; options: { value: string; label: string; path: string }[]; value: () => string; fg: () => string; bg: () => string; set: (v: string) => void }
   /** Free content (a preview, a gallery). */
   | { type: "custom"; render: () => HTMLElement };
 
@@ -153,7 +163,7 @@ export class TaskPane {
         btn.addEventListener("click", () => {
           const pop = h("div", { class: "menu palette" });
           if (c.auto) pop.append(h("button", { type: "button", class: "item", onclick: () => { closePopup(); c.set(null); changed(); } }, "Automatisch"));
-          pop.append(...colorGrid((hex) => { closePopup(); c.set(hex); changed(); }));
+          pop.append(...colorGrid((hex) => { closePopup(); c.set(hex.startsWith("#") ? hex.toUpperCase() : `#${hex.toUpperCase()}`); changed(); }));
           showPopup(pop, btn.getBoundingClientRect());
         });
         return h("div", { class: "tp-line" }, h("span", { class: "tp-label" }, c.label), btn);
@@ -165,6 +175,9 @@ export class TaskPane {
         const commit = () => {
           const n = parseFloat(input.value.replace(",", ".").replace(/[^\d.-]/g, ""));
           if (!Number.isFinite(n)) { input.value = fmt(c.value()); return; }
+          // Enter commits, and Chromium fires change after it too: the same text is not set twice (one undo step).
+          if (input.dataset.done === input.value || n === c.value()) { input.value = fmt(n); return; }
+          input.dataset.done = input.value;
           c.set(Math.max(c.min ?? -Infinity, Math.min(c.max ?? Infinity, n)));
           changed();
         };
@@ -198,6 +211,45 @@ export class TaskPane {
         return h("div", { class: "tp-line" }, h("button", { type: "button", class: "tp-btn", disabled: dis, onclick: () => { c.run(); changed(); } }, c.label));
       case "row":
         return h("div", { class: "tp-row" }, ...c.items.map((i) => this.control(i)));
+      case "gradient": {
+        const stops = c.stops();
+        const sel = c.selected();
+        const css = [...stops].sort((a, b) => a.pos - b.pos).map((s) => `${s.color} ${s.pos}%`).join(", ");
+        const bar = h("div", { class: "tp-grad-bar", style: `background:linear-gradient(to right, ${css || "#fff, #fff"})`, "aria-label": c.label, role: "group" });
+        stops.forEach((s, i) => {
+          const handle = h("button", { type: "button", class: `tp-grad-stop${i === sel ? " on" : ""}`, style: `left:${s.pos}%`, "aria-label": `Stopp ${i + 1} von ${stops.length}`, "data-tip": `Stopp ${i + 1} von ${stops.length}` },
+            h("span", { style: `background:${s.color}` }));
+          handle.addEventListener("pointerdown", (e) => {
+            e.preventDefault();
+            c.select(i);
+            const r = bar.getBoundingClientRect();
+            let moved = false;
+            const move = (ev: PointerEvent) => { moved = true; handle.style.left = `${Math.max(0, Math.min(100, ((ev.clientX - r.left) / r.width) * 100))}%`; };
+            const up = (ev: PointerEvent) => {
+              removeEventListener("pointermove", move);
+              removeEventListener("pointerup", up);
+              if (moved) c.move(i, Math.round(Math.max(0, Math.min(100, ((ev.clientX - r.left) / r.width) * 100))));
+              changed();
+            };
+            addEventListener("pointermove", move);
+            addEventListener("pointerup", up);
+          });
+          bar.append(handle);
+        });
+        const add = h("button", { type: "button", class: "tp-icon-btn", "aria-label": "Farbverlaufstopp hinzufügen", "data-tip": "Farbverlaufstopp hinzufügen", onclick: () => { c.add(); changed(); } }, "+");
+        const del = h("button", { type: "button", class: "tp-icon-btn", "aria-label": "Farbverlaufstopp entfernen", "data-tip": "Farbverlaufstopp entfernen", disabled: stops.length <= 2, onclick: () => { c.remove(); changed(); } }, "✕");
+        return h("div", { class: "tp-grad" }, h("div", { class: "tp-line" }, h("span", { class: "tp-label" }, c.label), add, del), bar);
+      }
+      case "pattern": {
+        const cur = c.value(), fg = c.fg(), bg = c.bg();
+        const grid = h("div", { class: "tp-patterns", role: "listbox", "aria-label": c.label }, ...c.options.map((o) => {
+          const svg = `<svg width="20" height="20" viewBox="0 0 6 6" aria-hidden="true"><rect width="6" height="6" fill="${bg}"/><path d="${o.path}" fill="${fg}"/></svg>`;
+          const b = h("button", { type: "button", class: `tp-pattern${o.value === cur ? " on" : ""}`, role: "option", "aria-selected": String(o.value === cur), "aria-label": o.label, "data-tip": o.label, "data-value": o.value, onclick: () => { c.set(o.value); changed(); } });
+          b.innerHTML = svg;
+          return b;
+        }));
+        return h("div", { class: "tp-pattern-box" }, h("div", { class: "tp-heading" }, c.label), grid);
+      }
       case "custom":
         return c.render();
     }

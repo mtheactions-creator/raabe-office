@@ -11,7 +11,7 @@ import type { Sheet } from "@raabe/sheet-engine";
 import { PackageWriter, Rels, relsPath, resolveTarget } from "../package";
 import {
   CHART_CONTENT_TYPE, CHART_REL_TYPE, CHARTEX_CONTENT_TYPE, CHARTEX_REL_TYPE, DRAWING_CONTENT_TYPE, DRAWING_REL_TYPE,
-  anchorFromXml, anchorXml, chartFromXml, chartToXml, drawingXml, isChartEx,
+  anchorFromXml, anchorXml, chartFromXml, chartToXml, chartToXmlWithImages, drawingXml, isChartEx,
 } from "./chart";
 import { isRel } from "./read";
 import { canon } from "./styles";
@@ -38,7 +38,7 @@ export interface DrawingRaw {
 }
 
 const rawXml = (m: ChartModel) => (m.raw as { xml?: unknown } | undefined)?.xml;
-const placeOf = (m: ChartModel) => canon([m.from, m.to, m.name ?? null]);
+const placeOf = (m: ChartModel) => canon([m.from, m.to, m.name ?? null, m.props ?? null]);
 
 /** Reads the charts of a sheet's drawing; undefined when it has none. */
 export function readCharts(files: Record<string, Uint8Array>, sheet: Sheet, sheetPart: string, sheetRels: Rels): DrawingRaw | undefined {
@@ -59,7 +59,20 @@ export function readCharts(files: Record<string, Uint8Array>, sheet: Sheet, shee
     const cpart = cr ? resolveTarget(part, cr.target) : "";
     if (!info || !cr || !files[cpart]) continue;
     try {
-      const m = chartFromXml(strFromU8(files[cpart]), { from: info.from, to: info.to, name: info.name });
+      // Bild- oder Texturfüllungen: the chart part's pictures as data URLs.
+      const crels = new Rels(files[relsPath(cpart)] ? strFromU8(files[relsPath(cpart)]) : null);
+      const image = (rId: string) => {
+        const ir = crels.get(rId);
+        const ipart = ir ? resolveTarget(cpart, ir.target) : "";
+        const bytes = ipart ? files[ipart] : undefined;
+        if (!bytes) return undefined;
+        let bin = "";
+        for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+        const ext = (/\.(\w+)$/.exec(ipart)?.[1] ?? "png").toLowerCase();
+        return `data:${MIME[ext] ?? "image/png"};base64,${btoa(bin)}`;
+      };
+      const m = chartFromXml(strFromU8(files[cpart]), { from: info.from, to: info.to, name: info.name, image });
+      if (info.props) m.props = info.props;
       charts.push(m);
       read.push({ xml: String(rawXml(m) ?? ""), part: cpart, rId: info.rId, anchor: ax, place: placeOf(m) });
     } catch {
@@ -164,6 +177,21 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
       slots.push({ xml: ax, chart: /<(?:c|cx):chart\b/.test(ax) ? raw?.charts.find((c) => c.anchor === ax) : undefined });
     }
   }
+  /** A chart part's XML with its picture fills linked as media of that part (D-111). */
+  const chartPart = (m: ChartModel, cpart: string): string => {
+    const { xml, images } = chartToXmlWithImages(m);
+    let out = xml;
+    images.forEach((src, k) => {
+      const mm = /^data:([^;]+);base64,(.*)$/.exec(src);
+      if (!mm) return;
+      const bin = atob(mm[2]);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      const media = pw.addMedia(bytes, mm[1], "xl/media/image");
+      out = out.split(`r:embed="@img${k}"`).join(`r:embed="${pw.link(cpart, IMAGE_REL_TYPE, media)}"`);
+    });
+    return out;
+  };
   const fresh = pics.filter((p) => !p.raw || !old?.includes(p.raw));
   const freshShapes = (sheet.shapes ?? []).filter((s) => !s.raw || !old?.includes(s.raw));
   const freshInks = (sheet.inks ?? []).filter((k) => !k.raw || !old?.includes(k.raw));
@@ -180,21 +208,21 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
   for (const m of charts) {
     const orig = raw?.charts.find((c) => !placed.has(c) && c.xml !== "" && c.xml === rawXml(m) && pw.files[c.part]);
     if (orig) {
-      const xml = chartToXml(m);
+      const xml = chartPart(m, orig.part);
       if (xml !== strFromU8(pw.files[orig.part])) pw.setPart(orig.part, xml);
       placed.set(orig, placeOf(m) === orig.place ? orig.anchor
-        : anchorXml({ from: m.from, to: m.to, id: id++, name: m.name ?? `Diagramm ${id - 1}`, rId: orig.rId, chartEx: isChartEx(m) }));
+        : anchorXml({ from: m.from, to: m.to, id: id++, name: m.name ?? `Diagramm ${id - 1}`, rId: orig.rId, chartEx: isChartEx(m), props: m.props }));
       continue;
     }
     // A new chart (or a copy): a part of its own. Kept XML that refers to relationships of
     // another part is not reused.
     const ex = isChartEx(m);
-    let xml = chartToXml(m);
-    if (/\br:id="/.test(xml)) xml = chartToXml({ ...m, raw: undefined });
     const cpart = pw.freeName(ex ? "xl/charts/chartEx" : "xl/charts/chart");
+    // Kept XML that refers to relationships of another part is not reused.
+    const xml = chartPart(/\br:(id|embed)="/.test(chartToXml(m)) ? { ...m, raw: undefined } : m, cpart);
     pw.setPart(cpart, xml, ex ? CHARTEX_CONTENT_TYPE : CHART_CONTENT_TYPE);
     const rId = pw.link(part, ex ? CHARTEX_REL_TYPE : CHART_REL_TYPE, cpart);
-    added.push(anchorXml({ from: m.from, to: m.to, id: id++, name: m.name ?? `Diagramm ${id - 1}`, rId, chartEx: ex }));
+    added.push(anchorXml({ from: m.from, to: m.to, id: id++, name: m.name ?? `Diagramm ${id - 1}`, rId, chartEx: ex, props: m.props }));
   }
   // New pictures: their image as a media part of the package.
   for (const p of fresh) {

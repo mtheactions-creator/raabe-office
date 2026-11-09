@@ -3570,6 +3570,440 @@ Strg+click and Alt+S on a chosen slicer were there (D-092).
 - **Not recorded**: the cases with the Mehrfachauswahl button (UI Automation lost the button in Excel's slicer after
   the eleventh case); RaabeCalc's Mehrfachauswahl behaves as D-092 built it.
 
+## D-137 RaabePresent: every option triggered by hand, and what it found (2026-11-09)
+
+The owner found RaabeCalc's chart formatting broken in many places although the automated checks passed: they drove
+the model through test APIs, not the controls. RaabePresent got the same audit.
+- **sweep_present.py** starts the release exe (our own instance, its DevTools port) and walks every ribbon tab in a
+  starting point that suits it (sweep.ts in the app makes it: text selected in a shape, a shape, three slides, a
+  picture, a table, a chart, an equation, a SmartArt, the three master views, Freistellen), every control of the tab,
+  every entry of the menus, galleries and palettes the controls open (one level of submenus; lists longer than 40
+  entries, such as the shapes or the colours, by about a dozen entries spread over the list), the dialogs they open
+  (OK with the dialog's values), the context menus of thirteen kinds of object, every keyboard shortcut of the command
+  list, the Datei pages and their buttons, the status bar, and every control of the task panes (Form formatieren with
+  Formoptionen and Textoptionen, Grafik formatieren, Hintergrund formatieren, the chart's pane), each from a fresh
+  start. The option itself is triggered as a student does: a trusted CDP mouse click at the control's place, typing
+  into the field, Enter, key events; nothing of the option goes through a test API. Checked per option: no exception,
+  rejected promise or console error; an effect (the document's parts change, or the UI: a menu, a dialog, a pane, the
+  view, the selection); Strg+Z brings every part back; the presentation is written and every XML part parses, and no
+  colour is written that is neither hex nor a scheme colour. The native file dialogs, the clipboard and camera,
+  microphone and screen are replaced in the page by stand-ins (a prepared file, a file in TEMP, an in-memory
+  clipboard, streams drawn in the page), so no OS window opens and no other session's clipboard is touched.
+- **report_present_sweep.py** merges the runs into results/2026-11-09-present-options.json (every option reached,
+  how it fared, the ribbon's defined entries no walk reached, the commands no walk reached by their label) and opens
+  the saved presentations in a PowerPoint of our own (windowless, only when no POWERPNT.EXE runs).
+- **compare_present_office.py** checks that the effect is the right one for the options a student uses most: the same
+  option in PowerPoint on the same starting file (the ribbon command by its idMso through ExecuteMso, else the COM call
+  it makes), both files saved, and what changed in each compared (geometry, fill, outline, text body, paragraph and run
+  properties, layout, transition, animations, table grid, slide size).
+- **real_present.py** does the controls where the OS input matters with SendInput under the real-input lock: a
+  palette, a combo box's list, typing into the font box, a spinner's arrow, the pane's slider and its native list,
+  Tab through a dialog, drawing a shape by dragging, a transition from the gallery, F5/click/Esc.
+
+Found and fixed (each with a lasting case in apps/raabe-present/test/byhand.test.ts or in the sweep itself):
+- Strg+Z after any Diagrammentwurf or chart Format command, and after any SmartArt-Design command (Layout ändern,
+  Farben ändern, Formatvorlagen, Form hinzufügen, Höher/Tiefer stufen ...), left the chart or diagram changed: the
+  undo step held only the slide, not the chart's or the diagram's own parts: 168 options of the first sweep.
+- Files PowerPoint refuses to open: Texthervorhebungsfarbe wrote the colour's name (GREEN) as its value, and the
+  palettes' Automatisch wrote a scheme colour "auto" (Schriftfarbe, Fülleffekt, Formkontur, Textkontur). D-140.
+- Layout's gallery showed Neue Folie's three entries (Ausgewählte Folien duplizieren, Folien aus Gliederung,
+  Folien wiederverwenden), and Neue Folie lost them under every design whose name did not end in "Design".
+- Folien aus Gliederung and Folien wiederverwenden were one undo step per slide made; now one for all (Deck.group). A
+  file that cannot be read is said in a message instead of an unhandled error.
+- Umschalt+F9 (Gitternetzlinien), Alt+F9 (Führungslinien) and Strg+Alt+V (Inhalte einfügen) did nothing although the
+  tooltips name them; Gruppieren and Gruppierung aufheben named Strg+G and Strg+Umschalt+G, German PowerPoint's keys
+  (and ours) are Strg+Umschalt+G and Strg+Umschalt+H.
+- Strg+Z while editing an equation did nothing; it now ends the editing and undoes (a new empty equation goes).
+- Pasting or cutting through the notes pane's menu could not be undone (setRangeText bypassed the text box's undo).
+- Tabelle einfügen left the table style it added after Strg+Z.
+- A number typed into the Format pane and confirmed with Enter was written a second time when the field was left, so
+  the first Strg+Z seemed to do nothing: a change that changes nothing is no undo step now.
+- Übergänge > Nach: the spinner had no accessible name (now its command's, "Automatisch nach").
+- Form darunter hinzufügen and Aufzählungszeichen hinzufügen (SmartArt) were two undo steps (add, demote).
+- A structure from Formel > Formel or Einfügen > Formel while an equation was being edited made a new equation; it
+  goes in at the caret now, as in PowerPoint.
+- Textkontur's button wrote a scheme colour "none" while no colour had been picked (D-140).
+- Spalte einfügen made the table wider; PowerPoint keeps the width (D-138).
+- Texteffekte formatieren... and the WordArt-Formate launcher were "Noch nicht verfügbar"; they open the Format pane's
+  new Textoptionen (D-139).
+Measured against PowerPoint and left as it is: the caret right after a word (no selection) leaves Fett, Kursiv and
+Schriftgrad without effect in both programs; Keine Füllung/Keine Kontur write only what changes where PowerPoint also
+writes the style's other values (the same look); bullets' indents could not be compared (COM's Bullet.Visible gives
+PowerPoint a numbered list, not what the button does). Real input: F5, a click to the next slide, then Esc did not end
+the show in the exe (with CDP keys it does). Leaving the browser's full screen now ends the show too (Esc with the OS
+keyboard may leave full screen before the page sees the key), but the case still fails with that build: the cause is
+not found yet (the key probably does not reach the page after the click; open).
+Open (not fixed tonight): RaabePresent has no SmartArt Format tab (PowerPoint has one); Seitenverhältnis sperren (table),
+Folienmaster einfügen, Masterlayout..., Platzhalter einfügen stay "Noch nicht verfügbar"; Übergänge > Dauer does
+nothing while the slide has no transition (PowerPoint's COM writes the duration alone; the ribbon's own behaviour there
+was not recorded). The chart Format tab's WordArt-Formate, Schnellformatvorlagen and Daten
+aktualisieren, and Format > Gruppieren for a chart, belong to the charts work (packages/charts) and were reported there.
+
+## D-138 RaabePresent: a new table column keeps the table's width (2026-11-09)
+
+Measured with PowerPoint's own commands (ExecuteMso TableInsertColumnsRight/Left) on 2-column tables of 300 pt and 600
+pt: the table keeps its width and the columns, the new one as wide as its neighbour, shrink alike (2 x 150 pt became
+3 x 100 pt). RaabePresent added the column's width to the table (it grew past the slide). Now as PowerPoint; rows still
+add their height (PowerPoint's Zeile oberhalb/unterhalb einfügen do, compared the same way).
+
+## D-139 RaabePresent: Textoptionen in the Format pane (2026-11-09)
+
+Form formatieren had only Formoptionen; Texteffekte formatieren... (context menu) and the WordArt-Formate launcher
+(Formformat, Tabellenentwurf, the chart's Format) were greyed. The pane now has PowerPoint's second set, Textoptionen,
+for a shape with text: Textfüllung und -kontur (Keine Füllung, Einfarbige Füllung, Automatisch, Farbe; Keine Linie,
+Einfarbige Linie, Farbe, Breite) and Textfeld (the Textfeld settings that also stand under Größe und Eigenschaften).
+They work on the selected text, or on all of a selected shape's text, through the same code as the ribbon's
+Schriftfarbe and Textkontur, each change one undo step. Texteffekte (shadow, glow ... on text) are not in it yet.
+
+## D-140 RaabePresent: colours PowerPoint refuses (2026-11-09)
+
+Opening the sweep's saved files in PowerPoint found two kinds it refuses although the XML is well formed: a highlight
+written by its name (`<a:srgbClr val="GREEN"/>`; the palette names its colours as Word does) and a palette's
+Automatisch written as `<a:schemeClr val="auto"/>`. Now: highlights are written as their hex value; Automatisch takes
+the run's own colour away (Schriftfarbe: the design's text colour shows), the shape's own fill or line colour away
+(Fülleffekt, Formkontur: the shape style's shows), and colorEl/colorXml never write "auto" (tx1 instead). The sweep's
+save check now refuses any srgbClr that is not six hex digits and any schemeClr outside the scheme's names, so this
+kind of fault shows without PowerPoint. Opening 600 files of the exe sweep afterwards found one more: Nummerierung >
+Keine wrote `<a:buAutoNum type="none"/>`; it switches the list off now (buNone), and the save check refuses that too. The colour lint then found Hintergrund
+formatieren's Farbe writing five hex digits (the palette's colour without "#" lost its first digit); fixed.
+
+## D-141 RaabeCalc: every option tried by hand, and against Excel (2026-11-09)
+
+The owner found chart formatting "downright broken in many parts" although the automated checks passed: those
+drove the model through test APIs, not through the controls. So RaabeCalc's options are now tried the way a student
+uses them. Three tools, all against the release exe:
+- **sweep_calc.py** starts an instance of our own off screen (RAABE_FEEL_BACKGROUND) and walks everything a user can
+  reach: every ribbon tab and control (buttons, split buttons and their arrows, dropdowns, galleries, combo lists,
+  colour palettes, spinners, launchers), every menu entry and submenu entry, the context menus of cells, row and
+  column headers, sheet tabs, the status bar and the AutoFilter button, and every page of Datei with its controls
+  (Drucken's lists entry by entry). Each option starts from the same small workbook (a bold header row, numbers with
+  a format, dates, a formula; a mixed selection A1:B4) and is triggered with trusted DevTools mouse clicks at the
+  control's position, which never touch the real mouse. Recorded per option: whether it was there, enabled and not
+  covered; what it opened (menu entries, a dialog with its controls); exceptions and console errors; the effect on
+  the workbook, the view and the drawn grid; and for a change, whether Strg+Z pressed as a key right then (where the
+  focus is) gives back the workbook as it was, and Strg+Y redoes it. Dialogs run twice: Esc, and OK as they open.
+  Options that open native windows (Öffnen, Speichern unter, Dieses Gerät, PDF and CSV export) or print are listed,
+  not clicked. Results: results/2026-11-09-calc-sweep-before.json, -after.json; the option inventory:
+  results/2026-11-09-calc-options.json.
+- **compare_calc_options.py** runs chosen options in RaabeCalc (by hand, as above, including typing into dialog
+  fields) and the same ribbon command in an invisible Excel of our own (CommandBars.ExecuteMso, or the dialog's
+  effect through COM where a command has no id), saves both, opens both in Excel and compares what Excel sees
+  (values, formulas, number formats, fonts, fills, alignment, borders, merges, sizes, frozen panes, AutoFilter,
+  conditional formats with the cells Excel shows them on, page setup). Differences already in the setup are left
+  out. Options without an Excel command (a palette colour) are checked against their own expectation.
+- **check_calc_realinput.py** (D-144) for what only the operating system's input shows.
+
+## D-142 RaabeCalc: what trying every option by hand found, and the fixes (2026-11-09)
+
+Found by sweep_calc.py and compare_calc_options.py (D-141), checked against Excel where Excel decides, fixed in the
+app, and pinned by apps/raabe-calc/test/audit.test.ts or a compare case:
+- **Zellen formatieren, OK** gave every selected cell the active cell's whole format: OK on a mixed selection made
+  all of it bold (the header's) or gave all the active cell's number format. Now OK changes only what was changed in
+  the dialog; the rest stays each cell's own (Excel).
+- **Colours that did not survive saving:** the standard font carries a design reference (Text 1); a colour set
+  through a cell style (Gut, Schlecht ...), Zellen formatieren or a hyperlink kept that reference, and the file then
+  said "Text 1": black in Excel. A colour set without a reference of its own now drops the old one (fills too).
+  The colour grid of Zellen formatieren > Ausfüllen and Schrift > Farbe handed over "C00000" without "#": the fill
+  was neither drawn nor saved. Hyperlinks get Excel's design colour (Link, theme 10).
+- **One Strg+Z for one action:** Schriftgrad (list, field, vergrößern), Textumbruch and the Ausrichtung menu's
+  rotations made two undo steps (the format, then the row heights), so Strg+Z took back only the row heights; now
+  one. Nach dem Wert der ausgewählten Zelle filtern made two (filter on, then filter). Undoing Blatt ausblenden left
+  the sheet hidden and active, undoing Umbenennen kept the new name, and defined names (Namen definieren, Aus
+  Auswahl erstellen, Name löschen, Spezialfilter) were not undone at all: a step now keeps the sheets' names,
+  visibility and tab colours and the workbook's names.
+- **Sortieren:** formulas moved with their rows without their references (=B3*2 sorted into row 2 still read row 3,
+  so every computed column was wrong after sorting); now they move as copied (Excel, checked through COM). A
+  selection of a column inside a table sorted that column alone and tore the rows apart; now the Sortierwarnung asks
+  first (Markierung erweitern, the default, or Mit bestehender Markierung fortfahren), as Excel does, for the quick
+  sort and Benutzerdefiniertes Sortieren.
+- **Verbinden:** the merged area keeps the top-left cell's format for all its cells (it kept each cell's own, so a
+  date format or bold reappeared after Zellverbund aufheben); before values other than the top-left one are lost,
+  RaabeCalc asks as Excel does.
+- **Unreachable or wrong controls:** Seitenlayout > Designs, Farben, Schriftarten had no command and stayed grey;
+  Aus Auswahl erstellen opened Neuer Name instead of Excel's dialog (Oberster Zeile, Linker Spalte, Unterster Zeile,
+  Rechter Spalte), now built; Registerfarbe (sheet tab and Format) listed colour codes as text ("#C00000"), now
+  Excel's palette with Keine Farbe; Füllfarbe offered "Automatisch" on top where Excel has "Keine Füllung" below
+  the colours (a shell palette option, `noColor`); the sheet tab's Blatt schützen..., the cell menu's Neuer
+  Kommentar and Dropdown-Auswahlliste... were grey although the commands exist; Drehen (Seitenlayout > Anordnen)
+  was enabled without a selected object.
+- **Names of controls:** the split buttons and menus of Start (Einfügen, Löschen, AutoSumme, Ausfüllen, Löschen,
+  Sortieren und Filtern, Suchen und Auswählen) were named after the command behind them ("Alle löschen",
+  "Sortieren...", "Suchen...") for screen readers and UI Automation; now as labelled, as in Excel.
+- **Formeln anzeigen** is a setting of the sheet's window, saved in the file (showFormulas), as in Excel (it was one
+  switch for the app, lost on saving).
+- **Zellen formatieren > Zahlen:** Dezimalstellen and 1.000er-Trennzeichen verwenden (.) for the number categories,
+  and a format like 0,000 is shown as Zahl with three decimals. **Rahmen:** Außen drew no lines (it ticked the
+  boxes but kept the old sides), and a line style picked after the sides now applies to them. **Layout:** the Zahlen
+  panel showed under every other tab, the colour grids of Ausfüllen and Schrift > Farbe were squeezed so that labels
+  covered colours (a click on them did nothing; found when the comparison's click on a fill colour left no fill),
+  and the category and type lists were two lines tall.
+- **Regeln in ausgewählten Zellen löschen** removed whole rules that only touched the selection; now it takes the
+  selected cells out of each rule's range (moving its formulas with the new top-left cell), and makes no undo step
+  when there is nothing to delete.
+- **Bedingte Formatierung, formulas:** rule formulas were evaluated for every cell as written for the top-left one
+  (=$B2>10 on A2:D9 tested row 2 everywhere); now relative references follow the cell as in Excel.
+- **PivotTable** on a new sheet: the sheet and the table were two undo steps; now one. The ribbon's tile galleries
+  (the Zeichnen tab's pens) had no accessible names; they carry their tooltip's title now (shell).
+- AutoSumme on a range selects the results with it (B2:G5 becomes B2:G6), as Excel (checked through COM).
+Left as they are, with the reason: Daten > Aus Tabelle/Bereich is two undo steps (the table, then the loaded copy;
+Excel's Power Query loads were not recorded tonight); Zellen formatieren still lacks Excel's border colours and
+diagonals, pattern fills, the orientation dial and the font list; sorting a range whose own sum row is sorted with
+it gives #BEZUG! where Excel keeps a shortened reference (an edge case, found by the comparison).
+
+## D-143 RaabeCalc: Bedingte Formatierung with Excel's rule dialogs (2026-11-09)
+
+The galleries' entries ending in "..." applied a fixed rule at once (Obere 10 Elemente always 10, Doppelte Werte
+always light red); Excel opens a dialog for each. Built from the dialogs' controls in Excel's inventory
+(results/2026-11-05-excel-inventory.json): Obere/Untere 10 Elemente and 10 % (the number, then the format), Über
+and Unter dem Durchschnitt, Doppelte Werte (Doppelte or Eindeutige), and the new **Datum...** (Gestern, Heute,
+Morgen, In den letzten 7 Tagen, Letzte/Diese/Nächste Woche, Letzter/Dieser/Nächster Monat), written as Excel writes a
+timePeriod rule, with its formula, which RaabeCalc evaluates. Text rules (Textinhalt, and the new rule types) are
+written with Excel's formula as well; Excel tests the cells with it.
+**Neue Regel...** and every gallery's **Weitere Regeln...** open Neue Formatierungsregel with Excel's six rule types:
+Alle Zellen basierend auf ihren Werten formatieren (2-/3-Farben-Skala, Datenbalken with the colours), Nur Zellen
+formatieren, die enthalten (Zellwert with the eight operators, Bestimmter Text), obere oder untere Werte, über oder
+unter dem Durchschnitt, eindeutige oder doppelte Werte, and Formel zur Ermittlung der zu formatierenden Zellen
+verwenden; the format through Formatieren... (Schriftschnitt, Farbe, Hintergrundfarbe). **Regeln verwalten...**
+opens the manager: the rules of the selection or the sheet in the order they apply, Neue Regel..., Regel löschen,
+Nach oben, Nach unten; OK applies all as one undo step. Not built: Regel bearbeiten..., Regel duplizieren, the icon
+sets' and the values' types (Zahl, Prozent, Perzentil) in the first rule type.
+The galleries carry Excel's names: Blauer ... Lilafarbener Datenbalken under Farbverlauf (the bars of Einfarbige
+Füllung need Excel 2010's extension of the rule and are left for later), and all twelve colour scales,
+Grün-Gelb-Rot-Farbskala to Gelb-Grün-Farbskala (six were missing). The scales' colours were reversed: a name lists
+the colours from the highest value down, so Grün-Gelb-Rot gives the lowest value red and the highest green; the rule
+keeps them from the lowest up. Recorded with probe_excel_cf_galleries.py (real clicks on every gallery entry in an
+Excel of our own, the rule read back through COM; results/2026-11-09-excel-cf-galleries.json): all twelve scales
+give exactly RaabeCalc's colours and order; of the six bars, Grüner Datenbalken is #63C384 (it was #63BE7B), fixed.
+
+## D-144 RaabeCalc: Datei > Drucken with Excel's settings, and the real-input pass (2026-11-09)
+
+**Drucken** had Hochformat/Querformat and the paper size only. Added, as on Excel's page: what to print (Aktive
+Blätter drucken, Gesamte Arbeitsmappe drucken, Auswahl drucken), Seiten von ... bis, Seitenränder (Normale, Breite,
+Schmale, Benutzerdefinierte Seitenränder) and Skalierung (Keine Skalierung, Blatt auf einer Seite darstellen, Alle
+Spalten / Alle Zeilen auf einer Seite darstellen, Benutzerdefinierte Skalierungsoptionen...). What and which pages
+hold for this printing only, as in Excel; margins and scaling are the sheet's page setup (one undo step each, saved).
+The preview follows every choice. Exemplare and the printer stay with the system's print dialog.
+**Real input** (check_calc_realinput.py, under the real-input lock, every click only into our own window checked to be
+in front): the font list (open, scroll, pick), Schriftgrad typed with Enter, Füllfarbe (a colour, Keine Füllung),
+Schriftfarbe, Zellenformatvorlagen, Rahmen, a submenu of Bedingte Formatierung into its dialog with a value and Enter,
+Strg+1 with Tab staying inside Zellen formatieren and Esc closing it, the sheet tab's context menu with Registerfarbe,
+the Skalierung spinner, Sortieren of one column through the Sortierwarnung with Enter, and Strg+Z after it: 14 of 14
+on the release build of this night (12 of 14 on the first run, both misses in the test's own selectors).
+Number formats chosen on the ribbon or in Zellen formatieren now widen columns of standard width whose numbers no
+longer fit, as Excel does (Datum, lang showed ####).
+
+## D-133 RaabeWrite: every option triggered by hand, as a student does (2026-11-09)
+
+The owner found RaabeCalc's chart formatting broken although the automated checks passed: they drove the model
+through test APIs, not the controls. RaabeWrite now has a by-hand audit that goes through the controls only.
+- **Inventory** (`sweep_write.py inventory`, results/2026-11-09-write-options.json): the app's ribbon definition and
+  command list (`__app.inventory()`: all tabs with the contextual ones, menus, launchers) joined with what the running
+  exe really shows: each tab's visible controls, every menu, gallery, palette and dialog the sweep opened, the context
+  menus, the status bar, the Datei pages and the shortcuts. Defined but not reached, and reached but not defined, are
+  listed. The chart tabs (Diagrammentwurf, Format) are not built yet and listed as such.
+- **Sweep** (`sweep_write.py sweep`): our own release exe off screen, never focused. Every visible control of every
+  tab is clicked with trusted DevTools mouse input at its place; contextual tabs get their document set up by hand too
+  (caret in the table, a click on the picture, a double click into the header, a rectangle drawn from the Formen
+  gallery and typed into, Alt+Umschalt+0; Referenzen and Überprüfen once more with notes, a comment and tracked
+  changes). Then every entry of the menu, gallery, palette or list it opens (long panels are scrolled to the entry and
+  the click is hit-tested; galleries of more than 14 entries are sampled: first and last entries), each dialog's Esc
+  and OK, every entry of four context menus, the status bar, every Datei page and its buttons, every shortcut of the
+  command list. Per option: no exception or console error; a visible effect (document, selection, ribbon state, pane,
+  dialog, popup, backstage page, view, a system dialog asked for); Strg+Z (as a key) restores the document; the
+  document saves. Options that change nothing because the base document already is so (the current design, "Ohne",
+  removing what is not there, going to the next note when there is none) count as passed (`ALREADY`, each with its
+  reason); greyed options are listed, not failed. Two settings Word does not take back with Strg+Z either (Änderungen
+  nachverfolgen; closing a header opened empty) count as passed.
+- **Word** (`sweep_write.py word`): Word (own invisible instance) opens every file the sweep saved, and for the
+  options with a Word counterpart (feellab/word_ops.py) applies Word's own option to the same base document with the
+  same selection and compares what changed (feellab/word_summary.py: the target's character and paragraph formatting,
+  lists, table, page setup, objects, notes, fields, header, footer ...).
+- **Real input** (`real_input_write.py`, under the real-input lock, our window checked in front before every input):
+  lists that open and close, the style gallery, palettes and the Farben dialog, spinners and typed fields, Tab through
+  the Absatz dialog, a dialog dragged by its title, the table grid under the mouse, the context menu at the mouse,
+  keytips with the real Alt key, the zoom slider, the mouse wheel, the Schriftart dialog's lists.
+- The system's file dialogs and printing cannot be opened off screen: the sweep replaces them (`__app.stubNative()`,
+  test API only) and counts the request as the option's effect.
+- **Results** (2026-11-09). Real input: 9/15 before (three app faults: Weitere Farben, a dialog's title bar, the
+  Schriftart dialog's lists; three errors of the test itself), 15/15 after (results/2026-11-09-write-real-input.json).
+  Inventory: 288 ribbon controls defined in 14 tabs (chart tabs not built), 280 reached by hand (the other 8 are style
+  gallery entries the run sampled and one check box whose label differs), 46 dialogs, 449 commands (17 deferred, 2 with
+  no behaviour: the Kommentare pane's own entry and Weitersuchen, both reached through other controls).
+  Sweep before the fixes (the same harness without its later corrections): Start, Layout, table tabs 434 of 435 decided
+  options passed; the other tabs and the extras 721 of 1021 (107 of the failures were Strg+Z in equations, D-136; most
+  others limits of that run's harness). After the fixes: A (Start, Layout, table tabs) 455 options, 430 passed, 0
+  failed, 1 untested, 24 greyed or deferred; B (the other tabs, context menus, status bar, Datei, shortcuts) 1515
+  options, 1345 passed, 57 failed, 9 untested, 94 greyed or deferred, 10 fields. Word opened all 254 files of A; 81 of
+  88 options with a Word counterpart changed the same as Word's (the 7: section breaks, fixed and re-measured 18/18 on
+  the Layout tab; Kein Leerraum's font; Spalte links/rechts einfügen keeps the table's width where Word keeps the
+  column widths). Word opened 802 of B's 803 files (the one after Strg+N: fixed, D-134); of B's 11 comparisons 6 are
+  the same, Leere Seite differed (fixed afterwards) and four came from set-ups Word's side did not repeat (notes,
+  comment and changes added first; such rows are no longer compared). The 57 left in B are listed in the results' report (`sweep_write.py report --out write-sweep-b`):
+  mostly shortcuts the sweep presses wrongly (Strg+Return, Strg+(, Alt+Strg+3 ...), Annehmen/Ablehnen when the
+  selection holds no change, picture options that are already so (Mit Text in Zeile, Ausfüllen, Einpassen), the
+  print page's own fields, and Kopieren in the context menus (the clipboard is not checked there).
+
+## D-134 RaabeWrite: what the by-hand audit found broken (2026-11-09)
+
+- **Weitere Farben...** (every colour palette: Schriftfarbe, Schattierung, Seitenfarbe, the Format pane, text effects)
+  clicked a hidden browser colour input whose system dialog the app's web view never opened: nothing happened. It now
+  opens Office's **Farben** dialog in the window (packages/shell/src/color-dialog.ts): Standard (a grid of colours) and
+  Benutzerdefiniert (Farbmodell RGB, Rot, Grün, Blau, Hex), Neu and Aktuell side by side, OK and Abbrechen. The shell's
+  palette uses it, so RaabeCalc and RaabePresent get it too. (The other visible colour inputs in Bildformat, Formformat
+  and Entwurf > Farben anpassen are unchanged.)
+- **Dialogs move with their title bar**, as Office's do (`installDialogDrag`, shell); they could not be moved.
+- **Texteffekte > Ligaturen > Keine** removed the run's own setting, so the style's ligatures (Word's Normal has
+  "Standard und kontextbezogen") stayed: no effect. It now writes `w14:ligatures w14:val="none"`, as Word does.
+- **A new document Word could not open:** Word opened 802 of the 803 files the sweep saved; the one after Strg+N was
+  "possibly damaged": the new document's styles.xml had the ligatures of its defaults (`w14:ligatures`) without
+  declaring the w14 namespace (documents read from a file keep their own styles part, new ones are written from
+  scratch). styles.xml now always declares w14 (packages/ooxml, test styles-ns.test.ts).
+- **Formen > Neuer Zeichenbereich** was a button without a command (nothing happened); Word's drawing canvas is not
+  built, so it is greyed with a tooltip saying so.
+- The audit's own errors (popups closed by the reopen, panes left open, labels with check marks, long panels not
+  scrolled) were fixed in the harness, not the app.
+
+## D-135 RaabeWrite: options made to behave as Word's, recorded in Word (2026-11-09)
+
+- **Groß-/Kleinschreibung > Ersten Buchstaben im Satz großschreiben / Ersten Buchstaben jedes Wortes großschreiben**
+  lowered every other letter, so German nouns lost their capitals ("weitere Beobachtungen" became "weitere
+  beobachtungen"). Word (recorded with Range.Case) raises the first letter of a sentence (of each word) and leaves the
+  other letters as typed; only words with capitals inside (iPhone, McDonald) are lowered after their first letter, and
+  every word when the whole selection was in capitals. text-engine `wordCase`, with Word's cases as unit tests.
+- **Layout > Umbrüche > Abschnittsumbrüche** (Nächste Seite, Fortlaufend, Gerade Seite, Ungerade Seite) deleted the
+  selected text and put the break in its place. Word puts a section break before the selection and keeps the text
+  (found by the Word comparison: Word's file still had the selected words); only page and column breaks replace the
+  selection, in Word as in RaabeWrite. **Einfügen > Leere Seite** likewise deleted the selected text; Word keeps it
+  and puts the blank page before it, and so does RaabeWrite now (not re-measured in the exe before the deadline).
+- **Kopfzeile/Fußzeile > Leer** inserts Word's placeholder "[Hier eingeben]" (Word's building block has it as a
+  content control), selected so typing replaces it; it inserted an empty header.
+- **Status bar:** a click on the page number opens the Navigationsbereich, on the word count Wörter zählen, as in Word
+  (they did nothing).
+- **Schriftart dialog:** Schriftart and Schriftgrad have Word's lists under their fields (a click puts the entry into
+  the field); the dialog had only fields with suggestions, which the mouse could not use.
+
+## D-136 RaabeWrite: Strg+Z inside an equation (2026-11-09)
+
+An equation being edited was one undo step for the whole edit, so Strg+Z after inserting a symbol or structure into a
+new equation removed the equation itself. Word takes back one change at a time. The edit session now keeps the
+equation's values before each change: Strg+Z and Strg+Y step back and forth inside the equation (the caret goes to its
+end); with no change left, Strg+Z ends the edit and acts on the document (the next step removes a new equation, as in
+Word). The document still gets one undo step for the whole edit once it is left.
+
+## D-111 RaabeCalc: the chart Format pane complete, every option drawn, saved and read back (2026-11-08)
+
+The owner found the chart Format pane "downright broken in many parts" (an axis could not be made to draw).
+Causes: the renderer drew only what Excel's default style shows (no value axis line, no tick marks, no
+logarithmic scale, no crossings, no label positions), the pane edited fields nobody drew, the crossing was
+read into the wrong axis, and Strg+Z closed the pane. Excel's pane was recorded first in an Excel of our own
+(`probe_excel_chartpane.py`, UI Automation without real input: 94 panes of 7 chart types, every section,
+control, label and dropdown entry; results/2026-11-09-excel-chart-pane.json), then built the same way.
+- **Model** (`packages/charts/src/model.ts`): fills gain Farbverlauf (type, angle, stops with transparency,
+  Mit Form drehen), Bild- oder Texturfüllung (picture, tiled or stretched with offsets, transparency) and
+  Musterfüllung (DrawingML's 48 presets, Vorder-/Hintergrund); lines gain Farbverlaufslinie, Verbundtyp,
+  Abschluss- and Anschlusstyp, Start-/Endpfeil with size; every element gains Effekte (Schatten außen and
+  innen, Leuchten, Weiche Kanten, 3D-Format, and for text Spiegelung); text gains fill, Kontur, effects,
+  underline/strike and the Textfeld (Vertikale Ausrichtung, Textrichtung, Benutzerdefinierter Winkel);
+  axes gain Achsentyp (Text, Datum with Basis/Haupteinheit), Anzeigeeinheiten (with or without label),
+  Intervall zwischen Teilstrichen / Beschriftungen, Abstand zur Achse, Achsenposition (auf / zwischen
+  Teilstrichen), a fill and a secondary value axis of its own (`format.valAxis2`); series gain effects,
+  Kreisexplosion and data points of their own (`points`: Datenpunkt formatieren); the chart gains
+  Punkte nach Farbe unterscheiden, Abgerundete Ecken, the legend "Oben rechts" and the object's
+  Eigenschaften (placement, Objekt drucken, Gesperrt, Seitenverhältnis sperren, Alternativtext).
+- **`crosses` means where the other axis crosses this one**, in this axis' units, as the pane says it
+  ("Horizontale Achse schneidet" on the value axis, "Vertikale Achse schneidet: Bei Rubriknummer" on the
+  category axis). The file writes it on the other axis' element (c:crossesAt / c:crosses), which is how the
+  reader now takes it back (it read it into the wrong axis before, and the category axis' "Bei größter
+  Rubrik" wrote the value axis' field).
+- **Drawing as Excel does:** an axis line is drawn when the axis has one (Excel's default value axis has
+  none; Einfarbige Linie draws it); Teilstriche are drawn with the axis line's paint, so without a line they
+  stay invisible as in Excel; major ticks reach 2.75 pt, minor 2.06 pt beyond the line (Excel's PDF export);
+  columns grow from where the category axis crosses; labels "Achsennah" follow their axis (so with negative
+  values the categories stand at the zero line, as in Excel), "Niedrig"/"Hoch" stand at the plot's ends and
+  the plot makes room on that side; Abstand zur Achse adds 2.92 pt per 100 (measured); the Anzeigeeinheit's
+  label stands rotated beside the value labels ("Tausende", "x 10000", Excel's texts). Gradients, patterns,
+  pictures, arrowheads and effects are SVG definitions collected per scene (`paint.ts` beginDefs); compound
+  lines are drawn through a mask; effects are SVG filters (a fair likeness: Excel's exact blur and bevel
+  shading are not reproduced, D-114).
+- **File:** everything is written as DrawingML in the schema's order and read back: gradFill, pattFill,
+  blipFill (the picture as a media part of the chart part, linked when the drawing is written), a:ln's cmpd,
+  cap, join, headEnd/tailEnd, a:effectLst (glow, innerShdw, outerShdw, reflection, softEdge), a:scene3d and
+  a:sp3d, a:defRPr's ln/fill/effectLst/latin, a:bodyPr's rot/vert/anchor/anchorCtr, c:dateAx, c:dispUnits,
+  c:tickLblSkip/c:tickMarkSkip/c:lblOffset/c:auto, c:crossBetween from the category axis' Achsenposition,
+  c:dPt with c:explosion, c:varyColors, c15:datalabelsRange (Wert aus Zellen), c:roundedCorners, and in the
+  drawing anchor editAs, fPrintsWithSheet, fLocksWithSheet, graphicFrameLocks and cNvPr's descr/title.
+
+## D-112 RaabeCalc: the chart pane's controls (2026-11-08)
+
+- The pane is split into `formatpane.ts` (elements, names, tabs), `panefill.ts` (Füllung, Rahmen/Linie,
+  Effekte), `paneoptions.ts` (the element's own options) and `panetext.ts` (Textoptionen, Ausrichtung,
+  Größe und Eigenschaften). Labels, entries and the order of tabs are Excel's as recorded ("Stärke",
+  "Uni", "Rahmenpfeil", "Pfeil L Größe 1-9", "Hauptstriche", "Bei Rubriknummer", "Abstand zur Achse",
+  "Am Ende außerhalb", "Kreisexplosion", "Segmentfarbunterscheidung" …); text fill and outline have no
+  Automatisch, as in Excel.
+- @raabe/shell's task pane gains two controls with Excel's look: Farbverlaufsstopps (the bar with a
+  handle per stop, add, remove, drag) and the Musterfüllung grid (8 x 6 tiles drawn in the chosen colours).
+- A second click on a selected series selects the clicked point (Datenpunkt formatieren), as in Excel; the
+  element mapping moved from feature.ts into formatpane.ts (`elementOfPart`, `partsSelector`).
+- Strg+Z and Strg+Y keep the chart selected and its pane open on the same element (they closed the pane, so
+  a student lost the pane after every undo). This is a small change in feature.ts' `refresh`.
+- Größe und Eigenschaften: Höhe/Breite skalieren are relative to Excel's default chart size (12,7 x 7,62 cm),
+  Seitenverhältnis sperren keeps the ratio when one side changes.
+
+## D-113 RaabeCalc: the chart pane tested by hand (2026-11-08)
+
+`tools/feel-lab/check_calc_chartpane.py` drives the real release exe with trusted DevTools input (no OS mouse,
+window off screen and never focused): for column, bar, line, pie, scatter, area and Verbund charts it selects
+the chart with a click, opens the pane with Strg+1, picks every element in the pane's own element list, opens
+every option set, tab and section and uses every control once (radio and check clicks, a colour swatch, the
+arrow key in a dropdown, typed numbers and their spin button, a click on a slider, a pattern tile, adding a
+gradient stop; controls a choice reveals are used before that choice is undone). After each use it checks that
+the model changed and the drawing changed, and that Strg+Z restores both. The changed models are saved by
+RaabeCalc into one workbook per chart type, opened again (the setting must come back) and opened by our own
+invisible Excel, which reports each setting through COM (`excel_chartpane_com.py` maps model fields to the
+object model: Axes(2).MajorTickMark, Format.Line.Visible, Format.Fill.Type, Shadow, Glow, SoftEdge,
+TickLabelSpacing, DisplayUnit, CrossesAt, Points(n).Explosion, ChartObject.Placement …) and exports each chart.
+First results (results/2026-11-09-calc-chartpane-column.json, -pie-line.json, on the build before the fixes they
+led to): column 1436 controls used, 1418 changed the chart, all 1418 undone by Strg+Z, 1178 back on reopening,
+Excel COM 1334 of 1682 settings; pie 529 / 523 / 523 / 359, COM 474 of 605; line 942 / 916 / 906 / 90. What
+failed was fixed: palette colours without "#", two undo steps for one typed value, gradient stops out of order,
+the chart area's Textoptionen not saved or drawn, a pie series' Linie only on its points, a solid pie fill read
+back as a colour the pie ignores, error bar effects not saved, details of an automatic line lost, XY charts on
+the Sekundärachse written without their secondary axes (Excel refused the file). COM misses that remain are
+mostly text formats Excel does not report through TextFrame2 for chart text it builds itself, and settings Excel
+ignores (a format code "Probe 1").
+On the merged build with those fixes (results/2026-11-09-calc-chartpane-line.json, -others.json): line 1177
+controls used, 1169 changed, 1169 undone, 977 back on reopening, COM 1424 of 1428; scatter 787 / 785 / 785 /
+589, COM 979 of 981; combo 879 / 851 / 837 / 398, and Excel refused that file: every series moved to the
+Sekundärachse left the part without a primary group (fixed: written on the primary axes). Line series' own line
+details and marker defaults on reading, trendline and error bar effects in the drawing were fixed after it.
+Then bar 667 / 640 / 627 / 612, COM 691 of 693, and area 658 / 632 / 618 / 604, COM 681 of 683 (the undo misses
+were an empty undo step from a spin button at its limit; controls that change nothing make no step now). On the
+final build: combo 960 controls used, 953 changed, all 953 undone, 901 back on reopening, Excel opens the file,
+COM 1169 of 1174; a line series 125 / 125 / 125 / 116, COM 159 of 159 (results/…-combo.json, …-line-series.json).
+Settings revealed by Datumsachse on text categories (Grenzen, Hauptstriche) change nothing visible, as in Excel
+with text categories.
+`check_calc_chartpane_real.py` (OS mouse and keyboard under the real-input lock): 12 of 12 (slider drag, spin
+button, colour palette, native dropdowns, typing and Enter, Strg+Z, a gradient stop dragged, a stop added).
+`compare_calc_chartpane_pictures.py`: for 24 of 25 settings our drawing and Excel's export of our file change
+in the same region (box overlap at least 0.3, most above 0.9); it first found the plot standing about 8 pt
+higher than Excel's when negative values put the category labels inside the plot (Excel keeps only a small
+margin then; fixed). The miss: Abstand zur Achse 500 with labels inside the plot (0.09).
+
+## D-114 RaabeCalc chart pane: what differs from Excel on purpose or is left out (2026-11-08)
+
+- Left out: the galleries Voreingestellte Farbverläufe and Textur (24 bitmaps), Helligkeit of a gradient stop,
+  Perspektive shadows, 3D-Drehung of 2-D charts and text, the lighting Winkel, Benutzerdefiniert error
+  amounts (Wert angeben, needs ranges), the Datenbeschriftungsreihe of a single label, Text sperren, the
+  greyed text box options (Ränder, Umbruch, Spalten). Bild- oder Texturfüllung takes a picture file
+  (Einfügen ...) or the clipboard; X/Y-Skalierung and Ausrichtung of tiles are not offered.
+- Effects are drawn as SVG filters close to Excel's look; blur radii and bevel shading are approximations,
+  the file keeps Excel's exact values. A text outline's Verbundtyp is saved but drawn as a single line.
+- An axis' "Keine Füllung" and "Automatisch" write the same file (Excel's automatic axis fill is none), so the
+  pane shows Automatisch after reopening. A Bild- oder Texturfüllung without a chosen picture is not saved.
+- The Alternativtext section stays in Größe und Eigenschaften (Excel 365 moved it to a pane of its own).
+- The Einheiten fields keep Excel's accessible names "Hauptstriche" / "Teilstriche" as their labels.
+
 ## D-129 RaabeWrite: Diagrammentwurf and Format around a selected chart, with RaabeCalc's chart UI shared (2026-11-09)
 
 Open item of D-091. Recorded first in our own Word (`probe_word_chart_ui.py`, UI Automation only; the tab selection may

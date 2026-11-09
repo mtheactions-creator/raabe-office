@@ -1,0 +1,9549 @@
+{
+ "summary": {
+  "options": 117,
+  "errors": 0,
+  "undoFailures": 0,
+  "noEffect": 0,
+  "disabled": 0,
+  "notFound": 0,
+  "seconds": 190
+ },
+ "results": [
+  {
+   "path": [
+    "cell"
+   ],
+   "variant": "",
+   "popup": [
+    {
+     "id": "Ausschneiden",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Kopieren",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Einfügen (E)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Werte (W)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Formeln (F)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Transponieren (T)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Formatierung (R)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Inhalte einfügen...",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen einfügen...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen löschen...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Inhalte löschen",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Filter",
+     "disabled": false,
+     "sub": true,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Sortieren",
+     "disabled": false,
+     "sub": true,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Neuer Kommentar",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Neue Notiz",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen formatieren...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Dropdown-Auswahlliste...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Namen definieren...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Link",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    }
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "cursor": [
+     "cell",
+     "image-set(url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M8.5%202.5h6v6h6v6h-6v6h-6v-6h-6v-6h6z%22%20fill%3D%22%23fff%22%20stroke%3D%22%23000%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 1dppx, url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2236%22%20height%3D%2236%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M8.5%202.5h6v6h6v6h-6v6h-6v-6h-6v-6h6z%22%20fill%3D%22%23fff%22%20stroke%3D%22%23000%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 1.5dppx, url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M8.5%202.5h6v6h6v6h-6v6h-6v-6h-6v-6h6z%22%20fill%3D%22%23fff%22%20stroke%3D%22%23000%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 2dppx) 11 11, cell"
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "context",
+   "ms": 712
+  },
+  {
+   "path": [
+    "cell",
+    "Ausschneiden"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1486
+  },
+  {
+   "path": [
+    "cell",
+    "Kopieren"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 942
+  },
+  {
+   "path": [
+    "cell",
+    "Einfügen (E)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 2251
+  },
+  {
+   "path": [
+    "cell",
+    "Werte (W)"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1027
+  },
+  {
+   "path": [
+    "cell",
+    "Formeln (F)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1591
+  },
+  {
+   "path": [
+    "cell",
+    "Transponieren (T)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1600
+  },
+  {
+   "path": [
+    "cell",
+    "Formatierung (R)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1911
+  },
+  {
+   "path": [
+    "cell",
+    "Zellen einfügen..."
+   ],
+   "variant": "",
+   "dialog": "Zellen einfügen",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 573,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Zellen nach rechts verschieben",
+     "field": "Zellen nach rechts verschieben",
+     "value": false,
+     "x": 515.1666870117188,
+     "y": 620.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Zellen nach unten verschieben",
+     "field": "Zellen nach unten verschieben",
+     "value": true,
+     "x": 515.1666870117188,
+     "y": 649.75,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Ganze Zeile",
+     "field": "Ganze Zeile",
+     "value": false,
+     "x": 515.1666870117188,
+     "y": 679.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Ganze Spalte",
+     "field": "Ganze Spalte",
+     "value": false,
+     "x": 515.1666870117188,
+     "y": 708.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 770,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 770,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Zellen einfügen"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1562
+  },
+  {
+   "path": [
+    "cell",
+    "Zellen einfügen..."
+   ],
+   "variant": "ok",
+   "dialog": "Zellen einfügen",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 573,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Zellen nach rechts verschieben",
+     "field": "Zellen nach rechts verschieben",
+     "value": false,
+     "x": 515.1666870117188,
+     "y": 620.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Zellen nach unten verschieben",
+     "field": "Zellen nach unten verschieben",
+     "value": true,
+     "x": 515.1666870117188,
+     "y": 649.75,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Ganze Zeile",
+     "field": "Ganze Zeile",
+     "value": false,
+     "x": 515.1666870117188,
+     "y": 679.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Ganze Spalte",
+     "field": "Ganze Spalte",
+     "value": false,
+     "x": 515.1666870117188,
+     "y": 708.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 770,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 770,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Zellen einfügen"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Zellen einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "cell",
+    "Zellen löschen..."
+   ],
+   "variant": "",
+   "dialog": "Löschen",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 573,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Zellen nach links verschieben",
+     "field": "Zellen nach links verschieben",
+     "value": true,
+     "x": 515.1666870117188,
+     "y": 620.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Zellen nach oben verschieben",
+     "field": "Zellen nach oben verschieben",
+     "value": false,
+     "x": 515.1666870117188,
+     "y": 649.75,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Ganze Zeile",
+     "field": "Ganze Zeile",
+     "value": false,
+     "x": 515.1666870117188,
+     "y": 679.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Ganze Spalte",
+     "field": "Ganze Spalte",
+     "value": false,
+     "x": 515.1666870117188,
+     "y": 708.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 770,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 770,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Löschen"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1300
+  },
+  {
+   "path": [
+    "cell",
+    "Zellen löschen..."
+   ],
+   "variant": "ok",
+   "dialog": "Löschen",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 573,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Zellen nach links verschieben",
+     "field": "Zellen nach links verschieben",
+     "value": true,
+     "x": 515.1666870117188,
+     "y": 620.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Zellen nach oben verschieben",
+     "field": "Zellen nach oben verschieben",
+     "value": false,
+     "x": 515.1666870117188,
+     "y": 649.75,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Ganze Zeile",
+     "field": "Ganze Zeile",
+     "value": false,
+     "x": 515.1666870117188,
+     "y": 679.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Ganze Spalte",
+     "field": "Ganze Spalte",
+     "value": false,
+     "x": 515.1666870117188,
+     "y": 708.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 770,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 770,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Löschen"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Zellen löschen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "cell",
+    "Inhalte löschen"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Löschen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1629
+  },
+  {
+   "path": [
+    "cell",
+    "Filter"
+   ],
+   "variant": "",
+   "popup": [
+    {
+     "id": "Ausschneiden",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Kopieren",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Einfügen (E)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Werte (W)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Formeln (F)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Transponieren (T)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Formatierung (R)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Inhalte einfügen...",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen einfügen...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen löschen...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Inhalte löschen",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Filter",
+     "disabled": false,
+     "sub": true,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Sortieren",
+     "disabled": false,
+     "sub": true,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Neuer Kommentar",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Neue Notiz",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen formatieren...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Dropdown-Auswahlliste...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Namen definieren...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Link",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "› Löschen",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 1
+    },
+    {
+     "id": "› Erneut anwenden",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 1
+    },
+    {
+     "id": "› Nach dem Wert der ausgewählten Zelle filtern",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 1
+    }
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1033
+  },
+  {
+   "path": [
+    "cell",
+    "Filter",
+    "› Nach dem Wert der ausgewählten Zelle filtern"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 2071
+  },
+  {
+   "path": [
+    "cell",
+    "Sortieren"
+   ],
+   "variant": "",
+   "popup": [
+    {
+     "id": "Ausschneiden",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Kopieren",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Einfügen (E)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Werte (W)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Formeln (F)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Transponieren (T)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Formatierung (R)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Inhalte einfügen...",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen einfügen...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen löschen...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Inhalte löschen",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Filter",
+     "disabled": false,
+     "sub": true,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Sortieren",
+     "disabled": false,
+     "sub": true,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Neuer Kommentar",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Neue Notiz",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen formatieren...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Dropdown-Auswahlliste...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Namen definieren...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Link",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "› Nach Größe sortieren (aufsteigend)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 1
+    },
+    {
+     "id": "› Nach Größe sortieren (absteigend)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 1
+    },
+    {
+     "id": "› Benutzerdefiniertes Sortieren...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 1
+    }
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 977
+  },
+  {
+   "path": [
+    "cell",
+    "Sortieren",
+    "› Nach Größe sortieren (aufsteigend)"
+   ],
+   "variant": "",
+   "dialog": "Sortierwarnung",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 955.6666870117188,
+     "y": 560.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Markierung erweitern",
+     "field": "Markierung erweitern",
+     "value": true,
+     "x": 375.16668701171875,
+     "y": 692,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Mit bestehender Markierung fortfahren",
+     "field": "Mit bestehender Markierung fortfahren",
+     "value": false,
+     "x": 375.16668701171875,
+     "y": 721.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Sortieren",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 782.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 911.6666870117188,
+     "y": 782.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Sortierwarnung"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1768
+  },
+  {
+   "path": [
+    "cell",
+    "Sortieren",
+    "› Nach Größe sortieren (aufsteigend)"
+   ],
+   "variant": "ok",
+   "dialog": "Sortierwarnung",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 955.6666870117188,
+     "y": 560.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Markierung erweitern",
+     "field": "Markierung erweitern",
+     "value": true,
+     "x": 375.16668701171875,
+     "y": 692,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Mit bestehender Markierung fortfahren",
+     "field": "Mit bestehender Markierung fortfahren",
+     "value": false,
+     "x": 375.16668701171875,
+     "y": 721.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Sortieren",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 782.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 911.6666870117188,
+     "y": 782.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Sortierwarnung"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 5,
+       "c1": 3
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Sortieren"
+   },
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "cell",
+    "Sortieren",
+    "› Nach Größe sortieren (absteigend)"
+   ],
+   "variant": "",
+   "dialog": "Sortierwarnung",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 955.6666870117188,
+     "y": 560.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Markierung erweitern",
+     "field": "Markierung erweitern",
+     "value": true,
+     "x": 375.16668701171875,
+     "y": 692,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Mit bestehender Markierung fortfahren",
+     "field": "Mit bestehender Markierung fortfahren",
+     "value": false,
+     "x": 375.16668701171875,
+     "y": 721.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Sortieren",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 782.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 911.6666870117188,
+     "y": 782.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Sortierwarnung"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1490
+  },
+  {
+   "path": [
+    "cell",
+    "Sortieren",
+    "› Nach Größe sortieren (absteigend)"
+   ],
+   "variant": "ok",
+   "dialog": "Sortierwarnung",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 955.6666870117188,
+     "y": 560.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Markierung erweitern",
+     "field": "Markierung erweitern",
+     "value": true,
+     "x": 375.16668701171875,
+     "y": 692,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Mit bestehender Markierung fortfahren",
+     "field": "Mit bestehender Markierung fortfahren",
+     "value": false,
+     "x": 375.16668701171875,
+     "y": 721.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Sortieren",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 782.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 911.6666870117188,
+     "y": 782.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Sortierwarnung"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 5,
+       "c1": 3
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Sortieren"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "cell",
+    "Sortieren",
+    "› Benutzerdefiniertes Sortieren..."
+   ],
+   "variant": "",
+   "dialog": "Sortierwarnung",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 955.6666870117188,
+     "y": 560.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Markierung erweitern",
+     "field": "Markierung erweitern",
+     "value": true,
+     "x": 375.16668701171875,
+     "y": 692,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Mit bestehender Markierung fortfahren",
+     "field": "Mit bestehender Markierung fortfahren",
+     "value": false,
+     "x": 375.16668701171875,
+     "y": 721.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Sortieren",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 782.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 911.6666870117188,
+     "y": 782.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Sortierwarnung"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1555
+  },
+  {
+   "path": [
+    "cell",
+    "Sortieren",
+    "› Benutzerdefiniertes Sortieren..."
+   ],
+   "variant": "ok",
+   "dialog": "Sortierwarnung",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 955.6666870117188,
+     "y": 560.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Markierung erweitern",
+     "field": "Markierung erweitern",
+     "value": true,
+     "x": 375.16668701171875,
+     "y": 692,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Mit bestehender Markierung fortfahren",
+     "field": "Mit bestehender Markierung fortfahren",
+     "value": false,
+     "x": 375.16668701171875,
+     "y": 721.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Sortieren",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 782.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 911.6666870117188,
+     "y": 782.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Sortierwarnung",
+    "Sortieren"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 5,
+       "c1": 3
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "cell",
+    "Neuer Kommentar"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     "cm-input"
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1103
+  },
+  {
+   "path": [
+    "cell",
+    "Neue Notiz"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     "note-edit"
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 988
+  },
+  {
+   "path": [
+    "cell",
+    "Zellen formatieren..."
+   ],
+   "variant": "",
+   "dialog": "Zellen formatieren",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 939.6666870117188,
+     "y": 515.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Zahlen",
+     "field": "",
+     "value": "",
+     "x": 411.68231201171875,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Ausrichtung",
+     "field": "",
+     "value": "",
+     "x": 492.8958549499512,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Schrift",
+     "field": "",
+     "value": "",
+     "x": 572.96875,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Rahmen",
+     "field": "",
+     "value": "",
+     "x": 642.0625,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Ausfüllen",
+     "field": "",
+     "value": "",
+     "x": 719.5208358764648,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Schutz",
+     "field": "",
+     "value": "",
+     "x": 792.3854370117188,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "StandardZahlWährungBuchhaltungDatumUhrzeitProzentBruchWissenschaftTextSonderform",
+     "field": "",
+     "value": "Standard",
+     "x": 459.66668701171875,
+     "y": 627.9166870117188,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "1.000er-Trennzeichen verwenden (.)",
+     "field": "1.000er-Trennzeichen verwenden (.)",
+     "value": false,
+     "x": 566.1666870117188,
+     "y": 665,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "Standard",
+     "x": 685.6666870117188,
+     "y": 738.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "Standard",
+     "field": "",
+     "value": "General",
+     "x": 747.6666870117188,
+     "y": 770.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 799.6666870117188,
+     "y": 827.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 895.6666870117188,
+     "y": 827.25,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Zellen formatieren"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 6956
+  },
+  {
+   "path": [
+    "cell",
+    "Zellen formatieren..."
+   ],
+   "variant": "ok",
+   "dialog": "Zellen formatieren",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 939.6666870117188,
+     "y": 515.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Zahlen",
+     "field": "",
+     "value": "",
+     "x": 411.68231201171875,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Ausrichtung",
+     "field": "",
+     "value": "",
+     "x": 492.8958549499512,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Schrift",
+     "field": "",
+     "value": "",
+     "x": 572.96875,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Rahmen",
+     "field": "",
+     "value": "",
+     "x": 642.0625,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Ausfüllen",
+     "field": "",
+     "value": "",
+     "x": 719.5208358764648,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Schutz",
+     "field": "",
+     "value": "",
+     "x": 792.3854370117188,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "StandardZahlWährungBuchhaltungDatumUhrzeitProzentBruchWissenschaftTextSonderform",
+     "field": "",
+     "value": "Standard",
+     "x": 459.66668701171875,
+     "y": 627.9166870117188,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "1.000er-Trennzeichen verwenden (.)",
+     "field": "1.000er-Trennzeichen verwenden (.)",
+     "value": false,
+     "x": 566.1666870117188,
+     "y": 665,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "Standard",
+     "x": 685.6666870117188,
+     "y": 738.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "Standard",
+     "field": "",
+     "value": "General",
+     "x": 747.6666870117188,
+     "y": 770.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 799.6666870117188,
+     "y": 827.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 895.6666870117188,
+     "y": 827.25,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Zellen formatieren"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Zellen formatieren"
+   },
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "cell",
+    "Dropdown-Auswahlliste..."
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 929
+  },
+  {
+   "path": [
+    "cell",
+    "Namen definieren..."
+   ],
+   "variant": "",
+   "dialog": "Neuer Name",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 570.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "Name:",
+     "field": "Name:",
+     "value": "",
+     "x": 613.6666870117188,
+     "y": 644,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "Bezieht sich auf:",
+     "field": "Bezieht sich auf:",
+     "value": "=Tabelle1!$A$1:$B$4",
+     "x": 633.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 772.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 772.5,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Neuer Name"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1243
+  },
+  {
+   "path": [
+    "cell",
+    "Namen definieren..."
+   ],
+   "variant": "ok",
+   "dialog": "Neuer Name",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 570.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "Name:",
+     "field": "Name:",
+     "value": "",
+     "x": 613.6666870117188,
+     "y": 644,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "Bezieht sich auf:",
+     "field": "Bezieht sich auf:",
+     "value": "=Tabelle1!$A$1:$B$4",
+     "x": 633.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 772.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 772.5,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Neuer Name",
+    "RaabeCalc"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "cell",
+    "Link"
+   ],
+   "variant": "",
+   "dialog": "Link einfügen",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 570.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "Anzuzeigender Text:",
+     "field": "Anzuzeigender Text:",
+     "value": "Name",
+     "x": 643.6666870117188,
+     "y": 644,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "Adresse:",
+     "field": "Adresse:",
+     "value": "",
+     "x": 643.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 772.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 772.5,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Link einfügen"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1161
+  },
+  {
+   "path": [
+    "cell",
+    "Link"
+   ],
+   "variant": "ok",
+   "dialog": "Link einfügen",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 570.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "Anzuzeigender Text:",
+     "field": "Anzuzeigender Text:",
+     "value": "Name",
+     "x": 643.6666870117188,
+     "y": 644,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "Adresse:",
+     "field": "Adresse:",
+     "value": "",
+     "x": 643.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 772.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 772.5,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Link einfügen"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "row"
+   ],
+   "variant": "",
+   "popup": [
+    {
+     "id": "Ausschneiden",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Kopieren",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Einfügen (E)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Werte (W)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Formeln (F)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Transponieren (T)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Formatierung (R)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Inhalte einfügen...",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen einfügen",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen löschen",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Inhalte löschen",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen formatieren...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zeilenhöhe...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Ausblenden",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Einblenden",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    }
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "cursor": [
+     "image-set(url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M8.5%202.5h6v6h6v6h-6v6h-6v-6h-6v-6h6z%22%20fill%3D%22%23fff%22%20stroke%3D%22%23000%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 1dppx, url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2236%22%20height%3D%2236%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M8.5%202.5h6v6h6v6h-6v6h-6v-6h-6v-6h6z%22%20fill%3D%22%23fff%22%20stroke%3D%22%23000%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 1.5dppx, url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M8.5%202.5h6v6h6v6h-6v6h-6v-6h-6v-6h6z%22%20fill%3D%22%23fff%22%20stroke%3D%22%23000%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 2dppx) 11 11, cell",
+     "image-set(url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M2.5%208v4h8v3.5L17.5%2010%2010.5%204.5V8z%22%20fill%3D%22%23000%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 1dppx, url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2230%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M2.5%208v4h8v3.5L17.5%2010%2010.5%204.5V8z%22%20fill%3D%22%23000%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 1.5dppx, url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M2.5%208v4h8v3.5L17.5%2010%2010.5%204.5V8z%22%20fill%3D%22%23000%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 2dppx) 17 10, e-resize"
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 16383
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "context",
+   "ms": 596
+  },
+  {
+   "path": [
+    "row",
+    "Ausschneiden"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 16383
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1076
+  },
+  {
+   "path": [
+    "row",
+    "Kopieren"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 16383
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 850
+  },
+  {
+   "path": [
+    "row",
+    "Einfügen (E)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 3
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1580
+  },
+  {
+   "path": [
+    "row",
+    "Werte (W)"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 3
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1082
+  },
+  {
+   "path": [
+    "row",
+    "Formeln (F)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 3
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1480
+  },
+  {
+   "path": [
+    "row",
+    "Transponieren (T)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 3
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1549
+  },
+  {
+   "path": [
+    "row",
+    "Formatierung (R)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 3
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1538
+  },
+  {
+   "path": [
+    "row",
+    "Zellen einfügen"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 16383
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Zeilen einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1522
+  },
+  {
+   "path": [
+    "row",
+    "Zellen löschen"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 16383
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Zeilen löschen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1431
+  },
+  {
+   "path": [
+    "row",
+    "Inhalte löschen"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 16383
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Löschen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1438
+  },
+  {
+   "path": [
+    "row",
+    "Zellen formatieren..."
+   ],
+   "variant": "",
+   "dialog": "Zellen formatieren",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 939.6666870117188,
+     "y": 515.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Zahlen",
+     "field": "",
+     "value": "",
+     "x": 411.68231201171875,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Ausrichtung",
+     "field": "",
+     "value": "",
+     "x": 492.8958549499512,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Schrift",
+     "field": "",
+     "value": "",
+     "x": 572.96875,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Rahmen",
+     "field": "",
+     "value": "",
+     "x": 642.0625,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Ausfüllen",
+     "field": "",
+     "value": "",
+     "x": 719.5208358764648,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Schutz",
+     "field": "",
+     "value": "",
+     "x": 792.3854370117188,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "StandardZahlWährungBuchhaltungDatumUhrzeitProzentBruchWissenschaftTextSonderform",
+     "field": "",
+     "value": "Standard",
+     "x": 459.66668701171875,
+     "y": 627.9166870117188,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "1.000er-Trennzeichen verwenden (.)",
+     "field": "1.000er-Trennzeichen verwenden (.)",
+     "value": false,
+     "x": 566.1666870117188,
+     "y": 665,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "Standard",
+     "x": 685.6666870117188,
+     "y": 738.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "Standard",
+     "field": "",
+     "value": "General",
+     "x": 747.6666870117188,
+     "y": 770.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 799.6666870117188,
+     "y": 827.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 895.6666870117188,
+     "y": 827.25,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Zellen formatieren"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 16383
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1241
+  },
+  {
+   "path": [
+    "row",
+    "Zellen formatieren..."
+   ],
+   "variant": "ok",
+   "dialog": "Zellen formatieren",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 939.6666870117188,
+     "y": 515.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Zahlen",
+     "field": "",
+     "value": "",
+     "x": 411.68231201171875,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Ausrichtung",
+     "field": "",
+     "value": "",
+     "x": 492.8958549499512,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Schrift",
+     "field": "",
+     "value": "",
+     "x": 572.96875,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Rahmen",
+     "field": "",
+     "value": "",
+     "x": 642.0625,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Ausfüllen",
+     "field": "",
+     "value": "",
+     "x": 719.5208358764648,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Schutz",
+     "field": "",
+     "value": "",
+     "x": 792.3854370117188,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "StandardZahlWährungBuchhaltungDatumUhrzeitProzentBruchWissenschaftTextSonderform",
+     "field": "",
+     "value": "Standard",
+     "x": 459.66668701171875,
+     "y": 627.9166870117188,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "1.000er-Trennzeichen verwenden (.)",
+     "field": "1.000er-Trennzeichen verwenden (.)",
+     "value": false,
+     "x": 566.1666870117188,
+     "y": 665,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "Standard",
+     "x": 685.6666870117188,
+     "y": 738.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "Standard",
+     "field": "",
+     "value": "General",
+     "x": 747.6666870117188,
+     "y": 770.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 799.6666870117188,
+     "y": 827.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 895.6666870117188,
+     "y": 827.25,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Zellen formatieren"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 16383
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Zellen formatieren"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "row",
+    "Zeilenhöhe..."
+   ],
+   "variant": "",
+   "dialog": "Zeilenhöhe",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 601.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "Zeilenhöhe:",
+     "field": "Zeilenhöhe:",
+     "value": "15",
+     "x": 543.6666870117188,
+     "y": 674.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 741.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 741.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Zeilenhöhe"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 16383
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1412
+  },
+  {
+   "path": [
+    "row",
+    "Zeilenhöhe..."
+   ],
+   "variant": "ok",
+   "dialog": "Zeilenhöhe",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 601.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "Zeilenhöhe:",
+     "field": "Zeilenhöhe:",
+     "value": "15",
+     "x": 543.6666870117188,
+     "y": 674.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 741.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 741.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Zeilenhöhe"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 16383
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Zeilenhöhe"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "row",
+    "Ausblenden"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 16383
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Ausblenden"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1468
+  },
+  {
+   "path": [
+    "row",
+    "Einblenden"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 2,
+      "col": 0
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 2,
+       "c0": 0,
+       "r1": 2,
+       "c1": 16383
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1291
+  },
+  {
+   "path": [
+    "col"
+   ],
+   "variant": "",
+   "popup": [
+    {
+     "id": "Ausschneiden",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Kopieren",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Einfügen (E)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Werte (W)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Formeln (F)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Transponieren (T)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Formatierung (R)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Inhalte einfügen...",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen einfügen",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen löschen",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Inhalte löschen",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zellen formatieren...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Spaltenbreite...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Ausblenden",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Einblenden",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    }
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "cursor": [
+     "image-set(url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M2.5%208v4h8v3.5L17.5%2010%2010.5%204.5V8z%22%20fill%3D%22%23000%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 1dppx, url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2230%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M2.5%208v4h8v3.5L17.5%2010%2010.5%204.5V8z%22%20fill%3D%22%23000%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 1.5dppx, url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M2.5%208v4h8v3.5L17.5%2010%2010.5%204.5V8z%22%20fill%3D%22%23000%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 2dppx) 17 10, e-resize",
+     "image-set(url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M8%202.5h4v8h3.5L10%2017.5%204.5%2010.5H8z%22%20fill%3D%22%23000%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 1dppx, url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2230%22%20height%3D%2230%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M8%202.5h4v8h3.5L10%2017.5%204.5%2010.5H8z%22%20fill%3D%22%23000%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 1.5dppx, url(\"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2020%2020%22%3E%3Cpath%20d%3D%22M8%202.5h4v8h3.5L10%2017.5%204.5%2010.5H8z%22%20fill%3D%22%23000%22%20stroke%3D%22%23fff%22%20stroke-width%3D%221%22%2F%3E%3C%2Fsvg%3E\") 2dppx) 10 17, s-resize"
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 1048575,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "context",
+   "ms": 682
+  },
+  {
+   "path": [
+    "col",
+    "Ausschneiden"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 1048575,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1110
+  },
+  {
+   "path": [
+    "col",
+    "Kopieren"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 1048575,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 897
+  },
+  {
+   "path": [
+    "col",
+    "Einfügen (E)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 5,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1436
+  },
+  {
+   "path": [
+    "col",
+    "Werte (W)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 5,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1403
+  },
+  {
+   "path": [
+    "col",
+    "Formeln (F)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 5,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1419
+  },
+  {
+   "path": [
+    "col",
+    "Transponieren (T)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 5,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1441
+  },
+  {
+   "path": [
+    "col",
+    "Formatierung (R)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 5,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1418
+  },
+  {
+   "path": [
+    "col",
+    "Zellen einfügen"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 1048575,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Spalten einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1393
+  },
+  {
+   "path": [
+    "col",
+    "Zellen löschen"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 1048575,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Spalten löschen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1438
+  },
+  {
+   "path": [
+    "col",
+    "Inhalte löschen"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 1048575,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Löschen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1429
+  },
+  {
+   "path": [
+    "col",
+    "Zellen formatieren..."
+   ],
+   "variant": "",
+   "dialog": "Zellen formatieren",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 939.6666870117188,
+     "y": 515.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Zahlen",
+     "field": "",
+     "value": "",
+     "x": 411.68231201171875,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Ausrichtung",
+     "field": "",
+     "value": "",
+     "x": 492.8958549499512,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Schrift",
+     "field": "",
+     "value": "",
+     "x": 572.96875,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Rahmen",
+     "field": "",
+     "value": "",
+     "x": 642.0625,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Ausfüllen",
+     "field": "",
+     "value": "",
+     "x": 719.5208358764648,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Schutz",
+     "field": "",
+     "value": "",
+     "x": 792.3854370117188,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "StandardZahlWährungBuchhaltungDatumUhrzeitProzentBruchWissenschaftTextSonderform",
+     "field": "",
+     "value": "Standard",
+     "x": 459.66668701171875,
+     "y": 627.9166870117188,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "1.000er-Trennzeichen verwenden (.)",
+     "field": "1.000er-Trennzeichen verwenden (.)",
+     "value": false,
+     "x": 566.1666870117188,
+     "y": 665,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "Standard",
+     "x": 685.6666870117188,
+     "y": 738.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "Standard",
+     "field": "",
+     "value": "General",
+     "x": 747.6666870117188,
+     "y": 770.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 799.6666870117188,
+     "y": 827.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 895.6666870117188,
+     "y": 827.25,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Zellen formatieren"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 1048575,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1187
+  },
+  {
+   "path": [
+    "col",
+    "Zellen formatieren..."
+   ],
+   "variant": "ok",
+   "dialog": "Zellen formatieren",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 939.6666870117188,
+     "y": 515.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Zahlen",
+     "field": "",
+     "value": "",
+     "x": 411.68231201171875,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Ausrichtung",
+     "field": "",
+     "value": "",
+     "x": 492.8958549499512,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Schrift",
+     "field": "",
+     "value": "",
+     "x": 572.96875,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Rahmen",
+     "field": "",
+     "value": "",
+     "x": 642.0625,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Ausfüllen",
+     "field": "",
+     "value": "",
+     "x": 719.5208358764648,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "button",
+     "label": "Schutz",
+     "field": "",
+     "value": "",
+     "x": 792.3854370117188,
+     "y": 555.75,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "StandardZahlWährungBuchhaltungDatumUhrzeitProzentBruchWissenschaftTextSonderform",
+     "field": "",
+     "value": "Standard",
+     "x": 459.66668701171875,
+     "y": 627.9166870117188,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "1.000er-Trennzeichen verwenden (.)",
+     "field": "1.000er-Trennzeichen verwenden (.)",
+     "value": false,
+     "x": 566.1666870117188,
+     "y": 665,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "Standard",
+     "x": 685.6666870117188,
+     "y": 738.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "Standard",
+     "field": "",
+     "value": "General",
+     "x": 747.6666870117188,
+     "y": 770.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 799.6666870117188,
+     "y": 827.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 895.6666870117188,
+     "y": 827.25,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Zellen formatieren"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 1048575,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Zellen formatieren"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "col",
+    "Spaltenbreite..."
+   ],
+   "variant": "",
+   "dialog": "Spaltenbreite",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 601.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "Spaltenbreite:",
+     "field": "Spaltenbreite:",
+     "value": "10,79",
+     "x": 543.6666870117188,
+     "y": 674.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 741.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 741.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Spaltenbreite"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 1048575,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1641
+  },
+  {
+   "path": [
+    "col",
+    "Spaltenbreite..."
+   ],
+   "variant": "ok",
+   "dialog": "Spaltenbreite",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 601.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "Spaltenbreite:",
+     "field": "Spaltenbreite:",
+     "value": "10,79",
+     "x": 543.6666870117188,
+     "y": 674.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 741.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 741.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Spaltenbreite"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 1048575,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Spaltenbreite"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "col",
+    "Ausblenden"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 1048575,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Ausblenden"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1393
+  },
+  {
+   "path": [
+    "col",
+    "Einblenden"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "active": [
+     {
+      "row": 0,
+      "col": 0
+     },
+     {
+      "row": 0,
+      "col": 1
+     }
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 1,
+       "r1": 1048575,
+       "c1": 1
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 903
+  },
+  {
+   "path": [
+    "sheettab"
+   ],
+   "variant": "",
+   "popup": [
+    {
+     "id": "Einfügen...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Löschen",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Umbenennen",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Verschieben oder kopieren...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Code anzeigen",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blatt schützen...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Registerfarbe",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Ausblenden",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Einblenden...",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Alle Blätter auswählen",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    }
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "context",
+   "ms": 558
+  },
+  {
+   "path": [
+    "sheettab",
+    "Einfügen..."
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "sheetbar": [
+     "Tabelle1Tabelle3+",
+     "Tabelle69Tabelle1Tabelle3+"
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 0,
+       "c1": 0
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Blatt einfügen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1477
+  },
+  {
+   "path": [
+    "sheettab",
+    "Löschen"
+   ],
+   "variant": "",
+   "dialog": "RaabeCalc",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 865.8021240234375,
+     "y": 627.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Löschen",
+     "field": "",
+     "value": "",
+     "x": 725.8021240234375,
+     "y": 715.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 821.8021240234375,
+     "y": 715.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "RaabeCalc"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1173
+  },
+  {
+   "path": [
+    "sheettab",
+    "Löschen"
+   ],
+   "variant": "ok",
+   "dialog": "RaabeCalc",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 865.8021240234375,
+     "y": 627.25,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Löschen",
+     "field": "",
+     "value": "",
+     "x": 725.8021240234375,
+     "y": 715.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 821.8021240234375,
+     "y": 715.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "RaabeCalc"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "sheetbar": [
+     "Tabelle1Tabelle3+",
+     "Tabelle3+"
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 0,
+       "c1": 0
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Blatt löschen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "sheettab",
+    "Umbenennen"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "sheetbar": [
+     "Tabelle1Tabelle3+",
+     "Tabelle3+"
+    ],
+    "typing": [
+     "cell-editor",
+     "sheetrename"
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 856
+  },
+  {
+   "path": [
+    "sheettab",
+    "Verschieben oder kopieren..."
+   ],
+   "variant": "",
+   "dialog": "Verschieben oder kopieren",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 586.5,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "Tabelle1Tabelle3(ans Ende stellen)",
+     "field": "Einfügen vor:Tabelle1Tabelle3(ans Ende stellen)",
+     "value": "0",
+     "x": 623.6666870117188,
+     "y": 660,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Kopie erstellen",
+     "field": "Kopie erstellen",
+     "value": false,
+     "x": 514.1666870117188,
+     "y": 693.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 756.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 756.5,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Verschieben oder kopieren"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1265
+  },
+  {
+   "path": [
+    "sheettab",
+    "Verschieben oder kopieren..."
+   ],
+   "variant": "ok",
+   "dialog": "Verschieben oder kopieren",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 586.5,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "Tabelle1Tabelle3(ans Ende stellen)",
+     "field": "Einfügen vor:Tabelle1Tabelle3(ans Ende stellen)",
+     "value": "0",
+     "x": 623.6666870117188,
+     "y": 660,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Kopie erstellen",
+     "field": "Kopie erstellen",
+     "value": false,
+     "x": 514.1666870117188,
+     "y": 693.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 675.6666870117188,
+     "y": 756.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 771.6666870117188,
+     "y": 756.5,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Verschieben oder kopieren"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Blatt verschieben"
+   },
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "sheettab",
+    "Blatt schützen..."
+   ],
+   "variant": "",
+   "dialog": "Blatt schützen",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 824.6666870117188,
+     "y": 480.0833435058594,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Arbeitsblatt und Inhalt gesperrter Zellen schützen",
+     "field": "Arbeitsblatt und Inhalt gesperrter Zellen schützen",
+     "value": true,
+     "x": 505.16668701171875,
+     "y": 525.8333740234375,
+     "disabled": true
+    },
+    {
+     "tag": "input",
+     "type": "password",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 659.6666870117188,
+     "y": 579.7500410079956,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Gesperrte Zellen auswählen",
+     "field": "Gesperrte Zellen auswählen",
+     "value": true,
+     "x": 509.8333435058594,
+     "y": 652.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Nicht gesperrte Zellen auswählen",
+     "field": "Nicht gesperrte Zellen auswählen",
+     "value": true,
+     "x": 509.8333435058594,
+     "y": 681.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Zellen formatieren",
+     "field": "Zellen formatieren",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 711.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Spalten formatieren",
+     "field": "Spalten formatieren",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 740.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Zeilen formatieren",
+     "field": "Zeilen formatieren",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 770.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Spalten einfügen",
+     "field": "Spalten einfügen",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 799.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Zeilen einfügen",
+     "field": "Zeilen einfügen",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 829.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Hyperlinks einfügen",
+     "field": "Hyperlinks einfügen",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 858.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Spalten löschen",
+     "field": "Spalten löschen",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 888.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Zeilen löschen",
+     "field": "Zeilen löschen",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 917.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Sortieren",
+     "field": "Sortieren",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 947.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "AutoFilter verwenden",
+     "field": "AutoFilter verwenden",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 976.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "PivotTable und PivotChart verwenden",
+     "field": "PivotTable und PivotChart verwenden",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 1006.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Objekte bearbeiten",
+     "field": "Objekte bearbeiten",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 1035.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Szenarios bearbeiten",
+     "field": "Szenarios bearbeiten",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 1065.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 684.6666870117188,
+     "y": 862.9166870117188,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 780.6666870117188,
+     "y": 862.9166870117188,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Blatt schützen"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1144
+  },
+  {
+   "path": [
+    "sheettab",
+    "Blatt schützen..."
+   ],
+   "variant": "ok",
+   "dialog": "Blatt schützen",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 824.6666870117188,
+     "y": 480.0833435058594,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Arbeitsblatt und Inhalt gesperrter Zellen schützen",
+     "field": "Arbeitsblatt und Inhalt gesperrter Zellen schützen",
+     "value": true,
+     "x": 505.16668701171875,
+     "y": 525.8333740234375,
+     "disabled": true
+    },
+    {
+     "tag": "input",
+     "type": "password",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 659.6666870117188,
+     "y": 579.7500410079956,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Gesperrte Zellen auswählen",
+     "field": "Gesperrte Zellen auswählen",
+     "value": true,
+     "x": 509.8333435058594,
+     "y": 652.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Nicht gesperrte Zellen auswählen",
+     "field": "Nicht gesperrte Zellen auswählen",
+     "value": true,
+     "x": 509.8333435058594,
+     "y": 681.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Zellen formatieren",
+     "field": "Zellen formatieren",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 711.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Spalten formatieren",
+     "field": "Spalten formatieren",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 740.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Zeilen formatieren",
+     "field": "Zeilen formatieren",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 770.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Spalten einfügen",
+     "field": "Spalten einfügen",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 799.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Zeilen einfügen",
+     "field": "Zeilen einfügen",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 829.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Hyperlinks einfügen",
+     "field": "Hyperlinks einfügen",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 858.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Spalten löschen",
+     "field": "Spalten löschen",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 888.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Zeilen löschen",
+     "field": "Zeilen löschen",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 917.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Sortieren",
+     "field": "Sortieren",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 947.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "AutoFilter verwenden",
+     "field": "AutoFilter verwenden",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 976.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "PivotTable und PivotChart verwenden",
+     "field": "PivotTable und PivotChart verwenden",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 1006.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Objekte bearbeiten",
+     "field": "Objekte bearbeiten",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 1035.8333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "checkbox",
+     "label": "Szenarios bearbeiten",
+     "field": "Szenarios bearbeiten",
+     "value": false,
+     "x": 509.8333435058594,
+     "y": 1065.3333740234375,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 684.6666870117188,
+     "y": 862.9166870117188,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 780.6666870117188,
+     "y": 862.9166870117188,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Blatt schützen"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Blatt schützen"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "sheettab",
+    "Registerfarbe"
+   ],
+   "variant": "",
+   "popup": [
+    {
+     "id": "Weiß, Hintergrund 1",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Schwarz, Text 1",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Hellgrau, Hintergrund 2",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blaugrau, Text 2",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau, Akzent 1",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Orange, Akzent 2",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grau, Akzent 3",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Gold, Akzent 4",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau, Akzent 5",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grün, Akzent 6",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Weiß, Hintergrund 1, dunkler 5%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Schwarz, Text 1, heller 50%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Hellgrau, Hintergrund 2, dunkler 10%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blaugrau, Text 2, heller 80%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau, Akzent 1, heller 80%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Orange, Akzent 2, heller 80%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grau, Akzent 3, heller 80%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Gold, Akzent 4, heller 80%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau, Akzent 5, heller 80%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grün, Akzent 6, heller 80%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Weiß, Hintergrund 1, dunkler 15%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Schwarz, Text 1, heller 35%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Hellgrau, Hintergrund 2, dunkler 25%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blaugrau, Text 2, heller 60%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau, Akzent 1, heller 60%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Orange, Akzent 2, heller 60%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grau, Akzent 3, heller 60%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Gold, Akzent 4, heller 60%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau, Akzent 5, heller 60%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grün, Akzent 6, heller 60%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Weiß, Hintergrund 1, dunkler 25%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Schwarz, Text 1, heller 25%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Hellgrau, Hintergrund 2, dunkler 50%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blaugrau, Text 2, heller 40%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau, Akzent 1, heller 40%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Orange, Akzent 2, heller 40%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grau, Akzent 3, heller 40%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Gold, Akzent 4, heller 40%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau, Akzent 5, heller 40%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grün, Akzent 6, heller 40%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Weiß, Hintergrund 1, dunkler 35%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Schwarz, Text 1, heller 15%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Hellgrau, Hintergrund 2, dunkler 75%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blaugrau, Text 2, dunkler 25%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau, Akzent 1, dunkler 25%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Orange, Akzent 2, dunkler 25%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grau, Akzent 3, dunkler 25%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Gold, Akzent 4, dunkler 25%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau, Akzent 5, dunkler 25%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grün, Akzent 6, dunkler 25%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Weiß, Hintergrund 1, dunkler 50%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Schwarz, Text 1, heller 5%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Hellgrau, Hintergrund 2, dunkler 90%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blaugrau, Text 2, dunkler 50%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau, Akzent 1, dunkler 50%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Orange, Akzent 2, dunkler 50%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grau, Akzent 3, dunkler 50%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Gold, Akzent 4, dunkler 50%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau, Akzent 5, dunkler 50%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grün, Akzent 6, dunkler 50%",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Dunkelrot",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Rot",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Orange",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Gelb",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Hellgrün",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Grün",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Hellblau",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Blau",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Dunkelblau",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Lila",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Keine Farbe",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Weitere Farben...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "",
+     "disabled": false,
+     "sub": false,
+     "tag": "input",
+     "level": 0
+    }
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 857
+  },
+  {
+   "path": [
+    "sheettab",
+    "Registerfarbe",
+    "Weiß, Hintergrund 1"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Registerfarbe"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1786
+  },
+  {
+   "path": [
+    "sheettab",
+    "Registerfarbe",
+    "Grün, Akzent 6"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Registerfarbe"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1630
+  },
+  {
+   "path": [
+    "sheettab",
+    "Registerfarbe",
+    "Blau, Akzent 5, heller 80%"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Registerfarbe"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1706
+  },
+  {
+   "path": [
+    "sheettab",
+    "Registerfarbe",
+    "Gold, Akzent 4, heller 60%"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Registerfarbe"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1661
+  },
+  {
+   "path": [
+    "sheettab",
+    "Registerfarbe",
+    "Grau, Akzent 3, heller 40%"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Registerfarbe"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1769
+  },
+  {
+   "path": [
+    "sheettab",
+    "Registerfarbe",
+    "Orange, Akzent 2, dunkler 25%"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Registerfarbe"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1732
+  },
+  {
+   "path": [
+    "sheettab",
+    "Registerfarbe",
+    "Blau, Akzent 1, dunkler 50%"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Registerfarbe"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1769
+  },
+  {
+   "path": [
+    "sheettab",
+    "Registerfarbe",
+    "Gelb"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Registerfarbe"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1747
+  },
+  {
+   "path": [
+    "sheettab",
+    "Ausblenden"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "sheetbar": [
+     "Tabelle1Tabelle3+",
+     "Tabelle3+"
+    ],
+    "sel": [
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 3,
+       "c1": 1
+      }
+     ],
+     [
+      {
+       "r0": 0,
+       "c0": 0,
+       "r1": 0,
+       "c1": 0
+      }
+     ]
+    ],
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Ausblenden"
+   },
+   "focus": "calc|",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 1383
+  },
+  {
+   "path": [
+    "statusbar"
+   ],
+   "variant": "",
+   "popup": [
+    {
+     "id": "Mittelwert",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Anzahl",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Numerische Zählung",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Minimum",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Maximum",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Summe",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    }
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "context",
+   "ms": 571
+  },
+  {
+   "path": [
+    "statusbar",
+    "Mittelwert"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 972
+  },
+  {
+   "path": [
+    "statusbar",
+    "Anzahl"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 892
+  },
+  {
+   "path": [
+    "statusbar",
+    "Numerische Zählung"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 913
+  },
+  {
+   "path": [
+    "statusbar",
+    "Minimum"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 882
+  },
+  {
+   "path": [
+    "statusbar",
+    "Maximum"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 898
+  },
+  {
+   "path": [
+    "statusbar",
+    "Summe"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "cell-editor",
+     null
+    ]
+   },
+   "history": {
+    "undo": false,
+    "label": null
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 852
+  },
+  {
+   "path": [
+    "filterbutton"
+   ],
+   "variant": "",
+   "popup": [
+    {
+     "id": "↑Nach Größe sortieren (aufsteigend)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "↓Nach Größe sortieren (absteigend)",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Nach Farbe sortieren›",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Filter entfernen aus \"Punkte\"",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Nach Farbe filtern›",
+     "disabled": true,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zahlenfilter›",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "filter-search",
+     "disabled": false,
+     "sub": false,
+     "tag": "input",
+     "level": 0
+    },
+    {
+     "id": "",
+     "disabled": false,
+     "sub": false,
+     "tag": "input",
+     "level": 0
+    },
+    {
+     "id": "#2",
+     "disabled": false,
+     "sub": false,
+     "tag": "input",
+     "level": 0
+    },
+    {
+     "id": "#3",
+     "disabled": false,
+     "sub": false,
+     "tag": "input",
+     "level": 0
+    },
+    {
+     "id": "#4",
+     "disabled": false,
+     "sub": false,
+     "tag": "input",
+     "level": 0
+    },
+    {
+     "id": "OK",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Abbrechen",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    }
+   ],
+   "model": false,
+   "ui": false,
+   "canvas": false,
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "context",
+   "ms": 1203
+  },
+  {
+   "path": [
+    "filterbutton",
+    "↑Nach Größe sortieren (aufsteigend)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Sortieren"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 2507
+  },
+  {
+   "path": [
+    "filterbutton",
+    "↓Nach Größe sortieren (absteigend)"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Sortieren"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 2016
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›"
+   ],
+   "variant": "",
+   "popup": [
+    {
+     "id": "Ist gleich...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Ist nicht gleich...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Größer als...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Größer oder gleich...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Kleiner als...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Kleiner oder gleich...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Zwischen...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Top 10...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Über dem Durchschnitt",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Unter dem Durchschnitt",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    },
+    {
+     "id": "Benutzerdefinierter Filter...",
+     "disabled": false,
+     "sub": false,
+     "tag": "button",
+     "level": 0
+    }
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     null
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1365
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Ist gleich..."
+   ],
+   "variant": "",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "eq",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 2083
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Ist gleich..."
+   ],
+   "variant": "ok",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "eq",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Ist nicht gleich..."
+   ],
+   "variant": "",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "ne",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 2055
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Ist nicht gleich..."
+   ],
+   "variant": "ok",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "ne",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Größer als..."
+   ],
+   "variant": "",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "gt",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 2060
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Größer als..."
+   ],
+   "variant": "ok",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "gt",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Größer oder gleich..."
+   ],
+   "variant": "",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "ge",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 2112
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Größer oder gleich..."
+   ],
+   "variant": "ok",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "ge",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Kleiner als..."
+   ],
+   "variant": "",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "lt",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 2071
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Kleiner als..."
+   ],
+   "variant": "ok",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "lt",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Kleiner oder gleich..."
+   ],
+   "variant": "",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "le",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 2026
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Kleiner oder gleich..."
+   ],
+   "variant": "ok",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "le",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Zwischen..."
+   ],
+   "variant": "",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "ge",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "le",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 2115
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Zwischen..."
+   ],
+   "variant": "ok",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "ge",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "le",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Top 10..."
+   ],
+   "variant": "",
+   "dialog": "Top 10 AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 875.6666870117188,
+     "y": 605.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "OberstenUntersten",
+     "field": "",
+     "value": "top",
+     "x": 533.6666870117188,
+     "y": 676.75,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "number",
+     "label": "",
+     "field": "",
+     "value": "10",
+     "x": 659.6666870117188,
+     "y": 676.75,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ElementeProzent",
+     "field": "",
+     "value": "items",
+     "x": 785.6666870117188,
+     "y": 676.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 737.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 831.6666870117188,
+     "y": 737.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Top 10 AutoFilter"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 2170
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Top 10..."
+   ],
+   "variant": "ok",
+   "dialog": "Top 10 AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 875.6666870117188,
+     "y": 605.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "OberstenUntersten",
+     "field": "",
+     "value": "top",
+     "x": 533.6666870117188,
+     "y": 676.75,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "number",
+     "label": "",
+     "field": "",
+     "value": "10",
+     "x": 659.6666870117188,
+     "y": 676.75,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ElementeProzent",
+     "field": "",
+     "value": "items",
+     "x": 785.6666870117188,
+     "y": 676.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 737.75,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 831.6666870117188,
+     "y": 737.75,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Top 10 AutoFilter"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Über dem Durchschnitt"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 2467
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Unter dem Durchschnitt"
+   ],
+   "variant": "",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry",
+   "ms": 2511
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Benutzerdefinierter Filter..."
+   ],
+   "variant": "",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "eq",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 2627
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Zahlenfilter›",
+    "Benutzerdefinierter Filter..."
+   ],
+   "variant": "ok",
+   "dialog": "Benutzerdefinierter AutoFilter",
+   "dialogControls": [
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Schließen",
+     "field": "",
+     "value": "",
+     "x": 859.6666870117188,
+     "y": 535,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "eq",
+     "x": 549.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 630,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Und",
+     "field": "Und",
+     "value": true,
+     "x": 495.16668701171875,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "radio",
+     "label": "Oder",
+     "field": "Oder",
+     "value": false,
+     "x": 564.1146240234375,
+     "y": 669.25,
+     "disabled": false
+    },
+    {
+     "tag": "select",
+     "type": "select-one",
+     "label": "ist gleichist nicht gleichist größer alsist größer oder gleichist kleiner alsist",
+     "field": "",
+     "value": "",
+     "x": 549.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "input",
+     "type": "text",
+     "label": "",
+     "field": "",
+     "value": "",
+     "x": 735.6666870117188,
+     "y": 705.5,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "OK",
+     "field": "",
+     "value": "",
+     "x": 719.6666870117188,
+     "y": 808,
+     "disabled": false
+    },
+    {
+     "tag": "button",
+     "type": "submit",
+     "label": "Abbrechen",
+     "field": "",
+     "value": "",
+     "x": 815.6666870117188,
+     "y": 808,
+     "disabled": false
+    }
+   ],
+   "dialogs": [
+    "Benutzerdefinierter AutoFilter"
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "focus": "cell-editor|Zelleninhalt",
+   "undo": true,
+   "redo": true,
+   "errors": [],
+   "kind": "entry"
+  },
+  {
+   "path": [
+    "filterbutton",
+    "OK"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1610
+  },
+  {
+   "path": [
+    "filterbutton",
+    "Abbrechen"
+   ],
+   "variant": "",
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "uiDiff": {
+    "typing": [
+     "filter-search",
+     "cell-editor"
+    ]
+   },
+   "history": {
+    "undo": true,
+    "label": "Filtern"
+   },
+   "errors": [],
+   "kind": "entry",
+   "ms": 1439
+  }
+ ],
+ "inventory": {}
+}

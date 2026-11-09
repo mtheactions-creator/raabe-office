@@ -16,7 +16,7 @@ import {
 import { CellError, formatValue, type Rect, type Sheet, type Workbook } from "@raabe/sheet-engine";
 import { h, showDialog, showMenu, type MenuEntry } from "@raabe/shell";
 import type { CalcApp } from "../app";
-import { chartElements, elementName, formatPane, type ChartElement } from "./formatpane";
+import { chartElements, elementName, elementOfPart, formatPane, partsSelector, type ChartElement } from "./formatpane";
 import { sheetAxes, type Axis } from "../grid/metrics";
 import { chartButtons } from "./buttons";
 import { choiceLabel, elementEntries } from "./elements";
@@ -703,11 +703,14 @@ export function chartsFeature(app: CalcApp) {
 
   // ----- elements and the Format pane --------------------------------------------------------------
 
-  /** The element under the pointer, from the drawing's data-part marks (series by their index in the full chart). */
+  /**
+   * The element under the pointer, from the drawing's data-part marks (series by their index in the full chart;
+   * a second click on a selected series: its point, D-111).
+   */
   function elementAt(m: ChartModel, target: Element, at?: { clientX: number; clientY: number }): ChartElement | null {
     const part = (target.closest?.("[data-part]") as SVGElement | null)?.dataset.part;
     if (!part) return null;
-    const [kind, a] = part.split(":");
+    const [kind, a, b] = part.split(":");
     // The chart area's background inside the plot's box is the Zeichnungsfläche (Excel).
     if (kind === "chart" && at) {
       const svg = target.closest("svg") as SVGSVGElement | null;
@@ -720,40 +723,14 @@ export function chartsFeature(app: CalcApp) {
       }
     }
     const full = (i: number) => visibleModel(m).index[i] ?? i;
-    switch (kind) {
-      case "chart": return { kind: "chart" };
-      case "plot": return { kind: "plot" };
-      case "title": return { kind: "title" };
-      case "legend": return { kind: "legend" };
-      case "axis": return a === "val" ? { kind: "valAxis" } : { kind: "catAxis" };
-      case "axes": return { kind: "catAxis" };
-      case "grid": return { kind: "majorGrid" };
-      case "minorGrid": return { kind: "minorGrid" };
-      case "catGrid": return { kind: "catGrid" };
-      case "axisTitle": return { kind: "axisTitle", axis: a === "val" ? "val" : "cat" };
-      case "series": return { kind: "series", index: full(Number(a)) };
-      case "labels": return { kind: "labels" };
-      case "trend": case "trendLabel": return { kind: "trend", index: full(Number(a)) };
-      case "errbars": return { kind: "errorBars", index: full(Number(a)) };
-      default: return null;
-    }
+    const indexed = ["series", "trend", "trendLabel", "errbars"].includes(kind) && a !== undefined;
+    return elementOfPart(indexed ? [kind, full(Number(a)), ...(b !== undefined ? [b] : [])].join(":") : part, element);
   }
 
   /** The SVG parts that make up an element (for its selection frame). */
   function partsOf(m: ChartModel, e: ChartElement): string {
     const shown = (i: number) => visibleModel(m).index.indexOf(i);
-    switch (e.kind) {
-      case "chart": return "";
-      case "valAxis": return '[data-part="axis:val"]';
-      case "catAxis": return '[data-part="axis:cat"],[data-part="axes"]';
-      case "majorGrid": return '[data-part="grid"]';
-      case "series": return `[data-part^="series:${shown(e.index)}"]`;
-      case "labels": return '[data-part^="labels:"]';
-      case "trend": return `[data-part="trend:${shown(e.index)}"]`;
-      case "errorBars": return `[data-part="errbars:${shown(e.index)}"]`;
-      case "axisTitle": return `[data-part="axisTitle:${e.axis}"]`;
-      default: return `[data-part="${e.kind}"]`;
-    }
+    return partsSelector("index" in e ? { ...e, index: shown(e.index) } as ChartElement : e);
   }
 
   function setElement(m: ChartModel, e: ChartElement): void {
