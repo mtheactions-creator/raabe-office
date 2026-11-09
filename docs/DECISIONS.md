@@ -3517,6 +3517,10 @@ controls used, 1169 changed, 1169 undone, 977 back on reopening, COM 1424 of 142
 589, COM 979 of 981; combo 879 / 851 / 837 / 398, and Excel refused that file: every series moved to the
 Sekundärachse left the part without a primary group (fixed: written on the primary axes). Line series' own line
 details and marker defaults on reading, trendline and error bar effects in the drawing were fixed after it.
+Then bar 667 / 640 / 627 / 612, COM 691 of 693, and area 658 / 632 / 618 / 604, COM 681 of 683 (the undo misses
+were an empty undo step from a spin button at its limit; controls that change nothing make no step now). On the
+final build: combo 960 controls used, 953 changed, all 953 undone, 901 back on reopening, Excel opens the file,
+COM 1169 of 1174; a line series 125 / 125 / 125 / 116, COM 159 of 159 (results/…-combo.json, …-line-series.json).
 Settings revealed by Datumsachse on text categories (Grenzen, Hauptstriche) change nothing visible, as in Excel
 with text categories.
 `check_calc_chartpane_real.py` (OS mouse and keyboard under the real-input lock): 12 of 12 (slider drag, spin
