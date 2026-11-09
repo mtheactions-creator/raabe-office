@@ -678,7 +678,10 @@ export function displayUnitText(o: AxisOptions | undefined): string {
 function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bottom: number }): Pick<Scene, "plot" | "valueScale" | "xScale"> {
   const { m } = c;
   const bar = isBar(m.kind), scatter = isScatter(m.kind);
-  const groups = isScatter(m.kind) ? [{ kind: m.kind, idx: m.series.map((_, i) => i), secondary: false }] : chartGroups(m);
+  // XY charts: one group per axis (a series on the Sekundärachse is drawn against the right value axis, D-111).
+  const groups = isScatter(m.kind)
+    ? [false, true].map((secondary) => ({ kind: m.kind, idx: m.series.map((_, i) => i).filter((i) => !!m.series[i].secondary === secondary), secondary })).filter((g, k) => g.idx.length || k === 0)
+    : chartGroups(m);
   const prim = groups.filter((g) => !g.secondary), sec = groups.filter((g) => g.secondary);
   const percent = prim.some((g) => kindInfo(g.kind).grouping === "percentStacked");
   const percent2 = sec.some((g) => kindInfo(g.kind).grouping === "percentStacked");
@@ -935,7 +938,7 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
     }
     clipStart(c, plot);
     if (kindInfo(m.kind).family === "bubble") drawBubbles(c, plot, xp, vPos);
-    else m.series.forEach((s, si) => drawScatterSeries(c, s, si, xp, vPos));
+    else m.series.forEach((s, si) => drawScatterSeries(c, s, si, xp, s.secondary ? vPos2 : vPos));
     m.series.forEach((s, si) => { if (s.errorBars) s.val.cache.forEach((v, i) => { const x = xOf(s, i); if (v !== null && x !== null) drawErrorBar(c, s, si, xp(x), v, vPos, false, i); }); });
     m.series.forEach((s, si) => { if (s.trendline) drawTrendline(c, s, si, plot, (v) => xp(v), vPos, (i) => xOf(s, i)); });
     clipEnd(c);

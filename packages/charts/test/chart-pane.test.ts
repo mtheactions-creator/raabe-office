@@ -240,6 +240,8 @@ describe("the pane's options in the file", () => {
     const used = [...xml.matchAll(/<c:scatterChart>[\s\S]*?<\/c:scatterChart>/g)].flatMap((g) => [...g[0].matchAll(/<c:axId val="(\d+)"\/>/g)].map((x) => x[1]));
     for (const id of used) expect(ids("valAx")).toContain(id);
     expect(roundTrip(m).series[0].secondary).toBe(true);
+    // Drawn against a value axis of its own on the right.
+    expect(scene(m).prims.some((p) => p.part === "axis:val2" && p.t === "text")).toBe(true);
   });
 
   it("writes a picture fill with a relationship placeholder the drawing replaces", () => {
