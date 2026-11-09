@@ -11,6 +11,7 @@ import type { CondEval } from "./cond";
 import { device, type Axis } from "./metrics";
 import { LANE, groups, maxLevel } from "./outline";
 import { drawSparklines } from "./sparkline-draw";
+import { canvasFill, parseFill, type FancyFill } from "../fills";
 
 export const COLORS = {
   grid: "#e0e0e0",
@@ -133,7 +134,14 @@ export function cssFont(style: CellStyle, zoom: number): string {
   return `${f.italic ? "italic " : ""}${f.bold ? "bold " : ""}${(size * PT * zoom).toFixed(3)}px "${f.name}", Carlito, sans-serif`;
 }
 
-/** A fill the grid does not draw as such (patterns, gradients): its look as one colour. */
+const fancyFills = new Map<string, FancyFill | undefined>();
+function fancyOf(xml: string | undefined): FancyFill | undefined {
+  if (!xml) return undefined;
+  if (!fancyFills.has(xml)) fancyFills.set(xml, parseFill(xml));
+  return fancyFills.get(xml);
+}
+
+/** A pattern or gradient fill as one colour (where only one colour can be drawn: turned cells, printing). */
 export function fillColor(style: CellStyle): string | undefined {
   if (style.fill) return style.fill;
   const xml = style.fillXml;
@@ -251,8 +259,11 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
         ctx.moveTo(x0, y1); ctx.lineTo(x1, y1); ctx.lineTo(x1 + sl, y0); ctx.lineTo(x0 + sl, y0); ctx.closePath();
         ctx.fill();
       } else if (fill) {
-        ctx.fillStyle = fill;
-        ctx.fillRect(snap(c.at, dpr) - px, snap(r.at, dpr) - px, snap(c.size, dpr) + px, snap(r.size, dpr) + px);
+        const x = snap(c.at, dpr) - px, y = snap(r.at, dpr) - px, w = snap(c.size, dpr) + px, hh = snap(r.size, dpr) + px;
+        // Patterns and gradients (Zellen formatieren > Ausfüllen, D-147) as Excel draws them; a rule's fill covers them.
+        const fancy = !look?.fill && !st.fill ? fancyOf(st.fillXml) : undefined;
+        ctx.fillStyle = fancy ? canvasFill(ctx, fancy, x, y, w, hh) : fill;
+        ctx.fillRect(x, y, w, hh);
       }
       if (look?.bar) {
         // Datenbalken: a bar from the left, 2 px inside the cell (Excel's default); Farbverlauf fades to white and has

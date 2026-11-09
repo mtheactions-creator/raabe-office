@@ -14,6 +14,12 @@ does; the real mouse is not touched) and records:
 Dialogs are run twice: cancelled with Esc and confirmed with their default button as they open.
 
     .venv/Scripts/python.exe sweep_calc.py [--tabs Start,Daten] [--only <id substring>] [--quick]
+    .venv/Scripts/python.exe sweep_calc.py --flows [--only <name substring>]
+
+--flows runs the by-hand flows inside dialogs that a click on a control alone does not reach (Zellen formatieren's
+Rahmen, Ausfüllen, Ausrichtung and Schrift pages, the rules manager's Regel bearbeiten and Regel duplizieren, the
+Datenbalken of Einfarbige Füllung, sorting a sum row, Aus Tabelle/Bereich; D-145 to D-148): the steps of the cases
+of compare_calc_options.py named in FLOWS, each checked for errors, an effect, and Strg+Z / Strg+Y as keys.
 
 Results: results/2026-11-09-calc-sweep.json (every option with its outcome) and
 results/2026-11-09-calc-options.json (the inventory: every option with its kind and where it is).
@@ -263,6 +269,34 @@ class Sweep:
         res["errors"] = list(self.p.errors)
         return res
 
+    # ----- flows ---------------------------------------------------------------------------------
+    def flow(self, name: str, sel: str, steps: list[tuple]) -> dict:
+        """One case of compare_calc_options.py run by hand here: the effect, errors, and undo/redo as keys."""
+        import compare_calc_options as CMP
+        runner = CMP.Raabe.__new__(CMP.Raabe)
+        runner.s, runner.p = self, self.p
+        self.reset(sel)
+        before = self.snap()
+        r = runner.run(sel, steps, None)
+        after = self.snap()
+        res: dict = {"path": ["flow", name], "kind": "flow", "selection": sel, "steps": r.get("steps")}
+        if r.get("failed"):
+            res["outcome"] = "step failed: " + r["failed"]
+        res["model"] = after["model"] != before["model"]
+        res["ui"] = after["ui"] != before["ui"]
+        res["canvas"] = after["canvas"] != before["canvas"]
+        if res["model"]:
+            self.p.js("document.activeElement?.blur?.(); __calc.app.grid.focus?.(); true")
+            self.p.key("z", "ctrl")
+            self.p.pump(0.25)
+            res["undo"] = self.snap()["model"] == before["model"]
+            if res["undo"]:
+                self.p.key("y", "ctrl")
+                self.p.pump(0.25)
+                res["redo"] = self.snap()["model"] == after["model"]
+        res["errors"] = list(self.p.errors)
+        return res
+
     # ----- walking -------------------------------------------------------------------------------
     def walk(self, path: list[tuple[str, str]], depth: int, label: str, kind: str, limit: int = 60, sub: bool = False) -> None:
         """One option and, when it opens a menu, every entry in it (depth-first)."""
@@ -417,6 +451,43 @@ class Sweep:
         self.exe.close()
 
 
+#: The flows of --flows: names of compare_calc_options.py cases (D-145 to D-148).
+FLOWS = (
+    "Sortieren mit Summenzeile", "Datenbalken Einfarbige Füllung", "Datenbalken Farbverlauf Blau", "Neue Regel Datenbalken einfarbig",
+    "Regel duplizieren", "Regel bearbeiten", "Regel nach unten", "Rahmen", "Ausfüllen", "Ausrichtung", "Schrift",
+)
+
+
+def flows(only: str | None) -> None:
+    import compare_calc_options as CMP
+    s = Sweep()
+    t0 = time.perf_counter()
+    try:
+        for case in CMP.CASES:
+            name, sel, steps = case[:3]
+            if not any(name.startswith(f) for f in FLOWS) or (only and only not in name):
+                continue
+            try:
+                res = s.flow(name, sel, steps)
+            except Exception as e:  # noqa: BLE001
+                res = {"path": ["flow", name], "outcome": "harness error", "why": str(e)[:300], "errors": list(s.p.errors)}
+            s.results.append(res)
+            s.log(res)
+        # Daten > Aus Tabelle/Bereich on a range: the table and the loaded sheet as one undo step (D-145).
+        res = s.flow("Aus Tabelle/Bereich", "A1:D5", [("tab", "Daten"), ("ctrl", "Daten abrufen und transformieren|Aus Tabelle/Bereich"), ("ok",)])
+        s.results.append(res)
+        s.log(res)
+    finally:
+        s.close()
+    summary = summarise(s.results)
+    summary["seconds"] = round(time.perf_counter() - t0)
+    summary["noUndo"] = sum(1 for r in s.results if r.get("model") and r.get("undo") is False)
+    summary["passed"] = sum(1 for r in s.results if not r.get("outcome") and not r.get("errors") and r.get("model") and r.get("undo") and r.get("redo"))
+    out = HERE / "results" / "2026-11-09-calc-sweep-flows.json"
+    out.write_text(json.dumps({"summary": summary, "results": s.results}, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+    print(json.dumps(summary, ensure_ascii=False, indent=1))
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--tabs", default="")
@@ -424,7 +495,11 @@ def main() -> None:
     ap.add_argument("--context", action="store_true", help="context menus only")
     ap.add_argument("--out", default="calc-sweep")
     ap.add_argument("--dev", default=None, help="port:url of a dev page in a headless browser")
+    ap.add_argument("--flows", action="store_true", help="the by-hand flows inside dialogs (D-145 to D-148)")
     a = ap.parse_args()
+    if a.flows:
+        flows(a.only)
+        return
     s = Sweep(dev=a.dev)
     t0 = time.perf_counter()
     try:

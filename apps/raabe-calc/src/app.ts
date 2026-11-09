@@ -117,6 +117,8 @@ export class CalcApp {
   readonly recorder = new MacroRecorder(this);
   private copied: Copied | null = null;
   private fontList: string[] = [];
+  /** The installed fonts (Zellen formatieren > Schrift lists them as the ribbon does). */
+  fonts(): string[] { return this.fontList; }
   private lastFontColor = "#FF0000";
   private lastFill = "#FFFF00";
   private painter: { style: number | undefined; keep: boolean } | null = null;

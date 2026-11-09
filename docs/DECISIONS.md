@@ -3929,3 +3929,50 @@ Compare cases (compare_calc_options.py): the six bars of Einfarbige Füllung, on
 solid bar, Regel duplizieren, Regel bearbeiten (operator and value), Regel bearbeiten of a data bar to Einfarbige
 Füllung, Nach unten with two rules, each against the rule Excel makes (type, cells, operator, formulas, colours,
 fill type, and the cells Excel shows formatted). The file's form is pinned in packages/ooxml/test/xlsx-databar.test.ts.
+
+## D-147 RaabeCalc: Zellen formatieren > Rahmen and Ausfüllen as Excel's pages (2026-11-09)
+
+D-142 left the dialog without Excel's border colours and diagonals, pattern fills and Fülleffekte. Recorded first:
+the pages' controls from the inventory (results/2026-11-05-excel-inventory.json), the Musterformat entries and the
+Fülleffekte dialog with real clicks in an Excel of our own (probe_excel_patterns_ui.py, probe_excel_followup_ui.py),
+and what Excel writes in the file for every line style, colour, diagonal, pattern and gradient through COM
+(probe_excel_followup.py, results/2026-11-09-excel-followup.json).
+- **Rahmen:** Linie with Art (Excel's 14 styles, Keine to Doppelt, in its two columns, each written as Excel writes it:
+  hair, dotted, dashDotDot, dashDot, dashed, thin, mediumDashDotDot, slantDashDot, mediumDashDot, mediumDashed, medium,
+  thick, double) and Farbe (Automatisch and the palette); Voreinstellungen Keine, Außen and Innen (Innen only for more
+  than one cell); the eight buttons around the preview (Oben, Horizontal, Unten, Diagonal nach oben, Links, Vertikal,
+  Rechts, Diagonal nach unten) and the preview itself, which takes a click on a line (the nearest side, inner line or
+  diagonal within a few pixels). A click puts the current line there, or takes it away when the same line is there
+  already, as in Excel. Only the sides touched in the dialog change; Horizontal and Vertikal go on both cells of each
+  inner edge (as Alle Rahmenlinien); a diagonal goes in every cell (the file keeps one diagonal style per cell with a
+  flag for each direction).
+- **Ausfüllen:** Hintergrundfarbe (Keine Farbe, the palette, Weitere Farben..., Fülleffekte...), Musterfarbe
+  (Automatisch and the palette) and Musterformat with Excel's 18 entries and names (Uni, 75% Grau ... Dünn Diagonal
+  Kariert; Uni is no pattern), and the Beispiel. A pattern is written as Excel writes it (fgColor the pattern's colour,
+  bgColor the background colour). **Fülleffekte...** opens Excel's dialog: Farben (Einfarbig with Dunkel/Hell,
+  Zweifarbig), Farbe 1 and 2, the six Schattierungsarten (Horizontal, Vertikal, Diagonal oben, Diagonal unten, Aus der
+  Ecke, Aus der Mitte), their Varianten as clickable previews, and Beispiel; written as gradientFill with Excel's
+  degrees (90, 0, 45, 135) or as a path from a corner or the middle (recorded). Not built: Voreinstellung (Office's
+  ready-made gradients, shown greyed). Not recorded: which variant Excel writes with which stop order; ours writes
+  the variants as two or three stops that look the same.
+- **Drawing:** the grid now draws patterns (Excel's 8 x 8 screen patterns in the two colours) and gradients
+  (linear at the angle, or from the corner or middle) instead of one mixed colour.
+Compare cases (compare_calc_options.py and sweep_calc.py --flows): a red dashed bottom line; four line styles on four
+sides; both diagonals; a click into the preview; Außen with Mittel and Innen with Dünn; Keine after Alle
+Rahmenlinien; a pattern with its colour on a background; 50% Grau; Fülleffekte horizontal and Aus der Mitte.
+
+## D-148 RaabeCalc: Zellen formatieren > Ausrichtung's dial and Schrift's lists (2026-11-09)
+
+- **Ausrichtung:** Excel's orientation box: the vertical "Text" (Vertikaler Text, file value 255) and the dial, whose
+  pointer is dragged (or moved with the arrow keys) between -90 and 90 degrees in steps of one degree, with the Grad
+  spinner beside it following and driving it; with vertical text on, the dial and the spinner are off. Typed degrees
+  are kept within -90 to 90. Not built: Verteilt ausrichten and Textrichtung (the model has no reading order).
+- **Schrift:** Schriftart, Schriftschnitt and Schriftgrad each a field with its list below, as Excel's page: the
+  design's fonts first (Überschriften, Textkörper), then the installed fonts (the same list as the ribbon's);
+  Standard, Kursiv, Fett, Fett Kursiv; 8 to 72. Typing in a field selects the matching entry; picking an entry fills
+  the field. Unterstreichung (Ohne, Einfach, Doppelt, Einfach (Buchhaltung), Doppelt (Buchhaltung), as recorded),
+  Farbe, Standardschrift (the workbook's standard font without effects; unticked again by any change), Effekte
+  (Durchgestrichen; Hochgestellt and Tiefgestellt exclude each other) and Vorschau in the chosen font.
+Compare cases: the pointer dragged to 45 degrees, -30 typed, vertical text, a font with Schriftschnitt, Grad,
+Unterstreichung and Durchgestrichen from the lists, Hochgestellt after Tiefgestellt, Standardschrift on a mixed
+selection.

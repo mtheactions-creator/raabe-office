@@ -199,6 +199,44 @@ CASES: list[tuple] = [
     ("Datenbalken Farbverlauf Blau", "B2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Datenbalken"), ("item", "› Blauer Datenbalken")], xl_bar(0xC68E63, solid=False)),
     ("Neue Regel Datenbalken einfarbig", "B2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Neue Regel..."), ("click", ".cf-type:nth-child(1)"),
                                                    ("select", "Formatstil", "Datenbalken"), ("select", "Füllung", "Einfarbige Füllung"), ("ok",)], xl_bar(0xC68E63, solid=True)),
+    # Zellen formatieren > Rahmen (D-147): line style, colour, the side buttons, the preview, both diagonals, Innen.
+    ("Rahmen rot gestrichelt unten", "A2:B4", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Rahmen"), ("aria", "Gestrichelt"), ("aria", "Farbe Automatisch"), ("popswatch", 61),
+                                              ("aria", "Unten"), ("ok",)], None, None,
+     lambda c: c["A4"]["Border bottom"][0] == -4115 and c["B4"]["Border bottom"][2] == 0x0000FF and c["A2"]["Border bottom"][0] in (-4142, None)),
+    ("Rahmen Linienarten", "A2:B4", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Rahmen"), ("aria", "StrichPunktPunkt Mittel"), ("aria", "Oben"),
+                                     ("aria", "SchrägstrichStrichPunkt"), ("aria", "Links"), ("aria", "Doppelt"), ("aria", "Unten"), ("aria", "Haarstrich"), ("aria", "Rechts"), ("ok",)],
+     lambda app, ws: [(setattr(app.Selection.Borders(i), "LineStyle", ls), setattr(app.Selection.Borders(i), "Weight", w)) for i, ls, w in ((8, 5, -4138), (7, 13, -4138), (9, -4119, 4), (10, 1, 1))]),
+    ("Rahmen Diagonalen", "B2", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Rahmen"), ("aria", "Diagonal nach unten"), ("aria", "Diagonal nach oben"), ("ok",)],
+     lambda app, ws: [setattr(app.Selection.Borders(i), "LineStyle", 1) for i in (5, 6)]),
+    ("Rahmen Vorschau angeklickt", "B2", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Rahmen"), ("aria", "Dick"), ("click", ".fc-border-preview"), ("ok",)],
+     # The middle of the preview is on both diagonals: the first one found is Diagonal nach unten.
+     lambda app, ws: (setattr(app.Selection.Borders(5), "LineStyle", 1), setattr(app.Selection.Borders(5), "Weight", 4))),
+    ("Rahmen Außen und Innen", "A2:B4", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Rahmen"), ("aria", "Mittel"), ("aria", "Außen"), ("aria", "Dünn"), ("aria", "Innen"), ("ok",)],
+     lambda app, ws: ([(setattr(app.Selection.Borders(i), "LineStyle", 1), setattr(app.Selection.Borders(i), "Weight", -4138)) for i in (7, 8, 9, 10)],
+                      [setattr(app.Selection.Borders(i), "LineStyle", 1) for i in (11, 12)])),
+    ("Rahmen Keine nach Alle", "A2:B4", [T, ("ctrl", "Schriftart|Rahmen ▾"), ("item", "Alle Rahmenlinien"), ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Rahmen"), ("aria", "Keine", 1), ("ok",)],
+     lambda app, ws: None),
+    # Ausfüllen: Musterformat with Musterfarbe on a background colour, and Fülleffekte.
+    ("Ausfüllen Muster", "A2:B3", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Ausfüllen"), ("swatch", 3), ("click", ".fc-pattern-btn"), ("aria", "Dünn Diagonal Gestreift"),
+                                   ("aria", "Musterfarbe Automatisch"), ("popswatch", 5), ("ok",)], None, None,
+     lambda c: all(c[a]["Interior"][0] == 14 for a in ("A2", "B3"))),
+    ("Ausfüllen Muster 50 Prozent", "A2", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Ausfüllen"), ("click", ".fc-pattern-btn"), ("aria", "50% Grau"), ("ok",)], None, None,
+     lambda c: c["A2"]["Interior"][0] == -4125),
+    ("Ausfüllen Fülleffekte horizontal", "A2:B3", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Ausfüllen"), ("btn", "Fülleffekte..."), ("ok",), ("ok",)], None, None,
+     lambda c: all(c[a]["Interior"][0] == 4000 for a in ("A2", "B3"))),
+    ("Ausfüllen Fülleffekte aus der Mitte", "A2", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Ausfüllen"), ("btn", "Fülleffekte..."), ("check", "Aus der Mitte"), ("ok",), ("ok",)], None, None,
+     lambda c: c["A2"]["Interior"][0] == 4001),
+    # Ausrichtung: the dial dragged, the degrees typed, vertical text.
+    ("Ausrichtung Zeiger gezogen", "A1:D1", [T, ("ctrl", "Ausrichtung|Zellenausrichtung formatieren"), ("dragin", "Ausrichtung", 14 + 42, 74 - 42), ("ok",)], xl_set("Orientation", 45)),
+    ("Ausrichtung Grad -30", "A1:D1", [T, ("ctrl", "Ausrichtung|Zellenausrichtung formatieren"), ("type-in", "Grad", "-30"), ("ok",)], xl_set("Orientation", -30)),
+    ("Ausrichtung vertikaler Text", "A1:D1", [T, ("ctrl", "Ausrichtung|Zellenausrichtung formatieren"), ("aria", "Vertikaler Text"), ("ok",)], xl_set("Orientation", -4166)),
+    # Schrift: the font list, Schriftschnitt and Schriftgrad lists, Unterstreichung, Effekte, Standardschrift.
+    ("Schrift aus der Liste", "A2:B4", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Schrift"), ("type-in", "Schriftart:", "Arial"), ("listpick", "Schriftschnitt:", "Fett Kursiv"),
+                                        ("listpick", "Schriftgrad:", "14"), ("select", "Unterstreichung:", "Doppelt"), ("check", "Durchgestrichen"), ("ok",)],
+     lambda app, ws: [setattr(app.Selection.Font, k, v) for k, v in (("Name", "Arial"), ("Bold", True), ("Italic", True), ("Size", 14), ("Underline", -4119), ("Strikethrough", True))]),
+    ("Schrift Hochgestellt", "A2", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Schrift"), ("check", "Tiefgestellt"), ("check", "Hochgestellt"), ("ok",)], xl_set("Font.Superscript", True)),
+    ("Schrift Standardschrift", "A1:B4", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Schrift"), ("check", "Standardschrift"), ("ok",)],
+     lambda app, ws: (setattr(app.Selection.Font, "Bold", False), setattr(app.Selection.Font, "Name", "Calibri"), setattr(app.Selection.Font, "Size", 11))),
     ("Regel duplizieren", "B2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Regeln zum Hervorheben von Zellen"), ("item", "› Größer als..."), ("field", "", "10"), ("ok",),
                                     ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Regeln verwalten..."), ("click", ".cf-rules button[role=option]"),
                                     ("btn", "Regel duplizieren"), ("ok",)],
@@ -244,6 +282,53 @@ class Raabe:
         self.p.pump(0.15)
         return True
 
+    def aria_box(self, label: str, nth: int = 0) -> dict | None:
+        return self.p.js(f"""(() => {{ const d = [...document.querySelectorAll('.dialog-layer .dialog')].pop();
+          const all = [...(d ? d.querySelectorAll('[aria-label]') : []), ...document.querySelectorAll('.fc-pop [aria-label]')].filter(e => e.getAttribute('aria-label') === {json.dumps(label)} && e.getClientRects().length);
+          const e = all[{nth}]; if (!e) return null; e.scrollIntoView({{block: 'nearest'}}); const r = e.getBoundingClientRect(); return {{x: r.left, y: r.top, w: r.width, h: r.height}}; }})()""")
+
+    def list_pick(self, label: str, value: str) -> bool:
+        """A list box (size > 1): the entry is picked with the keyboard as a user can (the list has the focus)."""
+        ok = self.p.js(f"""(() => {{ const d = [...document.querySelectorAll('.dialog-layer .dialog')].pop();
+          const s = [...d.querySelectorAll('select[aria-label]')].find(e => e.getAttribute('aria-label') === {json.dumps(label)} && e.size > 1);
+          if (!s) return null; const i = [...s.options].findIndex(o => o.textContent === {json.dumps(value)}); return i < 0 ? null : {{i, cur: s.selectedIndex}}; }})()""")
+        if not ok:
+            return False
+        steps = ok["i"] - max(0, ok["cur"])
+        if ok["cur"] < 0:
+            self.p.key("Home")
+        for _ in range(abs(steps)):
+            self.p.key("ArrowDown" if steps > 0 else "ArrowUp")
+        self.p.pump(0.1)
+        return True
+
+    def aria_click(self, label: str, nth: int = 0) -> bool:
+        b = self.aria_box(label, nth)
+        if not b:
+            return False
+        self.p.click(b["x"] + b["w"] / 2, b["y"] + b["h"] / 2)
+        self.p.pump(0.15)
+        return True
+
+    def drag_in(self, label: str, x: float, y: float) -> bool:
+        """A drag inside the element, from its middle to (x, y) of its box (the dial's pointer)."""
+        b = self.aria_box(label)
+        if not b:
+            return False
+        self.p.drag(b["x"] + b["w"] / 2, b["y"] + b["h"] / 2, b["x"] + x, b["y"] + y)
+        self.p.pump(0.15)
+        return True
+
+    def type_in(self, label: str, text: str) -> bool:
+        b = self.aria_box(label)
+        if not b:
+            return False
+        self.p.click(b["x"] + b["w"] / 2, b["y"] + b["h"] / 2)
+        self.p.key("a", "ctrl")
+        self.p.type(text)
+        self.p.pump(0.1)
+        return True
+
     def select_option(self, label: str, value: str, listbox: bool = False) -> bool:
         """A <select>: a user clicks it and picks the entry; native drop-downs are not in the page, so the
         keyboard picks it as a user can (focus, then the entry's first letters)."""
@@ -287,6 +372,14 @@ class Raabe:
                 r = {"ok": self.dialog_click(f"[...d.querySelectorAll('.fc-palette .swatch')].filter(e => e.offsetParent)[{st[1]}]")}
             elif k == "click":
                 r = {"ok": self.dialog_click(f"d.querySelector({json.dumps(st[1])})")}
+            elif k == "listpick":
+                r = {"ok": self.dialog_click(f"[...d.querySelectorAll('select[aria-label]')].find(e => e.getAttribute('aria-label') === {json.dumps(st[1])} && e.size > 1)") and self.list_pick(st[1], st[2])}
+            elif k == "aria":
+                r = {"ok": self.aria_click(st[1], st[2] if len(st) > 2 else 0)}
+            elif k == "dragin":
+                r = {"ok": self.drag_in(st[1], st[2], st[3])}
+            elif k == "type-in":
+                r = {"ok": self.type_in(st[1], st[2])}
             elif k == "popswatch":
                 el = self.p.js(f"""(() => {{ const b = [...document.querySelectorAll('.fc-pop .swatch')][{st[1]}]; if (!b) return null;
                   const r = b.getBoundingClientRect(); return {{x: r.left + r.width / 2, y: r.top + r.height / 2}}; }})()""")
