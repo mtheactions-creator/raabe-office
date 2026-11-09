@@ -913,6 +913,8 @@ ALREADY = [
     # list inside the open panel (which the sweep does not count as a new popup).
     r"Konvertierungen / Unicode \[button\]$", r"Konvertierungen / Konvertieren \[split-main\]$", r"Konvertierungen / Weitere Optionen \[split-arrow\] > ",
     r"> Katalogfilter$",
+    # The only shape on the page: nothing to move behind (Word neither).
+    r"Formformat > Anordnen / Ebene nach hinten \[split-main\]$",
     # The target starts mid-sentence and has no capitals inside: Word's Satzanfang groß changes nothing (recorded).
     r"Groß-/Kleinschreibung \[dropdown\] > Ersten Buchstaben im Satz großschreiben\.$", r"Ansichten / Drucklayout \[button\]$", r"Zoom / 100% \[button\]$",
 ]
