@@ -142,28 +142,29 @@ export function chartsFeature(api: AppApi) {
   async function editData(): Promise<void> {
     const e = ed();
     const sel = e?.selectedImage();
-    if (!e || !sel || sel.kind !== "inline" || !sel.obj.chart) { await messageBox("RaabeWrite", "Markieren Sie zuerst ein Diagramm."); return; }
+    if (!e || !sel || !sel.obj.chart) { await messageBox("RaabeWrite", "Markieren Sie zuerst ein Diagramm."); return; }
     const obj = sel.obj;
     const xml = obj.chart!.xml;
     const t = await editTable(tableOf(xml));
     if (!t) return;
     const kind = chartFromXml(xml).kind;
+    // Inline or floating (D-131): the chart's part and picture change, its place stays.
     const next = chartObject(kind, t, obj.width, obj.height, xml);
-    e.replaceSelectedObject((o) => ({ ...o, data: undefined, image: next.image, chart: next.chart }));
+    e.setSelectedChart(next.chart!, next.image!);
     api.refresh();
   }
 
-  const selectedChart = () => { const s = ed()?.selectedImage(); return !!s && s.kind === "inline" && !!s.obj.chart; };
+  const selectedChart = () => { const s = ed()?.selectedImage(); return !!s && !!s.obj.chart; };
   c.implement("insert.chart", { run: () => void insertDialog(), enabled: () => !!ed() });
   c.implement("chart.editData", { run: () => void editData(), enabled: selectedChart });
   /** Without dialogs (tests): a chart of `kind` with `table` at the caret; `edit` changes the selected chart's data. */
   const insertChart = (kind: ChartKind, table: ChartTable = SAMPLE) => { ed()?.insertInlineObject(chartObject(kind, table)); api.refresh(); };
   const setData = (table: ChartTable) => {
     const e = ed(), sel = e?.selectedImage();
-    if (!e || !sel || sel.kind !== "inline" || !sel.obj.chart) return false;
+    if (!e || !sel || !sel.obj.chart) return false;
     const xml = sel.obj.chart.xml;
     const next = chartObject(chartFromXml(xml).kind, table, sel.obj.width, sel.obj.height, xml);
-    e.replaceSelectedObject((o) => ({ ...o, data: undefined, image: next.image, chart: next.chart }));
+    e.setSelectedChart(next.chart!, next.image!);
     return true;
   };
   return { insertDialog, editData, selectedChart, insertChart, setData };

@@ -159,7 +159,7 @@ export function contextFeature(api: AppApi, spellEntries: (e: Editor, pos: Pos) 
         { label: "In den Hintergrund", icon: "send-backward", submenu: cmds("layout.sendBackward"), disabled: image.kind === "inline" },
         "-",
         { cmd: "insert.link", label: "Link" },
-        ...(image?.kind === "inline" && image.obj.chart ? [{ cmd: "chart.editData", label: "Daten bearbeiten" }] : []),
+        ...(image?.obj.chart ? [{ cmd: "chart.editData", label: "Daten bearbeiten" }] : []),
         { cmd: "picture.saveAs", label: "Als Grafik speichern..." },
         "-",
         { cmd: "ref.caption", label: "Beschriftung einfügen..." },
