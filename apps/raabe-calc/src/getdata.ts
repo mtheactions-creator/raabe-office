@@ -205,8 +205,13 @@ export function getDataFeature(app: CalcApp) {
       const ok = await showDialog({ title: "Tabelle erstellen", body: h("div", null, `Die Daten in ${app.sheet.name}!${r.r0 + 1}:${r.r1 + 1} werden zuerst zu einer Tabelle mit Überschriften.`),
         buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
       if (!ok) return;
-      t = app.tables.create(r, true) ?? undefined;
-      if (!t) return;
+      // The new table and the loaded copy are one undo step (D-145; Excel takes both back with one Strg+Z).
+      const sheet = app.sheet;
+      app.change("Aus Tabelle/Bereich", () => {
+        const made = app.tables.create(r, true);
+        if (made) load(blockOf(app.wb, sheet, { ...made.ref, r1: tableData(made).r1 }, made.name));
+      });
+      return;
     }
     const sheet = app.sheet;
     load(blockOf(app.wb, sheet, { ...t.ref, r1: tableData(t).r1 }, t.name));

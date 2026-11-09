@@ -1,0 +1,352 @@
+{
+ "solidBars": {
+  "entries": [
+   {
+    "name": "Blauer Datenbalken",
+    "count": 1,
+    "color": "#638EC6",
+    "fill": 0,
+    "border": 0,
+    "axis": 0
+   },
+   {
+    "name": "Grüner Datenbalken",
+    "count": 1,
+    "color": "#63C384",
+    "fill": 0,
+    "border": 0,
+    "axis": 0
+   },
+   {
+    "name": "Roter Datenbalken",
+    "count": 1,
+    "color": "#FF555A",
+    "fill": 0,
+    "border": 0,
+    "axis": 0
+   },
+   {
+    "name": "Orangefarbener Datenbalken",
+    "count": 1,
+    "color": "#FFB628",
+    "fill": 0,
+    "border": 0,
+    "axis": 0
+   },
+   {
+    "name": "Hellblauer Datenbalken",
+    "count": 1,
+    "color": "#008AEF",
+    "fill": 0,
+    "border": 0,
+    "axis": 0
+   },
+   {
+    "name": "Lilafarbener Datenbalken",
+    "count": 1,
+    "color": "#D6007B",
+    "fill": 0,
+    "border": 0,
+    "axis": 0
+   }
+  ],
+  "cfRules": [
+   "<cfRule type=\"dataBar\" priority=\"6\"><dataBar><cfvo type=\"min\"/><cfvo type=\"max\"/><color rgb=\"FF638EC6\"/></dataBar><extLst><ext uri=\"{B025F937-C7B1-47D3-B67F-A62EFF666E3E}\" xmlns:x14=\"http://schemas.microsoft.com/office/spreadsheetml/2009/9/main\"><x14:id>{C6683521-732A-438B-9F36-6E9B288763A6}</x14:id></ext></extLst></cfRule>",
+   "<cfRule type=\"dataBar\" priority=\"5\"><dataBar><cfvo type=\"min\"/><cfvo type=\"max\"/><color rgb=\"FF63C384\"/></dataBar><extLst><ext uri=\"{B025F937-C7B1-47D3-B67F-A62EFF666E3E}\" xmlns:x14=\"http://schemas.microsoft.com/office/spreadsheetml/2009/9/main\"><x14:id>{78F06730-C5B7-48F4-9C9D-2046734B88D6}</x14:id></ext></extLst></cfRule>",
+   "<cfRule type=\"dataBar\" priority=\"4\"><dataBar><cfvo type=\"min\"/><cfvo type=\"max\"/><color rgb=\"FFFF555A\"/></dataBar><extLst><ext uri=\"{B025F937-C7B1-47D3-B67F-A62EFF666E3E}\" xmlns:x14=\"http://schemas.microsoft.com/office/spreadsheetml/2009/9/main\"><x14:id>{48ACD1AF-E60D-4BBF-8E1C-E6E43DDD4D53}</x14:id></ext></extLst></cfRule>",
+   "<cfRule type=\"dataBar\" priority=\"3\"><dataBar><cfvo type=\"min\"/><cfvo type=\"max\"/><color rgb=\"FFFFB628\"/></dataBar><extLst><ext uri=\"{B025F937-C7B1-47D3-B67F-A62EFF666E3E}\" xmlns:x14=\"http://schemas.microsoft.com/office/spreadsheetml/2009/9/main\"><x14:id>{2011B1A0-118C-434F-80EA-A4B9CE4F3F62}</x14:id></ext></extLst></cfRule>",
+   "<cfRule type=\"dataBar\" priority=\"2\"><dataBar><cfvo type=\"min\"/><cfvo type=\"max\"/><color rgb=\"FF008AEF\"/></dataBar><extLst><ext uri=\"{B025F937-C7B1-47D3-B67F-A62EFF666E3E}\" xmlns:x14=\"http://schemas.microsoft.com/office/spreadsheetml/2009/9/main\"><x14:id>{B3A70A22-30C8-4B03-B0BC-36EAED03A2CB}</x14:id></ext></extLst></cfRule>",
+   "<cfRule type=\"dataBar\" priority=\"1\"><dataBar><cfvo type=\"min\"/><cfvo type=\"max\"/><color rgb=\"FFD6007B\"/></dataBar><extLst><ext uri=\"{B025F937-C7B1-47D3-B67F-A62EFF666E3E}\" xmlns:x14=\"http://schemas.microsoft.com/office/spreadsheetml/2009/9/main\"><x14:id>{EED9D824-8FC9-4074-8E01-E6599864EB8C}</x14:id></ext></extLst></cfRule>"
+  ],
+  "x14": [
+   "<x14:cfRule type=\"dataBar\" id=\"{C6683521-732A-438B-9F36-6E9B288763A6}\"><x14:dataBar minLength=\"0\" maxLength=\"100\" gradient=\"0\"><x14:cfvo type=\"autoMin\"/><x14:cfvo type=\"autoMax\"/><x14:negativeFillColor rgb=\"FFFF0000\"/><x14:axisColor rgb=\"FF000000\"/></x14:dataBar></x14:cfRule>",
+   "<x14:cfRule type=\"dataBar\" id=\"{78F06730-C5B7-48F4-9C9D-2046734B88D6}\"><x14:dataBar minLength=\"0\" maxLength=\"100\" gradient=\"0\"><x14:cfvo type=\"autoMin\"/><x14:cfvo type=\"autoMax\"/><x14:negativeFillColor rgb=\"FFFF0000\"/><x14:axisColor rgb=\"FF000000\"/></x14:dataBar></x14:cfRule>",
+   "<x14:cfRule type=\"dataBar\" id=\"{48ACD1AF-E60D-4BBF-8E1C-E6E43DDD4D53}\"><x14:dataBar minLength=\"0\" maxLength=\"100\" gradient=\"0\"><x14:cfvo type=\"autoMin\"/><x14:cfvo type=\"autoMax\"/><x14:negativeFillColor rgb=\"FFFF0000\"/><x14:axisColor rgb=\"FF000000\"/></x14:dataBar></x14:cfRule>",
+   "<x14:cfRule type=\"dataBar\" id=\"{2011B1A0-118C-434F-80EA-A4B9CE4F3F62}\"><x14:dataBar minLength=\"0\" maxLength=\"100\" gradient=\"0\"><x14:cfvo type=\"autoMin\"/><x14:cfvo type=\"autoMax\"/><x14:negativeFillColor rgb=\"FFFF0000\"/><x14:axisColor rgb=\"FF000000\"/></x14:dataBar></x14:cfRule>",
+   "<x14:cfRule type=\"dataBar\" id=\"{B3A70A22-30C8-4B03-B0BC-36EAED03A2CB}\"><x14:dataBar minLength=\"0\" maxLength=\"100\" gradient=\"0\"><x14:cfvo type=\"autoMin\"/><x14:cfvo type=\"autoMax\"/><x14:negativeFillColor rgb=\"FFFF0000\"/><x14:axisColor rgb=\"FF000000\"/></x14:dataBar></x14:cfRule>",
+   "<x14:cfRule type=\"dataBar\" id=\"{EED9D824-8FC9-4074-8E01-E6599864EB8C}\"><x14:dataBar minLength=\"0\" maxLength=\"100\" gradient=\"0\"><x14:cfvo type=\"autoMin\"/><x14:cfvo type=\"autoMax\"/><x14:negativeFillColor rgb=\"FFFF0000\"/><x14:axisColor rgb=\"FF000000\"/></x14:dataBar></x14:cfRule>"
+  ]
+ },
+ "formatCells": {
+  "musterLabel": [
+   {
+    "name": "Musterformat:",
+    "type": "Text",
+    "rect": [
+     1948,
+     825,
+     290,
+     21
+    ]
+   }
+  ],
+  "fuelleffekte": {
+   "title": "Fülleffekte",
+   "controls": [
+    [
+     "Direkthilfe",
+     "Button"
+    ],
+    [
+     "Schließen",
+     "Button"
+    ],
+    [
+     "Graduell",
+     "TabItem"
+    ],
+    [
+     "Farben",
+     "Group"
+    ],
+    [
+     "Einfarbig",
+     "RadioButton"
+    ],
+    [
+     "Zweifarbig",
+     "RadioButton"
+    ],
+    [
+     "Voreinstellung",
+     "RadioButton"
+    ],
+    [
+     "Farbe 1:",
+     "Text"
+    ],
+    [
+     "Füllfarbe 1",
+     "Button"
+    ],
+    [
+     "Farbe 2:",
+     "Text"
+    ],
+    [
+     "Füllfarbe 2",
+     "Button"
+    ],
+    [
+     "Schattierungsarten",
+     "Group"
+    ],
+    [
+     "Horizontal",
+     "RadioButton"
+    ],
+    [
+     "Vertikal",
+     "RadioButton"
+    ],
+    [
+     "Diagonal oben",
+     "RadioButton"
+    ],
+    [
+     "Diagonal unten",
+     "RadioButton"
+    ],
+    [
+     "Aus der Ecke",
+     "RadioButton"
+    ],
+    [
+     "Aus der Mitte",
+     "RadioButton"
+    ],
+    [
+     "Varianten",
+     "Group"
+    ],
+    [
+     "Beispiel:",
+     "Text"
+    ],
+    [
+     "OK",
+     "Button"
+    ],
+    [
+     "Abbrechen",
+     "Button"
+    ]
+   ]
+  },
+  "unterstreichung": [
+   "Ohne",
+   "Einfach",
+   "Doppelt",
+   "Einfach (Buchhaltung)",
+   "Doppelt (Buchhaltung)",
+   "Ohne",
+   "Einfach",
+   "Doppelt",
+   "Einfach (Buchhaltung)",
+   "Doppelt (Buchhaltung)"
+  ]
+ },
+ "manager": {
+  "before": [
+   [
+    "=3",
+    1
+   ],
+   [
+    "=2",
+    2
+   ]
+  ],
+  "managerTitle": "Manager für Regeln zur bedingten Formatierung",
+  "edit": {
+   "title": "Formatierungsregel bearbeiten",
+   "controls": [
+    [
+     "Regeltyp auswählen",
+     "Text"
+    ],
+    [
+     "Regeltyp auswählen",
+     "List"
+    ],
+    [
+     "► Alle Zellen basierend auf ihren Werten formatieren",
+     "ListItem"
+    ],
+    [
+     "► Alle Zellen basierend auf ihren Werten formatieren",
+     "Text"
+    ],
+    [
+     "► Nur Zellen formatieren, die enthalten",
+     "ListItem"
+    ],
+    [
+     "► Nur Zellen formatieren, die enthalten",
+     "Text"
+    ],
+    [
+     "► Nur obere oder untere Werte formatieren",
+     "ListItem"
+    ],
+    [
+     "► Nur obere oder untere Werte formatieren",
+     "Text"
+    ],
+    [
+     "► Nur Werte über oder unter dem Durchschnitt formatieren",
+     "ListItem"
+    ],
+    [
+     "► Nur Werte über oder unter dem Durchschnitt formatieren",
+     "Text"
+    ],
+    [
+     "► Nur eindeutige oder doppelte Werte formatieren",
+     "ListItem"
+    ],
+    [
+     "► Nur eindeutige oder doppelte Werte formatieren",
+     "Text"
+    ],
+    [
+     "► Formel zur Ermittlung der zu formatierenden Zellen verwenden",
+     "ListItem"
+    ],
+    [
+     "► Formel zur Ermittlung der zu formatierenden Zellen verwenden",
+     "Text"
+    ],
+    [
+     "Regelbeschreibung bearbeiten",
+     "Text"
+    ],
+    [
+     "Nur Zellen formatieren mit",
+     "Text"
+    ],
+    [
+     "Nur Zellen formatieren mit",
+     "ComboBox"
+    ],
+    [
+     "Nur Zellen formatieren mit",
+     "Text"
+    ],
+    [
+     "Öffnen",
+     "Button"
+    ],
+    [
+     "Vergleich",
+     "ComboBox"
+    ],
+    [
+     "Vergleich",
+     "Text"
+    ],
+    [
+     "Öffnen",
+     "Button"
+    ],
+    [
+     "Wert",
+     "Edit"
+    ],
+    [
+     "Vorschau",
+     "Text"
+    ],
+    [
+     "Vorschau",
+     "Group"
+    ],
+    [
+     "Formatieren...",
+     "Button"
+    ],
+    [
+     "OK",
+     "Button"
+    ],
+    [
+     "Abbrechen",
+     "Button"
+    ],
+    [
+     " ",
+     "Text"
+    ],
+    [
+     "Größenfeld",
+     "Thumb"
+    ],
+    [
+     "Direkthilfe",
+     "Button"
+    ],
+    [
+     "Schließen",
+     "Button"
+    ]
+   ]
+  },
+  "after": [
+   [
+    "=3",
+    1,
+    13551615.0
+   ],
+   [
+    "=3",
+    2,
+    13551615.0
+   ],
+   [
+    "=2",
+    3,
+    13561798.0
+   ]
+  ]
+ }
+}

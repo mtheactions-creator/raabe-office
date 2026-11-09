@@ -3889,3 +3889,19 @@ new equation removed the equation itself. Word takes back one change at a time. 
 equation's values before each change: Strg+Z and Strg+Y step back and forth inside the equation (the caret goes to its
 end); with no change left, Strg+Z ends the edit and acts on the document (the next step removes a new equation, as in
 Word). The document still gets one undo step for the whole edit once it is left.
+
+## D-145 RaabeCalc: what the by-hand audit left open: Aus Tabelle/Bereich and sorting a sum row (2026-11-09)
+
+Two leftovers of D-142, each recorded in an Excel of our own first (probe_excel_followup.py, COM, invisible;
+results/2026-11-09-excel-followup.json):
+- **Daten > Aus Tabelle/Bereich** on a range that is not a table yet made two undo steps (Tabelle erstellen, then
+  Daten laden): one Strg+Z left the loaded sheet without its source table or the other way round. The table and the
+  loaded copy are now one step, as a student expects from one command. (Excel's Power Query opens its editor here,
+  which RaabeCalc does not have, D-080; there is no closer behaviour to copy.)
+- **Sorting a range with its own sum row** (the comparison's Von Z bis A sortieren on a list whose last row is
+  =SUMME(B2:B5)) gave #BEZUG! where Excel keeps a shortened reference. Recorded: a formula moves with its row as if
+  copied (D-142), but a range with one end pushed off the sheet is cut at the sheet's edge (=SUMME(B2:B5) sorted
+  four rows up reads =SUMME(B1:B1), =SUMME(B2:B3) two rows up as well); a range with both ends off and a single
+  reference off the sheet become #BEZUG!; absolute references stay. Sorting now does exactly this
+  (`shiftFormula(..., { clipRanges: true })`); copying and AutoAusfüllen keep #BEZUG! for every reference pushed off
+  (Excel). Pinned in apps/raabe-calc/test/followup.test.ts with the six recorded cases.

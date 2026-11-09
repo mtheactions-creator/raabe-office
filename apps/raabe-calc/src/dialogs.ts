@@ -459,7 +459,7 @@ export function dialogs(app: CalcApp) {
       const row = rect.r0 + i, d = row - origin.get(cells)!;
       cells.forEach((c, j) => {
         const col = rect.c0 + j;
-        sheet().set(row, col, c.v === null && c.s === undefined && !c.f ? undefined : { ...c, ...(c.f !== undefined && d ? { f: shiftFormula(c.f, d, 0) } : {}) });
+        sheet().set(row, col, c.v === null && c.s === undefined && !c.f ? undefined : { ...c, ...(c.f !== undefined && d ? { f: shiftFormula(c.f, d, 0, { clipRanges: true }) } : {}) });
       });
     });
   }

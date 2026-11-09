@@ -30,17 +30,24 @@ function refError(r: RefTok): string {
  * The formula copied to a cell dRow rows and dCol columns away (AutoAusfüllen, copy and
  * paste): relative parts move, "$" parts stay, a reference pushed off the sheet becomes #BEZUG!.
  */
-export function shiftFormula(file: string, dRow: number, dCol: number): string {
+export function shiftFormula(file: string, dRow: number, dCol: number, opts: { clipRanges?: boolean } = {}): string {
   if (!dRow && !dCol) return file;
   return rewrite(file, (_t, r) => {
-    const move = (e: RefEnd): RefEnd | null => {
+    const move = (e: RefEnd, clip = false): RefEnd | null => {
       const n = { ...e };
       if (n.row !== undefined && !n.rowAbs) n.row += dRow;
       if (n.col !== undefined && !n.colAbs) n.col += dCol;
-      if (n.row !== undefined && (n.row < 0 || n.row >= MAX_ROWS)) return null;
-      if (n.col !== undefined && (n.col < 0 || n.col >= MAX_COLS)) return null;
+      if (n.row !== undefined && (n.row < 0 || n.row >= MAX_ROWS)) { if (!clip) return null; n.row = n.row < 0 ? 0 : MAX_ROWS - 1; }
+      if (n.col !== undefined && (n.col < 0 || n.col >= MAX_COLS)) { if (!clip) return null; n.col = n.col < 0 ? 0 : MAX_COLS - 1; }
       return n;
     };
+    if (opts.clipRanges && r.b) {
+      // Sortieren (D-145, recorded from Excel): a range with one end pushed off the sheet is cut at the
+      // sheet's edge (=SUMME(B2:B5) moved up four rows reads =SUMME(B1:B1)); with both ends off it is #BEZUG!.
+      const a0 = move(r.a), b0 = move(r.b);
+      if (!a0 && !b0) return refError(r);
+      return refText({ ...r, a: a0 ?? move(r.a, true)!, b: b0 ?? move(r.b, true)! });
+    }
     const a = move(r.a);
     const b = r.b ? move(r.b) : undefined;
     if (!a || b === null) return refError(r);
