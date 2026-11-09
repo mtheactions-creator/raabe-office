@@ -338,8 +338,59 @@ def run_dialog(data: dict) -> None:
         x.close()
 
 
+def run_none(data: dict) -> None:
+    """Keine Füllung and Keine Linie chosen on elements whose automatic look has neither (title, legend, plot area,
+    data labels, the value axis' line): the element's c:spPr before and after."""
+    x = ExcelTarget(visible=False, place=False)
+    out: dict = {}
+    try:
+        wb = x.wb
+        ws = wb.Worksheets(1)
+        fill_data(ws)
+        sh, ch = column_chart(ws)
+        ch.HasTitle = True
+        ch.HasLegend = True
+        ch.SeriesCollection(1).HasDataLabels = True
+        base = chart_xml(wb)
+        els = {"title": lambda: ch.ChartTitle.Format, "legend": lambda: ch.Legend.Format, "plotArea": lambda: ch.PlotArea.Format,
+               "dLbls": lambda: ch.SeriesCollection(1).DataLabels().Format, "valAx": lambda: ch.Axes(2).Format}
+        tag = {"title": "c:title", "legend": "c:legend", "plotArea": "c:plotArea", "dLbls": "c:dLbls", "valAx": "c:valAx"}
+
+        def sp(xml: str, name: str) -> str:
+            block = el(xml, tag[name])
+            if name == "plotArea":
+                # The plot area's own c:spPr follows its axes.
+                i = block.rfind("<c:spPr>")
+                return block[i:block.find("</c:spPr>", i) + 9] if i >= 0 else ""
+            return sppr_of(block)
+        for name, f in els.items():
+            rec = {"default": sp(base, name)}
+            try:
+                f().Fill.Visible = 0
+                rec["Keine Füllung"] = sp(chart_xml(wb), name)
+            except Exception as e:  # noqa: BLE001
+                rec["Keine Füllung"] = "error " + str(e)[:60]
+            try:
+                f().Line.Visible = 0
+                rec["Keine Linie"] = sp(chart_xml(wb), name)
+            except Exception as e:  # noqa: BLE001
+                rec["Keine Linie"] = "error " + str(e)[:60]
+            out[name] = rec
+        sh.Delete()
+    finally:
+        data["none"] = out
+        x.close()
+
+
 def main() -> None:
     what = sys.argv[1:] or ["com", "pane"]
+    if "none" in what:
+        data0 = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
+        try:
+            run_none(data0)
+        finally:
+            OUT.write_text(json.dumps(data0, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+        return
     if "dialog" in what:
         data0 = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {}
         try:

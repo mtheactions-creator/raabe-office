@@ -4038,3 +4038,13 @@ Excel's XML for each setting, never Office's texture bitmaps), then built the sa
 - **Datenquelle auswählen**: the shrunk dialog (Dialog reduzieren) keeps its top left corner where the dialog stood,
   as Excel's; it was centred (D-117's own choice, now dropped).
 Still not built: 3D-Drehung of text, X-/Y-Skalierung, Ausrichtung and Spiegelungstyp of tiled textures.
+- **Re-sweep of column and pie charts** (`check_calc_chartpane.py` on a fresh build of main, before the changes
+  above; results/2026-11-09-calc-chartpane-column-pie-before.json): column 1604 controls used, 1580 changed the
+  chart, 1424 changed the drawing, all 1580 undone by Strg+Z, 1498 back on reopening, Excel COM 2003 of 2074; pie
+  1009 / 966 / 720 / 966 / 876, COM 1208 of 1276. What it found and what was fixed: Keine Füllung / Keine Linie on
+  the title, legend, plot area and axes came back as Automatisch (now written with Excel's a14:hiddenFill /
+  hiddenLine, recorded by COM, and read back); an Einfarbige Linie on a column series came back as the columns'
+  colour (the reader took the border's colour when the fill was automatic; fixed); Bild- oder Texturfüllung without
+  a picture was lost (the texture above). Left as they are: a series' Einfarbige Füllung reads back as the series'
+  colour (the same drawing), data labels' Keine Füllung (Excel writes the same file as for the automatic look),
+  Datumsachse settings on text categories. The sweep has not been repeated on a build with the fixes.

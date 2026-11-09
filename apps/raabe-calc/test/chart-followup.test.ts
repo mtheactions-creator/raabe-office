@@ -89,6 +89,28 @@ describe("an axis' Keine Füllung (D-155)", () => {
   });
 });
 
+describe("Keine Füllung / Keine Linie of title, legend and plot area (D-155)", () => {
+  it("are written with Excel's hiddenFill / hiddenLine and come back", () => {
+    const m = chart();
+    m.format = { title: { fill: { type: "none" }, line: { type: "none" } }, legend: { line: { type: "none" } }, plot: { fill: { type: "none" } } };
+    const xml = chartToXml(m);
+    const title = /<c:title>[\s\S]*?<\/c:title>/.exec(xml)![0];
+    expect(/<a:extLst>[\s\S]*?<\/a:extLst>/.exec(title)![0]).toBe(/<a:extLst>[\s\S]*?<\/a:extLst>/.exec(EXCEL.none.title["Keine Linie"])![0]);
+    const back = chartFromXml(xml).format;
+    expect(back?.title?.fill).toEqual({ type: "none" });
+    expect(back?.title?.line).toEqual({ type: "none" });
+    expect(back?.legend?.line).toEqual({ type: "none" });
+    expect(back?.plot?.fill).toEqual({ type: "none" });
+  });
+  it("a column series' own border colour does not become its fill colour", () => {
+    const m = chart();
+    m.series[0].line = { type: "solid", color: "#595959", width: 0.75 };
+    const back = chartFromXml(chartToXml(m));
+    expect(back.series[0].color).toBeUndefined();
+    expect(back.series[0].line?.color).toBe("#595959");
+  });
+});
+
 describe("3D-Format of an axis (D-155)", () => {
   it("is saved and read back", () => {
     const m = chart();

@@ -126,9 +126,26 @@ export function sp3dXml(f: Format3D | undefined): string {
 /** What Excel adds to an axis' c:spPr for Keine Füllung (its automatic fill is a:noFill as well, D-155). */
 export const HIDDEN_NOFILL = '<a:extLst><a:ext uri="{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}"><a14:hiddenFill xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"><a:noFill/></a14:hiddenFill></a:ext></a:extLst>';
 
+/**
+ * Keine Füllung / Keine Linie chosen on an element whose automatic look has neither (title, legend, plot area, axes):
+ * Excel writes a:noFill as for the automatic look and adds a14:hiddenFill / a14:hiddenLine (D-155), which tells the
+ * two apart on reading.
+ */
+export function hiddenExt(fill: { type: string } | undefined, line: { type: string } | undefined): string {
+  const f = fill?.type === "none" ? '<a:ext uri="{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}"><a14:hiddenFill xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"><a:noFill/></a14:hiddenFill></a:ext>' : "";
+  const l = line?.type === "none" ? '<a:ext uri="{91240B29-F687-4F45-9708-019B960494DF}"><a14:hiddenLine xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"><a:noFill/></a14:hiddenLine></a:ext>' : "";
+  return f || l ? `<a:extLst>${f}${l}</a:extLst>` : "";
+}
+
+/** Whether a c:spPr says Keine Füllung / Keine Linie was chosen (a14:hiddenFill / a14:hiddenLine, D-155). */
+export function hiddenOf(r: { xml: string }, spPr: El | undefined): { fill: boolean; line: boolean } {
+  const body = spPr ? r.xml.slice(spPr.start, spPr.end) : "";
+  return { fill: body.includes("<a14:hiddenFill"), line: body.includes("<a14:hiddenLine") };
+}
+
 /** c:spPr from a format; `autoFill` / `autoLine` are Excel's defaults for the element. */
-export function spPrXml(fmt: { fill?: Fill; line?: Line; effects?: Effects } | undefined, autoFill: string, autoLine: string): string {
-  return `<c:spPr>${fillXml(fmt?.fill, autoFill)}${lineXml(fmt?.line, autoLine)}${effectLstXml(fmt?.effects)}${sp3dXml(fmt?.effects?.format3d)}</c:spPr>`;
+export function spPrXml(fmt: { fill?: Fill; line?: Line; effects?: Effects } | undefined, autoFill: string, autoLine: string, hidden = false): string {
+  return `<c:spPr>${fillXml(fmt?.fill, autoFill)}${lineXml(fmt?.line, autoLine)}${effectLstXml(fmt?.effects)}${sp3dXml(fmt?.effects?.format3d)}${hidden ? hiddenExt(fmt?.fill, fmt?.line) : ""}</c:spPr>`;
 }
 
 /** The run properties of a text format inside a:defRPr: attributes, and the children before a:latin (outline, fill, effects). */
@@ -515,9 +532,8 @@ export function readAxis(r: Reader, ax: El, isVal: boolean): AxisOptions | undef
   const f = readFormat(r, r.find(ax, "c:spPr"), r.find(ax, "c:txPr"), 900, "-60000000");
   if (f?.line) o.line = f.line;
   // Excel's automatic axis fill is a:noFill too; Keine Füllung chosen in the pane adds a14:hiddenFill (D-155).
-  const sp = r.find(ax, "c:spPr");
-  const hidden = !!sp && r.xml.slice(sp.start, sp.end).includes("<a14:hiddenFill");
-  if (f?.fill && (f.fill.type !== "none" || hidden)) o.fill = f.fill;
+  const hidden = hiddenOf(r, r.find(ax, "c:spPr"));
+  if (f?.fill && (f.fill.type !== "none" || hidden.fill)) o.fill = f.fill;
   if (f?.effects) o.effects = f.effects;
   if (f?.text) o.text = f.text;
   return Object.keys(o).length ? o : undefined;
