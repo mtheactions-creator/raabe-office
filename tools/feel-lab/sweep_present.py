@@ -588,6 +588,13 @@ class Sweeper:
     def act(self, opt: dict, trigger) -> dict:
         """Runs `trigger` (the user's action) and checks what follows: errors, effect, dialogs (Abbrechen and OK), undo, saving."""
         p = self.page
+        # What was walked so far goes to a partial file every 25 options (a stopped run keeps its results).
+        self.acts = getattr(self, "acts", 0) + 1
+        if self.acts % 25 == 0 and getattr(self, "partial", None):
+            try:
+                self.partial[0].write_text(json.dumps({"partial": True, "results": [{k: v for k, v in r.items() if k != "fp"} for r in self.partial[1]]}, ensure_ascii=False), encoding="utf-8", newline="\n")
+            except OSError:
+                pass
         v0, before_fp = self.baseline()
         before_ui = p.js("window.__sw.ui()")
         res: dict = {}
@@ -953,8 +960,10 @@ def walk_backstage_status(sw: Sweeper, args, results: list, inventory: list) -> 
             bid = f"{oid} / {b['name']}"
             e2 = {"id": bid, "ctx": "slides", "tab": "Datei", "group": pg["name"], "name": b["name"], "kind": "backstage-button"}
             inventory.append({"ctx": "slides", "tab": "Datei", "group": pg["name"], "name": b["name"], "kind": "backstage-button", "disabled": False})
-            if b["name"] in ("Schließen",) and pg["name"] in ("Schließen",):
-                pass
+            if p.kind == "exe" and b["name"] == "Drucken" and pg["name"] == "Drucken":
+                # The OS print dialog is modal for the whole WebView (the sweep would wait for ever): listed, not pressed.
+                results.append(e2 | {"status": "skipped", "why": "opens the OS print dialog"})
+                continue
             go()
 
             def trig(b=b):
@@ -1136,6 +1145,7 @@ def main() -> None:
     page = start(args.dev, args.url, args.port)
     sw = Sweeper(page, out_dir)
     results: list = []
+    sw.partial = (TMP / f"partial-{name}.json", results)
     inventory: list = []
     t0 = time.perf_counter()
     parts = args.parts.split(",")
