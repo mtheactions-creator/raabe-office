@@ -54,6 +54,18 @@ describe("floating charts", () => {
     expect(back.chart?.workbook?.length).toBe(workbook.length);
   });
 
+  it("a filtered series' extension stays in the chart; the workbook link goes after it (Word refused the file before)", () => {
+    const m = sampleChart();
+    m.series[1].filtered = true;
+    const f: FloatObject = { at: 0, data: undefined, width: 300, height: 180, x: { rel: "column", offset: 0 }, y: { rel: "paragraph", offset: 0 }, wrap: "square", side: "bothSides",
+      dist: [0, 0, 9, 9], chart: { xml: chartToXml(m), workbook: writeXlsx(newWorkbook()) } };
+    const out = writeDocx(new Doc({ paras: [{ ...makePara("A"), floats: [f] }] }).state(), null);
+    const name = Object.keys(unzipSync(out)).find((k) => /^word\/charts\/chart\d+\.xml$/.test(k))!;
+    const xml = part(out, name);
+    expect(xml).toContain("c15:filteredBarSeries");
+    expect(xml.indexOf("<c:externalData")).toBeGreaterThan(xml.lastIndexOf("</c:chart>"));
+  });
+
   it("an inline chart read from Word keeps its embedded workbook", () => {
     const bytes = new Uint8Array(readFileSync(join(__dirname, "fixtures", "word-charts.docx")));
     const paras = readDocx(bytes).state.paras;

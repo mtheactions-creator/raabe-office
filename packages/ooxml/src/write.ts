@@ -321,7 +321,11 @@ class DocWriter {
       const brid = this.pw.link(chartPath, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/package", book);
       xml = xml.replace(/<c:externalData\b[\s\S]*?<\/c:externalData>/, "");
       const ext = `<c:externalData r:id="${brid}"><c:autoUpdate val="0"/></c:externalData>`;
-      const at = xml.search(/<c:(printSettings|userShapes|extLst)\b(?![\s\S]*<c:chart\b)/);
+      // After the chart (c:chart holds extLst of its own, a filtered series' c15 data among them), before the
+      // chart space's printSettings, userShapes or extLst.
+      const end = xml.lastIndexOf("</c:chart>");
+      const tail = end >= 0 ? xml.slice(end).search(/<c:(printSettings|userShapes|extLst)\b/) : -1;
+      const at = tail >= 0 ? end + tail : -1;
       xml = at >= 0 ? xml.slice(0, at) + ext + xml.slice(at) : xml.replace("</c:chartSpace>", ext + "</c:chartSpace>");
       if (!/xmlns:r=/.test(xml.slice(0, 400))) xml = xml.replace("<c:chartSpace ", `<c:chartSpace xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" `);
     }
