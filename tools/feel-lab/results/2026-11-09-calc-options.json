@@ -112,31 +112,31 @@
    "path": "cell > Neue Notiz",
    "kind": "entry",
    "opens": null,
-   "status": "not found"
+   "status": "ok"
   },
   {
    "path": "cell > Zellen formatieren...",
    "kind": "entry",
-   "opens": null,
-   "status": "not found"
+   "opens": "Zellen formatieren",
+   "status": "ok"
   },
   {
    "path": "cell > Dropdown-Auswahlliste...",
    "kind": "entry",
    "opens": null,
-   "status": "not found"
+   "status": "ok"
   },
   {
    "path": "cell > Namen definieren...",
    "kind": "entry",
-   "opens": null,
-   "status": "not found"
+   "opens": "Neuer Name",
+   "status": "ok"
   },
   {
    "path": "cell > Link",
    "kind": "entry",
-   "opens": null,
-   "status": "not found"
+   "opens": "Link einfügen",
+   "status": "ok"
   },
   {
    "path": "row",
@@ -3379,67 +3379,67 @@
    "status": "ok"
   },
   {
-   "path": "Zeichnen > Zeichentools|",
+   "path": "Zeichnen > Zeichentools|Auswählen",
    "kind": "gallery-item",
    "opens": null,
    "status": "ok"
   },
   {
-   "path": "Zeichnen > Zeichentools|#2",
+   "path": "Zeichnen > Zeichentools|Lassoauswahl",
    "kind": "gallery-item",
    "opens": null,
    "status": "ok"
   },
   {
-   "path": "Zeichnen > Zeichentools|#3",
+   "path": "Zeichnen > Zeichentools|Radierer",
    "kind": "gallery-item",
    "opens": null,
    "status": "ok"
   },
   {
-   "path": "Zeichnen > Zeichentools|#4",
+   "path": "Zeichnen > Zeichentools|Stift: Schwarz, 0.35 mm",
    "kind": "gallery-item",
    "opens": null,
    "status": "ok"
   },
   {
-   "path": "Zeichnen > Zeichentools|#5",
+   "path": "Zeichnen > Zeichentools|Stift: Rot, 0.35 mm",
    "kind": "gallery-item",
    "opens": null,
    "status": "ok"
   },
   {
-   "path": "Zeichnen > Zeichentools|#6",
+   "path": "Zeichnen > Zeichentools|Stift: Galaxie, 0.5 mm",
    "kind": "gallery-item",
    "opens": null,
    "status": "ok"
   },
   {
-   "path": "Zeichnen > Zeichentools|#7",
+   "path": "Zeichnen > Zeichentools|Bleistift: Grau, 0.5 mm",
    "kind": "gallery-item",
    "opens": null,
    "status": "ok"
   },
   {
-   "path": "Zeichnen > Zeichentools|#8",
+   "path": "Zeichnen > Zeichentools|Textmarker: Gelb, 6 mm, an Text ausrichten: Aus",
    "kind": "gallery-item",
    "opens": null,
    "status": "ok"
   },
   {
-   "path": "Zeichnen > Zeichentools|#9",
+   "path": "Zeichnen > Zeichentools|Füllfederhalter: Dunkelblau, 1 mm",
    "kind": "gallery-item",
    "opens": null,
    "status": "ok"
   },
   {
-   "path": "Zeichnen > Zeichentools|#10",
+   "path": "Zeichnen > Zeichentools|Pinselstift: Grün, 1 mm",
    "kind": "gallery-item",
    "opens": null,
    "status": "ok"
   },
   {
-   "path": "Zeichnen > Zeichentools|#11",
+   "path": "Zeichnen > Zeichentools|Aktionsstift",
    "kind": "gallery-item",
    "opens": null,
    "status": "ok"
