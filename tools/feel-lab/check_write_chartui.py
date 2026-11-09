@@ -134,6 +134,7 @@ class Ui:
         if rr:
             x, y, w, h = rr
             self.click(x + w * 0.04, y + h * 0.96)
+        print("select_chart:", rr, self.sel(), self.texts(".tab.contextual"), flush=True)
 
     def save(self, name: str) -> Path:
         out = TMP / f"{name}.docx"
@@ -350,6 +351,15 @@ def cases(ui: Ui, run: Run, saved: list) -> None:
 
     # ----- Format: Aktuelle Auswahl, Fülleffekt, the pane, Größe -------------------------------------------------
     fresh(ui)
+    x, y, w, h = ui.chart_rect()
+    ui.click(x + w * 0.04, y + h * 0.96)
+    run.check("a click on the selected chart keeps it selected (the chart area)", ui.sel() is not None and ui.js("__app.chartTools().element()") == {"kind": "chart"}, ui.sel())
+    tt = ui.js("""(() => { const l = document.querySelector('.wchart-overlay > svg [data-part="title"]'); if (!l) return null; const r = l.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; })()""")
+    if tt:
+        ui.click(tt[0], tt[1])
+    ui.tab("Format")
+    combo_value = ui.js("document.querySelector('.ribbon-card .rcombo input')?.value")
+    run.check("a click on the title chooses it: Aktuelle Auswahl shows Diagrammtitel", bool(tt) and ui.js("__app.chartTools().element()") == {"kind": "title"} and combo_value == "Diagrammtitel", [tt, combo_value])
     ui.tab("Format")
     names = ui.js("(() => { const m = __app.chartTools().model(); return m ? null : null; })()")
     del names

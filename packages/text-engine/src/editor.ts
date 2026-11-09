@@ -7179,6 +7179,7 @@ cropFill(fit: boolean): void {
   /** Drags the selected text: a caret shows where it goes; on release it moves (Strg: a copy). */
   private dragSelectedText(e: MouseEvent, click: Pos, upstream: boolean): void {
     const x0 = e.clientX, y0 = e.clientY;
+    const keepObject = this.selectedImage()?.kind === "inline";
     let moved = false;
     let target: Pos | null = null;
     const move = (ev: MouseEvent) => {
@@ -7194,6 +7195,8 @@ cropFill(fit: boolean): void {
       removeEventListener("mousemove", move, true);
       removeEventListener("mouseup", up, true);
       this.view.caretOverride = null;
+      // A press on a selected picture or chart in the line without moving keeps it selected (Word); on text it puts the caret there.
+      if ((!moved || !target) && keepObject) { this.update(); this.emit(false); return; }
       if (!moved || !target) { this.setSel(click, click, upstream); this.update(); this.emit(false); return; }
       if (!this.insideSelection(target)) this.moveSelectionTo(target, ev.ctrlKey);
       else this.update();
