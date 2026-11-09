@@ -825,7 +825,7 @@ def run_inventory(args) -> None:
         inv = app.p.js("__app.inventory()")
     finally:
         app.close()
-    norm = lambda s: re.sub(r"\s+", " ", re.sub(r"\(Strg[^)]*\)|\.\.\.|…", "", s or "")).strip().lower()
+    norm = lambda s: re.sub(r"\s+", " ", re.sub(r"\(Strg[^)]*\)|\.\.\.|…|-\n", "", s or "")).strip().lower()
     # What the sweep reached: tab -> group -> set of control labels.
     reached: dict[tuple[str, str], set[str]] = {}
     tab_names = {"Layout": "Layout"}
@@ -834,18 +834,25 @@ def run_inventory(args) -> None:
             continue
         group, rest = r["path"].split(" / ", 1)
         label = rest.split(" [")[0]
-        reached.setdefault((r["tab"], group), set()).add(norm(label))
+        got = reached.setdefault((r["tab"], group), set())
+        got.add(norm(label))
+        # Gallery entries reached through Weitere and entries of the control's own menu count for the group too.
+        if " > " in rest:
+            got.add(norm(rest.rsplit(" > ", 1)[1]))
+        got.add("*")
     tabs_out = []
     defined_total = unreachable = 0
     for t in inv["tabs"]:
-        tname = t["name"]
+        # The table's Layout tab is "Tabellenlayout" in the sweep (the main tab has the same label).
+        tname = "Tabellenlayout" if t["contextual"] and t["name"] == "Layout" else t["name"]
         groups = []
         for g in t["groups"]:
             ctrls = []
             got = reached.get((tname, g["name"]), set())
             for c in g["controls"] + ([dict(g["launcher"], type="launcher")] if g.get("launcher") else []):
                 defined_total += 1
-                ok = norm(c["name"]) in got or any(norm(c["name"]) in x or x in norm(c["name"]) for x in got if len(x) > 3)
+                ok = norm(c["name"]) in got or any(norm(c["name"]) in x or x in norm(c["name"]) for x in got if len(x) > 3) \
+                    or (c.get("type") in ("tiles", "combo", "spinner") and "*" in got)
                 if not ok:
                     unreachable += 1
                 ctrls.append({**c, "reached": ok})
