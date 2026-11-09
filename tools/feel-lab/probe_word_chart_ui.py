@@ -6,13 +6,15 @@ same with the chart made floating (ConvertToShape), and the drop-down menus that
 (ExpandCollapse) are read. Selecting a tab may bring our Word window to the front, so the run holds the real-input
 lock (a short hold). Labels and keytips only (no tooltips or other prose): results/<date>-word-chart-ui.json.
 
-    .venv/Scripts/python.exe probe_word_chart_ui.py
+    .venv/Scripts/python.exe probe_word_chart_ui.py            # tabs, groups, menus (inline and floating)
+    .venv/Scripts/python.exe probe_word_chart_ui.py arrange    # Format > Anordnen (collapsed) and its Textumbruch menu
 """
 from __future__ import annotations
 
 import datetime
 import json
 import shutil
+import sys
 import tempfile
 import time
 from pathlib import Path
@@ -96,6 +98,55 @@ def read_menu(root, name: str) -> list[str] | dict:
     return items
 
 
+def expand_in(root, container_name: str, item: str):
+    """Expands a collapsed group's button, then `item` inside it; the items of both."""
+    out: dict = {"group": read_menu_keep(root, container_name)}
+    el = uia.find(root, lambda x: x["name"] == item and x["type"] in ("MenuItem", "SplitButton", "Button") and x["rect"][2] > 0, max_depth=22)
+    if el is None:
+        out["item"] = {"error": "not found"}
+        return out
+    try:
+        pat = el.GetCurrentPattern(uia.U.UIA_ExpandCollapsePatternId).QueryInterface(uia.U.IUIAutomationExpandCollapsePattern)
+        pat.Expand()
+    except Exception as e:  # noqa: BLE001
+        out["item"] = {"error": f"no expand: {e}"}
+        return out
+    time.sleep(0.9)
+    items = []
+    f = el.FindAll(uia.U.TreeScope_Descendants, uia._uia.CreateTrueCondition())
+    for i in range(f.Length):
+        try:
+            d = uia.describe(f.GetElement(i))
+        except Exception:  # noqa: BLE001
+            continue
+        if d["name"] and d["type"] not in ("Text", "Image"):
+            items.append(f"{d['type']}:{d['name']}" + (f" [{d['key']}]" if d["key"] else "") + ("" if d["enabled"] else " (aus)"))
+    out["item"] = items
+    return out
+
+
+def read_menu_keep(root, name: str):
+    """Like read_menu, but leaves the menu open (its items are expanded next)."""
+    el = uia.find(root, lambda x: x["name"] == name and x["type"] in ("MenuItem", "SplitButton", "Button") and x["rect"][2] > 0, max_depth=16)
+    if el is None:
+        return {"error": "control not found"}
+    try:
+        el.GetCurrentPattern(uia.U.UIA_ExpandCollapsePatternId).QueryInterface(uia.U.IUIAutomationExpandCollapsePattern).Expand()
+    except Exception as e:  # noqa: BLE001
+        return {"error": f"no expand: {e}"}
+    time.sleep(0.9)
+    items = []
+    f = el.FindAll(uia.U.TreeScope_Descendants, uia._uia.CreateTrueCondition())
+    for i in range(f.Length):
+        try:
+            d = uia.describe(f.GetElement(i))
+        except Exception:  # noqa: BLE001
+            continue
+        if d["name"] and d["type"] in ("MenuItem", "Button", "SplitButton"):
+            items.append(f"{d['type']}:{d['name']}" + (f" [{d['key']}]" if d["key"] else "") + ("" if d["enabled"] else " (aus)"))
+    return items
+
+
 def main() -> None:
     import win32com.client
     tmp = Path(tempfile.gettempdir()) / "raabe-word-chart-ui"
@@ -115,6 +166,14 @@ def main() -> None:
             pid = winapi.window_pid(win.Hwnd)
             time.sleep(1.0)
             root = uia.element_for(win.Hwnd)
+            if len(sys.argv) > 1 and sys.argv[1] == "arrange":
+                result = json.loads(OUT.read_text(encoding="utf-8"))
+                d.InlineShapes(1).Select()
+                time.sleep(0.8)
+                read_tab(root, "Format")
+                result["arrange_inline"] = expand_in(root, "Anordnen", "Textumbruch")
+                d.Close(0)
+                return
             result["inline_count"] = d.InlineShapes.Count
             d.InlineShapes(1).Select()
             time.sleep(0.8)
@@ -134,6 +193,11 @@ def main() -> None:
             app.Quit(0)
         except Exception:  # noqa: BLE001
             pass
+        if len(sys.argv) > 1 and sys.argv[1] == "arrange" and "arrange_inline" in result:
+            OUT.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+            print("wrote", OUT)
+    if len(sys.argv) > 1:
+        return
     del pid
     OUT.write_text(json.dumps(result, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     print("wrote", OUT)

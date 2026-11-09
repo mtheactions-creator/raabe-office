@@ -3569,3 +3569,63 @@ Strg+click and Alt+S on a chosen slicer were there (D-092).
 - **Measured**: check_calc_misc.py: all 11 recorded cases replayed with clicks, Strg/Umschalt+clicks, drags and Alt+S on one slicer as in Excel: 11/11 the same items chosen (before the fixes: Strg+click on the last item and Umschalt+click differed).
 - **Not recorded**: the cases with the Mehrfachauswahl button (UI Automation lost the button in Excel's slicer after
   the eleventh case); RaabeCalc's Mehrfachauswahl behaves as D-092 built it.
+
+## D-129 RaabeWrite: Diagrammentwurf and Format around a selected chart, with RaabeCalc's chart UI shared (2026-11-09)
+
+Open item of D-091. Recorded first in our own Word (`probe_word_chart_ui.py`, UI Automation only; the tab selection may
+bring Word to the front, so the short run held the real-input lock; `results/2026-11-09-word-chart-ui.json`, labels,
+keytips and enabled state only): with a chart selected Word shows **Diagrammentwurf** (J C: Diagrammlayouts Z L with
+Diagrammelement hinzufügen D and Schnelllayout C; Diagrammformatvorlagen Z S with Farben ändern F and the gallery S of
+14 Formatvorlagen for a column chart; Daten Z D with Zeile/Spalte tauschen E (greyed while the data sheet is closed),
+Daten auswählen... T, Daten bearbeiten A (split), Daten aktualisieren N (greyed); Typ Z T with Diagrammtyp ändern... I)
+and **Format** (J Y: Aktuelle Auswahl Z L with the Diagrammelemente box A 1, Auswahl formatieren U, Auf Formatvorl.
+zurücks. V 1; Formen einfügen Z H with Formen 2 and Form ändern Ä (greyed); Formenarten Z Y with Schnellformatvorlagen
+N C, Fülleffekt Ü, Formkontur V 2, Formeffekte M O and the launcher Objekt formatieren... B B; WordArt-Formate Z S with
+Schnellformatvorlagen C, Textfüllung 4, Textkontur T E, Texteffekte I E and the launcher Texteffekte formatieren... O;
+Barrierefreiheit Z 1 with Alternativtext A T; Anordnen Z A; Größe Z Z with Formenhöhe H, Formenbreite R R and the
+launcher Größe und Position... R G). The same for an inline and a floating chart. RaabeWrite now shows both tabs with
+these groups and keytips (`apps/raabe-write/src/features/chart-tools.ts`).
+- **One chart UI for both apps:** the new package `@raabe/chart-ui` gives RaabeWrite RaabeCalc's buttons beside the
+  chart, the elements' entries and side menus, Excel's/Word's chart styles, the Diagrammtyp ändern dialog and the
+  Format pane of chart elements (D-115 - D-118). The modules stay in `apps/raabe-calc/src/charts/` for now and the
+  package re-exports them: the Format pane is being completed in another branch tonight ("charts-pane"), and a move
+  now would have split its merge. After that merge they move into the package in one step (and RaabeCalc's
+  feature.ts uses `applyQuickLayout`/`applyColors` from `chart-ui/layouts.ts`, which now holds the Schnelllayout steps).
+- **How a chart is changed in the text:** a chart object keeps its chart part as XML. The selected chart's part is
+  parsed once (cached per part), the tabs, buttons and pane change that model, and the part is written again
+  (`chartToXml`) and drawn again at the chart's size, as one undo step; the embedded workbook stays (charts read from
+  Word now keep theirs, `chart.workbook`), so Word's Daten bearbeiten still finds the data. Livevorschau (styles,
+  Schnelllayout, Farben ändern, the elements' side menus) uses the editor's preview.
+- **Daten:** Daten bearbeiten and Daten auswählen... open the data table of D-091 (Word opens Excel; RaabeWrite has
+  no sheet to pick ranges in); Zeile/Spalte tauschen and Daten aktualisieren are greyed, as Word shows them while the
+  data sheet is closed.
+- **Anordnen** (collapsed to one button at the probe's width, opened through UI Automation): Position P P, Textumbruch
+  J, Ebene nach vorne G E, Ebene nach hinten G H, Auswahlbereich... Q, Ausrichten D A, Gruppieren G R, Drehen D R (the
+  layers, Gruppieren and Drehen greyed for an inline chart). The Textumbruch menu lists Mit Text in Zeile, Quadrat,
+  Eng, Transparent, Oben und unten, Hinter den Text, Vor den Text (Word 365 says "Eng", not "Passend"), Rahmenpunkte
+  bearbeiten (greyed), Mit Text verschieben, Position auf Seite fixieren, Weitere Layoutoptionen..., Als Standardlayout
+  festlegen: the pictures' menu, which RaabeWrite already has; the controls are Bildformat's.
+- **Not built** (greyed, "Zurückgestellt", as in RaabeCalc): the Formenarten and WordArt galleries, Formeffekte,
+  Textkontur, Texteffekte, Formen and Form ändern inside the chart.
+
+## D-130 RaabeWrite: the buttons beside a selected chart and the Format pane of its elements (2026-11-09)
+
+Word shows four buttons at the top right of a selected chart: Layoutoptionen, then Diagrammelemente,
+Diagrammformatvorlagen and Diagrammfilter (the side buttons do not answer UI Automation, in Word as in Excel). The
+first is the pictures' Layoutoptionen (Mit Text in Zeile; Quadrat, Eng, Transparent, Oben und unten, Hinter den Text,
+Vor den Text; Mit Text verschieben / Position auf der Seite fixieren), the other three are RaabeCalc's flyouts
+(D-115, D-116, D-118) below it, 38 px apart, in Word's blue. They follow the chart when panes open or the page
+scrolls. Diagrammfilter's "Daten auswählen..." opens Daten bearbeiten; Namen offers row 1 and column A of Word's data
+sheet. A chart has no rotation handle (Word). A click on the selected chart picks the element under the mouse
+(Aktuelle Auswahl), a double-click opens that element's Format pane (Word); the pane is RaabeCalc's (`formatPane`),
+docked at the right of the document. A chart sized with the mouse is drawn anew at its new size in the same step.
+
+## D-131 RaabeWrite: floating charts, written as Word writes them (2026-11-09)
+
+A chart leaves the line like a picture (Textumbruch, Layoutoptionen): it becomes a floating object anchored to its
+paragraph (`FloatObject.chart`) and is dragged, sized and arranged with the pictures' code (the drag paths of D-128
+included). It is written as Word writes a floating chart: `wp:anchor` (distances 0/0/9/9 pt, wrapSquare/Tight/Through/
+TopAndBottom/None, behindDoc, positionH/V with the offsets) around the chart's graphic frame, with the chart part and
+its embedded workbook; floating charts in Word's files are read with their chart (before, they showed as a picture
+only). Unit tests: `docx-chart-float.test.ts` (each wrapping written and read back at the same place; Word's seven
+charts keep their workbooks).

@@ -45,6 +45,7 @@ import { grammarFeature } from "./features/grammar";
 import { contextFeature, CONTEXT_COMMANDS } from "./features/context";
 import { shapesFeature, SHAPE_COMMANDS } from "./features/shapes";
 import { chartsFeature } from "./features/charts";
+import { CHART_TOOLS_COMMANDS, chartToolsFeature } from "./features/chart-tools";
 import { tablesFeature, TABLE_COMMANDS } from "./features/tables";
 import { GALLERY, miniToolbar, ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { applyTips } from "./tooltips";
@@ -139,7 +140,7 @@ export class WriteApp {
     this.fonts.onChange(() => { for (const d of this.docs) d.editor.relayout(); });
     void platform.listFonts().then((f) => { this.fontList = f; }).catch(() => {});
     this.commands.register(...COMMANDS, ...TABLE_COMMANDS, ...PAGE_COMMANDS, ...HEADER_COMMANDS, ...PICTURE_COMMANDS, ...FIND_COMMANDS,
-      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS, ...CONTEXT_COMMANDS, ...LIST_COMMANDS, ...PICTURE_TAB_COMMANDS, ...SHAPE_COMMANDS, ...GROUP_COMMANDS, ...HYPHENATION_COMMANDS);
+      ...REFERENCE_COMMANDS, ...REVIEW_COMMANDS, ...MATH_COMMANDS, ...CONTEXT_COMMANDS, ...LIST_COMMANDS, ...PICTURE_TAB_COMMANDS, ...SHAPE_COMMANDS, ...GROUP_COMMANDS, ...HYPHENATION_COMMANDS, ...CHART_TOOLS_COMMANDS);
     this.implementCommands();
     this.features = this.makeFeatures();
     applyTips(this.commands);
@@ -293,6 +294,9 @@ export class WriteApp {
     this.commands.implement("picture.altText", { run: () => altText.open(), enabled: () => !!this.active?.editor.pictureAlt() });
     // With a shape selected, the text effects' "…optionen" open Form formatieren > Textoptionen (as in Word).
     textEffects.redirect((t) => { if (!api.editor()?.selectedShape()) return false; formatPane.open(t === "fill" ? "textFill" : "textEffects"); return true; });
+    const pictures = picturesFeature(api);
+    const charts = chartsFeature(api);
+    const chartTools = chartToolsFeature(api, this.docArea, this.dock, { editData: () => charts.editData(), ...pictures.arrange });
     return {
       context: contextFeature(api, async (e, pos) => { const s = await spell.spellEntries(e, pos); return s.length ? s : grammar.entries(e, pos); },
         (kind) => this.ribbon?.toolbar(miniToolbar(this.ribbonContext(), kind)).el ?? null,
@@ -304,9 +308,10 @@ export class WriteApp {
       tables: tablesFeature(api),
       pages: pageSetupFeature(api),
       hf: headerFooterFeature(api),
-      pictures: picturesFeature(api),
+      pictures,
       shapes: shapesFeature(api),
-      charts: chartsFeature(api),
+      charts,
+      chartTools,
       spell,
       refs: referencesFeature(api),
       math,
@@ -345,7 +350,10 @@ export class WriteApp {
     if (e.inTable()) tabs.push(this.features.tables.designTab, this.features.tables.layoutTab);
     // A shape (also while its text is edited) shows Formformat, a picture Bildformat.
     if (e.selectedShape() || e.selectedGroup()) tabs.push(this.features.shapes.tab);
+    // A chart shows Diagrammentwurf and Format (D-129), as in Word.
+    else if (e.selectedImage()?.obj.chart) tabs.push(this.features.chartTools.designTab, this.features.chartTools.formatTab);
     else if (e.selectedImage()) tabs.push(this.features.pictures.tab);
+    this.features.chartTools.sync();
     if (this.features.math.editing()) tabs.push(this.features.math.tab);
     const wasHf = this.contextualKey.includes("headerFooter");
     this.ribbon.setContextual(tabs);
@@ -1501,6 +1509,10 @@ export class WriteApp {
       /** Diagramm without dialogs (check_write_charts.py, Step 7b). */
       insertChart: (kind: import("@raabe/charts").ChartKind, table?: import("./features/charts").ChartTable) => this.features.charts.insertChart(kind, table),
       setChartData: (table: import("./features/charts").ChartTable) => this.features.charts.setData(table),
+      /** The chart tools (D-129, check_write_chartui.py): the selected chart's model, element, buttons, pane. */
+      chartTools: () => this.features.chartTools,
+      /** The active document as .docx bytes (what Speichern writes). */
+      docxBytes: () => (this.active ? writeDocx(this.active.editor.doc.state(), this.active.pkg, { author: this.settings.userName }) : null),
       /** Als PDF exportieren into a given file (the look corpus, D-080). */
       exportPdf: (path: string) => this.exportPdf(path),
       /** Opens a document from bytes (development platform, which has no file system). */

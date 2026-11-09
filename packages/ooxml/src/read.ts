@@ -743,8 +743,8 @@ class PartReader {
     const chartEl = blip ? undefined : c.getElementsByTagNameNS("http://schemas.openxmlformats.org/drawingml/2006/chart", "chart")[0];
     const chartXml = chartEl ? this.chartPart(chartEl.getAttributeNS(RNS, "id")) : undefined;
     const chartImage = chartXml ? this.chartPreview(chartXml, inline ?? anchor) : undefined;
-    const chartBook = chartXml && chartImage ? this.chartBook(chartEl!.getAttributeNS(RNS, "id")) : undefined;
-    const chart = chartXml && chartImage ? { chart: { xml: chartXml, ...(chartBook ? { workbook: chartBook } : {}) } } : {};
+    const chartBook = chartXml ? this.chartBook(chartEl!.getAttributeNS(RNS, "id")) : undefined;
+    const chart = chartXml ? { chart: { xml: chartXml, ...(chartBook ? { workbook: chartBook } : {}) } } : {};
     const image = blip ? this.r.image(this.part, this.rels, blip.getAttributeNS(RNS, "embed")) : chartImage;
     // Bildformat settings and Alternativtext; the XML is only rewritten when they change.
     const picEl = c.getElementsByTagNameNS("http://schemas.openxmlformats.org/drawingml/2006/picture", "pic")[0];

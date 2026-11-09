@@ -11560,5 +11560,43 @@
   "top": 0.15000000596046448,
   "wrap": 0,
   "hasChart": true
+ },
+ "arrange_inline": {
+  "group": [
+   "MenuItem:Position [Alt, J Y, P P]",
+   "MenuItem:Textumbruch [Alt, J Y, J]",
+   "SplitButton:Ebene nach vorne [Alt, J Y, G E] (aus)",
+   "Button:Ebene nach vorne (aus)",
+   "MenuItem:Weitere Optionen [Alt, J Y, G E] (aus)",
+   "SplitButton:Ebene nach hinten [Alt, J Y, G H] (aus)",
+   "Button:Ebene nach hinten (aus)",
+   "MenuItem:Weitere Optionen [Alt, J Y, G H] (aus)",
+   "Button:Auswahlbereich... [Alt, J Y, Q]",
+   "MenuItem:Ausrichten [Alt, J Y, D A]",
+   "MenuItem:Gruppieren [Alt, J Y, G R] (aus)",
+   "MenuItem:Drehen [Alt, J Y, D R] (aus)"
+  ],
+  "item": [
+   "Menu:Textumbruch",
+   "Menu:Textumbruch",
+   "Group: ",
+   "ListItem:Mit Text in Zeile [ALT+i]",
+   "Group: ",
+   "ListItem:Quadrat [ALT+Q]",
+   "ListItem:Eng [ALT+E]",
+   "ListItem:Transparent [ALT+p]",
+   "ListItem:Oben und unten [ALT+u]",
+   "Group: ",
+   "ListItem:Hinter den Text [ALT+H]",
+   "ListItem:Vor den Text [ALT+V]",
+   "Group: ",
+   "ListItem:Rahmenpunkte bearbeiten [ALT+m] (aus)",
+   "Group: ",
+   "MenuItem:Mit Text verschieben [Alt, J Y, J, M] (aus)",
+   "MenuItem:Position auf Seite fixieren [Alt, J Y, J, S] (aus)",
+   "Group: ",
+   "MenuItem:Weitere Layoutoptionen... [Alt, J Y, J, W]",
+   "MenuItem:Als Standardlayout festlegen [Alt, J Y, J, A]"
+  ]
  }
 }
