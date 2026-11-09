@@ -346,6 +346,9 @@ function groupXml(m: ChartModel, g: ChartGroup): string {
 /** The plot area of every kind RaabeCalc did not write before, and of Verbund charts. */
 function plotAreaGroups(m: ChartModel): string {
   const groups = chartGroups(m);
+  // Every series on the Sekundärachse: they are written on the primary axes (a chart part needs a primary group;
+  // Excel refused the file the sweep made, D-111).
+  if (groups.length && groups.every((g) => g.secondary)) for (const g of groups) g.secondary = false;
   const main = kindInfo(m.kind);
   const t = m.axisTitles, f = m.format, at = f?.axisTitles;
   const first = groups.find((g) => !g.secondary)?.idx[0] ?? 0;

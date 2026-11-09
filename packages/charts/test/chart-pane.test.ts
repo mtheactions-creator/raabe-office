@@ -244,6 +244,17 @@ describe("the pane's options in the file", () => {
     expect(scene(m).prims.some((p) => p.part === "axis:val2" && p.t === "text")).toBe(true);
   });
 
+  it("writes a chart whose series are all on the Sekundärachse with axes its groups refer to", () => {
+    const m = chart("column");
+    m.series.forEach((s) => { s.secondary = true; });
+    m.series[1].kind = "lineMarkers";
+    const xml = chartToXml(m);
+    const axes = [...xml.matchAll(/<c:(?:cat|val|date)Ax><c:axId val="(\d+)"\/>/g)].map((x) => x[1]);
+    const used = [...xml.matchAll(/<c:(?:bar|line)Chart>[\s\S]*?<\/c:(?:bar|line)Chart>/g)].flatMap((g) => [...g[0].matchAll(/<c:axId val="(\d+)"\/>/g)].map((x) => x[1]));
+    expect(used.length).toBeGreaterThan(0);
+    for (const id of used) expect(axes).toContain(id);
+  });
+
   it("writes a picture fill with a relationship placeholder the drawing replaces", () => {
     const png = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==";
     const m = chart("column", { format: { plot: { fill: { type: "picture", picture: { src: png, tile: true, transparency: 20 } } } } });
