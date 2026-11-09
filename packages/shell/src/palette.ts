@@ -1,6 +1,7 @@
 // Word's colour pickers: "Schriftfarbe" (theme colours with tints and shades, standard
 // colours, Automatisch) and "Texthervorhebungsfarbe" (the 15 highlight colours).
 
+import { colorDialog } from "./color-dialog";
 import type { Commands } from "./commands";
 import { h } from "./dom";
 import { closePopup, hoverPreview, showPopup } from "./popup";
@@ -173,8 +174,6 @@ export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hov
   }
   const std = h("div", { class: "swatches", style: "grid-template-columns:repeat(10, 18px)" },
     ...STANDARD.map(([hex, label]) => swatch(hex, label, () => pick(hex), hv(hex))));
-  const custom = h("input", { type: "color", style: "position:absolute;opacity:0;width:0;height:0" });
-  custom.addEventListener("change", () => { closePopup(); pick(custom.value.slice(1).toUpperCase()); });
   // `noColor`: a fill's "Keine Füllung" below the standard colours instead of Automatisch on top (Excel).
   const auto = h("button", { onclick: () => { closePopup(); pick("auto"); } }, h("span", { class: "auto-swatch" }), noColor ?? "Automatisch");
   const box = h("div", { class: "menu palette" },
@@ -182,7 +181,7 @@ export function showFontColors(anchor: DOMRect, pick: (hex: string) => void, hov
     h("div", { class: "palette-title" }, "Designfarben"), grid,
     h("div", { class: "palette-title" }, "Standardfarben"), std,
     h("hr"), ...(noColor ? [auto] : []),
-    h("button", { onclick: () => custom.click() }, more), custom, ...(extra ?? []));
+    h("button", { onclick: () => { closePopup(); void colorDialog().then((c) => { if (c) pick(c); }); } }, more), ...(extra ?? []));
   showPopup(box, anchor);
 }
 

@@ -31,7 +31,19 @@ export class StatusBar {
   private pct = h("button", { class: "cell pct", "data-tip": "Zoomfaktor" });
   private lang = h("button", { class: "cell", "data-tip": "Sprache: Deutsch (Deutschland)" }, "Deutsch (Deutschland)");
 
-  constructor(commands: Commands, private onZoom: (z: number) => void, views: { cmd: string }[], zoomDialogCmd: string) {
+  /**
+   * Word's status bar is clickable (D-135): the page number opens the Navigationsbereich, the word count Wörter
+   * zählen. The commands run on a click (none: nothing happens).
+   */
+  constructor(commands: Commands, private onZoom: (z: number) => void, views: { cmd: string }[], zoomDialogCmd: string,
+    clicks: { page?: string; words?: string } = {}) {
+    if (clicks.page) { const id = clicks.page; this.page.onclick = () => void commands.run(id); }
+    if (clicks.words) {
+      const id = clicks.words;
+      this.words.setAttribute("role", "button");
+      this.words.style.cursor = "default";
+      this.words.onclick = () => void commands.run(id);
+    }
     const viewButtons = views.map((v) => {
       const c = commands.get(v.cmd);
       const b = h("button", { class: "cell viewbtn", "aria-label": c.label, "data-tip": commands.tooltip(v.cmd), onclick: () => void commands.run(v.cmd) }, icon(c.icon));

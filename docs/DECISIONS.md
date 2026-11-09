@@ -3791,3 +3791,101 @@ the Skalierung spinner, Sortieren of one column through the Sortierwarnung with 
 on the release build of this night (12 of 14 on the first run, both misses in the test's own selectors).
 Number formats chosen on the ribbon or in Zellen formatieren now widen columns of standard width whose numbers no
 longer fit, as Excel does (Datum, lang showed ####).
+
+## D-133 RaabeWrite: every option triggered by hand, as a student does (2026-11-09)
+
+The owner found RaabeCalc's chart formatting broken although the automated checks passed: they drove the model
+through test APIs, not the controls. RaabeWrite now has a by-hand audit that goes through the controls only.
+- **Inventory** (`sweep_write.py inventory`, results/2026-11-09-write-options.json): the app's ribbon definition and
+  command list (`__app.inventory()`: all tabs with the contextual ones, menus, launchers) joined with what the running
+  exe really shows: each tab's visible controls, every menu, gallery, palette and dialog the sweep opened, the context
+  menus, the status bar, the Datei pages and the shortcuts. Defined but not reached, and reached but not defined, are
+  listed. The chart tabs (Diagrammentwurf, Format) are not built yet and listed as such.
+- **Sweep** (`sweep_write.py sweep`): our own release exe off screen, never focused. Every visible control of every
+  tab is clicked with trusted DevTools mouse input at its place; contextual tabs get their document set up by hand too
+  (caret in the table, a click on the picture, a double click into the header, a rectangle drawn from the Formen
+  gallery and typed into, Alt+Umschalt+0; Referenzen and Überprüfen once more with notes, a comment and tracked
+  changes). Then every entry of the menu, gallery, palette or list it opens (long panels are scrolled to the entry and
+  the click is hit-tested; galleries of more than 14 entries are sampled: first and last entries), each dialog's Esc
+  and OK, every entry of four context menus, the status bar, every Datei page and its buttons, every shortcut of the
+  command list. Per option: no exception or console error; a visible effect (document, selection, ribbon state, pane,
+  dialog, popup, backstage page, view, a system dialog asked for); Strg+Z (as a key) restores the document; the
+  document saves. Options that change nothing because the base document already is so (the current design, "Ohne",
+  removing what is not there, going to the next note when there is none) count as passed (`ALREADY`, each with its
+  reason); greyed options are listed, not failed. Two settings Word does not take back with Strg+Z either (Änderungen
+  nachverfolgen; closing a header opened empty) count as passed.
+- **Word** (`sweep_write.py word`): Word (own invisible instance) opens every file the sweep saved, and for the
+  options with a Word counterpart (feellab/word_ops.py) applies Word's own option to the same base document with the
+  same selection and compares what changed (feellab/word_summary.py: the target's character and paragraph formatting,
+  lists, table, page setup, objects, notes, fields, header, footer ...).
+- **Real input** (`real_input_write.py`, under the real-input lock, our window checked in front before every input):
+  lists that open and close, the style gallery, palettes and the Farben dialog, spinners and typed fields, Tab through
+  the Absatz dialog, a dialog dragged by its title, the table grid under the mouse, the context menu at the mouse,
+  keytips with the real Alt key, the zoom slider, the mouse wheel, the Schriftart dialog's lists.
+- The system's file dialogs and printing cannot be opened off screen: the sweep replaces them (`__app.stubNative()`,
+  test API only) and counts the request as the option's effect.
+- **Results** (2026-11-09). Real input: 9/15 before (three app faults: Weitere Farben, a dialog's title bar, the
+  Schriftart dialog's lists; three errors of the test itself), 15/15 after (results/2026-11-09-write-real-input.json).
+  Inventory: 288 ribbon controls defined in 14 tabs (chart tabs not built), 280 reached by hand (the other 8 are style
+  gallery entries the run sampled and one check box whose label differs), 46 dialogs, 449 commands (17 deferred, 2 with
+  no behaviour: the Kommentare pane's own entry and Weitersuchen, both reached through other controls).
+  Sweep before the fixes (the same harness without its later corrections): Start, Layout, table tabs 434 of 435 decided
+  options passed; the other tabs and the extras 721 of 1021 (107 of the failures were Strg+Z in equations, D-136; most
+  others limits of that run's harness). After the fixes: A (Start, Layout, table tabs) 455 options, 430 passed, 0
+  failed, 1 untested, 24 greyed or deferred; B (the other tabs, context menus, status bar, Datei, shortcuts) 1515
+  options, 1345 passed, 57 failed, 9 untested, 94 greyed or deferred, 10 fields. Word opened all 254 files of A; 81 of
+  88 options with a Word counterpart changed the same as Word's (the 7: section breaks, fixed and re-measured 18/18 on
+  the Layout tab; Kein Leerraum's font; Spalte links/rechts einfügen keeps the table's width where Word keeps the
+  column widths). Word opened 802 of B's 803 files (the one after Strg+N: fixed, D-134); of B's 11 comparisons 6 are
+  the same, Leere Seite differed (fixed afterwards) and four came from set-ups Word's side did not repeat (notes,
+  comment and changes added first; such rows are no longer compared). The 57 left in B are listed in the results' report (`sweep_write.py report --out write-sweep-b`):
+  mostly shortcuts the sweep presses wrongly (Strg+Return, Strg+(, Alt+Strg+3 ...), Annehmen/Ablehnen when the
+  selection holds no change, picture options that are already so (Mit Text in Zeile, Ausfüllen, Einpassen), the
+  print page's own fields, and Kopieren in the context menus (the clipboard is not checked there).
+
+## D-134 RaabeWrite: what the by-hand audit found broken (2026-11-09)
+
+- **Weitere Farben...** (every colour palette: Schriftfarbe, Schattierung, Seitenfarbe, the Format pane, text effects)
+  clicked a hidden browser colour input whose system dialog the app's web view never opened: nothing happened. It now
+  opens Office's **Farben** dialog in the window (packages/shell/src/color-dialog.ts): Standard (a grid of colours) and
+  Benutzerdefiniert (Farbmodell RGB, Rot, Grün, Blau, Hex), Neu and Aktuell side by side, OK and Abbrechen. The shell's
+  palette uses it, so RaabeCalc and RaabePresent get it too. (The other visible colour inputs in Bildformat, Formformat
+  and Entwurf > Farben anpassen are unchanged.)
+- **Dialogs move with their title bar**, as Office's do (`installDialogDrag`, shell); they could not be moved.
+- **Texteffekte > Ligaturen > Keine** removed the run's own setting, so the style's ligatures (Word's Normal has
+  "Standard und kontextbezogen") stayed: no effect. It now writes `w14:ligatures w14:val="none"`, as Word does.
+- **A new document Word could not open:** Word opened 802 of the 803 files the sweep saved; the one after Strg+N was
+  "possibly damaged": the new document's styles.xml had the ligatures of its defaults (`w14:ligatures`) without
+  declaring the w14 namespace (documents read from a file keep their own styles part, new ones are written from
+  scratch). styles.xml now always declares w14 (packages/ooxml, test styles-ns.test.ts).
+- **Formen > Neuer Zeichenbereich** was a button without a command (nothing happened); Word's drawing canvas is not
+  built, so it is greyed with a tooltip saying so.
+- The audit's own errors (popups closed by the reopen, panes left open, labels with check marks, long panels not
+  scrolled) were fixed in the harness, not the app.
+
+## D-135 RaabeWrite: options made to behave as Word's, recorded in Word (2026-11-09)
+
+- **Groß-/Kleinschreibung > Ersten Buchstaben im Satz großschreiben / Ersten Buchstaben jedes Wortes großschreiben**
+  lowered every other letter, so German nouns lost their capitals ("weitere Beobachtungen" became "weitere
+  beobachtungen"). Word (recorded with Range.Case) raises the first letter of a sentence (of each word) and leaves the
+  other letters as typed; only words with capitals inside (iPhone, McDonald) are lowered after their first letter, and
+  every word when the whole selection was in capitals. text-engine `wordCase`, with Word's cases as unit tests.
+- **Layout > Umbrüche > Abschnittsumbrüche** (Nächste Seite, Fortlaufend, Gerade Seite, Ungerade Seite) deleted the
+  selected text and put the break in its place. Word puts a section break before the selection and keeps the text
+  (found by the Word comparison: Word's file still had the selected words); only page and column breaks replace the
+  selection, in Word as in RaabeWrite. **Einfügen > Leere Seite** likewise deleted the selected text; Word keeps it
+  and puts the blank page before it, and so does RaabeWrite now (not re-measured in the exe before the deadline).
+- **Kopfzeile/Fußzeile > Leer** inserts Word's placeholder "[Hier eingeben]" (Word's building block has it as a
+  content control), selected so typing replaces it; it inserted an empty header.
+- **Status bar:** a click on the page number opens the Navigationsbereich, on the word count Wörter zählen, as in Word
+  (they did nothing).
+- **Schriftart dialog:** Schriftart and Schriftgrad have Word's lists under their fields (a click puts the entry into
+  the field); the dialog had only fields with suggestions, which the mouse could not use.
+
+## D-136 RaabeWrite: Strg+Z inside an equation (2026-11-09)
+
+An equation being edited was one undo step for the whole edit, so Strg+Z after inserting a symbol or structure into a
+new equation removed the equation itself. Word takes back one change at a time. The edit session now keeps the
+equation's values before each change: Strg+Z and Strg+Y step back and forth inside the equation (the caret goes to its
+end); with no change left, Strg+Z ends the edit and acts on the document (the next step removes a new equation, as in
+Word). The document still gets one undo step for the whole edit once it is left.

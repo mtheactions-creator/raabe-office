@@ -15,6 +15,8 @@ export const SHAPE_COMMANDS: Command[] = [
   cmd("insert.textBoxDraw", "Textfeld erstellen", "draw-text-box", { tip: "Textfeld erstellen\nEin Textfeld an beliebiger Stelle im Dokument zeichnen." }),
   // Word saves a shape with its text as a picture; we cannot draw one into a file yet.
   cmd("shape.saveAs", "Als Grafik speichern...", "save-picture", { deferred: true }),
+  // Word's drawing canvas (wpc) holds shapes drawn together; not built. Its entry was a button without a command (D-134).
+  cmd("insert.drawingCanvas", "Neuer Zeichenbereich", undefined, { deferred: true }),
   ...SHAPE_TAB_COMMANDS,
 ];
 
@@ -48,7 +50,8 @@ export function shapesFeature(api: AppApi) {
     const all = withRecent && recent.length ? [{ title: "Zuletzt verwendete Formen", items: recent }, ...sections] : sections;
     for (const s of all) parts.push(h("div", { class: "title" }, s.title), h("div", { class: "tiles shape-tiles" }, ...s.items.map(tile)));
     return h("div", { class: "rpanel shape-gallery" }, ...parts,
-      h("hr"), h("button", { class: "link", onclick: () => { close(); void c.run("insert.drawingCanvas"); } }, "Neuer Zeichenbereich"));
+      h("hr"), h("button", { class: "link", disabled: !c.isEnabled("insert.drawingCanvas"), "data-tip": c.tooltip("insert.drawingCanvas", false),
+        onclick: () => { close(); void c.run("insert.drawingCanvas"); } }, "Neuer Zeichenbereich"));
   };
   c.implement("insert.shapes", { run: () => {}, enabled: has });
 

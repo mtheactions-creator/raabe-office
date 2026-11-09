@@ -50,9 +50,10 @@ export function headerFooterFeature(api: AppApi) {
   c.implement("insert.header", { run: () => {}, enabled: has });
   c.implement("insert.footer", { run: () => {}, enabled: has });
   c.implement("insert.pageNumber", { run: () => {}, enabled: has });
-  run("header.blank", () => fill("header", "left", [""]));
+  // Word's Leer has the placeholder [Hier eingeben] (recorded 2026-11-09, D-135); it is selected, so typing replaces it.
+  run("header.blank", () => fill("header", "left", ["[Hier eingeben]"]));
   run("header.blank3", () => fill("header", "left", ["[Hier eingeben]\t[Hier eingeben]\t[Hier eingeben]"]));
-  run("footer.blank", () => fill("footer", "left", [""]));
+  run("footer.blank", () => fill("footer", "left", ["[Hier eingeben]"]));
   run("footer.blank3", () => fill("footer", "left", ["[Hier eingeben]\t[Hier eingeben]\t[Hier eingeben]"]));
   run("header.edit", () => { ed()?.editHeaderFooter("header"); api.selectTab("headerFooter"); });
   run("footer.edit", () => { ed()?.editHeaderFooter("footer"); api.selectTab("headerFooter"); });

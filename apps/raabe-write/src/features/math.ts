@@ -262,6 +262,10 @@ interface Session {
   marks: HTMLElement[];
   /** The x Up/Down keep (client px). */
   column: number | null;
+  /** Strg+Z / Strg+Y inside the equation, one step per change as in Word (D-136): the values before and after. */
+  history: Seq[];
+  future: Seq[];
+  last: Seq;
 }
 
 type LinearFormat = "unicode" | "latex";
@@ -410,7 +414,9 @@ export function mathFeature(api: AppApi) {
 
   /** The tree into the document (one undo step for the whole edit), then redrawn. */
   const sync = (s: Session) => {
-    s.editor.setMath(s.pos, s.me.value(), !s.recorded, true);
+    const v = s.me.value();
+    if (JSON.stringify(v) !== JSON.stringify(s.last)) { s.history.push(s.last); s.future = []; s.last = v; }
+    s.editor.setMath(s.pos, v, !s.recorded, true);
     s.recorded = true;
     s.isNew = false;
     draw(s);
@@ -435,7 +441,7 @@ export function mathFeature(api: AppApi) {
     if (!o) return;
     const me = new MathEditor(treeOf(o), enter === "start" ? "start" : "end");
     configure(e, me);
-    const s: Session = { editor: e, pos, me, recorded: inserted, isNew: inserted, marks: [], column: null };
+    const s: Session = { editor: e, pos, me, recorded: inserted, isNew: inserted, marks: [], column: null, history: [], future: [], last: me.value() };
     session = s;
     // The document's own caret waits after the equation; ours is drawn instead.
     e.caretAt({ p: pos.p, o: pos.o + 1 });
@@ -485,6 +491,17 @@ export function mathFeature(api: AppApi) {
   const geometry = (s: Session) => {
     const found = s.editor.mathElement(s.pos);
     return found ? new Geometry(found.el) : null;
+  };
+
+  /** The equation as it was before a change (Strg+Z inside it); the caret goes to its end. */
+  const restore = (s: Session, v: Seq) => {
+    s.me = new MathEditor(v, "end");
+    configure(s.editor, s.me);
+    s.last = v;
+    s.editor.setMath(s.pos, v, false, true);
+    s.isNew = false;
+    draw(s);
+    api.refresh();
   };
 
   /** Keys while an equation is edited; false lets the document handle them (after leaving). */
@@ -544,7 +561,10 @@ export function mathFeature(api: AppApi) {
       if (k === "c" || k === "x") { cutCopy(s, k === "x"); return true; }
       if (k === "v") { void paste(s); return true; }
       if (k === "a") { me.selectAll(); return done(false); }
-      // Undo, redo and everything else act on the document: the edit ends first for undo.
+      // Strg+Z and Strg+Y take back (and redo) the changes made in this equation one by one, as Word does; with
+      // none left they act on the document (the edit ends first, so the next Strg+Z removes a new equation).
+      if (k === "z" && s.history.length) { s.future.push(s.last); restore(s, s.history.pop()!); return true; }
+      if (k === "y" && s.future.length) { s.history.push(s.last); restore(s, s.future.pop()!); return true; }
       if (k === "z" || k === "y") { close(null); return false; }
       return false;
     }

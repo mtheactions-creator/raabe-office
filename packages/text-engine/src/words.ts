@@ -94,3 +94,38 @@ export function countWords(texts: readonly string[]): number {
   }
   return n;
 }
+
+/** True when the text has letters and all of them are capitals (Word then lowers whole words when changing case). */
+export function allCapitals(text: string): boolean {
+  const letters = text.replace(/[^\p{L}]/gu, "");
+  return letters !== "" && letters === letters.toUpperCase() && letters !== letters.toLowerCase();
+}
+
+/**
+ * Groß-/Kleinschreibung > Ersten Buchstaben im Satz großschreiben ("sentence") and Ersten Buchstaben jedes Wortes
+ * großschreiben ("title") as Word does them (recorded 2026-11-09, D-135): the first letter of a sentence (of every
+ * word) becomes a capital and the other letters stay as typed, so nouns and acronyms keep their capitals. Only words
+ * with capitals inside (iPhone, McDonald) are lowered after their first letter, and every word when the whole
+ * selection was in capitals. `state` carries the sentence start across the paragraphs of one selection.
+ */
+export function wordCase(text: string, mode: "sentence" | "title", state: { sentenceStart: boolean; allCaps: boolean }): string {
+  const one = (ch: string, up: boolean) => {
+    const x = up ? ch.toUpperCase() : ch.toLowerCase();
+    return x.length === ch.length ? x : ch;
+  };
+  let out = "";
+  for (const [tok] of text.matchAll(/\p{L}+|[^\p{L}]+/gu)) {
+    if (!/\p{L}/u.test(tok)) {
+      if (/[.!?]/.test(tok)) state.sentenceStart = true;
+      out += tok;
+      continue;
+    }
+    const chars = [...tok];
+    const tail = chars.slice(1).join("");
+    const lowerTail = state.allCaps || (tail !== tail.toLowerCase() && tok !== tok.toUpperCase());
+    const first = mode === "title" || state.sentenceStart ? one(chars[0], true) : lowerTail ? one(chars[0], false) : chars[0];
+    out += first + (lowerTail ? chars.slice(1).map((ch) => one(ch, false)).join("") : tail);
+    state.sentenceStart = false;
+  }
+  return out;
+}
