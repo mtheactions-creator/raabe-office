@@ -3514,10 +3514,10 @@ mostly text formats Excel does not report through TextFrame2 for chart text it b
 ignores (a format code "Probe 1").
 `check_calc_chartpane_real.py` (OS mouse and keyboard under the real-input lock): 12 of 12 (slider drag, spin
 button, colour palette, native dropdowns, typing and Enter, Strg+Z, a gradient stop dragged, a stop added).
-`compare_calc_chartpane_pictures.py`: for 21 of 25 settings our drawing and Excel's export of our file change
-in the same region (box overlap at least 0.3); the four misses are a series' shadow and glow, one point's
-colour (drawn the same, but the plot stood about 8 pt higher than Excel's with negative values, fixed since)
-and category labels "Niedrig".
+`compare_calc_chartpane_pictures.py`: for 24 of 25 settings our drawing and Excel's export of our file change
+in the same region (box overlap at least 0.3, most above 0.9); it first found the plot standing about 8 pt
+higher than Excel's when negative values put the category labels inside the plot (Excel keeps only a small
+margin then; fixed). The miss: Abstand zur Achse 500 with labels inside the plot (0.09).
 
 ## D-114 RaabeCalc chart pane: what differs from Excel on purpose or is left out (2026-11-08)
 
