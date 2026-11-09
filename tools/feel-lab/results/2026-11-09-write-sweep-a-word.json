@@ -1,0 +1,4733 @@
+{
+ "date": "2026-11-09",
+ "summary": {
+  "files": 254,
+  "opened": 254,
+  "compared": 88,
+  "same": 81
+ },
+ "items": [
+  {
+   "path": "Start > Zwischenablage / Einfügen [split-main]",
+   "file": "0001.docx",
+   "opens": true,
+   "ours": {
+    "words": 70,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSc weitere Beobachtungenhluss.\n"
+   }
+  },
+  {
+   "path": "Start > Zwischenablage / Weitere Optionen [split-arrow] > Ursprüngliche Formatierung beibehalten",
+   "file": "0002.docx",
+   "opens": true,
+   "ours": {
+    "words": 70,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSc weitere Beobachtungenhluss.\n"
+   }
+  },
+  {
+   "path": "Start > Zwischenablage / Weitere Optionen [split-arrow] > Nur den Text übernehmen",
+   "file": "0003.docx",
+   "opens": true,
+   "ours": {
+    "words": 70,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSc weitere Beobachtungenhluss.\n"
+   }
+  },
+  {
+   "path": "Start > Zwischenablage / Ausschneiden [button]",
+   "file": "0004.docx",
+   "opens": true,
+   "ours": {
+    "words": 66,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "targetPara.left": null,
+    "targetPara.keepNext": null,
+    "targetPara.line": null,
+    "targetPara.lineRule": null,
+    "targetPara.after": null,
+    "targetPara.right": null,
+    "targetPara.shading": null,
+    "targetPara.list": null,
+    "targetPara.level": null,
+    "targetPara.listType": null,
+    "targetPara.before": null,
+    "targetPara.style": null,
+    "targetPara.align": null,
+    "targetPara.pageBreakBefore": null,
+    "targetPara.borders": null,
+    "targetPara.first": null,
+    "targetHighlight": null,
+    "target.bold": null,
+    "target.hidden": null,
+    "target.spacing": null,
+    "target.color": null,
+    "target.smallcaps": null,
+    "target.name": null,
+    "target.dstrike": null,
+    "target.styleSet": null,
+    "target.sub": null,
+    "target.caps": null,
+    "target.strike": null,
+    "target.sup": null,
+    "target.underline": null,
+    "target.italic": null,
+    "target.lig": null,
+    "target.size": null,
+    "target.numSpacing": null,
+    "target.numForm": null,
+    "targetText": null
+   }
+  },
+  {
+   "path": "Start > Schriftart / Schriftart [combo-input] = Arial",
+   "file": "0005.docx",
+   "opens": true,
+   "ours": {
+    "target.name": "Arial"
+   },
+   "word": {
+    "target.name": "Arial"
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > Aptos Display (Überschriften)",
+   "file": "0006.docx",
+   "opens": true,
+   "ours": {
+    "target.name": "Aptos Display"
+   }
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > Aptos (Textkörper)",
+   "file": "0007.docx",
+   "opens": true,
+   "ours": {
+    "target.name": "Aptos"
+   }
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > Arial",
+   "file": "0008.docx",
+   "opens": true,
+   "ours": {
+    "target.name": "Arial"
+   }
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > Agency FB",
+   "file": "0009.docx",
+   "opens": true,
+   "ours": {
+    "target.name": "Agency FB"
+   }
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > Century",
+   "file": "0010.docx",
+   "opens": true,
+   "ours": {
+    "target.name": "Century"
+   }
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > Century Gothic",
+   "file": "0011.docx",
+   "opens": true,
+   "ours": {
+    "target.name": "Century Gothic"
+   }
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > Century Schoolbook",
+   "file": "0012.docx",
+   "opens": true,
+   "ours": {
+    "target.name": "Century Schoolbook"
+   }
+  },
+  {
+   "path": "Start > Schriftart / Schriftgrad [combo-input] = 14",
+   "file": "0013.docx",
+   "opens": true,
+   "ours": {
+    "target.size": 14.0
+   },
+   "word": {
+    "target.size": 14.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > 8",
+   "file": "0014.docx",
+   "opens": true,
+   "ours": {
+    "target.size": 8.0
+   }
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > 9",
+   "file": "0015.docx",
+   "opens": true,
+   "ours": {
+    "target.size": 9.0
+   }
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > 10",
+   "file": "0016.docx",
+   "opens": true,
+   "ours": {
+    "target.size": 10.0
+   }
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > 10,5",
+   "file": "0017.docx",
+   "opens": true,
+   "ours": {
+    "target.size": 10.5
+   }
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > 36",
+   "file": "0018.docx",
+   "opens": true,
+   "ours": {
+    "target.size": 36.0
+   }
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > 48",
+   "file": "0019.docx",
+   "opens": true,
+   "ours": {
+    "target.size": 48.0
+   }
+  },
+  {
+   "path": "Start > Schriftart / Öffnen [combo-arrow] > 72",
+   "file": "0020.docx",
+   "opens": true,
+   "ours": {
+    "target.size": 72.0
+   }
+  },
+  {
+   "path": "Start > Schriftart / Schriftart vergrößern [button]",
+   "file": "0021.docx",
+   "opens": true,
+   "ours": {
+    "target.size": 12.0
+   },
+   "word": {
+    "target.size": 12.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Schriftart verkleinern [button]",
+   "file": "0022.docx",
+   "opens": true,
+   "ours": {
+    "target.size": 10.0
+   },
+   "word": {
+    "target.size": 10.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Groß-/Kleinschreibung [dropdown] > kleinbuchstaben",
+   "file": "0023.docx",
+   "opens": true,
+   "ours": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "targetText": "weitere beobachtungen"
+   },
+   "word": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "targetText": "weitere beobachtungen"
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Groß-/Kleinschreibung [dropdown] > GROSSBUCHSTABEN",
+   "file": "0024.docx",
+   "opens": true,
+   "ours": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen WEITERE BEOBACHTUNGEN aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "targetText": "WEITERE BEOBACHTUNGEN"
+   },
+   "word": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen WEITERE BEOBACHTUNGEN aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "targetText": "WEITERE BEOBACHTUNGEN"
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Groß-/Kleinschreibung [dropdown] > Ersten Buchstaben Im Wort Großschreiben",
+   "file": "0025.docx",
+   "opens": true,
+   "ours": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen Weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "targetText": "Weitere Beobachtungen"
+   }
+  },
+  {
+   "path": "Start > Schriftart / Groß-/Kleinschreibung [dropdown] > gROSS-/kLEINSCHREIBUNG umkehren",
+   "file": "0026.docx",
+   "opens": true,
+   "ours": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen WEITERE bEOBACHTUNGEN aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "targetText": "WEITERE bEOBACHTUNGEN"
+   },
+   "word": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen WEITERE bEOBACHTUNGEN aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "targetText": "WEITERE bEOBACHTUNGEN"
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Alle Formatierungen löschen [button]",
+   "file": "0027.docx",
+   "opens": true,
+   "ours": {},
+   "word": {},
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Fett [button]",
+   "file": "0028.docx",
+   "opens": true,
+   "ours": {
+    "target.bold": -1
+   },
+   "word": {
+    "target.bold": -1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Kursiv [button]",
+   "file": "0029.docx",
+   "opens": true,
+   "ours": {
+    "target.italic": -1
+   },
+   "word": {
+    "target.italic": -1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Unterstreichen [split-main]",
+   "file": "0030.docx",
+   "opens": true,
+   "ours": {
+    "target.underline": 1
+   },
+   "word": {
+    "target.underline": 1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [split-arrow] > Unterstrichen",
+   "file": "0031.docx",
+   "opens": true,
+   "ours": {
+    "target.underline": 1
+   }
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [split-arrow] > Doppelt unterstrichen",
+   "file": "0032.docx",
+   "opens": true,
+   "ours": {
+    "target.underline": 3
+   }
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [split-arrow] > Dick unterstrichen",
+   "file": "0033.docx",
+   "opens": true,
+   "ours": {
+    "target.underline": 6
+   }
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [split-arrow] > Gepunktet unterstrichen",
+   "file": "0034.docx",
+   "opens": true,
+   "ours": {
+    "target.underline": 4
+   }
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [split-arrow] > Gestrichelt unterstrichen",
+   "file": "0035.docx",
+   "opens": true,
+   "ours": {
+    "target.underline": 7
+   }
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [split-arrow] > Wellenlinie",
+   "file": "0036.docx",
+   "opens": true,
+   "ours": {
+    "target.underline": 11
+   }
+  },
+  {
+   "path": "Start > Schriftart / Durchstreichen [button]",
+   "file": "0037.docx",
+   "opens": true,
+   "ours": {
+    "target.strike": -1
+   },
+   "word": {
+    "target.strike": -1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Tiefgestellt [button]",
+   "file": "0038.docx",
+   "opens": true,
+   "ours": {
+    "target.sub": -1
+   },
+   "word": {
+    "target.sub": -1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Hochgestellt [button]",
+   "file": "0039.docx",
+   "opens": true,
+   "ours": {
+    "target.sup": -1
+   },
+   "word": {
+    "target.sup": -1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Füllung: Schwarz, Textfarbe 1; Schatten",
+   "file": "0040.docx",
+   "opens": true,
+   "ours": {
+    "target.color": -587137025
+   }
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Füllung: Dunkelblaugrün, Akzentfarbe 1; Schatten",
+   "file": "0041.docx",
+   "opens": true,
+   "ours": {
+    "target.color": -738131969
+   }
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Füllung: Orange, Akzentfarbe 2; Kontur: Orange, Akzentfarbe 2",
+   "file": "0042.docx",
+   "opens": true,
+   "ours": {
+    "target.color": -721354906
+   }
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Füllung: Weiß; Kontur: Pflaume, Akzentfarbe 5; Schatten",
+   "file": "0043.docx",
+   "opens": true,
+   "ours": {
+    "target.color": 16777215
+   }
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Zahlenformatvorlagen > Proportionale Lineatur",
+   "file": "0044.docx",
+   "opens": true,
+   "ours": {
+    "target.numSpacing": 1,
+    "target.numForm": 1
+   },
+   "word": {
+    "target.numSpacing": 1,
+    "target.numForm": 1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Zahlenformatvorlagen > Tabularische Lineatur",
+   "file": "0045.docx",
+   "opens": true,
+   "ours": {
+    "target.numSpacing": 2,
+    "target.numForm": 1
+   }
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Zahlenformatvorlagen > Proportional Old-Formatvorlage",
+   "file": "0046.docx",
+   "opens": true,
+   "ours": {
+    "target.numSpacing": 1,
+    "target.numForm": 2
+   }
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Zahlenformatvorlagen > Tabellarisch Old-Formatvorlage",
+   "file": "0047.docx",
+   "opens": true,
+   "ours": {
+    "target.numSpacing": 2,
+    "target.numForm": 2
+   }
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Ligaturen > Keine",
+   "file": "0048.docx",
+   "opens": true,
+   "ours": {
+    "target.lig": 0
+   },
+   "word": {
+    "target.lig": 0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Ligaturen > Nur Standard",
+   "file": "0049.docx",
+   "opens": true,
+   "ours": {
+    "target.lig": 1
+   },
+   "word": {
+    "target.lig": 1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Ligaturen > Standard und kontextbezogen",
+   "file": "0050.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Ligaturen > Historisch und frei",
+   "file": "0051.docx",
+   "opens": true,
+   "ours": {
+    "target.lig": 12
+   },
+   "word": {
+    "target.lig": 12
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Ligaturen > Alle Ligaturen",
+   "file": "0052.docx",
+   "opens": true,
+   "ours": {
+    "target.lig": 15
+   },
+   "word": {
+    "target.lig": 15
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Stil-Sets > Stil-Set 1",
+   "file": "0053.docx",
+   "opens": true,
+   "ours": {
+    "target.styleSet": 1
+   },
+   "word": {
+    "target.styleSet": 1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Stil-Sets > Stil-Set 2",
+   "file": "0054.docx",
+   "opens": true,
+   "ours": {
+    "target.styleSet": 2
+   }
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Stil-Sets > Stil-Set 3",
+   "file": "0055.docx",
+   "opens": true,
+   "ours": {
+    "target.styleSet": 4
+   }
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Stil-Sets > Stil-Set 18",
+   "file": "0056.docx",
+   "opens": true,
+   "ours": {
+    "target.styleSet": 131072
+   }
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Stil-Sets > Stil-Set 19",
+   "file": "0057.docx",
+   "opens": true,
+   "ours": {
+    "target.styleSet": 262144
+   }
+  },
+  {
+   "path": "Start > Schriftart / Texteffekte und Typografie [dropdown] > Stil-Sets > Stil-Set 20",
+   "file": "0058.docx",
+   "opens": true,
+   "ours": {
+    "target.styleSet": 524288
+   },
+   "word": {
+    "target.styleSet": 524288
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Texthervorhebungsfarbe [color-main]",
+   "file": "0059.docx",
+   "opens": true,
+   "ours": {
+    "targetHighlight": 7
+   },
+   "word": {
+    "targetHighlight": 7
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [color-arrow] > Gelb",
+   "file": "0060.docx",
+   "opens": true,
+   "ours": {
+    "targetHighlight": 7
+   },
+   "word": {
+    "targetHighlight": 7
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [color-arrow] > Hellgrün",
+   "file": "0061.docx",
+   "opens": true,
+   "ours": {
+    "targetHighlight": 4
+   },
+   "word": {
+    "targetHighlight": 4
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [color-arrow] > Türkis",
+   "file": "0062.docx",
+   "opens": true,
+   "ours": {
+    "targetHighlight": 3
+   },
+   "word": {
+    "targetHighlight": 3
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [color-arrow] > Rosa",
+   "file": "0063.docx",
+   "opens": true,
+   "ours": {
+    "targetHighlight": 5
+   },
+   "word": {
+    "targetHighlight": 5
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [color-arrow] > Grau 25 %",
+   "file": "0064.docx",
+   "opens": true,
+   "ours": {
+    "targetHighlight": 16
+   }
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [color-arrow] > Schwarz",
+   "file": "0065.docx",
+   "opens": true,
+   "ours": {
+    "targetHighlight": 1
+   }
+  },
+  {
+   "path": "Start > Schriftart / Schriftfarbe [color-main]",
+   "file": "0066.docx",
+   "opens": true,
+   "ours": {
+    "target.color": 255
+   },
+   "word": {
+    "target.color": 255
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [color-arrow] > Weiß, Hintergrund 1",
+   "file": "0067.docx",
+   "opens": true,
+   "ours": {
+    "target.color": 16777215
+   }
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [color-arrow] > Schwarz, Text 1",
+   "file": "0068.docx",
+   "opens": true,
+   "ours": {
+    "target.color": 0
+   }
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [color-arrow] > Hellgrau, Hintergrund 2",
+   "file": "0069.docx",
+   "opens": true,
+   "ours": {
+    "target.color": 15132391
+   }
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [color-arrow] > Dunkelblau",
+   "file": "0070.docx",
+   "opens": true,
+   "ours": {
+    "target.color": 6299648
+   }
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [color-arrow] > Lila",
+   "file": "0071.docx",
+   "opens": true,
+   "ours": {
+    "target.color": 10498160
+   }
+  },
+  {
+   "path": "Start > Schriftart / Weitere Optionen [color-arrow] > Weitere Farben... > OK",
+   "file": "0072.docx",
+   "opens": true,
+   "ours": {
+    "target.color": 0
+   }
+  },
+  {
+   "path": "Start > Absatz / Aufzählungszeichen [split-main]",
+   "file": "0073.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "",
+    "p3.level": 1,
+    "p3.listType": 2,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "targetPara.left": 36.0,
+    "targetPara.list": "",
+    "targetPara.level": 1,
+    "targetPara.listType": 2,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   },
+   "word": {
+    "p3.left": 36.0,
+    "p3.list": "",
+    "p3.level": 1,
+    "p3.listType": 2,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "targetPara.left": 36.0,
+    "targetPara.list": "",
+    "targetPara.level": 1,
+    "targetPara.listType": 2,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > •••",
+   "file": "0074.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "",
+    "p3.level": 1,
+    "p3.listType": 2,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "targetPara.left": 36.0,
+    "targetPara.list": "",
+    "targetPara.level": 1,
+    "targetPara.listType": 2,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > ooo",
+   "file": "0075.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "o",
+    "p3.level": 1,
+    "p3.listType": 2,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "o",
+    "targetPara.level": 1,
+    "targetPara.listType": 2,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > ▪▪▪",
+   "file": "0076.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "",
+    "p3.level": 1,
+    "p3.listType": 2,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "",
+    "targetPara.level": 1,
+    "targetPara.listType": 2,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > ❖❖❖",
+   "file": "0077.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "",
+    "p3.level": 1,
+    "p3.listType": 2,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "",
+    "targetPara.level": 1,
+    "targetPara.listType": 2,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > ➢➢➢",
+   "file": "0078.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "",
+    "p3.level": 1,
+    "p3.listType": 2,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "",
+    "targetPara.level": 1,
+    "targetPara.listType": 2,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > ✓✓",
+   "file": "0079.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "",
+    "p3.level": 1,
+    "p3.listType": 2,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "",
+    "targetPara.level": 1,
+    "targetPara.listType": 2,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > Neues Aufzählungszeichen definieren... > OK",
+   "file": "0080.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "",
+    "p3.level": 1,
+    "p3.listType": 2,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "targetPara.left": 36.0,
+    "targetPara.list": "",
+    "targetPara.level": 1,
+    "targetPara.listType": 2,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Nummerierung [split-main]",
+   "file": "0081.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "1.",
+    "p3.level": 1,
+    "p3.listType": 3,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "1.",
+    "targetPara.level": 1,
+    "targetPara.listType": 3,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   },
+   "word": {
+    "p3.left": 36.0,
+    "p3.list": "1.",
+    "p3.level": 1,
+    "p3.listType": 3,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "1.",
+    "targetPara.level": 1,
+    "targetPara.listType": 3,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > 1.2.3.",
+   "file": "0082.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "1.",
+    "p3.level": 1,
+    "p3.listType": 3,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "1.",
+    "targetPara.level": 1,
+    "targetPara.listType": 3,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > 1)2)3)",
+   "file": "0083.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "1)",
+    "p3.level": 1,
+    "p3.listType": 3,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "1)",
+    "targetPara.level": 1,
+    "targetPara.listType": 3,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > I.II.III.",
+   "file": "0084.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "I.",
+    "p3.level": 1,
+    "p3.listType": 3,
+    "p3.style": "Listenabsatz",
+    "p3.first": -9.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "I.",
+    "targetPara.level": 1,
+    "targetPara.listType": 3,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -9.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > (1)(2)(3)",
+   "file": "0085.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "(1)",
+    "p3.level": 1,
+    "p3.listType": 3,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "(1)",
+    "targetPara.level": 1,
+    "targetPara.listType": 3,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > a)b)c)",
+   "file": "0086.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "a)",
+    "p3.level": 1,
+    "p3.listType": 3,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "a)",
+    "targetPara.level": 1,
+    "targetPara.listType": 3,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > a.b.c.",
+   "file": "0087.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "a.",
+    "p3.level": 1,
+    "p3.listType": 3,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "a.",
+    "targetPara.level": 1,
+    "targetPara.listType": 3,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > i.ii.iii.",
+   "file": "0088.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "i.",
+    "p3.level": 1,
+    "p3.listType": 3,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "i.",
+    "targetPara.level": 1,
+    "targetPara.listType": 3,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > Neues Zahlenformat definieren... > OK",
+   "file": "0089.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.list": "1.",
+    "p3.level": 1,
+    "p3.listType": 3,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 36.0,
+    "targetPara.list": "1.",
+    "targetPara.level": 1,
+    "targetPara.listType": 3,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Liste mit mehreren Ebenen [dropdown] > 1)a)i)",
+   "file": "0090.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 18.0,
+    "p3.list": "1)",
+    "p3.level": 1,
+    "p3.listType": 3,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 18.0,
+    "targetPara.list": "1)",
+    "targetPara.level": 1,
+    "targetPara.listType": 3,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Liste mit mehreren Ebenen [dropdown] > 1.1.1.1.1.1.",
+   "file": "0091.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 18.0,
+    "p3.list": "1.",
+    "p3.level": 1,
+    "p3.listType": 4,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 18.0,
+    "targetPara.list": "1.",
+    "targetPara.level": 1,
+    "targetPara.listType": 4,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Liste mit mehreren Ebenen [dropdown] > ❖➢▪",
+   "file": "0092.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 18.0,
+    "p3.list": "",
+    "p3.level": 1,
+    "p3.listType": 2,
+    "p3.style": "Listenabsatz",
+    "p3.first": -18.0,
+    "words": 69,
+    "targetPara.left": 18.0,
+    "targetPara.list": "",
+    "targetPara.level": 1,
+    "targetPara.listType": 2,
+    "targetPara.style": "Listenabsatz",
+    "targetPara.first": -18.0
+   }
+  },
+  {
+   "path": "Start > Absatz / Liste mit mehreren Ebenen [dropdown] > Artikel I. Überschrift 1Abschnitt 1.01 Überschrift 2(a) Überschrift 3",
+   "file": "0093.docx",
+   "opens": true,
+   "ours": {
+    "words": 70,
+    "p1.list": "Artikel I.",
+    "p1.level": 1,
+    "p1.listType": 4
+   }
+  },
+  {
+   "path": "Start > Absatz / Liste mit mehreren Ebenen [dropdown] > 1 Überschrift 11.1 Überschrift 21.1.1 Überschrift 3",
+   "file": "0094.docx",
+   "opens": true,
+   "ours": {
+    "words": 69,
+    "p1.left": 21.6,
+    "p1.list": "1",
+    "p1.level": 1,
+    "p1.listType": 4,
+    "p1.first": -21.6
+   }
+  },
+  {
+   "path": "Start > Absatz / Liste mit mehreren Ebenen [dropdown] > I. Überschrift 1A. Überschrift 21. Überschrift 3",
+   "file": "0095.docx",
+   "opens": true,
+   "ours": {
+    "words": 69,
+    "p1.list": "I.",
+    "p1.level": 1,
+    "p1.listType": 3
+   }
+  },
+  {
+   "path": "Start > Absatz / Liste mit mehreren Ebenen [dropdown] > Kapitel 1 Überschrift 1Überschrift 2Überschrift 3",
+   "file": "0096.docx",
+   "opens": true,
+   "ours": {
+    "words": 70,
+    "p1.list": "Kapitel 1",
+    "p1.level": 1,
+    "p1.listType": 3
+   }
+  },
+  {
+   "path": "Start > Absatz / Einzug verkleinern [button]",
+   "file": "0097.docx",
+   "opens": true,
+   "ours": {},
+   "word_error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2147467259), None)"
+  },
+  {
+   "path": "Start > Absatz / Einzug vergrößern [button]",
+   "file": "0098.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 35.4,
+    "targetPara.left": 35.4
+   },
+   "word_error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2147467259), None)"
+  },
+  {
+   "path": "Start > Absatz / Linksbündig [button]",
+   "file": "0099.docx",
+   "opens": true,
+   "ours": {
+    "p3.align": 3,
+    "targetPara.align": 3
+   }
+  },
+  {
+   "path": "Start > Absatz / Zentriert [button]",
+   "file": "0100.docx",
+   "opens": true,
+   "ours": {
+    "p3.align": 1,
+    "targetPara.align": 1
+   },
+   "word": {
+    "p3.align": 1,
+    "targetPara.align": 1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Rechtsbündig [button]",
+   "file": "0101.docx",
+   "opens": true,
+   "ours": {
+    "p3.align": 2,
+    "targetPara.align": 2
+   },
+   "word": {
+    "p3.align": 2,
+    "targetPara.align": 2
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Blocksatz [button]",
+   "file": "0102.docx",
+   "opens": true,
+   "ours": {
+    "p3.align": 3,
+    "targetPara.align": 3
+   },
+   "word": {
+    "p3.align": 3,
+    "targetPara.align": 3
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Zeilen- und Absatzabstand [dropdown] > 1,0",
+   "file": "0103.docx",
+   "opens": true,
+   "ours": {
+    "p3.line": 12.0,
+    "p3.lineRule": 0,
+    "targetPara.line": 12.0,
+    "targetPara.lineRule": 0
+   },
+   "word": {
+    "p3.line": 12.0,
+    "p3.lineRule": 0,
+    "targetPara.line": 12.0,
+    "targetPara.lineRule": 0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Zeilen- und Absatzabstand [dropdown] > 1,15",
+   "file": "0104.docx",
+   "opens": true,
+   "ours": {
+    "p3.line": 13.8,
+    "targetPara.line": 13.8
+   },
+   "word": {
+    "p3.line": 13.8,
+    "targetPara.line": 13.8
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Zeilen- und Absatzabstand [dropdown] > 1,5",
+   "file": "0105.docx",
+   "opens": true,
+   "ours": {
+    "p3.line": 18.0,
+    "p3.lineRule": 1,
+    "targetPara.line": 18.0,
+    "targetPara.lineRule": 1
+   },
+   "word": {
+    "p3.line": 18.0,
+    "p3.lineRule": 1,
+    "targetPara.line": 18.0,
+    "targetPara.lineRule": 1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Zeilen- und Absatzabstand [dropdown] > 2,0",
+   "file": "0106.docx",
+   "opens": true,
+   "ours": {
+    "p3.line": 24.0,
+    "p3.lineRule": 2,
+    "targetPara.line": 24.0,
+    "targetPara.lineRule": 2
+   },
+   "word": {
+    "p3.line": 24.0,
+    "p3.lineRule": 2,
+    "targetPara.line": 24.0,
+    "targetPara.lineRule": 2
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Zeilen- und Absatzabstand [dropdown] > 2,5",
+   "file": "0107.docx",
+   "opens": true,
+   "ours": {
+    "p3.line": 30.0,
+    "targetPara.line": 30.0
+   },
+   "word": {
+    "p3.line": 30.0,
+    "targetPara.line": 30.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Zeilen- und Absatzabstand [dropdown] > 3,0",
+   "file": "0108.docx",
+   "opens": true,
+   "ours": {
+    "p3.line": 36.0,
+    "targetPara.line": 36.0
+   },
+   "word": {
+    "p3.line": 36.0,
+    "targetPara.line": 36.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Zeilen- und Absatzabstand [dropdown] > Zeilenabstandsoptionen... > OK",
+   "file": "0109.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Start > Absatz / Zeilen- und Absatzabstand [dropdown] > Abstand vor Absatz hinzufügen",
+   "file": "0110.docx",
+   "opens": true,
+   "ours": {
+    "p3.before": 12.0,
+    "targetPara.before": 12.0
+   },
+   "word": {
+    "p3.before": 12.0,
+    "targetPara.before": 12.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Zeilen- und Absatzabstand [dropdown] > Abstand nach Absatz entfernen",
+   "file": "0111.docx",
+   "opens": true,
+   "ours": {
+    "p3.after": 0.0,
+    "targetPara.after": 0.0
+   },
+   "word": {
+    "p3.after": 0.0,
+    "targetPara.after": 0.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Absatz / Schattierung [color-main]",
+   "file": "0112.docx",
+   "opens": true,
+   "ours": {
+    "p3.shading": 65535,
+    "targetPara.shading": 65535
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [color-arrow] > Weiß, Hintergrund 1",
+   "file": "0113.docx",
+   "opens": true,
+   "ours": {
+    "p3.shading": 16777215,
+    "targetPara.shading": 16777215
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [color-arrow] > Schwarz, Text 1",
+   "file": "0114.docx",
+   "opens": true,
+   "ours": {
+    "p3.shading": 0,
+    "targetPara.shading": 0
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [color-arrow] > Hellgrau, Hintergrund 2",
+   "file": "0115.docx",
+   "opens": true,
+   "ours": {
+    "p3.shading": 15132391,
+    "targetPara.shading": 15132391
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [color-arrow] > Dunkelblau",
+   "file": "0116.docx",
+   "opens": true,
+   "ours": {
+    "p3.shading": 6299648,
+    "targetPara.shading": 6299648
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [color-arrow] > Lila",
+   "file": "0117.docx",
+   "opens": true,
+   "ours": {
+    "p3.shading": 10498160,
+    "targetPara.shading": 10498160
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [color-arrow] > Weitere Farben... > OK",
+   "file": "0118.docx",
+   "opens": true,
+   "ours": {
+    "p3.shading": 0,
+    "targetPara.shading": 0
+   }
+  },
+  {
+   "path": "Start > Absatz / Rahmen [split-main]",
+   "file": "0119.docx",
+   "opens": true,
+   "ours": {
+    "p3.borders": 1,
+    "targetPara.borders": 1
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > Rahmenlinie unten",
+   "file": "0120.docx",
+   "opens": true,
+   "ours": {
+    "p3.borders": 1,
+    "targetPara.borders": 1
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > Rahmenlinie oben",
+   "file": "0121.docx",
+   "opens": true,
+   "ours": {
+    "p3.borders": 1,
+    "targetPara.borders": 1
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > Rahmenlinie links",
+   "file": "0122.docx",
+   "opens": true,
+   "ours": {
+    "p3.borders": 1,
+    "targetPara.borders": 1
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > Rahmenlinie rechts",
+   "file": "0123.docx",
+   "opens": true,
+   "ours": {
+    "p3.borders": 1,
+    "targetPara.borders": 1
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > Alle Rahmenlinien",
+   "file": "0124.docx",
+   "opens": true,
+   "ours": {
+    "p3.borders": 4,
+    "targetPara.borders": 4
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > Rahmenlinien außen",
+   "file": "0125.docx",
+   "opens": true,
+   "ours": {
+    "p3.borders": 4,
+    "targetPara.borders": 4
+   }
+  },
+  {
+   "path": "Start > Absatz / Weitere Optionen [split-arrow] > Rahmenlinien innen",
+   "file": "0126.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Start > Absatz / Absatz... [launcher] > OK",
+   "file": "0127.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Start > Formatvorlagen / Standard [gallery-item]",
+   "file": "0128.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Start > Formatvorlagen / Kein Leerraum [gallery-item]",
+   "file": "0129.docx",
+   "opens": true,
+   "ours": {
+    "p3.line": 12.0,
+    "p3.lineRule": 0,
+    "p3.after": 0.0,
+    "p3.style": "Kein Leerraum",
+    "targetPara.line": 12.0,
+    "targetPara.lineRule": 0,
+    "targetPara.after": 0.0,
+    "targetPara.style": "Kein Leerraum",
+    "target.name": "Aptos"
+   },
+   "word": {
+    "p3.line": 12.0,
+    "p3.lineRule": 0,
+    "p3.after": 0.0,
+    "p3.style": "Kein Leerraum",
+    "targetPara.line": 12.0,
+    "targetPara.lineRule": 0,
+    "targetPara.after": 0.0,
+    "targetPara.style": "Kein Leerraum"
+   },
+   "same": false,
+   "diff": {
+    "target.name": {
+     "ours": "Aptos",
+     "word": "(unchanged)"
+    }
+   }
+  },
+  {
+   "path": "Start > Formatvorlagen / Überschrift 1 [gallery-item]",
+   "file": "0130.docx",
+   "opens": true,
+   "ours": {
+    "p3.keepNext": -1,
+    "p3.after": 4.0,
+    "p3.before": 18.0,
+    "p3.style": "Überschrift 1",
+    "targetPara.keepNext": -1,
+    "targetPara.after": 4.0,
+    "targetPara.before": 18.0,
+    "targetPara.style": "Überschrift 1",
+    "target.color": -738148353,
+    "target.name": "Calibri Light",
+    "target.size": 20.0
+   },
+   "word": {
+    "p3.keepNext": -1,
+    "p3.after": 4.0,
+    "p3.before": 18.0,
+    "p3.style": "Überschrift 1",
+    "targetPara.keepNext": -1,
+    "targetPara.after": 4.0,
+    "targetPara.before": 18.0,
+    "targetPara.style": "Überschrift 1",
+    "target.color": -738148353,
+    "target.name": "Calibri Light",
+    "target.size": 20.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Formatvorlagen / Überschrift 2 [gallery-item]",
+   "file": "0131.docx",
+   "opens": true,
+   "ours": {
+    "p3.keepNext": -1,
+    "p3.after": 4.0,
+    "p3.before": 8.0,
+    "p3.style": "Überschrift 2",
+    "targetPara.keepNext": -1,
+    "targetPara.after": 4.0,
+    "targetPara.before": 8.0,
+    "targetPara.style": "Überschrift 2",
+    "target.color": -738148353,
+    "target.name": "Aptos Display",
+    "target.size": 16.0
+   },
+   "word": {
+    "p3.keepNext": -1,
+    "p3.after": 4.0,
+    "p3.before": 8.0,
+    "p3.style": "Überschrift 2",
+    "targetPara.keepNext": -1,
+    "targetPara.after": 4.0,
+    "targetPara.before": 8.0,
+    "targetPara.style": "Überschrift 2",
+    "target.color": -738148353,
+    "target.name": "Aptos Display",
+    "target.size": 16.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Formatvorlagen / Titel [gallery-item]",
+   "file": "0132.docx",
+   "opens": true,
+   "ours": {
+    "p3.line": 12.0,
+    "p3.lineRule": 0,
+    "p3.after": 4.0,
+    "p3.style": "Titel",
+    "targetPara.line": 12.0,
+    "targetPara.lineRule": 0,
+    "targetPara.after": 4.0,
+    "targetPara.style": "Titel",
+    "target.spacing": -0.5,
+    "target.name": "Aptos Display",
+    "target.size": 28.0
+   },
+   "word": {
+    "p3.line": 12.0,
+    "p3.lineRule": 0,
+    "p3.after": 4.0,
+    "p3.style": "Titel",
+    "targetPara.line": 12.0,
+    "targetPara.lineRule": 0,
+    "targetPara.after": 4.0,
+    "targetPara.style": "Titel",
+    "target.spacing": -0.5,
+    "target.name": "Aptos Display",
+    "target.size": 28.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Formatvorlagen / Untertitel [gallery-item]",
+   "file": "0133.docx",
+   "opens": true,
+   "ours": {
+    "p3.style": "Untertitel",
+    "targetPara.style": "Untertitel",
+    "target.spacing": 0.8,
+    "target.color": -587137114,
+    "target.name": "Aptos",
+    "target.size": 14.0
+   },
+   "word": {
+    "p3.style": "Untertitel",
+    "targetPara.style": "Untertitel",
+    "target.spacing": 0.8,
+    "target.color": -587137114,
+    "target.name": "Aptos",
+    "target.size": 14.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Start > Formatvorlagen / Weitere [gallery-more] > Standard",
+   "file": "0134.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Start > Formatvorlagen / Weitere [gallery-more] > Kein Leerraum",
+   "file": "0135.docx",
+   "opens": true,
+   "ours": {
+    "p3.line": 12.0,
+    "p3.lineRule": 0,
+    "p3.after": 0.0,
+    "p3.style": "Kein Leerraum",
+    "targetPara.line": 12.0,
+    "targetPara.lineRule": 0,
+    "targetPara.after": 0.0,
+    "targetPara.style": "Kein Leerraum",
+    "target.name": "Aptos"
+   }
+  },
+  {
+   "path": "Start > Formatvorlagen / Weitere [gallery-more] > Überschrift 1",
+   "file": "0136.docx",
+   "opens": true,
+   "ours": {
+    "p3.keepNext": -1,
+    "p3.after": 4.0,
+    "p3.before": 18.0,
+    "p3.style": "Überschrift 1",
+    "targetPara.keepNext": -1,
+    "targetPara.after": 4.0,
+    "targetPara.before": 18.0,
+    "targetPara.style": "Überschrift 1",
+    "target.color": -738148353,
+    "target.name": "Calibri Light",
+    "target.size": 20.0
+   }
+  },
+  {
+   "path": "Start > Formatvorlagen / Weitere [gallery-more] > Überschrift 2",
+   "file": "0137.docx",
+   "opens": true,
+   "ours": {
+    "p3.keepNext": -1,
+    "p3.after": 4.0,
+    "p3.before": 8.0,
+    "p3.style": "Überschrift 2",
+    "targetPara.keepNext": -1,
+    "targetPara.after": 4.0,
+    "targetPara.before": 8.0,
+    "targetPara.style": "Überschrift 2",
+    "target.color": -738148353,
+    "target.name": "Aptos Display",
+    "target.size": 16.0
+   }
+  },
+  {
+   "path": "Start > Formatvorlagen / Weitere [gallery-more] > Intensiver Verweis",
+   "file": "0138.docx",
+   "opens": true,
+   "ours": {
+    "target.bold": -1,
+    "target.spacing": 0.2,
+    "target.color": -738148353,
+    "target.smallcaps": -1
+   }
+  },
+  {
+   "path": "Start > Formatvorlagen / Weitere [gallery-more] > Buchtitel",
+   "file": "0139.docx",
+   "opens": true,
+   "ours": {
+    "target.bold": -1,
+    "target.spacing": 0.2,
+    "target.italic": -1
+   }
+  },
+  {
+   "path": "Start > Formatvorlagen / Weitere [gallery-more] > Listenabsatz",
+   "file": "0140.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 36.0,
+    "p3.style": "Listenabsatz",
+    "targetPara.left": 36.0,
+    "targetPara.style": "Listenabsatz"
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Seitenränder [dropdown] > NormalOben: 2,5 cm Unten: 2 cm Links: 2,5 cm Rechts: 2,5 cm",
+   "file": "0141.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Seitenränder [dropdown] > SchmalOben: 1,27 cm Unten: 1,27 cm Links: 1,27 cm Rechts: 1,27 cm",
+   "file": "0142.docx",
+   "opens": true,
+   "ours": {
+    "page.left": 36.0,
+    "page.right": 36.0,
+    "page.top": 36.0,
+    "page.bottom": 36.0
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Seitenränder [dropdown] > MittelOben: 2,54 cm Unten: 2,54 cm Links: 1,91 cm Rechts: 1,91 cm",
+   "file": "0143.docx",
+   "opens": true,
+   "ours": {
+    "page.left": 54.2,
+    "page.right": 54.2,
+    "page.top": 72.0,
+    "page.bottom": 72.0
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Seitenränder [dropdown] > BreitOben: 2,54 cm Unten: 2,54 cm Links: 5,08 cm Rechts: 5,08 cm",
+   "file": "0144.docx",
+   "opens": true,
+   "ours": {
+    "page.left": 144.0,
+    "page.right": 144.0,
+    "page.top": 72.0,
+    "page.bottom": 72.0
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Seitenränder [dropdown] > Benutzerdefinierte Seitenränder... > OK",
+   "file": "0145.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Ausrichtung [dropdown] > Querformat",
+   "file": "0146.docx",
+   "opens": true,
+   "ours": {
+    "page.w": 841.9,
+    "page.right": 56.7,
+    "page.orient": 1,
+    "page.h": 595.3,
+    "page.bottom": 70.8
+   },
+   "word": {
+    "page.w": 841.9,
+    "page.right": 56.7,
+    "page.orient": 1,
+    "page.h": 595.3,
+    "page.bottom": 70.8
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Format [dropdown] > A329,7 cm x 42 cm",
+   "file": "0147.docx",
+   "opens": true,
+   "ours": {
+    "page.w": 841.9,
+    "page.h": 1190.6
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Format [dropdown] > A514,8 cm x 21 cm",
+   "file": "0148.docx",
+   "opens": true,
+   "ours": {
+    "page.w": 419.5,
+    "page.h": 595.3
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Format [dropdown] > B5 (JIS)18,2 cm x 25,7 cm",
+   "file": "0149.docx",
+   "opens": true,
+   "ours": {
+    "page.w": 516.0,
+    "page.h": 728.5
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Format [dropdown] > Letter21,59 cm x 27,94 cm",
+   "file": "0150.docx",
+   "opens": true,
+   "ours": {
+    "page.w": 612.0,
+    "page.h": 792.0
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Format [dropdown] > Legal21,59 cm x 35,56 cm",
+   "file": "0151.docx",
+   "opens": true,
+   "ours": {
+    "page.w": 612.0,
+    "page.h": 1008.0
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Format [dropdown] > Weitere Papierformate... > OK",
+   "file": "0152.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Spalten [dropdown] > Zwei",
+   "file": "0153.docx",
+   "opens": true,
+   "ours": {
+    "page.cols": 2
+   },
+   "word": {
+    "page.cols": 2
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Spalten [dropdown] > Drei",
+   "file": "0154.docx",
+   "opens": true,
+   "ours": {
+    "page.cols": 3
+   },
+   "word": {
+    "page.cols": 3
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Spalten [dropdown] > Links",
+   "file": "0155.docx",
+   "opens": true,
+   "ours": {
+    "page.cols": 2
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Spalten [dropdown] > Rechts",
+   "file": "0156.docx",
+   "opens": true,
+   "ours": {
+    "page.cols": 2
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Spalten [dropdown] > Weitere Spalten... > OK",
+   "file": "0157.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Umbrüche [dropdown] > Seite",
+   "file": "0158.docx",
+   "opens": true,
+   "ours": {
+    "p7.left": 36.0,
+    "p7.list": "",
+    "p7.level": 1,
+    "p7.listType": 2,
+    "p7.style": "Listenabsatz",
+    "p7.first": -18.0,
+    "words": 66,
+    "pages": 2,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \n\f\n aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "p9.left": 0.0,
+    "p9.keepNext": 0,
+    "p9.line": 12.9,
+    "p9.lineRule": 5,
+    "p9.after": 8.0,
+    "p9.right": 0.0,
+    "p9.shading": -16777216,
+    "p9.list": "",
+    "p9.level": 0,
+    "p9.listType": 0,
+    "p9.before": 0.0,
+    "p9.style": "Standard",
+    "p9.align": 0,
+    "p9.pageBreakBefore": 0,
+    "p9.borders": 0,
+    "p9.first": 0.0,
+    "paras": 25,
+    "targetPara.left": null,
+    "targetPara.keepNext": null,
+    "targetPara.line": null,
+    "targetPara.lineRule": null,
+    "targetPara.after": null,
+    "targetPara.right": null,
+    "targetPara.shading": null,
+    "targetPara.list": null,
+    "targetPara.level": null,
+    "targetPara.listType": null,
+    "targetPara.before": null,
+    "targetPara.style": null,
+    "targetPara.align": null,
+    "targetPara.pageBreakBefore": null,
+    "targetPara.borders": null,
+    "targetPara.first": null,
+    "p5.left": 0.0,
+    "p5.list": "",
+    "p5.level": 0,
+    "p5.listType": 0,
+    "p5.style": "Standard",
+    "p5.first": 0.0,
+    "targetHighlight": null,
+    "target.bold": null,
+    "target.hidden": null,
+    "target.spacing": null,
+    "target.color": null,
+    "target.smallcaps": null,
+    "target.name": null,
+    "target.dstrike": null,
+    "target.styleSet": null,
+    "target.sub": null,
+    "target.caps": null,
+    "target.strike": null,
+    "target.sup": null,
+    "target.underline": null,
+    "target.italic": null,
+    "target.lig": null,
+    "target.size": null,
+    "target.numSpacing": null,
+    "target.numForm": null,
+    "targetText": null,
+    "p8.left": 36.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 1,
+    "p8.listType": 2,
+    "p8.before": 0.0,
+    "p8.style": "Listenabsatz",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": -18.0,
+    "p4.left": 0.0,
+    "p4.list": "",
+    "p4.level": 0,
+    "p4.listType": 0,
+    "p4.style": "Standard",
+    "p4.first": 0.0
+   },
+   "word": {
+    "p7.left": 36.0,
+    "p7.list": "",
+    "p7.level": 1,
+    "p7.listType": 2,
+    "p7.style": "Listenabsatz",
+    "p7.first": -18.0,
+    "words": 66,
+    "pages": 2,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \n\f\n aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "p9.left": 0.0,
+    "p9.keepNext": 0,
+    "p9.line": 12.9,
+    "p9.lineRule": 5,
+    "p9.after": 8.0,
+    "p9.right": 0.0,
+    "p9.shading": -16777216,
+    "p9.list": "",
+    "p9.level": 0,
+    "p9.listType": 0,
+    "p9.before": 0.0,
+    "p9.style": "Standard",
+    "p9.align": 0,
+    "p9.pageBreakBefore": 0,
+    "p9.borders": 0,
+    "p9.first": 0.0,
+    "paras": 25,
+    "targetPara.left": null,
+    "targetPara.keepNext": null,
+    "targetPara.line": null,
+    "targetPara.lineRule": null,
+    "targetPara.after": null,
+    "targetPara.right": null,
+    "targetPara.shading": null,
+    "targetPara.list": null,
+    "targetPara.level": null,
+    "targetPara.listType": null,
+    "targetPara.before": null,
+    "targetPara.style": null,
+    "targetPara.align": null,
+    "targetPara.pageBreakBefore": null,
+    "targetPara.borders": null,
+    "targetPara.first": null,
+    "p5.left": 0.0,
+    "p5.list": "",
+    "p5.level": 0,
+    "p5.listType": 0,
+    "p5.style": "Standard",
+    "p5.first": 0.0,
+    "targetHighlight": null,
+    "target.bold": null,
+    "target.hidden": null,
+    "target.spacing": null,
+    "target.color": null,
+    "target.smallcaps": null,
+    "target.name": null,
+    "target.dstrike": null,
+    "target.styleSet": null,
+    "target.sub": null,
+    "target.caps": null,
+    "target.strike": null,
+    "target.sup": null,
+    "target.underline": null,
+    "target.italic": null,
+    "target.lig": null,
+    "target.size": null,
+    "target.numSpacing": null,
+    "target.numForm": null,
+    "targetText": null,
+    "p8.left": 36.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 1,
+    "p8.listType": 2,
+    "p8.before": 0.0,
+    "p8.style": "Listenabsatz",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": -18.0,
+    "p4.left": 0.0,
+    "p4.list": "",
+    "p4.level": 0,
+    "p4.listType": 0,
+    "p4.style": "Standard",
+    "p4.first": 0.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Umbrüche [dropdown] > Spalte",
+   "file": "0159.docx",
+   "opens": true,
+   "ours": {
+    "p7.left": 36.0,
+    "p7.list": "",
+    "p7.level": 1,
+    "p7.listType": 2,
+    "p7.style": "Listenabsatz",
+    "p7.first": -18.0,
+    "words": 66,
+    "pages": 2,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \n\u000e aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "targetPara.left": null,
+    "targetPara.keepNext": null,
+    "targetPara.line": null,
+    "targetPara.lineRule": null,
+    "targetPara.after": null,
+    "targetPara.right": null,
+    "targetPara.shading": null,
+    "targetPara.list": null,
+    "targetPara.level": null,
+    "targetPara.listType": null,
+    "targetPara.before": null,
+    "targetPara.style": null,
+    "targetPara.align": null,
+    "targetPara.pageBreakBefore": null,
+    "targetPara.borders": null,
+    "targetPara.first": null,
+    "targetHighlight": null,
+    "target.bold": null,
+    "target.hidden": null,
+    "target.spacing": null,
+    "target.color": null,
+    "target.smallcaps": null,
+    "target.name": null,
+    "target.dstrike": null,
+    "target.styleSet": null,
+    "target.sub": null,
+    "target.caps": null,
+    "target.strike": null,
+    "target.sup": null,
+    "target.underline": null,
+    "target.italic": null,
+    "target.lig": null,
+    "target.size": null,
+    "target.numSpacing": null,
+    "target.numForm": null,
+    "targetText": null,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0,
+    "p4.left": 0.0,
+    "p4.list": "",
+    "p4.level": 0,
+    "p4.listType": 0,
+    "p4.style": "Standard",
+    "p4.first": 0.0
+   },
+   "word": {
+    "p7.left": 36.0,
+    "p7.list": "",
+    "p7.level": 1,
+    "p7.listType": 2,
+    "p7.style": "Listenabsatz",
+    "p7.first": -18.0,
+    "words": 66,
+    "pages": 2,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \n\u000e aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "targetPara.left": null,
+    "targetPara.keepNext": null,
+    "targetPara.line": null,
+    "targetPara.lineRule": null,
+    "targetPara.after": null,
+    "targetPara.right": null,
+    "targetPara.shading": null,
+    "targetPara.list": null,
+    "targetPara.level": null,
+    "targetPara.listType": null,
+    "targetPara.before": null,
+    "targetPara.style": null,
+    "targetPara.align": null,
+    "targetPara.pageBreakBefore": null,
+    "targetPara.borders": null,
+    "targetPara.first": null,
+    "targetHighlight": null,
+    "target.bold": null,
+    "target.hidden": null,
+    "target.spacing": null,
+    "target.color": null,
+    "target.smallcaps": null,
+    "target.name": null,
+    "target.dstrike": null,
+    "target.styleSet": null,
+    "target.sub": null,
+    "target.caps": null,
+    "target.strike": null,
+    "target.sup": null,
+    "target.underline": null,
+    "target.italic": null,
+    "target.lig": null,
+    "target.size": null,
+    "target.numSpacing": null,
+    "target.numForm": null,
+    "targetText": null,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0,
+    "p4.left": 0.0,
+    "p4.list": "",
+    "p4.level": 0,
+    "p4.listType": 0,
+    "p4.style": "Standard",
+    "p4.first": 0.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Umbrüche [dropdown] > Textumbruch",
+   "file": "0160.docx",
+   "opens": true,
+   "ours": {
+    "words": 66,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \u000b aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "targetPara.left": null,
+    "targetPara.keepNext": null,
+    "targetPara.line": null,
+    "targetPara.lineRule": null,
+    "targetPara.after": null,
+    "targetPara.right": null,
+    "targetPara.shading": null,
+    "targetPara.list": null,
+    "targetPara.level": null,
+    "targetPara.listType": null,
+    "targetPara.before": null,
+    "targetPara.style": null,
+    "targetPara.align": null,
+    "targetPara.pageBreakBefore": null,
+    "targetPara.borders": null,
+    "targetPara.first": null,
+    "targetHighlight": null,
+    "target.bold": null,
+    "target.hidden": null,
+    "target.spacing": null,
+    "target.color": null,
+    "target.smallcaps": null,
+    "target.name": null,
+    "target.dstrike": null,
+    "target.styleSet": null,
+    "target.sub": null,
+    "target.caps": null,
+    "target.strike": null,
+    "target.sup": null,
+    "target.underline": null,
+    "target.italic": null,
+    "target.lig": null,
+    "target.size": null,
+    "target.numSpacing": null,
+    "target.numForm": null,
+    "targetText": null
+   },
+   "word": {
+    "words": 66,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \u000b aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "targetPara.left": null,
+    "targetPara.keepNext": null,
+    "targetPara.line": null,
+    "targetPara.lineRule": null,
+    "targetPara.after": null,
+    "targetPara.right": null,
+    "targetPara.shading": null,
+    "targetPara.list": null,
+    "targetPara.level": null,
+    "targetPara.listType": null,
+    "targetPara.before": null,
+    "targetPara.style": null,
+    "targetPara.align": null,
+    "targetPara.pageBreakBefore": null,
+    "targetPara.borders": null,
+    "targetPara.first": null,
+    "targetHighlight": null,
+    "target.bold": null,
+    "target.hidden": null,
+    "target.spacing": null,
+    "target.color": null,
+    "target.smallcaps": null,
+    "target.name": null,
+    "target.dstrike": null,
+    "target.styleSet": null,
+    "target.sub": null,
+    "target.caps": null,
+    "target.strike": null,
+    "target.sup": null,
+    "target.underline": null,
+    "target.italic": null,
+    "target.lig": null,
+    "target.size": null,
+    "target.numSpacing": null,
+    "target.numForm": null,
+    "targetText": null
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Umbrüche [dropdown] > Nächste Seite",
+   "file": "0161.docx",
+   "opens": true,
+   "ours": {
+    "p7.left": 36.0,
+    "p7.list": "",
+    "p7.level": 1,
+    "p7.listType": 2,
+    "p7.style": "Listenabsatz",
+    "p7.first": -18.0,
+    "words": 66,
+    "pages": 2,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \f aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "targetPara.left": null,
+    "targetPara.keepNext": null,
+    "targetPara.line": null,
+    "targetPara.lineRule": null,
+    "targetPara.after": null,
+    "targetPara.right": null,
+    "targetPara.shading": null,
+    "targetPara.list": null,
+    "targetPara.level": null,
+    "targetPara.listType": null,
+    "targetPara.before": null,
+    "targetPara.style": null,
+    "targetPara.align": null,
+    "targetPara.pageBreakBefore": null,
+    "targetPara.borders": null,
+    "targetPara.first": null,
+    "targetHighlight": null,
+    "target.bold": null,
+    "target.hidden": null,
+    "target.spacing": null,
+    "target.color": null,
+    "target.smallcaps": null,
+    "target.name": null,
+    "target.dstrike": null,
+    "target.styleSet": null,
+    "target.sub": null,
+    "target.caps": null,
+    "target.strike": null,
+    "target.sup": null,
+    "target.underline": null,
+    "target.italic": null,
+    "target.lig": null,
+    "target.size": null,
+    "target.numSpacing": null,
+    "target.numForm": null,
+    "targetText": null,
+    "sections": 2,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0,
+    "p4.left": 0.0,
+    "p4.list": "",
+    "p4.level": 0,
+    "p4.listType": 0,
+    "p4.style": "Standard",
+    "p4.first": 0.0
+   },
+   "word": {
+    "p7.left": 36.0,
+    "p7.list": "",
+    "p7.level": 1,
+    "p7.listType": 2,
+    "p7.style": "Listenabsatz",
+    "p7.first": -18.0,
+    "pages": 2,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \fweitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "sections": 2,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0,
+    "p4.left": 0.0,
+    "p4.list": "",
+    "p4.level": 0,
+    "p4.listType": 0,
+    "p4.style": "Standard",
+    "p4.first": 0.0
+   },
+   "same": false,
+   "diff": {
+    "targetPara.list": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.smallcaps": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.hidden": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "words": {
+     "ours": 66,
+     "word": "(unchanged)"
+    },
+    "target.underline": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.line": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.lig": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "text": {
+     "ours": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \f aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+     "word": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \fweitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n"
+    },
+    "targetPara.before": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.color": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.shading": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.listType": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.caps": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.align": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.right": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetText": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.numSpacing": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.styleSet": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.sup": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.dstrike": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.name": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.sub": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.style": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.strike": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.level": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.first": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.italic": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.lineRule": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.bold": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.size": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.after": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.keepNext": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.borders": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetHighlight": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.pageBreakBefore": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.numForm": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.left": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.spacing": {
+     "ours": null,
+     "word": "(unchanged)"
+    }
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Umbrüche [dropdown] > Fortlaufend",
+   "file": "0162.docx",
+   "opens": true,
+   "ours": {
+    "p7.left": 36.0,
+    "p7.list": "",
+    "p7.level": 1,
+    "p7.listType": 2,
+    "p7.style": "Listenabsatz",
+    "p7.first": -18.0,
+    "words": 66,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \f aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "targetPara.left": null,
+    "targetPara.keepNext": null,
+    "targetPara.line": null,
+    "targetPara.lineRule": null,
+    "targetPara.after": null,
+    "targetPara.right": null,
+    "targetPara.shading": null,
+    "targetPara.list": null,
+    "targetPara.level": null,
+    "targetPara.listType": null,
+    "targetPara.before": null,
+    "targetPara.style": null,
+    "targetPara.align": null,
+    "targetPara.pageBreakBefore": null,
+    "targetPara.borders": null,
+    "targetPara.first": null,
+    "targetHighlight": null,
+    "target.bold": null,
+    "target.hidden": null,
+    "target.spacing": null,
+    "target.color": null,
+    "target.smallcaps": null,
+    "target.name": null,
+    "target.dstrike": null,
+    "target.styleSet": null,
+    "target.sub": null,
+    "target.caps": null,
+    "target.strike": null,
+    "target.sup": null,
+    "target.underline": null,
+    "target.italic": null,
+    "target.lig": null,
+    "target.size": null,
+    "target.numSpacing": null,
+    "target.numForm": null,
+    "targetText": null,
+    "sections": 2,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0,
+    "p4.left": 0.0,
+    "p4.list": "",
+    "p4.level": 0,
+    "p4.listType": 0,
+    "p4.style": "Standard",
+    "p4.first": 0.0
+   },
+   "word": {
+    "p7.left": 36.0,
+    "p7.list": "",
+    "p7.level": 1,
+    "p7.listType": 2,
+    "p7.style": "Listenabsatz",
+    "p7.first": -18.0,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \fweitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "sections": 2,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0,
+    "p4.left": 0.0,
+    "p4.list": "",
+    "p4.level": 0,
+    "p4.listType": 0,
+    "p4.style": "Standard",
+    "p4.first": 0.0
+   },
+   "same": false,
+   "diff": {
+    "targetPara.list": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.smallcaps": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.hidden": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "words": {
+     "ours": 66,
+     "word": "(unchanged)"
+    },
+    "target.underline": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.line": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.lig": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "text": {
+     "ours": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \f aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+     "word": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \fweitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n"
+    },
+    "targetPara.before": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.color": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.shading": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.listType": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.caps": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.align": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.right": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetText": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.numSpacing": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.styleSet": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.sup": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.dstrike": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.name": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.sub": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.style": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.strike": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.level": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.first": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.italic": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.lineRule": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.bold": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.size": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.after": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.keepNext": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.borders": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetHighlight": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.pageBreakBefore": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.numForm": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.left": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.spacing": {
+     "ours": null,
+     "word": "(unchanged)"
+    }
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Umbrüche [dropdown] > Gerade Seite",
+   "file": "0163.docx",
+   "opens": true,
+   "ours": {
+    "p7.left": 36.0,
+    "p7.list": "",
+    "p7.level": 1,
+    "p7.listType": 2,
+    "p7.style": "Listenabsatz",
+    "p7.first": -18.0,
+    "words": 66,
+    "pages": 2,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \f aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "targetPara.left": null,
+    "targetPara.keepNext": null,
+    "targetPara.line": null,
+    "targetPara.lineRule": null,
+    "targetPara.after": null,
+    "targetPara.right": null,
+    "targetPara.shading": null,
+    "targetPara.list": null,
+    "targetPara.level": null,
+    "targetPara.listType": null,
+    "targetPara.before": null,
+    "targetPara.style": null,
+    "targetPara.align": null,
+    "targetPara.pageBreakBefore": null,
+    "targetPara.borders": null,
+    "targetPara.first": null,
+    "targetHighlight": null,
+    "target.bold": null,
+    "target.hidden": null,
+    "target.spacing": null,
+    "target.color": null,
+    "target.smallcaps": null,
+    "target.name": null,
+    "target.dstrike": null,
+    "target.styleSet": null,
+    "target.sub": null,
+    "target.caps": null,
+    "target.strike": null,
+    "target.sup": null,
+    "target.underline": null,
+    "target.italic": null,
+    "target.lig": null,
+    "target.size": null,
+    "target.numSpacing": null,
+    "target.numForm": null,
+    "targetText": null,
+    "sections": 2,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0,
+    "p4.left": 0.0,
+    "p4.list": "",
+    "p4.level": 0,
+    "p4.listType": 0,
+    "p4.style": "Standard",
+    "p4.first": 0.0
+   },
+   "word": {
+    "p7.left": 36.0,
+    "p7.list": "",
+    "p7.level": 1,
+    "p7.listType": 2,
+    "p7.style": "Listenabsatz",
+    "p7.first": -18.0,
+    "pages": 2,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \fweitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "sections": 2,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0,
+    "p4.left": 0.0,
+    "p4.list": "",
+    "p4.level": 0,
+    "p4.listType": 0,
+    "p4.style": "Standard",
+    "p4.first": 0.0
+   },
+   "same": false,
+   "diff": {
+    "targetPara.list": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.smallcaps": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.hidden": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "words": {
+     "ours": 66,
+     "word": "(unchanged)"
+    },
+    "target.underline": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.line": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.lig": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "text": {
+     "ours": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \f aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+     "word": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \fweitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n"
+    },
+    "targetPara.before": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.color": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.shading": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.listType": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.caps": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.align": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.right": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetText": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.numSpacing": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.styleSet": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.sup": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.dstrike": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.name": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.sub": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.style": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.strike": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.level": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.first": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.italic": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.lineRule": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.bold": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.size": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.after": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.keepNext": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.borders": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetHighlight": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.pageBreakBefore": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.numForm": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.left": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.spacing": {
+     "ours": null,
+     "word": "(unchanged)"
+    }
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Umbrüche [dropdown] > Ungerade Seite",
+   "file": "0164.docx",
+   "opens": true,
+   "ours": {
+    "p7.left": 36.0,
+    "p7.list": "",
+    "p7.level": 1,
+    "p7.listType": 2,
+    "p7.style": "Listenabsatz",
+    "p7.first": -18.0,
+    "words": 66,
+    "pages": 3,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \f aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "targetPara.left": null,
+    "targetPara.keepNext": null,
+    "targetPara.line": null,
+    "targetPara.lineRule": null,
+    "targetPara.after": null,
+    "targetPara.right": null,
+    "targetPara.shading": null,
+    "targetPara.list": null,
+    "targetPara.level": null,
+    "targetPara.listType": null,
+    "targetPara.before": null,
+    "targetPara.style": null,
+    "targetPara.align": null,
+    "targetPara.pageBreakBefore": null,
+    "targetPara.borders": null,
+    "targetPara.first": null,
+    "targetHighlight": null,
+    "target.bold": null,
+    "target.hidden": null,
+    "target.spacing": null,
+    "target.color": null,
+    "target.smallcaps": null,
+    "target.name": null,
+    "target.dstrike": null,
+    "target.styleSet": null,
+    "target.sub": null,
+    "target.caps": null,
+    "target.strike": null,
+    "target.sup": null,
+    "target.underline": null,
+    "target.italic": null,
+    "target.lig": null,
+    "target.size": null,
+    "target.numSpacing": null,
+    "target.numForm": null,
+    "targetText": null,
+    "sections": 2,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0,
+    "p4.left": 0.0,
+    "p4.list": "",
+    "p4.level": 0,
+    "p4.listType": 0,
+    "p4.style": "Standard",
+    "p4.first": 0.0
+   },
+   "word": {
+    "p7.left": 36.0,
+    "p7.list": "",
+    "p7.level": 1,
+    "p7.listType": 2,
+    "p7.style": "Listenabsatz",
+    "p7.first": -18.0,
+    "pages": 3,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \fweitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "sections": 2,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0,
+    "p4.left": 0.0,
+    "p4.list": "",
+    "p4.level": 0,
+    "p4.listType": 0,
+    "p4.style": "Standard",
+    "p4.first": 0.0
+   },
+   "same": false,
+   "diff": {
+    "targetPara.list": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.smallcaps": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.hidden": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "words": {
+     "ours": 66,
+     "word": "(unchanged)"
+    },
+    "target.underline": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.line": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.lig": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "text": {
+     "ours": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \f aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+     "word": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen \fweitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n"
+    },
+    "targetPara.before": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.color": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.shading": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.listType": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.caps": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.align": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.right": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetText": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.numSpacing": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.styleSet": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.sup": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.dstrike": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.name": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.sub": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.style": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.strike": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.level": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.first": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.italic": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.lineRule": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.bold": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.size": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.after": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.keepNext": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.borders": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetHighlight": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.pageBreakBefore": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.numForm": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "targetPara.left": {
+     "ours": null,
+     "word": "(unchanged)"
+    },
+    "target.spacing": {
+     "ours": null,
+     "word": "(unchanged)"
+    }
+   }
+  },
+  {
+   "path": "Layout > Seite einrichten / Zeilennummern [dropdown] > Fortlaufend",
+   "file": "0165.docx",
+   "opens": true,
+   "ours": {
+    "page.lineNumbers": -1
+   },
+   "word": {
+    "page.lineNumbers": -1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Zeilennummern [dropdown] > Jede Seite neu beginnen",
+   "file": "0166.docx",
+   "opens": true,
+   "ours": {
+    "page.lineNumbers": -1
+   },
+   "word": {
+    "page.lineNumbers": -1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Zeilennummern [dropdown] > Jeden Abschnitt neu beginnen",
+   "file": "0167.docx",
+   "opens": true,
+   "ours": {
+    "page.lineNumbers": -1
+   },
+   "word": {
+    "page.lineNumbers": -1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Zeilennummern [dropdown] > Für aktuellen Absatz unterdrücken",
+   "file": "0168.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Zeilennummern [dropdown] > Zeilennummerierungsoptionen... > OK",
+   "file": "0169.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Silbentrennung [dropdown] > Keine",
+   "file": "0170.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Silbentrennung [dropdown] > Automatisch",
+   "file": "0171.docx",
+   "opens": true,
+   "ours": {
+    "hyphenation": true
+   },
+   "word": {
+    "hyphenation": true
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Silbentrennung [dropdown] > Silbentrennungsoptionen... > OK",
+   "file": "0172.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Layout > Seite einrichten / Seite einrichten [launcher] > OK",
+   "file": "0173.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Layout > Absatz / Links: [spinner-input] = 1",
+   "file": "0174.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 28.4,
+    "targetPara.left": 28.4
+   },
+   "word": {
+    "p3.left": 28.4,
+    "targetPara.left": 28.4
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Absatz / Mehr [spinner-step]",
+   "file": "0175.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": 2.8,
+    "targetPara.left": 2.8
+   }
+  },
+  {
+   "path": "Layout > Absatz / Weniger [spinner-step]",
+   "file": "0176.docx",
+   "opens": true,
+   "ours": {
+    "p3.left": -2.8,
+    "targetPara.left": -2.8
+   }
+  },
+  {
+   "path": "Layout > Absatz / Rechts: [spinner-input] = 1",
+   "file": "0177.docx",
+   "opens": true,
+   "ours": {
+    "p3.right": 28.4,
+    "targetPara.right": 28.4
+   },
+   "word": {
+    "p3.right": 28.4,
+    "targetPara.right": 28.4
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Absatz / Mehr [spinner-step]",
+   "file": "0178.docx",
+   "opens": true,
+   "ours": {
+    "p3.right": 2.8,
+    "targetPara.right": 2.8
+   }
+  },
+  {
+   "path": "Layout > Absatz / Weniger [spinner-step]",
+   "file": "0179.docx",
+   "opens": true,
+   "ours": {
+    "p3.right": -2.8,
+    "targetPara.right": -2.8
+   }
+  },
+  {
+   "path": "Layout > Absatz / Vor: [spinner-input] = 1",
+   "file": "0180.docx",
+   "opens": true,
+   "ours": {
+    "p3.before": 1.0,
+    "targetPara.before": 1.0
+   },
+   "word": {
+    "p3.before": 1.0,
+    "targetPara.before": 1.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Absatz / Mehr [spinner-step]",
+   "file": "0181.docx",
+   "opens": true,
+   "ours": {
+    "p3.before": 6.0,
+    "targetPara.before": 6.0
+   }
+  },
+  {
+   "path": "Layout > Absatz / Weniger [spinner-step]",
+   "file": "0182.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Layout > Absatz / Nach: [spinner-input] = 1",
+   "file": "0183.docx",
+   "opens": true,
+   "ours": {
+    "p3.after": 1.0,
+    "targetPara.after": 1.0
+   },
+   "word": {
+    "p3.after": 1.0,
+    "targetPara.after": 1.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Layout > Absatz / Mehr [spinner-step]",
+   "file": "0184.docx",
+   "opens": true,
+   "ours": {
+    "p3.after": 12.0,
+    "targetPara.after": 12.0
+   }
+  },
+  {
+   "path": "Layout > Absatz / Weniger [spinner-step]",
+   "file": "0185.docx",
+   "opens": true,
+   "ours": {
+    "p3.after": 6.0,
+    "targetPara.after": 6.0
+   }
+  },
+  {
+   "path": "Layout > Absatz / Absatz... [launcher] > OK",
+   "file": "0186.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatoptionen / Kopfzeile [check]",
+   "file": "0187.docx",
+   "opens": true,
+   "ours": {
+    "table1.hdr": false
+   },
+   "word": {
+    "table1.hdr": false
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatoptionen / Ergebniszeile [check]",
+   "file": "0188.docx",
+   "opens": true,
+   "ours": {
+    "table1.lastRow": true
+   },
+   "word": {
+    "table1.lastRow": true
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatoptionen / Gebänderte Zeilen [check]",
+   "file": "0189.docx",
+   "opens": true,
+   "ours": {
+    "table1.bandRows": false
+   },
+   "word": {
+    "table1.bandRows": false
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatoptionen / Erste Spalte [check]",
+   "file": "0190.docx",
+   "opens": true,
+   "ours": {
+    "table1.firstCol": false
+   },
+   "word": {
+    "table1.firstCol": false
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatoptionen / Letzte Spalte [check]",
+   "file": "0191.docx",
+   "opens": true,
+   "ours": {
+    "table1.lastCol": true
+   },
+   "word": {
+    "table1.lastCol": true
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatoptionen / Gebänderte Spalten [check]",
+   "file": "0192.docx",
+   "opens": true,
+   "ours": {
+    "table1.bandCols": true
+   },
+   "word": {
+    "table1.bandCols": true
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Tabelle mit hellem Gitternetz [gallery-item]",
+   "file": "0193.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Tabelle mit hellem Gitternetz"
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Einfache Tabelle 1 [gallery-item]",
+   "file": "0194.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Einfache Tabelle 1"
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Einfache Tabelle 2 [gallery-item]",
+   "file": "0195.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Einfache Tabelle 2"
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Einfache Tabelle 3 [gallery-item]",
+   "file": "0196.docx",
+   "opens": true,
+   "ours": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPFLANZE\n|HÖHE\n|WOCHE\n|\n|SONNENBLUME\n|120\n|8\n|\n|TOMATE\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "table1.style": "Einfache Tabelle 3",
+    "table1.cell11": "PFLANZE"
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Einfache Tabelle 4 [gallery-item]",
+   "file": "0197.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Einfache Tabelle 4"
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Einfache Tabelle 5 [gallery-item]",
+   "file": "0198.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Einfache Tabelle 5",
+    "table1.shade11": -603914241,
+    "table1.align21": 2
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Gitternetztabelle 1 hell [gallery-item]",
+   "file": "0199.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Gitternetztabelle 1 hell"
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Gitternetztabelle 1 hell – Akzent 1 [gallery-item]",
+   "file": "0200.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Gitternetztabelle 1 hell  – Akzent 1"
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Gitternetztabelle 1 hell – Akzent 3 [gallery-item]",
+   "file": "0201.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Gitternetztabelle 1 hell  – Akzent 3"
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Gitternetztabelle 1 hell – Akzent 4 [gallery-item]",
+   "file": "0202.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Gitternetztabelle 1 hell  – Akzent 4"
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Weitere [gallery-more] > Tabelle mit hellem Gitternetz",
+   "file": "0203.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Tabelle mit hellem Gitternetz"
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Weitere [gallery-more] > Einfache Tabelle 1",
+   "file": "0204.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Einfache Tabelle 1"
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Weitere [gallery-more] > Einfache Tabelle 2",
+   "file": "0205.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Einfache Tabelle 2"
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Weitere [gallery-more] > Listentabelle 4 – Akzent 4",
+   "file": "0206.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Listentabelle 4 – Akzent 4",
+    "table1.shade11": -687800321
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Weitere [gallery-more] > Listentabelle 4 – Akzent 5",
+   "file": "0207.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Listentabelle 4 – Akzent 5",
+    "table1.shade11": -671023105
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Weitere [gallery-more] > Listentabelle 4 – Akzent 6",
+   "file": "0208.docx",
+   "opens": true,
+   "ours": {
+    "table1.style": "Listentabelle 4 – Akzent 6",
+    "table1.shade11": -654245889
+   }
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Schattierung [color-main]",
+   "file": "0209.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Weitere Optionen [color-arrow] > Weiß, Hintergrund 1",
+   "file": "0210.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Weitere Optionen [color-arrow] > Schwarz, Text 1",
+   "file": "0211.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Weitere Optionen [color-arrow] > Hellgrau, Hintergrund 2",
+   "file": "0212.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Weitere Optionen [color-arrow] > Dunkelblau",
+   "file": "0213.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Weitere Optionen [color-arrow] > Lila",
+   "file": "0214.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenentwurf > Tabellenformatvorlagen / Weitere Optionen [color-arrow] > Weitere Farben... > OK",
+   "file": "0215.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenentwurf > Rahmen / Rahmen [split-main]",
+   "file": "0216.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenentwurf > Rahmen / Weitere Optionen [split-arrow] > Rahmenlinie unten",
+   "file": "0217.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenentwurf > Rahmen / Weitere Optionen [split-arrow] > Rahmenlinie oben",
+   "file": "0218.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenentwurf > Rahmen / Weitere Optionen [split-arrow] > Rahmenlinie links",
+   "file": "0219.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenentwurf > Rahmen / Weitere Optionen [split-arrow] > Rahmenlinie rechts",
+   "file": "0220.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenlayout > Zeilen und Spalten / Löschen [dropdown] > Zellen löschen... > OK",
+   "file": "0221.docx",
+   "opens": true,
+   "ours": {
+    "words": 67,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 22
+   }
+  },
+  {
+   "path": "Tabellenlayout > Zeilen und Spalten / Löschen [dropdown] > Spalten löschen",
+   "file": "0222.docx",
+   "opens": true,
+   "ours": {
+    "words": 65,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nHöhe\n|Woche\n|\n|120\n|8\n|\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 20,
+    "table1.cols": 2,
+    "table1.cell11": "Höhe"
+   },
+   "word": {
+    "words": 65,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nHöhe\n|Woche\n|\n|120\n|8\n|\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 20,
+    "table1.cols": 2,
+    "table1.cell11": "Höhe"
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Zeilen und Spalten / Löschen [dropdown] > Zeilen löschen",
+   "file": "0223.docx",
+   "opens": true,
+   "ours": {
+    "words": 65,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 19,
+    "table1.rows": 2
+   },
+   "word": {
+    "words": 65,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 19,
+    "table1.rows": 2
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Zeilen und Spalten / Löschen [dropdown] > Tabelle löschen",
+   "file": "0224.docx",
+   "opens": true,
+   "ours": {
+    "words": 59,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\n\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "p9.left": 0.0,
+    "p9.keepNext": 0,
+    "p9.line": 12.9,
+    "p9.lineRule": 5,
+    "p9.after": 8.0,
+    "p9.right": 0.0,
+    "p9.shading": -16777216,
+    "p9.list": "",
+    "p9.level": 0,
+    "p9.listType": 0,
+    "p9.before": 0.0,
+    "p9.style": "Standard",
+    "p9.align": 0,
+    "p9.pageBreakBefore": 0,
+    "p9.borders": 0,
+    "p9.first": 0.0,
+    "p10.left": 0.0,
+    "p10.keepNext": 0,
+    "p10.line": 12.9,
+    "p10.lineRule": 5,
+    "p10.after": 8.0,
+    "p10.right": 0.0,
+    "p10.shading": -16777216,
+    "p10.list": "",
+    "p10.level": 0,
+    "p10.listType": 0,
+    "p10.before": 0.0,
+    "p10.style": "Standard",
+    "p10.align": 0,
+    "p10.pageBreakBefore": 0,
+    "p10.borders": 0,
+    "p10.first": 0.0,
+    "p11.left": 0.0,
+    "p11.keepNext": 0,
+    "p11.line": 12.9,
+    "p11.lineRule": 5,
+    "p11.after": 8.0,
+    "p11.right": 0.0,
+    "p11.shading": -16777216,
+    "p11.list": "",
+    "p11.level": 0,
+    "p11.listType": 0,
+    "p11.before": 0.0,
+    "p11.style": "Standard",
+    "p11.align": 0,
+    "p11.pageBreakBefore": 0,
+    "p11.borders": 0,
+    "p11.first": 0.0,
+    "paras": 11,
+    "tables": 0,
+    "table1.headRow": null,
+    "table1.lastRow": null,
+    "table1.cols": null,
+    "table1.autofit": null,
+    "table1.valign21": null,
+    "table1.bandCols": null,
+    "table1.style": null,
+    "table1.cell11": null,
+    "table1.lastCol": null,
+    "table1.shade11": null,
+    "table1.rows": null,
+    "table1.bandRows": null,
+    "table1.align21": null,
+    "table1.hdr": null,
+    "table1.firstCol": null,
+    "table1.w11": null,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0
+   },
+   "word": {
+    "words": 59,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\n\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "p9.left": 0.0,
+    "p9.keepNext": 0,
+    "p9.line": 12.9,
+    "p9.lineRule": 5,
+    "p9.after": 8.0,
+    "p9.right": 0.0,
+    "p9.shading": -16777216,
+    "p9.list": "",
+    "p9.level": 0,
+    "p9.listType": 0,
+    "p9.before": 0.0,
+    "p9.style": "Standard",
+    "p9.align": 0,
+    "p9.pageBreakBefore": 0,
+    "p9.borders": 0,
+    "p9.first": 0.0,
+    "p10.left": 0.0,
+    "p10.keepNext": 0,
+    "p10.line": 12.9,
+    "p10.lineRule": 5,
+    "p10.after": 8.0,
+    "p10.right": 0.0,
+    "p10.shading": -16777216,
+    "p10.list": "",
+    "p10.level": 0,
+    "p10.listType": 0,
+    "p10.before": 0.0,
+    "p10.style": "Standard",
+    "p10.align": 0,
+    "p10.pageBreakBefore": 0,
+    "p10.borders": 0,
+    "p10.first": 0.0,
+    "p11.left": 0.0,
+    "p11.keepNext": 0,
+    "p11.line": 12.9,
+    "p11.lineRule": 5,
+    "p11.after": 8.0,
+    "p11.right": 0.0,
+    "p11.shading": -16777216,
+    "p11.list": "",
+    "p11.level": 0,
+    "p11.listType": 0,
+    "p11.before": 0.0,
+    "p11.style": "Standard",
+    "p11.align": 0,
+    "p11.pageBreakBefore": 0,
+    "p11.borders": 0,
+    "p11.first": 0.0,
+    "paras": 11,
+    "tables": 0,
+    "table1.headRow": null,
+    "table1.lastRow": null,
+    "table1.cols": null,
+    "table1.autofit": null,
+    "table1.valign21": null,
+    "table1.bandCols": null,
+    "table1.style": null,
+    "table1.cell11": null,
+    "table1.lastCol": null,
+    "table1.shade11": null,
+    "table1.rows": null,
+    "table1.bandRows": null,
+    "table1.align21": null,
+    "table1.hdr": null,
+    "table1.firstCol": null,
+    "table1.w11": null,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Zeilen und Spalten / Zeile Oberhalb [button]",
+   "file": "0225.docx",
+   "opens": true,
+   "ours": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|\n|\n|\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 27,
+    "table1.rows": 4
+   },
+   "word": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|\n|\n|\n|\n|Sonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 27,
+    "table1.rows": 4
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Zeilen und Spalten / Zeile unterhalb einfügen [button]",
+   "file": "0226.docx",
+   "opens": true,
+   "ours": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|\n|\n|\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 27,
+    "table1.rows": 4
+   },
+   "word": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|120\n|8\n|\n|\n|\n|\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 27,
+    "table1.rows": 4
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Zeilen und Spalten / Spalte Links [button]",
+   "file": "0227.docx",
+   "opens": true,
+   "ours": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\n\n|Pflanze\n|Höhe\n|Woche\n|\n|\n|Sonnenblume\n|120\n|8\n|\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 26,
+    "table1.cols": 4,
+    "table1.cell11": "",
+    "table1.w11": 113.0
+   },
+   "word": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\n\n|Pflanze\n|Höhe\n|Woche\n|\n|\n|Sonnenblume\n|120\n|8\n|\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 26,
+    "table1.cols": 4,
+    "table1.cell11": ""
+   },
+   "same": false,
+   "diff": {
+    "table1.w11": {
+     "ours": 113.0,
+     "word": "(unchanged)"
+    }
+   }
+  },
+  {
+   "path": "Tabellenlayout > Zeilen und Spalten / Spalte rechts einfügen [button]",
+   "file": "0228.docx",
+   "opens": true,
+   "ours": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|\n|Höhe\n|Woche\n|\n|Sonnenblume\n|\n|120\n|8\n|\n|Tomate\n|\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 26,
+    "table1.cols": 4,
+    "table1.w11": 113.0
+   },
+   "word": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|\n|Höhe\n|Woche\n|\n|Sonnenblume\n|\n|120\n|8\n|\n|Tomate\n|\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 26,
+    "table1.cols": 4
+   },
+   "same": false,
+   "diff": {
+    "table1.w11": {
+     "ours": 113.0,
+     "word": "(unchanged)"
+    }
+   }
+  },
+  {
+   "path": "Tabellenlayout > Zeilen und Spalten / Zellen einfügen... [launcher] > OK",
+   "file": "0229.docx",
+   "opens": true,
+   "ours": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|\n|120\n|8\n|\n|Sonnenblume\n|80\n|6\n|\n|Tomate\n|\n|\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 27,
+    "table1.rows": 4
+   }
+  },
+  {
+   "path": "Tabellenlayout > Zusammenführen / Zellen teilen [button] > OK",
+   "file": "0230.docx",
+   "opens": true,
+   "ours": {
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|Sonnenblume\n|\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "table1.cols": 4
+   }
+  },
+  {
+   "path": "Tabellenlayout > Zusammenführen / Tabelle teilen [button]",
+   "file": "0231.docx",
+   "opens": true,
+   "ours": {
+    "tables": 2,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|\nSonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "p12.left": 0.0,
+    "p12.keepNext": 0,
+    "p12.line": 12.9,
+    "p12.lineRule": 5,
+    "p12.after": 8.0,
+    "p12.right": 0.0,
+    "p12.shading": -16777216,
+    "p12.list": "",
+    "p12.level": 0,
+    "p12.listType": 0,
+    "p12.before": 0.0,
+    "p12.style": "Standard",
+    "p12.align": 0,
+    "p12.pageBreakBefore": 0,
+    "p12.borders": 0,
+    "p12.first": 0.0,
+    "table1.rows": 1
+   },
+   "word": {
+    "tables": 2,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\n|Höhe\n|Woche\n|\n|\nSonnenblume\n|120\n|8\n|\n|Tomate\n|80\n|6\n|\n|\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "paras": 24,
+    "p12.left": 0.0,
+    "p12.keepNext": 0,
+    "p12.line": 12.9,
+    "p12.lineRule": 5,
+    "p12.after": 8.0,
+    "p12.right": 0.0,
+    "p12.shading": -16777216,
+    "p12.list": "",
+    "p12.level": 0,
+    "p12.listType": 0,
+    "p12.before": 0.0,
+    "p12.style": "Standard",
+    "p12.align": 0,
+    "p12.pageBreakBefore": 0,
+    "p12.borders": 0,
+    "p12.first": 0.0,
+    "table1.rows": 1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Zellengröße / AutoAnpassen [dropdown] > Automatisch an Inhalt anpassen",
+   "file": "0232.docx",
+   "opens": true,
+   "ours": {
+    "table1.autofit": true,
+    "table1.w11": 73.0
+   },
+   "word": {
+    "table1.autofit": true,
+    "table1.w11": 73.0
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Zellengröße / AutoAnpassen [dropdown] > Automatisch an Fenster anpassen",
+   "file": "0233.docx",
+   "opens": true,
+   "ours": {
+    "table1.autofit": true
+   },
+   "word": {
+    "table1.autofit": true
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Zellengröße / AutoAnpassen [dropdown] > Feste Spaltenbreite",
+   "file": "0234.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenlayout > Zellengröße / Höhe: [spinner-input] = 1",
+   "file": "0235.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenlayout > Zellengröße / Mehr [spinner-step]",
+   "file": "0236.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenlayout > Zellengröße / Weniger [spinner-step]",
+   "file": "0237.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenlayout > Zellengröße / Breite: [spinner-input] = 1",
+   "file": "0238.docx",
+   "opens": true,
+   "ours": {
+    "table1.w11": 28.0
+   }
+  },
+  {
+   "path": "Tabellenlayout > Zellengröße / Mehr [spinner-step]",
+   "file": "0239.docx",
+   "opens": true,
+   "ours": {
+    "table1.w11": 154.0
+   }
+  },
+  {
+   "path": "Tabellenlayout > Zellengröße / Weniger [spinner-step]",
+   "file": "0240.docx",
+   "opens": true,
+   "ours": {
+    "table1.w11": 148.0
+   }
+  },
+  {
+   "path": "Tabellenlayout > Zellengröße / Zeilen verteilen [button]",
+   "file": "0241.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenlayout > Zellengröße / Spalten verteilen [button]",
+   "file": "0242.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenlayout > Ausrichtung / Oben links ausrichten [button]",
+   "file": "0243.docx",
+   "opens": true,
+   "ours": {},
+   "word": {},
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Ausrichtung / Oben zentriert ausrichten [button]",
+   "file": "0244.docx",
+   "opens": true,
+   "ours": {
+    "table1.align21": 1
+   },
+   "word": {
+    "table1.align21": 1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Ausrichtung / Oben rechts ausrichten [button]",
+   "file": "0245.docx",
+   "opens": true,
+   "ours": {
+    "table1.align21": 2
+   },
+   "word": {
+    "table1.align21": 2
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Ausrichtung / Mitte links ausrichten [button]",
+   "file": "0246.docx",
+   "opens": true,
+   "ours": {
+    "table1.valign21": 1
+   },
+   "word": {
+    "table1.valign21": 1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Ausrichtung / Zentriert ausrichten [button]",
+   "file": "0247.docx",
+   "opens": true,
+   "ours": {
+    "table1.valign21": 1,
+    "table1.align21": 1
+   },
+   "word": {
+    "table1.valign21": 1,
+    "table1.align21": 1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Ausrichtung / Mitte rechts ausrichten [button]",
+   "file": "0248.docx",
+   "opens": true,
+   "ours": {
+    "table1.valign21": 1,
+    "table1.align21": 2
+   },
+   "word": {
+    "table1.valign21": 1,
+    "table1.align21": 2
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Ausrichtung / Unten links ausrichten [button]",
+   "file": "0249.docx",
+   "opens": true,
+   "ours": {
+    "table1.valign21": 3
+   },
+   "word": {
+    "table1.valign21": 3
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Ausrichtung / Unten Mitte ausrichten [button]",
+   "file": "0250.docx",
+   "opens": true,
+   "ours": {
+    "table1.valign21": 3,
+    "table1.align21": 1
+   },
+   "word": {
+    "table1.valign21": 3,
+    "table1.align21": 1
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Ausrichtung / Unten rechts ausrichten [button]",
+   "file": "0251.docx",
+   "opens": true,
+   "ours": {
+    "table1.valign21": 3,
+    "table1.align21": 2
+   },
+   "word": {
+    "table1.valign21": 3,
+    "table1.align21": 2
+   },
+   "same": true,
+   "diff": {}
+  },
+  {
+   "path": "Tabellenlayout > Ausrichtung / Zellenbegrenzungen... [button] > OK",
+   "file": "0252.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenlayout > Daten / Überschriften wiederholen [button]",
+   "file": "0253.docx",
+   "opens": true,
+   "ours": {}
+  },
+  {
+   "path": "Tabellenlayout > Daten / In Text konvertieren... [button] > OK",
+   "file": "0254.docx",
+   "opens": true,
+   "ours": {
+    "p13.left": 0.0,
+    "p13.keepNext": 0,
+    "p13.line": 12.9,
+    "p13.lineRule": 5,
+    "p13.after": 8.0,
+    "p13.right": 0.0,
+    "p13.shading": -16777216,
+    "p13.list": "",
+    "p13.level": 0,
+    "p13.listType": 0,
+    "p13.before": 0.0,
+    "p13.style": "Standard",
+    "p13.align": 0,
+    "p13.pageBreakBefore": 0,
+    "p13.borders": 0,
+    "p13.first": 0.0,
+    "text": "Ein Bericht über Pflanzen\nDer erste Absatz erklärt das Thema dieses Berichts in einigen ruhigen Sätzen. Pflanzen brauchen Licht, Wasser und Nährstoffe, damit sie wachsen können.\nIm zweiten Absatz stehen weitere Beobachtungen aus dem Schulgarten, die wir im Frühling notiert haben.\nSonnenblumen\nTomaten\nKürbisse\nDie folgende Tabelle zeigt die Messwerte.\nPflanze\tHöhe\tWoche\nSonnenblume\t120\t8\nTomate\t80\t6\n\nAm Ende fassen wir die Ergebnisse kurz zusammen.\n/\nSchluss.\n",
+    "p9.left": 0.0,
+    "p9.keepNext": 0,
+    "p9.line": 12.9,
+    "p9.lineRule": 5,
+    "p9.after": 8.0,
+    "p9.right": 0.0,
+    "p9.shading": -16777216,
+    "p9.list": "",
+    "p9.level": 0,
+    "p9.listType": 0,
+    "p9.before": 0.0,
+    "p9.style": "Standard",
+    "p9.align": 0,
+    "p9.pageBreakBefore": 0,
+    "p9.borders": 0,
+    "p9.first": 0.0,
+    "p10.left": 0.0,
+    "p10.keepNext": 0,
+    "p10.line": 12.9,
+    "p10.lineRule": 5,
+    "p10.after": 8.0,
+    "p10.right": 0.0,
+    "p10.shading": -16777216,
+    "p10.list": "",
+    "p10.level": 0,
+    "p10.listType": 0,
+    "p10.before": 0.0,
+    "p10.style": "Standard",
+    "p10.align": 0,
+    "p10.pageBreakBefore": 0,
+    "p10.borders": 0,
+    "p10.first": 0.0,
+    "p11.left": 0.0,
+    "p11.keepNext": 0,
+    "p11.line": 12.9,
+    "p11.lineRule": 5,
+    "p11.after": 8.0,
+    "p11.right": 0.0,
+    "p11.shading": -16777216,
+    "p11.list": "",
+    "p11.level": 0,
+    "p11.listType": 0,
+    "p11.before": 0.0,
+    "p11.style": "Standard",
+    "p11.align": 0,
+    "p11.pageBreakBefore": 0,
+    "p11.borders": 0,
+    "p11.first": 0.0,
+    "p14.left": 0.0,
+    "p14.keepNext": 0,
+    "p14.line": 12.9,
+    "p14.lineRule": 5,
+    "p14.after": 8.0,
+    "p14.right": 0.0,
+    "p14.shading": -16777216,
+    "p14.list": "",
+    "p14.level": 0,
+    "p14.listType": 0,
+    "p14.before": 0.0,
+    "p14.style": "Standard",
+    "p14.align": 0,
+    "p14.pageBreakBefore": 0,
+    "p14.borders": 0,
+    "p14.first": 0.0,
+    "paras": 14,
+    "tables": 0,
+    "p12.left": 0.0,
+    "p12.keepNext": 0,
+    "p12.line": 12.9,
+    "p12.lineRule": 5,
+    "p12.after": 8.0,
+    "p12.right": 0.0,
+    "p12.shading": -16777216,
+    "p12.list": "",
+    "p12.level": 0,
+    "p12.listType": 0,
+    "p12.before": 0.0,
+    "p12.style": "Standard",
+    "p12.align": 0,
+    "p12.pageBreakBefore": 0,
+    "p12.borders": 0,
+    "p12.first": 0.0,
+    "table1.headRow": null,
+    "table1.lastRow": null,
+    "table1.cols": null,
+    "table1.autofit": null,
+    "table1.valign21": null,
+    "table1.bandCols": null,
+    "table1.style": null,
+    "table1.cell11": null,
+    "table1.lastCol": null,
+    "table1.shade11": null,
+    "table1.rows": null,
+    "table1.bandRows": null,
+    "table1.align21": null,
+    "table1.hdr": null,
+    "table1.firstCol": null,
+    "table1.w11": null,
+    "p8.left": 0.0,
+    "p8.keepNext": 0,
+    "p8.line": 12.9,
+    "p8.lineRule": 5,
+    "p8.after": 8.0,
+    "p8.right": 0.0,
+    "p8.shading": -16777216,
+    "p8.list": "",
+    "p8.level": 0,
+    "p8.listType": 0,
+    "p8.before": 0.0,
+    "p8.style": "Standard",
+    "p8.align": 0,
+    "p8.pageBreakBefore": 0,
+    "p8.borders": 0,
+    "p8.first": 0.0
+   }
+  }
+ ]
+}
