@@ -86,6 +86,17 @@ def _call(path):
     return f
 
 
+def _indent(step):
+    """Einzug vergrößern/verkleinern: to the next (previous) default tab stop, as the ribbon does (ExecuteMso does not
+    run in an invisible Word)."""
+    def f(app, d, s):
+        tab = d.DefaultTabStop
+        pf = s.ParagraphFormat
+        n = int(pf.LeftIndent // tab + 1e-6)
+        pf.LeftIndent = max(0, (n + 1) * tab if step > 0 else (n - 1 if pf.LeftIndent % tab < 1e-3 else n) * tab)
+    return f
+
+
 def _hyph(on):
     def f(app, d, s):
         d.AutoHyphenation = on
@@ -158,8 +169,8 @@ OPS = {
     # Start: Absatz
     S + "Absatz / Aufzählungszeichen [split-main]": _call("Range.ListFormat.ApplyBulletDefault"),
     S + "Absatz / Nummerierung [split-main]": _call("Range.ListFormat.ApplyNumberDefault"),
-    S + "Absatz / Einzug vergrößern [button]": _mso("IndentIncrease"),
-    S + "Absatz / Einzug verkleinern [button]": _mso("IndentDecrease"),
+    S + "Absatz / Einzug vergrößern [button]": _indent(1),
+    S + "Absatz / Einzug verkleinern [button]": _indent(-1),
     S + "Absatz / Zentriert [button]": _para("Alignment", 1),
     S + "Absatz / Rechtsbündig [button]": _para("Alignment", 2),
     S + "Absatz / Blocksatz [button]": _para("Alignment", 3),
