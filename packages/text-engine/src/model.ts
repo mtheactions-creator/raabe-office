@@ -346,6 +346,8 @@ export interface FloatObject {
   readonly z?: number;
   /** Shapes and text boxes (wps:wsp); their outline, fill and effects are in `pic`. */
   readonly shape?: ShapeInfo;
+  /** A floating chart (D-131): its chart part and embedded workbook, as on an inline chart. */
+  readonly chart?: { readonly xml: string; readonly workbook?: Uint8Array };
   /** A group (Gruppieren, wpg:wgp): its shapes and pictures inside the object's box. */
   readonly group?: GroupInfo;
 }
