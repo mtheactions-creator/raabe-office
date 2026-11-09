@@ -259,6 +259,33 @@ def cases(c: Check) -> None:
         return groups == want_groups and grey_ok and bool(bg) and 'val="FF0000"' in bg[0] and drawn, {"groups": groups, "greyed": {n: greyed.get(n) for n in want_grey}, "bg": bg, "drawn": drawn}
     c.case("SmartArt > Format: Gruppen, grau, Fülleffekt > Rot", smartart_format)
 
+    def diagram_part(kind: str) -> str:
+        return c.js(f"(() => {{ const a = window.__present.app; const p = Object.keys(a.deck.pptx.files).concat([...a.deck.pptx.docs.keys()]).find((k) => /diagrams\\/{kind}\\d+\\.xml$/.test(k)); return p ? new XMLSerializer().serializeToString(a.deck.pptx.doc(p)) : ''; }})()")
+
+    def smartart_text():
+        c.setup("smartart", "Format")
+        c.click(c.control("Textfüllung (Pfeil)", "color-arrow"))
+        c.click(c.item("Rot"))
+        time.sleep(0.4)
+        runs = re.findall(r"<a:r>.*?</a:r>", diagram_part("drawing"), re.S)
+        red = [r for r in runs if 'val="FF0000"' in r]
+        data_red = len(re.findall(r'<a:rPr[^>]*>(?:(?!</a:rPr>).)*FF0000', diagram_part("data"), re.S))
+        c.js("window.__present.app.focusMain()")
+        c.key("Strg+z")
+        back = not re.findall(r'FF0000', diagram_part("drawing"))
+        return len(runs) == 3 and len(red) == 3 and data_red == 3 and back, {"runs": len(runs), "red_in_drawing": len(red), "red_in_data": data_red, "undone": back}
+    c.case("SmartArt > Format > Textfüllung > Rot (ganze Grafik)", smartart_text)
+
+    def smartart_outline():
+        c.setup("smartart", "Format")
+        c.click(c.control("Formkontur (Pfeil)", "color-arrow"))
+        c.click(c.item("Grün"))
+        time.sleep(0.4)
+        whole = re.findall(r"<dgm:whole>.*?</dgm:whole>", diagram_part("data"), re.S)
+        drawn = c.js("(() => { const e = document.querySelector('.diagram-bg'); return e ? e.style.boxShadow : ''; })()")
+        return bool(whole) and "<a:ln" in whole[0] and "solidFill" in whole[0] and bool(drawn), {"whole": whole, "drawn": drawn}
+    c.case("SmartArt > Format > Formkontur > Grün (ganze Grafik)", smartart_outline)
+
 
 def main() -> None:
     c = Check()

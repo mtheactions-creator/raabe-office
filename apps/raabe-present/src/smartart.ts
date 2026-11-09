@@ -8,6 +8,7 @@ import { SMARTART_COLORS, SMARTART_STYLES } from "./smartart-styles.gen";
 import { h, showDialog, type Control, type Tab } from "@raabe/shell";
 import { PptxDom } from "@raabe/ooxml";
 import { colorXml } from "./colors";
+import * as T from "./textops";
 import type { PresentApp } from "./app";
 import * as sc from "./smartart-create";
 
@@ -63,6 +64,26 @@ export function setDiagramWhole(app: PresentApp, id: number, what: "fill" | "lin
     }
   });
   // The slide's view of the frame reads these parts: drawn anew.
+  app.deck.invalidate(slide);
+  app.editor.render();
+}
+
+/**
+ * WordArt-Formate (Textfüllung, Textkontur, Texteffekte ...) with the whole SmartArt selected: every run of its text,
+ * in the data model's points and in the drawing PowerPoint shows, one undo step with the diagram's parts. (A new
+ * layout writes the drawing anew from the items: the formatting does not travel with it yet.)
+ */
+export function formatDiagramText(app: PresentApp, ids: number[], label: string, fn: (rPr: Element) => void): void {
+  const slide = app.slidePath();
+  const all = ids.map((id) => partsOf(app, id)).filter((p): p is Parts => !!p);
+  if (!slide || !all.length) return;
+  const paths = [slide, ...all.flatMap((p) => [p.data, ...(p.drawing ? [p.drawing] : [])])];
+  app.deck.change(label, paths, () => {
+    for (const p of all) {
+      for (const t of Array.from(app.deck.pptx.doc(p.data).getElementsByTagNameNS(NS_DGM, "t"))) if (t.getElementsByTagNameNS(PptxDom.NS_A, "t").length) T.formatAll(t, fn);
+      if (p.drawing) for (const b of Array.from(app.deck.pptx.doc(p.drawing).getElementsByTagNameNS(NS_DSP, "txBody"))) if (b.getElementsByTagNameNS(PptxDom.NS_A, "t").length) T.formatAll(b, fn);
+    }
+  });
   app.deck.invalidate(slide);
   app.editor.render();
 }

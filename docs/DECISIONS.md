@@ -3960,3 +3960,15 @@ Strg+Z afterwards): Dauer typed and its arrow, Seitenverh채ltnis sperren with H�
 on again), every entry of Platzhalter einf체gen (placeholder type and size against PowerPoint's XML; Inhalt drawn),
 Folienmaster einf체gen, and the SmartArt Format tab (groups, greyed controls, F체lleffekt > Rot): 7/7
 (results/2026-11-09-present-followup-check.json). D-152 to D-154 share this check.
+
+Later the same night: WordArt-Formate (Textf체llung, Textkontur, Texteffekte, the gallery) with the whole SmartArt
+selected format every run of its text, in the data model and in the drawing (one undo step with the diagram's parts;
+a new layout afterwards writes the text without it, open). check_present_followup.py then 9/9 (also Textf체llung > Rot
+and Formkontur > Gr체n on the whole graphic). Sweep rerun in the exe of the parts the audit had not rerun
+(sweep_present.py, table, chart, Formel and SmartArt contexts, before these changes): 1258 options, 1208 pass, 29
+disabled, 9 no-effect (Zeilen/Spalten verteilen and Oben ausrichten on a table already so, the chart Format tab's
+WordArt-Formate (charts work, reported), Verschieben nach on the last SmartArt item), 5 unbuilt (Seitenverh채ltnis
+sperren, now built; four chart commands), 7 fail: six Formel options "control not found after reset" (the harness
+read the ribbon before the Formel tab had come: reset now waits for a contextual tab) and the SmartArt Format tab
+missing (now built). The after-run of these parts was not made before the deadline. Keytips (first walk): 400, 362
+pass, 38 no-effect (a key that reaches an option already in effect, as above), 0 fail.

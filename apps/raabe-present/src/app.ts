@@ -53,7 +53,7 @@ import { endFreistellen, freistellenActive, freistellenTab, markTool } from "./f
 import { fileTypeSection } from "./exportimg";
 import { gifSection, videoSection } from "./videoui";
 import { Windows, type WindowDoc } from "./windows";
-import { convertSmartArt, setDiagramWhole, smartArtTab, textPane } from "./smartart";
+import { convertSmartArt, formatDiagramText, setDiagramWhole, smartArtTab, textPane } from "./smartart";
 import { PLACEHOLDER_KINDS, insertMaster, isMasterPath, masterLayoutDialog, newPlaceholder } from "./masterops";
 import { bgStylesMenu } from "./background";
 import { setEffectOptionsHook, shapeEffectsMenu } from "./shapefx";
@@ -689,8 +689,15 @@ export class PresentApp implements EditorHost, PanelHost {
       ed.edit(label, () => T.formatRange(body, t.anchor, t.caret, fn));
       return;
     }
-    const views = ed.selectedViews;
+    let views = ed.selectedViews;
     if (!views.length) return;
+    // A whole SmartArt: every run of its text, in its data model and its drawing (WordArt-Formate, D-154).
+    const diagrams = views.filter((v) => v.frame === "diagram");
+    if (diagrams.length) {
+      formatDiagramText(this, diagrams.map((v) => v.id), label, fn);
+      views = views.filter((v) => v.frame !== "diagram");
+      if (!views.length) return;
+    }
     ed.edit(label, () => {
       for (const v of views) for (const m of flat([v])) {
         const el = ed.shapeEl(m.id);

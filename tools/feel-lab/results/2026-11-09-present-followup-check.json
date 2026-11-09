@@ -1,7 +1,7 @@
 {
  "date": "2026-11-09",
- "passed": 7,
- "total": 7,
+ "passed": 9,
+ "total": 9,
  "cases": [
   {
    "name": "Übergänge > Dauer ohne Übergang: 3 getippt",
@@ -223,6 +223,28 @@
      "<dgm:bg><a:solidFill><a:srgbClr val=\"FF0000\"/></a:solidFill></dgm:bg>"
     ],
     "drawn": true
+   },
+   "errs": []
+  },
+  {
+   "name": "SmartArt > Format > Textfüllung > Rot (ganze Grafik)",
+   "ok": true,
+   "got": {
+    "runs": 3,
+    "red_in_drawing": 3,
+    "red_in_data": 3,
+    "undone": true
+   },
+   "errs": []
+  },
+  {
+   "name": "SmartArt > Format > Formkontur > Grün (ganze Grafik)",
+   "ok": true,
+   "got": {
+    "whole": [
+     "<dgm:whole><a:ln><a:solidFill><a:srgbClr val=\"00B050\"/></a:solidFill></a:ln></dgm:whole>"
+    ],
+    "drawn": "rgb(0, 176, 80) 0px 0px 0px 1px inset"
    },
    "errs": []
   }
