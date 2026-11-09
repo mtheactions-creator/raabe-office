@@ -3889,3 +3889,12 @@ new equation removed the equation itself. Word takes back one change at a time. 
 equation's values before each change: Strg+Z and Strg+Y step back and forth inside the equation (the caret goes to its
 end); with no change left, Strg+Z ends the edit and acts on the document (the next step removes a new equation, as in
 Word). The document still gets one undo step for the whole edit once it is left.
+
+## D-152 RaabePresent: Esc under the OS keyboard ends the show; Übergänge > Dauer without a transition (2026-11-09)
+
+**F5, a click, Esc** (open since D-137). Recorded in the release exe with real input (SendInput, under the lock) and a
+key listener in the page: with the show in the page's full screen, WebView2 takes Esc to leave full screen and the
+page never gets the keydown (only `fullscreenchange`), with or without a click before it; the click was not the cause.
+CDP keys go straight to the page, which is why the sweep passed. D-137 already ends the show when the full screen is
+left; with a build that has it, the real-input cases pass (F5/click/Esc and F5/Esc, the second also checks that the
+page did not see the key): real_present.py 11/11 (before: 9/10, the audit's run was made with an older build).
