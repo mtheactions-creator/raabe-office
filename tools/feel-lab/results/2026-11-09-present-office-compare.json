@@ -1,0 +1,1647 @@
+{
+ "date": "2026-11-09",
+ "target": "exe",
+ "cases": 54,
+ "counts": {
+  "same": 47,
+  "no change on either side": 2,
+  "different": 5
+ },
+ "results": [
+  {
+   "name": "Fett",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Fett"
+   ],
+   "action": [
+    "mso",
+    "Bold"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Fett, Cursor im Wort",
+   "ctx": "caret-2",
+   "steps": [
+    "Start",
+    "Fett"
+   ],
+   "action": [
+    "mso",
+    "Bold"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/r0/rPr",
+    "s1/sp#2/p0/r1/rPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/r0/rPr",
+    "s1/sp#2/p0/r1/rPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Fett, Cursor am Wortende",
+   "ctx": "caret-5",
+   "steps": [
+    "Start",
+    "Fett"
+   ],
+   "action": [
+    "mso",
+    "Bold"
+   ],
+   "status": "no change on either side",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [],
+   "changed_powerpoint": [],
+   "differences": {}
+  },
+  {
+   "name": "Kursiv, Cursor am Wortende",
+   "ctx": "caret-5",
+   "steps": [
+    "Start",
+    "Kursiv"
+   ],
+   "action": [
+    "mso",
+    "Italic"
+   ],
+   "status": "no change on either side",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [],
+   "changed_powerpoint": [],
+   "differences": {}
+  },
+  {
+   "name": "Schriftgrad vergrößern, Cursor im Wort",
+   "ctx": "caret-2",
+   "steps": [
+    "Start",
+    "Schriftgrad vergrößern"
+   ],
+   "action": [
+    "mso",
+    "FontSizeIncrease"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/r0/rPr",
+    "s1/sp#2/p0/r1/rPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/r0/rPr",
+    "s1/sp#2/p0/r1/rPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Kursiv",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Kursiv"
+   ],
+   "action": [
+    "mso",
+    "Italic"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Unterstreichen",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Unterstreichen"
+   ],
+   "action": [
+    "mso",
+    "Underline"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Durchstreichen",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Durchstreichen"
+   ],
+   "action": [
+    "mso",
+    "Strikethrough"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Schatten",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Schatten"
+   ],
+   "action": [
+    "mso",
+    "Shadow"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/r0/effects"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/r0/effects"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Schriftgrad vergrößern",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Schriftgrad vergrößern"
+   ],
+   "action": [
+    "mso",
+    "FontSizeIncrease"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Schriftgrad verkleinern",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Schriftgrad verkleinern"
+   ],
+   "action": [
+    "mso",
+    "FontSizeDecrease"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Schriftart Arial",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Schriftart",
+    [
+     "type",
+     "Arial"
+    ]
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/r0/font"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/r0/font"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Schriftgrad 24",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Schriftgrad",
+    [
+     "type",
+     "24"
+    ]
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/r0/rPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Schriftfarbe Rot",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Schriftfarbe (Pfeil)",
+    "Rot"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/r0/color"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/r0/color"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Linksbündig",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Linksbündig"
+   ],
+   "action": [
+    "mso",
+    "AlignLeft"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/pPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/pPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Rechtsbündig",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Rechtsbündig"
+   ],
+   "action": [
+    "mso",
+    "AlignRight"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/pPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/pPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Blocksatz",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Blocksatz"
+   ],
+   "action": [
+    "mso",
+    "AlignJustify"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/pPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/pPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Aufzählungszeichen",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Aufzählungszeichen"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "different",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/bullet",
+    "s1/sp#2/p0/pPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/bullet",
+    "s1/sp#2/p0/pPr"
+   ],
+   "differences": {
+    "s1/sp#2/p0/bullet": {
+     "ours": "buChar:char=•",
+     "powerpoint": "buAutoNum:type=arabicPeriod"
+    },
+    "s1/sp#2/p0/pPr": {
+     "ours": "algn=ctr,indent=-285750,marL=285750",
+     "powerpoint": "algn=ctr,indent=-342900,marL=342900"
+    }
+   }
+  },
+  {
+   "name": "Nummerierung",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Nummerierung"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "different",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/bullet",
+    "s1/sp#2/p0/pPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/bullet",
+    "s1/sp#2/p0/pPr"
+   ],
+   "differences": {
+    "s1/sp#2/p0/pPr": {
+     "ours": "algn=ctr,indent=-342900,marL=342900",
+     "powerpoint": "algn=ctr,indent=-342900"
+    }
+   }
+  },
+  {
+   "name": "Einzug vergrößern",
+   "ctx": "placeholder",
+   "steps": [
+    "Start",
+    "Einzug vergrößern"
+   ],
+   "action": [
+    "mso",
+    "IndentIncrease"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/ph:body:1/p0/pPr",
+    "s1/ph:body:1/p1/pPr",
+    "s1/ph:body:1/p2/pPr"
+   ],
+   "changed_powerpoint": [
+    "s1/ph:body:1/p0/pPr",
+    "s1/ph:body:1/p1/pPr",
+    "s1/ph:body:1/p2/pPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Zeilenabstand 1,5",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Zeilenabstand",
+    "1,5"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/lnSpc"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/lnSpc"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Zwei Spalten",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Spalten",
+    "Zwei Spalten"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/bodyPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/bodyPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Text oben ausrichten",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Text ausrichten",
+    "Oben"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/bodyPr"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/bodyPr"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "GROSSBUCHSTABEN",
+   "ctx": "shape-text",
+   "steps": [
+    "Start",
+    "Groß-/Kleinschreibung",
+    "GROSSBUCHSTABEN"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/p0/text"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/p0/text"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Rechtsdrehung 90°",
+   "ctx": "shape",
+   "steps": [
+    "Formformat",
+    "Drehen",
+    "Rechtsdrehung 90 Grad"
+   ],
+   "action": [
+    "mso",
+    "ObjectRotateRight90"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/turn"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/turn"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Horizontal kippen",
+   "ctx": "shape",
+   "steps": [
+    "Formformat",
+    "Drehen",
+    "Horizontal spiegeln"
+   ],
+   "action": [
+    "mso",
+    "ObjectFlipHorizontal"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/turn"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/turn"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Keine Füllung",
+   "ctx": "shape",
+   "steps": [
+    "Formformat",
+    "Fülleffekt (Pfeil)",
+    "Keine Füllung"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "different",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/fill"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/fill",
+    "s1/sp#2/ln"
+   ],
+   "differences": {
+    "s1/sp#2/ln": {
+     "ours": null,
+     "powerpoint": [
+      "12700",
+      "schemeClr:accent1(shade=15000)",
+      "solid"
+     ]
+    }
+   }
+  },
+  {
+   "name": "Füllung Rot",
+   "ctx": "shape",
+   "steps": [
+    "Formformat",
+    "Fülleffekt (Pfeil)",
+    "Rot"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/fill"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/fill"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Keine Kontur",
+   "ctx": "shape",
+   "steps": [
+    "Formformat",
+    "Formkontur (Pfeil)",
+    "Keine Kontur"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "different",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/ln"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/fill",
+    "s1/sp#2/ln"
+   ],
+   "differences": {
+    "s1/sp#2/fill": {
+     "ours": null,
+     "powerpoint": "schemeClr:accent1"
+    },
+    "s1/sp#2/ln": {
+     "ours": [
+      null,
+      "noFill",
+      null
+     ],
+     "powerpoint": [
+      "12700",
+      "noFill",
+      "solid"
+     ]
+    }
+   }
+  },
+  {
+   "name": "Kontur 3 Pt",
+   "ctx": "shape",
+   "steps": [
+    "Formformat",
+    "Formkontur (Pfeil)",
+    "Stärke",
+    "3 Pt."
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/ln"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/ln"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Formhöhe 3 cm",
+   "ctx": "shape",
+   "steps": [
+    "Formformat",
+    "Formenhöhe",
+    [
+     "type",
+     "3 cm"
+    ]
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/box"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/box"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Formbreite 5 cm",
+   "ctx": "shape",
+   "steps": [
+    "Formformat",
+    "Formenbreite",
+    [
+     "type",
+     "5 cm"
+    ]
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/box"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/box"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "In den Hintergrund",
+   "ctx": "two-shapes-second",
+   "steps": [
+    "Start",
+    "Anordnen",
+    "In den Hintergrund"
+   ],
+   "action": [
+    "mso",
+    "ObjectSendToBack"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/box",
+    "s1/sp#2/geom",
+    "s1/sp#2/p0/text",
+    "s1/sp#3/box",
+    "s1/sp#3/geom",
+    "s1/sp#3/p0/text"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/box",
+    "s1/sp#2/geom",
+    "s1/sp#2/p0/text",
+    "s1/sp#3/box",
+    "s1/sp#3/geom",
+    "s1/sp#3/p0/text"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "In den Vordergrund",
+   "ctx": "two-shapes-first",
+   "steps": [
+    "Start",
+    "Anordnen",
+    "In den Vordergrund"
+   ],
+   "action": [
+    "mso",
+    "ObjectBringToFront"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#2/box",
+    "s1/sp#2/geom",
+    "s1/sp#2/p0/text",
+    "s1/sp#3/box",
+    "s1/sp#3/geom",
+    "s1/sp#3/p0/text"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#2/box",
+    "s1/sp#2/geom",
+    "s1/sp#2/p0/text",
+    "s1/sp#3/box",
+    "s1/sp#3/geom",
+    "s1/sp#3/p0/text"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Gruppieren",
+   "ctx": "two-shapes",
+   "steps": [
+    "Formformat",
+    "Gruppieren",
+    "Gruppieren"
+   ],
+   "action": [
+    "mso",
+    "ObjectsGroup"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/count",
+    "s1/grpSp#2/2/bodyPr",
+    "s1/grpSp#2/2/box",
+    "s1/grpSp#2/2/geom",
+    "s1/grpSp#2/2/p0/pPr",
+    "s1/grpSp#2/2/p0/r0/rPr",
+    "s1/grpSp#2/2/p0/text",
+    "s1/grpSp#2/2/tag",
+    "s1/grpSp#2/2/turn",
+    "s1/grpSp#2/3/bodyPr",
+    "s1/grpSp#2/3/box",
+    "s1/grpSp#2/3/geom",
+    "s1/grpSp#2/3/p0/pPr",
+    "s1/grpSp#2/3/p0/r0/rPr",
+    "s1/grpSp#2/3/p0/text",
+    "s1/grpSp#2/3/tag",
+    "s1/grpSp#2/3/turn",
+    "s1/grpSp#2/box",
+    "s1/grpSp#2/tag",
+    "s1/grpSp#2/turn",
+    "s1/sp#2/bodyPr",
+    "s1/sp#2/box",
+    "s1/sp#2/geom",
+    "s1/sp#2/p0/pPr",
+    "s1/sp#2/p0/r0/rPr",
+    "s1/sp#2/p0/text",
+    "s1/sp#2/tag",
+    "s1/sp#2/turn",
+    "s1/sp#3/bodyPr",
+    "s1/sp#3/box",
+    "s1/sp#3/geom",
+    "s1/sp#3/p0/pPr",
+    "s1/sp#3/p0/r0/rPr",
+    "s1/sp#3/p0/text",
+    "s1/sp#3/tag",
+    "s1/sp#3/turn"
+   ],
+   "changed_powerpoint": [
+    "s1/count",
+    "s1/grpSp#2/2/bodyPr",
+    "s1/grpSp#2/2/box",
+    "s1/grpSp#2/2/geom",
+    "s1/grpSp#2/2/p0/pPr",
+    "s1/grpSp#2/2/p0/r0/rPr",
+    "s1/grpSp#2/2/p0/text",
+    "s1/grpSp#2/2/tag",
+    "s1/grpSp#2/2/turn",
+    "s1/grpSp#2/3/bodyPr",
+    "s1/grpSp#2/3/box",
+    "s1/grpSp#2/3/geom",
+    "s1/grpSp#2/3/p0/pPr",
+    "s1/grpSp#2/3/p0/r0/rPr",
+    "s1/grpSp#2/3/p0/text",
+    "s1/grpSp#2/3/tag",
+    "s1/grpSp#2/3/turn",
+    "s1/grpSp#2/box",
+    "s1/grpSp#2/tag",
+    "s1/grpSp#2/turn",
+    "s1/sp#2/bodyPr",
+    "s1/sp#2/box",
+    "s1/sp#2/geom",
+    "s1/sp#2/p0/pPr",
+    "s1/sp#2/p0/r0/rPr",
+    "s1/sp#2/p0/text",
+    "s1/sp#2/tag",
+    "s1/sp#2/turn",
+    "s1/sp#3/bodyPr",
+    "s1/sp#3/box",
+    "s1/sp#3/geom",
+    "s1/sp#3/p0/pPr",
+    "s1/sp#3/p0/r0/rPr",
+    "s1/sp#3/p0/text",
+    "s1/sp#3/tag",
+    "s1/sp#3/turn"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Linksbündig ausrichten",
+   "ctx": "two-shapes",
+   "steps": [
+    "Formformat",
+    "Ausrichten",
+    "Linksbündig"
+   ],
+   "action": [
+    "mso",
+    "ObjectsAlignLeftSmart"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#3/box"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#3/box"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Oben ausrichten",
+   "ctx": "two-shapes",
+   "steps": [
+    "Formformat",
+    "Ausrichten",
+    "Oben ausrichten"
+   ],
+   "action": [
+    "mso",
+    "ObjectsAlignTopSmart"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/sp#3/box"
+   ],
+   "changed_powerpoint": [
+    "s1/sp#3/box"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Neue Folie",
+   "ctx": "slides",
+   "steps": [
+    "Start",
+    "Neue Folie"
+   ],
+   "action": [
+    "mso",
+    "SlideNew"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s3/count",
+    "s3/layout",
+    "s3/ph:body:1/bodyPr",
+    "s3/ph:body:1/p0/pPr",
+    "s3/ph:body:1/p0/text",
+    "s3/ph:body:1/tag",
+    "s3/ph:title:0/bodyPr",
+    "s3/ph:title:0/p0/pPr",
+    "s3/ph:title:0/p0/text",
+    "s3/ph:title:0/tag",
+    "s4/anims",
+    "s4/count",
+    "s4/layout",
+    "s4/nvGrpSpPr#1/tag",
+    "slides"
+   ],
+   "changed_powerpoint": [
+    "s3/count",
+    "s3/layout",
+    "s3/ph:body:1/bodyPr",
+    "s3/ph:body:1/p0/pPr",
+    "s3/ph:body:1/p0/text",
+    "s3/ph:body:1/tag",
+    "s3/ph:title:0/bodyPr",
+    "s3/ph:title:0/p0/pPr",
+    "s3/ph:title:0/p0/text",
+    "s3/ph:title:0/tag",
+    "s4/anims",
+    "s4/count",
+    "s4/layout",
+    "s4/nvGrpSpPr#1/tag",
+    "slides"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Layout Titel und Inhalt",
+   "ctx": "slides",
+   "steps": [
+    "Start",
+    "Layout",
+    "Titel und Inhalt"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/layout",
+    "s1/ph:body:1/bodyPr",
+    "s1/ph:body:1/p0/pPr",
+    "s1/ph:body:1/p0/r0/rPr",
+    "s1/ph:body:1/p0/text",
+    "s1/ph:body:1/tag",
+    "s1/ph:ctrTitle:0/bodyPr",
+    "s1/ph:ctrTitle:0/p0/pPr",
+    "s1/ph:ctrTitle:0/p0/r0/rPr",
+    "s1/ph:ctrTitle:0/p0/text",
+    "s1/ph:ctrTitle:0/tag",
+    "s1/ph:subTitle:1/bodyPr",
+    "s1/ph:subTitle:1/p0/pPr",
+    "s1/ph:subTitle:1/p0/r0/rPr",
+    "s1/ph:subTitle:1/p0/text",
+    "s1/ph:subTitle:1/tag",
+    "s1/ph:title:0/bodyPr",
+    "s1/ph:title:0/p0/pPr",
+    "s1/ph:title:0/p0/r0/rPr",
+    "s1/ph:title:0/p0/text",
+    "s1/ph:title:0/tag"
+   ],
+   "changed_powerpoint": [
+    "s1/layout",
+    "s1/ph:body:1/bodyPr",
+    "s1/ph:body:1/p0/pPr",
+    "s1/ph:body:1/p0/r0/rPr",
+    "s1/ph:body:1/p0/text",
+    "s1/ph:body:1/tag",
+    "s1/ph:ctrTitle:0/bodyPr",
+    "s1/ph:ctrTitle:0/p0/pPr",
+    "s1/ph:ctrTitle:0/p0/r0/rPr",
+    "s1/ph:ctrTitle:0/p0/text",
+    "s1/ph:ctrTitle:0/tag",
+    "s1/ph:subTitle:1/bodyPr",
+    "s1/ph:subTitle:1/p0/pPr",
+    "s1/ph:subTitle:1/p0/r0/rPr",
+    "s1/ph:subTitle:1/p0/text",
+    "s1/ph:subTitle:1/tag",
+    "s1/ph:title:0/bodyPr",
+    "s1/ph:title:0/p0/pPr",
+    "s1/ph:title:0/p0/r0/rPr",
+    "s1/ph:title:0/p0/text",
+    "s1/ph:title:0/tag"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Folie duplizieren",
+   "ctx": "slides",
+   "steps": [
+    "Start",
+    "Neue Folie (Pfeil)",
+    "Ausgewählte Folien duplizieren"
+   ],
+   "action": [
+    "mso",
+    "DuplicateSelectedSlides"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s2/layout",
+    "s2/ph:body:1/bodyPr",
+    "s2/ph:body:1/p0/pPr",
+    "s2/ph:body:1/p0/text",
+    "s2/ph:body:1/tag",
+    "s2/ph:ctrTitle:0/bodyPr",
+    "s2/ph:ctrTitle:0/p0/pPr",
+    "s2/ph:ctrTitle:0/p0/r0/rPr",
+    "s2/ph:ctrTitle:0/p0/text",
+    "s2/ph:ctrTitle:0/tag",
+    "s2/ph:subTitle:1/bodyPr",
+    "s2/ph:subTitle:1/p0/pPr",
+    "s2/ph:subTitle:1/p0/r0/rPr",
+    "s2/ph:subTitle:1/p0/text",
+    "s2/ph:subTitle:1/tag",
+    "s2/ph:title:0/bodyPr",
+    "s2/ph:title:0/p0/pPr",
+    "s2/ph:title:0/p0/text",
+    "s2/ph:title:0/tag",
+    "s3/count",
+    "s3/layout",
+    "s3/ph:body:1/bodyPr",
+    "s3/ph:body:1/p0/pPr",
+    "s3/ph:body:1/p0/text",
+    "s3/ph:body:1/tag",
+    "s3/ph:title:0/bodyPr",
+    "s3/ph:title:0/p0/pPr",
+    "s3/ph:title:0/p0/text",
+    "s3/ph:title:0/tag",
+    "s4/anims",
+    "s4/count",
+    "s4/layout",
+    "s4/nvGrpSpPr#1/tag",
+    "slides"
+   ],
+   "changed_powerpoint": [
+    "s2/layout",
+    "s2/ph:body:1/bodyPr",
+    "s2/ph:body:1/p0/pPr",
+    "s2/ph:body:1/p0/text",
+    "s2/ph:body:1/tag",
+    "s2/ph:ctrTitle:0/bodyPr",
+    "s2/ph:ctrTitle:0/p0/pPr",
+    "s2/ph:ctrTitle:0/p0/r0/rPr",
+    "s2/ph:ctrTitle:0/p0/text",
+    "s2/ph:ctrTitle:0/tag",
+    "s2/ph:subTitle:1/bodyPr",
+    "s2/ph:subTitle:1/p0/pPr",
+    "s2/ph:subTitle:1/p0/r0/rPr",
+    "s2/ph:subTitle:1/p0/text",
+    "s2/ph:subTitle:1/tag",
+    "s2/ph:title:0/bodyPr",
+    "s2/ph:title:0/p0/pPr",
+    "s2/ph:title:0/p0/text",
+    "s2/ph:title:0/tag",
+    "s3/count",
+    "s3/layout",
+    "s3/ph:body:1/bodyPr",
+    "s3/ph:body:1/p0/pPr",
+    "s3/ph:body:1/p0/text",
+    "s3/ph:body:1/tag",
+    "s3/ph:title:0/bodyPr",
+    "s3/ph:title:0/p0/pPr",
+    "s3/ph:title:0/p0/text",
+    "s3/ph:title:0/tag",
+    "s4/anims",
+    "s4/count",
+    "s4/layout",
+    "s4/nvGrpSpPr#1/tag",
+    "slides"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Übergang Verblassen",
+   "ctx": "slides",
+   "steps": [
+    "Übergänge",
+    "Verblassen"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/transition"
+   ],
+   "changed_powerpoint": [
+    "s1/transition"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Übergang Wischen",
+   "ctx": "slides",
+   "steps": [
+    "Übergänge",
+    "Wischen"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/transition"
+   ],
+   "changed_powerpoint": [
+    "s1/transition"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Übergangsdauer 1,5",
+   "ctx": "slides",
+   "steps": [
+    "Übergänge",
+    "Dauer",
+    [
+     "type",
+     "01,50"
+    ]
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "different",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [],
+   "changed_powerpoint": [
+    "s1/transition"
+   ],
+   "differences": {
+    "s1/transition": {
+     "ours": null,
+     "powerpoint": [
+      "",
+      "slow",
+      "1500"
+     ]
+    }
+   }
+  },
+  {
+   "name": "Foliengröße 4:3",
+   "ctx": "slides",
+   "steps": [
+    "Entwurf",
+    "Foliengröße",
+    "Standard (4:3)"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "size"
+   ],
+   "changed_powerpoint": [
+    "size"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Animation Erscheinen",
+   "ctx": "shape",
+   "steps": [
+    "Animationen",
+    "Erscheinen"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/anims"
+   ],
+   "changed_powerpoint": [
+    "s1/anims"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Animation Verblassen",
+   "ctx": "shape",
+   "steps": [
+    "Animationen",
+    "Verblassen"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/anims"
+   ],
+   "changed_powerpoint": [
+    "s1/anims"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Animation Einfliegen",
+   "ctx": "shape",
+   "steps": [
+    "Animationen",
+    "Einfliegen"
+   ],
+   "action": [
+    "com",
+    "COM"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/anims"
+   ],
+   "changed_powerpoint": [
+    "s1/anims"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Zeile oberhalb einfügen",
+   "ctx": "table",
+   "steps": [
+    "Tabellenlayout",
+    "Zeile Oberhalb"
+   ],
+   "action": [
+    "mso",
+    "TableInsertRowsAbove"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/graphicFrame#2/box",
+    "s1/graphicFrame#2/table"
+   ],
+   "changed_powerpoint": [
+    "s1/graphicFrame#2/box",
+    "s1/graphicFrame#2/table"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Spalte rechts einfügen",
+   "ctx": "table",
+   "steps": [
+    "Tabellenlayout",
+    "Spalte rechts einfügen"
+   ],
+   "action": [
+    "mso",
+    "TableInsertColumnsRight"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/graphicFrame#2/grid",
+    "s1/graphicFrame#2/table"
+   ],
+   "changed_powerpoint": [
+    "s1/graphicFrame#2/grid",
+    "s1/graphicFrame#2/table"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Spalte rechts einfügen, schmale Tabelle",
+   "ctx": "table-small",
+   "steps": [
+    "Tabellenlayout",
+    "Spalte rechts einfügen"
+   ],
+   "action": [
+    "mso",
+    "TableInsertColumnsRight"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/graphicFrame#2/grid",
+    "s1/graphicFrame#2/table"
+   ],
+   "changed_powerpoint": [
+    "s1/graphicFrame#2/grid",
+    "s1/graphicFrame#2/table"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Spalte links einfügen, schmale Tabelle",
+   "ctx": "table-small",
+   "steps": [
+    "Tabellenlayout",
+    "Spalte Links"
+   ],
+   "action": [
+    "mso",
+    "TableInsertColumnsLeft"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/graphicFrame#2/grid",
+    "s1/graphicFrame#2/table"
+   ],
+   "changed_powerpoint": [
+    "s1/graphicFrame#2/grid",
+    "s1/graphicFrame#2/table"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Zeile unterhalb einfügen",
+   "ctx": "table",
+   "steps": [
+    "Tabellenlayout",
+    "Zeile unterhalb einfügen"
+   ],
+   "action": [
+    "mso",
+    "TableInsertRowsBelow"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/graphicFrame#2/box",
+    "s1/graphicFrame#2/table"
+   ],
+   "changed_powerpoint": [
+    "s1/graphicFrame#2/box",
+    "s1/graphicFrame#2/table"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Tabelle löschen",
+   "ctx": "table",
+   "steps": [
+    "Tabellenlayout",
+    "Löschen",
+    "Tabelle löschen"
+   ],
+   "action": [
+    "mso",
+    "TableDelete"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/count",
+    "s1/graphicFrame#2/box",
+    "s1/graphicFrame#2/grid",
+    "s1/graphicFrame#2/table",
+    "s1/graphicFrame#2/tag",
+    "s1/graphicFrame#2/turn"
+   ],
+   "changed_powerpoint": [
+    "s1/count",
+    "s1/graphicFrame#2/box",
+    "s1/graphicFrame#2/grid",
+    "s1/graphicFrame#2/table",
+    "s1/graphicFrame#2/tag",
+    "s1/graphicFrame#2/turn"
+   ],
+   "differences": {}
+  },
+  {
+   "name": "Bild Rechtsdrehung 90°",
+   "ctx": "picture",
+   "steps": [
+    "Bildformat",
+    "Drehen",
+    "Rechtsdrehung 90 Grad"
+   ],
+   "action": [
+    "mso",
+    "ObjectRotateRight90"
+   ],
+   "status": "same",
+   "ours": {},
+   "powerpoint": {
+    "error": null
+   },
+   "changed_ours": [
+    "s1/pic#2/turn"
+   ],
+   "changed_powerpoint": [
+    "s1/pic#2/turn"
+   ],
+   "differences": {}
+  }
+ ]
+}
