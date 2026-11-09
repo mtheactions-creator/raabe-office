@@ -202,7 +202,7 @@ CASES: list[tuple] = [
     # Zellen formatieren > Rahmen (D-147): line style, colour, the side buttons, the preview, both diagonals, Innen.
     ("Rahmen rot gestrichelt unten", "A2:B4", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Rahmen"), ("aria", "Gestrichelt"), ("aria", "Farbe Automatisch"), ("popswatch", 61),
                                               ("aria", "Unten"), ("ok",)], None, None,
-     lambda c: c["A4"]["Border bottom"][0] == -4115 and c["B4"]["Border bottom"][2] == 0x0000FF and c["A2"]["Border bottom"][0] in (-4142, None)),
+     lambda c: c["A4"]["Border bottom"][0] == -4115 and c["B4"]["Border bottom"][2] == 0x0000FF and c["A2"]["Border bottom"] is None),
     ("Rahmen Linienarten", "A2:B4", [T, ("ctrl", "Schriftart|Zellenschriftart formatieren"), ("btn", "Rahmen"), ("aria", "StrichPunktPunkt Mittel"), ("aria", "Oben"),
                                      ("aria", "SchrägstrichStrichPunkt"), ("aria", "Links"), ("aria", "Doppelt"), ("aria", "Unten"), ("aria", "Haarstrich"), ("aria", "Rechts"), ("ok",)],
      lambda app, ws: [(setattr(app.Selection.Borders(i), "LineStyle", ls), setattr(app.Selection.Borders(i), "Weight", w)) for i, ls, w in ((8, 5, -4138), (7, 13, -4138), (9, -4119, 4), (10, 1, 1))]),
@@ -525,7 +525,11 @@ def main() -> None:
                 res["excel"] = "no reference (checked by its own expectation)"
                 cells = props(app, ours)["cells"]
                 expect = case[5] if len(case) > 5 else None
-                res["pass"] = bool(expect and expect(cells)) and not r.get("failed") and not r.get("errors")
+                try:
+                    met = bool(expect and expect(cells))
+                except (TypeError, KeyError, IndexError):  # a property Excel reports as None: not met
+                    met = False
+                res["pass"] = met and not r.get("failed") and not r.get("errors")
                 res["ours"] = {a: {k: cells[a][k] for k in ("Font", "Interior")} for a in ("A1", "A2", "B1", "B3")}
                 results.append(res)
                 print(name, "| ours only:", "ok" if res["pass"] else "FAILED", r.get("failed", ""), flush=True)
