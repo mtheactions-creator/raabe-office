@@ -3162,6 +3162,10 @@ through test APIs, not the controls. RaabeWrite now has a by-hand audit that goe
   beobachtungen"). Word (recorded with Range.Case) raises the first letter of a sentence (of each word) and leaves the
   other letters as typed; only words with capitals inside (iPhone, McDonald) are lowered after their first letter, and
   every word when the whole selection was in capitals. text-engine `wordCase`, with Word's cases as unit tests.
+- **Layout > Umbrüche > Abschnittsumbrüche** (Nächste Seite, Fortlaufend, Gerade Seite, Ungerade Seite) deleted the
+  selected text and put the break in its place. Word puts a section break before the selection and keeps the text
+  (found by the Word comparison: Word's file still had the selected words); only page and column breaks replace the
+  selection, in Word as in RaabeWrite.
 - **Kopfzeile/Fußzeile > Leer** inserts Word's placeholder "[Hier eingeben]" (Word's building block has it as a
   content control), selected so typing replaces it; it inserted an empty header.
 - **Status bar:** a click on the page number opens the Navigationsbereich, on the word count Wörter zählen, as in Word
