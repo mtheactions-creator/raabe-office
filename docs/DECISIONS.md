@@ -3889,3 +3889,117 @@ new equation removed the equation itself. Word takes back one change at a time. 
 equation's values before each change: Strg+Z and Strg+Y step back and forth inside the equation (the caret goes to its
 end); with no change left, Strg+Z ends the edit and acts on the document (the next step removes a new equation, as in
 Word). The document still gets one undo step for the whole edit once it is left.
+
+## D-111 RaabeCalc: the chart Format pane complete, every option drawn, saved and read back (2026-11-08)
+
+The owner found the chart Format pane "downright broken in many parts" (an axis could not be made to draw).
+Causes: the renderer drew only what Excel's default style shows (no value axis line, no tick marks, no
+logarithmic scale, no crossings, no label positions), the pane edited fields nobody drew, the crossing was
+read into the wrong axis, and Strg+Z closed the pane. Excel's pane was recorded first in an Excel of our own
+(`probe_excel_chartpane.py`, UI Automation without real input: 94 panes of 7 chart types, every section,
+control, label and dropdown entry; results/2026-11-09-excel-chart-pane.json), then built the same way.
+- **Model** (`packages/charts/src/model.ts`): fills gain Farbverlauf (type, angle, stops with transparency,
+  Mit Form drehen), Bild- oder Texturfüllung (picture, tiled or stretched with offsets, transparency) and
+  Musterfüllung (DrawingML's 48 presets, Vorder-/Hintergrund); lines gain Farbverlaufslinie, Verbundtyp,
+  Abschluss- and Anschlusstyp, Start-/Endpfeil with size; every element gains Effekte (Schatten außen and
+  innen, Leuchten, Weiche Kanten, 3D-Format, and for text Spiegelung); text gains fill, Kontur, effects,
+  underline/strike and the Textfeld (Vertikale Ausrichtung, Textrichtung, Benutzerdefinierter Winkel);
+  axes gain Achsentyp (Text, Datum with Basis/Haupteinheit), Anzeigeeinheiten (with or without label),
+  Intervall zwischen Teilstrichen / Beschriftungen, Abstand zur Achse, Achsenposition (auf / zwischen
+  Teilstrichen), a fill and a secondary value axis of its own (`format.valAxis2`); series gain effects,
+  Kreisexplosion and data points of their own (`points`: Datenpunkt formatieren); the chart gains
+  Punkte nach Farbe unterscheiden, Abgerundete Ecken, the legend "Oben rechts" and the object's
+  Eigenschaften (placement, Objekt drucken, Gesperrt, Seitenverhältnis sperren, Alternativtext).
+- **`crosses` means where the other axis crosses this one**, in this axis' units, as the pane says it
+  ("Horizontale Achse schneidet" on the value axis, "Vertikale Achse schneidet: Bei Rubriknummer" on the
+  category axis). The file writes it on the other axis' element (c:crossesAt / c:crosses), which is how the
+  reader now takes it back (it read it into the wrong axis before, and the category axis' "Bei größter
+  Rubrik" wrote the value axis' field).
+- **Drawing as Excel does:** an axis line is drawn when the axis has one (Excel's default value axis has
+  none; Einfarbige Linie draws it); Teilstriche are drawn with the axis line's paint, so without a line they
+  stay invisible as in Excel; major ticks reach 2.75 pt, minor 2.06 pt beyond the line (Excel's PDF export);
+  columns grow from where the category axis crosses; labels "Achsennah" follow their axis (so with negative
+  values the categories stand at the zero line, as in Excel), "Niedrig"/"Hoch" stand at the plot's ends and
+  the plot makes room on that side; Abstand zur Achse adds 2.92 pt per 100 (measured); the Anzeigeeinheit's
+  label stands rotated beside the value labels ("Tausende", "x 10000", Excel's texts). Gradients, patterns,
+  pictures, arrowheads and effects are SVG definitions collected per scene (`paint.ts` beginDefs); compound
+  lines are drawn through a mask; effects are SVG filters (a fair likeness: Excel's exact blur and bevel
+  shading are not reproduced, D-114).
+- **File:** everything is written as DrawingML in the schema's order and read back: gradFill, pattFill,
+  blipFill (the picture as a media part of the chart part, linked when the drawing is written), a:ln's cmpd,
+  cap, join, headEnd/tailEnd, a:effectLst (glow, innerShdw, outerShdw, reflection, softEdge), a:scene3d and
+  a:sp3d, a:defRPr's ln/fill/effectLst/latin, a:bodyPr's rot/vert/anchor/anchorCtr, c:dateAx, c:dispUnits,
+  c:tickLblSkip/c:tickMarkSkip/c:lblOffset/c:auto, c:crossBetween from the category axis' Achsenposition,
+  c:dPt with c:explosion, c:varyColors, c15:datalabelsRange (Wert aus Zellen), c:roundedCorners, and in the
+  drawing anchor editAs, fPrintsWithSheet, fLocksWithSheet, graphicFrameLocks and cNvPr's descr/title.
+
+## D-112 RaabeCalc: the chart pane's controls (2026-11-08)
+
+- The pane is split into `formatpane.ts` (elements, names, tabs), `panefill.ts` (Füllung, Rahmen/Linie,
+  Effekte), `paneoptions.ts` (the element's own options) and `panetext.ts` (Textoptionen, Ausrichtung,
+  Größe und Eigenschaften). Labels, entries and the order of tabs are Excel's as recorded ("Stärke",
+  "Uni", "Rahmenpfeil", "Pfeil L Größe 1-9", "Hauptstriche", "Bei Rubriknummer", "Abstand zur Achse",
+  "Am Ende außerhalb", "Kreisexplosion", "Segmentfarbunterscheidung" …); text fill and outline have no
+  Automatisch, as in Excel.
+- @raabe/shell's task pane gains two controls with Excel's look: Farbverlaufsstopps (the bar with a
+  handle per stop, add, remove, drag) and the Musterfüllung grid (8 x 6 tiles drawn in the chosen colours).
+- A second click on a selected series selects the clicked point (Datenpunkt formatieren), as in Excel; the
+  element mapping moved from feature.ts into formatpane.ts (`elementOfPart`, `partsSelector`).
+- Strg+Z and Strg+Y keep the chart selected and its pane open on the same element (they closed the pane, so
+  a student lost the pane after every undo). This is a small change in feature.ts' `refresh`.
+- Größe und Eigenschaften: Höhe/Breite skalieren are relative to Excel's default chart size (12,7 x 7,62 cm),
+  Seitenverhältnis sperren keeps the ratio when one side changes.
+
+## D-113 RaabeCalc: the chart pane tested by hand (2026-11-08)
+
+`tools/feel-lab/check_calc_chartpane.py` drives the real release exe with trusted DevTools input (no OS mouse,
+window off screen and never focused): for column, bar, line, pie, scatter, area and Verbund charts it selects
+the chart with a click, opens the pane with Strg+1, picks every element in the pane's own element list, opens
+every option set, tab and section and uses every control once (radio and check clicks, a colour swatch, the
+arrow key in a dropdown, typed numbers and their spin button, a click on a slider, a pattern tile, adding a
+gradient stop; controls a choice reveals are used before that choice is undone). After each use it checks that
+the model changed and the drawing changed, and that Strg+Z restores both. The changed models are saved by
+RaabeCalc into one workbook per chart type, opened again (the setting must come back) and opened by our own
+invisible Excel, which reports each setting through COM (`excel_chartpane_com.py` maps model fields to the
+object model: Axes(2).MajorTickMark, Format.Line.Visible, Format.Fill.Type, Shadow, Glow, SoftEdge,
+TickLabelSpacing, DisplayUnit, CrossesAt, Points(n).Explosion, ChartObject.Placement …) and exports each chart.
+First results (results/2026-11-09-calc-chartpane-column.json, -pie-line.json, on the build before the fixes they
+led to): column 1436 controls used, 1418 changed the chart, all 1418 undone by Strg+Z, 1178 back on reopening,
+Excel COM 1334 of 1682 settings; pie 529 / 523 / 523 / 359, COM 474 of 605; line 942 / 916 / 906 / 90. What
+failed was fixed: palette colours without "#", two undo steps for one typed value, gradient stops out of order,
+the chart area's Textoptionen not saved or drawn, a pie series' Linie only on its points, a solid pie fill read
+back as a colour the pie ignores, error bar effects not saved, details of an automatic line lost, XY charts on
+the Sekundärachse written without their secondary axes (Excel refused the file). COM misses that remain are
+mostly text formats Excel does not report through TextFrame2 for chart text it builds itself, and settings Excel
+ignores (a format code "Probe 1").
+On the merged build with those fixes (results/2026-11-09-calc-chartpane-line.json, -others.json): line 1177
+controls used, 1169 changed, 1169 undone, 977 back on reopening, COM 1424 of 1428; scatter 787 / 785 / 785 /
+589, COM 979 of 981; combo 879 / 851 / 837 / 398, and Excel refused that file: every series moved to the
+Sekundärachse left the part without a primary group (fixed: written on the primary axes). Line series' own line
+details and marker defaults on reading, trendline and error bar effects in the drawing were fixed after it.
+Then bar 667 / 640 / 627 / 612, COM 691 of 693, and area 658 / 632 / 618 / 604, COM 681 of 683 (the undo misses
+were an empty undo step from a spin button at its limit; controls that change nothing make no step now). On the
+final build: combo 960 controls used, 953 changed, all 953 undone, 901 back on reopening, Excel opens the file,
+COM 1169 of 1174; a line series 125 / 125 / 125 / 116, COM 159 of 159 (results/…-combo.json, …-line-series.json).
+Settings revealed by Datumsachse on text categories (Grenzen, Hauptstriche) change nothing visible, as in Excel
+with text categories.
+`check_calc_chartpane_real.py` (OS mouse and keyboard under the real-input lock): 12 of 12 (slider drag, spin
+button, colour palette, native dropdowns, typing and Enter, Strg+Z, a gradient stop dragged, a stop added).
+`compare_calc_chartpane_pictures.py`: for 24 of 25 settings our drawing and Excel's export of our file change
+in the same region (box overlap at least 0.3, most above 0.9); it first found the plot standing about 8 pt
+higher than Excel's when negative values put the category labels inside the plot (Excel keeps only a small
+margin then; fixed). The miss: Abstand zur Achse 500 with labels inside the plot (0.09).
+
+## D-114 RaabeCalc chart pane: what differs from Excel on purpose or is left out (2026-11-08)
+
+- Left out: the galleries Voreingestellte Farbverläufe and Textur (24 bitmaps), Helligkeit of a gradient stop,
+  Perspektive shadows, 3D-Drehung of 2-D charts and text, the lighting Winkel, Benutzerdefiniert error
+  amounts (Wert angeben, needs ranges), the Datenbeschriftungsreihe of a single label, Text sperren, the
+  greyed text box options (Ränder, Umbruch, Spalten). Bild- oder Texturfüllung takes a picture file
+  (Einfügen ...) or the clipboard; X/Y-Skalierung and Ausrichtung of tiles are not offered.
+- Effects are drawn as SVG filters close to Excel's look; blur radii and bevel shading are approximations,
+  the file keeps Excel's exact values. A text outline's Verbundtyp is saved but drawn as a single line.
+- An axis' "Keine Füllung" and "Automatisch" write the same file (Excel's automatic axis fill is none), so the
+  pane shows Automatisch after reopening. A Bild- oder Texturfüllung without a chosen picture is not saved.
+- The Alternativtext section stays in Größe und Eigenschaften (Excel 365 moved it to a pane of its own).
+- The Einheiten fields keep Excel's accessible names "Hauptstriche" / "Teilstriche" as their labels.

@@ -9,4 +9,5 @@ export * from "./series";
 export * from "./render";
 export * from "./layouts";
 export * from "./colors";
+export { PATTERNS, patternPath, logScale, unitDivisor, DISPLAY_UNITS, effectFilter, fillPaint, linePaint } from "./paint";
 export * from "./filter";

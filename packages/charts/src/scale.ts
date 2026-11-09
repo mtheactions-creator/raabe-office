@@ -9,7 +9,24 @@
 //   intervals, where L depends on the axis length (10 for a default chart);
 // - the ends are rounded outwards to whole major units.
 
-export interface AxisScale { min: number; max: number; major: number }
+export interface AxisScale {
+  min: number;
+  max: number;
+  /** The major unit; on a logarithmic axis the factor between ticks. */
+  major: number;
+  /** Logarithmische Skalierung with this Basis (D-111). */
+  log?: number;
+}
+
+/** Where `v` lies on a scale, 0 at the minimum and 1 at the maximum (logarithmic scales by their logarithm). */
+export function scaleFrac(s: AxisScale, v: number): number {
+  if (s.log) {
+    if (!(v > 0)) return -1;
+    const a = Math.log(s.min), b = Math.log(s.max);
+    return (Math.log(v) - a) / (b - a || 1);
+  }
+  return (v - s.min) / (s.max - s.min || 1);
+}
 
 /** The nice units Excel uses, ascending from well below `span`. */
 function units(span: number): number[] {
@@ -75,6 +92,10 @@ function round(v: number, unit: number): number {
 /** The tick values of a scale. */
 export function ticks(s: AxisScale): number[] {
   const out: number[] = [];
+  if (s.log) {
+    for (let v = s.min, i = 0; v <= s.max * (1 + 1e-9) && i < 200; v *= s.major > 1 ? s.major : s.log, i++) out.push(Number(v.toPrecision(12)));
+    return out;
+  }
   const n = Math.round((s.max - s.min) / s.major);
   for (let i = 0; i <= n && i < 1000; i++) out.push(round(s.min + i * s.major, s.major));
   return out;
