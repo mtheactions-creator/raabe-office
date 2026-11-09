@@ -192,7 +192,7 @@ export function trendlineXml(t: Trendline, autoLine: string, label: string, effe
 }
 
 export function errBarsXml(e: ErrorBars, scatter: boolean, autoLine: string): string {
-  return `<c:errBars>${scatter ? '<c:errDir val="y"/>' : ""}<c:errBarType val="${e.dir}"/><c:errValType val="${e.type}"/><c:noEndCap val="${e.noEndCap ? 1 : 0}"/>${e.type === "fixedVal" || e.type === "percentage" || e.type === "stdDev" ? `<c:val val="${e.value ?? (e.type === "percentage" ? 5 : 1)}"/>` : ""}<c:spPr>${lineXml(e.line, autoLine)}<a:effectLst/></c:spPr></c:errBars>`;
+  return `<c:errBars>${scatter ? '<c:errDir val="y"/>' : ""}<c:errBarType val="${e.dir}"/><c:errValType val="${e.type}"/><c:noEndCap val="${e.noEndCap ? 1 : 0}"/>${e.type === "fixedVal" || e.type === "percentage" || e.type === "stdDev" ? `<c:val val="${e.value ?? (e.type === "percentage" ? 5 : 1)}"/>` : ""}<c:spPr>${lineXml(e.line, autoLine)}${effectLstXml(e.effects)}</c:spPr></c:errBars>`;
 }
 
 // ----- reading ---------------------------------------------------------------------------------------
@@ -391,7 +391,7 @@ export function readText(r: Reader, txPr: El | undefined, defaultSize: number, a
     if (a.strike && a.strike !== "noStrike") out.strike = true;
     const kids = kidsOf(r, d);
     const fill = readFill(r, kids);
-    if (fill?.type === "solid") out.color = fill.color;
+    if (fill?.type === "solid" && !fill.transparency) out.color = fill.color;
     if (fill && fill.type !== "solid") out.fill = fill;
     if (fill?.type === "solid" && fill.transparency) out.fill = fill;
     const ln = kids.find((k) => k.name === "a:ln");

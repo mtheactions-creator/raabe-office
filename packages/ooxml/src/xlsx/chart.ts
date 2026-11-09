@@ -965,6 +965,10 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
       if (val(xml, find(xml, eb, "c:noEndCap")) === "1") e.noEndCap = true;
       const v = val(xml, find(xml, eb, "c:val"));
       if (v !== undefined) e.value = Number(v);
+      // Their own Linie and Effekte (the automatic grey line stays automatic).
+      const esh = readShape(rd, find(xml, eb, "c:spPr"));
+      if (esh.line && esh.line.type !== "auto") e.line = esh.line;
+      if (esh.effects) e.effects = esh.effects;
       out.errorBars = e;
     }
     if (val(xml, find(xml, s, "c:dLbls", "c:showVal")) === "1") dataLabels = true;
