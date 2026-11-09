@@ -3134,10 +3134,22 @@ through test APIs, not the controls. RaabeWrite now has a by-hand audit that goe
   keytips with the real Alt key, the zoom slider, the mouse wheel, the Schriftart dialog's lists.
 - The system's file dialogs and printing cannot be opened off screen: the sweep replaces them (`__app.stubNative()`,
   test API only) and counts the request as the option's effect.
-- **Results** (2026-11-09): real input 9/15 before (three app faults: Weitere Farben, a dialog's title bar, the
-  Schriftart dialog's lists; three errors of the test itself), 15/15 after. The sweep before the fixes: Start,
-  Layout and the two table tabs 434 of 435 options passed; the other tabs' run found the faults of D-134 to D-136.
-  The run after the fixes is in results/2026-11-09-write-sweep-a.json and -b.json (numbers below when finished).
+- **Results** (2026-11-09). Real input: 9/15 before (three app faults: Weitere Farben, a dialog's title bar, the
+  Schriftart dialog's lists; three errors of the test itself), 15/15 after (results/2026-11-09-write-real-input.json).
+  Inventory: 288 ribbon controls defined in 14 tabs (chart tabs not built), 280 reached by hand (the other 8 are style
+  gallery entries the run sampled and one check box whose label differs), 46 dialogs, 449 commands (17 deferred, 2 with
+  no behaviour: the Kommentare pane's own entry and Weitersuchen, both reached through other controls).
+  Sweep before the fixes (the same harness without its later corrections): Start, Layout, table tabs 434 of 435 decided
+  options passed; the other tabs and the extras 721 of 1021 (107 of the failures were Strg+Z in equations, D-136; most
+  others limits of that run's harness). After the fixes: A (Start, Layout, table tabs) 455 options, 430 passed, 0
+  failed, 1 untested, 24 greyed or deferred; B (the other tabs, context menus, status bar, Datei, shortcuts) 1515
+  options, 1345 passed, 57 failed, 9 untested, 94 greyed or deferred, 10 fields. Word opened all 254 files of A; 81 of
+  88 options with a Word counterpart changed the same as Word's (the 7: section breaks, fixed and re-measured 18/18 on
+  the Layout tab; Kein Leerraum's font; Spalte links/rechts einfügen keeps the table's width where Word keeps the
+  column widths). The 57 left in B are listed in the results' report (`sweep_write.py report --out write-sweep-b`):
+  mostly shortcuts the sweep presses wrongly (Strg+Return, Strg+(, Alt+Strg+3 ...), Annehmen/Ablehnen when the
+  selection holds no change, picture options that are already so (Mit Text in Zeile, Ausfüllen, Einpassen), the
+  print page's own fields, and Kopieren in the context menus (the clipboard is not checked there).
 
 ## D-134 RaabeWrite: what the by-hand audit found broken (2026-11-09)
 
@@ -3165,7 +3177,8 @@ through test APIs, not the controls. RaabeWrite now has a by-hand audit that goe
 - **Layout > Umbrüche > Abschnittsumbrüche** (Nächste Seite, Fortlaufend, Gerade Seite, Ungerade Seite) deleted the
   selected text and put the break in its place. Word puts a section break before the selection and keeps the text
   (found by the Word comparison: Word's file still had the selected words); only page and column breaks replace the
-  selection, in Word as in RaabeWrite.
+  selection, in Word as in RaabeWrite. **Einfügen > Leere Seite** likewise deleted the selected text; Word keeps it
+  and puts the blank page before it, and so does RaabeWrite now (not re-measured in the exe before the deadline).
 - **Kopfzeile/Fußzeile > Leer** inserts Word's placeholder "[Hier eingeben]" (Word's building block has it as a
   content control), selected so typing replaces it; it inserted an empty header.
 - **Status bar:** a click on the page number opens the Navigationsbereich, on the word count Wörter zählen, as in Word

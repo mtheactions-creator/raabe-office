@@ -1067,7 +1067,8 @@ export class WriteApp {
     for (const id of ["layout.indentLeft", "layout.indentRight", "layout.spaceBefore", "layout.spaceAfter"]) layoutOn(id);
     run("insert.pageBreak", (e) => e.insertBreak("page"));
     run("insert.lineBreak", (e) => e.insertBreak("line"));
-    run("insert.blankPage", (e) => { e.insertBreak("page"); e.insertBreak("page"); });
+    // Leere Seite keeps the selected text (Word: the page goes in before it, D-135); a page break alone replaces it.
+    run("insert.blankPage", (e) => { const [a] = e.selectionRange(); e.select(a, a); e.insertBreak("page"); e.insertBreak("page"); });
     c.implement("layout.breaks", { run: () => {}, enabled: has });
 
     // View.
