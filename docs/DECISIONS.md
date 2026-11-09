@@ -3196,4 +3196,5 @@ the run's own colour away (Schriftfarbe: the design's text colour shows), the sh
 (Fülleffekt, Formkontur: the shape style's shows), and colorEl/colorXml never write "auto" (tx1 instead). The sweep's
 save check now refuses any srgbClr that is not six hex digits and any schemeClr outside the scheme's names, so this
 kind of fault shows without PowerPoint. Opening 600 files of the exe sweep afterwards found one more: Nummerierung >
-Keine wrote `<a:buAutoNum type="none"/>`; it switches the list off now (buNone), and the save check refuses that too.
+Keine wrote `<a:buAutoNum type="none"/>`; it switches the list off now (buNone), and the save check refuses that too. The colour lint then found Hintergrund
+formatieren's Farbe writing five hex digits (the palette's colour without "#" lost its first digit); fixed.
