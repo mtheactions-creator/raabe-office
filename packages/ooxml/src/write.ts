@@ -312,7 +312,7 @@ class DocWriter {
    * A chart made or changed in RaabeWrite (Step 7b): its chart part, the embedded workbook with the data (linked as
    * Word links it, so Word's Daten bearbeiten finds it) and the inline drawing that shows it.
    */
-  private newChart(o: InlineObject, part: string): string {
+  private newChart(o: { chart?: InlineObject["chart"]; width?: number; height?: number; alt?: AltText }, part: string, anchor?: FloatObject): string {
     const ch = o.chart!;
     const chartPath = this.pw.freeName("word/charts/chart");
     let xml = ch.xml;
@@ -321,7 +321,11 @@ class DocWriter {
       const brid = this.pw.link(chartPath, "http://schemas.openxmlformats.org/officeDocument/2006/relationships/package", book);
       xml = xml.replace(/<c:externalData\b[\s\S]*?<\/c:externalData>/, "");
       const ext = `<c:externalData r:id="${brid}"><c:autoUpdate val="0"/></c:externalData>`;
-      const at = xml.search(/<c:(printSettings|userShapes|extLst)\b(?![\s\S]*<c:chart\b)/);
+      // After the chart (c:chart holds extLst of its own, a filtered series' c15 data among them), before the
+      // chart space's printSettings, userShapes or extLst.
+      const end = xml.lastIndexOf("</c:chart>");
+      const tail = end >= 0 ? xml.slice(end).search(/<c:(printSettings|userShapes|extLst)\b/) : -1;
+      const at = tail >= 0 ? end + tail : -1;
       xml = at >= 0 ? xml.slice(0, at) + ext + xml.slice(at) : xml.replace("</c:chartSpace>", ext + "</c:chartSpace>");
       if (!/xmlns:r=/.test(xml.slice(0, 400))) xml = xml.replace("<c:chartSpace ", `<c:chartSpace xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" `);
     }
@@ -330,9 +334,21 @@ class DocWriter {
     const cx = Math.round((o.width ?? 300) * EMU), cy = Math.round((o.height ?? 180) * EMU);
     const id = this.docPrId++;
     const NS_C = "http://schemas.openxmlformats.org/drawingml/2006/chart";
-    return `<w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0" xmlns:wp="${NS_WP}"><wp:extent cx="${cx}" cy="${cy}"/><wp:effectExtent l="0" t="0" r="0" b="0"/>` +
-      `<wp:docPr id="${id}" name="Diagramm ${id}"/><wp:cNvGraphicFramePr/><a:graphic xmlns:a="${NS_A}"><a:graphicData uri="${NS_C}">` +
-      `<c:chart xmlns:c="${NS_C}" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:id="${rid}"/></a:graphicData></a:graphic></wp:inline></w:drawing>`;
+    const docPr = `<wp:docPr id="${id}" name="${esc(o.alt?.name ?? `Diagramm ${id}`)}"${o.alt?.descr ? ` descr="${esc(o.alt.descr)}"` : ""}${o.alt?.hidden ? ' hidden="1"' : ""}${o.alt?.title ? ` title="${esc(o.alt.title)}"` : ""}/><wp:cNvGraphicFramePr/>`;
+    const graphic = `<a:graphic xmlns:a="${NS_A}"><a:graphicData uri="${NS_C}">` +
+      `<c:chart xmlns:c="${NS_C}" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:id="${rid}"/></a:graphicData></a:graphic>`;
+    const common = `<wp:extent cx="${cx}" cy="${cy}"/><wp:effectExtent l="0" t="0" r="0" b="0"/>`;
+    if (!anchor) return `<w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0" xmlns:wp="${NS_WP}">${common}${docPr}${graphic}</wp:inline></w:drawing>`;
+    // A floating chart (D-131) as Word writes one: wp:anchor with the wrapping, Word's distances from the text.
+    const e = (pt: number) => Math.round(pt * EMU);
+    const pos = (tag: string, p: FloatObject["x"]) => `<wp:${tag} relativeFrom="${esc(p.rel)}">${p.align ? `<wp:align>${esc(p.align)}</wp:align>` : `<wp:posOffset>${e(p.offset)}</wp:posOffset>`}</wp:${tag}>`;
+    const wrap = anchor.wrap === "front" || anchor.wrap === "behind" || anchor.wrap === "none" ? "<wp:wrapNone/>"
+      : anchor.wrap === "topAndBottom" ? "<wp:wrapTopAndBottom/>"
+      : anchor.wrap === "square" ? `<wp:wrapSquare wrapText="${esc(anchor.side)}"/>`
+      : `<wp:wrap${anchor.wrap === "tight" ? "Tight" : "Through"} wrapText="${esc(anchor.side)}">${polygonXml(anchor.polygon)}</wp:wrap${anchor.wrap === "tight" ? "Tight" : "Through"}>`;
+    const [t, b, l, r] = anchor.dist.map(e);
+    return `<w:drawing><wp:anchor distT="${t}" distB="${b}" distL="${l}" distR="${r}" simplePos="0" relativeHeight="${anchor.z ?? 251659264 + id}" behindDoc="${anchor.wrap === "behind" ? 1 : 0}" locked="0" layoutInCell="1" allowOverlap="1" xmlns:wp="${NS_WP}">` +
+      `<wp:simplePos x="0" y="0"/>${pos("positionH", anchor.x)}${pos("positionV", anchor.y)}${common}${wrap}${docPr}${graphic}</wp:anchor></w:drawing>`;
   }
 
   private newDrawing(o: { image?: InlineObject["image"]; width?: number; height?: number; pic?: PictureFormat; alt?: AltText }, part: string, anchor?: FloatObject): string {
@@ -373,6 +389,7 @@ class DocWriter {
     }
     if (typeof d === "string") return d;
     if (f.shape) return this.newShape(f, f.shape, part, f);
+    if (f.chart) return this.newChart(f, part, f);
     if (f.image) return this.newDrawing(f, part, f);
     return "";
   }

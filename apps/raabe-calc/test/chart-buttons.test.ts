@@ -5,9 +5,9 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { chartScene, newChart, seriesFromBlock, visibleModel, type ChartModel } from "@raabe/charts";
-import { choiceLabel, elementEntries } from "../src/charts/elements";
-import { applyStyle, chartStyles, styleIndex } from "../src/charts/styles";
-import { parseName, parseValues } from "../src/charts/selectdata";
+import { choiceLabel, elementEntries } from "@raabe/chart-ui";
+import { applyStyle, chartStyles, styleIndex } from "@raabe/chart-ui";
+import { parseName, parseValues } from "@raabe/chart-ui";
 
 const excel = JSON.parse(readFileSync("tools/feel-lab/results/2026-11-09-excel-chart-buttons.json", "utf-8"));
 const styles = JSON.parse(readFileSync("tools/feel-lab/results/2026-11-09-excel-chart-filter.json", "utf-8"));

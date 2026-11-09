@@ -695,6 +695,19 @@ class PartReader {
     return this.r.text(resolveTarget(this.part, rel.target)) ?? undefined;
   }
 
+  /**
+   * The workbook embedded with a chart part (its package relationship, as Word links it), so a chart that is changed
+   * here (Diagrammformatvorlagen, Diagrammelemente, made floating ...) keeps the data Word's Daten bearbeiten opens.
+   */
+  private chartBook(id: string | null): Uint8Array | undefined {
+    if (!id) return undefined;
+    const rel = this.rels.get(id);
+    if (!rel || rel.external) return undefined;
+    const chartPath = resolveTarget(this.part, rel.target);
+    const pkg = this.r.rels(chartPath).list.find((x) => !x.external && x.type.endsWith("/package"));
+    return pkg ? this.r.files[resolveTarget(chartPath, pkg.target)] : undefined;
+  }
+
   /** A chart part drawn as an SVG picture of the drawing's size (undefined where no canvas measures text: tests). */
   private chartPreview(xml: string, holder: Element | undefined): ImageData | undefined {
     if (!holder || typeof document === "undefined") return undefined;
@@ -730,6 +743,8 @@ class PartReader {
     const chartEl = blip ? undefined : c.getElementsByTagNameNS("http://schemas.openxmlformats.org/drawingml/2006/chart", "chart")[0];
     const chartXml = chartEl ? this.chartPart(chartEl.getAttributeNS(RNS, "id")) : undefined;
     const chartImage = chartXml ? this.chartPreview(chartXml, inline ?? anchor) : undefined;
+    const chartBook = chartXml ? this.chartBook(chartEl!.getAttributeNS(RNS, "id")) : undefined;
+    const chart = chartXml ? { chart: { xml: chartXml, ...(chartBook ? { workbook: chartBook } : {}) } } : {};
     const image = blip ? this.r.image(this.part, this.rels, blip.getAttributeNS(RNS, "embed")) : chartImage;
     // Bildformat settings and Alternativtext; the XML is only rewritten when they change.
     const picEl = c.getElementsByTagNameNS("http://schemas.openxmlformats.org/drawingml/2006/picture", "pic")[0];
@@ -752,7 +767,7 @@ class PartReader {
     }
     if (inline || !anchor) {
       const size = inline ? ext(inline) : { width: 0, height: 0 };
-      b.addObject({ kind: "image", data, display: "", width: size.width, height: size.height, image, pic, alt, ...(chartXml && chartImage ? { chart: { xml: chartXml } } : {}) }, props);
+      b.addObject({ kind: "image", data, display: "", width: size.width, height: size.height, image, pic, alt, ...chart }, props);
       return;
     }
     const size = ext(anchor);
@@ -772,7 +787,7 @@ class PartReader {
       at: b.text.length, data, width: size.width, height: size.height, image,
       x: pos("positionH"), y: pos("positionV"), wrap, side: wrapEl?.getAttribute("wrapText") ?? "bothSides",
       dist: [d("distT"), d("distB"), d("distL"), d("distR")], polygon: wrapPolygon(wrapEl), pic, alt,
-      z: Number(anchor.getAttribute("relativeHeight") ?? 0) || undefined,
+      z: Number(anchor.getAttribute("relativeHeight") ?? 0) || undefined, ...chart,
     });
   }
 

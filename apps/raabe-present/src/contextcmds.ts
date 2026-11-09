@@ -76,7 +76,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     fillExtra: () => app.fillExtra(),
     cropMenu: () => app.cropMenu(),
     // A chart element picked in Aktuelle Auswahl: the format pane for the chart (its parts are not selected one by one).
-    formatChartElement: () => void app.commands.run("draw.format"),
+    formatChartElement: (name) => { if (!app.chartUi.openPane(name)) void app.commands.run("draw.format"); },
     penStyles: () => penMenus(app).styles(), penWeights: () => penMenus(app).weights(),
     penColor: () => `#${app.tablePen.color.length === 6 ? app.tablePen.color : "000000"}`,
     setPenColor: (c) => { app.tablePen.color = c.replace("#", "").toUpperCase(); app.editor.endText(); app.editor.tool = { kind: "tableDraw" }; app.editor.render(); app.updateChrome(); },

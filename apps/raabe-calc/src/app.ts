@@ -29,7 +29,7 @@ import { parseClipboard, rangeHtml, rangeText, type Copied } from "./clipboard";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import { dialogs } from "./dialogs";
 import { chartsFeature } from "./charts/feature";
-import { chartMenus, chartTypeDialog, type ChartTypeHost } from "./charts/types";
+import { chartMenus, chartTypeDialog, type ChartTypeHost } from "@raabe/chart-ui";
 import { printFeature } from "./print";
 import { notesFeature } from "./notes";
 import { traceFeature } from "./trace";
@@ -2488,7 +2488,7 @@ export class CalcApp {
     this.updateChrome();
   }
 
-  /** What the chart type menus and the Diagrammtyp dialog act on (charts/types.ts). */
+  /** What the chart type menus and the Diagrammtyp dialog act on (@raabe/chart-ui types.ts). */
   chartTypeHost(): ChartTypeHost {
     return {
       insert: (k, tweak) => this.charts.insert(k, tweak),
@@ -2957,7 +2957,7 @@ export class CalcApp {
         ],
         fnFinancial: fnMenu(["BW", "KAPZ", "NBW", "RMZ", "ZINS", "ZINSZ", "ZW", "ZZR"]),
         fnRecent: fnMenu(["SUMME", "MITTELWERT", "WENN", "MAX", "MIN", "ANZAHL", "SVERWEIS", "RUNDEN", "ZÄHLENWENN", "SUMMEWENN"]),
-        // Einfügen > Diagramme: every type of Excel's menus (charts/types.ts, D-086).
+        // Einfügen > Diagramme: every type of Excel's menus (@raabe/chart-ui types.ts, D-086).
         ...(chartMenus(this.chartTypeHost()) as Pick<RibbonContext["menus"], "chartColumn" | "chartLine" | "chartPie" | "chartScatter" | "chartStat" | "chartHierarchy" | "chartOther" | "chartCombo">),
         fitWidth: ["Automatisch", "1 Seite", "2 Seiten", "3 Seiten"].map((l, i) => ({ label: l, run: () => this.print.setFit("width", i) })),
         fitHeight: ["Automatisch", "1 Seite", "2 Seiten", "3 Seiten"].map((l, i) => ({ label: l, run: () => this.print.setFit("height", i) })),

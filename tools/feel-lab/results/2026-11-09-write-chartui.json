@@ -1,0 +1,401 @@
+{
+ "passed": 79,
+ "total": 79,
+ "cases": [
+  {
+   "case": "Einfügen > Diagramm by hand inserts a chart, selected",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammentwurf and Format show with a chart selected",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammentwurf: Word's groups in Word's order",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammentwurf: controls' keytips as Word's",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Format: Word's groups in Word's order",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Format: controls' keytips as Word's",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelement hinzufügen lists Office's elements",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelement hinzufügen > Legende > Unten",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelement hinzufügen > Diagrammtitel > Keine",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelement hinzufügen > Datenbeschriftungen > Am Ende außerhalb",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelement hinzufügen > Achsentitel > Primär vertikal",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelement hinzufügen > Gitternetzlinien > Primäres Hauptgitter horizontal",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelement hinzufügen > Datentabelle > Mit Legendensymbolen",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Schnelllayout offers Layout 1 to Layout 11",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Schnelllayout > Layout 5 (Livevorschau, then applied: Datentabelle, no legend)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Farben ändern lists Farbige Palette 1-4 and Monochrome Palette 1-13",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Farben ändern > Monochrome Palette 3",
+   "passed": true,
+   "detail": "16"
+  },
+  {
+   "case": "Diagrammformatvorlagen gallery shows the chart's styles",
+   "passed": true,
+   "detail": "14"
+  },
+  {
+   "case": "Formatvorlage 3 applied from the ribbon",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Strg+Z takes the style back, the chart stays selected",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "four buttons beside the chart: Layoutoptionen, Diagrammelemente, Diagrammformatvorlagen, Diagrammfilter",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente lists Word's nine entries, ticked as Word ticks them",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Achsentitel switched by its check box (flyout stays open)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Diagrammtitel switched by its check box (flyout stays open)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Datenbeschriftungen switched by its check box (flyout stays open)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Datentabelle switched by its check box (flyout stays open)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Gitternetzlinien switched by its check box (flyout stays open)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente: Legende switched by its check box (flyout stays open)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammformatvorlagen shows the column styles (14)",
+   "passed": true,
+   "detail": "14"
+  },
+  {
+   "case": "a style tile: Livevorschau on hover (the chart unchanged), applied on click",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammfilter lists the series and categories (each with (Alle auswählen))",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammfilter: Datenreihe 2 hidden after Anwenden",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "a click on the selected chart keeps it selected (the chart area)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "a click on the title chooses it: Aktuelle Auswahl shows Diagrammtitel",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Aktuelle Auswahl lists the chart's elements",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Aktuelle Auswahl > Diagrammtitel selects the title",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Auswahl formatieren opens the title's Format pane",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Größe > Formenhöhe 7 cm",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "double-click on the legend opens Legende formatieren",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Format pane: Diagrammbereich > Keine Füllung",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammtyp ändern... > Linie",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Layoutoptionen > Quadrat: the chart floats with that wrapping",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "a floating chart is dragged with the mouse",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Layoutoptionen > Position auf der Seite fixieren",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "the chart buttons follow the dragged chart",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Layoutoptionen > Eng: the chart floats with that wrapping",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Layoutoptionen > Transparent: the chart floats with that wrapping",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Layoutoptionen > Oben und unten: the chart floats with that wrapping",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Layoutoptionen > Hinter den Text: the chart floats with that wrapping",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Layoutoptionen > Vor den Text: the chart floats with that wrapping",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Layoutoptionen > Mit Text in Zeile: the chart is back in the line",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Strg+Z: floating again",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Daten bearbeiten opens the chart's data",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Word reads elements: the same chart state (HasTitle, LegendPosition, HasDataTable, DataLabels, ValTitle, MajorGrid)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of elements: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "1.42"
+  },
+  {
+   "case": "Word reads layout5: the same chart state (HasDataTable, HasLegend)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of layout5: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "1.18"
+  },
+  {
+   "case": "Word reads buttons-elements: the same chart state (HasTitle, HasLegend, HasDataTable, DataLabels, ValTitle, CatTitle, MajorGrid)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of buttons-elements: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "1.73"
+  },
+  {
+   "case": "Word reads filter: the same chart state (Filtered)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of filter: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "1.54"
+  },
+  {
+   "case": "Word reads size: the same chart state (Height)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of size: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "0.5"
+  },
+  {
+   "case": "Word reads pane: the same chart state (ChartAreaFill)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of pane: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "0.5"
+  },
+  {
+   "case": "Word reads type-line: the same chart state (ChartType)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of type-line: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "0.47"
+  },
+  {
+   "case": "Word reads wrap-square: the same chart state (Wrap, X, Y, W, H)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of wrap-square: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "0.59"
+  },
+  {
+   "case": "Word reads wrap-tight: the same chart state (Wrap, X, Y, W, H)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of wrap-tight: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "0.56"
+  },
+  {
+   "case": "Word reads wrap-through: the same chart state (Wrap, X, Y, W, H)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of wrap-through: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "0.56"
+  },
+  {
+   "case": "Word reads wrap-topAndBottom: the same chart state (Wrap, X, Y, W, H)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of wrap-topAndBottom: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "0.56"
+  },
+  {
+   "case": "Word reads wrap-behind: the same chart state (Wrap, X, Y, W, H)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of wrap-behind: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "0.56"
+  },
+  {
+   "case": "Word reads wrap-front: the same chart state (Wrap, X, Y, W, H)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "picture of wrap-front: Word's PDF and RaabeWrite's page 1 (mean grey difference < 6 of 255)",
+   "passed": true,
+   "detail": "0.56"
+  }
+ ]
+}

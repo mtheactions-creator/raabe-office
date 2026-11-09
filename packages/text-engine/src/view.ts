@@ -50,6 +50,8 @@ export interface RenderOptions {
       readonly rotation?: number; readonly flipH?: boolean; readonly flipV?: boolean };
     /** Pictures get the rotation handle and Word's layout options button. */
     readonly picture?: boolean;
+    /** A chart: the layout options button but no rotation handle (Word); the chart buttons are the app's. */
+    readonly chart?: boolean;
     /** The object's turn (degrees clockwise about its middle): the frame and handles turn with it. */
     readonly rotation?: number;
     /** A shape whose text is being edited: its frame is dashed. */
@@ -910,10 +912,12 @@ export class View {
         box.append(el);
       }
       if (img.picture) {
-        const rot = document.createElement("div");
-        rot.style.cssText = `position:absolute;left:${img.w / 2 - 9}px;top:-26px;width:18px;height:18px`;
-        rot.innerHTML = ROTATE_SVG;
-        box.append(rot);
+        if (!img.chart) {
+          const rot = document.createElement("div");
+          rot.style.cssText = `position:absolute;left:${img.w / 2 - 9}px;top:-26px;width:18px;height:18px`;
+          rot.innerHTML = ROTATE_SVG;
+          box.append(rot);
+        }
         const at = this.layoutButtonPos(img);
         const lb = document.createElement("div");
         lb.style.cssText = `position:absolute;left:${at.x}px;top:${at.y}px;width:22px;height:22px;box-sizing:border-box;border:1px solid #9e9e9e;background:#fff;display:flex;align-items:center;justify-content:center`;
@@ -1083,7 +1087,7 @@ export class View {
       if (Math.abs(lp.x - p.x) <= tol && Math.abs(lp.y - p.y) <= tol) return img.crop ? `crop-${hd}` as Handle : hd;
     }
     if (img.picture && !img.crop) {
-      if (Math.abs(lp.x - (img.x + img.w / 2)) <= 10 && Math.abs(lp.y - (img.y - 17)) <= 10) return "rot";
+      if (!img.chart && Math.abs(lp.x - (img.x + img.w / 2)) <= 10 && Math.abs(lp.y - (img.y - 17)) <= 10) return "rot";
       const lb = this.layoutButtonPos(img);
       if (pt.x >= lb.x && pt.x <= lb.x + 22 && pt.y >= lb.y && pt.y <= lb.y + 22) return "layout";
     }

@@ -1,0 +1,61 @@
+{
+ "passed": 11,
+ "total": 11,
+ "cases": [
+  {
+   "case": "Einfügen > Diagramm > Gruppierte Säulen inserts a chart",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "a click selects the chart (Diagrammentwurf and Format show)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "the three chart buttons beside the chart",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Format > Auswahl formatieren opens the chart's pane (Diagrammbereich formatieren)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "the pane changes the chart: Diagrammbereich > Einfarbige Füllung",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Aktuelle Auswahl > Diagrammtitel opens the title's pane",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "WordArt-Formate > Textfüllung > Rot colours the chart's text",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Diagrammelemente > Legende off, Strg+Z brings it back",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "the chart part keeps the text colour and the chart area's fill",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "context menu > Diagrammbereich formatieren... opens the chart's pane",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "no chart errors in the console",
+   "passed": true,
+   "detail": ""
+  }
+ ]
+}

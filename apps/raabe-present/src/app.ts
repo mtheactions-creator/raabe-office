@@ -2,6 +2,7 @@
 // presentation is a document tab (D-010) shown in Normalansicht: the slide panel at the left, the
 // slide in the middle, the notes below. Files are .pptx; everything not edited is kept (D-024).
 
+import { presentChartUi } from "./chartui";
 import { onFontAlias, setCloudFonts } from "@raabe/text-engine";
 import { colorXml, specHex } from "./colors";
 import { colorWord } from "./quickstyles";
@@ -461,9 +462,14 @@ export class PresentApp implements EditorHost, PanelHost {
     }
     if (this.comments?.pane.isOpen) this.comments.pane.refresh();
     this.formatPane?.sync();
+    this.chartUi.sync();
     this.animPane?.refresh();
     this.updateChrome();
   }
+
+  /** The chart buttons and Format pane of a selected chart (@raabe/chart-ui, D-132). */
+  private chartUiCache: ReturnType<typeof presentChartUi> | null = null;
+  get chartUi(): ReturnType<typeof presentChartUi> { return (this.chartUiCache ??= presentChartUi(this)); }
 
   toolDone(): void {
     this.updateChrome();
@@ -2759,7 +2765,8 @@ export class PresentApp implements EditorHost, PanelHost {
     impl("view.gridDialog", () => this.gridDialog());
     impl("shape.editText", () => { const v = ed().selectedViews[0]; if (v) ed().enterText(v.id); }, shapes);
     impl("shape.sizePosition", () => this.formatPane.open(), shapes);
-    impl("draw.format", () => this.formatPane.open(), shapes);
+    // A chart gets the chart Format pane of RaabeCalc and RaabeWrite (D-132), not the shape pane.
+    impl("draw.format", () => { if (!this.chartUi.openPane()) this.formatPane.open(); }, shapes);
     impl("text.effectsDialog", () => this.formatPane.openText(), () => !!this.editor.text || shapes());
     impl("pic.format", () => this.formatPane.open(), shapes);
     const dlgHost = () => ({ runStyle: () => this.runStyle(), paraStyle: () => this.paraStyle(), fonts: () => this.fontList, formatRuns: (l: string, f: (r: Element) => void) => this.formatRuns(l, f), formatParas: (l: string, f: (p: Element) => void) => this.formatParas(l, f) });
@@ -3284,6 +3291,8 @@ export class PresentApp implements EditorHost, PanelHost {
       // as a scheme colour PowerPoint refuses to open.
       setFontColor: (hex) => {
         const v = hex.replace("#", "").toUpperCase();
+        // WordArt-Formate > Textfüllung on a selected chart: the chart's text (D-132).
+        if (v !== "AUTO" && !this.editor.text && this.chartUi.setTextColor(specHex(hex, this.paletteTheme()?.colors ?? {}) ?? v)) return;
         if (v === "AUTO") { this.formatRuns("Schriftfarbe", (r) => T.setRunColor(r, null)); return; }
         this.lastFontColor = v; this.formatRuns("Schriftfarbe", (r) => T.setRunColor(r, v));
       },

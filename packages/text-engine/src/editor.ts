@@ -2358,6 +2358,19 @@ export class Editor {
     this.update();
   }
 
+  /**
+   * Changes the selected chart, inline or floating (D-130): its chart part and the picture drawn of it. One undo step
+   * unless `snapshot` is false (a drawing at a new size belongs to the step that sized it).
+   */
+  setSelectedChart(chart: { readonly xml: string; readonly workbook?: Uint8Array }, image: ImageData, snapshot = true): void {
+    const img = this.selectedImage();
+    if (!img || !img.obj.chart) return;
+    if (snapshot) this.snapshot();
+    if (img.kind === "inline") this.replaceObject(img.p, img.o, { ...img.obj, data: undefined, chart, image });
+    else this.replaceFloat(img.p, img.index, { ...img.obj, data: undefined, chart, image });
+    this.update();
+  }
+
   /** Inserts a picture in the line at the caret, scaled down to fit the text width. */
   insertImage(image: ImageData, width: number, height: number): void {
     this.snapshot();
@@ -3937,6 +3950,7 @@ export class Editor {
       const ends = this.lineEnds(img.obj, box);
       return ends ? { ...box, picture: false, adjust: this.adjustHandles(img.obj, box), ends } : { ...box, picture: true, adjust: this.adjustHandles(img.obj, box), rotation: img.obj.pic?.rotation };
     }
+    if (img?.obj.chart) return { ...box, picture: true, chart: true };
     if (!this.cropping || !img?.obj.image) return { ...box, picture: isPicture, rotation: img?.obj.pic?.rotation };
     const c = img.obj.pic?.crop ?? { l: 0, t: 0, r: 0, b: 0 };
     const fw = box.w / Math.max(0.01, 1 - c.l - c.r), fh = box.h / Math.max(0.01, 1 - c.t - c.b);
@@ -4274,6 +4288,7 @@ cropFill(fit: boolean): void {
         x: { rel: "column", offset: box && fr ? (box.x - fr.x) / PT : 0 },
         y: { rel: "paragraph", offset: box ? (box.y - paraTop) / PT : 0 },
         wrap, side: "bothSides", dist: [0, 0, 9, 9], pic: img.obj.pic, alt: img.obj.alt,
+        ...(img.obj.chart ? { chart: img.obj.chart } : {}),
       };
       this.doc.delete({ p: img.p, o: img.o }, { p: img.p, o: img.o + 1 });
       const para = this.doc.main[img.p];
@@ -4287,7 +4302,7 @@ cropFill(fit: boolean): void {
       const f = img.obj;
       this.replaceFloat(img.p, img.index, null);
       const at = { p: img.p, o: Math.min(f.at, this.doc.main[img.p].text.length) };
-      const obj: InlineObject = { kind: "image", data: undefined, display: "", width: f.width, height: f.height, image: f.image, pic: f.pic, alt: f.alt };
+      const obj: InlineObject = { kind: "image", data: undefined, display: "", width: f.width, height: f.height, image: f.image, pic: f.pic, alt: f.alt, ...(f.chart ? { chart: f.chart } : {}) };
       E.insertObject(this.doc, at, at, obj, this.typingPropsAt(at));
       this.floatSel = null;
       this.setSel(at, { p: at.p, o: at.o + 1 });
@@ -7174,6 +7189,7 @@ cropFill(fit: boolean): void {
   /** Drags the selected text: a caret shows where it goes; on release it moves (Strg: a copy). */
   private dragSelectedText(e: MouseEvent, click: Pos, upstream: boolean): void {
     const x0 = e.clientX, y0 = e.clientY;
+    const keepObject = this.selectedImage()?.kind === "inline";
     let moved = false;
     let target: Pos | null = null;
     const move = (ev: MouseEvent) => {
@@ -7189,6 +7205,8 @@ cropFill(fit: boolean): void {
       removeEventListener("mousemove", move, true);
       removeEventListener("mouseup", up, true);
       this.view.caretOverride = null;
+      // A press on a selected picture or chart in the line without moving keeps it selected (Word); on text it puts the caret there.
+      if ((!moved || !target) && keepObject) { this.update(); this.emit(false); return; }
       if (!moved || !target) { this.setSel(click, click, upstream); this.update(); this.emit(false); return; }
       if (!this.insideSelection(target)) this.moveSelectionTo(target, ev.ctrlKey);
       else this.update();

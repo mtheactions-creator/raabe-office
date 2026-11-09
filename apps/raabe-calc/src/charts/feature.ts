@@ -16,12 +16,12 @@ import {
 import { CellError, formatValue, type Rect, type Sheet, type Workbook } from "@raabe/sheet-engine";
 import { h, showDialog, showMenu, type MenuEntry } from "@raabe/shell";
 import type { CalcApp } from "../app";
-import { chartElements, elementName, elementOfPart, formatPane, partsSelector, type ChartElement } from "./formatpane";
+import { chartElements, elementName, elementOfPart, formatPane, partsSelector, type ChartElement } from "@raabe/chart-ui";
 import { sheetAxes, type Axis } from "../grid/metrics";
-import { chartButtons } from "./buttons";
-import { choiceLabel, elementEntries } from "./elements";
-import { selectDataDialog, type SelectDataHost } from "./selectdata";
-import { applyStyle, chartStyles, setStyleTheme, styleIndex } from "./styles";
+import { chartButtons } from "@raabe/chart-ui";
+import { choiceLabel, elementEntries } from "@raabe/chart-ui";
+import { selectDataDialog, type SelectDataHost } from "@raabe/chart-ui";
+import { applyStyle, chartStyles, setStyleTheme, styleIndex } from "@raabe/chart-ui";
 
 export type ChartKind = Kind;
 
@@ -1184,7 +1184,7 @@ export function chartsFeature(app: CalcApp) {
     });
   }
 
-  async function chooseRibbon(m: ChartModel, id: string, ch: import("./elements").ElementChoice, on: boolean): Promise<void> {
+  async function chooseRibbon(m: ChartModel, id: string, ch: import("@raabe/chart-ui").ElementChoice, on: boolean): Promise<void> {
     if (id === "trendline" && m.series.filter((s) => !s.filtered).length > 1) {
       const i = await pickSeries(m);
       if (i === null) return;

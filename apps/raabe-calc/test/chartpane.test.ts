@@ -4,7 +4,7 @@
 import { describe, expect, it } from "vitest";
 import { newChart, type ChartKind, type ChartModel } from "@raabe/charts";
 import type { PaneControl, PaneSpec } from "@raabe/shell";
-import { chartElements, elementName, elementOfPart, formatPane, type ChartElement } from "../src/charts/formatpane";
+import { chartElements, elementName, elementOfPart, formatPane, type ChartElement } from "@raabe/chart-ui";
 
 const anchor = { col: 0, row: 0, x: 0, y: 0 }, to = { col: 8, row: 15, x: 0, y: 0 };
 const series = () => [
