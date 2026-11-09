@@ -727,7 +727,7 @@ class Sweep:
         skip = {"Strg+F1"}  # reduces the ribbon (checked with the ribbon's own button)
         names = {"Umschalt": "shift", "Strg": "ctrl", "Alt": "alt"}
         vks = {"*": (187, "BracketRight", True), ">": (226, "IntlBackslash", True), "<": (226, "IntlBackslash", False), "#": (191, "Backslash", False), "+": (187, "BracketRight", False),
-               "-": (189, "Slash", False), "Leertaste": (32, "Space", False), "Eingabe": (13, "Enter", False), "Rücktaste": (8, "Backspace", False),
+               "-": (189, "Slash", False), "Leertaste": (32, "Space", False), "Eingabe": (13, "Enter", False), "Return": (13, "Enter", False), "(": (56, "Digit8", True), ")": (57, "Digit9", True), "Rücktaste": (8, "Backspace", False),
                "Entf": (46, "Delete", False), "Tab": (9, "Tab", False), "Pos1": (36, "Home", False), "Ende": (35, "End", False)}
         for c in commands:
             sc = c.get("shortcut")
