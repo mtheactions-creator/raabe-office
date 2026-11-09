@@ -255,16 +255,22 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
         ctx.fillRect(snap(c.at, dpr) - px, snap(r.at, dpr) - px, snap(c.size, dpr) + px, snap(r.size, dpr) + px);
       }
       if (look?.bar) {
-        // Datenbalken: a gradient bar from the left, 2 px inside the cell (Excel's default).
+        // Datenbalken: a bar from the left, 2 px inside the cell (Excel's default); Farbverlauf fades to white and has
+        // a border of its colour, Einfarbige Füllung is one colour without a border (recorded, D-146).
         const w = Math.max(0, (c.size - 4 * zoom) * Math.min(1, look.bar.frac));
-        const g = ctx.createLinearGradient(c.at, 0, c.at + w, 0);
-        g.addColorStop(0, look.bar.color);
-        g.addColorStop(1, "#ffffff");
-        ctx.fillStyle = g;
-        ctx.fillRect(c.at + 2 * zoom, r.at + 2 * zoom, w, r.size - 5 * zoom);
-        ctx.strokeStyle = look.bar.color;
-        ctx.lineWidth = px;
-        ctx.strokeRect(c.at + 2 * zoom, r.at + 2 * zoom, w, r.size - 5 * zoom);
+        if (look.bar.solid) {
+          ctx.fillStyle = look.bar.color;
+          ctx.fillRect(c.at + 2 * zoom, r.at + 2 * zoom, w, r.size - 5 * zoom);
+        } else {
+          const g = ctx.createLinearGradient(c.at, 0, c.at + w, 0);
+          g.addColorStop(0, look.bar.color);
+          g.addColorStop(1, "#ffffff");
+          ctx.fillStyle = g;
+          ctx.fillRect(c.at + 2 * zoom, r.at + 2 * zoom, w, r.size - 5 * zoom);
+          ctx.strokeStyle = look.bar.color;
+          ctx.lineWidth = px;
+          ctx.strokeRect(c.at + 2 * zoom, r.at + 2 * zoom, w, r.size - 5 * zoom);
+        }
       }
       if (look?.icon) drawIcon(ctx, look.icon, c.at + 2 * zoom, r.at + r.size - 3 * zoom, zoom);
     }

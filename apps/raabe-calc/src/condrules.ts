@@ -91,8 +91,12 @@ export function condRules(app: CalcApp, addRule: (rule: NewRule) => Promise<void
   }
 
   /** The rule a "Neue Formatierungsregel" dialog describes; null when it is not complete. */
-  async function ruleDialog(title: string, startType = 1, start?: CondRule): Promise<NewRule | null> {
-    let type = startType;
+  async function ruleDialog(title: string, startType = 1, start?: CondRule, at?: Rect): Promise<NewRule | null> {
+    // Regel bearbeiten... (D-146): the dialog opens on the rule's type with its values filled in.
+    const kind = start ? typeOf(start) : -1;
+    let type = kind >= 0 ? kind : startType;
+    let touched = false;
+    const shown = (v: string) => fromFileValue(v);
     let format: Format = start?.format ? { ...start.format } : {};
     const list = h("div", { class: "cf-types", role: "listbox", "aria-label": "Regeltyp auswählen", style: "border:1px solid #c8c8c8;padding:2px;margin-bottom:8px" });
     const desc = h("div", { class: "cf-desc" });
@@ -112,27 +116,41 @@ export function condRules(app: CalcApp, addRule: (rule: NewRule) => Promise<void
       desc.replaceChildren();
       paintPreview();
       if (type === 0) {
-        const styleSel = sel("Formatstil", [["2", "2-Farben-Skala"], ["3", "3-Farben-Skala"], ["bar", "Datenbalken"]]);
-        const minC = h("input", { type: "color", value: "#F8696B", "aria-label": "Minimumfarbe" }) as HTMLInputElement;
-        const midC = h("input", { type: "color", value: "#FFEB84", "aria-label": "Mittelpunktfarbe" }) as HTMLInputElement;
-        const maxC = h("input", { type: "color", value: "#63BE7B", "aria-label": "Maximumfarbe" }) as HTMLInputElement;
+        const sc = start?.type === "colorScale" ? start.colors ?? [] : [];
+        const styleSel = sel("Formatstil", [["2", "2-Farben-Skala"], ["3", "3-Farben-Skala"], ["bar", "Datenbalken"]],
+          start?.type === "dataBar" ? "bar" : sc.length === 3 ? "3" : sc.length === 2 ? "2" : undefined);
+        const minC = h("input", { type: "color", value: sc[0] ?? "#F8696B", "aria-label": "Minimumfarbe" }) as HTMLInputElement;
+        const midC = h("input", { type: "color", value: sc.length === 3 ? sc[1] : "#FFEB84", "aria-label": "Mittelpunktfarbe" }) as HTMLInputElement;
+        const maxC = h("input", { type: "color", value: start?.type === "dataBar" ? start.colors?.[0] ?? "#638EC6" : sc.at(-1) ?? "#63BE7B", "aria-label": "Maximumfarbe" }) as HTMLInputElement;
+        // Datenbalken: Füllung (Einfarbige Füllung or Farbverlauf) and the bar's colour, as in Excel's dialog.
+        const fillSel = sel("Füllung", [["solid", "Einfarbige Füllung"], ["gradient", "Farbverlauf"]], start?.type === "dataBar" && start.solid ? "solid" : "gradient");
+        const fillRow = row(h("span", null, "Füllung"), fillSel);
         const mid = row(h("span", null, "Mittelpunkt"), midC);
-        const colors = h("div", null, row(h("span", null, "Minimum"), minC), mid, row(h("span", null, "Maximum"), maxC));
-        styleSel.onchange = () => { mid.hidden = styleSel.value !== "3"; minC.disabled = styleSel.value === "bar"; };
+        const minRow = row(h("span", null, "Minimum"), minC);
+        const maxLabel = h("span", null, "Maximum");
+        const colors = h("div", null, minRow, mid, row(maxLabel, maxC), fillRow);
+        styleSel.onchange = () => {
+          const bar = styleSel.value === "bar";
+          mid.hidden = styleSel.value !== "3"; minRow.hidden = bar; fillRow.hidden = !bar;
+          maxLabel.textContent = bar ? "Farbe" : "Maximum";
+          if (bar && maxC.value.toUpperCase() === "#63BE7B") maxC.value = "#638EC6";
+        };
         styleSel.onchange(new Event("change"));
         desc.append(h("div", { class: "fc-label" }, "Alle Zellen basierend auf ihren Werten formatieren:"), row(h("span", null, "Formatstil"), styleSel), colors);
         read = () => {
           const up = (i: HTMLInputElement) => i.value.toUpperCase();
-          if (styleSel.value === "bar") return { type: "dataBar", colors: [up(maxC)] };
+          if (styleSel.value === "bar") return { type: "dataBar", colors: [up(maxC)], ...(fillSel.value === "solid" ? { solid: true } : {}) };
           return { type: "colorScale", colors: styleSel.value === "3" ? [up(minC), up(midC), up(maxC)] : [up(minC), up(maxC)] };
         };
         return;
       }
       if (type === 1) {
-        const what = sel("Nur Zellen formatieren mit", [["value", "Zellwert"], ["text", "Bestimmter Text"]]);
-        const op = sel("Operator", OPERATORS, "between");
-        const textOp = sel("Operator", [["containsText", "enthält"], ["notContainsText", "enthält nicht"], ["beginsWith", "beginnend mit"], ["endsWith", "endend mit"]]);
-        const v1 = input("Erster Wert"), v2 = input("Zweiter Wert"), und = h("span", null, "und");
+        const isTextRule = !!start && ["containsText", "notContainsText", "beginsWith", "endsWith"].includes(start.type);
+        const what = sel("Nur Zellen formatieren mit", [["value", "Zellwert"], ["text", "Bestimmter Text"]], isTextRule ? "text" : "value");
+        const op = sel("Operator", OPERATORS, start?.type === "cellIs" ? start.operator ?? "between" : "between");
+        const textOp = sel("Operator", [["containsText", "enthält"], ["notContainsText", "enthält nicht"], ["beginsWith", "beginnend mit"], ["endsWith", "endend mit"]], isTextRule ? start!.type : undefined);
+        const v1 = input("Erster Wert", isTextRule ? start!.text ?? "" : start?.type === "cellIs" ? shown(start.formulas?.[0] ?? "") : "");
+        const v2 = input("Zweiter Wert", start?.type === "cellIs" ? shown(start.formulas?.[1] ?? "") : ""), und = h("span", null, "und");
         const line = row(what, op, textOp, v1, und, v2);
         const sync = () => {
           const isValue = what.value === "value", isText = what.value === "text";
@@ -144,7 +162,7 @@ export function condRules(app: CalcApp, addRule: (rule: NewRule) => Promise<void
         sync();
         desc.append(h("div", { class: "fc-label" }, "Nur Zellen formatieren mit:"), line, formatRow());
         read = () => {
-          if (what.value === "text") return v1.value ? textRule(textOp.value as TextType, v1.value, app.grid.selection[0], format) : null;
+          if (what.value === "text") return v1.value ? textRule(textOp.value as TextType, v1.value, at ?? app.grid.selection[0], format) : null;
           const two = op.value === "between" || op.value === "notBetween";
           if (!v1.value.trim() || (two && !v2.value.trim())) return null;
           return { type: "cellIs", operator: op.value, formulas: two ? [toFileValue(v1.value), toFileValue(v2.value)] : [toFileValue(v1.value)], format };
@@ -152,9 +170,10 @@ export function condRules(app: CalcApp, addRule: (rule: NewRule) => Promise<void
         return;
       }
       if (type === 2) {
-        const which = sel("Oben oder unten", [["top", "Oben"], ["bottom", "Unten"]]);
-        const n = h("input", { type: "number", min: "1", max: "1000", value: "10", style: "width:60px", "aria-label": "Rang" }) as HTMLInputElement;
-        const pct = h("input", { type: "checkbox", "aria-label": "% des ausgewählten Bereichs" }) as HTMLInputElement;
+        const t10 = start?.type === "top10" ? start : undefined;
+        const which = sel("Oben oder unten", [["top", "Oben"], ["bottom", "Unten"]], t10?.bottom ? "bottom" : "top");
+        const n = h("input", { type: "number", min: "1", max: "1000", value: String(t10?.rank ?? 10), style: "width:60px", "aria-label": "Rang" }) as HTMLInputElement;
+        const pct = h("input", { type: "checkbox", "aria-label": "% des ausgewählten Bereichs", checked: t10?.percent || undefined }) as HTMLInputElement;
         desc.append(h("div", { class: "fc-label" }, "Werte formatieren, die in folgenden Rangfolgen sind:"), row(which, n, h("label", { class: "check" }, pct, "% des ausgewählten Bereichs")), formatRow());
         read = () => {
           const v = Math.round(Number(n.value));
@@ -164,13 +183,13 @@ export function condRules(app: CalcApp, addRule: (rule: NewRule) => Promise<void
         return;
       }
       if (type === 3) {
-        const which = sel("Über oder unter", [["above", "über"], ["below", "unter"]]);
+        const which = sel("Über oder unter", [["above", "über"], ["below", "unter"]], start?.type === "aboveAverage" && start.above === false ? "below" : "above");
         desc.append(h("div", { class: "fc-label" }, "Werte formatieren, die folgende Bedingung erfüllen:"), row(which, h("span", null, "dem Durchschnitt des ausgewählten Bereichs")), formatRow());
         read = () => ({ type: "aboveAverage", above: which.value === "above", format });
         return;
       }
       if (type === 4) {
-        const which = sel("Alle formatieren", [["dup", "doppelte"], ["uni", "eindeutige"]]);
+        const which = sel("Alle formatieren", [["dup", "doppelte"], ["uni", "eindeutige"]], start?.type === "uniqueValues" ? "uni" : "dup");
         desc.append(h("div", { class: "fc-label" }, "Alle formatieren:"), row(which, h("span", null, "Werte im ausgewählten Bereich")), formatRow());
         read = () => ({ type: which.value === "uni" ? "uniqueValues" : "duplicateValues", format });
         return;
@@ -185,12 +204,17 @@ export function condRules(app: CalcApp, addRule: (rule: NewRule) => Promise<void
         return { type: "expression", formulas: [file], format };
       };
     };
-    TYPES.forEach((t, i) => list.append(h("button", { type: "button", role: "option", class: "cf-type", style: "display:block;width:100%;text-align:left", onclick: () => { type = i; show(); } }, `► ${t}`)));
+    TYPES.forEach((t, i) => list.append(h("button", { type: "button", role: "option", class: "cf-type", style: "display:block;width:100%;text-align:left", onclick: () => { type = i; touched = true; show(); } }, `► ${t}`)));
     show();
     const body = h("div", { style: "min-width:520px" }, h("div", { class: "fc-label" }, "Regeltyp auswählen:"), list, h("div", { class: "fc-label" }, "Regelbeschreibung bearbeiten:"), desc);
     for (;;) {
       const ok = await showDialog({ title, body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
       if (!ok) return null;
+      // A rule of a type the dialog does not describe (Symbolsatz, Datum, leere Zellen): only its format changes.
+      if (start && kind < 0 && !touched) {
+        const { priority: _p, ...rest } = start;
+        return { ...rest, ...(start.format || format.fill || format.color || format.bold || format.italic ? { format } : {}) };
+      }
       const r = read();
       if (r) return r;
       await messageBox("RaabeCalc", "Die Regel ist noch nicht vollständig: Geben Sie einen gültigen Wert oder eine Formel ein.");
@@ -238,10 +262,23 @@ export function condRules(app: CalcApp, addRule: (rule: NewRule) => Promise<void
       h("button", { type: "button", onclick: async () => {
         const r = await ruleDialog("Neue Formatierungsregel");
         if (!r) return;
-        const prio = Math.max(0, ...work.flatMap((f) => f.rules.map((x) => x.priority))) + 1;
-        work.push({ ref: app.grid.selection.map((x) => ({ ...x })), rules: [{ ...r, priority: prio }] });
+        // On top of the order, as Excel adds a rule (D-146).
+        for (const f of work) for (const x of f.rules) x.priority += 1;
+        work.push({ ref: app.grid.selection.map((x) => ({ ...x })), rules: [{ ...r, priority: 1 }] });
         render();
       } }, "Neue Regel..."),
+      h("button", { type: "button", onclick: async () => {
+        // Regel bearbeiten...: Excel's "Formatierungsregel bearbeiten" with the rule filled in; the rule keeps its
+        // place in the order and its cells (D-146).
+        if (!picked) return;
+        const p = picked;
+        const r = await ruleDialog("Formatierungsregel bearbeiten", 1, p.r, p.f.ref[0]);
+        if (!r) return;
+        const next: CondRule = { ...r, priority: p.r.priority };
+        p.f.rules = p.f.rules.map((x) => (x === p.r ? next : x));
+        picked = { f: p.f, r: next };
+        render();
+      } }, "Regel bearbeiten..."),
       h("button", { type: "button", onclick: () => {
         if (!picked) return;
         const p = picked;
@@ -251,6 +288,19 @@ export function condRules(app: CalcApp, addRule: (rule: NewRule) => Promise<void
         picked = null;
         render();
       } }, "Regel löschen"),
+      h("button", { type: "button", onclick: () => {
+        // Regel duplizieren: the copy comes right below the rule, with the same cells and format, and is selected
+        // (recorded in Excel: priorities 1, 2 became 1, 2 (the copy), 3).
+        if (!picked) return;
+        const p = picked;
+        const all = work.flatMap((f) => f.rules).sort((a, b) => a.priority - b.priority);
+        const copy: CondRule = structuredClone(p.r);
+        all.splice(all.indexOf(p.r) + 1, 0, copy);
+        p.f.rules.splice(p.f.rules.indexOf(p.r) + 1, 0, copy);
+        renumber(all);
+        picked = { f: p.f, r: copy };
+        render();
+      } }, "Regel duplizieren"),
       h("button", { type: "button", "aria-label": "Nach oben", onclick: () => move(-1) }, "▲"),
       h("button", { type: "button", "aria-label": "Nach unten", onclick: () => move(1) }, "▼"));
     render();
@@ -270,6 +320,24 @@ export function condRules(app: CalcApp, addRule: (rule: NewRule) => Promise<void
  * A colour of the shell's colour grid ("C00000") as the model keeps colours ("#C00000"). The grid's bare hex
  * made a cell's fill from Zellen formatieren > Ausfüllen invisible and lost on saving (D-142).
  */
+/** The rule type's place in the dialog's list (Regel bearbeiten); -1 for types the dialog does not describe. */
+function typeOf(r: CondRule): number {
+  if (r.type === "dataBar" || r.type === "colorScale") return 0;
+  if (r.type === "cellIs" || r.type === "containsText" || r.type === "notContainsText" || r.type === "beginsWith" || r.type === "endsWith") return 1;
+  if (r.type === "top10") return 2;
+  if (r.type === "aboveAverage") return 3;
+  if (r.type === "duplicateValues" || r.type === "uniqueValues") return 4;
+  if (r.type === "expression") return 5;
+  return -1;
+}
+
+/** A value as the file keeps it, shown as typed in the dialog (the reverse of toFileValue). */
+export function fromFileValue(v: string): string {
+  if (/^-?\d+(\.\d+)?$/.test(v)) return v.replace(".", ",");
+  if (/^"(.*)"$/s.test(v)) return v.slice(1, -1).replace(/""/g, '"');
+  return v ? "=" + v : "";
+}
+
 export function hexColor(c: string): string {
   if (!c) return "";
   return /^#?[0-9A-Fa-f]{6}$/.test(c) ? "#" + c.replace("#", "").toUpperCase() : c;

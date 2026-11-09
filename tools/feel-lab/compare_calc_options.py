@@ -62,6 +62,15 @@ def xl_cf(fc, dup: bool = False, top: int | None = None) -> None:
     fc.Font.Color = 0x06009C
 
 
+def xl_bar(color: int, solid: bool):
+    """A data bar as Excel's gallery makes it: Einfarbige Füllung (BarFillType 0) or Farbverlauf (1), the colour (BGR)."""
+    def run(app, ws):
+        db = app.Selection.FormatConditions.AddDatabar()
+        db.BarFillType = 0 if solid else 1
+        db.BarColor.Color = color
+    return run
+
+
 def xl_sort_region(order: int):
     """Excel's Von A bis Z / Z bis A on one cell: the current region, the header guessed, by the active cell's column."""
     def run(app, ws):
@@ -181,6 +190,31 @@ CASES: list[tuple] = [
      lambda app, ws: (setattr(app.Selection.Font, "Bold", True), setattr(app.Selection.Font, "Italic", True))),
     ("Zellen formatieren Zahl 2 Dezimalstellen", "D2:D5", [T, ("ctrl", "Zahl|Zellennummer formatieren"), ("selectlist", "Kategorie:", "Zahl"), ("ok",)], xl_numfmt("0,00")),
     ("Sortieren mit Formeln", "B3", [T, ("ctrl", "Bearbeiten|Sortieren und Filtern"), ("item", "Nach Größe sortieren (aufsteigend)")], ("mso", "SortAscendingExcel"), {"D2": "=B2*2", "D3": "=B3*2", "D4": "=B4*2", "D5": "=B5*2"}),
+    # ----- follow-up of the audit (D-145 to D-148) -----
+    # Sorting a list with its own sum row: Excel cuts the moved range at the sheet's edge (D-145).
+    ("Sortieren mit Summenzeile", "A3", [T, ("ctrl", "Bearbeiten|Sortieren und Filtern"), ("item", "Von Z bis A sortieren")], ("mso", "SortDescendingExcel")),
+    *[(f"Datenbalken Einfarbige Füllung {name}", "B2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Datenbalken"), ("item", f"› {name}#2")], xl_bar(color, solid=True))
+      for name, color in (("Blauer Datenbalken", 0xC68E63), ("Grüner Datenbalken", 0x84C363), ("Roter Datenbalken", 0x5A55FF), ("Orangefarbener Datenbalken", 0x28B6FF),
+                          ("Hellblauer Datenbalken", 0xEF8A00), ("Lilafarbener Datenbalken", 0x7B00D6))],
+    ("Datenbalken Farbverlauf Blau", "B2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Datenbalken"), ("item", "› Blauer Datenbalken")], xl_bar(0xC68E63, solid=False)),
+    ("Neue Regel Datenbalken einfarbig", "B2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Neue Regel..."), ("click", ".cf-type:nth-child(1)"),
+                                                   ("select", "Formatstil", "Datenbalken"), ("select", "Füllung", "Einfarbige Füllung"), ("ok",)], xl_bar(0xC68E63, solid=True)),
+    ("Regel duplizieren", "B2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Regeln zum Hervorheben von Zellen"), ("item", "› Größer als..."), ("field", "", "10"), ("ok",),
+                                    ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Regeln verwalten..."), ("click", ".cf-rules button[role=option]"),
+                                    ("btn", "Regel duplizieren"), ("ok",)],
+     lambda app, ws: [xl_cf(app.Selection.FormatConditions.Add(1, 5, "=10")) for _ in range(2)]),
+    ("Regel bearbeiten", "B2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Regeln zum Hervorheben von Zellen"), ("item", "› Größer als..."), ("field", "", "10"), ("ok",),
+                                   ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Regeln verwalten..."), ("click", ".cf-rules button[role=option]"),
+                                   ("btn", "Regel bearbeiten..."), ("select", "Operator", "kleiner als"), ("field", "Erster Wert", "12"), ("ok",), ("ok",)],
+     lambda app, ws: xl_cf(app.Selection.FormatConditions.Add(1, 6, "=12"))),
+    ("Regel bearbeiten Datenbalken", "B2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Datenbalken"), ("item", "› Roter Datenbalken"),
+                                               ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Regeln verwalten..."), ("click", ".cf-rules button[role=option]"),
+                                               ("btn", "Regel bearbeiten..."), ("select", "Füllung", "Einfarbige Füllung"), ("ok",), ("ok",)], xl_bar(0x5A55FF, solid=True)),
+    ("Regel nach unten", "B2:B5", [T, ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Regeln zum Hervorheben von Zellen"), ("item", "› Größer als..."), ("field", "", "10"), ("ok",),
+                                   ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Regeln zum Hervorheben von Zellen"), ("item", "› Kleiner als..."), ("field", "", "9"), ("ok",),
+                                   ("ctrl", "Formatvorlagen|Bedingte Formatierung"), ("item", "Regeln verwalten..."), ("click", ".cf-rules button[role=option]"),
+                                   ("btn", "▼"), ("ok",)],
+     lambda app, ws: (xl_cf(app.Selection.FormatConditions.Add(1, 5, "=10")), xl_cf(app.Selection.FormatConditions.Add(1, 6, "=9")))),
 ]
 
 
@@ -343,7 +377,9 @@ def props(app, path: Path) -> dict:
         for fc in ws.Cells.FormatConditions:
             p["cf"].append([get(lambda: fc.Type), get(lambda: fc.AppliesTo.GetAddress(False, False)), get(lambda: fc.Operator), get(lambda: fc.Formula1),
                             get(lambda: fc.Formula2), get(lambda: fc.DateOperator), get(lambda: fc.TextOperator), get(lambda: fc.Text),
-                            get(lambda: fc.Interior.Color if fc.Interior.ColorIndex != -4142 else None), get(lambda: fc.Font.Color)])
+                            get(lambda: fc.Interior.Color if fc.Interior.ColorIndex != -4142 else None), get(lambda: fc.Font.Color),
+                            # Datenbalken (D-146): Einfarbige Füllung or Farbverlauf, the bar's colour.
+                            get(lambda: fc.BarFillType if fc.Type == 4 else None), get(lambda: fc.BarColor.Color if fc.Type == 4 else None)])
         if p["cf"]:
             p["cfShown"] = [a for a in CELLS if get(lambda a=a: ws.Range(a).DisplayFormat.Interior.Color != ws.Range(a).Interior.Color
                                                     or ws.Range(a).DisplayFormat.Font.Color != ws.Range(a).Font.Color)]

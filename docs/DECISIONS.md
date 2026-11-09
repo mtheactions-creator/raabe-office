@@ -3905,3 +3905,27 @@ results/2026-11-09-excel-followup.json):
   reference off the sheet become #BEZUG!; absolute references stay. Sorting now does exactly this
   (`shiftFormula(..., { clipRanges: true })`); copying and AutoAusfüllen keep #BEZUG! for every reference pushed off
   (Excel). Pinned in apps/raabe-calc/test/followup.test.ts with the six recorded cases.
+
+## D-146 RaabeCalc: Datenbalken with Einfarbige Füllung, Regel bearbeiten and Regel duplizieren (2026-11-09)
+
+Left open by D-143, recorded first in an Excel of our own with real clicks under the real-input lock
+(probe_excel_followup_ui.py, results/2026-11-09-excel-followup-ui.json):
+- **Datenbalken > Einfarbige Füllung**: Excel's gallery has the six colours of Farbverlauf a second time, as one
+  colour without a border (BarFillType 0, no border). Excel writes the rule in the 2007 form and adds Excel 2010's
+  part in the sheet's extLst (x14:dataBar gradient="0", autoMin/autoMax, negative bars red, axis black); RaabeCalc
+  now writes exactly that, reads gradient="0" back as Einfarbige Füllung (`CondRule.solid`), keeps the file's x14
+  part on saving and drops it with its rule. The grid draws the bar in one colour without a border.
+- **Neue Formatierungsregel** for a data bar has Füllung (Einfarbige Füllung, Farbverlauf) and the bar's Farbe.
+- **Regel bearbeiten...** in the manager opens "Formatierungsregel bearbeiten" (Excel's title; the same controls as
+  Neue Formatierungsregel, recorded) on the rule's type with its values filled in; the rule keeps its cells and its
+  place in the order. Types the dialog does not describe (Symbolsätze, Datum, leere Zellen) keep their rule and only
+  take a new format.
+- **Regel duplizieren** puts the copy right below the selected rule with the same cells and format and selects it
+  (recorded: priorities 1, 2 became 1, the copy 2, and 3). Nach oben and Nach unten were there (D-143).
+- **A new rule goes to the top of the order** (priority 1, the others move down), from the galleries, their
+  dialogs and Neue Regel...: Excel adds rules this way; RaabeCalc appended them at the bottom, so with two
+  overlapping rules the older one won where Excel lets the newer one win.
+Compare cases (compare_calc_options.py): the six bars of Einfarbige Füllung, one of Farbverlauf, Neue Regel with a
+solid bar, Regel duplizieren, Regel bearbeiten (operator and value), Regel bearbeiten of a data bar to Einfarbige
+Füllung, Nach unten with two rules, each against the rule Excel makes (type, cells, operator, formulas, colours,
+fill type, and the cells Excel shows formatted). The file's form is pinned in packages/ooxml/test/xlsx-databar.test.ts.

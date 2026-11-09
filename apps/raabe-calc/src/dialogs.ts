@@ -905,8 +905,9 @@ export function dialogs(app: CalcApp) {
     app.change("Bedingte Formatierung", () => {
       app.history.whole(sheet());
       const list = sheet().conditional ?? (sheet().conditional = []);
-      const prio = Math.max(0, ...list.flatMap((f) => f.rules.map((r) => r.priority))) + 1;
-      list.push({ ref, rules: [{ ...rule, priority: prio }] });
+      // A new rule goes to the top of the order (priority 1) and the others move down, as Excel adds rules (D-146).
+      for (const f of list) for (const r of f.rules) r.priority += 1;
+      list.push({ ref, rules: [{ ...rule, priority: 1 }] });
     });
   }
 
@@ -1017,10 +1018,12 @@ export function dialogs(app: CalcApp) {
   }
 
   function conditionalBarMenu(): MenuEntry[] {
-    // Excel's names (recorded in the inventory, D-143); the gradient bars (Farbverlauf). Einfarbige Füllung needs
-    // Excel 2010's extension of the rule and is left for later.
+    // Excel's names (recorded in the inventory, D-143): Farbverlauf, then Einfarbige Füllung with the same six
+    // colours (recorded with real clicks, probe_excel_followup_ui.py, D-146).
     const bars: [string, string][] = [["Blauer Datenbalken", "#638EC6"], ["Grüner Datenbalken", "#63C384"], ["Roter Datenbalken", "#FF555A"], ["Orangefarbener Datenbalken", "#FFB628"], ["Hellblauer Datenbalken", "#008AEF"], ["Lilafarbener Datenbalken", "#D6007B"]];
-    return [{ heading: "Farbverlauf" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c] }) })), "-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) }];
+    return [{ heading: "Farbverlauf" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c] }) })),
+      { heading: "Einfarbige Füllung" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c], solid: true }) })),
+      "-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) }];
   }
 
   function conditionalScaleMenu(): MenuEntry[] {

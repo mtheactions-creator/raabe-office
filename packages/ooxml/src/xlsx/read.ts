@@ -419,7 +419,8 @@ function readSheet(xml: string, name: string, c: SheetContext): Sheet {
   const cfs = els.filter((e) => e.name === "conditionalFormatting");
   if (cfs.length) {
     raw.cf = { xml: [], rules: [] };
-    sheet.conditional = readConditional(xml, cfs, c.ctx, c.dxfs, raw.cf);
+    const x = get("extLst");
+    sheet.conditional = readConditional(xml, cfs, c.ctx, c.dxfs, raw.cf, x ? outer(xml, x) : undefined);
   }
   const dvs = get("dataValidations");
   const ext = get("extLst");
