@@ -1,6 +1,6 @@
 """Turns the charts Excel saved in each Diagrammformatvorlage (probe_excel_chart_filter.py: the gallery's entry n applied
 through the ribbon to a column, line, bar and pie chart; fixtures in packages/ooxml/test/fixtures/excel-chart-filter/
-style-<kind>-<n>.xml) into apps/raabe-calc/src/charts/chart-styles.gen.ts (D-118): per style what it sets on each
+style-<kind>-<n>.xml) into packages/chart-ui/src/chart-styles.gen.ts (D-118): per style what it sets on each
 element (fills, lines, text, which elements show, data labels, gap width), colours as theme references.
 
     python gen_chart_styles.py
@@ -15,7 +15,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 ROOT = HERE.parents[1]
 FIX = ROOT / "packages" / "ooxml" / "test" / "fixtures" / "excel-chart-filter"
-OUT = ROOT / "apps" / "raabe-calc" / "src" / "charts" / "chart-styles.gen.ts"
+OUT = ROOT / "packages" / "chart-ui" / "src" / "chart-styles.gen.ts"
 RES = HERE / "results" / "2026-11-09-excel-chart-filter.json"
 NS = {"c": "http://schemas.openxmlformats.org/drawingml/2006/chart", "a": "http://schemas.openxmlformats.org/drawingml/2006/main"}
 

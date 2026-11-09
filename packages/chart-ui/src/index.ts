@@ -1,11 +1,10 @@
-// The chart user interface shared by RaabeCalc and RaabeWrite (D-129): the three buttons beside a selected chart
-// (Diagrammelemente, Diagrammformatvorlagen, Diagrammfilter), the elements' entries and side menus, Excel's chart
-// styles and the Format pane of chart elements. The modules still live in RaabeCalc's folder, where they were built
-// (D-115 - D-118) and where the Format pane is being completed in a branch of its own; they move here in one step
-// once that branch is merged. RaabeWrite imports them only through this package.
-export * from "../../../apps/raabe-calc/src/charts/buttons";
-export * from "../../../apps/raabe-calc/src/charts/elements";
-export * from "../../../apps/raabe-calc/src/charts/formatpane";
-export * from "../../../apps/raabe-calc/src/charts/styles";
-export * from "../../../apps/raabe-calc/src/charts/types";
+// The chart user interface shared by RaabeCalc, RaabeWrite and RaabePresent (D-129, D-132): the three buttons beside a
+// selected chart (Diagrammelemente, Diagrammformatvorlagen, Diagrammfilter), the elements' entries and side menus,
+// Office's chart styles, the Diagrammtyp dialog and menus, Schnelllayout and Farben ändern, and the Format pane of
+// chart elements (D-111 - D-118). Built in RaabeCalc and moved here once the Format pane was complete.
+export * from "./buttons";
+export * from "./elements";
+export * from "./formatpane";
+export * from "./styles";
+export * from "./types";
 export * from "./layouts";

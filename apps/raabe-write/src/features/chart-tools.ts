@@ -7,7 +7,7 @@
 
 import {
   applyColors, applyQuickLayout, applyStyle, chartButtons, chartElements, chartStyles, chartTypeDialog, choiceLabel, elementEntries,
-  elementName, formatPane, layoutCount, setStyleTheme, styleIndex, type ChartElement, type ElementChoice,
+  elementName, elementOfPart, formatPane, layoutCount, setStyleTheme, styleIndex, type ChartElement, type ElementChoice,
 } from "@raabe/chart-ui";
 import { renderChart, seriesName, visibleModel, type ChartKind, type ChartModel } from "@raabe/charts";
 import { DEFAULT_THEME_COLORS, chartFromXml, chartImage, chartSvg, chartToXml } from "@raabe/ooxml";
@@ -282,24 +282,12 @@ export function chartToolsFeature(api: AppApi, docArea: HTMLElement, dock: Dock,
     if (!hit || !svg.contains(hit)) return null;
     const part = (hit.closest("[data-part]") as SVGElement | null)?.dataset.part;
     if (!part) return { kind: "chart" };
-    const [kind, a] = part.split(":");
+    // The pane's own mapping of drawn parts to elements (series by their place in the whole chart; a second click on a
+    // selected series picks the point, as in RaabeCalc).
+    const [kind, a, b] = part.split(":");
     const full = (i: number) => visibleModel(m).index[i] ?? i;
-    switch (kind) {
-      case "plot": return { kind: "plot" };
-      case "title": return { kind: "title" };
-      case "legend": return { kind: "legend" };
-      case "axis": return a === "val" ? { kind: "valAxis" } : { kind: "catAxis" };
-      case "axes": return { kind: "catAxis" };
-      case "grid": return { kind: "majorGrid" };
-      case "minorGrid": return { kind: "minorGrid" };
-      case "catGrid": return { kind: "catGrid" };
-      case "axisTitle": return { kind: "axisTitle", axis: a === "val" ? "val" : "cat" };
-      case "series": return { kind: "series", index: full(Number(a)) };
-      case "labels": return { kind: "labels" };
-      case "trend": case "trendLabel": return { kind: "trend", index: full(Number(a)) };
-      case "errbars": return { kind: "errorBars", index: full(Number(a)) };
-      default: return { kind: "chart" };
-    }
+    const indexed = ["series", "trend", "trendLabel", "errbars"].includes(kind) && a !== undefined;
+    return elementOfPart(indexed ? [kind, full(Number(a)), ...(b !== undefined ? [b] : [])].join(":") : part, element) ?? { kind: "chart" };
   }
   const inChart = (x: number, y: number) => {
     const r = sel() ? ed()?.view.selectedObjectRect() : null;

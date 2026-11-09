@@ -4,7 +4,7 @@
 // chart instead of the shape pane. The chart part is read into the chart engine's model, changed in place and written
 // back as one undo step (the slide and the chart part, as chartops.ts does).
 
-import { chartButtons, chartElements, formatPane, type ChartElement } from "@raabe/chart-ui";
+import { chartButtons, chartElements, elementName, formatPane, type ChartElement } from "@raabe/chart-ui";
 import { renderChart, seriesName, type ChartModel } from "@raabe/charts";
 import { chartFromXml, chartToXml } from "@raabe/ooxml";
 import { TaskPane, h, showDialog } from "@raabe/shell";
@@ -13,7 +13,7 @@ import type { PresentApp } from "./app";
 const EMU_CM = 360000;
 
 const CSS = `
-.pchart-overlay { position: fixed; pointer-events: none; z-index: 30; }
+.pchart-overlay { position: fixed; pointer-events: none; z-index: 14; }
 .pchart-overlay .chart-btn { pointer-events: auto; }
 .pchart-overlay .chart-btn.on { background: #fbe3d6; border-color: #c43e1c; }
 `;
@@ -156,7 +156,15 @@ export function presentChartUi(app: PresentApp) {
   return {
     sync,
     /** Objekt formatieren... with a chart selected: the chart's Format pane (Diagrammbereich, or the chosen element). */
-    openPane: (): boolean => { const m = selected(); if (!m) return false; element = { kind: "chart" }; showPane(m); return true; },
+    openPane: (name?: string): boolean => {
+      const m = selected();
+      if (!m) return false;
+      // Aktuelle Auswahl's entries by name (PowerPoint's names are the pane's).
+      element = (name ? chartElements(m).find((e) => elementName(m, e) === name) : undefined) ?? { kind: "chart" };
+      showPane(m);
+      return true;
+    },
+    element: () => element,
     setTextColor,
     selected: () => !!selected(),
     model: () => selected(),
