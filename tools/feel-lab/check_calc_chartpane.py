@@ -165,7 +165,7 @@ STATE = r"""(() => {
   const k = app.sheet.charts.length - 1;
   const m = app.sheet.charts[k];
   const { raw, from, to, ...rest } = m;
-  const svg = document.querySelectorAll('.chart-obj svg')[k];
+  const svg = document.querySelectorAll('.chart-obj > svg')[k];
   // The drawing without its random definition ids.
   const pic = svg ? svg.innerHTML.replace(/\b(cd|rc|cm)[a-z0-9]{5,}\d*/g, 'id') : '';
   return { model: JSON.stringify(rest), from: JSON.stringify([from, to]), pic, el: app.charts.elementName() };

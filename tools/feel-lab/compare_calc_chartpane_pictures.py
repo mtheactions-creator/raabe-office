@@ -71,7 +71,9 @@ def changed_box(a: Image.Image, b: Image.Image) -> tuple[float, float, float, fl
     # A quarter of the size: anti-aliasing shifted by a fraction of a pixel is not a change.
     size = (max(1, a.width // 4), max(1, a.height // 4))
     a, b = a.convert("RGB").resize(size, Image.BOX), b.convert("RGB").resize(size, Image.BOX)
-    diff = ImageChops.difference(a, b).convert("L").point(lambda v: 255 if v > 40 else 0)
+    r, g, bl = ImageChops.difference(a, b).split()
+    # The largest change of any colour channel (a faint yellow glow hardly changes the luminance).
+    diff = ImageChops.lighter(ImageChops.lighter(r, g), bl).point(lambda v: 255 if v > 40 else 0)
     box = diff.getbbox()
     if not box:
         return None
@@ -89,7 +91,7 @@ def iou(p, q) -> float:
 
 
 def shot(c, k: int) -> Image.Image:
-    r = c.js(f"(() => {{ const e = document.querySelectorAll('.chart-obj svg')[{k}]; e.scrollIntoView({{block: 'center'}}); const b = e.getBoundingClientRect(); return {{x: b.left, y: b.top, w: b.width, h: b.height}}; }})()")
+    r = c.js(f"(() => {{ const e = document.querySelectorAll('.chart-obj > svg')[{k}]; e.scrollIntoView({{block: 'center'}}); const b = e.getBoundingClientRect(); return {{x: b.left, y: b.top, w: b.width, h: b.height}}; }})()")
     c._id += 1
     c.ws.send(json.dumps({"id": c._id, "method": "Page.captureScreenshot", "params": {"format": "png", "clip": {"x": r["x"], "y": r["y"], "width": r["w"], "height": r["h"], "scale": 2}}}))
     while True:
