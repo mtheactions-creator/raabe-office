@@ -515,6 +515,13 @@ class Sweeper:
         p.events.clear()
         if tab:
             r = p.js(f"window.__sw.tabRect({json.dumps(tab)})")
+            # A contextual tab can come a little later (the equation's editor starts in the next frame, and rAF runs
+            # late in the off-screen window): waited for, not counted as missing (6 Formel options failed so).
+            for _ in range(15):
+                if r:
+                    break
+                time.sleep(0.1)
+                r = p.js(f"window.__sw.tabRect({json.dumps(tab)})")
             if not r:
                 return False
             p.mouse(r["x"], r["y"])

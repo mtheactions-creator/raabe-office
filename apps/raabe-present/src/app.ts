@@ -54,7 +54,8 @@ import { endFreistellen, freistellenActive, freistellenTab, markTool } from "./f
 import { fileTypeSection } from "./exportimg";
 import { gifSection, videoSection } from "./videoui";
 import { Windows, type WindowDoc } from "./windows";
-import { convertSmartArt, smartArtTab, textPane } from "./smartart";
+import { convertSmartArt, formatDiagramText, setDiagramWhole, smartArtTab, textPane } from "./smartart";
+import { PLACEHOLDER_KINDS, insertMaster, isMasterPath, masterLayoutDialog, newPlaceholder } from "./masterops";
 import { bgStylesMenu } from "./background";
 import { setEffectOptionsHook, shapeEffectsMenu } from "./shapefx";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
@@ -383,10 +384,24 @@ export class PresentApp implements EditorHost, PanelHost {
   private masterList(): string[] {
     if (this.masterKind === "notes") return [this.deck.ensureNotesMasterPath()];
     if (this.masterKind === "handout") return [this.deck.ensureHandoutMasterPath()];
-    const m = this.deck.pptx.masters()[0];
-    return m ? [m, ...this.deck.pptx.layouts(m)] : [];
+    // Every master with its layouts, in the presentation's order (Folienmaster einfügen adds one, D-153).
+    return this.deck.pptx.masters().flatMap((m) => [m, ...this.deck.pptx.layouts(m)]);
   }
   masterPaths(): string[] | null { return this.masterMode ? this.masterList() : null; }
+  /** The master of the entry shown in the Folienmaster view (the entry itself, or its layout's). */
+  private currentMaster(): string | undefined {
+    const p = this.masterList()[this.masterIndex];
+    return isMasterPath(p) ? p : p ? this.deck.pptx.masterOf(p) : this.deck.pptx.masters()[0];
+  }
+  private onLayout(): boolean { const p = this.masterList()[this.masterIndex]; return this.masterMode && this.masterKind === "slides" && !!p && !isMasterPath(p); }
+  private onMaster(): boolean { return this.masterMode && this.masterKind === "slides" && isMasterPath(this.masterList()[this.masterIndex]); }
+  /** Platzhalter einfügen: the kind its button repeats (the last one picked, Inhalt at first; recorded). */
+  private lastPlaceholder = 0;
+  private placeholderTool(k: number): void {
+    this.lastPlaceholder = k;
+    const kind = PLACEHOLDER_KINDS[k];
+    this.startTool({ kind: "box", label: "Platzhalter einfügen", make: (doc, id, b) => newPlaceholder(doc, id, kind, b) });
+  }
 
   setMasterView(on: boolean, kind: "slides" | "notes" | "handout" = "slides"): void {
     this.masterKind = kind;
@@ -680,8 +695,15 @@ export class PresentApp implements EditorHost, PanelHost {
       ed.edit(label, () => T.formatRange(body, t.anchor, t.caret, fn));
       return;
     }
-    const views = ed.selectedViews;
+    let views = ed.selectedViews;
     if (!views.length) return;
+    // A whole SmartArt: every run of its text, in its data model and its drawing (WordArt-Formate, D-154).
+    const diagrams = views.filter((v) => v.frame === "diagram");
+    if (diagrams.length) {
+      formatDiagramText(this, diagrams.map((v) => v.id), label, fn);
+      views = views.filter((v) => v.frame !== "diagram");
+      if (!views.length) return;
+    }
     ed.edit(label, () => {
       for (const v of views) for (const m of flat([v])) {
         const el = ed.shapeEl(m.id);
@@ -865,6 +887,7 @@ export class PresentApp implements EditorHost, PanelHost {
 
   private setFill(hex: string | null): void {
     if (this.chartArea("fill", hex)) return;
+    if (this.diagramWhole("fill", hex)) return;
     const views = this.editor.selectedViews.filter((v) => v.kind === "sp" || v.kind === "pic" || v.kind === "grpSp");
     if (!views.length) return;
     if (hex && hex !== "AUTO") this.lastFill = hex;
@@ -1150,6 +1173,7 @@ export class PresentApp implements EditorHost, PanelHost {
 
   private setLine(hex: string | null | undefined, width?: number, dash?: string): void {
     if (hex !== undefined && this.chartArea("line", hex)) return;
+    if (hex !== undefined && this.diagramWhole("line", hex, width)) return;
     const views = this.editor.selectedViews.filter((v) => v.kind === "sp" || v.kind === "pic" || v.kind === "cxnSp");
     if (!views.length) return;
     if (hex && hex !== "AUTO") this.lastLine = hex;
@@ -1810,6 +1834,14 @@ export class PresentApp implements EditorHost, PanelHost {
 
   /** Entwurf > Schriftarten: the theme's heading and body fonts. */
   /** A colour for a selected chart goes to its Diagrammbereich (the chart model keeps RGB colours). */
+  /** A whole SmartArt selected: Fülleffekt and Formkontur act on the graphic's background and outline (D-154). */
+  private diagramWhole(what: "fill" | "line", hex: string | null, width?: number): boolean {
+    const ids = this.editor.selectedViews.filter((v) => v.frame === "diagram").map((v) => v.id);
+    if (!ids.length) return false;
+    for (const id of ids) setDiagramWhole(this, id, what, hex, width);
+    return true;
+  }
+
   private chartArea(what: "fill" | "line", spec: string | null): boolean {
     if (!this.editor.selectedViews.some((v) => v.frame === "chart")) return false;
     const hex = spec ? specHex(spec, this.paletteTheme()?.colors ?? {}) : null;
@@ -2057,7 +2089,7 @@ export class PresentApp implements EditorHost, PanelHost {
     if (kinds.has("pic")) tabs.push(this.pictureTab());
     if (kinds.has("table")) tabs.push(this.tableTab(), this.tableLayoutTab());
     if (kinds.has("chart")) tabs.push(this.chartTab(), this.chartFormatTab());
-    if (kinds.has("diagram")) tabs.push(this.cachedTab("smartart", () => smartArtTab(this)));
+    if (kinds.has("diagram")) tabs.push(this.cachedTab("smartart", () => smartArtTab(this)), this.cachedTab("smartartFormat", () => CT.smartArtFormatTab(this.host2())));
     // Freistellen while a picture's background is being removed (it comes first, as in PowerPoint).
     if (freistellenActive() !== null && this.editor.sel.includes(freistellenActive()!)) tabs.unshift(this.cachedTab("freistellen", () => freistellenTab()));
     if (selectedEquation(this) !== null) tabs.push(this.cachedTab("equation", () => equationTab(this)));
@@ -2108,7 +2140,7 @@ export class PresentApp implements EditorHost, PanelHost {
         id: "slideMaster", label: "Folienmaster", key: "O", contextual: true, shrink: [],
         groups: [
           { id: "edit", label: "Master bearbeiten", key: "ZM", icon: "slide-layout", controls: [b("master.insertMaster", "N"), b("master.insertLayout", "L"), { type: "stack", items: [b("master.delete", "DL", "small"), b("master.rename", "A", "small"), b("master.preserve", "M", "small")] }] },
-          { id: "layout", label: "Masterlayout", key: "ZL", icon: "slide-layout", controls: [b("master.masterLayout", "O"), b("master.insertPlaceholder", "P"), { type: "stack", items: [check("master.title", "T"), check("master.footers", "U")] }] },
+          { id: "layout", label: "Masterlayout", key: "ZL", icon: "slide-layout", controls: [b("master.masterLayout", "O"), { type: "split", cmd: "master.insertPlaceholder", key: "P", size: "large", menu: PLACEHOLDER_KINDS.map((_, k) => ({ cmd: `master.placeholder${k}` })) } as Control, { type: "stack", items: [check("master.title", "T"), check("master.footers", "U")] }] },
           design, background,
           { id: "size", label: "Größe", key: "ZG", icon: "page-size", controls: [slideSize] },
           close],
@@ -2700,12 +2732,17 @@ export class PresentApp implements EditorHost, PanelHost {
     // Dropdowns whose menus do the work (they were greyed without a command).
     for (const id of ["slide.layout", "slide.section", "edit.select", "design.colors", "design.fonts", "design.effects"]) impl(id, () => {}, () => !!this.slidePath());
     // Folienmaster > Masterlayout: Titel and Fußzeilen on the layout; Master bearbeiten > Beibehalten.
-    const layoutPath = () => (this.masterMode && this.masterKind === "slides" && this.masterIndex > 0 ? this.masterList()[this.masterIndex] : undefined);
+    const layoutPath = () => (this.onLayout() ? this.masterList()[this.masterIndex] : undefined);
     const hasPh = (types: string[]) => { const p = layoutPath(); return !!p && Array.from(this.deck.pptx.doc(p).getElementsByTagNameNS(PptxDom.NS_P, "ph")).some((x) => types.includes(x.getAttribute("type") ?? "")); };
     impl("master.title", () => this.toggleLayoutPh(layoutPath(), ["title"]), () => !!layoutPath(), () => hasPh(["title"]));
     impl("master.footers", () => this.toggleLayoutPh(layoutPath(), ["dt", "ftr", "sldNum"]), () => !!layoutPath(), () => hasPh(["dt", "ftr", "sldNum"]));
-    const masterRoot = () => { const m = this.deck.pptx.masters()[0]; return m ? this.deck.pptx.doc(m).documentElement : null; };
-    impl("master.preserve", () => { const m = this.deck.pptx.masters()[0]; if (!m) return; const on = masterRoot()?.getAttribute("preserve") === "1"; this.deck.change("Beibehalten", [m], () => { const r = this.deck.pptx.doc(m).documentElement; if (on) r.removeAttribute("preserve"); else r.setAttribute("preserve", "1"); }); this.updateChrome(); }, () => this.masterMode, () => masterRoot()?.getAttribute("preserve") === "1");
+    const masterRoot = () => { const m = this.currentMaster(); return m ? this.deck.pptx.doc(m).documentElement : null; };
+    // Masterlayout..., Folienmaster einfügen, Platzhalter einfügen (D-153): on the master, the first two; on a layout, the third.
+    impl("master.masterLayout", () => { const m = this.currentMaster(); if (m) void masterLayoutDialog(this.deck, m).then((done) => { if (done) { this.editor.render(); this.panel.render(); this.updateChrome(); } }); }, () => this.onMaster());
+    impl("master.insertMaster", () => { const m = insertMaster(this.deck); this.setCurrent(this.masterList().indexOf(m)); this.panel.selected = new Set([this.masterIndex]); this.panel.render(); }, () => this.masterMode && this.masterKind === "slides");
+    impl("master.insertPlaceholder", () => this.placeholderTool(this.lastPlaceholder), () => this.onLayout(), () => this.editor.tool?.kind === "box");
+    PLACEHOLDER_KINDS.forEach((_, k) => impl(`master.placeholder${k}`, () => this.placeholderTool(k), () => this.onLayout()));
+    impl("master.preserve", () => { const m = this.currentMaster(); if (!m) return; const on = masterRoot()?.getAttribute("preserve") === "1"; this.deck.change("Beibehalten", [m], () => { const r = this.deck.pptx.doc(m).documentElement; if (on) r.removeAttribute("preserve"); else r.setAttribute("preserve", "1"); }); this.updateChrome(); }, () => this.onMaster(), () => masterRoot()?.getAttribute("preserve") === "1");
     impl("arrange.align", () => {}, shapes);
     impl("arrange.rotate", () => {}, shapes);
     for (const [id, k] of [["arrange.alignLeft", "l"], ["arrange.alignCenter", "c"], ["arrange.alignRight", "r"], ["arrange.alignTop", "t"], ["arrange.alignMiddle", "m"], ["arrange.alignBottom", "b"]] as const) impl(id, () => this.alignShapes(k), shapes);
@@ -2748,11 +2785,12 @@ export class PresentApp implements EditorHost, PanelHost {
       const on = this.deck.pptx.doc(p).documentElement.getAttribute("showMasterSp") === "0";
       this.deck.change("Hintergrundgrafiken ausblenden", [p], () => { const r = this.deck.pptx.doc(p).documentElement; if (on) r.removeAttribute("showMasterSp"); else r.setAttribute("showMasterSp", "0"); });
       this.editor.render(); this.panel.render();
-    }, () => this.masterMode && this.masterKind === "slides" && this.masterIndex > 0, () => this.masterMode && this.deck.pptx.has(this.masterList()[this.masterIndex] ?? "") && this.deck.pptx.doc(this.masterList()[this.masterIndex]).documentElement.getAttribute("showMasterSp") === "0");
+    }, () => this.onLayout(), () => this.masterMode && this.deck.pptx.has(this.masterList()[this.masterIndex] ?? "") && this.deck.pptx.doc(this.masterList()[this.masterIndex]).documentElement.getAttribute("showMasterSp") === "0");
     impl("master.close", () => this.setMasterView(false));
-    impl("master.rename", () => this.renameLayout(), () => this.masterMode && this.masterIndex > 0);
+    impl("master.rename", () => this.renameLayout(), () => this.onLayout());
     impl("master.insertLayout", () => this.insertLayout(), () => this.masterMode);
-    impl("master.delete", () => this.deleteLayout(), () => this.masterMode && this.masterIndex > 0 && !this.layoutInUse());
+    // Löschen: a layout no slide uses, or a master (when there is another) none of whose layouts a slide uses.
+    impl("master.delete", () => { if (this.onMaster()) this.deleteMaster(); else this.deleteLayout(); }, () => (this.onLayout() && !this.layoutInUse()) || (this.onMaster() && this.deck.pptx.masters().length > 1 && !this.masterInUse()));
     impl("view.sorter", () => this.setView("sorter"), undefined, () => this.view === "sorter");
     impl("view.outline", () => this.setView("outline"), undefined, () => this.view === "outline");
     impl("view.notesPage", () => this.setView("notesPage"), undefined, () => this.view === "notesPage");
@@ -2906,6 +2944,27 @@ export class PresentApp implements EditorHost, PanelHost {
     }
   }
 
+  private masterInUse(): boolean {
+    const m = this.currentMaster();
+    const lays = m ? this.deck.pptx.layouts(m) : [];
+    return this.deck.slides.some((s) => lays.includes(this.deck.pptx.layoutOf(s.path) ?? ""));
+  }
+
+  private deleteMaster(): void {
+    const pptx = this.deck.pptx;
+    const m = this.currentMaster();
+    if (!m) return;
+    this.deck.change("Folienmaster löschen", [pptx.presPath], () => {
+      const rels = pptx.rels(pptx.presPath);
+      const r = rels.list.find((x) => pptx.target(pptx.presPath, x.id) === m);
+      if (!r) return;
+      for (const x of kids(PptxDom.at(pptx.presentation, "sldMasterIdLst"), "sldMasterId")) if (x.getAttributeNS(PptxDom.NS_R, "id") === r.id) x.remove();
+      rels.list.splice(rels.list.indexOf(r), 1);
+      rels.changed = true;
+    });
+    this.setCurrent(Math.max(0, this.masterIndex - 1));
+  }
+
   private layoutInUse(): boolean {
     const lay = this.masterList()[this.masterIndex];
     return this.deck.slides.some((s) => this.deck.pptx.layoutOf(s.path) === lay);
@@ -2922,9 +2981,10 @@ export class PresentApp implements EditorHost, PanelHost {
   /** Layout einfügen: a new layout (a copy of Nur Titel) after the current one, "Benutzerdefiniertes Layout". */
   private insertLayout(): void {
     const pptx = this.deck.pptx;
-    const master = pptx.masters()[0];
+    const master = this.currentMaster()!;
+    const cur = this.masterList()[this.masterIndex];
     const path = pptx.freeName("ppt/slideLayouts/slideLayout#.xml");
-    const list0 = this.masterList();
+    const list0 = [master, ...pptx.layouts(master)];
     const src = list0.find((p) => pptx.doc(p).documentElement.getAttribute("type") === "titleOnly") ?? list0[1];
     this.deck.change("Layout einfügen", [path, master], () => {
       const doc = PptxDom.parseXml(PptxDom.serialize(pptx.doc(src)));
@@ -2938,15 +2998,17 @@ export class PresentApp implements EditorHost, PanelHost {
       const ids = kids(list, "sldLayoutId").map((x) => num(x, "id") ?? 0);
       const el = make(pptx.doc(master), "p:sldLayoutId", { id: Math.max(...ids, 2147483648) + 1 });
       el.setAttributeNS(PptxDom.NS_R, "r:id", rid);
-      const after = kids(list, "sldLayoutId")[this.masterIndex - 1];
+      // After the current layout; with the master itself selected, at the end of its layouts.
+      const pos = isMasterPath(cur) ? -1 : list0.indexOf(cur) - 1;
+      const after = pos >= 0 ? kids(list, "sldLayoutId")[pos] : undefined;
       list.insertBefore(el, after ? after.nextSibling : null);
     });
-    this.setCurrent(this.masterIndex + 1);
+    this.setCurrent(this.masterList().indexOf(path));
   }
 
   private deleteLayout(): void {
     const pptx = this.deck.pptx;
-    const master = pptx.masters()[0];
+    const master = this.currentMaster()!;
     const lay = this.masterList()[this.masterIndex];
     this.deck.change("Layout löschen", [master], () => {
       const rels = pptx.rels(master);
@@ -3503,13 +3565,16 @@ export class PresentApp implements EditorHost, PanelHost {
     return grid;
   }
 
-  transitionDuration(): string { return this.transitionInfo()?.duration ?? "01,00"; }
+  transitionDuration(): string { return this.transitionInfo()?.duration ?? "02,00"; }
   transitionAfter(): string { return this.transitionInfo()?.after ?? "00:00,00"; }
   private transitionInfo(): { duration: string; after: string } | null {
     const p = this.slidePath();
     if (!p) return null;
     const tr = kid(this.deck.pptx.doc(p).documentElement, "transition") ?? this.deck.pptx.doc(p).documentElement.getElementsByTagNameNS(PptxDom.NS_P, "transition")[0];
-    const dur = tr ? Number(tr.getAttributeNS(PptxDom.NS_P14, "dur") ?? tr.getAttribute("p14:dur") ?? (tr.getAttribute("spd") === "slow" ? 1000 : tr.getAttribute("spd") === "med" ? 750 : 500)) : 1000;
+    // No transition, or one without an effect and without p14:dur: PowerPoint shows 02,00 (recorded, D-152).
+    const effect = tr ? Array.from(tr.children).some((c) => c.localName !== "sndAc" && c.localName !== "extLst") : false;
+    const d14 = tr ? tr.getAttributeNS(PptxDom.NS_P14, "dur") || tr.getAttribute("p14:dur") : null;
+    const dur = !tr ? 2000 : d14 ? Number(d14) : !effect ? 2000 : tr.getAttribute("spd") === "slow" ? 1000 : tr.getAttribute("spd") === "med" ? 750 : 500;
     const adv = tr ? Number(tr.getAttribute("advTm") ?? 0) : 0;
     const fmt = (ms: number) => (ms / 1000).toFixed(2).padStart(5, "0").replace(".", ",");
     return { duration: fmt(dur), after: `${String(Math.floor(adv / 60000)).padStart(2, "0")}:${((adv % 60000) / 1000).toFixed(2).padStart(5, "0").replace(".", ",")}` };

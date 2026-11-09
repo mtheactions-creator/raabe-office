@@ -53,3 +53,31 @@ describe("by-hand sweep findings (D-137)", () => {
     expect(d.canUndo).toBe(false);
   });
 });
+
+describe("follow-up of the by-hand audit (D-152)", () => {
+  it("writes Übergänge > Dauer on a slide without a transition as PowerPoint does: the duration alone", async () => {
+    const { setTransitionDuration, readTransition, setTransition } = await import("../src/transitions");
+    const d = new Deck();
+    const p = d.slides[0].path;
+    const app = { deck: d, panel: { selected: new Set([0]) } } as unknown as Parameters<typeof setTransitionDuration>[0];
+    expect(readTransition(d.pptx.doc(p).documentElement)).toBe(null);
+    setTransitionDuration(app, 3);
+    const xml = new XMLSerializer().serializeToString(d.pptx.doc(p));
+    // Recorded (probe_powerpoint_followup.py): <p:transition spd="slow" p14:dur="3000"/> in the Choice, no effect.
+    expect(xml).toMatch(/<p:transition spd="slow" p14:dur="3000"\/>/);
+    expect(xml).not.toMatch(/<p:cut\/>|<p:fade/);
+    const t = readTransition(d.pptx.doc(p).documentElement)!;
+    expect(t.kind).toBe("none");
+    expect(t.dur).toBe(3000);
+    // A second change keeps it effect-free; Strg+Z takes both back.
+    setTransitionDuration(app, 2.25);
+    expect(new XMLSerializer().serializeToString(d.pptx.doc(p))).toMatch(/p14:dur="2250"\/>/);
+    d.undo();
+    d.undo();
+    expect(readTransition(d.pptx.doc(p).documentElement)).toBe(null);
+    // An effect picked afterwards writes its element.
+    setTransition(app, "fade");
+    expect(readTransition(d.pptx.doc(p).documentElement)!.kind).toBe("fade");
+    expect(new Deck(Pptx.read(d.write())).slides.length).toBe(d.slides.length);
+  });
+});

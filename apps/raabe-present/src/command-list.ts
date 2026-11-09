@@ -340,6 +340,7 @@ export const COMMANDS: Command[] = [
   cmd("master.preserve", "Beibehalten", "pin"),
   cmd("master.masterLayout", "Masterlayout...", "slide-layout"),
   cmd("master.insertPlaceholder", "Platzhalter einfügen", "placeholder-source"),
+  ...["Inhalt", "Text", "Bild", "Onlinegrafik", "Diagramm", "Tabelle", "SmartArt", "Medien", "Cameo"].map((label, k) => cmd(`master.placeholder${k}`, label, "placeholder-source")),
   cmd("master.title", "Titel", "check"),
   cmd("master.footers", "Fußzeilen", "check"),
   cmd("master.close", "Masteransicht schließen", "close-x"),

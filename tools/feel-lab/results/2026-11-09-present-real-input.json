@@ -1,7 +1,7 @@
 {
  "date": "2026-11-09",
- "passed": 9,
- "total": 10,
+ "passed": 11,
+ "total": 11,
  "cases": [
   {
    "name": "Schriftfarbe-Palette > Rot",
@@ -80,14 +80,26 @@
   },
   {
    "name": "F5, Klick weiter, Esc",
-   "ok": false,
+   "ok": true,
    "got": {
     "in": true,
     "s1": 1,
     "fg_click": true,
     "s2": 2,
     "fg_esc": true,
-    "out": false
+    "out": true
+   },
+   "errs": []
+  },
+  {
+   "name": "F5, Esc",
+   "ok": true,
+   "got": {
+    "in": true,
+    "fullscreen": true,
+    "out": true,
+    "page_saw_esc": false,
+    "fullscreen_after": false
    },
    "errs": []
   }

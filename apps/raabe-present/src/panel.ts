@@ -138,15 +138,16 @@ export class SlidePanel {
       }
       if (sec && this.collapsed.has(sec.id)) return;
       const item = document.createElement("div");
-      item.className = `thumb-item${i === cur ? " current" : ""}${this.selected.has(i) ? " selected" : ""}${master ? (i === 0 ? " master" : " layout") : ""}`;
+      const isM = master && /slideMasters\//.test(ref.path);
+      item.className = `thumb-item${i === cur ? " current" : ""}${this.selected.has(i) ? " selected" : ""}${master ? (isM ? " master" : " layout") : ""}`;
       item.dataset.i = String(i);
       const num = document.createElement("div");
       num.className = "thumb-num";
-      num.textContent = master ? (i === 0 ? "1" : "") : String(i + 1);
+      num.textContent = master ? (isM ? String(slides.slice(0, i + 1).filter((x) => /slideMasters\//.test(x.path)).length) : "") : String(i + 1);
       if (!master && this.deck.pptx.doc(ref.path).documentElement.getAttribute("show") === "0") num.classList.add("hidden-slide");
       const frame = document.createElement("div");
       frame.className = "thumb-frame";
-      frame.append(this.thumb(i, master && i > 0 ? Math.round(w0 * 0.8) : w0));
+      frame.append(this.thumb(i, master && !isM ? Math.round(w0 * 0.8) : w0));
       item.append(num, frame);
       item.addEventListener("mousedown", (e) => { if (master) { e.preventDefault(); this.el.focus(); this.pick(i, false, false); } else this.down(e, i); });
       items.push(item);

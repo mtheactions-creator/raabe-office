@@ -4153,3 +4153,86 @@ The audit pressed some shortcuts with key events no keyboard sends, so 15 of its
   open. 4 of 7.
 - Not re-measured before the deadline: the Word comparison of the new runs (Leere Seite, Kein Leerraum, the column
   widths, Word opening every file incl. the one after Strg+N).
+
+## D-152 RaabePresent: Esc under the OS keyboard ends the show; Übergänge > Dauer without a transition (2026-11-09)
+
+**F5, a click, Esc** (open since D-137). Recorded in the release exe with real input (SendInput, under the lock) and a
+key listener in the page: with the show in the page's full screen, WebView2 takes Esc to leave full screen and the
+page never gets the keydown (only `fullscreenchange`), with or without a click before it; the click was not the cause.
+CDP keys go straight to the page, which is why the sweep passed. D-137 already ends the show when the full screen is
+left; with a build that has it, the real-input cases pass (F5/click/Esc and F5/Esc, the second also checks that the
+page did not see the key): real_present.py 11/11 (before: 9/10, the audit's run was made with an older build).
+
+**Übergänge > Dauer while the slide has no transition** (open since D-137), recorded through the ribbon in PowerPoint
+(probe_powerpoint_followup.py, results/2026-11-09-powerpoint-followup.json): the spinner is enabled and shows 02,00; a
+value typed into it, or its arrow (steps of 0,25), writes a transition with the duration and no effect element
+(`<p:transition spd="slow" p14:dur="3000"/>` in the p14 Choice, the same without p14:dur as Fallback). RaabePresent
+showed 01,00 and did nothing; now as PowerPoint, one undo step each, and such a transition reads as "Ohne" (no effect
+in the show). Not changed: an effect picked from the gallery afterwards takes its own default duration (COM's
+EntryEffect keeps the typed one; the gallery's own behaviour there was not recorded).
+
+## D-153 RaabePresent: Seitenverhältnis sperren for tables; Folienmaster commands (2026-11-09)
+
+**Tabellenlayout > Seitenverhältnis sperren**, recorded through the ribbon: the check box is the table frame's own
+setting (`a:graphicFrameLocks`; COM's LockAspectRatio stays 0 and the saved XML shows no noChangeAspect while the box
+is ticked, so PowerPoint keeps it in its view state; we write `noChangeAspect="1"` so it lasts). While it is on, Höhe
+changes Breite in proportion (5,29 cm to 8 cm made 21,17 cm to 32 cm, rows and columns scaled alike) and Breite
+changes Höhe; off again, Breite alone. RaabePresent's box was "Noch nicht verfügbar"; now as recorded, also for
+the frame's corner handles.
+
+**Folienmaster** (open since D-137: "Noch nicht verfügbar"), recorded through the ribbon in a PowerPoint of our own
+(probe_powerpoint_followup.py, part master):
+- Which commands are on where: with the master selected, Masterlayout... and Beibehalten are enabled, Platzhalter
+  einfügen, Titel and Fußzeilen greyed; with a layout selected the other way round. Folienmaster einfügen and Layout
+  einfügen always. RaabePresent now follows this (Beibehalten was enabled on layouts too).
+- **Masterlayout...**: Platzhalter with Titel, Text, Datum, Foliennummer, Fußzeile, ticked for those the master has.
+  PowerPoint put a removed Datum back at Office's place (838200, 6356350; 2743200 x 365125 EMU at 16:9), after the
+  master's other shapes, with the next id. Ours: the same, from our template's master (scaled to the slide size);
+  unticking removes the placeholder. One undo step.
+- **Platzhalter einfügen**: a split button; the menu has Inhalt, Text, Bild, Onlinegrafik, Diagramm, Tabelle, SmartArt,
+  Medien, Cameo (no vertical entries in this version). After a pick, a click on the layout puts a 914400 EMU (2,54 cm)
+  square with its top left corner at the point; a drag draws it. The XML as recorded: `<p:ph sz="quarter" idx="13"/>`
+  (Inhalt; type body, pic, clipArt, chart, tbl, dgm, media for the others; Cameo is a media placeholder with the p232
+  phTypeExt cameo extension), Inhalt and Text with the master's five levels as text, the others an empty paragraph;
+  idx the next after the layout's highest (13 after the footers). Names as German PowerPoint writes them
+  (Inhaltsplatzhalter 5, Onlinebild-Platzhalter 11 ...). The button's main part repeats the last pick (Inhalt first).
+- **Folienmaster einfügen**: a second master after the others, "Benutzerdefiniertes Design", kept (preserve), with the
+  eleven layouts of a new presentation and the Office design (the current design was Office in the recording, so
+  whether PowerPoint copies the current design's colours was not seen; ours takes the Office design). The Folienmaster
+  view now lists every master with its layouts (it showed only the first); Layout einfügen, Löschen and Beibehalten
+  act on the selected entry's master, and Löschen removes a master none of whose layouts a slide uses when there is
+  another one.
+Not done: Umbenennen on the master (PowerPoint enables it; ours renames layouts only).
+
+## D-154 RaabePresent: the SmartArt Format tab (2026-11-09)
+
+Open since D-137: RaabePresent had no Format tab for a SmartArt. Recorded in PowerPoint (probe_powerpoint_followup.py,
+part smartart: the tab walked as the inventory walks one; the full inventory had skipped it because the chart's tab of
+the same name had been walked): Formen (In 2D bearbeiten, Form ändern, Größer, Kleiner), Formenarten
+(Schnellformatvorlagen, Fülleffekt, Formkontur, Formeffekte, launcher), WordArt-Formate (gallery, Textfüllung,
+Textkontur, Texteffekte, launcher), Barrierefreiheit (Alternativtext), Anordnen, Größe; keytip JO. With the whole
+SmartArt selected Formen and the shape styles are greyed (with one of its shapes selected they are enabled). What the
+colour commands do then (probe_powerpoint_smartart_format.py, through COM on the selection's ShapeRange): Fülleffekt
+writes the graphic's background, `<dgm:bg><a:solidFill>...</a:solidFill></dgm:bg>` in the data model; a fill on one
+shape writes that point's dgm:spPr and the drawing's shape. RaabePresent now has the tab with these groups and keys;
+Fülleffekt and Formkontur on the whole SmartArt write dgm:bg and dgm:whole/a:ln (one undo step, with the data part),
+and the renderer draws that background and outline under the shapes. Formen and the shape styles stay greyed: our
+SmartArt is selected as a whole only (selecting one of its shapes is not built).
+
+Checked by hand in the release exe (check_present_followup.py: trusted CDP clicks on the controls, typing, Enter, and
+Strg+Z afterwards): Dauer typed and its arrow, Seitenverhältnis sperren with Höhe typed, Masterlayout... (Datum off and
+on again), every entry of Platzhalter einfügen (placeholder type and size against PowerPoint's XML; Inhalt drawn),
+Folienmaster einfügen, and the SmartArt Format tab (groups, greyed controls, Fülleffekt > Rot): 7/7
+(results/2026-11-09-present-followup-check.json). D-152 to D-154 share this check.
+
+Later the same night: WordArt-Formate (Textfüllung, Textkontur, Texteffekte, the gallery) with the whole SmartArt
+selected format every run of its text, in the data model and in the drawing (one undo step with the diagram's parts;
+a new layout afterwards writes the text without it, open). check_present_followup.py then 9/9 (also Textfüllung > Rot
+and Formkontur > Grün on the whole graphic). Sweep rerun in the exe of the parts the audit had not rerun
+(sweep_present.py, table, chart, Formel and SmartArt contexts, before these changes): 1258 options, 1208 pass, 29
+disabled, 9 no-effect (Zeilen/Spalten verteilen and Oben ausrichten on a table already so, the chart Format tab's
+WordArt-Formate (charts work, reported), Verschieben nach on the last SmartArt item), 5 unbuilt (Seitenverhältnis
+sperren, now built; four chart commands), 7 fail: six Formel options "control not found after reset" (the harness
+read the ribbon before the Formel tab had come: reset now waits for a contextual tab) and the SmartArt Format tab
+missing (now built). The after-run of these parts was not made before the deadline. Keytips (first walk): 400, 362
+pass, 38 no-effect (a key that reaches an option already in effect, as above), 0 fail.

@@ -7,6 +7,8 @@
 import { SMARTART_COLORS, SMARTART_STYLES } from "./smartart-styles.gen";
 import { h, showDialog, type Control, type Tab } from "@raabe/shell";
 import { PptxDom } from "@raabe/ooxml";
+import { colorXml } from "./colors";
+import * as T from "./textops";
 import type { PresentApp } from "./app";
 import * as sc from "./smartart-create";
 
@@ -26,6 +28,64 @@ function partsOf(app: PresentApp, id: number): Parts | null {
   const ext = app.deck.pptx.doc(data).getElementsByTagNameNS("http://schemas.microsoft.com/office/drawing/2008/diagram", "dataModelExt")[0];
   const drawing = ext ? app.deck.pptx.target(path, ext.getAttribute("relId") ?? "") : undefined;
   return { data, drawing: drawing && app.deck.pptx.has(drawing) ? drawing : undefined };
+}
+
+/**
+ * Format > Fülleffekt / Formkontur with the whole SmartArt selected: PowerPoint writes the graphic's background
+ * (dgm:bg, recorded: probe_powerpoint_smartart_format.py) and outline (dgm:whole/a:ln). null: Keine Füllung / Kontur;
+ * "AUTO": the graphic's own fill or line taken away.
+ */
+export function setDiagramWhole(app: PresentApp, id: number, what: "fill" | "line", hex: string | null, width?: number): void {
+  const parts = partsOf(app, id);
+  const slide = app.slidePath();
+  if (!parts || !slide) return;
+  const doc = app.deck.pptx.doc(parts.data);
+  const root = doc.documentElement;
+  const el = (name: string) => {
+    let e = PptxDom.kids(root).find((k) => k.localName === name);
+    if (!e) { e = doc.createElementNS(NS_DGM, `dgm:${name}`); const before = PptxDom.kids(root).find((k) => k.localName === (name === "bg" ? "whole" : "extLst")); root.insertBefore(e, before ?? null); }
+    return e;
+  };
+  const fill = (v: string | null) => (v === null ? "<a:noFill/>" : `<a:solidFill>${colorXml(v)}</a:solidFill>`);
+  app.deck.change(what === "fill" ? "Fülleffekt" : "Formkontur", [parts.data, slide], () => {
+    if (what === "fill") {
+      const bg = el("bg");
+      for (const c of PptxDom.kids(bg)) if (["noFill", "solidFill", "gradFill", "blipFill", "pattFill", "grpFill"].includes(c.localName)) c.remove();
+      if (hex !== "AUTO") bg.prepend(PptxDom.fragment(doc, fill(hex))[0]);
+    } else {
+      const whole = el("whole");
+      let ln = PptxDom.kid(whole, "ln");
+      if (!ln) { ln = PptxDom.make(doc, "a:ln"); whole.prepend(ln); }
+      if (width !== undefined) ln.setAttribute("w", String(Math.round(width * 12700)));
+      if (hex !== undefined) {
+        for (const c of PptxDom.kids(ln)) if (["noFill", "solidFill", "gradFill", "pattFill"].includes(c.localName)) c.remove();
+        if (hex !== "AUTO") ln.prepend(PptxDom.fragment(doc, fill(hex))[0]);
+      }
+    }
+  });
+  // The slide's view of the frame reads these parts: drawn anew.
+  app.deck.invalidate(slide);
+  app.editor.render();
+}
+
+/**
+ * WordArt-Formate (Textfüllung, Textkontur, Texteffekte ...) with the whole SmartArt selected: every run of its text,
+ * in the data model's points and in the drawing PowerPoint shows, one undo step with the diagram's parts. (A new
+ * layout writes the drawing anew from the items: the formatting does not travel with it yet.)
+ */
+export function formatDiagramText(app: PresentApp, ids: number[], label: string, fn: (rPr: Element) => void): void {
+  const slide = app.slidePath();
+  const all = ids.map((id) => partsOf(app, id)).filter((p): p is Parts => !!p);
+  if (!slide || !all.length) return;
+  const paths = [slide, ...all.flatMap((p) => [p.data, ...(p.drawing ? [p.drawing] : [])])];
+  app.deck.change(label, paths, () => {
+    for (const p of all) {
+      for (const t of Array.from(app.deck.pptx.doc(p.data).getElementsByTagNameNS(NS_DGM, "t"))) if (t.getElementsByTagNameNS(PptxDom.NS_A, "t").length) T.formatAll(t, fn);
+      if (p.drawing) for (const b of Array.from(app.deck.pptx.doc(p.drawing).getElementsByTagNameNS(NS_DSP, "txBody"))) if (b.getElementsByTagNameNS(PptxDom.NS_A, "t").length) T.formatAll(b, fn);
+    }
+  });
+  app.deck.invalidate(slide);
+  app.editor.render();
 }
 
 /** The text points of the data model with their level (from the parOf connections), in the model's order. */

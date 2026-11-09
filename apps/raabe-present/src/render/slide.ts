@@ -135,7 +135,16 @@ export function renderShape(s: ShapeView, o: RenderOptions, map: Map<number, HTM
       line.style.cssText = "position:absolute;inset:0;box-shadow:inset 0 0 0 0.33px #d3d3d3;pointer-events:none";
       box.append(line);
       if (!o.editing && s.zoom) { box.dataset.zoom = String(s.zoom.sldId); if (s.zoom.section) box.dataset.zoomSection = s.zoom.section; if (s.zoom.back) box.dataset.zoomBack = "1"; }
-    } else if (s.frame === "diagram" && s.children) for (const c of s.children) box.append(renderShape({ ...c, rot: c.rot - s.rot }, { ...o, editing: false, selection: null }, null, s));
+    } else if (s.frame === "diagram" && s.children) {
+      // The whole graphic's background and outline (SmartArt > Format > Fülleffekt, Formkontur; D-154), under its shapes.
+      if ((s.diagramBg && s.diagramBg.kind !== "none") || s.diagramLine) {
+        const bg = document.createElement("div");
+        bg.className = "diagram-bg";
+        bg.style.cssText = `position:absolute;inset:0;pointer-events:none;${s.diagramBg && s.diagramBg.kind !== "none" ? `background:${fillCss(s.diagramBg)};` : ""}${s.diagramLine ? `box-shadow:inset 0 0 0 ${(s.diagramLine.width * 96) / 72}px #${s.diagramLine.color};` : ""}`;
+        box.append(bg);
+      }
+      for (const c of s.children) box.append(renderShape({ ...c, rot: c.rot - s.rot }, { ...o, editing: false, selection: null }, null, s));
+    }
     else box.append(placeholderBox(w, h));
   } else if (s.kind === "sp" || s.kind === "cxnSp") {
     const url = s.pic?.path ? o.image(s.pic.path) : undefined;

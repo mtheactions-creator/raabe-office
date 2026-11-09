@@ -43,8 +43,10 @@ export function readTransition(root: Element): { kind: string; dur: number; advC
   const dur = num(el, "p14:dur") ?? Number(el.getAttributeNS(NS_P14, "dur") || NaN);
   const spd = el.getAttribute("spd") ?? "fast";
   return {
-    kind: child?.localName === "prstTrans" ? child.getAttribute("prst") ?? "fade" : child?.localName ?? "cut",
-    dur: Number.isFinite(dur) ? dur : spd === "slow" ? 1000 : spd === "med" ? 750 : 500,
+    // No effect element: a transition that holds only a duration or Nach (Übergänge > Dauer on a slide without one,
+    // D-152); PowerPoint shows such a slide's duration as 02,00 when none is written.
+    kind: child?.localName === "prstTrans" ? child.getAttribute("prst") ?? "fade" : child?.localName ?? "none",
+    dur: Number.isFinite(dur) ? dur : !child ? 2000 : spd === "slow" ? 1000 : spd === "med" ? 750 : 500,
     advClick: el.getAttribute("advClick") !== "0",
     advTm: num(el, "advTm"),
     dir: child?.getAttribute("dir") ?? undefined,
@@ -55,9 +57,12 @@ export function readTransition(root: Element): { kind: string; dur: number; advC
 
 const DEFAULT_DUR: Record<string, number> = { fade: 700, push: 1000, wipe: 1000, split: 1500, reveal: 1600, cut: 100, randomBar: 1000, circle: 2000, uncover: 1000, cover: 1000, flash: 1000, morph: 2000 };
 
-function transitionXml(kind: string, dur: number, extra: { advClick?: boolean; advTm?: number }): string {
+function transitionXml(kind: string, dur: number, extra: { advClick?: boolean; advTm?: number }, durOnly = false): string {
   const spd = dur >= 1000 ? "slow" : dur >= 750 ? "med" : "fast";
   const attrs = `${extra.advClick === false ? ' advClick="0"' : ""}${extra.advTm !== undefined ? ` advTm="${extra.advTm}"` : ""}`;
+  // Only a duration, no effect (PowerPoint writes it so when Dauer is set on a slide without a transition, D-152).
+  if (kind === "none" && durOnly) return `<mc:AlternateContent xmlns:mc="${NS_MC}"><mc:Choice xmlns:p14="${NS_P14}" Requires="p14"><p:transition spd="${spd}" p14:dur="${Math.round(dur)}"${attrs}/></mc:Choice>` +
+    `<mc:Fallback><p:transition spd="${spd}"${attrs}/></mc:Fallback></mc:AlternateContent>`;
   if (kind === "none") return "";
   const inner = PRST.has(kind) ? `<p15:prstTrans xmlns:p15="http://schemas.microsoft.com/office/powerpoint/2012/main" prst="${PRST.get(kind)}"/>`
     : P14_KINDS.has(kind) ? `<p14:${kind}/>` : kind === "circle" ? "<p:circle/>" : `<p:${kind}/>`;
@@ -74,14 +79,14 @@ export function setTransition(app: PresentApp, kind: string): void {
   });
 }
 
-function writeTransition(root: Element, kind: string, dur: number): void {
+function writeTransition(root: Element, kind: string, dur: number, durOnly = false): void {
   const cur = readTransition(root);
   const { el, wrap } = transitionOf(root);
   // The transition's sound stays when the effect changes (PowerPoint).
   const sound = kid(el, "sndAc");
   (wrap ?? el)?.remove();
-  if (kind === "none") return;
-  const xml = transitionXml(kind, dur, { advClick: cur?.advClick, advTm: cur?.advTm });
+  if (kind === "none" && !durOnly) return;
+  const xml = transitionXml(kind, dur, { advClick: cur?.advClick, advTm: cur?.advTm }, durOnly);
   // Schema order: after clrMapOvr, before timing.
   const timing = kid(root, "timing") ?? kid(root, "extLst") ?? null;
   const added = fragment(root.ownerDocument, xml)[0];
@@ -96,7 +101,8 @@ export function setTransitionDuration(app: PresentApp, seconds: number): void {
     for (const p of paths) {
       const root = deck.pptx.doc(p).documentElement;
       const t = readTransition(root);
-      if (t) writeTransition(root, t.kind, seconds * 1000);
+      // Without a transition PowerPoint writes the duration alone (recorded: probe_powerpoint_followup.py, D-152).
+      writeTransition(root, t?.kind ?? "none", seconds * 1000, true);
     }
   });
 }

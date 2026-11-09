@@ -226,6 +226,27 @@ def cases(r: Real) -> list[dict]:
         time.sleep(0.6)
         st["out"] = not r.js("window.__present.inShow()")
     case("F5, Klick weiter, Esc", show, lambda: (st.get("in") and st.get("out"), st))
+
+    # 10. F5 and Esc without a click. Under the OS keyboard WebView2 takes Esc to leave the page's full screen and the
+    # page never sees the key (D-152, recorded with a key listener): the show ends through fullscreenchange.
+    st2: dict = {}
+
+    def show_esc():
+        r.setup("slides", None)
+        r.js("window.__escSeen = false; window.addEventListener('keydown', (e) => { if (e.key === 'Escape') window.__escSeen = true; }, true)")
+        r.front()
+        winapi.press("f5")
+        time.sleep(1.2)
+        st2["in"] = r.js("window.__present.inShow()")
+        st2["fullscreen"] = r.js("!!document.fullscreenElement")
+        if not r.ours():
+            raise RuntimeError("the show is not ours in front: no key sent")
+        winapi.press("esc")
+        time.sleep(0.6)
+        st2["out"] = not r.js("window.__present.inShow()")
+        st2["page_saw_esc"] = r.js("window.__escSeen")
+        st2["fullscreen_after"] = r.js("!!document.fullscreenElement")
+    case("F5, Esc", show_esc, lambda: (st2.get("in") and st2.get("out") and not st2.get("fullscreen_after"), st2))
     return out
 
 
