@@ -1226,7 +1226,9 @@ export class SlideEditor {
     const cx = v.x + v.w / 2, cy = v.y + v.h / 2;
     const el = this.rendered?.shapes.get(id);
     const frame = this.overlay.querySelector(`.frame[data-id="${id}"]`) as HTMLElement | null;
-    const keepRatio = v.kind === "pic" || (v.el.localName === "graphicFrame" && v.frame === "chart" ? false : !!PptxDom.at(v.el, "nvPicPr/cNvPicPr/picLocks")?.getAttribute("noChangeAspect"));
+    // A table with Seitenverhältnis sperren keeps its proportions too (graphicFrameLocks, D-153).
+    const keepRatio = v.kind === "pic" || (v.el.localName === "graphicFrame" && v.frame === "chart" ? false : !!PptxDom.at(v.el, "nvPicPr/cNvPicPr/picLocks")?.getAttribute("noChangeAspect"))
+      || (v.frame === "table" && PptxDom.at(v.el, "nvGraphicFramePr/cNvGraphicFramePr/graphicFrameLocks")?.getAttribute("noChangeAspect") === "1");
     let result: S.Xfrm | null = null;
     // The handle follows the pointer's movement from where it was grabbed (not the pointer's place: the
     // handle is drawn around the edge; measured, PowerPoint sizes by the full movement).

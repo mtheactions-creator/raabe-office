@@ -3898,3 +3898,20 @@ page never gets the keydown (only `fullscreenchange`), with or without a click b
 CDP keys go straight to the page, which is why the sweep passed. D-137 already ends the show when the full screen is
 left; with a build that has it, the real-input cases pass (F5/click/Esc and F5/Esc, the second also checks that the
 page did not see the key): real_present.py 11/11 (before: 9/10, the audit's run was made with an older build).
+
+**Übergänge > Dauer while the slide has no transition** (open since D-137), recorded through the ribbon in PowerPoint
+(probe_powerpoint_followup.py, results/2026-11-09-powerpoint-followup.json): the spinner is enabled and shows 02,00; a
+value typed into it, or its arrow (steps of 0,25), writes a transition with the duration and no effect element
+(`<p:transition spd="slow" p14:dur="3000"/>` in the p14 Choice, the same without p14:dur as Fallback). RaabePresent
+showed 01,00 and did nothing; now as PowerPoint, one undo step each, and such a transition reads as "Ohne" (no effect
+in the show). Not changed: an effect picked from the gallery afterwards takes its own default duration (COM's
+EntryEffect keeps the typed one; the gallery's own behaviour there was not recorded).
+
+## D-153 RaabePresent: Seitenverhältnis sperren for tables; Folienmaster commands (2026-11-09)
+
+**Tabellenlayout > Seitenverhältnis sperren**, recorded through the ribbon: the check box is the table frame's own
+setting (`a:graphicFrameLocks`; COM's LockAspectRatio stays 0 and the saved XML shows no noChangeAspect while the box
+is ticked, so PowerPoint keeps it in its view state; we write `noChangeAspect="1"` so it lasts). While it is on, Höhe
+changes Breite in proportion (5,29 cm to 8 cm made 21,17 cm to 32 cm, rows and columns scaled alike) and Breite
+changes Höhe; off again, Breite alone. RaabePresent's box was "Noch nicht verfügbar"; now as recorded, also for
+the frame's corner handles.

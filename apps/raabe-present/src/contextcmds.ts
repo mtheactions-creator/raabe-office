@@ -340,17 +340,43 @@ function tableSizeText(app: PresentApp, k: "row" | "col" | "h" | "w"): string {
   return tableOf(app) ? cm(tableSize(app, k)) : "";
 }
 
+/** Tabellenlayout > Seitenverhältnis sperren: the frame's graphicFrameLocks/@noChangeAspect (D-153). */
+export function tableRatioLocked(el: Element | undefined): boolean {
+  return !!el && PptxDom.at(el, "nvGraphicFramePr/cNvGraphicFramePr/graphicFrameLocks")?.getAttribute("noChangeAspect") === "1";
+}
+
+export function toggleTableRatio(app: PresentApp): void {
+  const t = tableOf(app);
+  if (!t) return;
+  const on = !tableRatioLocked(t.el);
+  app.editor.edit("Seitenverhältnis sperren", () => {
+    const el = app.editor.shapeEl(t.v.id);
+    const c = el ? PptxDom.at(el, "nvGraphicFramePr/cNvGraphicFramePr") : undefined;
+    if (!c) return;
+    let l = kid(c, "graphicFrameLocks");
+    if (!l && on) { l = make(c.ownerDocument, "a:graphicFrameLocks"); c.prepend(l); }
+    if (!l) return;
+    if (on) l.setAttribute("noChangeAspect", "1");
+    else { l.removeAttribute("noChangeAspect"); if (!l.attributes.length && !l.firstElementChild) l.remove(); }
+  });
+}
+
 function setTableSize(app: PresentApp, k: "row" | "col" | "h" | "w", emu: number): void {
   const t = tableOf(app);
   if (!t || !(emu > 0)) return;
   const c = app.editor.text?.cell ?? { r: 0, c: 0 };
+  // With Seitenverhältnis sperren on, Höhe and Breite scale the whole table (PowerPoint, D-153).
+  const both = tableRatioLocked(t.el) && (k === "h" || k === "w");
   app.editor.edit("Größe", () => {
     const rows = kids(t.tbl, "tr"), cols = kids(kid(t.tbl, "tblGrid"), "gridCol");
     const ext = kid(kid(t.el, "xfrm"), "ext");
+    const f = k === "h" ? emu / Math.max(1, t.v.h) : emu / Math.max(1, t.v.w);
     if (k === "row") rows[c.r]?.setAttribute("h", String(emu));
     else if (k === "col") cols[c.c]?.setAttribute("w", String(emu));
-    else if (k === "h") { const f = emu / Math.max(1, t.v.h); for (const r of rows) r.setAttribute("h", String(Math.round((num(r, "h") ?? 0) * f))); }
-    else { const f = emu / Math.max(1, t.v.w); for (const g of cols) g.setAttribute("w", String(Math.round((num(g, "w") ?? 0) * f))); }
+    else {
+      if (k === "h" || both) for (const r of rows) r.setAttribute("h", String(Math.round((num(r, "h") ?? 0) * f)));
+      if (k === "w" || both) for (const g of cols) g.setAttribute("w", String(Math.round((num(g, "w") ?? 0) * f)));
+    }
     if (ext) { ext.setAttribute("cx", String(cols.reduce((s, g) => s + (num(g, "w") ?? 0), 0))); ext.setAttribute("cy", String(rows.reduce((s, r) => s + (num(r, "h") ?? 0), 0))); }
   });
 }
@@ -459,6 +485,7 @@ export function implementContext(app: PresentApp): void {
   impl("table.penWeight", () => {}, table);
   impl("table.penColor", () => {}, table);
   for (const id of ["table.rowHeight", "table.colWidth", "table.height", "table.width"]) impl(id, () => {}, table);
+  impl("table.lockRatio", () => toggleTableRatio(app), table, () => tableRatioLocked(tableOf(app)?.el));
   impl("table.gridlines", () => { document.body.classList.toggle("table-gridlines"); }, table, () => document.body.classList.contains("table-gridlines"));
   impl("chart.changeType", () => {}, chart);
   impl("chart.quickLayout", () => {}, chart);

@@ -268,6 +268,11 @@ def master(inv: Inventory, scene: Scene, out: dict) -> None:
                 uia.invoke(okb[0][0])
             time.sleep(0.8)
             r["master_after_dialog"] = phs(m.Shapes)
+            try:
+                mx = slide_xml(inv, pres, 0, "ppt/slideMasters/slideMaster1.xml")
+                r["master_after_dialog_xml"] = [x for x in re.findall(r"<p:sp>.*?</p:sp>", mx, re.S) if 'type="dt"' in x]
+            except Exception as e:  # noqa: BLE001
+                r["master_after_dialog_xml"] = f"error: {str(e)[:80]}"
         else:
             r["dialog"] = "no dialog"
     # A layout selected: Platzhalter einfügen's entries; each picked, then a click on the layout.
@@ -310,6 +315,13 @@ def master(inv: Inventory, scene: Scene, out: dict) -> None:
         time.sleep(0.8)
         got = phs(lay.Shapes)[n0:] if lay.Shapes.Count > n0 else []
         picks[name] = {"dragged" if k == 0 else "clicked": got}
+        try:
+            # What PowerPoint writes for it: the layout's last shape in a saved copy.
+            lx = slide_xml(inv, pres, 0, "ppt/slideLayouts/slideLayout7.xml")
+            sps = re.findall(r"<p:sp>.*?</p:sp>", lx, re.S)
+            picks[name]["xml"] = sps[-1] if sps and got else ""
+        except Exception as e:  # noqa: BLE001
+            picks[name]["xml"] = f"error: {str(e)[:80]}"
         for i in range(lay.Shapes.Count, n0, -1):
             lay.Shapes(i).Delete()
         inv.press("esc")

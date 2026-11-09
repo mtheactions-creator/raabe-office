@@ -3494,13 +3494,16 @@ export class PresentApp implements EditorHost, PanelHost {
     return grid;
   }
 
-  transitionDuration(): string { return this.transitionInfo()?.duration ?? "01,00"; }
+  transitionDuration(): string { return this.transitionInfo()?.duration ?? "02,00"; }
   transitionAfter(): string { return this.transitionInfo()?.after ?? "00:00,00"; }
   private transitionInfo(): { duration: string; after: string } | null {
     const p = this.slidePath();
     if (!p) return null;
     const tr = kid(this.deck.pptx.doc(p).documentElement, "transition") ?? this.deck.pptx.doc(p).documentElement.getElementsByTagNameNS(PptxDom.NS_P, "transition")[0];
-    const dur = tr ? Number(tr.getAttributeNS(PptxDom.NS_P14, "dur") ?? tr.getAttribute("p14:dur") ?? (tr.getAttribute("spd") === "slow" ? 1000 : tr.getAttribute("spd") === "med" ? 750 : 500)) : 1000;
+    // No transition, or one without an effect and without p14:dur: PowerPoint shows 02,00 (recorded, D-152).
+    const effect = tr ? Array.from(tr.children).some((c) => c.localName !== "sndAc" && c.localName !== "extLst") : false;
+    const d14 = tr ? tr.getAttributeNS(PptxDom.NS_P14, "dur") || tr.getAttribute("p14:dur") : null;
+    const dur = !tr ? 2000 : d14 ? Number(d14) : !effect ? 2000 : tr.getAttribute("spd") === "slow" ? 1000 : tr.getAttribute("spd") === "med" ? 750 : 500;
     const adv = tr ? Number(tr.getAttribute("advTm") ?? 0) : 0;
     const fmt = (ms: number) => (ms / 1000).toFixed(2).padStart(5, "0").replace(".", ",");
     return { duration: fmt(dur), after: `${String(Math.floor(adv / 60000)).padStart(2, "0")}:${((adv % 60000) / 1000).toFixed(2).padStart(5, "0").replace(".", ",")}` };
