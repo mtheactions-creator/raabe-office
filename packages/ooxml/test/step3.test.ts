@@ -24,7 +24,9 @@ describe("tables", () => {
     E.insertColumns(d, 1, 1, "right");
     def = d.paras[1].cell!.table;
     expect(def.grid.length).toBe(4);
-    expect(def.grid.reduce((s, x) => s + x, 0)).toBeCloseTo(450, 5);
+    // Word keeps the columns' widths: the new one as wide as its neighbour, the table grows (D-149).
+    expect(def.grid.reduce((s, x) => s + x, 0)).toBeCloseTo(600, 5);
+    expect(def.width).toBeCloseTo(600, 5);
     expect(d.paras[1].text).toBe("A1");
     E.deleteColumns(d, 1, 1);
     def = d.paras[1].cell!.table;

@@ -95,8 +95,8 @@ export const COMMANDS: Command[] = [
   // ----- Formatvorlagen -------------------------------------------------------------------
   cmd("style.normal", "Standard", undefined, { tip: "Standard\nFormatvorlage „Standard“ anwenden.", keywords: ["Formatvorlage"] }),
   cmd("style.noSpacing", "Kein Leerraum", undefined, { keywords: ["Formatvorlage"] }),
-  cmd("style.h1", "Überschrift 1", undefined, { keywords: ["Formatvorlage", "Überschrift"] }),
-  cmd("style.h2", "Überschrift 2", undefined, { keywords: ["Formatvorlage", "Überschrift"] }),
+  cmd("style.h1", "Überschrift 1", undefined, { shortcut: "Alt+1", keywords: ["Formatvorlage", "Überschrift"] }),
+  cmd("style.h2", "Überschrift 2", undefined, { shortcut: "Alt+2", keywords: ["Formatvorlage", "Überschrift"] }),
   cmd("style.title", "Titel", undefined, { keywords: ["Formatvorlage"] }),
   cmd("style.subtitle", "Untertitel", undefined, { keywords: ["Formatvorlage"] }),
   cmd("style.quote", "Zitat", undefined, { keywords: ["Formatvorlage"] }),
@@ -109,7 +109,7 @@ export const COMMANDS: Command[] = [
   cmd("style.intenseReference", "Intensiver Verweis", undefined, { keywords: ["Formatvorlage"] }),
   cmd("style.bookTitle", "Buchtitel", undefined, { keywords: ["Formatvorlage"] }),
   cmd("style.listParagraph", "Listenabsatz", undefined, { keywords: ["Formatvorlage"] }),
-  cmd("style.h3", "Überschrift 3", undefined, { shortcut: "Strg+Alt+3", hidden: true }),
+  cmd("style.h3", "Überschrift 3", undefined, { shortcut: "Alt+3", hidden: true }),
   cmd("style.pane", "Formatvorlagen", "fonts", { shortcut: "Strg+Alt+Umschalt+S", hidden: true }),
 
   // ----- Einfügen -------------------------------------------------------------------------

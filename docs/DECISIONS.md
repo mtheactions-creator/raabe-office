@@ -4093,3 +4093,63 @@ charts keep their workbooks).
   Not yet on slides: the flyouts' Livevorschau and highlighting, Namen in Diagrammfilter, resizing from the pane.
   `check_present_chartui.py` (release exe, trusted DevTools input): 11 of 11.
 - **RaabeCalc unchanged:** `check_calc_chartui.py` 126 of 126 on the build with the modules moved into the package.
+
+## D-149 RaabeWrite: Kein Leerraum, new table columns and Überprüfen as recorded in Word (2026-11-09)
+
+The by-hand audit (D-133) left three differences open; each was recorded first in our own invisible Word
+(`probe_word_followup.py`, results/2026-11-09-word-followup.json) on the audit's base document.
+- **Kein Leerraum** kept the text's font in Word (Calibri, as Standard has it on that PC) and gave Aptos in RaabeWrite.
+  Word copies the style from its template, where No Spacing carries the same font as Normal
+  (`<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>`); our built-in style is based on nothing and fell back to the
+  theme font. A paragraph style based on nothing, added to a document whose Standard style has a font of its own, now
+  takes that font (text-engine `ensureStyle`). In a document whose Standard has no font of its own nothing changes.
+- **Spalte links/rechts einfügen**: Word keeps every column's width (3 x 151.2 pt became 4 x 151.2 pt) and the table
+  grows by the new column (its width becomes 604.8 pt, w:tblW in dxa). RaabeWrite kept the table's width and narrowed
+  all columns. It now does as Word (edits `insertColumns`; unit test step3.test.ts). PowerPoint does the opposite
+  (D-138), so RaabePresent is unchanged.
+- **Überprüfen with no change in the selection**: Word's Zurück and Weiter go on from the other end of the document
+  (Zurück before the first change selects the last one); RaabeWrite did nothing. "Diese Änderung annehmen/ablehnen"
+  does nothing in Word (the command fails), as in RaabeWrite. The split buttons' main part (Annehmen/Ablehnen und zur
+  nächsten wechseln) cannot be run through Word's object model (ExecuteMso refuses split buttons) and UI Automation did
+  not reach the ribbon of an automated instance, so it is not recorded; RaabeWrite now goes to the next change there,
+  which is what "und zur nächsten wechseln" does once the change is gone (before: nothing).
+
+## D-150 RaabeWrite: shortcuts as a German keyboard sends them (2026-11-09)
+
+The audit pressed some shortcuts with key events no keyboard sends, so 15 of its 57 open failures were the sweep's.
+- The sweep now sends what a German keyboard sends (`german_key` in sweep_write.py): the character with Umschalt or
+  AltGr (Strg+Alt is AltGr: Strg+Alt+3 arrives as "³" and types it unless the app stops it, Strg+Alt+E as "€"), the
+  key's code and virtual key (Strg+( is Strg+Umschalt+8, Alt+= is Alt+Umschalt+0, Strg+* is Strg+Umschalt++). Each
+  shortcut is also compared with its command run directly from the same set-up (in the same document after
+  Rückgängig, so the results compare exactly): what changes (document, dialog, pane, view, focus) must be the same.
+  Rückgängig/Wiederholen get something typed first, Kopieren is checked on the clipboard, Speichern on a copy's file,
+  100% after another zoom.
+- **Word's key bindings recorded** (Application.FindKey, German Word): Überschrift 1 to 3 are **Alt+1, Alt+2, Alt+3**
+  (Strg+Alt+1..3 are free in German Word, where Strg+Alt is AltGr); F7 runs the Rechtschreibung und Grammatik pane,
+  Strg+Alt+Umschalt+S the Formatvorlagen pane, Strg+0 100 %. RaabeWrite had Strg+Alt+3 in its command list without a
+  key binding, and no binding for F7 and Strg+Alt+Umschalt+S. They are bound now; Alt+1..3 are shortcuts, not keytips
+  (the shell's Keytips take a list of key codes an app uses with Alt, empty for RaabeCalc and RaabePresent).
+- Strg+Alt shortcuts (Fußnote, Endnote, Kommentar, Format übertragen/einfügen) go by the key's code, not its
+  character, so an AltGr character on the key cannot break them.
+
+## D-151 RaabeWrite: the audit's run B again, and the options one click cannot finish (2026-11-09)
+
+- **Run B again** on the exe with D-149/D-150 (the sweep's German key events, the comment cards and the focus as
+  effects, Kopieren checked on the clipboard, the paste entries of the context menus with something on the clipboard,
+  "already so" options each with its reason in `ALREADY`/`RECORDED_NOTHING`): 3139 options (this run walked every
+  gallery entry), 2981 passed, 29 failed, 14 untested, 92 greyed, 10 deferred, 13 fields
+  (results/2026-11-09-write-sweep-b-after.json); before: 1515 options, 57 failed. Every shortcut passes now and does
+  the same as its command; Annehmen/Ablehnen, Annehmen und weiter and Zurück pass. Left: 16 of the 29 are buttons of
+  the Startseite/Öffnen pages (templates and recent files clicked without a visible change the sweep can see), the
+  "none" entries of Bildformat/Formformat/Texteffekte that are already so, Kopieren/paste in two context menus, Markup >
+  Kommentare (the comment cards' visibility is not seen by the sweep run that recorded it), Vorherige Endnote with
+  no endnote before the caret. Start and Tabellenlayout again: 906 options, 886 passed, 6 failed (Kontur > Keine Kontur
+  and Weitere Leuchtfarben entries: already so).
+- **By hand** (`check_write_byhand.py`, trusted DevTools input into the exe, results/2026-11-09-write-byhand.json):
+  Freihandform: Form (open and closed), Kurve and Freihand: Skizze pass (pointer, shape, a:custGeom with a:lnTo /
+  a:cubicBezTo, a:close when closed, Strg+Z): 4 of 4. Zuschneiden (ribbon and context menu) shows the crop marks and
+  Enter ends it, but the check's drag of the right crop mark did not crop (no a:srcRect): open, not yet told apart from
+  a fault of the check. Rahmenpipette shows the pipette mode, but the check's click did not land on the border line:
+  open. 4 of 7.
+- Not re-measured before the deadline: the Word comparison of the new runs (Leere Seite, Kein Leerraum, the column
+  widths, Word opening every file incl. the one after Strg+N).

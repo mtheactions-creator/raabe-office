@@ -2719,8 +2719,15 @@ export class Editor {
   ensureStyle(id: string): void {
     for (let cur: string | undefined = id, guard = 0; cur && guard < 10; guard++) {
       if (this.doc.styles.get(cur)) { cur = this.doc.styles.get(cur)!.basedOn; continue; }
-      const builtin = builtinStyle(BUILTIN_NAME_BY_ID[cur] ?? cur);
+      let builtin = builtinStyle(BUILTIN_NAME_BY_ID[cur] ?? cur);
       if (!builtin) break;
+      // A paragraph style based on nothing (Kein Leerraum) takes the font the document's Standard has of its own:
+      // Word copies it from the template, where it carries Standard's font, so the text keeps its font (D-149).
+      const std = this.doc.styles.get("Standard");
+      if (builtin.type === "paragraph" && !builtin.basedOn && builtin.id !== "Standard" && std && (std.rPr.font || std.rPr.fontTheme)
+          && !builtin.rPr.font && !builtin.rPr.fontTheme) {
+        builtin = { ...builtin, rPr: { ...builtin.rPr, ...(std.rPr.font ? { font: std.rPr.font } : {}), ...(std.rPr.fontTheme ? { fontTheme: std.rPr.fontTheme } : {}) } };
+      }
       this.doc.setStyles(this.doc.styles.withStyle(builtin));
       cur = builtin.basedOn;
     }
@@ -5846,7 +5853,8 @@ cropFill(fit: boolean): void {
       if (!span) return;
       [from, to] = [span.from, span.to];
     }
-    if (!R.hasRevisions(paras, from, to)) return;
+    // Annehmen / Ablehnen (and move to the next) with no change in the selection: Word goes to the next change (D-149).
+    if (!R.hasRevisions(paras, from, to)) { if (scope === "next") this.nextChange(1); return; }
     this.snapshot();
     R.resolveRevisions(this.doc, from, to, accept);
     const at = this.fixPos(from);
@@ -5858,7 +5866,9 @@ cropFill(fit: boolean): void {
   /** Zurück / Weiter: selects the previous or next change. */
   nextChange(dir: 1 | -1): boolean {
     const h = dir > 0 ? maxPos(this.sel.anchor, this.sel.head) : minPos(this.sel.anchor, this.sel.head);
-    const span = R.findRevision(this.doc.paras, dir > 0 ? { p: h.p, o: h.o - 1 } : h, dir);
+    // Past the last (before the first) change Word goes on from the other end of the document (recorded, D-149).
+    const span = R.findRevision(this.doc.paras, dir > 0 ? { p: h.p, o: h.o - 1 } : h, dir)
+      ?? R.findRevision(this.doc.paras, dir > 0 ? { p: 0, o: -1 } : { p: this.doc.paras.length, o: 0 }, dir);
     if (!span) return false;
     this.setSel(span.from, span.to);
     this.update({ scroll: true });

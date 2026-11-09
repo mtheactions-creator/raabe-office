@@ -20,8 +20,11 @@ export class Keytips {
   /** A mouse button is down (a drag): Alt then belongs to the drag, not to the keytips. */
   private buttons = false;
 
-  /** `scopeAfter(el)` tells which scope to continue in after activating `el` (a ribbon tab). */
-  constructor(private scopeAfter: (el: HTMLElement) => string | null, private onExit: () => void) {
+  /**
+   * `scopeAfter(el)` tells which scope to continue in after activating `el` (a ribbon tab). `shortcutCodes`: keys
+   * (KeyboardEvent.code) that pressed together with Alt are the app's shortcuts, not keytips (Word: Alt+1 Überschrift 1).
+   */
+  constructor(private scopeAfter: (el: HTMLElement) => string | null, private onExit: () => void, private shortcutCodes: readonly string[] = []) {
     addEventListener("keydown", (e) => this.onKeyDown(e), true);
     addEventListener("keyup", (e) => this.onKeyUp(e), true);
     addEventListener("mousedown", () => this.exit(), true);
@@ -52,7 +55,7 @@ export class Keytips {
     if (!this.active) {
       // Alt+letter pressed together jumps straight to that tab (Alt+Umschalt+… are shortcuts,
       // such as Alt+Umschalt+0 for a new equation).
-      if (e.altKey && !e.ctrlKey && !e.shiftKey && norm(e.key)) {
+      if (e.altKey && !e.ctrlKey && !e.shiftKey && norm(e.key) && !this.shortcutCodes.includes(e.code)) {
         this.altAlone = false;
         e.preventDefault();
         e.stopPropagation();

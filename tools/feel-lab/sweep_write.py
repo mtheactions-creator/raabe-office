@@ -26,6 +26,7 @@ import argparse
 import datetime
 import json
 import os
+import re
 import sys
 import tempfile
 import time
@@ -233,10 +234,80 @@ def effects(before: dict, after: dict) -> list[str]:
     if after["doc"] != before["doc"]:
         out.append("doc")
     a, b = before["ui"], after["ui"]
-    for k in ("tab", "ctx", "checked", "combos", "backstage", "status", "view", "shell", "panes", "dialogs", "popups", "sel", "docs", "bodyCls", "minimized", "native", "popSig", "bsPage", "overlay"):
+    for k in ("tab", "ctx", "checked", "combos", "backstage", "status", "view", "shell", "panes", "dialogs", "popups", "sel", "docs", "bodyCls", "minimized", "native", "popSig", "bsPage", "overlay", "focus", "comments"):
         if a.get(k) != b.get(k):
             out.append(k)
     return out
+
+
+# A German keyboard (D-150): what each key gives with Umschalt and with AltGr (= Strg+Alt), its code and virtual key.
+# Word binds keys, not characters, so the sweep must send what the keyboard really sends: Strg+Alt+3 arrives as "³",
+# Strg+( as Strg+Umschalt+8, Alt+= as Alt+Umschalt+0.
+_DIGIT_SHIFT = dict(zip("1234567890", "!\"§$%&/()="))
+_DIGIT_ALTGR = {"2": "²", "3": "³", "7": "{", "8": "[", "9": "]", "0": "}"}
+_LETTER_ALTGR = {"q": "@", "e": "€", "m": "µ"}
+# Characters on a key of their own or with Umschalt: (code, vk, shifted?, unshifted character).
+_PUNCT = {"+": ("BracketRight", 187, False), "*": ("BracketRight", 187, True), "#": ("Backslash", 191, False), "'": ("Backslash", 191, True),
+          "<": ("IntlBackslash", 226, False), ">": ("IntlBackslash", 226, True), "-": ("Slash", 189, False), "_": ("Slash", 189, True),
+          ",": ("Comma", 188, False), ";": ("Comma", 188, True), ".": ("Period", 190, False), ":": ("Period", 190, True)}
+_PUNCT_BASE = {"BracketRight": "+", "Backslash": "#", "IntlBackslash": "<", "Slash": "-", "Comma": ",", "Period": "."}
+_NAMED = {"Eingabe": ("Enter", "Enter", 13), "Return": ("Enter", "Enter", 13), "Leertaste": (" ", "Space", 32), "Rücktaste": ("Backspace", "Backspace", 8),
+          "Entf": ("Delete", "Delete", 46), "Tab": ("Tab", "Tab", 9), "Pos1": ("Home", "Home", 36), "Ende": ("End", "End", 35), "Esc": ("Escape", "Escape", 27)}
+
+
+def german_key(combo: str) -> dict | None:
+    """The key event a German keyboard sends for a shortcut as Word writes it ("Alt+Strg+3", "Strg+(", "Strg+Eingabe")."""
+    parts = combo.split("+")
+    if combo.endswith("++"):
+        parts = combo[:-2].split("+") + ["+"]
+    mods = {m for m in parts[:-1]}
+    name = parts[-1]
+    ctrl, alt, shift = "Strg" in mods, "Alt" in mods, "Umschalt" in mods
+    if name in _NAMED:
+        key, code, vk = _NAMED[name]
+    elif len(name) > 1 and name[0] == "F" and name[1:].isdigit():
+        key, code, vk = name, name, 111 + int(name[1:])
+    elif len(name) == 1 and name.isalpha() and name.isascii():
+        low = name.lower()
+        key, code, vk = (name.upper() if shift else low), f"Key{low.upper()}", ord(low.upper())
+    elif name.isdigit() or name in _DIGIT_SHIFT.values():
+        digit = name if name.isdigit() else next(d for d, ch in _DIGIT_SHIFT.items() if ch == name)
+        if not name.isdigit():
+            shift = True
+        key, code, vk = (_DIGIT_SHIFT[digit] if shift else digit), f"Digit{digit}", 48 + int(digit)
+    elif name in _PUNCT:
+        code, vk, shifted = _PUNCT[name]
+        shift = shift or shifted
+        key = name if shifted or not shift else next((ch for ch, v in _PUNCT.items() if v[0] == code and v[2]), name)
+    else:
+        return None
+    # Strg+Alt is AltGr: the key gives its AltGr character where it has one (and types it unless the app stops it).
+    altgr = False
+    if ctrl and alt and not shift:
+        if code.startswith("Digit") and code[5:] in _DIGIT_ALTGR:
+            key, altgr = _DIGIT_ALTGR[code[5:]], True
+        elif code.startswith("Key") and code[3:].lower() in _LETTER_ALTGR:
+            key, altgr = _LETTER_ALTGR[code[3:].lower()], True
+    mods_bits = (1 if alt else 0) | (2 if ctrl else 0) | (8 if shift else 0)
+    # A character is typed only when the keys give one: alone, with Umschalt, or with AltGr.
+    typed = len(key) == 1 and (altgr or not ctrl and not alt)
+    return {"key": key, "code": code, "vk": vk, "mods": mods_bits, "text": key if typed else ""}
+
+
+def press(p, ev: dict) -> None:
+    """Sends the key event (keyDown with its character, or rawKeyDown) and its keyUp."""
+    base = {"key": ev["key"], "code": ev["code"], "windowsVirtualKeyCode": ev["vk"], "nativeVirtualKeyCode": ev["vk"], "modifiers": ev["mods"]}
+    if ev["text"]:
+        p.cdp("Input.dispatchKeyEvent", {"type": "keyDown", **base, "text": ev["text"], "unmodifiedText": ev["text"]})
+    else:
+        p.cdp("Input.dispatchKeyEvent", {"type": "rawKeyDown", **base})
+    p.cdp("Input.dispatchKeyEvent", {"type": "keyUp", **base})
+
+
+# Shortcuts whose set-up is part of the test (something typed to take back, the clipboard, the format to copy, a
+# document saved, made or closed): compared from a fresh set-up, not in the same document.
+SPECIAL_KEYS = {"edit.undo", "edit.redo", "edit.paste", "edit.pasteText", "edit.formatPainter", "file.new", "file.close", "file.save", "file.open",
+                "insert.equation", "view.zoom100"}  # an equation opens its own edit session; the zoom is set first
 
 
 class Sweep:
@@ -592,6 +663,9 @@ class Sweep:
             if it["tag"] in ("INPUT", "SELECT"):
                 self.record({"tab": tab, "path": ipath, "setup": setup, "status": "field"})
                 continue
+            # The paste entries need something on the clipboard (the clipboard outlives the set-up's reset).
+            if tab == "Kontextmenü" and re.search(r"Formatierung beibehalten|Nur den Text übernehmen|Formatierung zusammenführen|^Einfügen", it["label"] or ""):
+                self.prime_clipboard()
             opener()
             ok = True
             for v in via:
@@ -636,7 +710,13 @@ class Sweep:
                 if left:
                     self.record({"tab": tab, "path": ipath + " > Esc", "setup": setup, "status": "esc", "note": f"dialog left: {left}"})
                 continue
-            self.record(self.judge(tab, ipath, setup, before, after, errors))
+            row = self.judge(tab, ipath, setup, before, after, errors)
+            if row["status"] == "noeffect" and re.match(r"(Kopieren|Ausschneiden)", it["label"] or ""):
+                # Kopieren changes nothing on the page: what it put on the clipboard is its effect.
+                info = p.js("__app.clipboardInfo()")
+                got = bool(info and (info.get("text") or info.get("html") or info.get("image")))
+                row["status"], row["note"] = ("ok" if got else "noeffect"), f"clipboard {info}"
+            self.record(row)
             p.key("Escape")
 
     def statusbar(self) -> None:
@@ -722,44 +802,125 @@ class Sweep:
                 p.key("Escape")
 
     def shortcuts(self, commands: list[dict]) -> None:
-        """Every keyboard shortcut of the command list, pressed as keys with the target selected."""
+        """Every keyboard shortcut of the command list, pressed as a German keyboard sends it (german_key: the key's
+        character with Umschalt or AltGr, its code and virtual key), with the target selected. Each is compared with
+        the same command run directly from the same set-up (D-150): the shortcut must change the document the same
+        way and open the same dialog or pane, so a shortcut that types a character instead (AltGr) fails."""
         a, p = self.a, self.a.p
         skip = {"Strg+F1"}  # reduces the ribbon (checked with the ribbon's own button)
-        names = {"Umschalt": "shift", "Strg": "ctrl", "Alt": "alt"}
-        vks = {"*": (187, "BracketRight", True), ">": (226, "IntlBackslash", True), "<": (226, "IntlBackslash", False), "#": (191, "Backslash", False), "+": (187, "BracketRight", False),
-               "-": (189, "Slash", False), "Leertaste": (32, "Space", False), "Eingabe": (13, "Enter", False), "Return": (13, "Enter", False), "(": (56, "Digit8", True), ")": (57, "Digit9", True), "Rücktaste": (8, "Backspace", False),
-               "Entf": (46, "Delete", False), "Tab": (9, "Tab", False), "Pos1": (36, "Home", False), "Ende": (35, "End", False)}
         for c in commands:
             sc = c.get("shortcut")
             if not sc or c.get("deferred"):
                 continue
             for combo in [s.strip() for s in sc.split(",")][:1]:
-                if combo in skip:
-                    self.record({"tab": "Tastenkombination", "path": f"{combo} ({c['label']})", "setup": "text", "status": "native"})
+                path = f"{combo} ({c['label']})"
+                if os.environ.get("SWEEP_KEYS") and not re.search(os.environ["SWEEP_KEYS"], path):
                     continue
-                parts = combo.split("+") if combo != "Strg++" else ["Strg", "+"]
-                if combo.endswith("++"):
-                    parts = combo[:-2].split("+") + ["+"]
-                mods = {names[x] for x in parts[:-1] if x in names}
-                k = parts[-1]
-                a.fresh("table" if c["id"].startswith("table.") else "text")
-                if c["id"] == "file.close":
-                    p.js("__app.newDoc()")  # the last document would close the window
-                before = a.state()
-                if k in vks:
-                    vk, code, shift = vks[k]
-                    p.key(k if len(k) == 1 else code, ctrl="ctrl" in mods, shift="shift" in mods or shift, alt="alt" in mods, vk=vk, code=code)
-                elif len(k) == 1:
-                    p.key(k.lower() if k.isalpha() else k, ctrl="ctrl" in mods, shift="shift" in mods, alt="alt" in mods)
+                if combo in skip:
+                    self.record({"tab": "Tastenkombination", "path": path, "setup": "text", "status": "native"})
+                    continue
+                setup = "table" if c["id"].startswith("table.") else "text"
+                ev = german_key(combo)
+                if ev is None:
+                    self.record({"tab": "Tastenkombination", "path": path, "setup": setup, "status": "error", "note": "key not known to the sweep"})
+                    continue
+                cid = c["id"]
+
+                def prepare() -> None:
+                    a.fresh(setup)
+                    if cid == "file.close":
+                        p.js("__app.newDoc()")  # the last document would close the window
+                    elif cid == "file.save":
+                        # Speichern writes to a copy, not the base document; the file's time shows the save.
+                        p.js(f"__app.saveTo({json.dumps(str(TMP / 'keys-save.docx'))})")
+                    elif cid in ("edit.undo", "edit.redo"):
+                        p.type("x")  # something to take back
+                        p.pump(0.1)
+                        if cid == "edit.redo":
+                            p.key("z", ctrl=True)
+                            p.pump(0.1)
+                    elif cid in ("edit.paste", "edit.pasteText"):
+                        self.prime_clipboard()
+                    elif cid == "edit.formatPainter":
+                        p.js("__sw.selectText('Ein Bericht', false)")  # the heading's format is copied ...
+                    elif cid == "view.zoom100":
+                        press(p, german_key("Strg++"))  # another zoom first, so 100% has something to do
+                        p.pump(0.2)
+                    p.js("__sw.markBase()")
+                    p.take_errors()
+
+                def finish() -> None:
+                    if cid == "edit.formatPainter":
+                        # ... and put on the target with Alt+Strg+V, as Word's CopyFormat / PasteFormat.
+                        p.js("__sw.selectText('weitere Beobachtungen')")
+                        press(p, german_key("Strg+Alt+V"))
+                    p.pump(0.35)
+
+                # The command itself, run from the same set-up: the reference.
+                prepare()
+                mt0 = (TMP / "keys-save.docx").stat().st_mtime if cid == "file.save" else 0
+                ref0 = a.state()
+                if cid == "edit.formatPainter":
+                    press(p, ev)  # no command of its own (the ribbon's brush differs): the shortcut is its own reference
                 else:
-                    p.key(k, ctrl="ctrl" in mods, shift="shift" in mods, alt="alt" in mods)
-                p.pump(0.35)
+                    p.js(f"(void __app.run({json.dumps(cid)}), 0)")
+                finish()
+                ref = a.state()
+                p.take_errors()
+                p.key("Escape")
+                # The shortcut, in the same document where the command changed it: back with Rückgängig first, so the
+                # two results can be compared exactly (a document read anew has other internal ids).
+                restored = False
+                if ref["doc"] != ref0["doc"] and cid not in SPECIAL_KEYS and not cid.startswith("math."):
+                    p.pump(0.1)
+                    for _ in range(3):
+                        if p.js("__sw.docFp()") == ref0["doc"]:
+                            break
+                        p.js("(void __app.run('edit.undo'), 0)")
+                        p.pump(0.15)
+                    restored = p.js("__sw.docFp()") == ref0["doc"] and not p.js("__sw.dialogs()").__len__()
+                if restored:
+                    a.setup(setup)
+                    p.js("__sw.markBase()")
+                    p.take_errors()
+                else:
+                    prepare()
+                before = a.state()
+                press(p, ev)
+                finish()
                 after = a.state()
                 errors = p.take_errors()
-                extra = {"cmd": c["id"]}
+                extra = {"cmd": cid, "keys": {k: ev[k] for k in ("key", "code", "vk", "mods")}}
                 if after["ui"]["dialogs"]:
                     extra["dialog"] = (p.js("__sw.dialogInfo()") or {}).get("title")
-                self.record(self.judge("Tastenkombination", f"{combo} ({c['label']})", "text", before, after, errors, extra))
+                if cid == "edit.copy":
+                    info = p.js("__app.clipboardInfo()")
+                    extra["note"] = f"clipboard {info}"
+                    if info and info.get("text"):
+                        extra["clipboard"] = True
+                if cid == "file.save":
+                    extra["saved_file"] = (TMP / "keys-save.docx").stat().st_mtime > mt0
+                # Not edits (Rückgängig and Wiederholen themselves; documents made or closed; a setting): no Strg+Z check.
+                undo = cid not in ("file.new", "file.close", "file.open", "review.trackChanges", "edit.undo", "edit.redo")
+                row = self.judge("Tastenkombination", path, setup, before, after, errors, extra, undo=undo)
+                if row["status"] == "noeffect" and (extra.get("clipboard") or extra.get("saved_file")):
+                    row["status"] = "ok"
+                # The same as the command: what changed (document, dialogs, panes, view ...), and in the same document
+                # the same result.
+                keys = ("doc", "dialogs", "panes", "view", "backstage", "docs", "comments", "focus")
+                e_ref, e_key = set(effects(ref0, ref)) & set(keys), set(effects(before, after)) & set(keys)
+                diff = sorted(e_ref ^ e_key)
+                # A comment carries the minute it was written: compared by what changed, not exactly.
+                if restored and "doc" in e_ref and after["doc"] != ref["doc"] and cid not in ("review.newComment", "insert.comment"):
+                    diff.append("doc result")
+                for k in ("dialogs", "panes"):
+                    if after["ui"].get(k) != ref["ui"].get(k) and k not in diff:
+                        diff.append(k)
+                row["same_as_command"] = not diff
+                if row["status"] == "ok" and diff:
+                    row["status"] = "differs"
+                    row["note"] = (row.get("note", "") + " differs from the command run directly: " + ",".join(diff)).strip()
+                self.record(row)
                 p.key("Escape")
 
 
@@ -920,6 +1081,33 @@ ALREADY = [
     # The target starts mid-sentence and has no capitals inside: Word's Satzanfang groß changes nothing (recorded).
     r"Groß-/Kleinschreibung \[dropdown\] > Ersten Buchstaben im Satz großschreiben\.$", r"Ansichten / Drucklayout \[button\]$", r"Zoom / 100% \[button\]$",
 ]
+# The same, for options found in run B (D-151): each changes nothing visible on the audit's document, as in Word.
+ALREADY += [
+    # No change and no tracking in the plain text set-up: nothing to accept or reject.
+    r"Alle Änderungen (annehmen|ablehnen) und Nachverfolgung beenden$",
+    # The picture is inline already, uncropped (it fills its frame: Ausfüllen and Einpassen change nothing), and a
+    # rectangle; Als Standardlayout festlegen is a setting for pictures inserted later.
+    r"> Mit Text in Zeile$", r"> Als Standardlayout festlegen$", r"Auf Form zuschneiden > Rechteck$",
+    r"Größe / Weitere Optionen \[split-arrow\] > (Ausfüllen|Einpassen)$",
+    # What the next Ausrichten aligns to (a setting of the menu; nothing moves until Ausrichten is used).
+    r"Ausrichten \[dropdown\] > (An Seite ausrichten|Am Seitenrand ausrichten)$",
+    # The new rectangle: no gradient, its text centred already; the only shape, in front already.
+    r"Farbverlauf > Keine Farbverläufe$", r"Text ausrichten \[dropdown\] > Zentriert$", r"Ebene nach vorne \[split-main\]$",
+    # No picture on the clipboard.
+    r"Bild ändern > Aus Zwischenablage(\.\.\.)?$",
+    # The print page of a one-page document: no page before or after.
+    r"^Datei > Drucken > (Vorherige|Nächste) Seite$",
+]
+# Options that do nothing on the audit's document in Word either, recorded (results/2026-11-09-word-followup.json),
+# also in the notes and revisions set-ups.
+RECORDED_NOTHING = [
+    # Diese Änderung annehmen / ablehnen with no change in the selection: Word refuses (ExecuteMso fails, nothing changes).
+    r"Weitere Optionen \[split-arrow\] > Diese Änderung (annehmen|ablehnen)$",
+    # Kontextbezogen is how comments are shown already.
+    r"Kommentare / Weitere Optionen \[split-arrow\] > Kontextbezogen$",
+]
+# The print page's own fields (copies, pages, the page range list): typed into, not clicked.
+FIELDS = [r"^Datei > Drucken > (INPUT( #\d+)?|Alle Seiten drucken.*)$"]
 # Options Word does not take back with Strg+Z either (a setting, not an edit).
 NO_UNDO_IN_WORD = [r"Änderungen nachverfolgen \[split-main\]$", r"Änderungen nachverfolgen$",
                    # Closing a header opened empty drops the empty header again (no edit to take back; Word keeps an empty part).
@@ -955,6 +1143,10 @@ def classify(rows: list[dict]) -> dict:
         if st == "noeffect" and not (r.get("setup") in ("notes", "revisions") and re.search(r"Fußnote|Endnote|Kommentar|Änderung", key)) \
                 and any(re.search(p, key) for p in ALREADY):
             st = "ok"
+        if st == "noeffect" and any(re.search(p, key) for p in RECORDED_NOTHING):
+            st = "ok"
+        if st == "noeffect" and any(re.search(p, key) for p in FIELDS):
+            st = "field"
         if st == "undo" and any(re.search(p, key) for p in NO_UNDO_IN_WORD):
             st = "ok"
         if st == "noeffect" and any(re.search(p, key) for p in UNTESTED):
