@@ -3146,7 +3146,9 @@ through test APIs, not the controls. RaabeWrite now has a by-hand audit that goe
   options, 1345 passed, 57 failed, 9 untested, 94 greyed or deferred, 10 fields. Word opened all 254 files of A; 81 of
   88 options with a Word counterpart changed the same as Word's (the 7: section breaks, fixed and re-measured 18/18 on
   the Layout tab; Kein Leerraum's font; Spalte links/rechts einfügen keeps the table's width where Word keeps the
-  column widths). The 57 left in B are listed in the results' report (`sweep_write.py report --out write-sweep-b`):
+  column widths). Word opened 802 of B's 803 files (the one after Strg+N: fixed, D-134); of B's 11 comparisons 6 are
+  the same, Leere Seite differed (fixed afterwards) and four came from set-ups Word's side did not repeat (notes,
+  comment and changes added first; such rows are no longer compared). The 57 left in B are listed in the results' report (`sweep_write.py report --out write-sweep-b`):
   mostly shortcuts the sweep presses wrongly (Strg+Return, Strg+(, Alt+Strg+3 ...), Annehmen/Ablehnen when the
   selection holds no change, picture options that are already so (Mit Text in Zeile, Ausfüllen, Einpassen), the
   print page's own fields, and Kopieren in the context menus (the clipboard is not checked there).
