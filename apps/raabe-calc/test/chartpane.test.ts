@@ -81,6 +81,14 @@ describe("the chart Format pane", () => {
     expect(spec.title).toBe("Zeichnungsfläche formatieren");
   });
 
+  it("makes no undo step for a control that changes nothing", () => {
+    const m = chart("column");
+    const edits = { n: 0 };
+    const all = controls(formatPane(m, { kind: "plot" }, host(m, edits)));
+    (all.find((x) => x.where.endsWith("/Füllung") && label(x.c) === "Automatisch")!.c as Extract<PaneControl, { type: "radio" }>).pick();
+    expect(edits.n).toBe(0);
+  });
+
   it("keeps gradient stops in order when one is added", () => {
     const m = chart("column");
     m.format = { plot: { fill: { type: "gradient", gradient: { kind: "linear", angle: 90, stops: [{ pos: 0, color: "#FFFFFF" }, { pos: 100, color: "#000000" }] } } } };

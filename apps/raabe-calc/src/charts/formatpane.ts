@@ -202,7 +202,23 @@ function autoColor(m: ChartModel, e: ChartElement): string {
 }
 
 /** The Format pane of an element. */
-export function formatPane(m: ChartModel, e: ChartElement, host: PaneHost): PaneSpec {
+export function formatPane(m: ChartModel, e: ChartElement, outer: PaneHost): PaneSpec {
+  // A control that leaves the chart as it is (a spin button at its limit, the same entry picked again) makes
+  // no undo step: Strg+Z would otherwise seem to do nothing (found by the sweep, D-113).
+  const host: PaneHost = {
+    ...outer,
+    edit: (fn) => {
+      const { raw, ...rest } = m;
+      void raw;
+      const probe = structuredClone(rest) as ChartModel;
+      fn(probe);
+      tidyPoints(probe);
+      const { raw: _r, ...now } = probe as ChartModel & { raw?: unknown };
+      void _r;
+      if (JSON.stringify(now) === JSON.stringify(rest)) return;
+      outer.edit(fn);
+    },
+  };
   const target: FmtTarget = {
     key: JSON.stringify(e),
     get: () => slot(m, e, false),
