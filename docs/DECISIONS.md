@@ -3527,6 +3527,8 @@ margin then; fixed). The miss: Abstand zur Achse 500 with labels inside the plot
   greyed text box options (Ränder, Umbruch, Spalten). Bild- oder Texturfüllung takes a picture file
   (Einfügen ...) or the clipboard; X/Y-Skalierung and Ausrichtung of tiles are not offered.
 - Effects are drawn as SVG filters close to Excel's look; blur radii and bevel shading are approximations,
-  the file keeps Excel's exact values.
+  the file keeps Excel's exact values. A text outline's Verbundtyp is saved but drawn as a single line.
+- An axis' "Keine Füllung" and "Automatisch" write the same file (Excel's automatic axis fill is none), so the
+  pane shows Automatisch after reopening. A Bild- oder Texturfüllung without a chosen picture is not saved.
 - The Alternativtext section stays in Größe und Eigenschaften (Excel 365 moved it to a pane of its own).
 - The Einheiten fields keep Excel's accessible names "Hauptstriche" / "Teilstriche" as their labels.
