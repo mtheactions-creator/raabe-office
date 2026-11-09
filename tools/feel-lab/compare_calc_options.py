@@ -250,11 +250,11 @@ class Raabe:
             elif k == "btn":
                 r = {"ok": self.dialog_click(f"[...d.querySelectorAll('button')].find(b => b.textContent.trim() === {json.dumps(st[1])})")}
             elif k == "swatch":
-                r = {"ok": self.dialog_click(f"[...d.querySelectorAll('.fc-palette button, .fc-palette [role=button], .fc-palette > *')].filter(e => e.offsetParent)[{st[1]}]")}
+                r = {"ok": self.dialog_click(f"[...d.querySelectorAll('.fc-palette .swatch')].filter(e => e.offsetParent)[{st[1]}]")}
             elif k == "click":
                 r = {"ok": self.dialog_click(f"d.querySelector({json.dumps(st[1])})")}
             elif k == "popswatch":
-                el = self.p.js(f"""(() => {{ const b = [...document.querySelectorAll('.fc-pop .fc-palette > *')][{st[1]}]; if (!b) return null;
+                el = self.p.js(f"""(() => {{ const b = [...document.querySelectorAll('.fc-pop .swatch')][{st[1]}]; if (!b) return null;
                   const r = b.getBoundingClientRect(); return {{x: r.left + r.width / 2, y: r.top + r.height / 2}}; }})()""")
                 if el:
                     self.p.click(el["x"], el["y"])

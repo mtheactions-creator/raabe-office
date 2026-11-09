@@ -93,8 +93,15 @@ body.painting .grid-canvas { cursor: copy; }
 .fc-label { font-weight: 600; margin: 8px 0 4px; }
 .fc-color { width: 60px; height: 22px; border: 1px solid #c6c6c6; }
 .fc-presets { display: flex; gap: 8px; }
-.fc-palette { display: grid; grid-template-columns: repeat(10, 18px); gap: 2px; margin: 6px 0; }
-.fc-palette > * { width: 18px; height: 18px; }
+/* The colour grids of Zellen formatieren (Ausfüllen, Schrift > Farbe, Formatieren...) lay out their own rows (D-142). */
+.fc-palette { display: block; margin: 6px 0; }
+.fc-palette .swatches { display: grid; gap: 2px; margin-bottom: 4px; }
+.fc-palette .swatch { width: 18px; height: 18px; padding: 0; min-width: 0; min-height: 0; }
+/* A panel of another tab stays hidden (the Zahlen panel showed on every tab). */
+.fc [hidden] { display: none !important; }
+/* Lists, not drop-downs: the dialog's select height made them two lines tall. */
+.fc select.fc-cats { height: 220px !important; }
+.fc select.fc-codes { height: 150px !important; }
 .fc-fill-sample { width: 200px; height: 40px; border: 1px solid #c6c6c6; }
 .fc-pop { padding: 6px; background: #fff; border: 1px solid #c6c6c6; box-shadow: 0 2px 6px rgba(0,0,0,.18); }
 .find { min-width: 460px; }
