@@ -3915,3 +3915,48 @@ is ticked, so PowerPoint keeps it in its view state; we write `noChangeAspect="1
 changes Breite in proportion (5,29 cm to 8 cm made 21,17 cm to 32 cm, rows and columns scaled alike) and Breite
 changes Höhe; off again, Breite alone. RaabePresent's box was "Noch nicht verfügbar"; now as recorded, also for
 the frame's corner handles.
+
+**Folienmaster** (open since D-137: "Noch nicht verfügbar"), recorded through the ribbon in a PowerPoint of our own
+(probe_powerpoint_followup.py, part master):
+- Which commands are on where: with the master selected, Masterlayout... and Beibehalten are enabled, Platzhalter
+  einfügen, Titel and Fußzeilen greyed; with a layout selected the other way round. Folienmaster einfügen and Layout
+  einfügen always. RaabePresent now follows this (Beibehalten was enabled on layouts too).
+- **Masterlayout...**: Platzhalter with Titel, Text, Datum, Foliennummer, Fußzeile, ticked for those the master has.
+  PowerPoint put a removed Datum back at Office's place (838200, 6356350; 2743200 x 365125 EMU at 16:9), after the
+  master's other shapes, with the next id. Ours: the same, from our template's master (scaled to the slide size);
+  unticking removes the placeholder. One undo step.
+- **Platzhalter einfügen**: a split button; the menu has Inhalt, Text, Bild, Onlinegrafik, Diagramm, Tabelle, SmartArt,
+  Medien, Cameo (no vertical entries in this version). After a pick, a click on the layout puts a 914400 EMU (2,54 cm)
+  square with its top left corner at the point; a drag draws it. The XML as recorded: `<p:ph sz="quarter" idx="13"/>`
+  (Inhalt; type body, pic, clipArt, chart, tbl, dgm, media for the others; Cameo is a media placeholder with the p232
+  phTypeExt cameo extension), Inhalt and Text with the master's five levels as text, the others an empty paragraph;
+  idx the next after the layout's highest (13 after the footers). Names as German PowerPoint writes them
+  (Inhaltsplatzhalter 5, Onlinebild-Platzhalter 11 ...). The button's main part repeats the last pick (Inhalt first).
+- **Folienmaster einfügen**: a second master after the others, "Benutzerdefiniertes Design", kept (preserve), with the
+  eleven layouts of a new presentation and the Office design (the current design was Office in the recording, so
+  whether PowerPoint copies the current design's colours was not seen; ours takes the Office design). The Folienmaster
+  view now lists every master with its layouts (it showed only the first); Layout einfügen, Löschen and Beibehalten
+  act on the selected entry's master, and Löschen removes a master none of whose layouts a slide uses when there is
+  another one.
+Not done: Umbenennen on the master (PowerPoint enables it; ours renames layouts only).
+
+## D-154 RaabePresent: the SmartArt Format tab (2026-11-09)
+
+Open since D-137: RaabePresent had no Format tab for a SmartArt. Recorded in PowerPoint (probe_powerpoint_followup.py,
+part smartart: the tab walked as the inventory walks one; the full inventory had skipped it because the chart's tab of
+the same name had been walked): Formen (In 2D bearbeiten, Form ändern, Größer, Kleiner), Formenarten
+(Schnellformatvorlagen, Fülleffekt, Formkontur, Formeffekte, launcher), WordArt-Formate (gallery, Textfüllung,
+Textkontur, Texteffekte, launcher), Barrierefreiheit (Alternativtext), Anordnen, Größe; keytip JO. With the whole
+SmartArt selected Formen and the shape styles are greyed (with one of its shapes selected they are enabled). What the
+colour commands do then (probe_powerpoint_smartart_format.py, through COM on the selection's ShapeRange): Fülleffekt
+writes the graphic's background, `<dgm:bg><a:solidFill>...</a:solidFill></dgm:bg>` in the data model; a fill on one
+shape writes that point's dgm:spPr and the drawing's shape. RaabePresent now has the tab with these groups and keys;
+Fülleffekt and Formkontur on the whole SmartArt write dgm:bg and dgm:whole/a:ln (one undo step, with the data part),
+and the renderer draws that background and outline under the shapes. Formen and the shape styles stay greyed: our
+SmartArt is selected as a whole only (selecting one of its shapes is not built).
+
+Checked by hand in the release exe (check_present_followup.py: trusted CDP clicks on the controls, typing, Enter, and
+Strg+Z afterwards): Dauer typed and its arrow, Seitenverhältnis sperren with Höhe typed, Masterlayout... (Datum off and
+on again), every entry of Platzhalter einfügen (placeholder type and size against PowerPoint's XML; Inhalt drawn),
+Folienmaster einfügen, and the SmartArt Format tab (groups, greyed controls, Fülleffekt > Rot): 7/7
+(results/2026-11-09-present-followup-check.json). D-152 to D-154 share this check.

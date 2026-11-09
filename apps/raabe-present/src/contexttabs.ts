@@ -21,6 +21,11 @@ export const CONTEXT_COMMANDS: Command[] = [
   cmd("shape.heightBox", "Formenhöhe", "shape-height"),
   cmd("shape.widthBox", "Formenbreite", "shape-width"),
   cmd("shape.sizeDialog", "Größe und Position...", "launcher"),
+  cmd("smartart.edit2d", "In 2D bearbeiten", "edit-shape"),
+  cmd("smartart.changeShape", "Form ändern", "edit-shape"),
+  cmd("smartart.larger", "Größer", "font-grow"),
+  cmd("smartart.smaller", "Kleiner", "font-shrink"),
+  cmd("smartart.shapeStyles", "Schnellformatvorlagen", "styles"),
   cmd("pic.edit", "Bild bearbeiten", "edit"),
   cmd("pic.removeBg", "Hintergrund entfernen", "remove-background"),
   cmd("pic.corrections", "Korrekturen", "corrections"),
@@ -150,6 +155,27 @@ export function shapeFormatTab(h: ContextTabHost): Tab {
       { id: "access", label: "Barrierefreiheit", key: "ZB", icon: "alt-text", controls: [b("shape.altTextPane", "AT", "large")] },
       { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: arrange(false) },
       { id: "size", label: "Größe", key: "ZG", icon: "size-position", launcher: { cmd: "shape.sizeDialog", key: "ß" }, controls: [stack(h.sizeSpin("h"), h.sizeSpin("w"))] },
+    ],
+  };
+}
+
+/**
+ * SmartArt's Format tab (SmartArt-Tools), recorded in PowerPoint (probe_powerpoint_followup.py, D-154): Formen (In 2D
+ * bearbeiten, Form ändern, Größer, Kleiner), Formenarten, WordArt-Formate, Barrierefreiheit, Anordnen, Größe. With the
+ * whole SmartArt selected PowerPoint greys Formen and the shape styles; Fülleffekt and Formkontur colour the graphic's
+ * background and outline.
+ */
+export function smartArtFormatTab(h: ContextTabHost): Tab {
+  return {
+    id: "smartartFormat", label: "Format", key: "JO", contextual: true, shrink: [],
+    groups: [
+      { id: "shapes", label: "Formen", key: "ZM", icon: "shapes", controls: [b("smartart.edit2d", "A1", "large"), stack(dd("smartart.changeShape", "Ä", "small", []), b("smartart.larger", "Ö"), b("smartart.smaller", "L"))] },
+      { id: "styles", label: "Formenarten", key: "ZF", icon: "shape-fill", launcher: { cmd: "draw.format", key: "BB" }, controls: [{ type: "dropdown", cmd: "smartart.shapeStyles", key: "NC", size: "large", menu: [] },
+        stack(h.color(() => h.fillColor(), (c) => h.setFill(c), "draw.fill", "Ü", true, () => h.fillExtra()), h.color(() => h.lineColor(), (c) => h.setLine(c), "draw.outline", "V", true, () => h.outlineExtra()), dd("draw.effects", "MO", "medium", () => h.effects()))] },
+      { id: "wordart", label: "WordArt-Formate", key: "ZW", icon: "wordart", launcher: { cmd: "wordart.dialog", key: "O" }, controls: wordArt(h) },
+      { id: "access", label: "Barrierefreiheit", key: "ZB", icon: "alt-text", controls: [b("shape.altTextPane", "AT", "large")] },
+      { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: arrange(false) },
+      { id: "size", label: "Größe", key: "ZZ", icon: "size-position", launcher: { cmd: "shape.sizeDialog", key: "ß" }, controls: [stack(h.sizeSpin("h"), h.sizeSpin("w"))] },
     ],
   };
 }

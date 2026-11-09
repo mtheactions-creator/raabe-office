@@ -28,7 +28,9 @@ export type Tool = { kind: "shape"; prst: string; head?: boolean; tail?: boolean
   /** Drawing by points (Benutzerdefinierter Pfad): the points in EMU go to `done`. */
   | { kind: "points"; mode: "curve" | "polygon" | "scribble"; done: (pts: { x: number; y: number }[], closed: boolean) => void }
   /** Pipette: the next click's point (EMU) goes to `done`. */
-  | { kind: "pick"; done: (pt: { x: number; y: number }) => void } | null;
+  | { kind: "pick"; done: (pt: { x: number; y: number }) => void }
+  /** Drawn like a shape (a click: 914400 EMU square at the point), made by `make` (Platzhalter einfügen, D-153). */
+  | { kind: "box"; label: string; make: (doc: Document, id: number, b: { x: number; y: number; w: number; h: number }) => Element } | null;
 
 export interface EditorHost {
   readonly deck: Deck;
@@ -1495,11 +1497,12 @@ export class SlideEditor {
       // A click: PowerPoint's default size (2,54 cm square for shapes; a growing text box).
       if (!dragged) b = { x: start.x, y: start.y, w: 914400, h: tool.kind === "textbox" ? 369332 : 914400, rot: 0, flipH: false, flipV: false };
       let id = 0;
-      this.edit(tool.kind === "textbox" ? "Textfeld" : "Form einfügen", () => {
+      this.edit(tool.kind === "textbox" ? "Textfeld" : tool.kind === "box" ? tool.label : "Form einfügen", () => {
         const tree = S.treeOf(this.doc!);
         id = S.maxId(tree) + 1;
         const el = tool.kind === "textbox"
           ? S.newTextBox(this.doc!, id, b.x, b.y, dragged ? b.w : null, 369332)
+          : tool.kind === "box" ? tool.make(this.doc!, id, b)
           : S.newShape(this.doc!, id, tool.prst, { ...b, rot: 0 });
         if (tool.kind === "shape" && (tool.head || tool.tail)) {
           const sp = PptxDom.kid(el, "spPr")!;

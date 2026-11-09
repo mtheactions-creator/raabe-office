@@ -1,0 +1,230 @@
+{
+ "date": "2026-11-09",
+ "passed": 7,
+ "total": 7,
+ "cases": [
+  {
+   "name": "Übergänge > Dauer ohne Übergang: 3 getippt",
+   "ok": true,
+   "got": {
+    "shown_before": "02,00",
+    "shown_after": "03,00",
+    "transition": [
+     "<p:transition spd=\"slow\" p14:dur=\"3000\"/>",
+     "<p:transition spd=\"slow\"/>"
+    ],
+    "undone": true,
+    "powerpoint": "<mc:AlternateContent xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><mc:Choice xmlns:p14=\"http://schemas.microsoft.com/office/powerpoint/2010/main\" Requires=\"p14\"><p:transition spd=\"slow\" p14:dur=\"3000\"/></mc:Choice><mc:Fallback><p:transition spd=\"slow\"/></mc:Fallback></mc:AlternateContent>"
+   },
+   "errs": []
+  },
+  {
+   "name": "Übergänge > Dauer ohne Übergang: Pfeil nach oben",
+   "ok": true,
+   "got": {
+    "shown": "02,25",
+    "powerpoint": "02,25"
+   },
+   "errs": []
+  },
+  {
+   "name": "Tabellenlayout > Seitenverhältnis sperren, Höhe 8 cm",
+   "ok": true,
+   "got": {
+    "before": {
+     "w": 7620000,
+     "h": 741680
+    },
+    "after": {
+     "w": 29589042,
+     "h": 2880000
+    },
+    "ratio": 10.274,
+    "powerpoint_ratio": 4.0
+   },
+   "errs": []
+  },
+  {
+   "name": "Folienmaster > Masterlayout... (Datum aus, wieder ein)",
+   "ok": true,
+   "got": {
+    "enabled": {
+     "Masterlayout...": true,
+     "Platzhalter einfügen": false
+    },
+    "powerpoint": {
+     "Masterlayout...": true,
+     "Platzhalter einfügen": false
+    },
+    "boxes": [
+     "Titel",
+     "Text",
+     "Datum",
+     "Foliennummer",
+     "Fußzeile"
+    ],
+    "removed": true,
+    "unchecked_after": true,
+    "restored_at_office_place": true
+   },
+   "errs": []
+  },
+  {
+   "name": "Folienmaster > Platzhalter einfügen: jeder Eintrag",
+   "ok": true,
+   "got": {
+    "menu": [
+     "Inhalt",
+     "Text",
+     "Bild",
+     "Onlinegrafik",
+     "Diagramm",
+     "Tabelle",
+     "SmartArt",
+     "Medien",
+     "Cameo"
+    ],
+    "powerpoint_menu": [
+     "Inhalt",
+     "Text",
+     "Bild",
+     "Onlinegrafik",
+     "Diagramm",
+     "Tabelle",
+     "SmartArt",
+     "Medien",
+     "Cameo"
+    ],
+    "picks": {
+     "Inhalt": {
+      "ph": "sz=\"quarter\" idx=\"13\"/",
+      "powerpoint": "sz=\"quarter\" idx=\"13\"/",
+      "size": [
+       "2533650",
+       "1905000"
+      ],
+      "ok": true
+     },
+     "Text": {
+      "ph": "type=\"body\" sz=\"quarter\" idx=\"13\"/",
+      "powerpoint": "type=\"body\" sz=\"quarter\" idx=\"13\"/",
+      "size": [
+       "914400",
+       "914400"
+      ],
+      "ok": true
+     },
+     "Bild": {
+      "ph": "type=\"pic\" sz=\"quarter\" idx=\"13\"/",
+      "powerpoint": "type=\"pic\" sz=\"quarter\" idx=\"13\"/",
+      "size": [
+       "914400",
+       "914400"
+      ],
+      "ok": true
+     },
+     "Onlinegrafik": {
+      "ph": "type=\"clipArt\" sz=\"quarter\" idx=\"13\"/",
+      "powerpoint": "type=\"clipArt\" sz=\"quarter\" idx=\"13\"/",
+      "size": [
+       "914400",
+       "914400"
+      ],
+      "ok": true
+     },
+     "Diagramm": {
+      "ph": "type=\"chart\" sz=\"quarter\" idx=\"13\"/",
+      "powerpoint": "type=\"chart\" sz=\"quarter\" idx=\"13\"/",
+      "size": [
+       "914400",
+       "914400"
+      ],
+      "ok": true
+     },
+     "Tabelle": {
+      "ph": "type=\"tbl\" sz=\"quarter\" idx=\"13\"/",
+      "powerpoint": "type=\"tbl\" sz=\"quarter\" idx=\"13\"/",
+      "size": [
+       "914400",
+       "914400"
+      ],
+      "ok": true
+     },
+     "SmartArt": {
+      "ph": "type=\"dgm\" sz=\"quarter\" idx=\"13\"/",
+      "powerpoint": "type=\"dgm\" sz=\"quarter\" idx=\"13\"/",
+      "size": [
+       "914400",
+       "914400"
+      ],
+      "ok": true
+     },
+     "Medien": {
+      "ph": "type=\"media\" sz=\"quarter\" idx=\"13\"/",
+      "powerpoint": "type=\"media\" sz=\"quarter\" idx=\"13\"/",
+      "size": [
+       "914400",
+       "914400"
+      ],
+      "ok": true
+     },
+     "Cameo": {
+      "ph": "type=\"media\" sz=\"quarter\" idx=\"13\"",
+      "powerpoint": "type=\"media\" sz=\"quarter\" idx=\"13\"",
+      "size": [
+       "914400",
+       "914400"
+      ],
+      "ok": true
+     }
+    }
+   },
+   "errs": []
+  },
+  {
+   "name": "Folienmaster > Folienmaster einfügen",
+   "ok": true,
+   "got": {
+    "masters": 2,
+    "layouts": 11,
+    "theme": "Benutzerdefiniertes Design",
+    "preserve": "1",
+    "thumbs": 24,
+    "masterThumbs": 2,
+    "undone_to": 1,
+    "powerpoint": {
+     "designs": 2,
+     "layouts": 11,
+     "name": "Benutzerdefiniertes Design"
+    }
+   },
+   "errs": []
+  },
+  {
+   "name": "SmartArt > Format: Gruppen, grau, Fülleffekt > Rot",
+   "ok": true,
+   "got": {
+    "groups": [
+     "Formen",
+     "Formenarten",
+     "WordArt-Formate",
+     "Barrierefreiheit",
+     "Anordnen",
+     "Größe"
+    ],
+    "greyed": {
+     "In 2D bearbeiten": true,
+     "Form ändern": true,
+     "Größer": true,
+     "Kleiner": true,
+     "Schnellformatvorlagen": true
+    },
+    "bg": [
+     "<dgm:bg><a:solidFill><a:srgbClr val=\"FF0000\"/></a:solidFill></dgm:bg>"
+    ],
+    "drawn": true
+   },
+   "errs": []
+  }
+ ]
+}

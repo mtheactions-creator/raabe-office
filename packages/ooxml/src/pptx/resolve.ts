@@ -149,6 +149,9 @@ export interface ShapeView {
   /** Folienzoom (frame "zoom"): the target slide's sldId and whether the show returns afterwards. */
   zoom?: { sldId: number; back: boolean; section?: string; tiles?: { section: string; path?: string; x: number; y: number; w: number; h: number }[] };
   children?: ShapeView[];
+  /** SmartArt: the whole graphic's background (dgm:bg) and outline (dgm:whole/a:ln), Format > Fülleffekt/Formkontur. */
+  diagramBg?: Fill;
+  diagramLine?: { color: string; width: number };
   /** Whether the shape is a text box (txBox="1"). */
   textBox: boolean;
   /** The layout or master element it inherits from (placeholders). */
@@ -744,6 +747,13 @@ export class SlideResolver {
         const drawing = ext ? this.pptx.target(this.path, ext.getAttribute("relId") ?? "") : undefined;
         const tree = drawing && this.pptx.has(drawing) ? kids(this.pptx.doc(drawing).documentElement).find((k) => k.localName === "spTree") : undefined;
         if (tree) v.children = this.shapes(tree, new GroupMap(x, y, w, h, 0, 0, w, h, rot));
+        const root = dm && this.pptx.has(dm) ? this.pptx.doc(dm).documentElement : undefined;
+        const bgF = kids(kids(root).find((k) => k.localName === "bg")).find((c) => FILL.includes(c.localName));
+        if (bgF) v.diagramBg = readFillLocal(bgF, this.theme);
+        const ln = kid(kids(root).find((k) => k.localName === "whole"), "ln");
+        const lnF = ln ? kid(ln, "solidFill") : undefined;
+        const lc = lnF ? readColor(lnF, this.theme.colors) : undefined;
+        if (lc) v.diagramLine = { color: lc.hex, width: (num(ln, "w") ?? 9525) / 12700 };
       }
       if (v.frame === "chart") {
         const ch = kids(gd).find((k) => k.localName === "chart");

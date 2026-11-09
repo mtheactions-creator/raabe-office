@@ -482,6 +482,9 @@ export function implementContext(app: PresentApp): void {
   impl("chart.elements", () => {}, () => app.editor.selectedViews.some((v) => v.frame === "chart"));
   // Form ändern on a chart's Format tab: greyed, as PowerPoint has it with the whole chart selected.
   impl("shape.changeShapeChart", () => {}, () => false);
+  // SmartArt > Format > Formen and the shape styles: greyed with the whole SmartArt selected, as in PowerPoint (D-154;
+  // they act on one shape of the graphic, which RaabePresent does not select on its own).
+  for (const id of ["smartart.edit2d", "smartart.changeShape", "smartart.larger", "smartart.smaller", "smartart.shapeStyles"]) impl(id, () => {}, () => false);
   impl("table.penWeight", () => {}, table);
   impl("table.penColor", () => {}, table);
   for (const id of ["table.rowHeight", "table.colWidth", "table.height", "table.width"]) impl(id, () => {}, table);
