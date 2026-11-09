@@ -963,8 +963,16 @@ function plainChartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellAnc
     const noLineByDefault = gk === "scatter" || fam === "area" || fam === "bar" || fam === "bubble" || fam === "surface" || fam === "stock" || gk === "radarFilled";
     // A line in the series' colour at the kind's own width is the automatic one (the colour is kept as `color`).
     const autoWidth = fam === "line" || fam === "radar" ? 2.25 : 1.5;
-    const plain = shape.line?.type === "solid" && !shape.line.dash && !shape.line.transparency && (shape.line.width ?? autoWidth) === autoWidth && shape.line.color === (color ?? shape.line.color);
-    if (shape.line && !plain && (shape.line.width !== undefined || shape.line.dash || shape.line.type === "none") && !(noLineByDefault && shape.line.type === "none")) out.line = shape.line;
+    const sl = shape.line;
+    // Line series draw with round caps by default (Excel writes cap="rnd").
+    const roundByDefault = ["line", "scatter", "radar", "stock"].includes(fam);
+    const details = !!sl && (!!sl.compound || (!!sl.cap && !(roundByDefault && sl.cap === "rnd")) || !!sl.join || !!sl.head || !!sl.tail || sl.type === "gradient");
+    const plain = sl?.type === "solid" && !sl.dash && !sl.transparency && !details && (sl.width ?? autoWidth) === autoWidth && sl.color === (color ?? sl.color);
+    if (sl && !plain && (sl.width !== undefined || sl.dash || details || sl.type === "none") && !(noLineByDefault && sl.type === "none")) {
+      out.line = sl;
+      // A line series' colour is its line's (D-111): kept once, in the line.
+      if (["line", "scatter", "radar"].includes(fam) && sl.type === "solid" && sl.color === out.color) delete out.color;
+    }
     const mkEl = find(xml, s, "c:marker");
     if (mkEl) {
       const sym = val(xml, find(xml, mkEl, "c:symbol")) as MarkerSymbol | undefined, size = val(xml, find(xml, mkEl, "c:size"));
@@ -972,7 +980,9 @@ function plainChartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellAnc
       const msh = readShape(rd, find(xml, mkEl, "c:spPr"));
       const mf = msh.fill && !(msh.fill.type === "solid" && msh.fill.color === color && !msh.fill.transparency) ? msh.fill : undefined;
       const ml = msh.line && !(msh.line.type === "solid" && msh.line.color === color && !msh.line.transparency && (msh.line.width ?? 0.75) === 0.75 && !msh.line.dash) ? msh.line : undefined;
-      if ((sym && sym !== autoSym) || (size && size !== "5") || mf || ml) out.marker = { ...(sym ? { symbol: sym } : {}), ...(size ? { size: Number(size) } : {}), ...(mf ? { fill: mf } : {}), ...(ml ? { line: ml } : {}) };
+      // Only what differs from the type's own marker (circle, 5 pt) is the series' own.
+      const ownSym = sym && sym !== autoSym ? sym : undefined, ownSize = size && size !== "5" ? Number(size) : undefined;
+      if (ownSym || ownSize !== undefined || mf || ml) out.marker = { ...(ownSym ? { symbol: ownSym } : {}), ...(ownSize !== undefined ? { size: ownSize } : {}), ...(mf ? { fill: mf } : {}), ...(ml ? { line: ml } : {}) };
     }
     if (val(xml, find(xml, s, "c:smooth")) === "1" && kindInfo(gk).lines !== "smooth") out.smooth = true;
     if (gk !== kind) out.kind = gk;
