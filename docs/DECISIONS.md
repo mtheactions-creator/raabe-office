@@ -3168,7 +3168,10 @@ app, and pinned by apps/raabe-calc/test/audit.test.ts or a compare case:
   switch for the app, lost on saving).
 - **Zellen formatieren > Zahlen:** Dezimalstellen and 1.000er-Trennzeichen verwenden (.) for the number categories,
   and a format like 0,000 is shown as Zahl with three decimals. **Rahmen:** Außen drew no lines (it ticked the
-  boxes but kept the old sides), and a line style picked after the sides now applies to them.
+  boxes but kept the old sides), and a line style picked after the sides now applies to them. **Layout:** the Zahlen
+  panel showed under every other tab, the colour grids of Ausfüllen and Schrift > Farbe were squeezed so that labels
+  covered colours (a click on them did nothing; found when the comparison's click on a fill colour left no fill),
+  and the category and type lists were two lines tall.
 - **Regeln in ausgewählten Zellen löschen** removed whole rules that only touched the selection; now it takes the
   selected cells out of each rule's range (moving its formulas with the new top-left cell), and makes no undo step
   when there is nothing to delete.
