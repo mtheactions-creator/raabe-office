@@ -915,6 +915,8 @@ ALREADY = [
     r"> Katalogfilter$",
     # The only shape on the page: nothing to move behind (Word neither).
     r"Formformat > Anordnen / Ebene nach hinten \[split-main\]$",
+    # Drucklayout is the view already; Datei opens on Startseite.
+    r"^Statusleiste > Drucklayout #\d+$", r"^Datei > Startseite$",
     # The target starts mid-sentence and has no capitals inside: Word's Satzanfang groß changes nothing (recorded).
     r"Groß-/Kleinschreibung \[dropdown\] > Ersten Buchstaben im Satz großschreiben\.$", r"Ansichten / Drucklayout \[button\]$", r"Zoom / 100% \[button\]$",
 ]
@@ -928,6 +930,12 @@ UNTESTED = [
     r"(Freihandform: Form|Kurve|Freihand: Skizze)( \[gallery-item\])?$",
     # Rahmenpipette waits for a click on a border; the sweep's click does not land on the table's border line.
     r"> Rahmenpipette$",
+    # The mini toolbar's Format übertragen arms the painter; it acts on the next selection, which the sweep does not make.
+    r"^Kontextmenü > \w+ > Format übertragen$",
+    # Zuschneiden switches the picture into cropping; the sweep sees no change it can tell from the page (not verified).
+    r"Zuschneiden( \[split-main\])?$",
+    # A click in the middle of the zoom slider leaves the zoom (the slider is dragged in the real-input pass).
+    r"^Statusleiste > Zoom #\d+$",
 ]
 FAIL = {"error", "undo", "crash", "esc", "docchange-on-open", "noeffect"}
 
