@@ -3162,6 +3162,10 @@ through test APIs, not the controls. RaabeWrite now has a by-hand audit that goe
 - **Dialogs move with their title bar**, as Office's do (`installDialogDrag`, shell); they could not be moved.
 - **Texteffekte > Ligaturen > Keine** removed the run's own setting, so the style's ligatures (Word's Normal has
   "Standard und kontextbezogen") stayed: no effect. It now writes `w14:ligatures w14:val="none"`, as Word does.
+- **A new document Word could not open:** Word opened 802 of the 803 files the sweep saved; the one after Strg+N was
+  "possibly damaged": the new document's styles.xml had the ligatures of its defaults (`w14:ligatures`) without
+  declaring the w14 namespace (documents read from a file keep their own styles part, new ones are written from
+  scratch). styles.xml now always declares w14 (packages/ooxml, test styles-ns.test.ts).
 - **Formen > Neuer Zeichenbereich** was a button without a command (nothing happened); Word's drawing canvas is not
   built, so it is greyed with a tooltip saying so.
 - The audit's own errors (popups closed by the reopen, panes left open, labels with check marks, long panels not
