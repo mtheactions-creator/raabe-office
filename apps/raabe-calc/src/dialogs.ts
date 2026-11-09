@@ -1018,7 +1018,7 @@ export function dialogs(app: CalcApp) {
   function conditionalBarMenu(): MenuEntry[] {
     // Excel's names (recorded in the inventory, D-143); the gradient bars (Farbverlauf). Einfarbige Füllung needs
     // Excel 2010's extension of the rule and is left for later.
-    const bars: [string, string][] = [["Blauer Datenbalken", "#638EC6"], ["Grüner Datenbalken", "#63BE7B"], ["Roter Datenbalken", "#FF555A"], ["Orangefarbener Datenbalken", "#FFB628"], ["Hellblauer Datenbalken", "#008AEF"], ["Lilafarbener Datenbalken", "#D6007B"]];
+    const bars: [string, string][] = [["Blauer Datenbalken", "#638EC6"], ["Grüner Datenbalken", "#63C384"], ["Roter Datenbalken", "#FF555A"], ["Orangefarbener Datenbalken", "#FFB628"], ["Hellblauer Datenbalken", "#008AEF"], ["Lilafarbener Datenbalken", "#D6007B"]];
     return [{ heading: "Farbverlauf" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c] }) })), "-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) }];
   }
 

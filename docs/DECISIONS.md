@@ -3203,10 +3203,9 @@ The galleries carry Excel's names: Blauer ... Lilafarbener Datenbalken under Far
 Füllung need Excel 2010's extension of the rule and are left for later), and all twelve colour scales,
 Grün-Gelb-Rot-Farbskala to Gelb-Grün-Farbskala (six were missing). The scales' colours were reversed: a name lists
 the colours from the highest value down, so Grün-Gelb-Rot gives the lowest value red and the highest green; the rule
-keeps them from the lowest up. probe_excel_cf_galleries.py was written to read every gallery entry's colours from
-Excel with real clicks; it could not finish tonight (the foreground was taken by other runs twice), so the colours
-follow Excel's known defaults (F8696B, FFEB84, 63BE7B, 5A8AC6, FCFCFF, FFEF9C) and the same order as RaabeCalc's
-Schnellanalyse already used; the probe is there for the owner's next free evening.
+keeps them from the lowest up. Recorded with probe_excel_cf_galleries.py (real clicks on every gallery entry in an
+Excel of our own, the rule read back through COM; results/2026-11-09-excel-cf-galleries.json): all twelve scales
+give exactly RaabeCalc's colours and order; of the six bars, Grüner Datenbalken is #63C384 (it was #63BE7B), fixed.
 
 ## D-144 RaabeCalc: Datei > Drucken with Excel's settings, and the real-input pass (2026-11-09)
 
