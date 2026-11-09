@@ -4064,3 +4064,32 @@ TopAndBottom/None, behindDoc, positionH/V with the offsets) around the chart's g
 its embedded workbook; floating charts in Word's files are read with their chart (before, they showed as a picture
 only). Unit tests: `docx-chart-float.test.ts` (each wrapping written and read back at the same place; Word's seven
 charts keep their workbooks).
+
+## D-132 The chart UI by hand in RaabeWrite and RaabePresent, and what it found (2026-11-09)
+
+- **RaabeWrite** (`check_write_chartui.py`, release exe off screen, trusted DevTools input, no real input; the saved
+  files opened in our own invisible Word): 79 of 79 on the build of the merged branch. By hand: Einfügen > Diagramm
+  through both dialogs; both tabs' groups in Word's order and the controls' keytips as recorded (D-129); six
+  Diagrammelement hinzufügen entries, Schnelllayout 1-11 (Livevorschau, Layout 5), Farben ändern (17 palettes), a
+  ribbon style and Strg+Z; the four buttons beside the chart, Diagrammelemente's check boxes, a style tile
+  (Livevorschau on hover only), Diagrammfilter (lists with "(Alle auswählen)", Anwenden); a click on the chart and on
+  its title (Aktuelle Auswahl), Auswahl formatieren, a double-click on the legend, Keine Füllung in the pane, Formenhöhe
+  7 cm, Diagrammtyp ändern... > Linie; Layoutoptionen with each of the six wrappings, dragging the floating chart,
+  Position auf der Seite fixieren, Mit Text in Zeile and Strg+Z; Daten bearbeiten. Word read 13 saved documents with
+  the same chart state (HasTitle, HasLegend, Legend.Position, HasDataTable, data labels, axis titles, gridlines,
+  ChartType, FullSeriesCollection(i).IsFiltered, Height; for floating charts WrapFormat.Type, RelativeHorizontal/
+  VerticalPosition and Left/Top within 1 pt, Width/Height), and Word's PDF of each against RaabeWrite's PDF: mean grey
+  difference of page 1 between 0.47 and 1.73 of 255 (whole pages, mostly white). Word's object model reports a chart
+  area's noFill as "mixed"; that case is read from the file Word saves again instead.
+- **Found and fixed:** Word refused a document with a filtered series (Diagrammfilter): the embedded workbook's
+  c:externalData was inserted inside c:chart, before the chart's own c15 extension (pre-existing, D-091; now after
+  `</c:chart>`, unit test). A click on a selected inline picture or chart put the caret there (it went into the
+  selected-text drag); it now keeps the object selected, as Word. Daten bearbeiten refused floating charts.
+- **RaabePresent** (coordinator's request after the audit D-137, which found that a chart's Objekt formatieren opened
+  the shape pane, whose controls did nothing to the chart, and that the chart Format tab's WordArt-Formate entries did
+  nothing): a selected chart now gets the same chart Format pane (Objekt formatieren..., Aktuelle Auswahl's entries,
+  the context menu's Diagrammbereich formatieren...), WordArt-Formate > Textfüllung colours the chart's text (title,
+  legend, axes, labels, as PowerPoint), and the three chart buttons stand beside it (`apps/raabe-present/src/chartui.ts`).
+  Not yet on slides: the flyouts' Livevorschau and highlighting, Namen in Diagrammfilter, resizing from the pane.
+  `check_present_chartui.py` (release exe, trusted DevTools input): 11 of 11.
+- **RaabeCalc unchanged:** `check_calc_chartui.py` 126 of 126 on the build with the modules moved into the package.
