@@ -7,6 +7,7 @@
 import { isBar, isPie, isScatter, kindInfo, seriesColor, seriesName, type ChartModel, type DataPoint, type Effects, type ElementFormat, type Fill, type Line } from "@raabe/charts";
 import type { PaneSection, PaneSpec, PaneTab } from "@raabe/shell";
 import { effectSections, fillSection, lineSection, type FmtTarget } from "./panefill";
+import type { SelectDataHost } from "./selectdata";
 import { axisSections, errorSections, labelSections, pointSections, seriesSections, trendSections } from "./paneoptions";
 import { boxControls, sizeSections, textSections } from "./panetext";
 
@@ -142,6 +143,8 @@ export interface PaneHost {
   /** The chart's size in cm and setting it (Größe und Eigenschaften). */
   size: () => { w: number; h: number };
   resize: (w: number, h: number) => void;
+  /** Range fields in the sheet (Benutzerdefiniert error amounts' Wert angeben, D-155). */
+  data?: SelectDataHost;
 }
 
 type Fmt = { fill?: Fill; line?: Line; effects?: Effects } & Partial<ElementFormat>;
@@ -249,8 +252,9 @@ export function formatPane(m: ChartModel, e: ChartElement, outer: PaneHost): Pan
   const isLine = ["valAxis", "catAxis", "valAxis2", "majorGrid", "minorGrid", "catGrid", "trend", "errorBars"].includes(e.kind) || ((e.kind === "series" || e.kind === "point") && lineKind);
   const auto = autoColor(m, e);
   const tabs: PaneTab[] = [{ id: "fill", label: "Füllung und Linie", icon: "pane-fill-line", sections: () => fillAndLine(m, e, host, target, isLine, lineKind, auto) }];
-  // Effekte: Schatten, Leuchten and Weiche Kanten everywhere; 3D-Format on areas (not the legend, gridlines, axes, trendlines, error bars).
-  const format3d = !isLine && e.kind !== "legend";
+  // Effekte: Schatten, Leuchten and Weiche Kanten everywhere; 3D-Format on areas and axes (Excel's axis pane has it,
+  // D-155), not on the legend, gridlines, trendlines or error bars.
+  const format3d = (!isLine || ["valAxis", "catAxis", "valAxis2"].includes(e.kind)) && e.kind !== "legend";
   tabs.push({ id: "effects", label: "Effekte", icon: "pane-effects", sections: () => effectSections(target, { autoColor: auto, format3d }) });
   if (e.kind === "chart") tabs.push({ id: "size", label: "Größe und Eigenschaften", icon: "size-position", sections: () => sizeSections(m, host) });
   // Titles, axes and labels: Größe und Eigenschaften holds the text's Ausrichtung.

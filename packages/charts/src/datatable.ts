@@ -2,7 +2,7 @@
 // legend key when "Mit Legendensymbolen") and a column per category; the category names head the columns in place
 // of the axis labels, as Excel draws it. The plot gives up the table's height; the row names stand left of it.
 
-import { LOOK, seriesColor, type ChartModel } from "./model";
+import { LOOK, isBar, seriesColor, type ChartModel } from "./model";
 import type { Area, Box, Ctx, Scene } from "./render";
 
 const ROW = 13.5;
@@ -17,14 +17,18 @@ export function withDataTable(c: Ctx, area: Area, draw: (c: Ctx, area: Area) => 
   const size = LOOK.labelSize;
   const nameW = Math.max(0, ...m.series.map((_, i) => c.measure(helpers.seriesName(i), size))) + (keys ? 12 : 0) + 8;
   const tableH = ROW * (rows + 1);
-  // The category labels are the table's head: the axis draws none.
-  const inner: ChartModel = { ...m, format: { ...(m.format ?? {}), catAxis: { ...(m.format?.catAxis ?? {}), labelPos: "none" } } };
+  // Columns and lines: the category labels are the table's head, the axis draws none. Horizontal bars (D-155) keep
+  // their category axis at the side; the table stands under the value labels with the categories as its columns, as
+  // Excel's PDF export of a bar chart shows it (head 18 pt below the value labels' baseline).
+  const bar = isBar(m.kind);
+  const BAR_GAP = 20;
+  const inner: ChartModel = bar ? m : { ...m, format: { ...(m.format ?? {}), catAxis: { ...(m.format?.catAxis ?? {}), labelPos: "none" } } };
   const sub: Ctx = { ...c, m: inner };
-  const a: Area = { ...area, bottom: area.bottom - tableH + 4, left: Math.max(area.left, area.left + nameW - 22) };
+  const a: Area = { ...area, bottom: area.bottom - tableH + 4 - (bar ? BAR_GAP : 0), left: Math.max(area.left, area.left + nameW - 22) };
   const scene = draw(sub, a);
   c.prims = sub.prims;
   const plot: Box = scene.plot;
-  const top = plot.y + plot.h;
+  const top = plot.y + plot.h + (bar ? BAR_GAP : 0);
   const left = plot.x - nameW;
   const colW = n ? plot.w / n : plot.w;
   const line = { stroke: LOOK.gridline, sw: 0.75 };

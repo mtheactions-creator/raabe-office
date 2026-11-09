@@ -111,6 +111,7 @@ export function refField(_host: SelectDataHost, value: string, label: string, op
     if (d.classList.contains("rf-collapsed")) {
       for (const l of others) l.style.visibility = "";
       d.classList.remove("rf-collapsed");
+      Object.assign(d.style, { position: "", left: "", top: "", margin: "" });
       if (home) home.parent.insertBefore(box, home.next);
       home = null;
       btn.innerHTML = COLLAPSE;
@@ -120,6 +121,9 @@ export function refField(_host: SelectDataHost, value: string, label: string, op
       let bar = d.querySelector<HTMLElement>(".rf-bar");
       if (!bar) { bar = h("div", { class: "rf-bar sd-row" }); d.querySelector(".dlg-body")!.prepend(bar); }
       bar.replaceChildren(box);
+      // The shrunk dialog keeps its top left corner where the dialog stood (Excel; D-155).
+      const at = d.getBoundingClientRect();
+      Object.assign(d.style, { position: "fixed", left: `${Math.round(at.left)}px`, top: `${Math.round(at.top)}px`, margin: "0" });
       d.classList.add("rf-collapsed");
       for (const l of others) l.style.visibility = "hidden";
       btn.innerHTML = EXPAND;
@@ -225,6 +229,46 @@ function rangeText(m: ChartModel): string {
   const live = m.series.filter((s) => s.val.ref);
   const src = sourceOf(live.length ? live : m.series);
   return src ? "=" + refText(src.ref.sheet, src.ref.r0, src.ref.c0, src.ref.r1, src.ref.c1) : "";
+}
+
+type Amount = { ref?: string; cache: (number | null)[] };
+const amountText = (d: Amount | undefined) => (d?.ref ? "=" + d.ref : `={${(d?.cache.length ? d.cache : [1]).map((v) => v ?? "").join(";")}}`);
+
+/**
+ * Fehlerindikatoren > Benutzerdefiniert > Wert angeben (D-155): Excel's "Benutzerdefinierte Fehlerindikatoren" with
+ * Positiver Fehlerwert and Negativer Fehlerwert, each a range (pointed at in the sheet, or typed) or values ("={1}").
+ * Resolves to the two amounts, or null for Abbrechen.
+ */
+export async function customErrorDialog(host: SelectDataHost, plus: Amount | undefined, minus: Amount | undefined): Promise<{ plus: Amount; minus: Amount } | null> {
+  ensureCss();
+  let sub: HTMLElement | null = null;
+  const pf = refField(host, amountText(plus), "Positiver Fehlerwert", { dialog: () => sub });
+  const mf = refField(host, amountText(minus), "Negativer Fehlerwert", { dialog: () => sub });
+  const body = h("div", null,
+    h("div", null, "Positiver Fehlerwert"), h("div", { class: "sd-row" }, pf.el),
+    h("div", { style: "margin-top:8px" }, "Negativer Fehlerwert"), h("div", { class: "sd-row" }, mf.el));
+  const o = openDialog({ title: "Benutzerdefinierte Fehlerindikatoren", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false }, "sd-dialog");
+  sub = o.dialog;
+  sub.style.minWidth = "300px";
+  sub.classList.add("ce-dialog");
+  const stop = pointThrough(host, o.layer, o.dialog);
+  pf.input.focus();
+  pf.input.select();
+  const ok = await o.done;
+  stop();
+  if (!ok) return null;
+  const sheet = host.sheetName();
+  const read = (text: string): Amount | null => {
+    const v = parseValues(text);
+    if (!v) return null;
+    return v.ref ? { ref: withSheet(v.ref, sheet), cache: [] } : { cache: v.values ?? [] };
+  };
+  const p = read(pf.input.value), q = read(mf.input.value);
+  if (!p || !q) {
+    await messageBox("RaabeCalc", "Der eingegebene Bezug ist ungültig.");
+    return null;
+  }
+  return { plus: p, minus: q };
 }
 
 export async function selectDataDialog(host: SelectDataHost, m: ChartModel): Promise<void> {

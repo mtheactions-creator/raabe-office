@@ -4236,3 +4236,48 @@ sperren, now built; four chart commands), 7 fail: six Formel options "control no
 read the ribbon before the Formel tab had come: reset now waits for a contextual tab) and the SmartArt Format tab
 missing (now built). The after-run of these parts was not made before the deadline. Keytips (first walk): 400, 362
 pass, 38 no-effect (a key that reaches an option already in effect, as above), 0 fail.
+
+## D-155 RaabeCalc charts: what D-114 and D-118 left out, recorded in Excel and built (2026-11-09)
+
+Recorded first in an Excel of our own (`probe_excel_chart_followup.py`: COM for the file side, the chart area's Format
+pane through UI Automation for the galleries, no real input; `results/2026-11-09-excel-chart-followup.json` holds
+Excel's XML for each setting, never Office's texture bitmaps), then built the same way:
+- **Voreingestellte Farbverläufe**: Excel's 30 entries (Heller Farbverlauf, Lichtakzent oben, Mittlerer Farbverlauf,
+  Lichtakzent unten, Radialer Farbverlauf, each in Akzent 1-6). Their stops are a design colour with Helligkeit, so a
+  stop keeps `theme` (written as a:schemeClr) and `brightness`; radial ones keep their focus (`Gradient.focus`,
+  a:fillToRect, drawn as the gradient's centre). All 30 write the stops and shading Excel writes (unit test).
+- **Helligkeit** of a gradient stop (-100 … 100 %): lumMod/lumOff on the stop's colour as Excel writes it (+40 % is
+  lumMod 60000 lumOff 40000, -30 % lumMod 70000), drawn and read back.
+- **Textur**: the 24 entries under Excel's names, with tiles of our own (drawn from colours and a grain per texture,
+  `charts/textures.ts`; Office's bitmaps are not ours to ship). Choosing Bild- oder Texturfüllung fills with the first
+  texture at once, tiled, as Excel does; so the choice is now saved (it was lost without a picture). The pane
+  recognises a texture by its picture after reopening.
+- **Perspektive** shadows: Excel's five presets (a:outerShdw with sx/sy/kx/algn, `Shadow.persp`), written as Excel
+  writes them and recognised again after reopening. Drawn as an offset shadow: an SVG filter cannot skew, so the
+  slanted shape of Excel's shadow is not reproduced (the file is exact).
+- **Benutzerdefiniert** error amounts: the radio (Excel starts with ={1} above and below) and **Wert angeben**, which
+  opens Benutzerdefinierte Fehlerindikatoren with Positiver / Negativer Fehlerwert (labels recorded from Excel's
+  dialog); the fields take a range pointed at in the sheet or typed, or values (={1;2;3}); a single value is every
+  point's amount, as in Excel.
+- **3D-Format on axes** (Excel's axis pane has it): offered, saved in the axis' c:spPr and read back.
+- **An axis' Keine Füllung**: Excel writes a:noFill for the automatic axis fill too, and adds a14:hiddenFill for an
+  explicit Keine Füllung; we write and read it the same way, so it no longer comes back as Automatisch.
+- **The chart style part**: styleN.xml and colorsN.xml are written for every chart (RaabeCalc wrote none), and the
+  style part's id is the chosen Diagrammformatvorlage, which is what Excel reports as Chart.ChartStyle (it reported 2).
+  A style part Excel wrote is kept, only its id follows. Its content stays the default style's description (Excel
+  uses it for elements added later), the chart's look itself is in the chart part as before (D-118).
+- **Datentabelle on horizontal bar charts**: drawn (was left out). The categories stay on the vertical axis, the table
+  stands under the value labels with the categories as columns, as Excel's PDF export of a bar chart shows it.
+- **Datenquelle auswählen**: the shrunk dialog (Dialog reduzieren) keeps its top left corner where the dialog stood,
+  as Excel's; it was centred (D-117's own choice, now dropped).
+Still not built: 3D-Drehung of text, X-/Y-Skalierung, Ausrichtung and Spiegelungstyp of tiled textures.
+- **Re-sweep of column and pie charts** (`check_calc_chartpane.py` on a fresh build of main, before the changes
+  above; results/2026-11-09-calc-chartpane-column-pie-before.json): column 1604 controls used, 1580 changed the
+  chart, 1424 changed the drawing, all 1580 undone by Strg+Z, 1498 back on reopening, Excel COM 2003 of 2074; pie
+  1009 / 966 / 720 / 966 / 876, COM 1208 of 1276. What it found and what was fixed: Keine Füllung / Keine Linie on
+  the title, legend, plot area and axes came back as Automatisch (now written with Excel's a14:hiddenFill /
+  hiddenLine, recorded by COM, and read back); an Einfarbige Linie on a column series came back as the columns'
+  colour (the reader took the border's colour when the fill was automatic; fixed); Bild- oder Texturfüllung without
+  a picture was lost (the texture above). Left as they are: a series' Einfarbige Füllung reads back as the series'
+  colour (the same drawing), data labels' Keine Füllung (Excel writes the same file as for the automatic look),
+  Datumsachse settings on text categories. The sweep has not been repeated on a build with the fixes.

@@ -6,6 +6,8 @@
 
 import { OFFICE_ACCENTS, PATTERNS, lum, patternPath, type Arrow, type Dash, type Effects, type Fill, type Format3D, type Gradient, type Line } from "@raabe/charts";
 import type { PaneControl, PaneSection } from "@raabe/shell";
+import { styleTheme } from "./styles";
+import { TEXTURES, textureSrc } from "./textures";
 
 /** What a section edits: an element's fill, line and effects (series, axes, the chart area …). */
 export interface FmtTarget {
@@ -66,7 +68,41 @@ export function defaultGradient(color: string): Gradient {
   ] };
 }
 
-/** The controls of a gradient (Typ, Richtung, Winkel, Farbverlaufsstopps, Farbe, Position, Transparenz, Mit Form drehen). */
+/**
+ * Voreingestellte Farbverläufe (D-155): Excel's five gradients in each accent, as Excel 365 writes them
+ * (probe_excel_chart_followup.py): stops in the accent with Helligkeit (lumMod/lumOff), linear or from a focus.
+ */
+const PRESET_GRADIENTS: { name: string; kind: Gradient["kind"]; angle?: number; focus?: Gradient["focus"]; stops: [number, number][] }[] = [
+  { name: "Heller Farbverlauf", kind: "linear", angle: 90, stops: [[0, 95], [74, 55], [83, 55], [100, 70]] },
+  { name: "Lichtakzent oben", kind: "radial", focus: { l: 50, t: -80, r: 50, b: 180 }, stops: [[0, 100], [35, 100], [100, 0]] },
+  { name: "Mittlerer Farbverlauf", kind: "linear", angle: 270, stops: [[0, -33], [48, 3], [100, 40]] },
+  { name: "Lichtakzent unten", kind: "radial", focus: { l: 50, t: 130, r: 50, b: -30 }, stops: [[0, 60], [46, 5], [100, -40]] },
+  { name: "Radialer Farbverlauf", kind: "radial", focus: { l: 50, t: 50, r: 50, b: 50 }, stops: [[0, -11], [23, -11], [69, -25], [97, -30]] },
+];
+
+/** The 30 entries of Voreingestellte Farbverläufe ("Heller Farbverlauf - Akzent 1" …), row by row as Excel's gallery. */
+export const GRADIENT_PRESETS = PRESET_GRADIENTS.flatMap((p) => [1, 2, 3, 4, 5, 6].map((k) => ({ label: `${p.name} - Akzent ${k}`, value: `${p.name}|${k}` })));
+
+/** A preset gradient in the workbook's design colours. */
+export function presetGradient(value: string): Gradient | undefined {
+  const [name, k] = value.split("|");
+  const p = PRESET_GRADIENTS.find((x) => x.name === name);
+  if (!p) return undefined;
+  const theme = `accent${k}`;
+  const color = styleTheme()[theme] ?? OFFICE_ACCENTS[Number(k) - 1] ?? "#4472C4";
+  const g: Gradient = { kind: p.kind, stops: p.stops.map(([pos, b]) => ({ pos, color, theme, ...(b ? { brightness: b } : {}) })) };
+  if (p.angle !== undefined) g.angle = p.angle;
+  if (p.focus && (p.focus.l !== 50 || p.focus.t !== 50 || p.focus.r !== 50 || p.focus.b !== 50)) g.focus = { ...p.focus };
+  return g;
+}
+
+/** The preset a gradient is (its value), if it is one. */
+function presetOf(g: Gradient): string {
+  const key = (x: Gradient) => JSON.stringify([x.kind, x.angle ?? null, x.focus ?? null, x.stops.map((s) => [s.pos, s.theme ?? s.color, s.brightness ?? 0, s.transparency ?? 0])]);
+  return GRADIENT_PRESETS.find((p) => { const q = presetGradient(p.value); return !!q && key(q) === key(g); })?.value ?? "";
+}
+
+/** The controls of a gradient (Typ, Richtung, Winkel, Farbverlaufsstopps, Farbe, Position, Transparenz, Helligkeit, Mit Form drehen). */
 function gradientControls(key: string, g: Gradient, set: (g: Gradient) => void): PaneControl[] {
   const sel = Math.min(chosenStop.get(key) ?? 0, g.stops.length - 1);
   const stop = g.stops[sel];
@@ -76,7 +112,10 @@ function gradientControls(key: string, g: Gradient, set: (g: Gradient) => void):
     chosenStop.set(key, stops.indexOf(changedStop));
     set({ ...g, stops });
   };
+  const preset = presetOf(g);
   const c: PaneControl[] = [
+    { type: "select", label: "Voreingestellte Farbverläufe", options: [...(preset ? [] : [{ label: "", value: "" }]), ...GRADIENT_PRESETS], value: () => preset,
+      set: (v) => { const p = presetGradient(v); if (p) { chosenStop.set(key, 0); set({ ...p, ...(g.rotWithShape === false ? { rotWithShape: false } : {}) }); } } },
     { type: "select", label: "Typ", options: [{ label: "Linear", value: "linear" }, { label: "Radial", value: "radial" }, { label: "Rechteckig", value: "rect" }, { label: "Pfad", value: "path" }],
       value: () => g.kind, set: (v) => set({ ...g, kind: v as Gradient["kind"], angle: v === "linear" ? g.angle ?? 90 : undefined }) },
   ];
@@ -110,9 +149,11 @@ function gradientControls(key: string, g: Gradient, set: (g: Gradient) => void):
     },
   });
   if (stop) {
-    c.push({ type: "color", label: "Farbe", value: () => stop.color, set: (hex) => withStop({ color: hex ?? stop.color }) });
+    // A colour picked from the palette is a colour of its own (no longer the design colour).
+    c.push({ type: "color", label: "Farbe", value: () => stop.color, set: (hex) => withStop({ color: hex ?? stop.color, theme: undefined }) });
     c.push({ type: "number", label: "Position", unit: " %", min: 0, max: 100, slider: true, value: () => stop.pos, set: (v) => withStop({ pos: Math.round(v) }) });
     c.push({ type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => stop.transparency ?? 0, set: (v) => withStop({ transparency: Math.round(v) || undefined }) });
+    c.push({ type: "number", label: "Helligkeit", unit: " %", min: -100, max: 100, slider: true, value: () => stop.brightness ?? 0, set: (v) => withStop({ brightness: Math.round(v) || undefined }) });
   }
   c.push({ type: "check", label: "Mit Form drehen", value: () => g.rotWithShape !== false, set: (on) => set({ ...g, rotWithShape: on ? undefined : false }) });
   return c;
@@ -121,6 +162,7 @@ function gradientControls(key: string, g: Gradient, set: (g: Gradient) => void):
 /** Bild- oder Texturfüllung: Einfügen... (a picture file), Zwischenablage, Transparenz, nebeneinander als Textur. */
 function pictureControls(f: Fill, set: (f: Fill) => void): PaneControl[] {
   const pic = f.picture;
+  const texture = (pic?.src && TEXTURES.find((t) => textureSrc(t) === pic.src)) || "";
   const choose = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -151,6 +193,9 @@ function pictureControls(f: Fill, set: (f: Fill) => void): PaneControl[] {
     { type: "heading", label: "Bildquelle" },
     { type: "button", label: "Einfügen...", run: choose },
     { type: "button", label: "Zwischenablage", run: () => { void paste(); } },
+    // The chosen texture is recognised by its picture (the file keeps no name, as in Excel).
+    { type: "select", label: "Textur", options: [...(texture ? [] : [{ label: "", value: "" }]), ...TEXTURES.map((t) => ({ label: t, value: t }))], value: () => texture,
+      set: (v) => { const src = textureSrc(v); if (src) set({ type: "picture", picture: { src, tile: true, ...(pic?.transparency ? { transparency: pic.transparency } : {}) } }); } },
     { type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => pic?.transparency ?? 0, set: (v) => pic && set({ type: "picture", picture: { ...pic, transparency: Math.round(v) || undefined } }), disabled: () => !pic },
     { type: "check", label: "Bild nebeneinander als Textur anordnen", value: () => !!pic?.tile, set: (on) => pic && set({ type: "picture", picture: { ...pic, tile: on || undefined } }), disabled: () => !pic },
   ];
@@ -176,7 +221,11 @@ export function fillSection(t: FmtTarget, autoColor: string, extra: PaneControl[
         radio("Keine Füllung", "none", () => ({ type: "none" })),
         radio("Einfarbige Füllung", "solid", () => ({ type: "solid", color })),
         radio("Farbverlauf", "gradient", () => ({ type: "gradient", gradient: f?.gradient ?? defaultGradient(color) })),
-        radio("Bild- oder Texturfüllung", "picture", () => ({ type: "picture", picture: f?.picture })),
+        // Excel fills with its first texture at once (tiled), so the choice is saved even without a picture (D-155).
+        radio("Bild- oder Texturfüllung", "picture", () => {
+          const src = f?.picture?.src ? undefined : textureSrc(TEXTURES[0]);
+          return { type: "picture", picture: f?.picture?.src ? f.picture : src ? { src, tile: true } : f?.picture };
+        }),
         radio("Musterfüllung", "pattern", () => ({ type: "pattern", pattern: f?.pattern ?? { preset: "pct5", fg: color, bg: "#FFFFFF" } })),
         ...(withAuto ? [radio("Automatisch", "auto", () => undefined)] : []),
         ...extra,
@@ -263,13 +312,22 @@ export function lineSection(t: FmtTarget, o: LineOptions): PaneSection {
   };
 }
 
-const SHADOWS: { label: string; value: string; s?: Effects["shadow"] }[] = [
+export const SHADOW_PRESETS: { label: string; value: string; s?: Effects["shadow"] }[] = [
   { label: "Ohne", value: "none" },
   ...([["unten rechts", 45], ["unten", 90], ["unten links", 135], ["rechts", 0], ["Mitte", -1], ["links", 180], ["oben rechts", 315], ["oben", 270], ["oben links", 225]] as const).map(([n, a]) =>
     ({ label: `Offset: ${n}`, value: `o-${n}`, s: a < 0 ? { color: "#000000", transparency: 60, size: 102, blur: 5, angle: 0, distance: 0 } : { color: "#000000", transparency: 60, blur: 4, angle: a, distance: 3 } })),
   ...([["oben links", 225], ["oben", 270], ["oben rechts", 315], ["links", 180], ["Mitte", -1], ["rechts", 0], ["unten links", 135], ["unten", 90], ["unten rechts", 45]] as const).map(([n, a]) =>
     ({ label: `Innen: ${n}`, value: `i-${n}`, s: a < 0 ? { inner: true, color: "#000000", transparency: 0, blur: 9, angle: 0, distance: 0 } : { inner: true, color: "#000000", transparency: 50, blur: 5, angle: a, distance: 4 } })),
+  // Perspektive (D-155), as Excel 365 writes them (probe_excel_chart_followup.py): scaled, skewed about a corner.
+  { label: "Perspektive: oben links", value: "p-oben links", s: { color: "#000000", transparency: 80, blur: 6, angle: 225, distance: 0, persp: { sy: 23, kx: 20, align: "br" } } },
+  { label: "Perspektive: oben rechts", value: "p-oben rechts", s: { color: "#000000", transparency: 80, blur: 6, angle: 315, distance: 0, persp: { sy: 23, kx: -20, align: "bl" } } },
+  { label: "Perspektive: unterhalb", value: "p-unterhalb", s: { color: "#000000", transparency: 85, blur: 12, angle: 90, distance: 25, persp: { sx: 90, sy: -19, align: "b" } } },
+  { label: "Perspektive: unten links", value: "p-unten links", s: { color: "#000000", transparency: 80, blur: 6, angle: 135, distance: 1, persp: { sy: -23, kx: 13.34, align: "br" } } },
+  { label: "Perspektive: unten rechts", value: "p-unten rechts", s: { color: "#000000", transparency: 80, blur: 6, angle: 45, distance: 1, persp: { sy: -23, kx: -13.34, align: "bl" } } },
 ];
+
+/** JSON with sorted keys: a shadow read from the file matches its preset whatever the order of its fields. */
+const canon = (v: unknown): string => JSON.stringify(v, (_k, x) => (x && typeof x === "object" && !Array.isArray(x) ? Object.fromEntries(Object.entries(x).sort(([a], [b]) => a.localeCompare(b))) : x));
 
 const BEVELS = [
   { label: "Keine", value: "none" }, { label: "Rund", value: "circle" }, { label: "Leichte Absenkung", value: "relaxedInset" }, { label: "Säule", value: "cross" },
@@ -302,11 +360,11 @@ export function effectSections(t: FmtTarget, o: EffectOptions): PaneSection[] {
   const out: PaneSection[] = [];
   if (o.shadow !== false) out.push({ title: "Schatten", controls: () => {
     const s = fx()?.shadow;
-    const preset = !s ? "none" : SHADOWS.find((p) => p.s && JSON.stringify(p.s) === JSON.stringify(s))?.value ?? "custom";
-    const patch = (p: Partial<NonNullable<Effects["shadow"]>>) => set({ shadow: { ...(s ?? SHADOWS[1].s!), ...p } });
+    const preset = !s ? "none" : SHADOW_PRESETS.find((p) => p.s && canon(p.s) === canon(s))?.value ?? "custom";
+    const patch = (p: Partial<NonNullable<Effects["shadow"]>>) => set({ shadow: { ...(s ?? SHADOW_PRESETS[1].s!), ...p } });
     const c: PaneControl[] = [
-      { type: "select", label: "Voreinstellungen", options: [...SHADOWS.map(({ label, value }) => ({ label, value })), ...(preset === "custom" ? [{ label: "Benutzerdefiniert", value: "custom" }] : [])],
-        value: () => preset, set: (v) => set({ shadow: v === "none" ? undefined : { ...SHADOWS.find((p) => p.value === v)!.s! } }) },
+      { type: "select", label: "Voreinstellungen", options: [...SHADOW_PRESETS.map(({ label, value }) => ({ label, value })), ...(preset === "custom" ? [{ label: "Benutzerdefiniert", value: "custom" }] : [])],
+        value: () => preset, set: (v) => set({ shadow: v === "none" ? undefined : { ...SHADOW_PRESETS.find((p) => p.value === v)!.s! } }) },
       { type: "color", label: "Farbe", value: () => s?.color ?? "#000000", set: (hex) => patch({ color: hex ?? "#000000" }) },
       { type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => s?.transparency ?? 60, set: (v) => patch({ transparency: Math.round(v) }) },
       { type: "number", label: "Größe", unit: " %", min: 1, max: 200, slider: true, value: () => s?.size ?? 100, set: (v) => patch({ size: Math.round(v) === 100 ? undefined : Math.round(v) }), disabled: () => !!s?.inner },

@@ -1,0 +1,246 @@
+{
+ "meta": {
+  "probe": "probe_excel_chart_followup.py",
+  "excel": "Microsoft Excel 365 (German), own instance, no real input"
+ },
+ "com": {
+  "axis default": {
+   "valAx": "<c:spPr><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "catAx": "<c:spPr><a:noFill/><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>"
+  },
+  "axis Keine Füllung": {
+   "valAx": "<c:spPr><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "catAx": "<c:spPr><a:noFill/><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/><a:extLst><a:ext uri=\"{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}\"><a14:hiddenFill xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a:noFill/></a14:hiddenFill></a:ext></a:extLst></c:spPr>"
+  },
+  "axis Keine Füllung reopened": {
+   "Visible": 0,
+   "Type": -2
+  },
+  "gradient stop Helligkeit": {
+   "com": [
+    {
+     "pos": 0.0,
+     "rgb": 255,
+     "brightness": 0.0
+    },
+    {
+     "pos": 0.5,
+     "rgb": 6750054,
+     "brightness": 0.4
+    },
+    {
+     "pos": 0.7,
+     "rgb": 45824,
+     "brightness": -0.3
+    },
+    {
+     "pos": 1.0,
+     "rgb": 16711680,
+     "brightness": 0.0
+    }
+   ],
+   "xml": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:srgbClr val=\"FF0000\"/></a:gs><a:gs pos=\"50000\"><a:srgbClr val=\"00FF00\"><a:lumMod val=\"60000\"/><a:lumOff val=\"40000\"/></a:srgbClr></a:gs><a:gs pos=\"70000\"><a:srgbClr val=\"00FF00\"><a:lumMod val=\"70000\"/></a:srgbClr></a:gs><a:gs pos=\"100000\"><a:srgbClr val=\"0000FF\"/></a:gs></a:gsLst><a:lin ang=\"5400000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>"
+  },
+  "error bars custom": "<c:errBars><c:errBarType val=\"both\"/><c:errValType val=\"cust\"/><c:noEndCap val=\"0\"/><c:plus><c:numRef><c:f>Tabelle1!$B$2:$B$5</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"4\"/><c:pt idx=\"0\"><c:v>4</c:v></c:pt><c:pt idx=\"1\"><c:v>-2</c:v></c:pt><c:pt idx=\"2\"><c:v>7</c:v></c:pt><c:pt idx=\"3\"><c:v>5</c:v></c:pt></c:numCache></c:numRef></c:plus><c:minus><c:numRef><c:f>Tabelle1!$C$2:$C$5</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"4\"/><c:pt idx=\"0\"><c:v>6</c:v></c:pt><c:pt idx=\"1\"><c:v>5</c:v></c:pt><c:pt idx=\"2\"><c:v>3</c:v></c:pt><c:pt idx=\"3\"><c:v>8</c:v></c:pt></c:numCache></c:numRef></c:minus><c:spPr><a:noFill/><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"65000\"/><a:lumOff val=\"35000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr></c:errBars>",
+  "error bars custom array": "<c:errBars><c:errBarType val=\"plus\"/><c:errValType val=\"cust\"/><c:noEndCap val=\"0\"/><c:plus><c:numLit><c:formatCode>General</c:formatCode><c:ptCount val=\"4\"/><c:pt idx=\"0\"><c:v>1</c:v></c:pt><c:pt idx=\"1\"><c:v>2</c:v></c:pt><c:pt idx=\"2\"><c:v>3</c:v></c:pt><c:pt idx=\"3\"><c:v>4</c:v></c:pt></c:numLit></c:plus><c:minus><c:numRef><c:f>Tabelle1!$C$2:$C$5</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"4\"/><c:pt idx=\"0\"><c:v>6</c:v></c:pt><c:pt idx=\"1\"><c:v>5</c:v></c:pt><c:pt idx=\"2\"><c:v>3</c:v></c:pt><c:pt idx=\"3\"><c:v>8</c:v></c:pt></c:numCache></c:numRef></c:minus><c:spPr><a:noFill/><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"65000\"/><a:lumOff val=\"35000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr></c:errBars>",
+  "ChartStyle 205": {
+   "cs:chartStyle": "<cs:chartStyle xmlns:cs=\"http://schemas.microsoft.com/office/drawing/2012/chartStyle\" xmlns:a=\"http://schemas.openxmlformats.org/drawingml/2006/main\" id=\"205\">",
+   "c:style": "<c:style val=\"2\"/>",
+   "mc:style": "<mc:AlternateContent xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"><mc:Choice Requires=\"c14\" xmlns:c14=\"http://schemas.microsoft.com/office/drawing/2007/8/2/chart\"><c14:style val=\"102\"/></mc:Choice><mc:Fallback><c:style val=\"2\"/></mc:Fallback></mc:AlternateContent>"
+  },
+  "bar Datentabelle": {
+   "dTable": "<c:dTable><c:showHorzBorder val=\"1\"/><c:showVertBorder val=\"1\"/><c:showOutline val=\"1\"/><c:showKeys val=\"1\"/><c:spPr><a:noFill/><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr><c:txPr><a:bodyPr rot=\"0\" spcFirstLastPara=\"1\" vertOverflow=\"ellipsis\" vert=\"horz\" wrap=\"square\" anchor=\"ctr\" anchorCtr=\"1\"/><a:lstStyle/><a:p><a:pPr><a:defRPr sz=\"900\" b=\"0\" i=\"0\" u=\"none\" strike=\"noStrike\" kern=\"1200\" baseline=\"0\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"65000\"/><a:lumOff val=\"35000\"/></a:schemeClr></a:solidFill><a:latin typeface=\"+mn-lt\"/><a:ea typeface=\"+mn-ea\"/><a:cs typeface=\"+mn-cs\"/></a:defRPr></a:pPr><a:endParaRPr lang=\"de-DE\"/></a:p></c:txPr></c:dTable>",
+   "plotArea layout": "<c:plotArea><c:layout/>"
+  },
+  "bar Datentabelle pdf": "bar-table.pdf"
+ },
+ "pane": {
+  "Voreingestellte Farbverläufe": {
+   "Heller Farbverlauf - Akzent 1": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"5000\"/><a:lumOff val=\"95000\"/></a:schemeClr></a:gs><a:gs pos=\"74000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"83000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"30000\"/><a:lumOff val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"5400000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Heller Farbverlauf - Akzent 2": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"5000\"/><a:lumOff val=\"95000\"/></a:schemeClr></a:gs><a:gs pos=\"74000\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"83000\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"30000\"/><a:lumOff val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"5400000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Heller Farbverlauf - Akzent 3": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"5000\"/><a:lumOff val=\"95000\"/></a:schemeClr></a:gs><a:gs pos=\"74000\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"83000\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"30000\"/><a:lumOff val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"5400000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Heller Farbverlauf - Akzent 4": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"5000\"/><a:lumOff val=\"95000\"/></a:schemeClr></a:gs><a:gs pos=\"74000\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"83000\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"30000\"/><a:lumOff val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"5400000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Heller Farbverlauf - Akzent 5": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"5000\"/><a:lumOff val=\"95000\"/></a:schemeClr></a:gs><a:gs pos=\"74000\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"83000\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"30000\"/><a:lumOff val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"5400000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Heller Farbverlauf - Akzent 6": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"5000\"/><a:lumOff val=\"95000\"/></a:schemeClr></a:gs><a:gs pos=\"74000\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"83000\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"30000\"/><a:lumOff val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"5400000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lichtakzent oben - Akzent 1": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"0\"/><a:lumOff val=\"100000\"/></a:schemeClr></a:gs><a:gs pos=\"35000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"0\"/><a:lumOff val=\"100000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"100000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"-80000\" r=\"50000\" b=\"180000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lichtakzent oben - Akzent 2": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"0\"/><a:lumOff val=\"100000\"/></a:schemeClr></a:gs><a:gs pos=\"35000\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"0\"/><a:lumOff val=\"100000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"100000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"-80000\" r=\"50000\" b=\"180000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lichtakzent oben - Akzent 3": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"0\"/><a:lumOff val=\"100000\"/></a:schemeClr></a:gs><a:gs pos=\"35000\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"0\"/><a:lumOff val=\"100000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"100000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"-80000\" r=\"50000\" b=\"180000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lichtakzent oben - Akzent 4": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"0\"/><a:lumOff val=\"100000\"/></a:schemeClr></a:gs><a:gs pos=\"35000\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"0\"/><a:lumOff val=\"100000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"100000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"-80000\" r=\"50000\" b=\"180000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lichtakzent oben - Akzent 5": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"0\"/><a:lumOff val=\"100000\"/></a:schemeClr></a:gs><a:gs pos=\"35000\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"0\"/><a:lumOff val=\"100000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"100000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"-80000\" r=\"50000\" b=\"180000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lichtakzent oben - Akzent 6": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"0\"/><a:lumOff val=\"100000\"/></a:schemeClr></a:gs><a:gs pos=\"35000\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"0\"/><a:lumOff val=\"100000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"100000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"-80000\" r=\"50000\" b=\"180000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Mittlerer Farbverlauf - Akzent 1": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"67000\"/></a:schemeClr></a:gs><a:gs pos=\"48000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"97000\"/><a:lumOff val=\"3000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"60000\"/><a:lumOff val=\"40000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"16200000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Mittlerer Farbverlauf - Akzent 2": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"67000\"/></a:schemeClr></a:gs><a:gs pos=\"48000\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"97000\"/><a:lumOff val=\"3000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"60000\"/><a:lumOff val=\"40000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"16200000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Mittlerer Farbverlauf - Akzent 3": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"67000\"/></a:schemeClr></a:gs><a:gs pos=\"48000\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"97000\"/><a:lumOff val=\"3000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"60000\"/><a:lumOff val=\"40000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"16200000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Mittlerer Farbverlauf - Akzent 4": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"67000\"/></a:schemeClr></a:gs><a:gs pos=\"48000\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"97000\"/><a:lumOff val=\"3000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"60000\"/><a:lumOff val=\"40000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"16200000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Mittlerer Farbverlauf - Akzent 5": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"67000\"/></a:schemeClr></a:gs><a:gs pos=\"48000\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"97000\"/><a:lumOff val=\"3000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"60000\"/><a:lumOff val=\"40000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"16200000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Mittlerer Farbverlauf - Akzent 6": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"67000\"/></a:schemeClr></a:gs><a:gs pos=\"48000\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"97000\"/><a:lumOff val=\"3000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"60000\"/><a:lumOff val=\"40000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"16200000\" scaled=\"1\"/><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lichtakzent unten - Akzent 1": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"40000\"/><a:lumOff val=\"60000\"/></a:schemeClr></a:gs><a:gs pos=\"46000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"95000\"/><a:lumOff val=\"5000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"60000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"130000\" r=\"50000\" b=\"-30000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lichtakzent unten - Akzent 2": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"40000\"/><a:lumOff val=\"60000\"/></a:schemeClr></a:gs><a:gs pos=\"46000\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"95000\"/><a:lumOff val=\"5000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"60000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"130000\" r=\"50000\" b=\"-30000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lichtakzent unten - Akzent 3": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"40000\"/><a:lumOff val=\"60000\"/></a:schemeClr></a:gs><a:gs pos=\"46000\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"95000\"/><a:lumOff val=\"5000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"60000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"130000\" r=\"50000\" b=\"-30000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lichtakzent unten - Akzent 4": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"40000\"/><a:lumOff val=\"60000\"/></a:schemeClr></a:gs><a:gs pos=\"46000\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"95000\"/><a:lumOff val=\"5000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"60000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"130000\" r=\"50000\" b=\"-30000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lichtakzent unten - Akzent 5": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"40000\"/><a:lumOff val=\"60000\"/></a:schemeClr></a:gs><a:gs pos=\"46000\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"95000\"/><a:lumOff val=\"5000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"60000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"130000\" r=\"50000\" b=\"-30000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lichtakzent unten - Akzent 6": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"40000\"/><a:lumOff val=\"60000\"/></a:schemeClr></a:gs><a:gs pos=\"46000\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"95000\"/><a:lumOff val=\"5000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"60000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"130000\" r=\"50000\" b=\"-30000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Radialer Farbverlauf - Akzent 1": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"89000\"/></a:schemeClr></a:gs><a:gs pos=\"23000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"89000\"/></a:schemeClr></a:gs><a:gs pos=\"69000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"75000\"/></a:schemeClr></a:gs><a:gs pos=\"97000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"50000\" r=\"50000\" b=\"50000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Radialer Farbverlauf - Akzent 2": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"89000\"/></a:schemeClr></a:gs><a:gs pos=\"23000\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"89000\"/></a:schemeClr></a:gs><a:gs pos=\"69000\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"75000\"/></a:schemeClr></a:gs><a:gs pos=\"97000\"><a:schemeClr val=\"accent2\"><a:lumMod val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"50000\" r=\"50000\" b=\"50000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Radialer Farbverlauf - Akzent 3": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"89000\"/></a:schemeClr></a:gs><a:gs pos=\"23000\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"89000\"/></a:schemeClr></a:gs><a:gs pos=\"69000\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"75000\"/></a:schemeClr></a:gs><a:gs pos=\"97000\"><a:schemeClr val=\"accent3\"><a:lumMod val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"50000\" r=\"50000\" b=\"50000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Radialer Farbverlauf - Akzent 4": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"89000\"/></a:schemeClr></a:gs><a:gs pos=\"23000\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"89000\"/></a:schemeClr></a:gs><a:gs pos=\"69000\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"75000\"/></a:schemeClr></a:gs><a:gs pos=\"97000\"><a:schemeClr val=\"accent4\"><a:lumMod val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"50000\" r=\"50000\" b=\"50000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Radialer Farbverlauf - Akzent 5": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"89000\"/></a:schemeClr></a:gs><a:gs pos=\"23000\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"89000\"/></a:schemeClr></a:gs><a:gs pos=\"69000\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"75000\"/></a:schemeClr></a:gs><a:gs pos=\"97000\"><a:schemeClr val=\"accent5\"><a:lumMod val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"50000\" r=\"50000\" b=\"50000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Radialer Farbverlauf - Akzent 6": "<c:spPr><a:gradFill flip=\"none\" rotWithShape=\"1\"><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"89000\"/></a:schemeClr></a:gs><a:gs pos=\"23000\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"89000\"/></a:schemeClr></a:gs><a:gs pos=\"69000\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"75000\"/></a:schemeClr></a:gs><a:gs pos=\"97000\"><a:schemeClr val=\"accent6\"><a:lumMod val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:path path=\"circle\"><a:fillToRect l=\"50000\" t=\"50000\" r=\"50000\" b=\"50000\"/></a:path><a:tileRect/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>"
+  },
+  "Textur": {
+   "Papyrus": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Leinen": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Blaue Baumwolle": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Gewebe": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Wassertropfen": {
+    "error": "entry not found"
+   },
+   "Papiertüte": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Fischfossil": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Sand": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Grüner Marmor": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Weißer Marmor": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Brauner Marmor": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Granit": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Zeitungspapier": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Recyclingpapier": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Pergament": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Briefpapier": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Blaues Seidenpapier": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Rosa Seidenpapier": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Lila Netz": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Blumenstrauß": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Kork": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Walnuss": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Eiche": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Nussbaum": "<c:spPr><a:blipFill><a:blip/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>"
+  },
+  "Perspektive": {
+   "Perspektive: oben links": "<c:spPr><a:solidFill><a:schemeClr val=\"bg1\"/></a:solidFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst><a:outerShdw blurRad=\"76200\" dir=\"13500000\" sy=\"23000\" kx=\"1200000\" algn=\"br\" rotWithShape=\"0\"><a:prstClr val=\"black\"><a:alpha val=\"20000\"/></a:prstClr></a:outerShdw></a:effectLst></c:spPr>",
+   "Perspektive: oben rechts": "<c:spPr><a:solidFill><a:schemeClr val=\"bg1\"/></a:solidFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst><a:outerShdw blurRad=\"76200\" dir=\"18900000\" sy=\"23000\" kx=\"-1200000\" algn=\"bl\" rotWithShape=\"0\"><a:prstClr val=\"black\"><a:alpha val=\"20000\"/></a:prstClr></a:outerShdw></a:effectLst></c:spPr>",
+   "Perspektive: unterhalb": "<c:spPr><a:solidFill><a:schemeClr val=\"bg1\"/></a:solidFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst><a:outerShdw blurRad=\"152400\" dist=\"317500\" dir=\"5400000\" sx=\"90000\" sy=\"-19000\" rotWithShape=\"0\"><a:prstClr val=\"black\"><a:alpha val=\"15000\"/></a:prstClr></a:outerShdw></a:effectLst></c:spPr>",
+   "Perspektive: unten links": "<c:spPr><a:solidFill><a:schemeClr val=\"bg1\"/></a:solidFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst><a:outerShdw blurRad=\"76200\" dist=\"12700\" dir=\"8100000\" sy=\"-23000\" kx=\"800400\" algn=\"br\" rotWithShape=\"0\"><a:prstClr val=\"black\"><a:alpha val=\"20000\"/></a:prstClr></a:outerShdw></a:effectLst></c:spPr>",
+   "Perspektive: unten rechts": "<c:spPr><a:solidFill><a:schemeClr val=\"bg1\"/></a:solidFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst><a:outerShdw blurRad=\"76200\" dist=\"12700\" dir=\"2700000\" sy=\"-23000\" kx=\"-800400\" algn=\"bl\" rotWithShape=\"0\"><a:prstClr val=\"black\"><a:alpha val=\"20000\"/></a:prstClr></a:outerShdw></a:effectLst></c:spPr>"
+  },
+  "Farbverlauf chosen": "<c:spPr><a:gradFill><a:gsLst><a:gs pos=\"0\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"5000\"/><a:lumOff val=\"95000\"/></a:schemeClr></a:gs><a:gs pos=\"74000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"83000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"45000\"/><a:lumOff val=\"55000\"/></a:schemeClr></a:gs><a:gs pos=\"100000\"><a:schemeClr val=\"accent1\"><a:lumMod val=\"30000\"/><a:lumOff val=\"70000\"/></a:schemeClr></a:gs></a:gsLst><a:lin ang=\"5400000\" scaled=\"1\"/></a:gradFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+  "Bild- oder Texturfüllung chosen": "<c:spPr><a:blipFill><a:blip xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" r:embed=\"rId3\"/><a:tile tx=\"0\" ty=\"0\" sx=\"100000\" sy=\"100000\" flip=\"none\" algn=\"tl\"/></a:blipFill><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>"
+ },
+ "dialog": {
+  "title": "Benutzerdefinierte Fehlerindikatoren",
+  "items": [
+   {
+    "t": "Text",
+    "name": "Positiver Fehlerwert",
+    "rect": [
+     1733,
+     989,
+     140,
+     21
+    ]
+   },
+   {
+    "t": "Edit",
+    "name": "Positiver Fehlerwert",
+    "rect": [
+     1733,
+     1015,
+     317,
+     29
+    ]
+   },
+   {
+    "t": "Text",
+    "name": "Negativer Fehlerwert",
+    "rect": [
+     1733,
+     1049,
+     148,
+     21
+    ]
+   },
+   {
+    "t": "Edit",
+    "name": "Negativer Fehlerwert",
+    "rect": [
+     1733,
+     1075,
+     317,
+     29
+    ]
+   },
+   {
+    "t": "Button",
+    "name": "OK",
+    "rect": [
+     1865,
+     1109,
+     113,
+     36
+    ]
+   },
+   {
+    "t": "Button",
+    "name": "Abbrechen",
+    "rect": [
+     1992,
+     1109,
+     113,
+     36
+    ]
+   },
+   {
+    "t": "Button",
+    "name": "Direkthilfe",
+    "rect": [
+     1973,
+     934,
+     71,
+     44
+    ]
+   },
+   {
+    "t": "Button",
+    "name": "Schließen",
+    "rect": [
+     2044,
+     934,
+     71,
+     44
+    ]
+   }
+  ],
+  "window": [
+   1713,
+   933,
+   412,
+   234
+  ]
+ },
+ "none": {
+  "title": {
+   "default": "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr>",
+   "Keine Füllung": "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/><a:extLst><a:ext uri=\"{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}\"><a14:hiddenFill xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a:noFill/></a14:hiddenFill></a:ext></a:extLst></c:spPr>",
+   "Keine Linie": "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/><a:extLst><a:ext uri=\"{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}\"><a14:hiddenFill xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a:noFill/></a14:hiddenFill></a:ext><a:ext uri=\"{91240B29-F687-4F45-9708-019B960494DF}\"><a14:hiddenLine xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a:noFill/></a14:hiddenLine></a:ext></a:extLst></c:spPr>"
+  },
+  "legend": {
+   "default": "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr>",
+   "Keine Füllung": "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/><a:extLst><a:ext uri=\"{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}\"><a14:hiddenFill xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a:noFill/></a14:hiddenFill></a:ext></a:extLst></c:spPr>",
+   "Keine Linie": "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/><a:extLst><a:ext uri=\"{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}\"><a14:hiddenFill xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a:noFill/></a14:hiddenFill></a:ext><a:ext uri=\"{91240B29-F687-4F45-9708-019B960494DF}\"><a14:hiddenLine xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a:noFill/></a14:hiddenLine></a:ext></a:extLst></c:spPr>"
+  },
+  "plotArea": {
+   "default": "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr>",
+   "Keine Füllung": "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/><a:extLst><a:ext uri=\"{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}\"><a14:hiddenFill xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a:noFill/></a14:hiddenFill></a:ext></a:extLst></c:spPr>",
+   "Keine Linie": "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/><a:extLst><a:ext uri=\"{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}\"><a14:hiddenFill xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a:noFill/></a14:hiddenFill></a:ext><a:ext uri=\"{91240B29-F687-4F45-9708-019B960494DF}\"><a14:hiddenLine xmlns:a14=\"http://schemas.microsoft.com/office/drawing/2010/main\"><a:noFill/></a14:hiddenLine></a:ext></a:extLst></c:spPr>"
+  },
+  "dLbls": {
+   "default": "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr>",
+   "Keine Füllung": "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr>",
+   "Keine Linie": "<c:spPr><a:noFill/><a:ln><a:noFill/></a:ln><a:effectLst/></c:spPr>"
+  },
+  "valAx": {
+   "default": "<c:spPr><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Keine Füllung": "<c:spPr><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>",
+   "Keine Linie": "<c:spPr><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:schemeClr val=\"tx1\"><a:lumMod val=\"15000\"/><a:lumOff val=\"85000\"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr>"
+  }
+ }
+}

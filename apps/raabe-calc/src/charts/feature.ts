@@ -779,6 +779,7 @@ export function chartsFeature(app: CalcApp) {
         const to = anchorAt(b.x + (w / 2.54) * 96, b.y + (hh / 2.54) * 96);
         edit(m, (c) => { c.to = to; });
       },
+      data: selectHost,
     }));
   }
 

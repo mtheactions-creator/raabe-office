@@ -34,8 +34,12 @@ export interface ChartData<T> {
 // Unset fields keep Excel's automatic look (style 201); what is set is written to the file as
 // DrawingML (c:spPr, c:txPr, c:scaling …) and read back.
 
-/** A Farbverlaufsstopp: position 0-100 %, colour, Transparenz %. */
-export interface GradientStop { pos: number; color: string; transparency?: number }
+/**
+ * A Farbverlaufsstopp: position 0-100 %, colour, Transparenz %, Helligkeit (-100 … 100 %, DrawingML's lumMod/lumOff
+ * on the colour, D-155) and the design colour it came from (accent1 …: written as a:schemeClr, as Excel's
+ * Voreingestellte Farbverläufe are; `color` is then that colour in the workbook's theme).
+ */
+export interface GradientStop { pos: number; color: string; transparency?: number; brightness?: number; theme?: string }
 
 /** Farbverlauf: Typ (Linear, Radial, Rechteckig, Pfad), Richtung as an angle (linear, degrees), the stops. */
 export interface Gradient {
@@ -45,13 +49,17 @@ export interface Gradient {
   stops: GradientStop[];
   /** Mit Form drehen. */
   rotWithShape?: boolean;
+  /** Where a radial, rectangular or path gradient starts (a:fillToRect, % from the left, top, right, bottom; 50 each: the middle). */
+  focus?: { l: number; t: number; r: number; b: number };
 }
 
 /** Musterfüllung: one of DrawingML's 48 preset patterns with Vordergrund and Hintergrund. */
 export interface Pattern { preset: string; fg: string; bg: string }
 
 /** Bild- oder Texturfüllung: a picture (data URL), stretched or tiled (Bild nebeneinander als Textur anordnen). */
-export interface PictureFill { src: string; tile?: boolean; transparency?: number; /** Offsets in % of the element (Strecken: links, rechts, oben, unten). */ offsets?: { l: number; t: number; r: number; b: number } }
+export interface PictureFill {
+  src: string; tile?: boolean; transparency?: number; /** Offsets in % of the element (Strecken: links, rechts, oben, unten). */ offsets?: { l: number; t: number; r: number; b: number };
+}
 
 /** Füllung: Keine Füllung, Einfarbige Füllung (colour, Transparenz in %), Farbverlauf, Bild- oder Texturfüllung, Musterfüllung, Automatisch. */
 export interface Fill {
@@ -89,7 +97,11 @@ export interface Line {
 }
 
 /** Schatten (a:outerShdw / a:innerShdw): Farbe, Transparenz %, Größe %, Weichzeichnen pt, Winkel °, Abstand pt. */
-export interface Shadow { inner?: boolean; color?: string; transparency?: number; size?: number; blur?: number; angle?: number; distance?: number }
+export interface Shadow {
+  inner?: boolean; color?: string; transparency?: number; size?: number; blur?: number; angle?: number; distance?: number;
+  /** Perspektive (D-155): the shadow scaled (sx, sy %, sy below 0 mirrors it), skewed (kx degrees) about the corner `align` (a:outerShdw algn). */
+  persp?: { sx?: number; sy: number; kx?: number; align: string };
+}
 /** Leuchten: Farbe, Größe pt, Transparenz %. */
 export interface Glow { color: string; size: number; transparency?: number }
 /** 3D-Format: Abschrägung oben/unten (preset, Breite/Höhe pt), Tiefe, Kontur, Material, Beleuchtung. */

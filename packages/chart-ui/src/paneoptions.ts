@@ -5,6 +5,7 @@
 import { isPie, isScatter, kindInfo, barDefaults, type AxisOptions, type ChartModel, type DataLabelOptions, type ErrorBars, type Trendline } from "@raabe/charts";
 import type { PaneControl, PaneSection } from "@raabe/shell";
 import type { PaneHost } from "./formatpane";
+import { customErrorDialog } from "./selectdata";
 
 const TICKS = [{ label: "Ohne", value: "none" }, { label: "Innen", value: "in" }, { label: "Außen", value: "out" }, { label: "Kreuz", value: "cross" }];
 
@@ -285,5 +286,13 @@ export function errorSections(m: ChartModel, i: number, host: PaneHost): PaneSec
     { type: "heading", label: "Fehlerbetrag" },
     ...amount("fixedVal", "Fester Wert", undefined, 1), ...amount("percentage", "Prozentsatz", " %", 5), ...amount("stdDev", "Standardabweichung(en)", undefined, 1),
     ...amount("stdErr", "Standardfehler"),
+    // Benutzerdefiniert: Excel starts with ={1} above and below; Wert angeben asks for ranges or values (D-155).
+    { type: "radio", label: "Benutzerdefiniert", checked: () => b()?.type === "cust",
+      pick: () => set({ type: "cust", value: undefined, plus: b()?.plus ?? { cache: [1] }, minus: b()?.minus ?? { cache: [1] } }) },
+    { type: "button", label: "Wert angeben", disabled: () => b()?.type !== "cust" || !host.data, run: () => {
+      const cur = b();
+      if (!cur || !host.data) return;
+      void customErrorDialog(host.data, cur.plus, cur.minus).then((r) => { if (r) set({ plus: r.plus, minus: r.minus }); });
+    } },
   ] }];
 }

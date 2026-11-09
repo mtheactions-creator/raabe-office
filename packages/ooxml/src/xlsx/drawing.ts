@@ -10,8 +10,8 @@ import type { ChartModel } from "@raabe/charts";
 import type { Sheet } from "@raabe/sheet-engine";
 import { PackageWriter, Rels, relsPath, resolveTarget } from "../package";
 import {
-  CHART_CONTENT_TYPE, CHART_REL_TYPE, CHARTEX_CONTENT_TYPE, CHARTEX_REL_TYPE, DRAWING_CONTENT_TYPE, DRAWING_REL_TYPE,
-  anchorFromXml, anchorXml, chartFromXml, chartToXml, chartToXmlWithImages, drawingXml, isChartEx,
+  CHART_COLORS_CONTENT_TYPE, CHART_COLORS_REL_TYPE, CHART_CONTENT_TYPE, CHART_REL_TYPE, CHART_STYLE_CONTENT_TYPE, CHART_STYLE_REL_TYPE,
+  CHARTEX_CONTENT_TYPE, CHARTEX_REL_TYPE, DRAWING_CONTENT_TYPE, DRAWING_REL_TYPE, anchorFromXml, chartColorsXml, chartStyleXml, anchorXml, chartFromXml, chartToXml, chartToXmlWithImages, drawingXml, isChartEx,
 } from "./chart";
 import { isRel } from "./read";
 import { canon } from "./styles";
@@ -190,7 +190,31 @@ export function writeCharts(pw: PackageWriter, sheet: Sheet, sheetPart: string, 
       const media = pw.addMedia(bytes, mm[1], "xl/media/image");
       out = out.split(`r:embed="@img${k}"`).join(`r:embed="${pw.link(cpart, IMAGE_REL_TYPE, media)}"`);
     });
+    if (!isChartEx(m)) chartStyleParts(m, cpart);
     return out;
+  };
+  // The chart's style and colour parts (xl/charts/styleN.xml, colorsN.xml): Excel reports the chosen
+  // Diagrammformatvorlage (Chart.ChartStyle) from the style part's id (D-155). A part Excel wrote is kept and only
+  // its id follows the chart's style; a chart without one gets ours.
+  const chartStyleParts = (m: ChartModel, cpart: string): void => {
+    const rels = pw.relsOf(cpart);
+    const id = m.style ?? 201;
+    const sr = rels.list.find((r) => isRel(r.type, CHART_STYLE_REL_TYPE));
+    const spath = sr ? resolveTarget(cpart, sr.target) : undefined;
+    if (spath && pw.files[spath]) {
+      const old = strFromU8(pw.files[spath]);
+      const next = old.replace(/(<cs:chartStyle\b[^>]*?\bid=")\d+(")/, `$1${id}$2`);
+      if (next !== old) pw.setPart(spath, next);
+      return;
+    }
+    const style = pw.freeName("xl/charts/style");
+    pw.setPart(style, chartStyleXml(id), CHART_STYLE_CONTENT_TYPE);
+    pw.link(cpart, CHART_STYLE_REL_TYPE, style);
+    if (!rels.list.some((r) => isRel(r.type, CHART_COLORS_REL_TYPE))) {
+      const colors = pw.freeName("xl/charts/colors");
+      pw.setPart(colors, chartColorsXml(), CHART_COLORS_CONTENT_TYPE);
+      pw.link(cpart, CHART_COLORS_REL_TYPE, colors);
+    }
   };
   const fresh = pics.filter((p) => !p.raw || !old?.includes(p.raw));
   const freshShapes = (sheet.shapes ?? []).filter((s) => !s.raw || !old?.includes(s.raw));

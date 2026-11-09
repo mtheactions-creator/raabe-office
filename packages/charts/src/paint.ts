@@ -4,7 +4,14 @@
 // they are collected in `defs` (beginDefs / endDefs) and referenced as url(#id).
 
 import { autoScale, type AxisScale } from "./scale";
-import type { Arrow, AxisOptions, Dash, Effects, Fill, Gradient, Line, TextFormat } from "./model";
+import { lum, type Arrow, type AxisOptions, type Dash, type Effects, type Fill, type Gradient, type GradientStop, type Line, type TextFormat } from "./model";
+
+/** A stop's colour with its Helligkeit (D-155): above 0 towards white, below 0 towards black, as DrawingML's lumMod/lumOff. */
+export function stopHex(s: GradientStop): string {
+  const b = s.brightness ? Math.max(-100, Math.min(100, s.brightness)) / 100 : 0;
+  const hex = s.color.slice(0, 7);
+  return b > 0 ? lum(hex, 1 - b, b) : b < 0 ? lum(hex, 1 + b, 0) : hex;
+}
 
 /** The SVG definitions of the scene being built. */
 export interface Defs { list: string[]; prefix: string; n: number; cache: Map<string, string> }
@@ -44,8 +51,8 @@ const opacity = (t?: number) => (t ? String(Math.round((1 - Math.max(0, Math.min
 /** A gradient definition; returns url(#id) (or the first stop's colour outside a scene). */
 export function gradientPaint(g: Gradient): string {
   const stops = [...g.stops].sort((a, b) => a.pos - b.pos);
-  const first = stops[0]?.color ?? "#FFFFFF";
-  const body = stops.map((s) => `<stop offset="${Math.max(0, Math.min(100, s.pos))}%" stop-color="${s.color.slice(0, 7)}" stop-opacity="${opacity(s.transparency)}"/>`).join("");
+  const first = stops[0] ? stopHex(stops[0]) : "#FFFFFF";
+  const body = stops.map((s) => `<stop offset="${Math.max(0, Math.min(100, s.pos))}%" stop-color="${stopHex(s)}" stop-opacity="${opacity(s.transparency)}"/>`).join("");
   const key = JSON.stringify(g);
   const id = define((id) => {
     if (g.kind === "linear") {
@@ -54,7 +61,12 @@ export function gradientPaint(g: Gradient): string {
       return `<linearGradient id="${id}" x1="0" y1="0.5" x2="1" y2="0.5" gradientTransform="rotate(${a} 0.5 0.5)">${body}</linearGradient>`;
     }
     // Radial, Rechteckig and Pfad from the centre outwards (a rectangle drawn as a circle).
-    return `<radialGradient id="${id}" cx="0.5" cy="0.5" r="${g.kind === "radial" ? 0.5 : 0.71}">${body}</radialGradient>`;
+    // The focus (a:fillToRect) moves the centre: l 50 / t -80 is above the middle of the top edge (Lichtakzent oben).
+    const fo = g.focus ?? { l: 50, t: 50, r: 50, b: 50 };
+    const cx = Math.round(((fo.l + (100 - fo.r)) / 2) * 10) / 1000, cy = Math.round(((fo.t + (100 - fo.b)) / 2) * 10) / 1000;
+    const reach = Math.max(Math.hypot(cx, cy), Math.hypot(1 - cx, cy), Math.hypot(cx, 1 - cy), Math.hypot(1 - cx, 1 - cy));
+    const r = g.kind === "radial" ? (g.focus ? Math.round(reach * 1000) / 1000 : 0.5) : 0.71;
+    return `<radialGradient id="${id}" cx="${cx}" cy="${cy}" r="${r}">${body}</radialGradient>`;
   }, "g" + key);
   return id ? `url(#${id})` : first;
 }
@@ -228,7 +240,8 @@ export function effectFilter(e: Effects | undefined): string | undefined {
     }
     if (e.shadow) {
       const s = e.shadow;
-      const a = ((s.angle ?? 45) * Math.PI) / 180, dist = s.distance ?? 3;
+      // Perspektive is drawn as an offset shadow (the filter cannot skew it; D-155).
+      const a = ((s.angle ?? 45) * Math.PI) / 180, dist = s.persp && !s.distance ? (s.blur ?? 4) / 2 : s.distance ?? 3;
       const dx = Math.round(Math.cos(a) * dist * 100) / 100, dy = Math.round(Math.sin(a) * dist * 100) / 100;
       const op = opacity(s.transparency ?? 60);
       if (s.inner) {
