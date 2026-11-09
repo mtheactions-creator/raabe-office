@@ -197,6 +197,8 @@ export class WriteApp {
     new Keytips(
       (el) => el.dataset.keytipScope === "root" && el.getAttribute("role") === "tab" ? this.ribbon.activeTab : null,
       () => this.active?.editor.focus(),
+      // Alt+1, Alt+2, Alt+3: Überschrift 1 to 3 (German Word's bindings, recorded with FindKey, D-150).
+      ["Digit1", "Digit2", "Digit3"],
     );
     this.installKeyboard();
     this.installFocusKeeping();
@@ -1468,14 +1470,19 @@ export class WriteApp {
         if (vk === 189) cmd = "font.subscript";            // Strg+Umschalt+-
         if (vk === 56) cmd = "para.showMarks";             // Strg+* (Umschalt+8)
       }
+      // Strg+Alt is AltGr on a German keyboard: the key's character may be another one (Strg+Alt+E gives "€"), so
+      // these go by the key's code (D-150).
       if (ctrl && alt && !shift) {
-        if (k === "f" && vk === 70) cmd = "ref.footnote";
-        if (k === "d" && vk === 68) cmd = "ref.endnote";
-        if (k === "k" && vk === 75) cmd = "review.newComment";
+        if (vk === 70) cmd = "ref.footnote";
+        if (vk === 68) cmd = "ref.endnote";
+        if (vk === 75) cmd = "review.newComment";
         // Word: CopyFormat / PasteFormat (the painter brush is the ribbon button).
-        if (k === "c" && vk === 67) { e.preventDefault(); if (ed) this.copiedFormat = ed.copyFormat(); return; }
-        if (k === "v" && vk === 86) { e.preventDefault(); if (ed && this.copiedFormat) ed.pasteFormat(this.copiedFormat); return; }
+        if (vk === 67) { e.preventDefault(); if (ed) this.copiedFormat = ed.copyFormat(); return; }
+        if (vk === 86) { e.preventDefault(); if (ed && this.copiedFormat) ed.pasteFormat(this.copiedFormat); return; }
       }
+      if (ctrl && alt && shift && vk === 83) cmd = "style.pane";                   // Strg+Alt+Umschalt+S
+      if (alt && !ctrl && !shift && vk >= 49 && vk <= 51) cmd = `style.h${vk - 48}`; // Alt+1 .. Alt+3
+      if (!ctrl && !alt && !shift && k === "F7") cmd = "review.spelling";
       if (!ctrl && !alt && k === "F12") cmd = "file.saveAs";
       if (alt && shift && !ctrl && vk === 48) cmd = "insert.equation";             // Alt+Umschalt+0
       if (!ctrl && !alt && shift && k === "F7") cmd = "review.thesaurus";

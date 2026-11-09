@@ -285,7 +285,8 @@ export function insertRows(doc: Doc, p: number, q: number, where: RowWhere): Pos
   return firstOfCell(doc, t.a, at, 0);
 }
 
-/** Spalten links/rechts einfügen; the table keeps its width (columns share it). */
+/** Spalten links/rechts einfügen: each new column as wide as the one it is copied from; the other columns keep their
+ *  widths and the table grows by the new ones, with that width as its own (recorded in Word, D-149). */
 export function insertColumns(doc: Doc, p: number, q: number, where: ColWhere): Pos | null {
   const t = tableAt(doc, p);
   if (!t) return null;
@@ -297,11 +298,9 @@ export function insertColumns(doc: Doc, p: number, q: number, where: ColWhere): 
   const count = hi - lo + 1;
   const gi = where === "left" ? lo : hi + 1;
   const cells = cellParas(doc, t.a, t.b, t.def);
-  const total = t.def.grid.reduce((s, x) => s + x, 0);
   const added = Array.from({ length: count }, (_, k) => t.def.grid[Math.min(t.def.grid.length - 1, (where === "left" ? lo : hi - count + 1) + k)]);
-  const grid0 = [...t.def.grid.slice(0, gi), ...added, ...t.def.grid.slice(gi)];
-  const scale = total / grid0.reduce((s, x) => s + x, 0);
-  const grid = grid0.map((x) => x * scale);
+  const grid = [...t.def.grid.slice(0, gi), ...added, ...t.def.grid.slice(gi)];
+  const width = grid.reduce((s, x) => s + x, 0);
   const rows = t.def.rows.map((row, r) => {
     let x = 0;
     const out: CellDef[] = [];
@@ -321,7 +320,7 @@ export function insertColumns(doc: Doc, p: number, q: number, where: ColWhere): 
     cells[r] = outCells;
     return { ...row, cells: out };
   });
-  rebuild(doc, t.a, t.b, { ...t.def, grid, rows }, cells);
+  rebuild(doc, t.a, t.b, { ...t.def, grid, rows, width }, cells);
   const r0 = c1.row;
   return firstOfCell(doc, t.a, r0, cellAtGrid(rows[r0], gi));
 }

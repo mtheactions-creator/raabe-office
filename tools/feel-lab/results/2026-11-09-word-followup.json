@@ -1,0 +1,448 @@
+{
+ "date": "2026-11-09",
+ "no_spacing": {
+  "target_font_before": "Calibri",
+  "target_font": "Calibri",
+  "style_font": "Calibri",
+  "style_base": "",
+  "style_xml": "<w:style w:type=\"paragraph\" w:styleId=\"KeinLeerraum\"><w:name w:val=\"No Spacing\"/><w:uiPriority w:val=\"1\"/><w:qFormat/><w:rsid w:val=\"00A22349\"/><w:pPr><w:spacing w:after=\"0\" w:line=\"240\" w:lineRule=\"auto\"/></w:pPr><w:rPr><w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/></w:rPr></w:style>"
+ },
+ "insert_col_left": {
+  "before": {
+   "cols": 3,
+   "widths": [
+    151.2,
+    151.2,
+    151.2
+   ],
+   "total": 453.6,
+   "pref": 0.0,
+   "prefType": 1,
+   "autofit": false
+  },
+  "after": {
+   "cols": 4,
+   "widths": [
+    151.2,
+    151.2,
+    151.2,
+    151.2
+   ],
+   "total": 604.8,
+   "pref": 604.8,
+   "prefType": 3,
+   "autofit": false
+  },
+  "tblGrid": "<w:tblGrid><w:gridCol w:w=\"3024\"/><w:gridCol w:w=\"3024\"/><w:gridCol w:w=\"3024\"/><w:gridCol w:w=\"3024\"/></w:tblGrid>",
+  "tblW": "<w:tblW w:w=\"12096\" w:type=\"dxa\"/>"
+ },
+ "insert_col_right": {
+  "before": {
+   "cols": 3,
+   "widths": [
+    151.2,
+    151.2,
+    151.2
+   ],
+   "total": 453.6,
+   "pref": 0.0,
+   "prefType": 1,
+   "autofit": false
+  },
+  "after": {
+   "cols": 4,
+   "widths": [
+    151.2,
+    151.2,
+    151.2,
+    151.2
+   ],
+   "total": 604.8,
+   "pref": 604.8,
+   "prefType": 3,
+   "autofit": false
+  },
+  "tblGrid": "<w:tblGrid><w:gridCol w:w=\"3024\"/><w:gridCol w:w=\"3024\"/><w:gridCol w:w=\"3024\"/><w:gridCol w:w=\"3024\"/></w:tblGrid>",
+  "tblW": "<w:tblW w:w=\"12096\" w:type=\"dxa\"/>"
+ },
+ "review": {
+  "ReviewAcceptChangeMenu": {
+   "label": "Annehmen",
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2147024809), None)",
+   "before": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   },
+   "after": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   },
+   "again": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   }
+  },
+  "ReviewRejectChangeMenu": {
+   "label": "Ablehnen",
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2147024809), None)",
+   "before": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   },
+   "after": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   },
+   "again": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   }
+  },
+  "ReviewAcceptChange": {
+   "label": "Diese Änderung annehmen",
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2147467259), None)",
+   "before": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   },
+   "after": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   },
+   "again": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   }
+  },
+  "ReviewRejectChange": {
+   "label": "Änderungen ablehnen",
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2147467259), None)",
+   "before": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   },
+   "after": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   },
+   "again": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   }
+  },
+  "ReviewNextChange": {
+   "label": "Weiter",
+   "error": null,
+   "before": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   },
+   "after": {
+    "start": 409,
+    "end": 414,
+    "text": "Ende ",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   },
+   "again": {
+    "start": 457,
+    "end": 461,
+    "text": "neu ",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   }
+  },
+  "ReviewPreviousChange": {
+   "label": "Zurück",
+   "error": null,
+   "before": {
+    "start": 203,
+    "end": 224,
+    "text": "weitere Beobachtungen",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   },
+   "after": {
+    "start": 457,
+    "end": 461,
+    "text": "neu ",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   },
+   "again": {
+    "start": 409,
+    "end": 414,
+    "text": "Ende ",
+    "revisions": 2,
+    "revs": [
+     {
+      "type": 2,
+      "text": "Ende "
+     },
+     {
+      "type": 1,
+      "text": "neu "
+     }
+    ]
+   }
+  }
+ },
+ "key_bindings": {
+  "Strg+N": "FileNewDefault",
+  "Strg+O": "FileOpenUsingBackstage",
+  "Strg+S": "FileSave",
+  "F12": "FileSaveAs",
+  "Strg+P": "PrintPreviewAndPrint",
+  "Strg+W": "DocClose",
+  "Strg+Z": "EditUndo",
+  "Strg+Y": "EditRedoOrRepeat",
+  "Strg+V": "EditPaste",
+  "Strg+Umschalt+V": "PasteTextOnly",
+  "Strg+X": "EditCut",
+  "Strg+C": "EditCopy",
+  "Strg+Alt+C": "CopyFormat",
+  "Strg+Alt+V": "PasteFormat",
+  "Strg+A": "EditSelectAll",
+  "Strg+F": "SmartFind",
+  "Strg+H": "EditReplace",
+  "Strg+G": "EditGoTo",
+  "Strg+Umschalt+A": "Font",
+  "Strg+Umschalt+P": "FontSizeSelect",
+  "Strg+Umschalt+<": "GrowFont",
+  "Strg+<": "ShrinkFont",
+  "Strg+Umschalt+F": "Bold",
+  "Strg+Umschalt+K": "Italic",
+  "Strg+Umschalt+U": "Underline",
+  "Strg+#": "Subscript",
+  "Strg+D": "FormatFont",
+  "Strg+Umschalt+M": "UnIndent",
+  "Strg+M": "Indent",
+  "Strg+Umschalt+8": "ShowAll",
+  "Strg+Umschalt++": "",
+  "Strg+L": "LeftPara",
+  "Strg+E": "CenterPara",
+  "Strg+R": "RightPara",
+  "Strg+B": "JustifyPara",
+  "Strg+Umschalt+D": "DoubleUnderline",
+  "Strg+Umschalt+G": "AllCaps",
+  "Strg+1": "SpacePara1",
+  "Strg+5": "SpacePara15",
+  "Strg+2": "SpacePara2",
+  "Strg+Alt+1": "",
+  "Strg+Alt+2": "",
+  "Strg+Alt+3": "",
+  "Strg+Alt+Umschalt+S": "FormattingPane",
+  "Strg+Eingabe": "InsertPageBreak",
+  "Umschalt+Eingabe": "\u000b",
+  "Strg+K": "InsertHyperlink",
+  "Strg+Alt+K": "InsertAnnotation",
+  "Alt+Umschalt+0": "EquationToggle",
+  "Strg+Alt+F": "InsertFootnoteNow",
+  "Strg+Alt+D": "InsertEndnoteNow",
+  "F7": "ToolsProofing",
+  "Umschalt+F7": "ToolsThesaurusRR",
+  "Strg+Alt+Leertaste": "ReadAloud",
+  "Strg+Umschalt+E": "ToolsRevisionMarksToggle",
+  "Strg+0": "Zoom100",
+  "Strg+F1": "ToggleRibbon",
+  "Alt+1": "ApplyHeading1",
+  "Alt+2": "ApplyHeading2",
+  "Alt+3": "ApplyHeading3",
+  "Alt+Umschalt+1": "ShowHeading1",
+  "Strg+Umschalt+1": "",
+  "Strg+Umschalt+N": "NormalStyle",
+  "Alt+Umschalt+3": "ShowHeading3"
+ }
+}

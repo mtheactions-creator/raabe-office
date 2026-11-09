@@ -65,6 +65,8 @@ HELPERS = r"""
         docs: window.__app.docs().length, native: (window.__nativeCalls || []).length,
         popSig: (() => { const ps = popups(); const q = ps[ps.length - 1]; return q ? H(q.className + "|" + clean(q.textContent).slice(0, 400)) : ""; })(),
         bsPage: bs && vis(bs) ? H(clean(bs.querySelector("nav .active, nav [aria-current]")?.textContent) + "|" + clean(bs.querySelector(".page-body")?.textContent).slice(0, 2000)) : "",
+        comments: [...document.querySelectorAll(".centry, .cpane-list, .cpane")].filter(vis).length,
+        focus: (() => { const f = document.activeElement; return f && f.closest(".ribbon-card, .qat, .statusbar") ? label(f) || f.tagName : ""; })(),
         overlay: document.querySelectorAll(".crop-handle, .crop, [class*=crop]").length, bodyCls: document.body.className, minimized: !!document.querySelector(".ribbon-card.hidden, .ribbon.minimized"),
       };
     },

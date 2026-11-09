@@ -3889,3 +3889,41 @@ new equation removed the equation itself. Word takes back one change at a time. 
 equation's values before each change: Strg+Z and Strg+Y step back and forth inside the equation (the caret goes to its
 end); with no change left, Strg+Z ends the edit and acts on the document (the next step removes a new equation, as in
 Word). The document still gets one undo step for the whole edit once it is left.
+
+## D-149 RaabeWrite: Kein Leerraum, new table columns and Überprüfen as recorded in Word (2026-11-09)
+
+The by-hand audit (D-133) left three differences open; each was recorded first in our own invisible Word
+(`probe_word_followup.py`, results/2026-11-09-word-followup.json) on the audit's base document.
+- **Kein Leerraum** kept the text's font in Word (Calibri, as Standard has it on that PC) and gave Aptos in RaabeWrite.
+  Word copies the style from its template, where No Spacing carries the same font as Normal
+  (`<w:rFonts w:ascii="Calibri" w:hAnsi="Calibri"/>`); our built-in style is based on nothing and fell back to the
+  theme font. A paragraph style based on nothing, added to a document whose Standard style has a font of its own, now
+  takes that font (text-engine `ensureStyle`). In a document whose Standard has no font of its own nothing changes.
+- **Spalte links/rechts einfügen**: Word keeps every column's width (3 x 151.2 pt became 4 x 151.2 pt) and the table
+  grows by the new column (its width becomes 604.8 pt, w:tblW in dxa). RaabeWrite kept the table's width and narrowed
+  all columns. It now does as Word (edits `insertColumns`; unit test step3.test.ts). PowerPoint does the opposite
+  (D-138), so RaabePresent is unchanged.
+- **Überprüfen with no change in the selection**: Word's Zurück and Weiter go on from the other end of the document
+  (Zurück before the first change selects the last one); RaabeWrite did nothing. "Diese Änderung annehmen/ablehnen"
+  does nothing in Word (the command fails), as in RaabeWrite. The split buttons' main part (Annehmen/Ablehnen und zur
+  nächsten wechseln) cannot be run through Word's object model (ExecuteMso refuses split buttons) and UI Automation did
+  not reach the ribbon of an automated instance, so it is not recorded; RaabeWrite now goes to the next change there,
+  which is what "und zur nächsten wechseln" does once the change is gone (before: nothing).
+
+## D-150 RaabeWrite: shortcuts as a German keyboard sends them (2026-11-09)
+
+The audit pressed some shortcuts with key events no keyboard sends, so 15 of its 57 open failures were the sweep's.
+- The sweep now sends what a German keyboard sends (`german_key` in sweep_write.py): the character with Umschalt or
+  AltGr (Strg+Alt is AltGr: Strg+Alt+3 arrives as "³" and types it unless the app stops it, Strg+Alt+E as "€"), the
+  key's code and virtual key (Strg+( is Strg+Umschalt+8, Alt+= is Alt+Umschalt+0, Strg+* is Strg+Umschalt++). Each
+  shortcut is also compared with its command run directly from the same set-up (in the same document after
+  Rückgängig, so the results compare exactly): what changes (document, dialog, pane, view, focus) must be the same.
+  Rückgängig/Wiederholen get something typed first, Kopieren is checked on the clipboard, Speichern on a copy's file,
+  100% after another zoom.
+- **Word's key bindings recorded** (Application.FindKey, German Word): Überschrift 1 to 3 are **Alt+1, Alt+2, Alt+3**
+  (Strg+Alt+1..3 are free in German Word, where Strg+Alt is AltGr); F7 runs the Rechtschreibung und Grammatik pane,
+  Strg+Alt+Umschalt+S the Formatvorlagen pane, Strg+0 100 %. RaabeWrite had Strg+Alt+3 in its command list without a
+  key binding, and no binding for F7 and Strg+Alt+Umschalt+S. They are bound now; Alt+1..3 are shortcuts, not keytips
+  (the shell's Keytips take a list of key codes an app uses with Alt, empty for RaabeCalc and RaabePresent).
+- Strg+Alt shortcuts (Fußnote, Endnote, Kommentar, Format übertragen/einfügen) go by the key's code, not its
+  character, so an AltGr character on the key cannot break them.
