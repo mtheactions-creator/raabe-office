@@ -3503,7 +3503,21 @@ RaabeCalc into one workbook per chart type, opened again (the setting must come 
 invisible Excel, which reports each setting through COM (`excel_chartpane_com.py` maps model fields to the
 object model: Axes(2).MajorTickMark, Format.Line.Visible, Format.Fill.Type, Shadow, Glow, SoftEdge,
 TickLabelSpacing, DisplayUnit, CrossesAt, Points(n).Explosion, ChartObject.Placement …) and exports each chart.
-Results: results/2026-11-09-calc-chartpane.json (numbers in the step report).
+First results (results/2026-11-09-calc-chartpane-column.json, -pie-line.json, on the build before the fixes they
+led to): column 1436 controls used, 1418 changed the chart, all 1418 undone by Strg+Z, 1178 back on reopening,
+Excel COM 1334 of 1682 settings; pie 529 / 523 / 523 / 359, COM 474 of 605; line 942 / 916 / 906 / 90. What
+failed was fixed: palette colours without "#", two undo steps for one typed value, gradient stops out of order,
+the chart area's Textoptionen not saved or drawn, a pie series' Linie only on its points, a solid pie fill read
+back as a colour the pie ignores, error bar effects not saved, details of an automatic line lost, XY charts on
+the Sekundärachse written without their secondary axes (Excel refused the file). COM misses that remain are
+mostly text formats Excel does not report through TextFrame2 for chart text it builds itself, and settings Excel
+ignores (a format code "Probe 1").
+`check_calc_chartpane_real.py` (OS mouse and keyboard under the real-input lock): 12 of 12 (slider drag, spin
+button, colour palette, native dropdowns, typing and Enter, Strg+Z, a gradient stop dragged, a stop added).
+`compare_calc_chartpane_pictures.py`: for 21 of 25 settings our drawing and Excel's export of our file change
+in the same region (box overlap at least 0.3); the four misses are a series' shadow and glow, one point's
+colour (drawn the same, but the plot stood about 8 pt higher than Excel's with negative values, fixed since)
+and category labels "Niedrig".
 
 ## D-114 RaabeCalc chart pane: what differs from Excel on purpose or is left out (2026-11-08)
 
