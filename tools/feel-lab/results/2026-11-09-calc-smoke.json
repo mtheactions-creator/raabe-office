@@ -1,0 +1,58 @@
+{
+ "app": {
+  "rows": 9,
+  "sheetGreyed": {
+   "data.subtotal": true,
+   "data.group": true,
+   "font.bold": true,
+   "cells.insertSheet": true
+  }
+ },
+ "excel": {
+  "opened": true,
+  "labels": [
+   "Klasse",
+   "7a",
+   "7a",
+   "7a Ergebnis",
+   "7b",
+   "7b",
+   "7b",
+   "7b Ergebnis",
+   "Gesamtergebnis"
+  ],
+  "totals": [
+   "=SUBTOTAL(9,C2:C3)",
+   "=SUBTOTAL(9,C5:C7)",
+   "=SUBTOTAL(9,C2:C7)"
+  ],
+  "values": [
+   5.0,
+   7.0,
+   12.0
+  ],
+  "outline": [
+   1.0,
+   3.0,
+   3.0,
+   2.0,
+   3.0,
+   3.0,
+   3.0,
+   2.0,
+   1.0
+  ],
+  "validation": 1,
+  "iconSet": true,
+  "pictures": [
+   "Logo"
+  ],
+  "header": "Notenliste",
+  "break": [
+   5
+  ],
+  "sheetProtected": true,
+  "bookProtected": true
+ },
+ "pass": true
+}
