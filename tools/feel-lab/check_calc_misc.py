@@ -41,6 +41,8 @@ def keytips(c: CalcSide, inp: Cdp) -> list[dict]:
         out.append({"check": name, "ok": bool(ok), "detail": detail})
 
     c.js("__calc.reset({}, 'A1', 1)")
+    # The first keys right after the window came up were lost once: a moment for the app first.
+    time.sleep(1.5)
     c.js("__calc.grid.focus()")
     inp.keytips("F M")
     time.sleep(0.3)

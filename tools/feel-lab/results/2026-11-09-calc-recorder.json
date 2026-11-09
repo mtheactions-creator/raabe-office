@@ -1,10 +1,10 @@
 {
  "counts": {
   "cases": 9,
-  "codeSame": 7,
-  "byHandSameWorkbook": 8,
+  "codeSame": 8,
+  "byHandSameWorkbook": 9,
   "excelMacroInCalc": 9,
-  "oursInExcel": 8,
+  "oursInExcel": 9,
   "shortcut": "1/1"
  },
  "results": {
@@ -304,7 +304,7 @@
   },
   "Fuellfarbe": {
    "byHand": {
-    "code": "Sub Makro_Fuellfarbe()\nAttribute Makro_Fuellfarbe.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Fuellfarbe Makro\n'\n'\nEnd Sub",
+    "code": "Sub Makro_Fuellfarbe()\nAttribute Makro_Fuellfarbe.VB_ProcData.VB_Invoke_Func = \" \\n14\"\n'\n' Makro_Fuellfarbe Makro\n'\n'\n    With Selection.Interior\n        .Pattern = xlSolid\n        .PatternColorIndex = xlAutomatic\n        .Color = 65535\n        .TintAndShade = 0\n        .PatternTintAndShade = 0\n    End With\nEnd Sub",
     "state": {
      "mode": "Bereit",
      "editing": null,
@@ -342,7 +342,7 @@
      "filter": false,
      "extra": {
       "A1": {
-       "fill": null,
+       "fill": 65535,
        "size": 11,
        "h": 1
       },
@@ -358,25 +358,11 @@
     "defaultName": "Makro1",
     "recording": false
    },
-   "codeSame": false,
-   "codeDiff": [
-    "@@ -7,7 +6,0 @@",
-    "-    With Selection.Interior",
-    "-        .Pattern = xlSolid",
-    "-        .PatternColorIndex = xlAutomatic",
-    "-        .Color = 65535",
-    "-        .TintAndShade = 0",
-    "-        .PatternTintAndShade = 0",
-    "-    End With"
-   ],
-   "stateDiff": [
-    "A1 fill: Excel 65535 RaabeCalc None"
-   ],
+   "codeSame": true,
+   "stateDiff": [],
    "excelMacroInCalc": [],
    "shortcut": null,
-   "oursInExcel": [
-    "A1 fill: Excel 65535 RaabeCalc None"
-   ]
+   "oursInExcel": []
   },
   "Ausfuellen": {
    "byHand": {

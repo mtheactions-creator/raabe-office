@@ -1,7 +1,7 @@
 {
  "counts": {
   "keytips": "10/10",
-  "formulabar": "9/10",
+  "formulabar": "10/10",
   "slicers": "11/11"
  },
  "report": {
@@ -119,10 +119,10 @@
    },
    {
     "check": "dragged far right: the room Excel leaves the buttons and the bar",
-    "ok": false,
+    "ok": true,
     "detail": [
-     1050.604248046875,
-     261.3957516551018,
+     1155,
+     156.99999970197678,
      156.66666666666666
     ]
    },

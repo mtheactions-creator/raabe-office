@@ -147,9 +147,9 @@ class Cdp:
         elif kind in ("tabdbl", "tabclick"):
             self.click_el(f"[...document.querySelectorAll('.sheettab')].find(t => t.textContent === {json.dumps(st[1])})", count=2 if kind == "tabdbl" else 1)
         elif kind == "ribbon":
-            self.side.js("document.querySelector('.ribbon [role=tab][data-keytip=R]')?.click()")
+            self.side.js("document.querySelector('[role=tab][data-keytip=R]')?.click()")
             time.sleep(0.2)
-            sel = {"font.fill": "[...document.querySelectorAll('.ribbon button.color-main')].find(b => (b.getAttribute('aria-label') || '').startsWith('Füllfarbe'))"}[st[1]]
+            sel = {"font.fill": "[...document.querySelectorAll('button.color-main')].find(b => (b.getAttribute('aria-label') || '').startsWith('Füllfarbe'))"}[st[1]]
             self.click_el(sel, 0.3, 0.5)
         elif kind == "wait":
             time.sleep(st[1])

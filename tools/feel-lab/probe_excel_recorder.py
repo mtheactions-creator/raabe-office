@@ -247,7 +247,7 @@ def main() -> None:
                     rec.front()
                     if c.get("relative"):
                         rec.keytips("f", "m", "v")
-                        winapi.press("esc")
+                        time.sleep(1.0)
                     rec.front()
                     name = f"Makro_{c['name']}"
                     # Ansicht > Makros > Makro aufzeichnen... by its keytips (Alt, F, M, R as recorded above).
@@ -351,7 +351,7 @@ def main() -> None:
                     out["cases"][c["name"]] = {"macro": name, "state": st}
                     if c.get("relative"):
                         rec.keytips("f", "m", "v")
-                        winapi.press("esc")
+                        time.sleep(1.0)
                     print(c["name"], "recorded", flush=True)
                     settle()
                 except Exception as e:  # noqa: BLE001
