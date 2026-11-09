@@ -12,7 +12,7 @@
 
 import { kindInfo, isScatter, parseRef, refText, seriesName, sourceOf, type ChartModel, type ChartSeries, type Ref } from "@raabe/charts";
 import { h, messageBox, showDialog } from "@raabe/shell";
-import { catNames } from "@raabe/chart-ui";
+import { catNames } from "./buttons";
 
 export interface SelectDataHost {
   /** The workbook's sheet names (the first is used for refs without one). */

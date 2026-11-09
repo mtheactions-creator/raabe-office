@@ -4021,10 +4021,11 @@ launcher Größe und Position... R G). The same for an inline and a floating cha
 these groups and keytips (`apps/raabe-write/src/features/chart-tools.ts`).
 - **One chart UI for both apps:** the new package `@raabe/chart-ui` gives RaabeWrite RaabeCalc's buttons beside the
   chart, the elements' entries and side menus, Excel's/Word's chart styles, the Diagrammtyp ändern dialog and the
-  Format pane of chart elements (D-115 - D-118). The modules stay in `apps/raabe-calc/src/charts/` for now and the
-  package re-exports them: the Format pane is being completed in another branch tonight ("charts-pane"), and a move
-  now would have split its merge. After that merge they move into the package in one step (and RaabeCalc's
-  feature.ts uses `applyQuickLayout`/`applyColors` from `chart-ui/layouts.ts`, which now holds the Schnelllayout steps).
+  Format pane of chart elements (D-111 - D-118). Once the complete Format pane was merged (D-111 - D-114), the modules
+  moved there from `apps/raabe-calc/src/charts/` (buttons, elements, formatpane with panefill/paneoptions/panetext,
+  styles with chart-styles.gen, types; `gen_chart_styles.py` writes into the package); RaabeCalc keeps only what needs
+  its sheets (feature.ts, selectdata.ts) and imports the rest from the package. `chart-ui/layouts.ts` holds the
+  Schnelllayout and Farben ändern steps for RaabeWrite (RaabeCalc's feature.ts still has its own copy of them).
 - **How a chart is changed in the text:** a chart object keeps its chart part as XML. The selected chart's part is
   parsed once (cached per part), the tabs, buttons and pane change that model, and the part is written again
   (`chartToXml`) and drawn again at the chart's size, as one undo step; the embedded workbook stays (charts read from

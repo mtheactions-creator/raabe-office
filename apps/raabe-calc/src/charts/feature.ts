@@ -20,7 +20,7 @@ import { chartElements, elementName, elementOfPart, formatPane, partsSelector, t
 import { sheetAxes, type Axis } from "../grid/metrics";
 import { chartButtons } from "@raabe/chart-ui";
 import { choiceLabel, elementEntries } from "@raabe/chart-ui";
-import { selectDataDialog, type SelectDataHost } from "./selectdata";
+import { selectDataDialog, type SelectDataHost } from "@raabe/chart-ui";
 import { applyStyle, chartStyles, setStyleTheme, styleIndex } from "@raabe/chart-ui";
 
 export type ChartKind = Kind;

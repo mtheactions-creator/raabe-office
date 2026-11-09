@@ -36,7 +36,23 @@ class Run:
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
     run = Run()
-    a = AppExe("present", port=9483)
+    a = AppExe("present", port=9483, size=(3840, 2000))
+    # The page loads once more after the window shows: connect to the page that is there then.
+    import urllib.request
+    from feellab.cdp_app import CdpPage
+    deadline = time.time() + 40
+    while True:
+        time.sleep(1.0)
+        try:
+            with urllib.request.urlopen("http://127.0.0.1:9483/json/list", timeout=2) as r:
+                pages = [x for x in json.load(r) if x.get("type") == "page"]
+            a.page = CdpPage(pages[0]["webSocketDebuggerUrl"])
+            if a.page.js("typeof window.__present === 'object' && !!window.__present.app"):
+                break
+        except Exception:  # noqa: BLE001
+            pass
+        if time.time() > deadline:
+            raise TimeoutError("RaabePresent's page did not come up")
     p = a.page
 
     def rect(sel: str, text: str | None = None):
@@ -72,7 +88,7 @@ def main() -> None:
         btns = p.js("[...document.querySelectorAll('.pchart-overlay:not([hidden]) .chart-btn')].map((b) => b.getAttribute('aria-label'))")
         run.check("the three chart buttons beside the chart", btns == ["Diagrammelemente", "Diagrammformatvorlagen", "Diagrammfilter"], btns)
         click(".tab", "Format")
-        click(".ribbon-card [aria-label]", "Auswahl formatieren")
+        click(".ribbon-card [data-group=current] [data-keytip=U]")  # Auswahl formatieren
         run.check("Format > Auswahl formatieren opens the chart's pane (Diagrammbereich formatieren)", title() == "Diagrammbereich formatieren", title())
         # A fill in the pane: Einfarbige Füllung changes the chart area.
         click(".taskpane:not([hidden]) label", "Einfarbige Füllung")
@@ -94,6 +110,10 @@ def main() -> None:
         run.check("WordArt-Formate > Textfüllung > Rot colours the chart's text", col is not None and col.upper().endswith("FF0000") and json.dumps(m, sort_keys=True) != before, col)
         # Diagrammelemente > Legende off, Strg+Z back.
         p.key("Escape")
+        if not p.js("__present.app.chartUi.selected()"):
+            x, y = rect(f'.stage [data-id="{cid}"]')
+            p.click(x, y)
+            time.sleep(0.5)
         click(".pchart-overlay .chart-btn", "Diagrammelemente")
         click(".cb-fly .cb-row", "Legende")
         off = (model() or {}).get("legend")
