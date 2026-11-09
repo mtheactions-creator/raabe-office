@@ -52,6 +52,9 @@ export interface PictureFormat {
   readonly saturation?: number;
   /** Farbton as colour temperature in Kelvin (6500 = unchanged). */
   readonly temperature?: number;
+  /** Künstlerische Effekte as the file names them (a14 element, e.g. "artisticPencilSketch", and its settings): kept and
+   *  written back, not drawn (Office works the effect into the stored picture; D-126). */
+  readonly artistic?: { readonly name: string; readonly attrs?: Readonly<Record<string, string>> };
   /** Neu einfärben. */
   readonly recolor?:
     | { readonly kind: "grayscale" | "sepia" | "washout" }

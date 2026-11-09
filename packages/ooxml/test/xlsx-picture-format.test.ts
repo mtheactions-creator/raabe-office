@@ -114,6 +114,17 @@ describe("Bildformat written back", () => {
     expect(same.length).toBe(30);
   });
 
+  it("keeps Künstlerische Effekte in a new picture made from the format (D-126; was the 30th readback in Excel)", () => {
+    const wb = readXlsx(FILE);
+    const art = wb.sheets[0].pictures!.find((p) => p.name === "Bild artistic")!;
+    expect((art.format as { artistic?: unknown } | undefined)?.artistic).toEqual({ name: "artisticPencilSketch" });
+    const plain = wb.sheets[0].pictures![0];
+    wb.sheets[0].pictures!.push({ from: { col: 30, row: 2, x: 0, y: 0 }, to: { col: 32, row: 6, x: 0, y: 0 }, size: { w: 128, h: 85 }, src: plain.src, name: "Grafik 98", format: art.format });
+    const xml = drawing(writeXlsx(wb));
+    const ours = /<xdr:twoCellAnchor\b(?:(?!<\/xdr:twoCellAnchor>)[\s\S])*?name="Grafik 98"[\s\S]*?<\/xdr:twoCellAnchor>/.exec(xml)![0];
+    expect(ours).toContain("<a14:imgLayer><a14:imgEffect><a14:artisticPencilSketch/></a14:imgEffect></a14:imgLayer>");
+  });
+
   it("keeps a group holding a picture", () => {
     const wb = readXlsx(FILE);
     wb.sheets[0].pictures![0] = { ...wb.sheets[0].pictures![0], format: { rotation: 10 } };

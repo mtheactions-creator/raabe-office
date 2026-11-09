@@ -249,5 +249,9 @@ export function refreshCaches(m: ChartModel, read: (ref: string) => RangeRead | 
       const z = read(s.size.ref);
       if (z) s.size.cache = z.vals.map((x) => (typeof x === "number" ? x : null));
     }
+    for (const d of [s.errorBars?.plus, s.errorBars?.minus]) {
+      const r = d?.ref ? read(d.ref) : null;
+      if (d && r) d.cache = r.vals.map((x) => (typeof x === "number" ? x : null));
+    }
   }
 }

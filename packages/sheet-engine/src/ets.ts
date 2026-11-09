@@ -3,14 +3,14 @@
 // constant step (or calendar months), missing points filled by interpolation or zeros, duplicate time
 // stamps aggregated.
 //
-// Excel's own parameter search is not documented; this one was built against Excel's results
-// (probe_excel_ets.py, test/fixtures/excel-ets.json): the season and the start of level and trend come from
-// a decomposition of the whole series (centred moving average, then a straight line through the
-// seasonally adjusted values), alpha, beta and gamma are chosen to minimise the squared one-step errors on a
-// grid refined down to 0.001, the season length is the strongest peak of the autocorrelation of the
-// detrended series (when it reaches 0.4), the confidence interval is z * RMSE * sqrt(1 + sum c_j^2) with
-// c_j = alpha (1 + j beta) + gamma [j a multiple of m]. Measured: forecasts within 2.2 % of Excel's, the
-// season length as Excel's in all recorded series; Excel's alpha, beta and gamma themselves are not matched.
+// Excel's own parameter search is not documented; this one was built against Excel's results on a broad
+// measurement set (probe_excel_ets_broad.py, test/fixtures/excel-ets-broad.json; D-124). Recorded exactly
+// (Excel's own alpha, beta and gamma reproduce Excel's end states): the error-correction form of the smoothing,
+// the start (first one-step value = first point; without a season the trend is the slope of a straight line
+// through the data), the error measures of PROGNOSE.ETS.STAT (over a holdout of the last points) and the
+// confidence interval. Matched approximately: the start of a season (centred moving average) and the choice of
+// alpha and gamma among the values Excel's choices take. The season length is the strongest peak of the
+// autocorrelation of the detrended series (when it reaches 0.4).
 
 export type EtsAggregation = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
@@ -139,21 +139,24 @@ export function detectSeason(y: number[]): number {
   const varr = r.reduce((s, v) => s + v * v, 0);
   if (varr < 1e-12 * Math.max(1, y.reduce((s, v) => s + v * v, 0))) return 0;
   const acf = (k: number) => { let s = 0; for (let i = 0; i + k < n; i++) s += r[i] * r[i + k]; return s / varr; };
-  let best = 0, bv = 0.4;
+  // The first peak of at least 0.2 shorter than half the series (D-124: 41 of 43 recorded series; the old rule, the
+  // strongest peak of at least 0.4, gave 37).
   let prev = acf(1), cur = acf(2);
-  for (let k = 2; k <= Math.floor(n / 2); k++) {
+  for (let k = 2; 2 * k < n; k++) {
     const next = k + 1 < n ? acf(k + 1) : -Infinity;
-    if (cur > prev && cur >= next && cur > bv) { best = k; bv = cur; }
+    if (cur > prev && cur >= next && cur >= 0.2) return k;
     prev = cur; cur = next;
   }
-  return best;
+  return 0;
 }
 
-/** Start states: season from a centred moving average over the whole series, level and trend from the adjusted values. */
+/** Start states (D-124): the trend is the slope of a straight line through the data (without a season, recorded exactly)
+ * or through the values adjusted by the season of a centred moving average (with one); the level is set so that the
+ * first one-step value is the first data point, as Excel's is. */
 function startStates(y: number[], m: number): { level: number; trend: number; season: number[] } {
   if (m <= 1) {
-    const [a, b] = linreg(y);
-    return { level: a - b, trend: b, season: [0] };
+    const [, b] = linreg(y);
+    return { level: y[0] - b, trend: b, season: [0] };
   }
   const n = y.length;
   const half = Math.floor(m / 2);
@@ -171,53 +174,80 @@ function startStates(y: number[], m: number): { level: number; trend: number; se
   });
   const mean = season.reduce((a, b) => a + b, 0) / m;
   season = season.map((v) => v - mean);
-  const [a, b] = linreg(y.map((v, i) => v - season[i % m]));
-  return { level: a - b, trend: b, season };
+  const [, b] = linreg(y.map((v, i) => v - season[i % m]));
+  return { level: y[0] - b - season[0], trend: b, season };
 }
 
-/** Runs the smoothing (Holt-Winters form) from the start states; returns the end states and one-step errors. */
+/** Runs the smoothing in the error-correction form Excel's states follow (recorded: Excel's own alpha, beta and gamma
+ * give Excel's end states): one-step value l + b + s, error e, then l += b + alpha e, b += beta e, s += gamma e. */
 function smooth(y: number[], m: number, alpha: number, beta: number, gamma: number, st: { level: number; trend: number; season: number[] }) {
   let l = st.level, t = st.trend;
   const s = [...st.season];
   const errors: number[] = [];
   for (let i = 0; i < y.length; i++) {
     const si = m > 1 ? s[i % m] : 0;
-    errors.push(y[i] - (l + t + si));
-    const ln = alpha * (y[i] - si) + (1 - alpha) * (l + t);
-    t = beta * (ln - l) + (1 - beta) * t;
-    if (m > 1) s[i % m] = gamma * (y[i] - ln) + (1 - gamma) * si;
-    l = ln;
+    const e = y[i] - (l + t + si);
+    errors.push(e);
+    l = l + t + alpha * e;
+    t = t + beta * e;
+    if (m > 1) s[i % m] = si + gamma * e;
   }
   return { level: l, trend: t, season: s, errors };
 }
+
+/** The holdout of Excel's error measures: the last points of the series, all of them up to 10 points (recorded). */
+export function etsHoldout(n: number): number {
+  if (n <= 10) return n;
+  return Math.max(Math.min(Math.floor(0.4 * n), 10), Math.ceil(0.2 * n));
+}
+
+// The values Excel's alpha, beta and gamma take (recorded on 99 fits, D-124): without a season alpha is one of
+// NONSEASONAL; with one alpha is one of SEASONAL and gamma one of GAMMA; beta stays 0.001 (3 of 99 fits differ). The
+// first entry wins ties (an exactly fitting series: 0.9 without a season, 0.751 with one, as Excel).
+const NONSEASONAL = [0.9, 0.002, 0.1, 0.126, 0.25, 0.5, 0.75, 0.998];
+const SEASONAL = [0.751, 0.002, 0.126, 0.251, 0.501, 0.998];
+const GAMMA = [0.001, 0.125, 0.25, 0.5];
+const BETA = 0.001;
 
 /** Fits the model: `season` 1 = find it, 0 = none, else the length. */
 export function fitEts(y: number[], season: number): EtsModel {
   let m = season === 1 ? detectSeason(y) : season;
   if (m < 2 || m > MAX_SEASON || m > y.length) m = 0;
-  const st = startStates(y, m);
-  const sse = (p: number[]) => smooth(y, m, p[0], p[1], p[2], st).errors.reduce((a, e) => a + e * e, 0);
-  const grid = [0.001, 0.126, 0.251, 0.376, 0.501, 0.626, 0.751, 0.876];
-  let best: { v: number; p: number[] } = { v: Infinity, p: [0.001, 0.001, 0.001] };
-  for (const a of grid) for (const b of grid) for (const g of m > 1 ? grid : [0]) {
-    const v = sse([a, b, g]);
-    if (v < best.v - 1e-12) best = { v, p: [a, b, g] };
+  const fit = fitWith(y, m);
+  // A season found in the data is kept only when the model with it scores better than the one without (recorded:
+  // Excel finds no season in noise or a trend whose autocorrelation has a weak peak; 47 of 49 series, D-124).
+  if (season === 1 && m) {
+    const plain = fitWith(y, 0);
+    if (!(fit.score < plain.score)) return plain.md;
   }
-  for (let step = 0.0625; step >= 0.0009; step /= 2) {
-    let improved = true;
-    while (improved) {
-      improved = false;
-      for (let k = 0; k < (m > 1 ? 3 : 2); k++) for (const d of [step, -step]) {
-        const q = [...best.p];
-        q[k] = Math.min(0.999, Math.max(0.001, Math.round((q[k] + d) * 1e6) / 1e6));
-        const v = sse(q);
-        if (v < best.v - 1e-12) { best = { v, p: q }; improved = true; }
-      }
+  return fit.md;
+}
+
+function fitWith(y: number[], m: number): { md: EtsModel; score: number } {
+  const st = startStates(y, m);
+  const n = y.length;
+  const k = etsHoldout(n);
+  const train = y.slice(0, n - k);
+  // Excel's choice is matched best (D-124) by the squared one-step errors over the points before the holdout plus the
+  // squared errors of the forecasts made from there over the holdout.
+  const score = (a: number, g: number) => {
+    if (k >= n) return smooth(y, m, a, BETA, g, st).errors.reduce((s, e) => s + e * e, 0);
+    const r = smooth(train, m, a, BETA, g, st);
+    let v = r.errors.reduce((s, e) => s + e * e, 0);
+    const md: EtsModel = { m, alpha: a, beta: BETA, gamma: g, level: r.level, trend: r.trend, season: r.season, errors: r.errors, n: train.length };
+    for (let h = 1; h <= k; h++) { const e = y[n - k + h - 1] - etsForecast(md, h); v += e * e; }
+    return v;
+  };
+  let best = { v: Infinity, a: 0.5, g: 0 };
+  for (const a of m > 1 ? SEASONAL : NONSEASONAL) {
+    for (const g of m > 1 ? GAMMA : [0]) {
+      if (m > 1 && g > 1 - a) continue;
+      const v = score(a, g);
+      if (best.v === Infinity || v < best.v - 1e-9 * Math.abs(best.v)) best = { v, a, g };
     }
   }
-  const [alpha, beta, gamma] = best.p;
-  const r = smooth(y, m, alpha, beta, m > 1 ? gamma : 0, st);
-  return { m, alpha, beta, gamma: m > 1 ? gamma : 0, level: r.level, trend: r.trend, season: r.season, errors: r.errors, n: y.length };
+  const r = smooth(y, m, best.a, BETA, best.g, st);
+  return { md: { m, alpha: best.a, beta: BETA, gamma: best.g, level: r.level, trend: r.trend, season: r.season, errors: r.errors, n }, score: best.v };
 }
 
 /** The forecast `h` steps after the last point (fractional h: the season between the two steps' seasons). */
@@ -228,37 +258,44 @@ export function etsForecast(md: EtsModel, h: number): number {
   return md.level + h * md.trend + s;
 }
 
+/** Root mean square of all one-step errors (the confidence interval's scale; recorded). */
 export function etsRmse(md: EtsModel): number {
   return Math.sqrt(md.errors.reduce((a, e) => a + e * e, 0) / md.errors.length);
 }
 
-/** Half the width of the confidence interval `h` steps ahead (z from the normal distribution). */
+/** Half the width of the confidence interval `h` steps ahead (z from the normal distribution): z * RMSE *
+ * sqrt(1 + sum c_j^2), c_j = alpha + j beta + gamma where j is a multiple of the season (recorded exactly). */
 export function etsConfint(md: EtsModel, h: number, z: number): number {
   let v = 1;
   for (let j = 1; j < Math.ceil(h - 1e-9); j++) {
-    const c = md.alpha * (1 + j * md.beta) + (md.m > 1 && j % md.m === 0 ? md.gamma : 0);
+    const c = md.alpha + j * md.beta + (md.m > 1 && j % md.m === 0 ? md.gamma : 0);
     v += c * c;
   }
   return z * etsRmse(md) * Math.sqrt(v);
 }
 
-/** PROGNOSE.ETS.STAT: 1 alpha, 2 beta, 3 gamma, 4 MASE, 5 SMAPE, 6 MAE, 7 RMSE, 8 step size. */
+/** PROGNOSE.ETS.STAT: 1 alpha, 2 beta, 3 gamma, 4 MASE, 5 SMAPE, 6 MAE, 7 RMSE, 8 step size. The error measures are
+ * Excel's (recorded exactly): over the holdout's one-step errors, MASE against the mean absolute step of the points
+ * before the holdout. */
 export function etsStat(md: EtsModel, s: EtsSeries, y: number[], kind: number): number {
-  const e = md.errors;
-  const n = e.length;
+  const n = md.errors.length;
+  const k = etsHoldout(n);
+  const e = md.errors.slice(n - k);
+  const mae = e.reduce((a, x) => a + Math.abs(x), 0) / k;
   switch (kind) {
     case 1: return md.alpha;
     case 2: return md.beta;
     case 3: return md.m > 1 ? md.gamma : 2.220446049250313e-16;
     case 4: {
+      const base = k >= n ? y : y.slice(0, n - k);
       let naive = 0;
-      for (let i = 1; i < y.length; i++) naive += Math.abs(y[i] - y[i - 1]);
-      naive /= Math.max(1, y.length - 1);
-      return naive ? e.reduce((a, x) => a + Math.abs(x), 0) / n / naive : 0;
+      for (let i = 1; i < base.length; i++) naive += Math.abs(base[i] - base[i - 1]);
+      naive /= Math.max(1, base.length - 1);
+      return naive ? mae / naive : 0;
     }
-    case 5: return e.reduce((a, x, i) => { const f = y[i] - x; const d = Math.abs(y[i]) + Math.abs(f); return a + (d ? (2 * Math.abs(x)) / d : 0); }, 0) / n / 2;
-    case 6: return e.reduce((a, x) => a + Math.abs(x), 0) / n;
-    case 7: return etsRmse(md);
-    default: return s.months ? 1 : s.step;
+    case 5: return e.reduce((a, x, i) => { const yy = y[n - k + i]; const d = Math.abs(yy) + Math.abs(yy - x); return a + (d ? (2 * Math.abs(x)) / d : 0); }, 0) / k;
+    case 6: return mae;
+    case 7: return Math.sqrt(e.reduce((a, x) => a + x * x, 0) / k);
+    default: return s.months ? 31 : s.step;
   }
 }

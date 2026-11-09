@@ -3230,3 +3230,103 @@ Left open (the failures above, and why):
   table borders, inline picture corner, rotation, text selection and ruler, all of PowerPoint (its run got no drag
   through; its result file was left out). RaabeWrite's inline picture corner frees the proportions with Umschalt, which
   Word probably does not; not changed without a recording (the test skips that key there).
+
+## D-124 RaabeCalc: PROGNOSE.ETS as Excel computes it, on a broad measurement set (2026-11-09)
+
+D-092's model was fitted to eight series; Excel's parameter search is not documented. A broad set recorded in our own
+invisible Excel (`probe_excel_ets_broad.py`, COM only, `packages/sheet-engine/test/fixtures/excel-ets-broad.json`):
+48 series (seasons of 2 to 24 with trend and noise, exact seasons, trends, random walks, level shifts, noise, short
+series, a step of 5, calendar months at the first and the last day, missing points with both kinds of
+Datenvervollständigung, duplicate time stamps with all seven Aggregationen, an unsorted timeline), 99 fits, each with
+PROGNOSE.ETS.STAT 1-8, the season found, PROGNOSE.ETS at every time point and 1-24 steps ahead, and KONFINT.
+Excel's own alpha, beta and gamma, run through candidate models, showed what Excel does:
+- **Recorded exactly** (`ets.ts`): the error-correction form (one-step value l + b + s; then l += b + alpha e,
+  b += beta e, s += gamma e; the Holt-Winters form we had gives other end states); the start without a season (trend
+  = slope of the least-squares line through all points, level so that the first one-step value is the first point;
+  from 7 points on); the first one-step error is 0 with a season too; STAT 4-7 over a holdout of the last
+  k = n (n <= 10), else max(min(floor(0.4 n), 10), ceil(0.2 n)) points (SMAPE = mean 2|e| / (|y| + |f|), MASE against the
+  mean step of the points before the holdout); KONFINT = z x RMSE of all one-step errors x sqrt(1 + sum (alpha + j beta
+  + gamma [m divides j])^2); a target inside the timeline gives level + h trend + season with h <= 0 (not the one-step
+  value, as D-092 assumed); STAT 8 for calendar months is 31.
+- **Excel's choices** take few values: without a season alpha in {0.002, 0.1, 0.126, 0.25, 0.5, 0.75, 0.9, 0.998}, with
+  one alpha in {0.002, 0.126, 0.251, 0.501, 0.751, 0.998} and gamma in {0.001, 0.125, 0.25, 0.5}; beta is 0.001 in 96 of
+  99 fits. We choose among these values by the squared one-step errors before the holdout plus the squared errors of
+  the forecasts made from there over the holdout: Excel's alpha in 34 of 41 fits without a season (SSE of all one-step
+  errors: 24), alpha and gamma in 15 of 41 with one. Ties go to 0.9 / 0.751 as in Excel (exact series).
+- **Season found:** the first autocorrelation peak of at least 0.2 shorter than half the series, kept only when the
+  model with it scores better than without (47 of 49 series; the old rule, the strongest peak of at least 0.4, 41).
+- **Not found:** Excel's start of the season (centred moving average, per-cycle means and least-squares start states
+  all come within a few tenths, none exactly), its exact search (it does not take the best of its own values by any
+  measure tried: SSE, MAE, SMAPE, holdout, multi-step), beta other than 0.001, the start for 4-6 points.
+- **Measured** (`ets-broad.test.ts`, relative to Excel's value or 5 % of the series' largest value), before -> after:
+  forecasts 1-24 steps mean 7.90 % -> 1.65 %, worst 485 % -> 51.6 % (Datenvervollständigung 0 on the gaps series: we
+  find a season Excel does not); KONFINT mean 60.6 % -> 11.7 %; values inside the timeline 8.18 % -> 4.38 %; season
+  84/99 -> 93/99; MAE 21.6 % -> 10.3 %, RMSE 24.2 % -> 9.9 %. With Excel's own parameters our forecasts would be within
+  0.31 % (no season) / 0.58 % (season): the floor the season's start leaves. The old eight series (`ets-excel.test.ts`)
+  got worse: mean 0.38 % -> 0.78 %, worst 2.17 % -> 7.01 % ("short", 8 points with season 3, where we take a larger
+  alpha than Excel's 0.002), KONFINT mean 19.5 % -> 28.4 %; its tolerances were widened to what is measured.
+  Results: `results/2026-11-09-excel-ets.json`.
+
+## D-125 RaabeCalc: 3-D charts in Excel's geometry, the Prognoseblatt's error bars, cells slanted by turned text (2026-11-09)
+
+Three open items of the Step 10 report, each recorded in our own invisible Excel first.
+- **3-D charts** (`packages/charts/src/render3d.ts`). Recorded: `probe_excel_3d_geometry.py` (COM: every 3-D chart of the
+  D-086 fixture, its 3-D view, plot area, axes' boxes and every point's projected box;
+  `results/2026-11-09-excel-3d-geometry.json`), Excel's PNG exports (D-086) measured by hand and fitted.
+  - *Rechtwinklige Achsen* (3-D columns and bars): an oblique projection, depth going back by sin(rotY) across and
+    sin(rotX) up (the point boxes give exactly 0.342 / 0.259 per unit of depth); each column's base is square (depth =
+    width at Tiefe 100 %); a row of depth is the column plus Abstand in der Tiefe 150 %, the column in its middle;
+    3D-Säulen with series in depth take one row per series; the front plane and the depth fill the plot (width +
+    depth x sin(rotY), height + depth x sin(rotX)). Faces lit as Excel's pictures show: top x 0.76, side x 0.635.
+    Drawn back row first, left to right, stacked pieces from the bottom.
+  - *Perspective* (3D-Linie, 3D-Fläche, 3D-Oberfläche): fitting a camera to six corners of Excel's area and line charts
+    gave rotY 19.4-20.8 and rotX 13.3-14 for the recorded 20 / 15 and a camera about 2 box widths from the centre; built as
+    the box turned by rotY, tilted by rotX, seen from 0.55 / tan(perspective / 2) box widths, its height stretched until
+    the picture fills the plot (AutoScaling). The floor's front and right edges are drawn with tick marks; line ribbons
+    are lit x 0.825 / x 0.655 as Excel's; surfaces are cut at the bands' edges (they were coloured per small square).
+  - *3D-Kreis*: the disc in perspective (tilted 0.9 x rotX, camera 5.2 radii away), so the back half is shorter than the
+    front, as in Excel's picture; the rim lit from the left.
+  - Mean grey difference to Excel's picture, 0-255 (`compare_calc_charttypes.py dev`, the engine through headless Edge;
+    before -> after): 3D-Säulen 18.4 -> 4.4, gruppiert 17.9 -> 4.7, gestapelt 18.7 -> 5.0, 100 % 23.4 -> 5.2; 3D-Balken
+    gruppiert 11.3 -> 3.3, gestapelt 11.3 -> 3.6, 100 % 14.5 -> 4.5; 3D-Linie 11.3 -> 4.6; 3D-Fläche 21.5 -> 7.2,
+    gestapelt 19.9 -> 6.9, 100 % 20.2 -> 7.9 (stacked areas take fewer value intervals, as Excel); 3D-Oberfläche 19.3 -> 7.8, Drahtmodell 6.4 -> 5.1; 3D-Kreis 9.2 -> 7.6.
+    In the release exe (`compare_calc_charttypes.py calc`, before -> after): 3D-Säulen 18.5 -> 5.1, gruppiert 18.7 -> 3.0,
+    gestapelt 19.2 -> 5.6, 100 % 23.9 -> 5.4; 3D-Balken 11.5 -> 5.9, 11.4 -> 5.2, 14.9 -> 6.7; 3D-Linie 11.3 -> 4.2;
+    3D-Fläche 21.8 -> 7.0, 20.3 -> 6.8, 20.6 -> 7.8; 3D-Oberfläche 19.4 -> 7.7, Drahtmodell 6.1 -> 5.0; 3D-Kreis 9.1 -> 8.1
+    (the worst 3-D chart now 8.1 of 255, it was 23.9).
+    `render3d-geometry.test.ts` holds the recorded proportions (square columns, pitch, rows, bar thickness within 5-8 %).
+  - Not matched: Excel's exact camera for every chart (the line and area charts' boxes stand at different margins;
+    measured offsets), its smooth gradient light on surfaces and pie rims, Abstand in der Tiefe other than 150 % (not in
+    the model), label placement along tilted axes (labels stay horizontal).
+- **Error bars on the Prognoseblatt's column chart** (D-092 left them out). Recorded with `probe_excel_forecast.py`
+  (its column run, `results/2026-11-09-excel-forecast-errbars.json`): Excel puts Fehlerindikatoren on the forecast series,
+  c:errValType "cust", plus and minus both referencing the Konfidenzintervall column, caps, line 595959 at alpha 40392,
+  0.75 pt. Built: custom amounts in the chart model (`ErrorBars.plus/minus`, read and written as c:plus / c:minus with
+  numRef and cache, refreshed from the cells, drawn per point; a point without amount gets no bar) and the Prognoseblatt
+  sets them. Measured: `errbars-cust.test.ts` (Excel's XML element for element, round trip, refresh, drawing);
+  `check_calc_forecast.py` with the release exe 24/24 (new: our chart has the bars on the right column; Excel opens the
+  file and finds them with caps, 0.75 pt, 60 % transparent). render.ts got the drawing (`drawErrorBar` takes the point's
+  index) - a few lines in another agent's file.
+- **Text turned by 1-89 degrees slants its cell.** Recorded (`probe_excel_rotated_borders.py`, Excel's PDF of cells
+  with borders, fill and text at -90 ... 90 degrees, side by side, one border only, thick, no border;
+  `results/2026-11-09-excel-rotated-borders.json`): when such a cell has a left or right border it becomes a
+  parallelogram along the text: the fill, the side borders run from the cell's bottom corners to the top moved by
+  height / tan(angle) (right for upward, left for downward text), the top border moves with them, the bottom one stays;
+  without side borders, at 0 and +-90 degrees and for vertical text the cell stays a rectangle. Built in the grid's
+  renderer (`slantOf`, fill, borders and the text's clip), which the printout shares (D-094). Measured:
+  `slant.test.ts` compares slantOf with the shift of every recorded angle (9/9) and the rectangle cases;
+  `check_calc_slant.py` (release exe, DevTools capture, no input) finds the slanted borders at +45 and -45 degrees and
+  the unbordered cell still a rectangle, 5/5.
+  Not built: merged cells keep the rectangle; the turned text's own place in a slanted cell is unchanged.
+
+## D-126 Pictures keep Künstlerische Effekte through the format (2026-11-09)
+
+The 30th readback of D-087 (RaabeCalc -> Excel, "artistic": Excel listed no picture effect where its own file has
+Bleistiftskizze) came from the picture format: the shared reader (`drawingml.ts readPicture`) knew Korrekturen,
+Sättigung and Farbton from a14:imgEffect but not the artistic effects, so a picture made again from its format (as the
+check does: insert, then set the read format) lost the effect's name. Now `PictureFormat.artistic` holds the a14
+element's name and settings (e.g. `artisticPencilSketch`), and `imgEffectsXml` writes it first in the image layer, as
+Office lists it. The effect is still not drawn by us (Office works it into the stored picture; D-087), so a new picture
+shows plainly in RaabeCalc while Excel lists the effect. Shared with RaabeWrite (same reader and writer; it keeps the
+effect too). Measured: `xlsx-picture-format.test.ts` reads the recorded effect and finds it in a new picture's XML;
+`check_calc_pictures.py` (the release exe against Excel, run under the real-input lock: it uses the clipboard): RaabeCalc -> Excel readback 29/30 -> 30/30, Excel -> RaabeCalc 31/31 as before.

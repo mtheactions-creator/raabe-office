@@ -242,7 +242,15 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
       const st = styleOf(cell, r.i, c.i);
       const look = s.cond?.look(r.i, c.i);
       const fill = look?.fill ?? fillColor(st);
-      if (fill) {
+      const sl = merges.length && merges.some((m) => inRect(m, r.i, c.i)) ? 0 : slantOf(st, r.size);
+      if (fill && sl) {
+        // Turned text with side borders: the cell is a parallelogram along the text (D-125).
+        const x0 = snap(c.at, dpr) - px, y0 = snap(r.at, dpr) - px, x1 = snap(c.at + c.size, dpr), y1 = snap(r.at + r.size, dpr);
+        ctx.fillStyle = fill;
+        ctx.beginPath();
+        ctx.moveTo(x0, y1); ctx.lineTo(x1, y1); ctx.lineTo(x1 + sl, y0); ctx.lineTo(x0 + sl, y0); ctx.closePath();
+        ctx.fill();
+      } else if (fill) {
         ctx.fillStyle = fill;
         ctx.fillRect(snap(c.at, dpr) - px, snap(r.at, dpr) - px, snap(c.size, dpr) + px, snap(r.size, dpr) + px);
       }
@@ -334,7 +342,9 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
       // Clipping to the cell (or the cells it runs into); never over the frozen pane's edge.
       ctx.save();
       ctx.beginPath();
-      ctx.rect(left, box.y, right - left, box.h);
+      const sl = merge ? 0 : slantOf(st, box.h);
+      if (sl) { ctx.moveTo(box.x, box.y + box.h); ctx.lineTo(box.x + box.w, box.y + box.h); ctx.lineTo(box.x + box.w + sl, box.y); ctx.lineTo(box.x + sl, box.y); ctx.closePath(); }
+      else ctx.rect(left, box.y, right - left, box.h);
       ctx.clip();
       if (s.textShift) ctx.translate(s.textShift.x * zoom, s.textShift.y * zoom);
       ctx.fillStyle = look?.color ?? text.color ?? st.font.color ?? "#000000";
@@ -395,6 +405,16 @@ function drawPane(ctx: CanvasRenderingContext2D, s: DrawState, pane: Pane): void
       const x0 = snap(c.at, dpr) - px, y0 = snap(r.at, dpr) - px;
       const x1 = snap(c.at + c.size, dpr) - px, y1 = snap(r.at + r.size, dpr) - px;
       const pr = !!s.print;
+      const sl = mg ? 0 : slantOf(st, r.size);
+      if (sl) {
+        // Turned text (D-125, recorded from Excel's PDF): the side borders run along the text from the cell's
+        // bottom corners, the top border is moved by the same amount, the bottom one stays.
+        if (b.top) line(ctx, b.top, x0 + sl, y0, x1 + sl, y0, dpr, zoom, pr);
+        if (b.bottom) line(ctx, b.bottom, x0, y1, x1, y1, dpr, zoom, pr);
+        if (b.left) line(ctx, b.left, x0, y1, x0 + sl, y0, dpr, zoom, pr);
+        if (b.right) line(ctx, b.right, x1, y1, x1 + sl, y0, dpr, zoom, pr);
+        continue;
+      }
       if (b.top) line(ctx, b.top, x0, y0, x1, y0, dpr, zoom, pr);
       if (b.bottom) line(ctx, b.bottom, x0, y1, x1, y1, dpr, zoom, pr);
       if (b.left) line(ctx, b.left, x0, y0, x0, y1, dpr, zoom, pr);
@@ -884,6 +904,20 @@ export function errorIndicator(cell: Cell): "text-number" | "error" | null {
   if (cell.f === undefined && typeof cell.v === "string" && /^\s*[+-]?(\d{1,3}(\.\d{3})+|\d+)(,\d+)?\s*$/.test(cell.v)) return "text-number";
   if (cell.f !== undefined && cell.v !== null && typeof cell.v === "object") return "error";
   return null;
+}
+
+/**
+ * How far the top of a cell with turned text moves sideways (px, + right) when Excel slants it (D-125, recorded from
+ * its PDF): text turned by 1 to 89 degrees either way in a cell with a left or right border makes the cell a
+ * parallelogram along the text: fill, side borders and top border; the bottom stays. 0: the cell stays a rectangle
+ * (no turn, 90 degrees, vertical text, or no side border).
+ */
+export function slantOf(st: CellStyle, h: number): number {
+  const r = st.rotation;
+  if (!r || r === 255 || r === 90 || r === 180) return 0;
+  if (!st.borders.left && !st.borders.right) return 0;
+  const deg = r <= 90 ? r : 90 - r;
+  return h / Math.tan((deg * Math.PI) / 180);
 }
 
 /** Turned text: rotated around the cell's anchor point as Excel lays it out (bottom for upward text). */

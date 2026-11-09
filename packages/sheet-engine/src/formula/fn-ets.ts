@@ -2,8 +2,9 @@
 // argument rules as recorded in Excel (probe_excel_ets.py): Saisonalität 0 (none), 1 (find it) or up to
 // 8760, Datenvervollständigung 0 (zeros) or 1 (interpolation), Aggregation 1 to 7, Konfidenzniveau between 0
 // and 1, a target before the timeline's start and a timeline without a constant step give #ZAHL!, ranges of
-// different sizes #NV. A target inside the timeline gives the model's one-step value there, one between two steps
-// has the trend's share of the step and the season between the two steps' (recorded: half a step after the end). The model itself is ets.ts.
+// different sizes #NV. A target inside the timeline gets the forecast formula from the end states (h <= 0, D-124), one
+// between two steps has the trend's share of the step and the season between the two steps' (recorded: half a step after
+// the end). The model itself is ets.ts.
 
 import { def, deref, type Ctx } from "./eval";
 import { values } from "./fn-util";
@@ -79,12 +80,8 @@ function valueAt(f: Fitted, target: number): number | CellError {
   const pos = gridPosition(f.s, target);
   const last = f.s.y.length - 1;
   if (pos < -1e-9) return E.num;
-  if (pos <= last + 1e-9) {
-    // Inside the timeline: the model's one-step value (the data less its error), between steps on the line.
-    const fit = (k: number) => f.s.y[k] - f.md.errors[k];
-    const k = Math.floor(pos + 1e-9);
-    return k >= last ? fit(last) : fit(k) + (fit(k + 1) - fit(k)) * (pos - k);
-  }
+  // Inside the timeline too, Excel gives the forecast formula from the end states: level + h trend + season with
+  // h <= 0 (recorded on every point of 99 fits, D-124).
   return etsForecast(f.md, pos - last);
 }
 
