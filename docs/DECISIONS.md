@@ -3162,7 +3162,9 @@ Measured against PowerPoint and left as it is: the caret right after a word (no 
 Schriftgrad without effect in both programs; Keine Füllung/Keine Kontur write only what changes where PowerPoint also
 writes the style's other values (the same look); bullets' indents could not be compared (COM's Bullet.Visible gives
 PowerPoint a numbered list, not what the button does). Real input: F5, a click to the next slide, then Esc did not end
-the show in the exe (with CDP keys it does); not found tonight.
+the show in the exe (with CDP keys it does). Leaving the browser's full screen now ends the show too (Esc with the OS
+keyboard may leave full screen before the page sees the key), but the case still fails with that build: the cause is
+not found yet (the key probably does not reach the page after the click; open).
 Open (not fixed tonight): RaabePresent has no SmartArt Format tab (PowerPoint has one); Seitenverhältnis sperren (table),
 Folienmaster einfügen, Masterlayout..., Platzhalter einfügen stay "Noch nicht verfügbar"; Übergänge > Dauer does
 nothing while the slide has no transition (PowerPoint's COM writes the duration alone; the ribbon's own behaviour there
