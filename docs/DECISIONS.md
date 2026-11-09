@@ -4281,3 +4281,90 @@ Still not built: 3D-Drehung of text, X-/Y-Skalierung, Ausrichtung and Spiegelung
   a picture was lost (the texture above). Left as they are: a series' Einfarbige Füllung reads back as the series'
   colour (the same drawing), data labels' Keine Füllung (Excel writes the same file as for the automatic look),
   Datumsachse settings on text categories. The sweep has not been repeated on a build with the fixes.
+
+## D-145 RaabeCalc: what the by-hand audit left open: Aus Tabelle/Bereich and sorting a sum row (2026-11-09)
+
+Two leftovers of D-142, each recorded in an Excel of our own first (probe_excel_followup.py, COM, invisible;
+results/2026-11-09-excel-followup.json):
+- **Daten > Aus Tabelle/Bereich** on a range that is not a table yet made two undo steps (Tabelle erstellen, then
+  Daten laden): one Strg+Z left the loaded sheet without its source table or the other way round. The table and the
+  loaded copy are now one step, as a student expects from one command. (Excel's Power Query opens its editor here,
+  which RaabeCalc does not have, D-080; there is no closer behaviour to copy.)
+- **Sorting a range with its own sum row** (the comparison's Von Z bis A sortieren on a list whose last row is
+  =SUMME(B2:B5)) gave #BEZUG! where Excel keeps a shortened reference. Recorded: a formula moves with its row as if
+  copied (D-142), but a range with one end pushed off the sheet is cut at the sheet's edge (=SUMME(B2:B5) sorted
+  four rows up reads =SUMME(B1:B1), =SUMME(B2:B3) two rows up as well); a range with both ends off and a single
+  reference off the sheet become #BEZUG!; absolute references stay. Sorting now does exactly this
+  (`shiftFormula(..., { clipRanges: true })`); copying and AutoAusfüllen keep #BEZUG! for every reference pushed off
+  (Excel). Pinned in apps/raabe-calc/test/followup.test.ts with the six recorded cases.
+
+## D-146 RaabeCalc: Datenbalken with Einfarbige Füllung, Regel bearbeiten and Regel duplizieren (2026-11-09)
+
+Left open by D-143, recorded first in an Excel of our own with real clicks under the real-input lock
+(probe_excel_followup_ui.py, results/2026-11-09-excel-followup-ui.json):
+- **Datenbalken > Einfarbige Füllung**: Excel's gallery has the six colours of Farbverlauf a second time, as one
+  colour without a border (BarFillType 0, no border). Excel writes the rule in the 2007 form and adds Excel 2010's
+  part in the sheet's extLst (x14:dataBar gradient="0", autoMin/autoMax, negative bars red, axis black); RaabeCalc
+  now writes exactly that, reads gradient="0" back as Einfarbige Füllung (`CondRule.solid`), keeps the file's x14
+  part on saving and drops it with its rule. The grid draws the bar in one colour without a border.
+- **Neue Formatierungsregel** for a data bar has Füllung (Einfarbige Füllung, Farbverlauf) and the bar's Farbe.
+- **Regel bearbeiten...** in the manager opens "Formatierungsregel bearbeiten" (Excel's title; the same controls as
+  Neue Formatierungsregel, recorded) on the rule's type with its values filled in; the rule keeps its cells and its
+  place in the order. Types the dialog does not describe (Symbolsätze, Datum, leere Zellen) keep their rule and only
+  take a new format.
+- **Regel duplizieren** puts the copy right below the selected rule with the same cells and format and selects it
+  (recorded: priorities 1, 2 became 1, the copy 2, and 3). Nach oben and Nach unten were there (D-143).
+- **A new rule goes to the top of the order** (priority 1, the others move down), from the galleries, their
+  dialogs and Neue Regel...: Excel adds rules this way; RaabeCalc appended them at the bottom, so with two
+  overlapping rules the older one won where Excel lets the newer one win.
+Compare cases (compare_calc_options.py): the six bars of Einfarbige Füllung, one of Farbverlauf, Neue Regel with a
+solid bar, Regel duplizieren, Regel bearbeiten (operator and value), Regel bearbeiten of a data bar to Einfarbige
+Füllung, Nach unten with two rules, each against the rule Excel makes (type, cells, operator, formulas, colours,
+fill type, and the cells Excel shows formatted). The file's form is pinned in packages/ooxml/test/xlsx-databar.test.ts.
+
+## D-147 RaabeCalc: Zellen formatieren > Rahmen and Ausfüllen as Excel's pages (2026-11-09)
+
+D-142 left the dialog without Excel's border colours and diagonals, pattern fills and Fülleffekte. Recorded first:
+the pages' controls from the inventory (results/2026-11-05-excel-inventory.json), the Musterformat entries and the
+Fülleffekte dialog with real clicks in an Excel of our own (probe_excel_patterns_ui.py, probe_excel_followup_ui.py),
+and what Excel writes in the file for every line style, colour, diagonal, pattern and gradient through COM
+(probe_excel_followup.py, results/2026-11-09-excel-followup.json).
+- **Rahmen:** Linie with Art (Excel's 14 styles, Keine to Doppelt, in its two columns, each written as Excel writes it:
+  hair, dotted, dashDotDot, dashDot, dashed, thin, mediumDashDotDot, slantDashDot, mediumDashDot, mediumDashed, medium,
+  thick, double) and Farbe (Automatisch and the palette); Voreinstellungen Keine, Außen and Innen (Innen only for more
+  than one cell); the eight buttons around the preview (Oben, Horizontal, Unten, Diagonal nach oben, Links, Vertikal,
+  Rechts, Diagonal nach unten) and the preview itself, which takes a click on a line (the nearest side, inner line or
+  diagonal within a few pixels). A click puts the current line there, or takes it away when the same line is there
+  already, as in Excel. Only the sides touched in the dialog change; Horizontal and Vertikal go on both cells of each
+  inner edge (as Alle Rahmenlinien); a diagonal goes in every cell (the file keeps one diagonal style per cell with a
+  flag for each direction).
+- **Ausfüllen:** Hintergrundfarbe (Keine Farbe, the palette, Weitere Farben..., Fülleffekte...), Musterfarbe
+  (Automatisch and the palette) and Musterformat with Excel's 18 entries and names (Uni, 75% Grau ... Dünn Diagonal
+  Kariert; Uni is no pattern), and the Beispiel. A pattern is written as Excel writes it (fgColor the pattern's colour,
+  bgColor the background colour). **Fülleffekte...** opens Excel's dialog: Farben (Einfarbig with Dunkel/Hell,
+  Zweifarbig), Farbe 1 and 2, the six Schattierungsarten (Horizontal, Vertikal, Diagonal oben, Diagonal unten, Aus der
+  Ecke, Aus der Mitte), their Varianten as clickable previews, and Beispiel; written as gradientFill with Excel's
+  degrees (90, 0, 45, 135) or as a path from a corner or the middle (recorded). Not built: Voreinstellung (Office's
+  ready-made gradients, shown greyed). Not recorded: which variant Excel writes with which stop order; ours writes
+  the variants as two or three stops that look the same.
+- **Drawing:** the grid now draws patterns (Excel's 8 x 8 screen patterns in the two colours) and gradients
+  (linear at the angle, or from the corner or middle) instead of one mixed colour.
+Compare cases (compare_calc_options.py and sweep_calc.py --flows): a red dashed bottom line; four line styles on four
+sides; both diagonals; a click into the preview; Außen with Mittel and Innen with Dünn; Keine after Alle
+Rahmenlinien; a pattern with its colour on a background; 50% Grau; Fülleffekte horizontal and Aus der Mitte.
+
+## D-148 RaabeCalc: Zellen formatieren > Ausrichtung's dial and Schrift's lists (2026-11-09)
+
+- **Ausrichtung:** Excel's orientation box: the vertical "Text" (Vertikaler Text, file value 255) and the dial, whose
+  pointer is dragged (or moved with the arrow keys) between -90 and 90 degrees in steps of one degree, with the Grad
+  spinner beside it following and driving it; with vertical text on, the dial and the spinner are off. Typed degrees
+  are kept within -90 to 90. Not built: Verteilt ausrichten and Textrichtung (the model has no reading order).
+- **Schrift:** Schriftart, Schriftschnitt and Schriftgrad each a field with its list below, as Excel's page: the
+  design's fonts first (Überschriften, Textkörper), then the installed fonts (the same list as the ribbon's);
+  Standard, Kursiv, Fett, Fett Kursiv; 8 to 72. Typing in a field selects the matching entry; picking an entry fills
+  the field. Unterstreichung (Ohne, Einfach, Doppelt, Einfach (Buchhaltung), Doppelt (Buchhaltung), as recorded),
+  Farbe, Standardschrift (the workbook's standard font without effects; unticked again by any change), Effekte
+  (Durchgestrichen; Hochgestellt and Tiefgestellt exclude each other) and Vorschau in the chosen font.
+Compare cases: the pointer dragged to 45 degrees, -30 typed, vertical text, a font with Schriftschnitt, Grad,
+Unterstreichung and Durchgestrichen from the lists, Hochgestellt after Tiefgestellt, Standardschrift on a mixed
+selection.

@@ -302,6 +302,8 @@ export interface CondRule {
   format?: { color?: string; fill?: string; bold?: boolean; italic?: boolean; underline?: boolean; strike?: boolean; border?: string };
   /** dataBar: one colour; colorScale: two or three colours (min, [mid], max). */
   colors?: string[];
+  /** dataBar: Einfarbige Füllung (Excel 2010's x14 extension, gradient="0", no border); otherwise Farbverlauf. */
+  solid?: boolean;
   /**
    * Symbolsatz: the set's file name (3TrafficLights1, 3Arrows …), reversed order, value hidden,
    * and the limits above the first icon (percent, num, percentile or formula; gte false = ">").

@@ -1,0 +1,263 @@
+{
+ "summary": {
+  "cases": 2,
+  "compared": 2,
+  "passed": 2,
+  "seconds": 23,
+  "baseDifferences": [
+   "/cells/B2/NumberFormat",
+   "/cells/B2/Style",
+   "/cells/B2/Text",
+   "/cells/B3/NumberFormat",
+   "/cells/B3/Style",
+   "/cells/B3/Text",
+   "/cells/B4/NumberFormat",
+   "/cells/B4/Style",
+   "/cells/B4/Text",
+   "/cells/B5/NumberFormat",
+   "/cells/B5/Style",
+   "/cells/B5/Text"
+  ]
+ },
+ "results": [
+  {
+   "name": "Ausfüllen Muster",
+   "selection": "A2:B3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Ausfüllen",
+     true,
+     null
+    ],
+    [
+     "3",
+     true,
+     null
+    ],
+    [
+     ".fc-pattern-btn",
+     true,
+     null
+    ],
+    [
+     "Dünn Diagonal Gestreift",
+     true,
+     null
+    ],
+    [
+     "Musterfarbe Automatisch",
+     true,
+     null
+    ],
+    [
+     "5",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "excel": "no reference (checked by its own expectation)",
+   "pass": true,
+   "ours": {
+    "A1": {
+     "Font": [
+      "Calibri",
+      11.0,
+      true,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ]
+    },
+    "A2": {
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      14,
+      6968388.0,
+      3243501
+     ]
+    },
+    "B1": {
+     "Font": [
+      "Calibri",
+      11.0,
+      true,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ]
+    },
+    "B3": {
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      14,
+      6968388.0,
+      3243501
+     ]
+    }
+   }
+  },
+  {
+   "name": "Ausfüllen Muster 50 Prozent",
+   "selection": "A2",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Ausfüllen",
+     true,
+     null
+    ],
+    [
+     ".fc-pattern-btn",
+     true,
+     null
+    ],
+    [
+     "50% Grau",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "excel": "no reference (checked by its own expectation)",
+   "pass": true,
+   "ours": {
+    "A1": {
+     "Font": [
+      "Calibri",
+      11.0,
+      true,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ]
+    },
+    "A2": {
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4125,
+      0.0,
+      0
+     ]
+    },
+    "B1": {
+     "Font": [
+      "Calibri",
+      11.0,
+      true,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ]
+    },
+    "B3": {
+     "Font": [
+      "Calibri",
+      11.0,
+      false,
+      false,
+      -4142,
+      false,
+      false,
+      false,
+      0.0
+     ],
+     "Interior": [
+      -4142,
+      null,
+      null
+     ]
+    }
+   }
+  }
+ ]
+}

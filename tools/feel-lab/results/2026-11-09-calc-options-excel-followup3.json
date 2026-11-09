@@ -1,0 +1,114 @@
+{
+ "summary": {
+  "cases": 3,
+  "compared": 3,
+  "passed": 2,
+  "seconds": 28,
+  "baseDifferences": [
+   "/cells/B2/NumberFormat",
+   "/cells/B2/Style",
+   "/cells/B2/Text",
+   "/cells/B3/NumberFormat",
+   "/cells/B3/Style",
+   "/cells/B3/Text",
+   "/cells/B4/NumberFormat",
+   "/cells/B4/Style",
+   "/cells/B4/Text",
+   "/cells/B5/NumberFormat",
+   "/cells/B5/Style",
+   "/cells/B5/Text"
+  ]
+ },
+ "results": [
+  {
+   "name": "Ausrichtung Zeiger gezogen",
+   "selection": "A1:D1",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Zellenausrichtung formatieren",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "diff": [
+    "/cells/A1/Align: (1, -4107, False, 0, 45, False) -> (1, -4107, False, 0, -4128, False)",
+    "/cells/B1/Align: (1, -4107, False, 0, 45, False) -> (1, -4107, False, 0, -4128, False)",
+    "/cells/C1/Align: (1, -4107, False, 0, 45, False) -> (1, -4107, False, 0, -4128, False)",
+    "/cells/D1/Align: (1, -4107, False, 0, 45, False) -> (1, -4107, False, 0, -4128, False)",
+    "/rows/0/0: 36.0 -> 14.5"
+   ],
+   "pass": false
+  },
+  {
+   "name": "Ausrichtung Grad -30",
+   "selection": "A1:D1",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Zellenausrichtung formatieren",
+     true,
+     null
+    ],
+    [
+     "Grad",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  },
+  {
+   "name": "Ausrichtung vertikaler Text",
+   "selection": "A1:D1",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Zellenausrichtung formatieren",
+     true,
+     null
+    ],
+    [
+     "Vertikaler Text",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "diff": [],
+   "pass": true
+  }
+ ]
+}

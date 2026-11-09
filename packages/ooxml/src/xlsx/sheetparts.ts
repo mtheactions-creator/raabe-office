@@ -110,12 +110,24 @@ export interface CfRaw {
   xml: string[];
   /** Original rules by their model form (without priority), with their dxf index. */
   rules: { key: string; xml: string; dxf?: number }[];
+  /** The x14 ids the file's rules refer to (their Excel 2010 part in the sheet's extLst). */
+  mainIds?: string[];
 }
 
 const yes = (v: string | undefined) => v === "1" || v === "true";
+const X14_ID = /<x14:id>([^<]+)<\/x14:id>/;
 
-export function readConditional(xml: string, els: El[], ctx: ColorContext, dxfs: string[], raw: CfRaw): CondFormat[] {
+/** The x14 data bars of a sheet's extLst with Einfarbige Füllung (gradient="0"), by id. */
+function solidBarIds(ext: string | undefined): Set<string> {
+  const out = new Set<string>();
+  for (const m of (ext ?? "").matchAll(/<x14:cfRule\b[^>]*\bid="([^"]+)"[^>]*>\s*<x14:dataBar\b([^>]*)>/g)) if (/\bgradient="0"/.test(m[2])) out.add(m[1]);
+  return out;
+}
+
+export function readConditional(xml: string, els: El[], ctx: ColorContext, dxfs: string[], raw: CfRaw, ext?: string): CondFormat[] {
   const out: CondFormat[] = [];
+  const solid = solidBarIds(ext);
+  raw.mainIds = [];
   for (const el of els) {
     raw.xml.push(outer(xml, el));
     const ref = (attrs(xml, el).sqref ?? "").split(/\s+/).map((t) => parseRange(t)).filter((r): r is Rect => !!r);
@@ -153,7 +165,16 @@ export function readConditional(xml: string, els: El[], ctx: ColorContext, dxfs:
           const cfvo = children(xml, k.open, k.close).filter((p) => p.name === "cfvo").map((p) => { const c = attrs(xml, p); return { type: c.type ?? "percent", val: c.val ?? "0", gte: c.gte === "0" ? false : undefined }; });
           rule.iconSet = { set: ia.iconSet ?? "3TrafficLights1", reverse: yes(ia.reverse) || undefined, showValue: ia.showValue === "0" ? false : undefined, cfvo };
           plain = false;
-        } else plain = false;
+        } else {
+          if (k.name === "extLst") {
+            const id = X14_ID.exec(outer(xml, k))?.[1];
+            if (id) {
+              raw.mainIds.push(id);
+              if (type === "dataBar" && solid.has(id)) rule.solid = true;
+            }
+          }
+          plain = false;
+        }
       }
       if (!plain) rule.rawXml = outer(xml, r);
       raw.rules.push({ key: ruleKey(rule), xml: outer(xml, r), dxf });
@@ -168,8 +189,11 @@ function ruleKey(r: CondRule): string {
   return canon({ ...r, priority: undefined });
 }
 
-/** The <conditionalFormatting> elements for the model's formats. */
-export function conditionalXml(list: CondFormat[], raw: CfRaw | undefined, sw: StylesWriter): string[] {
+/**
+ * The <conditionalFormatting> elements for the model's formats. New rules that need Excel 2010's part (data bars
+ * with Einfarbige Füllung) push their x14:conditionalFormatting to `ext` (for conditionalExt).
+ */
+export function conditionalXml(list: CondFormat[], raw: CfRaw | undefined, sw: StylesWriter, ext: string[] = []): string[] {
   return list.filter((cf) => cf.rules.length && cf.ref.length).map((cf) => {
     const rules = cf.rules.map((r) => {
       const prio = String(r.priority);
@@ -181,13 +205,35 @@ export function conditionalXml(list: CondFormat[], raw: CfRaw | undefined, sw: S
           return setAttrs(t, { priority: prio, dxfId: dxf === undefined ? undefined : String(dxf) });
         });
       }
-      return ruleXml(r, sw);
+      return ruleXml(r, sw, cf, ext);
     });
     return `<conditionalFormatting sqref="${cf.ref.map(rangeName).join(" ")}">${rules.join("")}</conditionalFormatting>`;
   });
 }
 
-function ruleXml(r: CondRule, sw: StylesWriter): string {
+/**
+ * The sheet's <extLst> with its x14 conditional formats: the file's own entries stay unless the rule that referred
+ * to them is gone (`kept`: the ids the written rules still refer to), new ones (`added`) are appended.
+ */
+export function conditionalExt(old: string | undefined, added: string[], mainIds: string[], kept: Set<string>): string | null | undefined {
+  const re = new RegExp(`<ext\\b[^>]*uri="${CF_EXT.replace(/[{}]/g, "\\$&")}"[^>]*>[\\s\\S]*?</ext>`);
+  const oldEntry = old ? re.exec(old)?.[0] : undefined;
+  const gone = new Set(mainIds.filter((id) => !kept.has(id)));
+  if (!added.length && !gone.size) return undefined;
+  const items = oldEntry ? [...oldEntry.matchAll(/<x14:conditionalFormatting\b[\s\S]*?<\/x14:conditionalFormatting>/g)].map((m) => m[0])
+    .filter((x) => ![...x.matchAll(/<x14:cfRule\b[^>]*\bid="([^"]+)"/g)].every((m) => gone.has(m[1]))) : [];
+  items.push(...added);
+  const entry = items.length ? `${oldEntry ? /^<ext\b[^>]*>/.exec(oldEntry)![0] : `<ext uri="${CF_EXT}" xmlns:x14="${X14_NS}">`}<x14:conditionalFormattings>${items.join("")}</x14:conditionalFormattings></ext>` : "";
+  let out: string;
+  if (!old) out = `<extLst>${entry}</extLst>`;
+  else if (oldEntry) out = old.replace(oldEntry, entry);
+  else out = old.replace(/^<extLst\b[^>]*>/, (t) => t + entry);
+  return /^<extLst\b[^>]*>\s*<\/extLst>$/.test(out) ? null : out;
+}
+
+let barIds = 0;
+
+function ruleXml(r: CondRule, sw: StylesWriter, cf?: CondFormat, ext: string[] = []): string {
   let a = ` type="${r.type}"`;
   if (r.format && r.type !== "dataBar" && r.type !== "colorScale") a += ` dxfId="${sw.dxf(r.format)}"`;
   a += ` priority="${r.priority}"`;
@@ -207,6 +253,15 @@ function ruleXml(r: CondRule, sw: StylesWriter): string {
     body = `<colorScale>${cfvo}${colors.map(rgb).join("")}</colorScale>`;
   } else if (r.type === "dataBar") {
     body = `<dataBar><cfvo type="min"/><cfvo type="max"/>${rgb(colors[0] ?? "#638EC6")}</dataBar>`;
+    if (r.solid && cf) {
+      // Einfarbige Füllung: Excel 2010's part of the rule, as Excel's gallery writes it (recorded, D-146).
+      const n = (++barIds).toString(16).toUpperCase();
+      const id = `{5241424B-0000-4000-8000-${n.padStart(12, "0")}}`;
+      body += `<extLst><ext uri="{B025F937-C7B1-47D3-B67F-A62EFF666E3E}" xmlns:x14="${X14_NS}"><x14:id>${id}</x14:id></ext></extLst>`;
+      ext.push(`<x14:conditionalFormatting xmlns:xm="${XM_NS}"><x14:cfRule type="dataBar" id="${id}"><x14:dataBar minLength="0" maxLength="100" gradient="0">` +
+        `<x14:cfvo type="autoMin"/><x14:cfvo type="autoMax"/><x14:negativeFillColor rgb="FFFF0000"/><x14:axisColor rgb="FF000000"/></x14:dataBar></x14:cfRule>` +
+        `<xm:sqref>${cf.ref.map(rangeName).join(" ")}</xm:sqref></x14:conditionalFormatting>`);
+    }
   } else if (r.type === "iconSet" && r.iconSet) {
     const i = r.iconSet;
     const at = (i.set !== "3TrafficLights1" ? ` iconSet="${esc(i.set)}"` : "") + (i.showValue === false ? ' showValue="0"' : "") + (i.reverse ? ' reverse="1"' : "");

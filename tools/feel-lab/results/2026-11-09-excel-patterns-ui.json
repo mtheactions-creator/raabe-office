@@ -1,0 +1,454 @@
+{
+ "page": [
+  [
+   "MSO Generic Control Container",
+   "ToolBar"
+  ],
+  [
+   "Muster",
+   "MenuItem"
+  ],
+  [
+   "MSO Generic Control Container",
+   "ToolBar"
+  ],
+  [
+   "Keine Farbe",
+   "ListItem"
+  ],
+  [
+   "Weiß",
+   "ListItem"
+  ],
+  [
+   "Schwarz",
+   "ListItem"
+  ],
+  [
+   "RGB(232, 232, 232)",
+   "ListItem"
+  ],
+  [
+   "RGB(14, 40, 65)",
+   "ListItem"
+  ],
+  [
+   "RGB(21, 96, 130)",
+   "ListItem"
+  ],
+  [
+   "RGB(233, 113, 50)",
+   "ListItem"
+  ],
+  [
+   "RGB(25, 107, 36)",
+   "ListItem"
+  ],
+  [
+   "RGB(15, 158, 213)",
+   "ListItem"
+  ],
+  [
+   "RGB(160, 43, 147)",
+   "ListItem"
+  ],
+  [
+   "RGB(78, 167, 46)",
+   "ListItem"
+  ],
+  [
+   "RGB(242, 242, 242)",
+   "ListItem"
+  ],
+  [
+   "Grau",
+   "ListItem"
+  ],
+  [
+   "RGB(208, 208, 208)",
+   "ListItem"
+  ],
+  [
+   "RGB(218, 233, 248)",
+   "ListItem"
+  ],
+  [
+   "RGB(192, 230, 245)",
+   "ListItem"
+  ],
+  [
+   "RGB(251, 226, 213)",
+   "ListItem"
+  ],
+  [
+   "RGB(193, 240, 200)",
+   "ListItem"
+  ],
+  [
+   "RGB(202, 237, 251)",
+   "ListItem"
+  ],
+  [
+   "RGB(242, 206, 239)",
+   "ListItem"
+  ],
+  [
+   "RGB(218, 242, 208)",
+   "ListItem"
+  ],
+  [
+   "RGB(217, 217, 217)",
+   "ListItem"
+  ],
+  [
+   "RGB(89, 89, 89)",
+   "ListItem"
+  ],
+  [
+   "RGB(173, 173, 173)",
+   "ListItem"
+  ],
+  [
+   "RGB(166, 201, 236)",
+   "ListItem"
+  ],
+  [
+   "RGB(131, 204, 235)",
+   "ListItem"
+  ],
+  [
+   "RGB(247, 199, 172)",
+   "ListItem"
+  ],
+  [
+   "RGB(131, 226, 142)",
+   "ListItem"
+  ],
+  [
+   "RGB(148, 220, 248)",
+   "ListItem"
+  ],
+  [
+   "RGB(228, 158, 221)",
+   "ListItem"
+  ],
+  [
+   "RGB(181, 230, 162)",
+   "ListItem"
+  ],
+  [
+   "RGB(191, 191, 191)",
+   "ListItem"
+  ],
+  [
+   "RGB(64, 64, 64)",
+   "ListItem"
+  ],
+  [
+   "RGB(116, 116, 116)",
+   "ListItem"
+  ],
+  [
+   "RGB(77, 147, 217)",
+   "ListItem"
+  ],
+  [
+   "RGB(68, 179, 225)",
+   "ListItem"
+  ],
+  [
+   "RGB(241, 169, 131)",
+   "ListItem"
+  ],
+  [
+   "RGB(71, 211, 89)",
+   "ListItem"
+  ],
+  [
+   "RGB(97, 203, 243)",
+   "ListItem"
+  ],
+  [
+   "RGB(216, 109, 205)",
+   "ListItem"
+  ],
+  [
+   "RGB(142, 217, 115)",
+   "ListItem"
+  ],
+  [
+   "RGB(166, 166, 166)",
+   "ListItem"
+  ],
+  [
+   "RGB(38, 38, 38)",
+   "ListItem"
+  ],
+  [
+   "RGB(57, 57, 57)",
+   "ListItem"
+  ],
+  [
+   "RGB(33, 92, 152)",
+   "ListItem"
+  ],
+  [
+   "RGB(16, 72, 97)",
+   "ListItem"
+  ],
+  [
+   "RGB(190, 80, 20)",
+   "ListItem"
+  ],
+  [
+   "RGB(18, 80, 26)",
+   "ListItem"
+  ],
+  [
+   "RGB(12, 118, 158)",
+   "ListItem"
+  ],
+  [
+   "RGB(120, 33, 112)",
+   "ListItem"
+  ],
+  [
+   "RGB(60, 125, 34)",
+   "ListItem"
+  ],
+  [
+   "Grau",
+   "ListItem"
+  ],
+  [
+   "RGB(13, 13, 13)",
+   "ListItem"
+  ],
+  [
+   "RGB(22, 22, 22)",
+   "ListItem"
+  ],
+  [
+   "RGB(21, 61, 100)",
+   "ListItem"
+  ],
+  [
+   "RGB(11, 48, 64)",
+   "ListItem"
+  ],
+  [
+   "RGB(126, 53, 14)",
+   "ListItem"
+  ],
+  [
+   "RGB(13, 53, 18)",
+   "ListItem"
+  ],
+  [
+   "RGB(7, 79, 105)",
+   "ListItem"
+  ],
+  [
+   "RGB(81, 21, 74)",
+   "ListItem"
+  ],
+  [
+   "RGB(39, 83, 23)",
+   "ListItem"
+  ],
+  [
+   "Dunkelrot",
+   "ListItem"
+  ],
+  [
+   "Rot",
+   "ListItem"
+  ],
+  [
+   "Orange",
+   "ListItem"
+  ],
+  [
+   "Gelb",
+   "ListItem"
+  ],
+  [
+   "Hellgrün",
+   "ListItem"
+  ],
+  [
+   "Grün",
+   "ListItem"
+  ],
+  [
+   "Hellblau",
+   "ListItem"
+  ],
+  [
+   "Blau",
+   "ListItem"
+  ],
+  [
+   "Dunkelblau",
+   "ListItem"
+  ],
+  [
+   "Lila",
+   "ListItem"
+  ],
+  [
+   "Direkthilfe",
+   "Button"
+  ],
+  [
+   "Schließen",
+   "Button"
+  ],
+  [
+   "Zellen formatieren",
+   "Tab"
+  ],
+  [
+   "Zahlen",
+   "TabItem"
+  ],
+  [
+   "Ausrichtung",
+   "TabItem"
+  ],
+  [
+   "Schrift",
+   "TabItem"
+  ],
+  [
+   "Rahmen",
+   "TabItem"
+  ],
+  [
+   "Ausfüllen",
+   "TabItem"
+  ],
+  [
+   "Schutz",
+   "TabItem"
+  ],
+  [
+   "Hintergrundfarbe:",
+   "Text"
+  ],
+  [
+   "Fülleffekte...",
+   "Button"
+  ],
+  [
+   "Weitere Farben...",
+   "Button"
+  ],
+  [
+   "Musterfarbe:",
+   "Text"
+  ],
+  [
+   "Musterfarbe Automatisch",
+   "Button"
+  ],
+  [
+   "Musterformat:",
+   "Text"
+  ],
+  [
+   "Beispiel",
+   "Group"
+  ],
+  [
+   "Beispiel",
+   "Button"
+  ],
+  [
+   "OK",
+   "Button"
+  ],
+  [
+   "Abbrechen",
+   "Button"
+  ]
+ ],
+ "popup": [
+  [
+   "Muster",
+   "Group"
+  ],
+  [
+   "Uni",
+   "ListItem"
+  ],
+  [
+   "75% Grau",
+   "ListItem"
+  ],
+  [
+   "50% Grau",
+   "ListItem"
+  ],
+  [
+   "25% Grau",
+   "ListItem"
+  ],
+  [
+   "12,5 % Grau",
+   "ListItem"
+  ],
+  [
+   "6,25 % Grau",
+   "ListItem"
+  ],
+  [
+   "Horizontal Gestreift",
+   "ListItem"
+  ],
+  [
+   "Vertikal Gestreift",
+   "ListItem"
+  ],
+  [
+   "Umgekehrt diagonal Gestreift",
+   "ListItem"
+  ],
+  [
+   "Diagonal Gestreift",
+   "ListItem"
+  ],
+  [
+   "Diagonal Kariert",
+   "ListItem"
+  ],
+  [
+   "Dick Diagonal Kariert",
+   "ListItem"
+  ],
+  [
+   "Dünn Horizontal Gestreift",
+   "ListItem"
+  ],
+  [
+   "Dünn Vertikal Gestreift",
+   "ListItem"
+  ],
+  [
+   "Dünn Umgekehrt diagonal Gestreift",
+   "ListItem"
+  ],
+  [
+   "Dünn Diagonal Gestreift",
+   "ListItem"
+  ],
+  [
+   "Dünn Horizontal Kariert",
+   "ListItem"
+  ],
+  [
+   "Dünn Diagonal Kariert",
+   "ListItem"
+  ]
+ ]
+}

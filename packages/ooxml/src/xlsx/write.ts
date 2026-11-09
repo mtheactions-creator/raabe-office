@@ -26,7 +26,7 @@ import { numText, widthFromBase, widthToFile } from "./units";
 import { esc, escText, encodeX, joinSplit, place, placeAll, setAttrs, split, tXml, type Split, XML_HEAD } from "./xml";
 import { CT_PERSON, CT_THREADS, RT_PERSON, RT_THREADS, fallbackText, guid, personsXml, readPersons, threadsXml } from "./threads";
 import { sparklinesExt } from "./sheetparts";
-import { FILTER_DB, PRINT_AREA, PRINT_TITLES, titlesRef, breaksXml, readPage, headerFooterXml, autoFilterXml, conditionalXml, fitToPage, pageXml, sheetRef, validationsXml } from "./sheetparts";
+import { FILTER_DB, PRINT_AREA, PRINT_TITLES, titlesRef, breaksXml, readPage, headerFooterXml, autoFilterXml, conditionalExt, conditionalXml, fitToPage, pageXml, sheetRef, validationsXml } from "./sheetparts";
 
 export const CT = {
   worksheet: "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
@@ -384,7 +384,15 @@ class SheetWriter {
     if (drawing !== undefined) this.put("drawing", drawing);
     const tableParts = writeTables(this.pw, s, this.part, this.nextTableId, this.get("tableParts"));
     if (tableParts !== undefined) this.put("tableParts", tableParts);
-    if (!snap || now.cf !== snap.cf) placeAll(this.sp, "conditionalFormatting", conditionalXml(s.conditional ?? [], this.own?.cf, this.sw), SHEET_ORDER);
+    if (!snap || now.cf !== snap.cf) {
+      const ext: string[] = [];
+      const cfs = conditionalXml(s.conditional ?? [], this.own?.cf, this.sw, ext);
+      placeAll(this.sp, "conditionalFormatting", cfs, SHEET_ORDER);
+      // Excel 2010's part of the rules (Einfarbige Füllung, D-146) in the sheet's extLst.
+      const kept = new Set(cfs.flatMap((x) => [...x.matchAll(/<x14:id>([^<]+)<\/x14:id>/g)].map((m) => m[1])));
+      const e = conditionalExt(this.get("extLst"), ext, this.own?.cf?.mainIds ?? [], kept);
+      if (e !== undefined) this.put("extLst", e);
+    }
     if (!snap || now.dv !== snap.dv) {
       const dv = validationsXml(s.validations ?? [], this.own?.dv, this.get("dataValidations"), this.get("extLst"));
       this.put("dataValidations", dv.main);

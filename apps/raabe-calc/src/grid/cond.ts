@@ -12,7 +12,7 @@ export interface CondLook {
   underline?: boolean;
   strike?: boolean;
   /** Datenbalken: the bar's length as a share of the cell and its colour. */
-  bar?: { frac: number; color: string };
+  bar?: { frac: number; color: string; solid?: boolean };
   /** Symbolsatz: the set, the icon (0 = lowest), and whether the value is hidden. */
   icon?: { set: string; index: number; hideValue?: boolean };
 }
@@ -84,7 +84,7 @@ export class CondEval {
       if (r.type === "dataBar" && typeof v === "number") {
         const s = this.statsOf(f);
         const span = s.max - Math.min(0, s.min);
-        out.bar ??= { frac: span ? (v - Math.min(0, s.min)) / span : 0, color: r.colors?.[0] ?? "#638EC6" };
+        out.bar ??= { frac: span ? (v - Math.min(0, s.min)) / span : 0, color: r.colors?.[0] ?? "#638EC6", ...(r.solid ? { solid: true } : {}) };
       } else if (r.type === "iconSet" && typeof v === "number" && r.iconSet) {
         out.icon ??= this.iconOf(f, r, v, row, col);
       } else if (r.type === "colorScale" && typeof v === "number") {

@@ -14,6 +14,7 @@ import { shown, editText } from "./engine";
 import { DEFAULT_COL_CHARS, charsToPx, shownChars, shownToChars } from "./grid/metrics";
 import type { Settings } from "./store";
 import { condRules, hexColor, textRule } from "./condrules";
+import { PATTERNS, SHADINGS, cssFill, fillXmlOf, parseFill, shadingFill, type FancyFill, type GradientFill, type Shading } from "./fills";
 import { CUSTOM_OPS, NUMBER_FILTERS, TEXT_FILTERS, fromCustom, passes, prepare as prepareFilter, toCustom } from "./filters";
 
 const field = (label: string, input: HTMLElement) => h("label", { class: "field" }, label, input);
@@ -181,57 +182,264 @@ export function dialogs(app: CalcApp) {
     panels.Zahlen = h("div", { class: "fc-num" }, h("div", null, h("div", { class: "fc-label" }, "Kategorie:"), catList),
       h("div", { class: "fc-right" }, h("div", { class: "fc-label" }, "Beispiel"), preview, decRow, thousands.el, h("div", { class: "fc-label" }, "Typ:"), codeBox, codeList));
 
-    // Ausrichtung.
-    const hSel = h("select", null, ...[["general", "Standard"], ["left", "Links (Einzug)"], ["center", "Zentriert"], ["right", "Rechts (Einzug)"], ["fill", "Ausfüllen"], ["justify", "Blocksatz"], ["centerContinuous", "Über Auswahl zentrieren"], ["distributed", "Verteilt (Einzug)"]]
+    // Ausrichtung: Textausrichtung, Textsteuerung and Excel's orientation box: the vertical "Text" (Vertikaler Text)
+    // and the dial whose pointer is dragged between -90 and 90 degrees, with the Grad spinner (D-148).
+    const hSel = h("select", { "aria-label": "Horizontal:" }, ...[["general", "Standard"], ["left", "Links (Einzug)"], ["center", "Zentriert"], ["right", "Rechts (Einzug)"], ["fill", "Ausfüllen"], ["justify", "Blocksatz"], ["centerContinuous", "Über Auswahl zentrieren"], ["distributed", "Verteilt (Einzug)"]]
       .map(([v, l]) => h("option", { value: v, selected: (st.h ?? "general") === v || undefined }, l))) as HTMLSelectElement;
-    const vSel = h("select", null, ...[["top", "Oben"], ["center", "Zentriert"], ["bottom", "Unten"], ["justify", "Blocksatz"], ["distributed", "Verteilt"]]
+    const vSel = h("select", { "aria-label": "Vertikal:" }, ...[["top", "Oben"], ["center", "Zentriert"], ["bottom", "Unten"], ["justify", "Blocksatz"], ["distributed", "Verteilt"]]
       .map(([v, l]) => h("option", { value: v, selected: (st.v ?? "bottom") === v || undefined }, l))) as HTMLSelectElement;
-    const indent = h("input", { type: "number", min: "0", max: "250", value: String(st.indent ?? 0), style: "width:60px" }) as HTMLInputElement;
-    const rot = h("input", { type: "number", min: "-90", max: "90", value: String(st.rotation === undefined ? 0 : st.rotation > 90 && st.rotation <= 180 ? 90 - st.rotation : st.rotation === 255 ? 0 : st.rotation), style: "width:60px" }) as HTMLInputElement;
+    const indent = h("input", { type: "number", min: "0", max: "250", value: String(st.indent ?? 0), style: "width:60px", "aria-label": "Einzug:" }) as HTMLInputElement;
+    let vertical = st.rotation === 255;
+    let deg = st.rotation === undefined || st.rotation === 255 ? 0 : st.rotation > 90 && st.rotation <= 180 ? 90 - st.rotation : st.rotation;
+    const rot = h("input", { type: "number", min: "-90", max: "90", value: String(deg), style: "width:56px", "aria-label": "Grad" }) as HTMLInputElement;
+    const vbox = h("button", { type: "button", class: "fc-vtext", role: "checkbox", "aria-label": "Vertikaler Text" }, ...[..."Text"].map((ch) => h("span", null, ch)));
+    const dial = h("div", { class: "fc-dial", role: "slider", tabindex: "0", "aria-label": "Ausrichtung", "aria-valuemin": "-90", "aria-valuemax": "90" });
+    const CX = 14, CY = 74, R = 60;
+    const paintDial = () => {
+      const a = (deg * Math.PI) / 180, x = CX + R * Math.cos(a), y = CY - R * Math.sin(a);
+      const dots = range(-6, 6).map((k) => { const b = (k * 15 * Math.PI) / 180, big = k % 3 === 0; return `<circle cx="${CX + R * Math.cos(b)}" cy="${CY - R * Math.sin(b)}" r="${big ? 2.6 : 1.5}" fill="${big ? "#000" : "#555"}"/>`; }).join("");
+      const tx = CX + 22 * Math.cos(a), ty = CY - 22 * Math.sin(a);
+      dial.innerHTML = `<svg width="90" height="148" viewBox="0 0 90 148" aria-hidden="true">${dots}<line x1="${CX + 44 * Math.cos(a)}" y1="${CY - 44 * Math.sin(a)}" x2="${x}" y2="${y}" stroke="#c00000" stroke-width="1.5"/>` +
+        `<rect x="${x - 3}" y="${y - 3}" width="6" height="6" fill="#c00000"/><text x="${tx}" y="${ty}" font-size="12" dominant-baseline="middle" transform="rotate(${-deg} ${tx} ${ty})">Text</text></svg>`;
+      dial.setAttribute("aria-valuenow", String(deg));
+      dial.classList.toggle("off", vertical);
+      vbox.setAttribute("aria-checked", String(vertical));
+      vbox.classList.toggle("on", vertical);
+      rot.disabled = vertical;
+      if (Number(rot.value) !== deg) rot.value = String(deg);
+    };
+    const setDeg = (d: number) => { if (vertical) return; deg = Math.max(-90, Math.min(90, Math.round(d))); paintDial(); };
+    const fromPointer = (e: PointerEvent) => {
+      const r = dial.getBoundingClientRect();
+      setDeg((Math.atan2(r.top + CY - e.clientY, e.clientX - (r.left + CX)) * 180) / Math.PI);
+    };
+    dial.addEventListener("pointerdown", (e) => { if (vertical) return; dial.setPointerCapture(e.pointerId); fromPointer(e); });
+    dial.addEventListener("pointermove", (e) => { if (dial.hasPointerCapture(e.pointerId)) fromPointer(e); });
+    dial.addEventListener("keydown", (e) => { if (e.key === "ArrowUp" || e.key === "ArrowRight") { setDeg(deg + 1); e.preventDefault(); } else if (e.key === "ArrowDown" || e.key === "ArrowLeft") { setDeg(deg - 1); e.preventDefault(); } });
+    rot.oninput = () => { const v = Number(rot.value); if (Number.isFinite(v) && rot.value.trim() !== "" && rot.value !== "-") { deg = Math.max(-90, Math.min(90, Math.round(v))); paintDial(); } };
+    vbox.onclick = () => { vertical = !vertical; paintDial(); };
+    paintDial();
     const wrap = checkbox("Zeilenumbruch", !!st.wrap), shrink = checkbox("An Zellgröße anpassen", !!st.shrink), mergeBox = checkbox("Zellen verbinden", app.sheet.merges.some((m) => A.overlaps(m, sel())));
-    panels.Ausrichtung = h("div", null, h("div", { class: "fc-label" }, "Textausrichtung"), field("Horizontal:", hSel), field("Vertikal:", vSel), field("Einzug:", indent),
-      h("div", { class: "fc-label" }, "Textsteuerung"), wrap.el, shrink.el, mergeBox.el, field("Ausrichtung (Grad):", rot));
+    panels.Ausrichtung = h("div", { class: "fc-align" },
+      h("div", null, h("div", { class: "fc-label" }, "Textausrichtung"), field("Horizontal:", hSel), field("Vertikal:", vSel), field("Einzug:", indent),
+        h("div", { class: "fc-label" }, "Textsteuerung"), wrap.el, shrink.el, mergeBox.el),
+      h("fieldset", { class: "fc-orient" }, h("legend", null, "Ausrichtung"), h("div", { class: "fc-orient-box" }, vbox, dial), h("label", { class: "field" }, rot, "Grad")));
 
-    // Schrift.
-    const fName = text(st.font.name, 220), fSize = text(de(st.font.size), 60);
-    const fStyle = h("select", null, ...["Standard", "Kursiv", "Fett", "Fett Kursiv"].map((v) => h("option", { value: v }, v))) as HTMLSelectElement;
-    fStyle.value = st.font.bold && st.font.italic ? "Fett Kursiv" : st.font.bold ? "Fett" : st.font.italic ? "Kursiv" : "Standard";
-    const fUnder = h("select", null, ...[["", "Ohne"], ["single", "Einfach"], ["double", "Doppelt"], ["singleAccounting", "Einfach (Buchhaltung)"], ["doubleAccounting", "Doppelt (Buchhaltung)"]]
+    // Schrift: Schriftart, Schriftschnitt and Schriftgrad each a field with its list, Unterstreichung, Farbe,
+    // Standardschrift, Effekte and Vorschau, as Excel's page (D-148).
+    const strip = (n: string) => n.replace(/ \((Überschriften|Textkörper)\)$/, "");
+    const themed = [`${app.wb.themeFonts.major} (Überschriften)`, `${app.wb.themeFonts.minor} (Textkörper)`];
+    const all = [...new Set(app.fonts().length ? app.fonts() : ["Arial", "Calibri", "Calibri Light", "Cambria", "Times New Roman"])].sort((a, b) => a.localeCompare(b, "de"));
+    const pair = (label: string, value: string, items: string[], width: number) => {
+      const input = h("input", { type: "text", value, "aria-label": label, style: `width:${width}px` }) as HTMLInputElement;
+      const list = h("select", { size: 6, class: "fc-list", "aria-label": label, style: `width:${width + 6}px` }, ...items.map((v) => h("option", { value: v }, v))) as HTMLSelectElement;
+      const sync = () => { const t = input.value.trim().toLowerCase(); const i = items.findIndex((v) => strip(v).toLowerCase() === t) ; const j = i >= 0 ? i : items.findIndex((v) => v.toLowerCase().startsWith(t)); list.selectedIndex = t ? j : -1; };
+      list.onchange = () => { input.value = label === "Schriftart:" ? strip(list.value) : list.value; input.dispatchEvent(new Event("input")); };
+      input.addEventListener("input", sync);
+      sync();
+      return { input, list, el: h("div", { class: "fc-pair" }, h("div", null, label), input, list) };
+    };
+    const fStyleName = st.font.bold && st.font.italic ? "Fett Kursiv" : st.font.bold ? "Fett" : st.font.italic ? "Kursiv" : "Standard";
+    const fontP = pair("Schriftart:", st.font.name, [...themed, ...all], 200);
+    const styleP = pair("Schriftschnitt:", fStyleName, ["Standard", "Kursiv", "Fett", "Fett Kursiv"], 110);
+    const sizeP = pair("Schriftgrad:", de(st.font.size), ["8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72"], 56);
+    const fName = fontP.input, fStyle = styleP.input, fSize = sizeP.input;
+    const fUnder = h("select", { "aria-label": "Unterstreichung:" }, ...[["", "Ohne"], ["single", "Einfach"], ["double", "Doppelt"], ["singleAccounting", "Einfach (Buchhaltung)"], ["doubleAccounting", "Doppelt (Buchhaltung)"]]
       .map(([v, l]) => h("option", { value: v, selected: (st.font.underline ?? "") === v || undefined }, l))) as HTMLSelectElement;
     let fColor = st.font.color ?? "";
-    const fColorBtn = h("button", { type: "button", class: "fc-color", style: `background:${fColor || "#000"}` });
-    fColorBtn.onclick = () => openColors(fColorBtn, (c) => { fColor = c; fColorBtn.style.background = c || "#000"; });
+    const fColorBtn = h("button", { type: "button", class: "fc-color", "aria-label": "Farbe:", style: `background:${fColor || "#000"}` });
     const strike = checkbox("Durchgestrichen", !!st.font.strike), sup = checkbox("Hochgestellt", st.font.vertAlign === "superscript"), sub = checkbox("Tiefgestellt", st.font.vertAlign === "subscript");
-    panels.Schrift = h("div", null, field("Schriftart:", fName), field("Schriftschnitt:", fStyle), field("Schriftgrad:", fSize), field("Unterstreichung:", fUnder), field("Farbe:", fColorBtn),
-      h("div", { class: "fc-label" }, "Darstellung"), strike.el, sup.el, sub.el);
-
-    // Rahmen: presets (Ohne, Außen, Innen) and the four sides.
-    const borders = structuredClone(st.borders);
-    let lineStyle = "thin";
-    const styleSel = h("select", null, ...[["thin", "Dünn"], ["medium", "Mittel"], ["thick", "Dick"], ["double", "Doppelt"], ["dotted", "Gepunktet"], ["dashed", "Gestrichelt"], ["hair", "Haarlinie"]]
-      .map(([v, l]) => h("option", { value: v }, l))) as HTMLSelectElement;
-    // The line style chosen applies to the sides already set as well (Excel draws the sides with the style picked).
-    styleSel.onchange = () => { lineStyle = styleSel.value; for (const k of ["top", "bottom", "left", "right"] as const) if (borders[k]) borders[k] = { style: lineStyle }; };
-    const sideBox = (k: "top" | "bottom" | "left" | "right", label: string) => {
-      const c = checkbox(label, !!borders[k]);
-      c.input.onchange = () => { borders[k] = c.input.checked ? { style: lineStyle } : undefined; };
-      return c;
+    const normal = checkbox("Standardschrift");
+    const fPreview = h("div", { class: "fc-font-preview" }, "AaBbCcYyZz");
+    const paintFont = () => {
+      const size = num(fSize.value);
+      fPreview.style.fontFamily = `"${strip(fName.value.trim()) || st.font.name}", Carlito, sans-serif`;
+      fPreview.style.fontSize = `${Math.min(48, size >= 1 ? size : st.font.size) * 96 / 72}px`;
+      fPreview.style.fontWeight = /fett/i.test(fStyle.value) ? "700" : "400";
+      fPreview.style.fontStyle = /kursiv/i.test(fStyle.value) ? "italic" : "normal";
+      fPreview.style.textDecoration = [fUnder.value ? "underline" : "", strike.input.checked ? "line-through" : ""].filter(Boolean).join(" ") || "none";
+      fPreview.style.textDecorationStyle = fUnder.value.startsWith("double") ? "double" : "solid";
+      fPreview.style.color = fColor || "#000";
+      fPreview.style.verticalAlign = "baseline";
     };
-    const sides = [sideBox("top", "Oben"), sideBox("bottom", "Unten"), sideBox("left", "Links"), sideBox("right", "Rechts")];
-    let preset: "none" | "outline" | "inside" | null = null;
-    panels.Rahmen = h("div", null, field("Linienart:", styleSel), h("div", { class: "fc-label" }, "Voreinstellungen"),
-      h("div", { class: "fc-presets" },
-        h("button", { type: "button", onclick: () => { preset = "none"; for (const s of sides) s.input.checked = false; for (const k of ["top", "bottom", "left", "right"] as const) borders[k] = undefined; } }, "Keine"),
-        h("button", { type: "button", onclick: () => { preset = "outline"; for (const s of sides) s.input.checked = true; for (const k of ["top", "bottom", "left", "right"] as const) borders[k] = { style: lineStyle }; } }, "Außen"),
-        h("button", { type: "button", onclick: () => { preset = "inside"; } }, "Innen")),
-      h("div", { class: "fc-label" }, "Rahmen"), ...sides.map((s) => s.el));
+    const fontChanged = () => { normal.input.checked = false; paintFont(); };
+    for (const el of [fName, fStyle, fSize]) el.addEventListener("input", fontChanged);
+    fUnder.onchange = fontChanged;
+    strike.input.onchange = fontChanged;
+    // Hochgestellt and Tiefgestellt exclude each other.
+    sup.input.onchange = () => { if (sup.input.checked) sub.input.checked = false; fontChanged(); };
+    sub.input.onchange = () => { if (sub.input.checked) sup.input.checked = false; fontChanged(); };
+    fColorBtn.onclick = () => openColors(fColorBtn, (c) => { fColor = c; fColorBtn.style.background = c || "#000"; fontChanged(); });
+    // Standardschrift: the workbook's standard font with no effects.
+    normal.input.onchange = () => {
+      if (!normal.input.checked) return;
+      const d = app.wb.styles.get(undefined).font;
+      fName.value = d.name; fStyle.value = "Standard"; fSize.value = de(d.size); fUnder.value = ""; fColor = ""; fColorBtn.style.background = "#000";
+      strike.input.checked = sup.input.checked = sub.input.checked = false;
+      for (const el of [fName, fStyle, fSize]) el.dispatchEvent(new Event("input"));
+      normal.input.checked = true;
+      paintFont();
+    };
+    paintFont();
+    panels.Schrift = h("div", { class: "fc-font" },
+      h("div", { class: "fc-pairs" }, fontP.el, styleP.el, sizeP.el),
+      h("div", { class: "fc-font-row" }, field("Unterstreichung:", fUnder), field("Farbe:", fColorBtn), normal.el),
+      h("div", { class: "fc-font-row" }, h("fieldset", null, h("legend", null, "Effekte"), strike.el, sup.el, sub.el), h("fieldset", { class: "fc-preview-box" }, h("legend", null, "Vorschau"), fPreview)));
 
-    // Ausfüllen.
+    // Rahmen: Linie (Art and Farbe), Voreinstellungen (Keine, Außen, Innen) and the sides as buttons around a
+    // preview that can be clicked too, both diagonals included (D-147). Only the sides touched in the dialog change.
+    type SideKey = "top" | "insideH" | "bottom" | "diagUp" | "left" | "insideV" | "right" | "diagDown";
+    const LINE_STYLES: [string, string][] = [["none", "Keine"], ["hair", "Haarstrich"], ["dotted", "Punktiert"], ["dashDotDot", "StrichPunktPunkt"], ["dashDot", "StrichPunkt"], ["dashed", "Gestrichelt"], ["thin", "Dünn"],
+      ["mediumDashDotDot", "StrichPunktPunkt Mittel"], ["slantDashDot", "SchrägstrichStrichPunkt"], ["mediumDashDot", "StrichPunkt Mittel"], ["mediumDashed", "Gestrichelt Mittel"], ["medium", "Mittel"], ["thick", "Dick"], ["double", "Doppelt"]];
+    const pen: { style: string; color?: string } = { style: "thin" };
+    const many = app.grid.selection.some((r) => r.r1 > r.r0 || r.c1 > r.c0);
+    const rowsMany = app.grid.selection.some((r) => r.r1 > r.r0), colsMany = app.grid.selection.some((r) => r.c1 > r.c0);
+    const b0 = st.borders;
+    const sides: Partial<Record<SideKey, { style: string; color?: string }>> = {
+      top: b0.top, bottom: b0.bottom, left: b0.left, right: b0.right,
+      diagUp: b0.diagonalUp ? b0.diagonal : undefined, diagDown: b0.diagonalDown ? b0.diagonal : undefined,
+    };
+    const touched = new Set<SideKey>();
+    const sameSide = (a?: { style: string; color?: string }, b?: { style: string; color?: string }) => !!a && !!b && a.style === b.style && (a.color ?? "") === (b.color ?? "");
+    const dashOf = (style: string) => ({ hair: "1 1", dotted: "1 2", dashDotDot: "6 2 2 2 2 2", dashDot: "6 2 2 2", dashed: "3 2", mediumDashDotDot: "6 2 2 2 2 2", slantDashDot: "8 2 2 2", mediumDashDot: "6 2 2 2", mediumDashed: "6 2" } as Record<string, string>)[style] ?? "";
+    const widthOf = (style: string) => (/^(medium|mediumDash|slant)/.test(style) ? 2 : style === "thick" ? 3 : 1);
+    const svgLine = (x1: number, y1: number, x2: number, y2: number, side: { style: string; color?: string }) => {
+      const c = side.color ?? "#000";
+      if (side.style === "double") {
+        const dx = y1 === y2 ? 0 : 1.5, dy = y1 === y2 ? 1.5 : 0;
+        return `<line x1="${x1 - dx}" y1="${y1 - dy}" x2="${x2 - dx}" y2="${y2 - dy}" stroke="${c}"/><line x1="${x1 + dx}" y1="${y1 + dy}" x2="${x2 + dx}" y2="${y2 + dy}" stroke="${c}"/>`;
+      }
+      return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${widthOf(side.style)}" stroke-dasharray="${dashOf(side.style)}"/>`;
+    };
+    const styleBtns = LINE_STYLES.map(([v, label]) => {
+      const b = h("button", { type: "button", class: "fc-linestyle", role: "radio", "aria-label": label, "data-style": v });
+      b.innerHTML = v === "none" ? "<span>Keine</span>" : `<svg width="64" height="10" aria-hidden="true">${svgLine(2, 5, 62, 5, { style: v })}</svg>`;
+      b.onclick = () => { pen.style = v; paintBorders(); };
+      return b;
+    });
+    const penColorBtn = h("button", { type: "button", class: "fc-color", "aria-label": "Farbe Automatisch", style: "background:#000" });
+    penColorBtn.onclick = () => openColors(penColorBtn, (c) => {
+      pen.color = c || undefined;
+      penColorBtn.style.background = c || "#000";
+      penColorBtn.setAttribute("aria-label", c ? `Farbe ${c}` : "Farbe Automatisch");
+      paintBorders();
+    });
+    const toggle = (k: SideKey) => {
+      if ((k === "insideH" && !rowsMany) || (k === "insideV" && !colsMany)) return;
+      sides[k] = pen.style === "none" || sameSide(sides[k], pen) ? undefined : { style: pen.style, ...(pen.color ? { color: pen.color } : {}) };
+      touched.add(k);
+      paintBorders();
+    };
+    const preset = (which: "none" | "outline" | "inside") => {
+      const keys: SideKey[] = which === "none" ? ["top", "bottom", "left", "right", "insideH", "insideV", "diagUp", "diagDown"] : which === "outline" ? ["top", "bottom", "left", "right"] : ["insideH", "insideV"];
+      for (const k of keys) {
+        if ((k === "insideH" && !rowsMany) || (k === "insideV" && !colsMany)) continue;
+        sides[k] = which === "none" || pen.style === "none" ? undefined : { style: pen.style, ...(pen.color ? { color: pen.color } : {}) };
+        touched.add(k);
+      }
+      paintBorders();
+    };
+    const sideBtn = (k: SideKey, label: string) => {
+      const b = h("button", { type: "button", class: `fc-side fc-side-${k}`, role: "checkbox", "aria-label": label, disabled: (k === "insideH" && !rowsMany) || (k === "insideV" && !colsMany) || undefined });
+      b.onclick = () => toggle(k);
+      return b;
+    };
+    const sideBtns: Record<SideKey, HTMLElement> = {
+      top: sideBtn("top", "Oben"), insideH: sideBtn("insideH", "Horizontal"), bottom: sideBtn("bottom", "Unten"), diagUp: sideBtn("diagUp", "Diagonal nach oben"),
+      left: sideBtn("left", "Links"), insideV: sideBtn("insideV", "Vertikal"), right: sideBtn("right", "Rechts"), diagDown: sideBtn("diagDown", "Diagonal nach unten"),
+    };
+    const PW = 150, PH = 110, PX = 10, PY = 10;
+    const borderPreview = h("div", { class: "fc-border-preview", role: "img", "aria-label": "Rahmen" });
+    const paintBorders = () => {
+      for (const b of styleBtns) b.classList.toggle("on", b.dataset.style === pen.style), b.setAttribute("aria-checked", String(b.dataset.style === pen.style));
+      for (const [k, b] of Object.entries(sideBtns)) { b.classList.toggle("on", !!sides[k as SideKey]); b.setAttribute("aria-checked", String(!!sides[k as SideKey])); }
+      const x0 = PX, y0 = PY, x1 = PX + PW, y1 = PY + PH, xm = (x0 + x1) / 2, ym = (y0 + y1) / 2;
+      let svg = `<svg width="${PW + 2 * PX}" height="${PH + 2 * PY}" aria-hidden="true">`;
+      // Corner marks and the sample text, as Excel's preview.
+      for (const [cx, cy] of [[x0, y0], [x1, y0], [x0, y1], [x1, y1], ...(colsMany ? [[xm, y0], [xm, y1]] : []), ...(rowsMany ? [[x0, ym], [x1, ym]] : [])]) svg += `<path d="M${cx - 6} ${cy}h4M${cx + 2} ${cy}h4M${cx} ${cy - 6}v4M${cx} ${cy + 2}v4" stroke="#999"/>`;
+      const cellsX = colsMany ? [x0, xm] : [x0], cellsY = rowsMany ? [y0, ym] : [y0], cw = colsMany ? PW / 2 : PW, ch = rowsMany ? PH / 2 : PH;
+      for (const cx of cellsX) for (const cy of cellsY) svg += `<text x="${cx + cw / 2}" y="${cy + ch / 2}" font-size="11" fill="#666" text-anchor="middle" dominant-baseline="middle">Text</text>`;
+      if (sides.top) svg += svgLine(x0, y0, x1, y0, sides.top);
+      if (sides.bottom) svg += svgLine(x0, y1, x1, y1, sides.bottom);
+      if (sides.left) svg += svgLine(x0, y0, x0, y1, sides.left);
+      if (sides.right) svg += svgLine(x1, y0, x1, y1, sides.right);
+      if (sides.insideH && rowsMany) svg += svgLine(x0, ym, x1, ym, sides.insideH);
+      if (sides.insideV && colsMany) svg += svgLine(xm, y0, xm, y1, sides.insideV);
+      for (const cx of cellsX) for (const cy of cellsY) {
+        if (sides.diagDown) svg += svgLine(cx, cy, cx + cw, cy + ch, sides.diagDown);
+        if (sides.diagUp) svg += svgLine(cx, cy + ch, cx + cw, cy, sides.diagUp);
+      }
+      borderPreview.innerHTML = svg + "</svg>";
+    };
+    // A click in the preview: the nearest line within a few pixels (sides, inner lines, diagonals of a cell).
+    borderPreview.addEventListener("click", (e) => {
+      const r = borderPreview.getBoundingClientRect();
+      const x = e.clientX - r.left - PX, y = e.clientY - r.top - PY;
+      const cw = colsMany ? PW / 2 : PW, ch = rowsMany ? PH / 2 : PH;
+      const near: [SideKey, number][] = [["top", Math.abs(y)], ["bottom", Math.abs(y - PH)], ["left", Math.abs(x)], ["right", Math.abs(x - PW)]];
+      if (rowsMany) near.push(["insideH", Math.abs(y - PH / 2)]);
+      if (colsMany) near.push(["insideV", Math.abs(x - PW / 2)]);
+      const lx = ((x % cw) + cw) % cw, ly = ((y % ch) + ch) % ch, len = Math.hypot(cw, ch);
+      near.push(["diagDown", Math.abs(ch * lx - cw * ly) / len], ["diagUp", Math.abs(ch * lx + cw * ly - cw * ch) / len]);
+      const [k, d] = near.sort((a, b) => a[1] - b[1])[0];
+      if (d <= 8) toggle(k);
+    });
+    paintBorders();
+    panels.Rahmen = h("div", { class: "fc-borders" },
+      h("fieldset", { class: "fc-line" }, h("legend", null, "Linie"), h("div", null, "Art:"), h("div", { class: "fc-linestyles", role: "radiogroup", "aria-label": "Art:" }, ...styleBtns), h("div", null, "Farbe:"), penColorBtn),
+      h("div", null,
+        h("div", { class: "fc-label" }, "Voreinstellungen"),
+        h("div", { class: "fc-presets" },
+          h("button", { type: "button", "aria-label": "Keine", onclick: () => preset("none") }, "Keine"),
+          h("button", { type: "button", "aria-label": "Außen", onclick: () => preset("outline") }, "Außen"),
+          h("button", { type: "button", "aria-label": "Innen", disabled: !many || undefined, onclick: () => preset("inside") }, "Innen")),
+        h("div", { class: "fc-label" }, "Rahmen"),
+        h("div", { class: "fc-border-grid" },
+          h("div", { class: "fc-side-col" }, sideBtns.top, sideBtns.insideH, sideBtns.bottom),
+          borderPreview,
+          h("div", { class: "fc-side-row" }, sideBtns.diagUp, sideBtns.left, sideBtns.insideV, sideBtns.right, sideBtns.diagDown))));
+
+    // Ausfüllen: Hintergrundfarbe (Keine Farbe, the palette, Fülleffekte...), Musterfarbe and Musterformat, and the
+    // Beispiel (D-147). A solid colour stays the cell's fill; a pattern or a gradient is written as Excel writes it.
     let fill = st.fill ?? "";
-    const fillSample = h("div", { class: "fc-fill-sample", style: `background:${fill || "#fff"}` });
-    const grid = colorGrid((c) => { fill = hexColor(c); fillSample.style.background = fill || "#fff"; });
-    panels.Ausfüllen = h("div", null, h("button", { type: "button", onclick: () => { fill = ""; fillSample.style.background = "#fff"; } }, "Keine Farbe"),
-      h("div", { class: "fc-palette" }, ...grid), h("div", { class: "fc-label" }, "Beispiel"), fillSample);
+    let fancy: FancyFill | undefined = st.fill ? undefined : parseFill(st.fillXml);
+    let patColor = fancy?.kind === "pattern" && fancy.type !== "solid" ? fancy.fg : "";
+    let patType = fancy?.kind === "pattern" && fancy.type !== "solid" ? fancy.type : "";
+    if (fancy?.kind === "pattern") fill = fancy.type === "solid" ? fancy.fg : fancy.bg ?? "";
+    const fillSample = h("div", { class: "fc-fill-sample", role: "img", "aria-label": "Beispiel" });
+    const currentFill = (): FancyFill | undefined => fancy?.kind === "gradient" ? fancy : patType ? { kind: "pattern", type: patType, fg: patColor || "#000000", ...(fill ? { bg: fill } : {}) } : undefined;
+    const paintFill = () => { fillSample.style.background = cssFill(currentFill(), fill || "#fff"); patBtn.style.background = cssFill(patType ? { kind: "pattern", type: patType, fg: patColor || "#000000" } : undefined, "#fff"); };
+    const grid = colorGrid((c) => { fill = hexColor(c); if (fancy?.kind === "gradient") fancy = undefined; paintFill(); });
+    const patColorBtn = h("button", { type: "button", class: "fc-color", "aria-label": "Musterfarbe Automatisch", style: `background:${patColor || "#000"}` });
+    patColorBtn.onclick = () => openColors(patColorBtn, (c) => {
+      patColor = c; patColorBtn.style.background = c || "#000"; patColorBtn.setAttribute("aria-label", c ? `Musterfarbe ${c}` : "Musterfarbe Automatisch");
+      if (fancy?.kind === "gradient") fancy = undefined;
+      paintFill();
+    });
+    const patBtn = h("button", { type: "button", class: "fc-pattern-btn", "aria-label": "Musterformat:" });
+    patBtn.onclick = () => {
+      const pop = h("div", { class: "menu fc-pop fc-patterns", role: "listbox", "aria-label": "Musterformat:" },
+        // Uni (the first entry) is no pattern: the cell has its Hintergrundfarbe only.
+        ...PATTERNS.map(([type, label]) => h("button", { type: "button", role: "option", "aria-label": label, title: label, class: "fc-pattern",
+          style: `background:${cssFill({ kind: "pattern", type, fg: "#000000" })}`, onclick: () => { patType = type === "solid" ? "" : type; if (fancy?.kind === "gradient") fancy = undefined; pop.remove(); paintFill(); } })));
+      const r = patBtn.getBoundingClientRect();
+      pop.style.cssText = `position:fixed;left:${r.left}px;top:${r.bottom + 2}px;z-index:90`;
+      document.body.append(pop);
+      setTimeout(() => addEventListener("pointerdown", function close(e) { if (!pop.contains(e.target as Node)) { pop.remove(); removeEventListener("pointerdown", close, true); } }, true));
+    };
+    const effects = h("button", { type: "button", onclick: async () => {
+      const g = await fillEffects(fancy?.kind === "gradient" ? fancy : undefined, fill || "#FFFFFF");
+      if (g) { fancy = g; patType = ""; paintFill(); }
+    } }, "Fülleffekte...");
+    const moreColors = h("input", { type: "color", "aria-label": "Weitere Farben...", value: fill || "#ffffff" }) as HTMLInputElement;
+    moreColors.oninput = () => { fill = moreColors.value.toUpperCase(); if (fancy?.kind === "gradient") fancy = undefined; paintFill(); };
+    paintFill();
+    const fillKey = () => JSON.stringify([fill, currentFill() ?? null]);
+    panels.Ausfüllen = h("div", { class: "fc-fillpage" },
+      h("div", null, h("div", { class: "fc-label" }, "Hintergrundfarbe:"),
+        h("button", { type: "button", onclick: () => { fill = ""; patType = ""; fancy = undefined; paintFill(); } }, "Keine Farbe"),
+        h("div", { class: "fc-palette" }, ...grid), h("div", { class: "fc-presets" }, effects, h("label", { class: "field" }, "Weitere Farben...", moreColors))),
+      h("div", null, field("Musterfarbe:", patColorBtn), field("Musterformat:", patBtn), h("div", { class: "fc-label" }, "Beispiel"), fillSample));
 
     // Schutz.
     const locked = checkbox("Gesperrt", st.locked !== false), hidden = checkbox("Ausgeblendet", !!st.hidden);
@@ -249,9 +457,9 @@ export function dialogs(app: CalcApp) {
     // property keeps each selected cell's own value (Excel; a mixed selection must not take the active
     // cell's format, D-142).
     const shownAt = () => ({
-      code: codeBox.value, h: hSel.value, v: vSel.value, indent: indent.value, rot: rot.value, wrap: wrap.input.checked, shrink: shrink.input.checked,
-      name: fName.value.trim(), size: fSize.value.trim(), style: fStyle.value, under: fUnder.value, color: fColor, strike: strike.input.checked,
-      sup: sup.input.checked, sub: sub.input.checked, fill, locked: locked.input.checked, hidden: hidden.input.checked,
+      code: codeBox.value, h: hSel.value, v: vSel.value, indent: indent.value, rot: vertical ? "v" : String(deg), wrap: wrap.input.checked, shrink: shrink.input.checked,
+      name: strip(fName.value.trim()), size: fSize.value.trim(), style: fStyle.value.trim(), under: fUnder.value, color: fColor, strike: strike.input.checked,
+      sup: sup.input.checked, sub: sub.input.checked, fill: fillKey(), locked: locked.input.checked, hidden: hidden.input.checked,
     });
     const initial = shownAt();
     const ok = await showDialog({ title: "Zellen formatieren", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
@@ -260,34 +468,37 @@ export function dialogs(app: CalcApp) {
     const changed = (k: keyof typeof now) => now[k] !== initial[k];
     let code: string;
     try { code = codeBox.value === "Standard" ? "General" : fileFormat(codeBox.value); } catch { code = st.numFmt; }
-    const before = app.activeStyle();
-    const changedBorders = JSON.stringify(borders) !== JSON.stringify(before.borders) || preset !== null;
+    const changedBorders = touched.size > 0;
     app.change("Zellen formatieren", () => {
       A.format(app.ctx, sheet(), app.grid.selection, (s) => {
         if (changed("code")) s.numFmt = code;
         if (changed("h")) s.h = hSel.value === "general" ? undefined : hSel.value as never;
         if (changed("v")) s.v = vSel.value === "bottom" ? undefined : vSel.value as never;
         if (changed("indent")) s.indent = Number(indent.value) || undefined;
-        const deg = Number(rot.value) || 0;
-        if (changed("rot")) s.rotation = deg === 0 ? undefined : deg > 0 ? deg : 90 - deg;
+        if (changed("rot")) s.rotation = vertical ? 255 : deg === 0 ? undefined : deg > 0 ? deg : 90 - deg;
         if (changed("wrap")) s.wrap = wrap.input.checked || undefined;
         if (changed("shrink")) s.shrink = shrink.input.checked || undefined;
-        if (changed("name")) s.font.name = fName.value.trim() || s.font.name;
+        if (changed("name")) s.font.name = strip(fName.value.trim()) || s.font.name;
         const size = num(fSize.value);
         if (changed("size") && size >= 1 && size <= 409) s.font.size = size;
         if (changed("style")) {
-          s.font.bold = fStyle.value.includes("Fett") || undefined;
-          s.font.italic = fStyle.value.includes("Kursiv") || undefined;
+          s.font.bold = /fett/i.test(fStyle.value) || undefined;
+          s.font.italic = /kursiv/i.test(fStyle.value) || undefined;
         }
         if (changed("under")) s.font.underline = (fUnder.value || undefined) as never;
         if (changed("color")) s.font.color = fColor || undefined;
         if (changed("strike")) s.font.strike = strike.input.checked || undefined;
         if (changed("sup") || changed("sub")) s.font.vertAlign = sup.input.checked ? "superscript" : sub.input.checked ? "subscript" : undefined;
-        if (changed("fill")) { s.fill = fill || undefined; s.fillXml = undefined; }
+        if (changed("fill")) {
+          const f = currentFill();
+          s.fill = f ? undefined : fill || undefined;
+          s.fillXml = f ? fillXmlOf(f) : undefined;
+          delete s.fillTheme;
+        }
         if (changed("locked")) s.locked = locked.input.checked ? undefined : false;
         if (changed("hidden")) s.hidden = hidden.input.checked || undefined;
       });
-      if (changedBorders) applyBorderSides(borders, preset, lineStyle);
+      if (changedBorders) applyBorderSides(sides, touched);
       if (changed("code")) app.autoWiden(app.grid.selection);
       // Taller text (Schriftgrad, Zeilenumbruch, Drehung): the rows fit in the same step (Excel).
       if (changed("size") || changed("wrap") || changed("rot") || changed("name")) for (const r of app.grid.selection) app.autoRowHeights(r);
@@ -300,21 +511,88 @@ export function dialogs(app: CalcApp) {
     });
   }
 
-  function applyBorderSides(b: { top?: { style: string }; bottom?: { style: string }; left?: { style: string }; right?: { style: string } }, preset: string | null, style: string): void {
-    const r = sel();
-    app.history.cells(sheet(), r);
-    for (let row = r.r0; row <= r.r1; row++) for (let col = r.c0; col <= r.c1; col++) {
-      const c = sheet().get(row, col) ?? { v: null };
-      const s = app.wb.styles.derive(c.s, (st) => {
-        if (preset === "none") { st.borders = {}; return; }
-        const outer = { top: row === r.r0, bottom: row === r.r1, left: col === r.c0, right: col === r.c1 };
-        for (const k of ["top", "bottom", "left", "right"] as const) {
-          if (preset === "inside") { if (!outer[k]) st.borders[k] = { style }; continue; }
-          if (outer[k]) st.borders[k] = b[k] ? { style: b[k]!.style } : undefined;
-        }
-      });
-      sheet().set(row, col, { ...c, s });
+  /**
+   * Rahmen of Zellen formatieren: the sides touched in the dialog, on every cell of the selection: the outer ones on
+   * the edge cells, Horizontal and Vertikal between the cells (on both cells, as Alle Rahmenlinien), the diagonals in
+   * every cell (the file has one diagonal line style per cell, with flags for the directions).
+   */
+  function applyBorderSides(sides: Partial<Record<string, { style: string; color?: string }>>, touched: Set<string>): void {
+    const side = (k: string) => (sides[k] ? { ...sides[k]! } : undefined);
+    for (const r of app.grid.selection) {
+      app.history.cells(sheet(), r);
+      for (let row = r.r0; row <= r.r1; row++) for (let col = r.c0; col <= r.c1; col++) {
+        const c = sheet().get(row, col) ?? { v: null };
+        const s = app.wb.styles.derive(c.s, (st) => {
+          const b = st.borders;
+          const put = (k: "top" | "bottom" | "left" | "right", from: string) => { if (touched.has(from)) b[k] = side(from); };
+          put("top", row === r.r0 ? "top" : "insideH");
+          put("bottom", row === r.r1 ? "bottom" : "insideH");
+          put("left", col === r.c0 ? "left" : "insideV");
+          put("right", col === r.c1 ? "right" : "insideV");
+          if (touched.has("diagUp") || touched.has("diagDown")) {
+            const up = touched.has("diagUp") ? side("diagUp") : b.diagonalUp ? b.diagonal : undefined;
+            const down = touched.has("diagDown") ? side("diagDown") : b.diagonalDown ? b.diagonal : undefined;
+            b.diagonal = down ?? up;
+            b.diagonalUp = up ? true : undefined;
+            b.diagonalDown = down ? true : undefined;
+            if (!b.diagonal) { delete b.diagonal; delete b.diagonalUp; delete b.diagonalDown; }
+          }
+          for (const k of ["top", "bottom", "left", "right"] as const) if (!b[k]) delete b[k];
+        });
+        sheet().set(row, col, { ...c, s });
+      }
     }
+  }
+
+  /** Fülleffekte (Ausfüllen): Excel's dialog with Farben, Schattierungsarten, Varianten and Beispiel (D-147). */
+  async function fillEffects(start: GradientFill | undefined, base: string): Promise<GradientFill | null> {
+    let c1 = start?.stops[0]?.color ?? base, c2 = start?.stops.at(-1)?.color ?? "#4472C4";
+    let kind: Shading = start?.path ? (start.path.left === 0.5 ? "Aus der Mitte" : "Aus der Ecke") : start?.degree === 0 ? "Vertikal" : start?.degree === 45 ? "Diagonal oben" : start?.degree === 135 ? "Diagonal unten" : "Horizontal";
+    let variant = 0;
+    let colors: "Einfarbig" | "Zweifarbig" = "Zweifarbig";
+    let light = 0.5;
+    const second = () => (colors === "Einfarbig" ? mixHex(c1, light >= 0.5 ? "#FFFFFF" : "#000000", Math.abs(light - 0.5) * 2) : c2);
+    const sample = h("div", { class: "fc-fill-sample", role: "img", "aria-label": "Beispiel:" });
+    const variants = h("div", { class: "fc-variants", role: "radiogroup", "aria-label": "Varianten" });
+    const c1Btn = h("button", { type: "button", class: "fc-color", "aria-label": "Füllfarbe 1" });
+    const c2Btn = h("button", { type: "button", class: "fc-color", "aria-label": "Füllfarbe 2" });
+    const lightIn = h("input", { type: "range", min: "0", max: "100", value: "50", "aria-label": "Dunkel Hell" }) as HTMLInputElement;
+    const c2Row = h("div", null, h("span", null, "Farbe 2:"), c2Btn);
+    const lightRow = h("div", null, h("span", null, "Dunkel"), lightIn, h("span", null, "Hell"));
+    const paint = () => {
+      c1Btn.style.background = c1;
+      c2Btn.style.background = c2;
+      c2Row.hidden = colors !== "Zweifarbig";
+      lightRow.hidden = colors !== "Einfarbig";
+      const n = kind === "Aus der Mitte" ? 2 : 4;
+      if (variant >= n) variant = 0;
+      variants.replaceChildren(...range(0, n - 1).map((i) => h("button", { type: "button", role: "radio", "aria-label": `Variante ${i + 1}`, "aria-checked": String(i === variant), class: `fc-variant${i === variant ? " on" : ""}`,
+        style: `background:${cssFill(shadingFill(kind, i, c1, second()))}`, onclick: () => { variant = i; paint(); } })));
+      sample.style.background = cssFill(shadingFill(kind, variant, c1, second()));
+    };
+    c1Btn.onclick = () => openColors(c1Btn, (c) => { c1 = c || "#FFFFFF"; paint(); });
+    c2Btn.onclick = () => openColors(c2Btn, (c) => { c2 = c || "#FFFFFF"; paint(); });
+    lightIn.oninput = () => { light = Number(lightIn.value) / 100; paint(); };
+    const radioOf = (group: string, label: string, on: boolean, pick: () => void, disabled = false) => {
+      const input = h("input", { type: "radio", name: group, checked: on || undefined, disabled: disabled || undefined }) as HTMLInputElement;
+      input.onchange = () => { if (input.checked) { pick(); paint(); } };
+      return h("label", { class: "check" }, input, label);
+    };
+    paint();
+    const body = h("div", { class: "fc-effects" },
+      h("div", { class: "fc-tabs", role: "tablist" }, h("button", { type: "button", role: "tab", class: "on" }, "Graduell")),
+      h("div", { class: "fc-effects-top" },
+        h("fieldset", null, h("legend", null, "Farben"),
+          radioOf("fe-colors", "Einfarbig", false, () => { colors = "Einfarbig"; }), radioOf("fe-colors", "Zweifarbig", true, () => { colors = "Zweifarbig"; }),
+          // Voreinstellung (Office's ready-made gradients) is not built (D-147).
+          radioOf("fe-colors", "Voreinstellung", false, () => {}, true)),
+        h("div", null, h("div", null, h("span", null, "Farbe 1:"), c1Btn), c2Row, lightRow)),
+      h("div", { class: "fc-effects-top" },
+        h("fieldset", null, h("legend", null, "Schattierungsarten"), ...SHADINGS.map((k) => radioOf("fe-shade", k, k === kind, () => { kind = k; }))),
+        h("fieldset", null, h("legend", null, "Varianten"), variants),
+        h("div", null, h("div", null, "Beispiel:"), sample)));
+    const ok = await showDialog({ title: "Fülleffekte", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    return ok ? shadingFill(kind, variant, c1, second()) : null;
   }
 
   function openColors(anchor: HTMLElement, pick: (hex: string) => void): void {
@@ -459,7 +737,7 @@ export function dialogs(app: CalcApp) {
       const row = rect.r0 + i, d = row - origin.get(cells)!;
       cells.forEach((c, j) => {
         const col = rect.c0 + j;
-        sheet().set(row, col, c.v === null && c.s === undefined && !c.f ? undefined : { ...c, ...(c.f !== undefined && d ? { f: shiftFormula(c.f, d, 0) } : {}) });
+        sheet().set(row, col, c.v === null && c.s === undefined && !c.f ? undefined : { ...c, ...(c.f !== undefined && d ? { f: shiftFormula(c.f, d, 0, { clipRanges: true }) } : {}) });
       });
     });
   }
@@ -905,8 +1183,9 @@ export function dialogs(app: CalcApp) {
     app.change("Bedingte Formatierung", () => {
       app.history.whole(sheet());
       const list = sheet().conditional ?? (sheet().conditional = []);
-      const prio = Math.max(0, ...list.flatMap((f) => f.rules.map((r) => r.priority))) + 1;
-      list.push({ ref, rules: [{ ...rule, priority: prio }] });
+      // A new rule goes to the top of the order (priority 1) and the others move down, as Excel adds rules (D-146).
+      for (const f of list) for (const r of f.rules) r.priority += 1;
+      list.push({ ref, rules: [{ ...rule, priority: 1 }] });
     });
   }
 
@@ -1017,10 +1296,12 @@ export function dialogs(app: CalcApp) {
   }
 
   function conditionalBarMenu(): MenuEntry[] {
-    // Excel's names (recorded in the inventory, D-143); the gradient bars (Farbverlauf). Einfarbige Füllung needs
-    // Excel 2010's extension of the rule and is left for later.
+    // Excel's names (recorded in the inventory, D-143): Farbverlauf, then Einfarbige Füllung with the same six
+    // colours (recorded with real clicks, probe_excel_followup_ui.py, D-146).
     const bars: [string, string][] = [["Blauer Datenbalken", "#638EC6"], ["Grüner Datenbalken", "#63C384"], ["Roter Datenbalken", "#FF555A"], ["Orangefarbener Datenbalken", "#FFB628"], ["Hellblauer Datenbalken", "#008AEF"], ["Lilafarbener Datenbalken", "#D6007B"]];
-    return [{ heading: "Farbverlauf" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c] }) })), "-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) }];
+    return [{ heading: "Farbverlauf" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c] }) })),
+      { heading: "Einfarbige Füllung" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c], solid: true }) })),
+      "-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) }];
   }
 
   function conditionalScaleMenu(): MenuEntry[] {
@@ -1281,6 +1562,11 @@ export function dialogs(app: CalcApp) {
     addRule, newRule: cr.newRule, manageRules: cr.manager, conditionalIconMenu, conditionalHighlightMenu, conditionalTopMenu, conditionalBarMenu, conditionalScaleMenu, clearConditional, defineName, createFromSelection, nameManager, note, link,
     symbol, insertFunction, moveSheet, unhideSheet, zoom, statistics, options, pasteSpecial,
   };
+}
+
+function mixHex(a: string, b: string, t: number): string {
+  const p = (x: string, i: number) => parseInt(x.replace("#", "").slice(i * 2, i * 2 + 2), 16);
+  return "#" + [0, 1, 2].map((i) => Math.round(p(a, i) + (p(b, i) - p(a, i)) * t).toString(16).padStart(2, "0")).join("").toUpperCase();
 }
 
 function range(a: number, b: number): number[] {

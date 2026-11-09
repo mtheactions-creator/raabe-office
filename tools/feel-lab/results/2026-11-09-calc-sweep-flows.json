@@ -1,0 +1,1929 @@
+{
+ "summary": {
+  "options": 45,
+  "errors": 0,
+  "undoFailures": 3,
+  "noEffect": 0,
+  "disabled": 0,
+  "notFound": 0,
+  "seconds": 122,
+  "noUndo": 3,
+  "passed": 39
+ },
+ "results": [
+  {
+   "path": [
+    "flow",
+    "Schriftgrad vergrößern"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Schriftgrad vergrößern",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Schriftgrad verkleinern"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Schriftgrad verkleinern",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Schriftgrad 16"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Schriftgrad",
+     true,
+     null
+    ],
+    [
+     "16",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": false,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Schriftart Arial"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Schriftart",
+     true,
+     null
+    ],
+    [
+     "Arial",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": false,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmenlinie unten"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie unten",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmenlinie oben"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie oben",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmenlinie links"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie links",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmenlinie rechts"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie rechts",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmenlinien außen"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinien außen",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmenlinie oben und unten"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie oben und unten",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmenlinie oben und dicke unten"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie oben und dicke unten",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmenlinie oben und doppelte unten"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Rahmenlinie oben und doppelte unten",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Ausfüllen unten"
+   ],
+   "kind": "flow",
+   "selection": "A2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Ausfüllen",
+     true,
+     null
+    ],
+    [
+     "Unten",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Ausfüllen rechts"
+   ],
+   "kind": "flow",
+   "selection": "B2:D3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Ausfüllen",
+     true,
+     null
+    ],
+    [
+     "Rechts",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Ausfüllen oben"
+   ],
+   "kind": "flow",
+   "selection": "A2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Ausfüllen",
+     true,
+     null
+    ],
+    [
+     "Oben",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Sortieren mit Summenzeile"
+   ],
+   "kind": "flow",
+   "selection": "A3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Bearbeiten|Sortieren und Filtern",
+     true,
+     null
+    ],
+    [
+     "Von Z bis A sortieren",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Datenbalken Einfarbige Füllung Blauer Datenbalken"
+   ],
+   "kind": "flow",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Datenbalken",
+     true,
+     null
+    ],
+    [
+     "› Blauer Datenbalken#2",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Datenbalken Einfarbige Füllung Grüner Datenbalken"
+   ],
+   "kind": "flow",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Datenbalken",
+     true,
+     null
+    ],
+    [
+     "› Grüner Datenbalken#2",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Datenbalken Einfarbige Füllung Roter Datenbalken"
+   ],
+   "kind": "flow",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Datenbalken",
+     true,
+     null
+    ],
+    [
+     "› Roter Datenbalken#2",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Datenbalken Einfarbige Füllung Orangefarbener Datenbalken"
+   ],
+   "kind": "flow",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Datenbalken",
+     true,
+     null
+    ],
+    [
+     "› Orangefarbener Datenbalken#2",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Datenbalken Einfarbige Füllung Hellblauer Datenbalken"
+   ],
+   "kind": "flow",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Datenbalken",
+     true,
+     null
+    ],
+    [
+     "› Hellblauer Datenbalken#2",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Datenbalken Einfarbige Füllung Lilafarbener Datenbalken"
+   ],
+   "kind": "flow",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Datenbalken",
+     true,
+     null
+    ],
+    [
+     "› Lilafarbener Datenbalken#2",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Datenbalken Farbverlauf Blau"
+   ],
+   "kind": "flow",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Datenbalken",
+     true,
+     null
+    ],
+    [
+     "› Blauer Datenbalken",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Neue Regel Datenbalken einfarbig"
+   ],
+   "kind": "flow",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Neue Regel...",
+     true,
+     null
+    ],
+    [
+     ".cf-type:nth-child(1)",
+     true,
+     null
+    ],
+    [
+     "Formatstil",
+     true,
+     null
+    ],
+    [
+     "Füllung",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmen rot gestrichelt unten"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Rahmen",
+     true,
+     null
+    ],
+    [
+     "Gestrichelt",
+     true,
+     null
+    ],
+    [
+     "Farbe Automatisch",
+     true,
+     null
+    ],
+    [
+     "61",
+     true,
+     null
+    ],
+    [
+     "Unten",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmen Linienarten"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Rahmen",
+     true,
+     null
+    ],
+    [
+     "StrichPunktPunkt Mittel",
+     true,
+     null
+    ],
+    [
+     "Oben",
+     true,
+     null
+    ],
+    [
+     "SchrägstrichStrichPunkt",
+     true,
+     null
+    ],
+    [
+     "Links",
+     true,
+     null
+    ],
+    [
+     "Doppelt",
+     true,
+     null
+    ],
+    [
+     "Unten",
+     true,
+     null
+    ],
+    [
+     "Haarstrich",
+     true,
+     null
+    ],
+    [
+     "Rechts",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": false,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmen Diagonalen"
+   ],
+   "kind": "flow",
+   "selection": "B2",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Rahmen",
+     true,
+     null
+    ],
+    [
+     "Diagonal nach unten",
+     true,
+     null
+    ],
+    [
+     "Diagonal nach oben",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmen Vorschau angeklickt"
+   ],
+   "kind": "flow",
+   "selection": "B2",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Rahmen",
+     true,
+     null
+    ],
+    [
+     "Dick",
+     true,
+     null
+    ],
+    [
+     ".fc-border-preview",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmen Außen und Innen"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Rahmen",
+     true,
+     null
+    ],
+    [
+     "Mittel",
+     true,
+     null
+    ],
+    [
+     "Außen",
+     true,
+     null
+    ],
+    [
+     "Dünn",
+     true,
+     null
+    ],
+    [
+     "Innen",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Rahmen Keine nach Alle"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Rahmen ▾",
+     true,
+     null
+    ],
+    [
+     "Alle Rahmenlinien",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Rahmen",
+     true,
+     null
+    ],
+    [
+     "Keine",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Ausfüllen Muster"
+   ],
+   "kind": "flow",
+   "selection": "A2:B3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Ausfüllen",
+     true,
+     null
+    ],
+    [
+     "3",
+     true,
+     null
+    ],
+    [
+     ".fc-pattern-btn",
+     true,
+     null
+    ],
+    [
+     "Dünn Diagonal Gestreift",
+     true,
+     null
+    ],
+    [
+     "Musterfarbe Automatisch",
+     true,
+     null
+    ],
+    [
+     "5",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Ausfüllen Muster 50 Prozent"
+   ],
+   "kind": "flow",
+   "selection": "A2",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Ausfüllen",
+     true,
+     null
+    ],
+    [
+     ".fc-pattern-btn",
+     true,
+     null
+    ],
+    [
+     "50% Grau",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Ausfüllen Fülleffekte horizontal"
+   ],
+   "kind": "flow",
+   "selection": "A2:B3",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Ausfüllen",
+     true,
+     null
+    ],
+    [
+     "Fülleffekte...",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Ausfüllen Fülleffekte aus der Mitte"
+   ],
+   "kind": "flow",
+   "selection": "A2",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Ausfüllen",
+     true,
+     null
+    ],
+    [
+     "Fülleffekte...",
+     true,
+     null
+    ],
+    [
+     "Aus der Mitte",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Ausrichtung Zeiger gezogen"
+   ],
+   "kind": "flow",
+   "selection": "A1:D1",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Zellenausrichtung formatieren",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": false,
+   "ui": true,
+   "canvas": false,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Ausrichtung Grad -30"
+   ],
+   "kind": "flow",
+   "selection": "A1:D1",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Zellenausrichtung formatieren",
+     true,
+     null
+    ],
+    [
+     "Grad",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Ausrichtung vertikaler Text"
+   ],
+   "kind": "flow",
+   "selection": "A1:D1",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Ausrichtung|Zellenausrichtung formatieren",
+     true,
+     null
+    ],
+    [
+     "Vertikaler Text",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Schrift aus der Liste"
+   ],
+   "kind": "flow",
+   "selection": "A2:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Schrift",
+     true,
+     null
+    ],
+    [
+     "Schriftart:",
+     true,
+     null
+    ],
+    [
+     "Schriftschnitt:",
+     true,
+     null
+    ],
+    [
+     "Schriftgrad:",
+     true,
+     null
+    ],
+    [
+     "Unterstreichung:",
+     true,
+     null
+    ],
+    [
+     "Durchgestrichen",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Schrift Hochgestellt"
+   ],
+   "kind": "flow",
+   "selection": "A2",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Schrift",
+     true,
+     null
+    ],
+    [
+     "Tiefgestellt",
+     true,
+     null
+    ],
+    [
+     "Hochgestellt",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Schrift Standardschrift"
+   ],
+   "kind": "flow",
+   "selection": "A1:B4",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Schriftart|Zellenschriftart formatieren",
+     true,
+     null
+    ],
+    [
+     "Schrift",
+     true,
+     null
+    ],
+    [
+     "Standardschrift",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Regel duplizieren"
+   ],
+   "kind": "flow",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Regeln zum Hervorheben von Zellen",
+     true,
+     null
+    ],
+    [
+     "› Größer als...",
+     true,
+     null
+    ],
+    [
+     "",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Regeln verwalten...",
+     true,
+     null
+    ],
+    [
+     ".cf-rules button[role=option]",
+     true,
+     null
+    ],
+    [
+     "Regel duplizieren",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": false,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Regel bearbeiten"
+   ],
+   "kind": "flow",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Regeln zum Hervorheben von Zellen",
+     true,
+     null
+    ],
+    [
+     "› Größer als...",
+     true,
+     null
+    ],
+    [
+     "",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Regeln verwalten...",
+     true,
+     null
+    ],
+    [
+     ".cf-rules button[role=option]",
+     true,
+     null
+    ],
+    [
+     "Regel bearbeiten...",
+     true,
+     null
+    ],
+    [
+     "Operator",
+     false,
+     null
+    ]
+   ],
+   "outcome": "step failed: ('select', 'Operator', 'kleiner als'): not done",
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Regel bearbeiten Datenbalken"
+   ],
+   "kind": "flow",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Datenbalken",
+     true,
+     null
+    ],
+    [
+     "› Roter Datenbalken",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Regeln verwalten...",
+     true,
+     null
+    ],
+    [
+     ".cf-rules button[role=option]",
+     true,
+     null
+    ],
+    [
+     "Regel bearbeiten...",
+     true,
+     null
+    ],
+    [
+     "Füllung",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": false,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Regel nach unten"
+   ],
+   "kind": "flow",
+   "selection": "B2:B5",
+   "steps": [
+    [
+     "Start",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Regeln zum Hervorheben von Zellen",
+     true,
+     null
+    ],
+    [
+     "› Größer als...",
+     true,
+     null
+    ],
+    [
+     "",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Regeln zum Hervorheben von Zellen",
+     true,
+     null
+    ],
+    [
+     "› Kleiner als...",
+     true,
+     null
+    ],
+    [
+     "",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ],
+    [
+     "Formatvorlagen|Bedingte Formatierung",
+     true,
+     null
+    ],
+    [
+     "Regeln verwalten...",
+     true,
+     null
+    ],
+    [
+     ".cf-rules button[role=option]",
+     true,
+     null
+    ],
+    [
+     "▼",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": false,
+   "errors": []
+  },
+  {
+   "path": [
+    "flow",
+    "Aus Tabelle/Bereich"
+   ],
+   "kind": "flow",
+   "selection": "A1:D5",
+   "steps": [
+    [
+     "Daten",
+     true,
+     null
+    ],
+    [
+     "Daten abrufen und transformieren|Aus Tabelle/Bereich",
+     true,
+     null
+    ],
+    [
+     "ok",
+     true,
+     null
+    ]
+   ],
+   "model": true,
+   "ui": true,
+   "canvas": true,
+   "undo": true,
+   "redo": true,
+   "errors": []
+  }
+ ]
+}
