@@ -1,13 +1,13 @@
 {
  "date": "2026-11-09",
- "options": 3862,
+ "options": 4269,
  "counts": {
-  "no-effect": 80,
-  "pass": 3565,
-  "disabled": 162,
+  "no-effect": 137,
+  "pass": 3746,
+  "disabled": 330,
   "skipped": 17,
   "unbuilt": 24,
-  "fail": 13,
+  "fail": 14,
   "harness-error": 1
  },
  "by_tab": {
@@ -148,9 +148,10 @@
    "pass": 9
   },
   "Aufgabenbereich": {
-   "pass": 93,
-   "no-effect": 6,
-   "disabled": 56
+   "pass": 274,
+   "no-effect": 63,
+   "disabled": 224,
+   "fail": 1
   }
  },
  "defined_not_reached": [
@@ -301,7 +302,6 @@
   "anim.delay (Animationsverzögerung)",
   "anim.duration (Animationsdauer)",
   "anim.gallery (Animationsstil)",
-  "design.formatBackground (Hintergrund formatieren)",
   "edit.editing (Bearbeiten)",
   "pic.edit (Bild bearbeiten)",
   "review.compare (Vergleichen)",
@@ -38935,6 +38935,4076 @@
    "name": "Oberer Seitenrand [Niedriger]",
    "kind": "pane-button",
    "ctx": "shape",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren / Textoptionen/Textfeld / Textfeld / Unterer Seitenrand (input:text 14)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren Textoptionen/Textfeld Textfeld",
+   "name": "Unterer Seitenrand",
+   "kind": "pane-input",
+   "ctx": "shape",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren / Textoptionen/Textfeld / Textfeld / Unterer Seitenrand [Höher] (button:button 15)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren Textoptionen/Textfeld Textfeld",
+   "name": "Unterer Seitenrand [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren / Textoptionen/Textfeld / Textfeld / Unterer Seitenrand [Niedriger] (button:button 16)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren Textoptionen/Textfeld Textfeld",
+   "name": "Unterer Seitenrand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren / Textoptionen/Textfeld / Textfeld / Text in Form umbrechen (input:checkbox 17)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren Textoptionen/Textfeld Textfeld",
+   "name": "Text in Form umbrechen",
+   "kind": "pane-input",
+   "ctx": "shape",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text)",
+   "name": "Form formatieren",
+   "kind": "pane",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Füllung und Linie / Füllung / Keine Füllung (input:radio 0)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Füllung und Linie Füllung",
+   "name": "Keine Füllung",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Füllung und Linie / Füllung / Einfarbige Füllung (input:radio 1)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Füllung und Linie Füllung",
+   "name": "Einfarbige Füllung",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Füllung und Linie / Füllung / Automatisch (input:radio 2)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Füllung und Linie Füllung",
+   "name": "Automatisch",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Füllung und Linie / Linie / Keine Linie (input:radio 3)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Füllung und Linie Linie",
+   "name": "Keine Linie",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Füllung und Linie / Linie / Einfarbige Linie (input:radio 4)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Füllung und Linie Linie",
+   "name": "Einfarbige Linie",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Voreinstellungen (select:select-one 0)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Farbe (button:button 1)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Transparenz (input:range 2)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Transparenz (input:text 3)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Transparenz [Höher] (button:button 4)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Transparenz [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Transparenz [Niedriger] (button:button 5)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Transparenz [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Größe (input:text 6)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Größe [Höher] (button:button 7)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Größe [Niedriger] (button:button 8)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Weichzeichnen (input:text 9)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Weichzeichnen",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Weichzeichnen [Höher] (button:button 10)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Weichzeichnen [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Weichzeichnen [Niedriger] (button:button 11)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Weichzeichnen [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Winkel (input:text 12)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Winkel",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Winkel [Höher] (button:button 13)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Winkel [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Winkel [Niedriger] (button:button 14)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Winkel [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Abstand (input:text 15)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Abstand",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Abstand [Höher] (button:button 16)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Abstand [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Schatten / Abstand [Niedriger] (button:button 17)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Schatten",
+   "name": "Abstand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Voreinstellungen (select:select-one 18)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Transparenz (input:range 19)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Transparenz (input:text 20)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Transparenz [Höher] (button:button 21)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Transparenz [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Transparenz [Niedriger] (button:button 22)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Transparenz [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Größe (input:range 23)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Größe (input:text 24)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Größe [Höher] (button:button 25)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Größe [Niedriger] (button:button 26)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Weichzeichnen (input:text 27)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Weichzeichnen",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Weichzeichnen [Höher] (button:button 28)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Weichzeichnen [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Weichzeichnen [Niedriger] (button:button 29)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Weichzeichnen [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Abstand (input:text 30)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Abstand",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Abstand [Höher] (button:button 31)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Abstand [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Spiegelung / Abstand [Niedriger] (button:button 32)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Spiegelung",
+   "name": "Abstand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Leuchten / Voreinstellungen (select:select-one 33)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Leuchten",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Leuchten / Farbe (button:button 34)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Leuchten",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Leuchten / Größe (input:text 35)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Leuchten",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Leuchten / Größe [Höher] (button:button 36)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Leuchten",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Leuchten / Größe [Niedriger] (button:button 37)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Leuchten",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Leuchten / Transparenz (input:range 38)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Leuchten",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Leuchten / Transparenz (input:text 39)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Leuchten",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Leuchten / Transparenz [Höher] (button:button 40)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Leuchten",
+   "name": "Transparenz [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Leuchten / Transparenz [Niedriger] (button:button 41)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Leuchten",
+   "name": "Transparenz [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Weiche Kanten / Voreinstellungen (select:select-one 42)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Weiche Kanten",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Weiche Kanten / Größe (input:text 43)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Weiche Kanten",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Weiche Kanten / Größe [Höher] (button:button 44)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Weiche Kanten",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / Weiche Kanten / Größe [Niedriger] (button:button 45)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte Weiche Kanten",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Abschrägung oben (select:select-one 46)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Abschrägung oben",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Breite (input:text 47)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Breite",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Breite [Höher] (button:button 48)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Breite [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Breite [Niedriger] (button:button 49)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Breite [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Höhe (input:text 50)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Höhe",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Höhe [Höher] (button:button 51)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Höhe [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Höhe [Niedriger] (button:button 52)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Höhe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Abschrägung unten (select:select-one 53)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Abschrägung unten",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Breite (input:text 54)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Breite",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Breite [Höher] (button:button 55)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Breite [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Breite [Niedriger] (button:button 56)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Breite [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Höhe (input:text 57)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Höhe",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Höhe [Höher] (button:button 58)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Höhe [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Höhe [Niedriger] (button:button 59)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Höhe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Farbe (button:button 60)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Größe (input:text 61)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Größe [Höher] (button:button 62)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Größe [Niedriger] (button:button 63)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Farbe (button:button 64)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Größe (input:text 65)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Größe [Höher] (button:button 66)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Größe [Niedriger] (button:button 67)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Material (select:select-one 68)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Material",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Beleuchtung (select:select-one 69)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Beleuchtung",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Winkel (input:text 70)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Winkel",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Winkel [Höher] (button:button 71)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Winkel [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Winkel [Niedriger] (button:button 72)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Winkel [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Format / Zurücksetzen (button:button 73)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Format",
+   "name": "Zurücksetzen",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Voreinstellungen (select:select-one 74)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / X-Drehung (input:text 75)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "X-Drehung",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / X-Drehung [Höher] (button:button 76)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "X-Drehung [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / X-Drehung [Niedriger] (button:button 77)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "X-Drehung [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Links (button:button 78)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Links",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Rechts (button:button 79)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Rechts",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Y-Drehung (input:text 80)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Y-Drehung",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Y-Drehung [Höher] (button:button 81)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Y-Drehung [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Y-Drehung [Niedriger] (button:button 82)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Y-Drehung [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Nach oben (button:button 83)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Nach oben",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Nach unten (button:button 84)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Nach unten",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Z-Drehung (input:text 85)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Z-Drehung",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Z-Drehung [Höher] (button:button 86)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Z-Drehung [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Z-Drehung [Niedriger] (button:button 87)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Z-Drehung [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Uhrzeigersinn (button:button 88)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Uhrzeigersinn",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Gegen Uhrzeigersinn (button:button 89)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Gegen Uhrzeigersinn",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Perspektive (input:text 90)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Perspektive",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Perspektive [Höher] (button:button 91)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Perspektive [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Perspektive [Niedriger] (button:button 92)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Perspektive [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Abstand vom Boden (input:text 93)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Abstand vom Boden",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Abstand vom Boden [Höher] (button:button 94)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Abstand vom Boden [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Abstand vom Boden [Niedriger] (button:button 95)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Abstand vom Boden [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Effekte / 3D-Drehung / Zurücksetzen (button:button 96)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Effekte 3D-Drehung",
+   "name": "Zurücksetzen",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Größe / Höhe (input:text 0)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Höhe",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Größe / Höhe [Höher] (button:button 1)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Höhe [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Größe / Höhe [Niedriger] (button:button 2)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Höhe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Größe / Breite (input:text 3)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Breite",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Größe / Breite [Höher] (button:button 4)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Breite [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Größe / Breite [Niedriger] (button:button 5)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Breite [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Größe / Drehung (input:text 6)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Drehung",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Größe / Drehung [Höher] (button:button 7)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Drehung [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Größe / Drehung [Niedriger] (button:button 8)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Drehung [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Position / Horizontale Position (input:text 9)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Position",
+   "name": "Horizontale Position",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Position / Horizontale Position [Höher] (button:button 10)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Position",
+   "name": "Horizontale Position [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Position / Horizontale Position [Niedriger] (button:button 11)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Position",
+   "name": "Horizontale Position [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Position / Vertikale Position (input:text 12)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Position",
+   "name": "Vertikale Position",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Position / Vertikale Position [Höher] (button:button 13)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Position",
+   "name": "Vertikale Position [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Position / Vertikale Position [Niedriger] (button:button 14)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Position",
+   "name": "Vertikale Position [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Vertikale Ausrichtung (select:select-one 15)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Vertikale Ausrichtung",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Textrichtung (select:select-one 16)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Textrichtung",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Nicht automatisch anpassen (input:radio 17)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Nicht automatisch anpassen",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Text bei Überlauf verkleinern (input:radio 18)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Text bei Überlauf verkleinern",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Größe der Form dem Text anpassen (input:radio 19)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Größe der Form dem Text anpassen",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Linker Seitenrand (input:text 20)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Linker Seitenrand",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Linker Seitenrand [Höher] (button:button 21)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Linker Seitenrand [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Linker Seitenrand [Niedriger] (button:button 22)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Linker Seitenrand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Rechter Seitenrand (input:text 23)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Rechter Seitenrand",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Rechter Seitenrand [Höher] (button:button 24)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Rechter Seitenrand [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Rechter Seitenrand [Niedriger] (button:button 25)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Rechter Seitenrand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Oberer Seitenrand (input:text 26)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Oberer Seitenrand",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Oberer Seitenrand [Höher] (button:button 27)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Oberer Seitenrand [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Oberer Seitenrand [Niedriger] (button:button 28)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Oberer Seitenrand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Unterer Seitenrand (input:text 29)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Unterer Seitenrand",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Unterer Seitenrand [Höher] (button:button 30)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Unterer Seitenrand [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Unterer Seitenrand [Niedriger] (button:button 31)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Unterer Seitenrand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Formoptionen/Größe und Eigenschaften / Textfeld / Text in Form umbrechen (input:checkbox 32)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Formoptionen/Größe und Eigenschaften Textfeld",
+   "name": "Text in Form umbrechen",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfüllung und -kontur / Textfüllung / Keine Füllung (input:radio 0)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfüllung und -kontur Textfüllung",
+   "name": "Keine Füllung",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfüllung und -kontur / Textfüllung / Einfarbige Füllung (input:radio 1)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfüllung und -kontur Textfüllung",
+   "name": "Einfarbige Füllung",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfüllung und -kontur / Textfüllung / Automatisch (input:radio 2)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfüllung und -kontur Textfüllung",
+   "name": "Automatisch",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfüllung und -kontur / Textkontur / Keine Linie (input:radio 3)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfüllung und -kontur Textkontur",
+   "name": "Keine Linie",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfüllung und -kontur / Textkontur / Einfarbige Linie (input:radio 4)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfüllung und -kontur Textkontur",
+   "name": "Einfarbige Linie",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Vertikale Ausrichtung (select:select-one 0)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Vertikale Ausrichtung",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Textrichtung (select:select-one 1)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Textrichtung",
+   "kind": "pane-select",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Nicht automatisch anpassen (input:radio 2)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Nicht automatisch anpassen",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Text bei Überlauf verkleinern (input:radio 3)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Text bei Überlauf verkleinern",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Größe der Form dem Text anpassen (input:radio 4)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Größe der Form dem Text anpassen",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Linker Seitenrand (input:text 5)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Linker Seitenrand",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Linker Seitenrand [Höher] (button:button 6)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Linker Seitenrand [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Linker Seitenrand [Niedriger] (button:button 7)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Linker Seitenrand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Rechter Seitenrand (input:text 8)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Rechter Seitenrand",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Rechter Seitenrand [Höher] (button:button 9)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Rechter Seitenrand [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Rechter Seitenrand [Niedriger] (button:button 10)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Rechter Seitenrand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Oberer Seitenrand (input:text 11)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Oberer Seitenrand",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Oberer Seitenrand [Höher] (button:button 12)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Oberer Seitenrand [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Oberer Seitenrand [Niedriger] (button:button 13)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Oberer Seitenrand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Unterer Seitenrand (input:text 14)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Unterer Seitenrand",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Unterer Seitenrand [Höher] (button:button 15)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Unterer Seitenrand [Höher]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Unterer Seitenrand [Niedriger] (button:button 16)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Unterer Seitenrand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Form formatieren (Text) / Textoptionen/Textfeld / Textfeld / Text in Form umbrechen (input:checkbox 17)",
+   "tab": "Aufgabenbereich",
+   "group": "Form formatieren (Text) Textoptionen/Textfeld Textfeld",
+   "name": "Text in Form umbrechen",
+   "kind": "pane-input",
+   "ctx": "shape-text",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren",
+   "name": "Grafik formatieren",
+   "kind": "pane",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Füllung und Linie / Füllung / Keine Füllung (input:radio 0)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Füllung und Linie Füllung",
+   "name": "Keine Füllung",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Füllung und Linie / Füllung / Einfarbige Füllung (input:radio 1)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Füllung und Linie Füllung",
+   "name": "Einfarbige Füllung",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Füllung und Linie / Füllung / Automatisch (input:radio 2)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Füllung und Linie Füllung",
+   "name": "Automatisch",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Füllung und Linie / Linie / Keine Linie (input:radio 3)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Füllung und Linie Linie",
+   "name": "Keine Linie",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Füllung und Linie / Linie / Einfarbige Linie (input:radio 4)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Füllung und Linie Linie",
+   "name": "Einfarbige Linie",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Voreinstellungen (select:select-one 0)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Farbe (button:button 1)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Transparenz (input:range 2)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Transparenz (input:text 3)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Transparenz [Höher] (button:button 4)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Transparenz [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Transparenz [Niedriger] (button:button 5)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Transparenz [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Größe (input:text 6)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Größe [Höher] (button:button 7)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Größe [Niedriger] (button:button 8)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Weichzeichnen (input:text 9)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Weichzeichnen",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Weichzeichnen [Höher] (button:button 10)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Weichzeichnen [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Weichzeichnen [Niedriger] (button:button 11)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Weichzeichnen [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Winkel (input:text 12)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Winkel",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Winkel [Höher] (button:button 13)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Winkel [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Winkel [Niedriger] (button:button 14)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Winkel [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Abstand (input:text 15)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Abstand",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Abstand [Höher] (button:button 16)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Abstand [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Schatten / Abstand [Niedriger] (button:button 17)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Schatten",
+   "name": "Abstand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Voreinstellungen (select:select-one 18)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Transparenz (input:range 19)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Transparenz (input:text 20)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Transparenz [Höher] (button:button 21)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Transparenz [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Transparenz [Niedriger] (button:button 22)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Transparenz [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Größe (input:range 23)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Größe (input:text 24)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Größe [Höher] (button:button 25)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Größe [Niedriger] (button:button 26)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Weichzeichnen (input:text 27)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Weichzeichnen",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Weichzeichnen [Höher] (button:button 28)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Weichzeichnen [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Weichzeichnen [Niedriger] (button:button 29)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Weichzeichnen [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Abstand (input:text 30)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Abstand",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Abstand [Höher] (button:button 31)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Abstand [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Spiegelung / Abstand [Niedriger] (button:button 32)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Spiegelung",
+   "name": "Abstand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Leuchten / Voreinstellungen (select:select-one 33)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Leuchten",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Leuchten / Farbe (button:button 34)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Leuchten",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Leuchten / Größe (input:text 35)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Leuchten",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Leuchten / Größe [Höher] (button:button 36)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Leuchten",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Leuchten / Größe [Niedriger] (button:button 37)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Leuchten",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Leuchten / Transparenz (input:range 38)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Leuchten",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Leuchten / Transparenz (input:text 39)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Leuchten",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Leuchten / Transparenz [Höher] (button:button 40)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Leuchten",
+   "name": "Transparenz [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Leuchten / Transparenz [Niedriger] (button:button 41)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Leuchten",
+   "name": "Transparenz [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Weiche Kanten / Voreinstellungen (select:select-one 42)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Weiche Kanten",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Weiche Kanten / Größe (input:text 43)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Weiche Kanten",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Weiche Kanten / Größe [Höher] (button:button 44)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Weiche Kanten",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / Weiche Kanten / Größe [Niedriger] (button:button 45)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte Weiche Kanten",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Abschrägung oben (select:select-one 46)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Abschrägung oben",
+   "kind": "pane-select",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Breite (input:text 47)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Breite",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Breite [Höher] (button:button 48)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Breite [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Breite [Niedriger] (button:button 49)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Breite [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Höhe (input:text 50)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Höhe",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Höhe [Höher] (button:button 51)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Höhe [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Höhe [Niedriger] (button:button 52)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Höhe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Abschrägung unten (select:select-one 53)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Abschrägung unten",
+   "kind": "pane-select",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Breite (input:text 54)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Breite",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Breite [Höher] (button:button 55)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Breite [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Breite [Niedriger] (button:button 56)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Breite [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Höhe (input:text 57)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Höhe",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Höhe [Höher] (button:button 58)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Höhe [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Höhe [Niedriger] (button:button 59)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Höhe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Farbe (button:button 60)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Größe (input:text 61)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Größe [Höher] (button:button 62)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Größe [Niedriger] (button:button 63)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Farbe (button:button 64)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Größe (input:text 65)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Größe [Höher] (button:button 66)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Größe [Niedriger] (button:button 67)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Material (select:select-one 68)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Material",
+   "kind": "pane-select",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Beleuchtung (select:select-one 69)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Beleuchtung",
+   "kind": "pane-select",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Winkel (input:text 70)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Winkel",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Winkel [Höher] (button:button 71)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Winkel [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Winkel [Niedriger] (button:button 72)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Winkel [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Format / Zurücksetzen (button:button 73)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Format",
+   "name": "Zurücksetzen",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Voreinstellungen (select:select-one 74)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / X-Drehung (input:text 75)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "X-Drehung",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / X-Drehung [Höher] (button:button 76)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "X-Drehung [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / X-Drehung [Niedriger] (button:button 77)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "X-Drehung [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Links (button:button 78)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Links",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Rechts (button:button 79)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Rechts",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Y-Drehung (input:text 80)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Y-Drehung",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Y-Drehung [Höher] (button:button 81)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Y-Drehung [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Y-Drehung [Niedriger] (button:button 82)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Y-Drehung [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Nach oben (button:button 83)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Nach oben",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Nach unten (button:button 84)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Nach unten",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Z-Drehung (input:text 85)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Z-Drehung",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Z-Drehung [Höher] (button:button 86)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Z-Drehung [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Z-Drehung [Niedriger] (button:button 87)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Z-Drehung [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Uhrzeigersinn (button:button 88)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Uhrzeigersinn",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Gegen Uhrzeigersinn (button:button 89)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Gegen Uhrzeigersinn",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Perspektive (input:text 90)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Perspektive",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Perspektive [Höher] (button:button 91)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Perspektive [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Perspektive [Niedriger] (button:button 92)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Perspektive [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Abstand vom Boden (input:text 93)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Abstand vom Boden",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Abstand vom Boden [Höher] (button:button 94)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Abstand vom Boden [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Abstand vom Boden [Niedriger] (button:button 95)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Abstand vom Boden [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Effekte / 3D-Drehung / Zurücksetzen (button:button 96)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Effekte 3D-Drehung",
+   "name": "Zurücksetzen",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Größe / Höhe (input:text 0)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Größe",
+   "name": "Höhe",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Größe / Höhe [Höher] (button:button 1)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Größe",
+   "name": "Höhe [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Größe / Höhe [Niedriger] (button:button 2)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Größe",
+   "name": "Höhe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Größe / Breite (input:text 3)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Größe",
+   "name": "Breite",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Größe / Breite [Höher] (button:button 4)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Größe",
+   "name": "Breite [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Größe / Breite [Niedriger] (button:button 5)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Größe",
+   "name": "Breite [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Größe / Drehung (input:text 6)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Größe",
+   "name": "Drehung",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Größe / Drehung [Höher] (button:button 7)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Größe",
+   "name": "Drehung [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Größe / Drehung [Niedriger] (button:button 8)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Größe",
+   "name": "Drehung [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Position / Horizontale Position (input:text 9)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Position",
+   "name": "Horizontale Position",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Position / Horizontale Position [Höher] (button:button 10)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Position",
+   "name": "Horizontale Position [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Position / Horizontale Position [Niedriger] (button:button 11)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Position",
+   "name": "Horizontale Position [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Position / Vertikale Position (input:text 12)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Position",
+   "name": "Vertikale Position",
+   "kind": "pane-input",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Position / Vertikale Position [Höher] (button:button 13)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Position",
+   "name": "Vertikale Position [Höher]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Bild formatieren / Grafik/Größe und Eigenschaften / Position / Vertikale Position [Niedriger] (button:button 14)",
+   "tab": "Aufgabenbereich",
+   "group": "Bild formatieren Grafik/Größe und Eigenschaften Position",
+   "name": "Vertikale Position [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "picture",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Hintergrund formatieren",
+   "tab": "Aufgabenbereich",
+   "group": "Hintergrund formatieren",
+   "name": "Hintergrund formatieren",
+   "kind": "pane",
+   "ctx": "slides",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Hintergrund formatieren / /Füllung / Füllung / Einfarbige Füllung (input:radio 0)",
+   "tab": "Aufgabenbereich",
+   "group": "Hintergrund formatieren /Füllung Füllung",
+   "name": "Einfarbige Füllung",
+   "kind": "pane-input",
+   "ctx": "slides",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Hintergrund formatieren / /Füllung / Füllung / Farbverlauf (input:radio 1)",
+   "tab": "Aufgabenbereich",
+   "group": "Hintergrund formatieren /Füllung Füllung",
+   "name": "Farbverlauf",
+   "kind": "pane-input",
+   "ctx": "slides",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Hintergrund formatieren / /Füllung / Füllung / Bild- oder Texturfüllung (input:radio 2)",
+   "tab": "Aufgabenbereich",
+   "group": "Hintergrund formatieren /Füllung Füllung",
+   "name": "Bild- oder Texturfüllung",
+   "kind": "pane-input",
+   "ctx": "slides",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Hintergrund formatieren / /Füllung / Füllung / Hintergrundgrafiken ausblenden (input:checkbox 3)",
+   "tab": "Aufgabenbereich",
+   "group": "Hintergrund formatieren /Füllung Füllung",
+   "name": "Hintergrundgrafiken ausblenden",
+   "kind": "pane-input",
+   "ctx": "slides",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Hintergrund formatieren / /Füllung / Füllung / Farbe (button:button 4)",
+   "tab": "Aufgabenbereich",
+   "group": "Hintergrund formatieren /Füllung Füllung",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "slides",
+   "status": "fail",
+   "why": "save"
+  },
+  {
+   "id": "Bereich Hintergrund formatieren / /Füllung / Füllung / Auf alle anwenden (button:button 5)",
+   "tab": "Aufgabenbereich",
+   "group": "Hintergrund formatieren /Füllung Füllung",
+   "name": "Auf alle anwenden",
+   "kind": "pane-button",
+   "ctx": "slides",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Hintergrund formatieren / /Füllung / Füllung / Hintergrund zurücksetzen (button:button 6)",
+   "tab": "Aufgabenbereich",
+   "group": "Hintergrund formatieren /Füllung Füllung",
+   "name": "Hintergrund zurücksetzen",
+   "kind": "pane-button",
+   "ctx": "slides",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren",
+   "name": "Form formatieren",
+   "kind": "pane",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Füllung und Linie / Füllung / Keine Füllung (input:radio 0)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Füllung und Linie Füllung",
+   "name": "Keine Füllung",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Füllung und Linie / Füllung / Einfarbige Füllung (input:radio 1)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Füllung und Linie Füllung",
+   "name": "Einfarbige Füllung",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Füllung und Linie / Füllung / Automatisch (input:radio 2)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Füllung und Linie Füllung",
+   "name": "Automatisch",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Füllung und Linie / Linie / Keine Linie (input:radio 3)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Füllung und Linie Linie",
+   "name": "Keine Linie",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Füllung und Linie / Linie / Einfarbige Linie (input:radio 4)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Füllung und Linie Linie",
+   "name": "Einfarbige Linie",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Voreinstellungen (select:select-one 0)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Farbe (button:button 1)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Transparenz (input:range 2)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Transparenz (input:text 3)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Transparenz [Höher] (button:button 4)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Transparenz [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Transparenz [Niedriger] (button:button 5)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Transparenz [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Größe (input:text 6)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Größe [Höher] (button:button 7)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Größe [Niedriger] (button:button 8)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Weichzeichnen (input:text 9)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Weichzeichnen",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Weichzeichnen [Höher] (button:button 10)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Weichzeichnen [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Weichzeichnen [Niedriger] (button:button 11)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Weichzeichnen [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Winkel (input:text 12)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Winkel",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Winkel [Höher] (button:button 13)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Winkel [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Winkel [Niedriger] (button:button 14)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Winkel [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Abstand (input:text 15)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Abstand",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Abstand [Höher] (button:button 16)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Abstand [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Schatten / Abstand [Niedriger] (button:button 17)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Schatten",
+   "name": "Abstand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Voreinstellungen (select:select-one 18)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Transparenz (input:range 19)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Transparenz (input:text 20)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Transparenz [Höher] (button:button 21)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Transparenz [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Transparenz [Niedriger] (button:button 22)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Transparenz [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Größe (input:range 23)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Größe (input:text 24)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Größe [Höher] (button:button 25)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Größe [Niedriger] (button:button 26)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Weichzeichnen (input:text 27)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Weichzeichnen",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Weichzeichnen [Höher] (button:button 28)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Weichzeichnen [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Weichzeichnen [Niedriger] (button:button 29)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Weichzeichnen [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Abstand (input:text 30)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Abstand",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Abstand [Höher] (button:button 31)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Abstand [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Spiegelung / Abstand [Niedriger] (button:button 32)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Spiegelung",
+   "name": "Abstand [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Leuchten / Voreinstellungen (select:select-one 33)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Leuchten",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Leuchten / Farbe (button:button 34)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Leuchten",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Leuchten / Größe (input:text 35)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Leuchten",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Leuchten / Größe [Höher] (button:button 36)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Leuchten",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Leuchten / Größe [Niedriger] (button:button 37)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Leuchten",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Leuchten / Transparenz (input:range 38)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Leuchten",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Leuchten / Transparenz (input:text 39)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Leuchten",
+   "name": "Transparenz",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Leuchten / Transparenz [Höher] (button:button 40)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Leuchten",
+   "name": "Transparenz [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Leuchten / Transparenz [Niedriger] (button:button 41)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Leuchten",
+   "name": "Transparenz [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Weiche Kanten / Voreinstellungen (select:select-one 42)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Weiche Kanten",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Weiche Kanten / Größe (input:text 43)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Weiche Kanten",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Weiche Kanten / Größe [Höher] (button:button 44)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Weiche Kanten",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / Weiche Kanten / Größe [Niedriger] (button:button 45)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte Weiche Kanten",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Abschrägung oben (select:select-one 46)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Abschrägung oben",
+   "kind": "pane-select",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Breite (input:text 47)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Breite",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Breite [Höher] (button:button 48)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Breite [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Breite [Niedriger] (button:button 49)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Breite [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Höhe (input:text 50)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Höhe",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Höhe [Höher] (button:button 51)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Höhe [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Höhe [Niedriger] (button:button 52)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Höhe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Abschrägung unten (select:select-one 53)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Abschrägung unten",
+   "kind": "pane-select",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Breite (input:text 54)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Breite",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Breite [Höher] (button:button 55)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Breite [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Breite [Niedriger] (button:button 56)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Breite [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Höhe (input:text 57)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Höhe",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Höhe [Höher] (button:button 58)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Höhe [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Höhe [Niedriger] (button:button 59)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Höhe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Farbe (button:button 60)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Größe (input:text 61)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Größe [Höher] (button:button 62)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Größe [Niedriger] (button:button 63)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Farbe (button:button 64)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Farbe",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Größe (input:text 65)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Größe",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Größe [Höher] (button:button 66)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Größe [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Größe [Niedriger] (button:button 67)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Größe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Material (select:select-one 68)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Material",
+   "kind": "pane-select",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Beleuchtung (select:select-one 69)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Beleuchtung",
+   "kind": "pane-select",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Winkel (input:text 70)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Winkel",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Winkel [Höher] (button:button 71)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Winkel [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Winkel [Niedriger] (button:button 72)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Winkel [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Format / Zurücksetzen (button:button 73)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Format",
+   "name": "Zurücksetzen",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Voreinstellungen (select:select-one 74)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Voreinstellungen",
+   "kind": "pane-select",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / X-Drehung (input:text 75)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "X-Drehung",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / X-Drehung [Höher] (button:button 76)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "X-Drehung [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / X-Drehung [Niedriger] (button:button 77)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "X-Drehung [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Links (button:button 78)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Links",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Rechts (button:button 79)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Rechts",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Y-Drehung (input:text 80)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Y-Drehung",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Y-Drehung [Höher] (button:button 81)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Y-Drehung [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Y-Drehung [Niedriger] (button:button 82)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Y-Drehung [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Nach oben (button:button 83)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Nach oben",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Nach unten (button:button 84)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Nach unten",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Z-Drehung (input:text 85)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Z-Drehung",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Z-Drehung [Höher] (button:button 86)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Z-Drehung [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Z-Drehung [Niedriger] (button:button 87)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Z-Drehung [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Uhrzeigersinn (button:button 88)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Uhrzeigersinn",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Gegen Uhrzeigersinn (button:button 89)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Gegen Uhrzeigersinn",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Perspektive (input:text 90)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Perspektive",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Perspektive [Höher] (button:button 91)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Perspektive [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Perspektive [Niedriger] (button:button 92)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Perspektive [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Abstand vom Boden (input:text 93)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Abstand vom Boden",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Abstand vom Boden [Höher] (button:button 94)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Abstand vom Boden [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Abstand vom Boden [Niedriger] (button:button 95)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Abstand vom Boden [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "no-effect",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Effekte / 3D-Drehung / Zurücksetzen (button:button 96)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Effekte 3D-Drehung",
+   "name": "Zurücksetzen",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "disabled",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Größe / Höhe (input:text 0)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Höhe",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Größe / Höhe [Höher] (button:button 1)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Höhe [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Größe / Höhe [Niedriger] (button:button 2)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Höhe [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Größe / Breite (input:text 3)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Breite",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Größe / Breite [Höher] (button:button 4)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Breite [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Größe / Breite [Niedriger] (button:button 5)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Breite [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Größe / Drehung (input:text 6)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Drehung",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Größe / Drehung [Höher] (button:button 7)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Drehung [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Größe / Drehung [Niedriger] (button:button 8)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Größe",
+   "name": "Drehung [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Position / Horizontale Position (input:text 9)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Position",
+   "name": "Horizontale Position",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Position / Horizontale Position [Höher] (button:button 10)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Position",
+   "name": "Horizontale Position [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Position / Horizontale Position [Niedriger] (button:button 11)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Position",
+   "name": "Horizontale Position [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Position / Vertikale Position (input:text 12)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Position",
+   "name": "Vertikale Position",
+   "kind": "pane-input",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Position / Vertikale Position [Höher] (button:button 13)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Position",
+   "name": "Vertikale Position [Höher]",
+   "kind": "pane-button",
+   "ctx": "chart",
+   "status": "pass",
+   "why": null
+  },
+  {
+   "id": "Bereich Diagramm formatieren / Formoptionen/Größe und Eigenschaften / Position / Vertikale Position [Niedriger] (button:button 14)",
+   "tab": "Aufgabenbereich",
+   "group": "Diagramm formatieren Formoptionen/Größe und Eigenschaften Position",
+   "name": "Vertikale Position [Niedriger]",
+   "kind": "pane-button",
+   "ctx": "chart",
    "status": "pass",
    "why": null
   }
