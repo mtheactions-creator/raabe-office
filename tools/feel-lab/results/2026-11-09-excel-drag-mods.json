@@ -1,0 +1,569 @@
+{
+ "excel": [
+  {
+   "case": "column border",
+   "out": "right",
+   "point": 0,
+   "plain": {
+    "before": 10.27,
+    "after": 22.55,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "shift-held": {
+    "before": 10.27,
+    "after": 22.55,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "ctrl-held": {
+    "before": 10.27,
+    "after": 22.55,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "alt-held": {
+    "before": 10.27,
+    "after": 22.55,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "shift-mid": {
+    "before": 10.27,
+    "after": 22.55,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "ctrl-mid": {
+    "before": 10.27,
+    "after": 22.55,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "alt-mid": {
+    "before": 10.27,
+    "after": 22.55,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "out-back": {
+    "before": 10.27,
+    "after": 15.73,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "out-release": {
+    "before": 10.27,
+    "after": 10.27,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "case": "row border",
+   "out": "down",
+   "point": 0,
+   "plain": {
+    "before": 14.5,
+    "after": 41.5,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "shift-held": {
+    "before": 14.5,
+    "after": 41.5,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "ctrl-held": {
+    "before": 14.5,
+    "after": 41.5,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "alt-held": {
+    "before": 14.5,
+    "after": 41.5,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "shift-mid": {
+    "before": 14.5,
+    "after": 41.5,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "ctrl-mid": {
+    "before": 14.5,
+    "after": 41.5,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "alt-mid": {
+    "before": 14.5,
+    "after": 41.5,
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "error": "our Office window lost the front during the drag"
+  },
+  {
+   "case": "fill handle",
+   "out": "down",
+   "point": 0,
+   "plain": {
+    "before": {
+     "B3": "7",
+     "C3": "x1",
+     "D3": "",
+     "C4": "",
+     "D4": "d4",
+     "C5": "c5",
+     "C6": "",
+     "C7": "",
+     "D5": "",
+     "E5": ""
+    },
+    "after": {
+     "B3": "7",
+     "C3": "x1",
+     "D3": "x2",
+     "C4": "",
+     "D4": "d4",
+     "C5": "c5",
+     "C6": "",
+     "C7": "",
+     "D5": "",
+     "E5": ""
+    },
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "shift-held": {
+    "before": {
+     "B3": "7",
+     "C3": "x1",
+     "D3": "",
+     "C4": "",
+     "D4": "d4",
+     "C5": "c5",
+     "C6": "",
+     "C7": "",
+     "D5": "",
+     "E5": ""
+    },
+    "after": {
+     "B3": "7",
+     "C3": "x1",
+     "D3": "",
+     "C4": "",
+     "D4": "d4",
+     "C5": "c5",
+     "C6": "",
+     "C7": "",
+     "D5": "",
+     "E5": ""
+    },
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "ctrl-held": {
+    "before": {
+     "B3": "7",
+     "C3": "x1",
+     "D3": "",
+     "C4": "",
+     "D4": "d4",
+     "C5": "c5",
+     "C6": "",
+     "C7": "",
+     "D5": "",
+     "E5": ""
+    },
+    "after": {
+     "B3": "7",
+     "C3": "x1",
+     "D3": "x1",
+     "C4": "",
+     "D4": "d4",
+     "C5": "c5",
+     "C6": "",
+     "C7": "",
+     "D5": "",
+     "E5": ""
+    },
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "alt-held": {
+    "before": {
+     "B3": "7",
+     "C3": "x1",
+     "D3": "",
+     "C4": "",
+     "D4": "d4",
+     "C5": "c5",
+     "C6": "",
+     "C7": "",
+     "D5": "",
+     "E5": ""
+    },
+    "after": {
+     "B3": "7",
+     "C3": "x1",
+     "D3": "",
+     "C4": "",
+     "D4": "d4",
+     "C5": "c5",
+     "C6": "",
+     "C7": "",
+     "D5": "",
+     "E5": ""
+    },
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "error": "our Office window lost the front during the drag"
+  },
+  {
+   "case": "move selection by its border",
+   "out": "right",
+   "point": 0,
+   "plain": {
+    "before": {
+     "B3": "7",
+     "C3": "x1",
+     "D3": "",
+     "C4": "",
+     "D4": "d4",
+     "C5": "c5",
+     "C6": "",
+     "C7": "",
+     "D5": "",
+     "E5": ""
+    },
+    "after": {
+     "B3": "7",
+     "C3": "",
+     "D3": "",
+     "C4": "",
+     "D4": "d4",
+     "C5": "c5",
+     "C6": "",
+     "C7": "",
+     "D5": "x1",
+     "E5": ""
+    },
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "error": "our Office window lost the front during the drag"
+  },
+  {
+   "case": "select a range",
+   "out": "down",
+   "point": 0,
+   "plain": {
+    "before": "$B$3",
+    "after": "$B$3:$C$5",
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "shift-held": {
+    "before": "$B$3",
+    "after": "$B$3:$C$5",
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "ctrl-held": {
+    "before": "$B$3",
+    "after": "$B$3",
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "alt-held": {
+    "before": "$B$3",
+    "after": "$B$3:$C$5",
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "shift-mid": {
+    "before": "$B$3",
+    "after": "$B$3:$C$5",
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "ctrl-mid": {
+    "before": "$B$3",
+    "after": "$B$3:$C$5",
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "alt-mid": {
+    "before": "$B$3",
+    "after": "$B$3:$C$5",
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "error": "our Office window lost the front during the drag"
+  },
+  {
+   "case": "shape move",
+   "out": "right",
+   "error": "the plain drag changed nothing"
+  },
+  {
+   "case": "shape corner handle",
+   "out": "right",
+   "point": 0,
+   "error": "our Office window lost the front during the drag"
+  },
+  {
+   "case": "shape rotation handle",
+   "out": "right",
+   "error": "the plain drag changed nothing"
+  },
+  {
+   "case": "chart move",
+   "out": "right",
+   "point": 0,
+   "plain": {
+    "before": [
+     200.0,
+     120.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "after": [
+     267.5,
+     147.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "shift-held": {
+    "before": [
+     200.0,
+     120.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "after": [
+     267.5,
+     120.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "ctrl-held": {
+    "before": [
+     200.0,
+     120.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "after": [
+     200.0,
+     120.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "copies": 1,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "alt-held": {
+    "before": [
+     200.0,
+     120.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "after": [
+     200.0,
+     120.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "shift-mid": {
+    "before": [
+     200.0,
+     120.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "after": [
+     200.0,
+     120.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "ctrl-mid": {
+    "before": [
+     200.0,
+     120.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "after": [
+     267.5,
+     147.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "alt-mid": {
+    "before": [
+     200.0,
+     120.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "after": [
+     200.0,
+     120.0,
+     240.0,
+     160.0,
+     0.0
+    ],
+    "copies": 0,
+    "scrolled": [
+     0.0,
+     0.0
+    ]
+   },
+   "error": "our Office window lost the front during the drag"
+  },
+  {
+   "case": "chart corner handle",
+   "out": "right",
+   "error": "our Office window lost the front during the drag"
+  }
+ ]
+}

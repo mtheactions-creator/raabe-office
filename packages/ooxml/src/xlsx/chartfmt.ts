@@ -191,8 +191,10 @@ export function trendlineXml(t: Trendline, autoLine: string, label: string, effe
   return `<c:trendline>${t.name ? `<c:name>${esc(t.name)}</c:name>` : ""}<c:spPr>${lineXml(t.line, autoLine)}${effectLstXml(effects)}</c:spPr><c:trendlineType val="${type}"/>${extra}${fc}<c:dispRSqr val="${t.showR2 ? 1 : 0}"/><c:dispEq val="${t.showEq ? 1 : 0}"/>${label}</c:trendline>`;
 }
 
-export function errBarsXml(e: ErrorBars, scatter: boolean, autoLine: string): string {
-  return `<c:errBars>${scatter ? '<c:errDir val="y"/>' : ""}<c:errBarType val="${e.dir}"/><c:errValType val="${e.type}"/><c:noEndCap val="${e.noEndCap ? 1 : 0}"/>${e.type === "fixedVal" || e.type === "percentage" || e.type === "stdDev" ? `<c:val val="${e.value ?? (e.type === "percentage" ? 5 : 1)}"/>` : ""}<c:spPr>${lineXml(e.line, autoLine)}${effectLstXml(e.effects)}</c:spPr></c:errBars>`;
+/** `data` writes a custom amount (c:plus / c:minus with its numRef and cache), as Excel's Prognoseblatt does (D-125). */
+export function errBarsXml(e: ErrorBars, scatter: boolean, autoLine: string, data?: (tag: string, d: { ref?: string; cache: (number | null)[]; format?: string }) => string): string {
+  const cust = e.type === "cust" && data ? `${e.plus ? data("plus", e.plus) : ""}${e.minus ? data("minus", e.minus) : ""}` : "";
+  return `<c:errBars>${scatter ? '<c:errDir val="y"/>' : ""}<c:errBarType val="${e.dir}"/><c:errValType val="${e.type}"/><c:noEndCap val="${e.noEndCap ? 1 : 0}"/>${cust}${e.type === "fixedVal" || e.type === "percentage" || e.type === "stdDev" ? `<c:val val="${e.value ?? (e.type === "percentage" ? 5 : 1)}"/>` : ""}<c:spPr>${e.type === "cust" ? "<a:noFill/>" : ""}${lineXml(e.line, autoLine)}${effectLstXml(e.effects)}</c:spPr></c:errBars>`;
 }
 
 // ----- reading ---------------------------------------------------------------------------------------

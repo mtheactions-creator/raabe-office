@@ -1,0 +1,15 @@
+{
+ "about": "Excel's Prognoseblatt, column variant (probe_excel_forecast.py run 'options', 2026-11-09): the c:errBars element Excel writes on the forecast series (D-125). The cache values are the KONFINT column's.",
+ "charts": {
+  "xl/charts/chart1.xml": {
+   "barChart": false,
+   "errBars": null,
+   "series_with_errBars": 0
+  },
+  "xl/charts/chart2.xml": {
+   "barChart": true,
+   "errBars": "<c:errBars><c:errBarType val=\"both\"/><c:errValType val=\"cust\"/><c:noEndCap val=\"0\"/><c:plus><c:numRef><c:f>Tabelle3!$D$2:$D$37</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"36\"/><c:pt idx=\"24\"><c:v>5.516458295154032</c:v></c:pt><c:pt idx=\"25\"><c:v>5.5607678206693967</c:v></c:pt><c:pt idx=\"26\"><c:v>5.6054192861196359</c:v></c:pt><c:pt idx=\"27\"><c:v>5.6504099708098225</c:v></c:pt><c:pt idx=\"28\"><c:v>5.6957371790745235</c:v></c:pt><c:pt idx=\"29\"><c:v>5.741398240883524</c:v></c:pt><c:pt idx=\"30\"><c:v>5.7880871832194751</c:v></c:pt><c:pt idx=\"31\"><c:v>5.8344025161689599</c:v></c:pt><c:pt idx=\"32\"><c:v>5.8810439006306048</c:v></c:pt><c:pt idx=\"33\"><c:v>5.9280087739957885</c:v></c:pt><c:pt idx=\"34\"><c:v>5.9752946014052544</c:v></c:pt><c:pt idx=\"35\"><c:v>6.0228988760233939</c:v></c:pt></c:numCache></c:numRef></c:plus><c:minus><c:numRef><c:f>Tabelle3!$D$2:$D$37</c:f><c:numCache><c:formatCode>General</c:formatCode><c:ptCount val=\"36\"/><c:pt idx=\"24\"><c:v>5.516458295154032</c:v></c:pt><c:pt idx=\"25\"><c:v>5.5607678206693967</c:v></c:pt><c:pt idx=\"26\"><c:v>5.6054192861196359</c:v></c:pt><c:pt idx=\"27\"><c:v>5.6504099708098225</c:v></c:pt><c:pt idx=\"28\"><c:v>5.6957371790745235</c:v></c:pt><c:pt idx=\"29\"><c:v>5.741398240883524</c:v></c:pt><c:pt idx=\"30\"><c:v>5.7880871832194751</c:v></c:pt><c:pt idx=\"31\"><c:v>5.8344025161689599</c:v></c:pt><c:pt idx=\"32\"><c:v>5.8810439006306048</c:v></c:pt><c:pt idx=\"33\"><c:v>5.9280087739957885</c:v></c:pt><c:pt idx=\"34\"><c:v>5.9752946014052544</c:v></c:pt><c:pt idx=\"35\"><c:v>6.0228988760233939</c:v></c:pt></c:numCache></c:numRef></c:minus><c:spPr><a:noFill/><a:ln w=\"9525\" cap=\"flat\" cmpd=\"sng\" algn=\"ctr\"><a:solidFill><a:srgbClr val=\"595959\"><a:alpha val=\"40392\"/></a:srgbClr></a:solidFill><a:prstDash val=\"solid\"/><a:round/></a:ln><a:effectLst/></c:spPr></c:errBars>",
+   "series_with_errBars": 1
+  }
+ }
+}

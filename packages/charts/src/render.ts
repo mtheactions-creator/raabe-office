@@ -19,6 +19,8 @@ import { barDefaults, chartGroups, isChartExKind, kindInfo, type ChartGroup } fr
 import { draw3D, draw3DPie, drawSurface } from "./render3d";
 import { drawOfPie, drawRadar } from "./renderspecial";
 import { drawChartEx, chartExLegend } from "./renderex";
+import { visibleModel } from "./filter";
+import { withDataTable } from "./datatable";
 
 export type Measure = (text: string, sizePt: number) => number;
 
@@ -125,11 +127,11 @@ export interface Ctx {
 }
 
 /** The chart's shapes for a size in pt. */
-export function chartScene(m: ChartModel, W: number, H: number, opts: RenderOptions = {}): Scene {
+export function chartScene(full: ChartModel, W: number, H: number, opts: RenderOptions = {}): Scene {
   const defs = beginDefs();
-  setBaseText(m.format?.chart?.text);
+  setBaseText(full.format?.chart?.text);
   try {
-    const scene = buildScene(m, W, H, opts);
+    const scene = buildScene(full, W, H, opts);
     if (defs.list.length) scene.defs = defs.list;
     return scene;
   } finally {
@@ -160,8 +162,10 @@ export function strokeOf(s: Stroke | null | undefined): Partial<Pick<Extract<Pri
   return o;
 }
 
-function buildScene(m: ChartModel, W: number, H: number, opts: RenderOptions): Scene {
+function buildScene(full: ChartModel, W: number, H: number, opts: RenderOptions): Scene {
   const accents = opts.accents ?? OFFICE_ACCENTS;
+  // Diagrammfilter (D-116): what is filtered out is not drawn.
+  const m = visibleModel(full, accents).model;
   const fmt = (v: number, format?: string) => {
     if (opts.format && format && format !== "General") {
       try { return opts.format(v, format); } catch { /* fall back */ }
@@ -216,6 +220,8 @@ function buildScene(m: ChartModel, W: number, H: number, opts: RenderOptions): S
   else if (info.family === "radar") scene = drawRadar(c, area);
   else if (info.family === "surface") scene = drawSurface(c, area);
   else if (info.d3 && info.family !== "bubble") scene = draw3D(c, area);
+  // Datentabelle under the plot (D-115, datatable.ts).
+  else if (m.dataTable && !isBar(m.kind) && !isScatter(m.kind)) scene = withDataTable(c, area, drawAxes, { catText: (i) => catText(c, m.series[0], i), seriesName: (i) => seriesName(m.series[i], i) });
   else scene = drawAxes(c, area);
   c.parts.push({ name: "plot", box: scene.plot });
   // An axis' own Füllung (and Effekte): a box under its labels, as Excel fills the axis' label area.
@@ -930,7 +936,7 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
     clipStart(c, plot);
     if (kindInfo(m.kind).family === "bubble") drawBubbles(c, plot, xp, vPos);
     else m.series.forEach((s, si) => drawScatterSeries(c, s, si, xp, vPos));
-    m.series.forEach((s, si) => { if (s.errorBars) s.val.cache.forEach((v, i) => { const x = xOf(s, i); if (v !== null && x !== null) drawErrorBar(c, s, si, xp(x), v, vPos, false); }); });
+    m.series.forEach((s, si) => { if (s.errorBars) s.val.cache.forEach((v, i) => { const x = xOf(s, i); if (v !== null && x !== null) drawErrorBar(c, s, si, xp(x), v, vPos, false, i); }); });
     m.series.forEach((s, si) => { if (s.trendline) drawTrendline(c, s, si, plot, (v) => xp(v), vPos, (i) => xOf(s, i)); });
     clipEnd(c);
     return { plot, valueScale: vScale, xScale: xs };
@@ -995,7 +1001,7 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
     s.val.cache.forEach((v, i) => {
       if (v === null || !isFinite(v)) return;
       const x = m.kind === "column" ? catCenter(i) - step / 2 + (bw * gp) / 2 + si * bw * (1 - ov) + bw / 2 : catCenter(i);
-      drawErrorBar(c, s, si, x, v, vPos, false);
+      drawErrorBar(c, s, si, x, v, vPos, false, i);
     });
   });
   m.series.forEach((s, si) => {
@@ -1030,8 +1036,24 @@ function drawGridlines(c: Ctx, scale: AxisScale, plot: Box, horizontal: boolean,
 }
 
 /** A vertical Fehlerindikator at a point: the amount as the pane sets it, with or without caps. */
-function drawErrorBar(c: Ctx, s: ChartSeries, si: number, x: number, v: number, vPos: (v: number) => number, _bar: boolean): void {
+function drawErrorBar(c: Ctx, s: ChartSeries, si: number, x: number, v: number, vPos: (v: number) => number, _bar: boolean, i = 0): void {
   const e = s.errorBars!;
+  if (e.type === "cust") {
+    // Benutzerdefiniert (D-125): the amounts from cells; a point without either amount gets no bar.
+    const up = e.plus?.cache[i], down = e.minus?.cache[i];
+    if ((up === null || up === undefined) && (down === null || down === undefined)) return;
+    const ln = linePaint(e.line, { color: "#595959", width: 0.75 });
+    if (!ln) return;
+    const hi = e.dir === "minus" ? v : v + (up ?? 0), lo = e.dir === "plus" ? v : v - (down ?? 0);
+    const y1 = vPos(hi), y0 = vPos(lo), cap = 3;
+    let d = `M${f(x)} ${f(y0)}V${f(y1)}`;
+    if (!e.noEndCap) {
+      if (e.dir !== "minus") d += `M${f(x - cap)} ${f(y1)}H${f(x + cap)}`;
+      if (e.dir !== "plus") d += `M${f(x - cap)} ${f(y0)}H${f(x + cap)}`;
+    }
+    c.prims.push({ t: "path", d, ...ln, part: `errbars:${si}` });
+    return;
+  }
   const vals = s.val.cache.filter((y): y is number => y !== null && isFinite(y));
   const n = vals.length, mean = vals.reduce((a, b) => a + b, 0) / Math.max(1, n);
   const sd = n > 1 ? Math.sqrt(vals.reduce((a, y) => a + (y - mean) ** 2, 0) / (n - 1)) : 0;
@@ -1245,7 +1267,8 @@ function drawLines(c: Ctx, catCenter: (i: number) => number, vPos: (v: number) =
     // Runs of points without gaps, drawn straight or smoothed (Linie glätten).
     const runs: [number, number][][] = [[]];
     vals.forEach((v, i) => {
-      if (v === null || !isFinite(v)) { if (runs.at(-1)!.length) runs.push([]); return; }
+      // Leere Zellen: a gap, unless "Datenpunkte mit einer Linie verbinden" (dispBlanksAs span, D-117).
+      if (v === null || !isFinite(v)) { if (runs.at(-1)!.length && c.m.dispBlanksAs !== "span") runs.push([]); return; }
       runs.at(-1)!.push([catCenter(i), vPos(v)]);
     });
     const d = runs.filter((r) => r.length).map((r) => (s.smooth && r.length > 2 ? smoothPath(r) : r.map(([x, y], i) => `${i ? "L" : "M"}${f(x)} ${f(y)}`).join(""))).join("");
@@ -1418,6 +1441,8 @@ export function renderChart(model: ChartModel, width: number, height: number, op
   svg.setAttribute("height", String(height));
   svg.setAttribute("viewBox", `0 0 ${scene.width} ${scene.height}`);
   svg.setAttribute("font-family", LOOK.font);
+  // The plot area's box (pt) for hit tests: an unformatted plot area draws nothing to click on (D-115).
+  svg.dataset.plot = [scene.plot.x, scene.plot.y, scene.plot.w, scene.plot.h].map((v) => Math.round(v * 10) / 10).join(",");
   svg.innerHTML = sceneMarkup(scene);
   return svg;
 }

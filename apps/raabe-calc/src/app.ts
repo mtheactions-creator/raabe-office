@@ -2014,7 +2014,7 @@ export class CalcApp {
     run("insert.chartHierarchy", () => this.charts.insert("treemap"));
     run("insert.chartOther", () => this.charts.insert("waterfall"));
     run("insert.chartCombo", () => void chartTypeDialog(this.chartTypeHost(), "insert", "Kombi"));
-    run("chart.addElement", () => this.charts.elements(), () => !!this.charts.selected());
+    run("chart.addElement", () => {}, () => !!this.charts.selected());
     run("chart.changeType", () => void chartTypeDialog(this.chartTypeHost(), "change"), () => !!this.charts.selected());
     run("chart.element", () => {}, () => !!this.charts.selected());
     run("insert.pivot", () => void this.pivots.create(), notEditing);
@@ -2054,6 +2054,22 @@ export class CalcApp {
     run("chart.switchRowCol", () => this.charts.switchRowCol(), () => !!this.charts.selected());
     run("chart.quickLayout", () => {}, () => this.charts.layoutCount() > 0);
     run("chart.colors", () => {}, () => !!this.charts.selected());
+    const chartOn = () => !!this.charts.selected();
+    run("chart.styles", () => {}, chartOn);
+    run("chart.insertShape", () => {}, chartOn);
+    run("chart.fill", () => {}, chartOn);
+    run("chart.outline", () => {}, chartOn);
+    run("chart.textFill", () => {}, chartOn);
+    run("chart.forward", () => this.charts.arrange("forward"), chartOn);
+    run("chart.bringToFront", () => this.charts.arrange("front"), chartOn);
+    run("chart.backward", () => this.charts.arrange("backward"), chartOn);
+    run("chart.sendToBack", () => this.charts.arrange("back"), chartOn);
+    run("chart.selectionPane", () => this.shapes.selectionPane());
+    // Gruppieren and Drehen are greyed out for one chart in Excel.
+    run("chart.group", () => {}, () => false);
+    run("chart.rotate", () => {}, () => false);
+    run("chart.height", () => {}, chartOn);
+    run("chart.width", () => {}, chartOn);
     run("chart.selectData", () => this.charts.selectData(), () => !!this.charts.selected());
     run("chart.move", () => this.charts.moveChart(), () => !!this.charts.selected());
     run("chart.formatSelection", () => this.charts.formatSelection(), () => !!this.charts.selected());
@@ -2368,37 +2384,99 @@ export class CalcApp {
   }
 
   private chartTabDef: import("@raabe/shell").Tab | null = null;
+  /** Diagrammentwurf, with the keytips recorded in German Excel 365 (results/2026-11-09-excel-chart-buttons.json, D-115). */
   private chartTab(): import("@raabe/shell").Tab {
-    const b =(cmd: string, key: string): import("@raabe/shell").Control => ({ type: "button", cmd, key, size: "large" });
+    const b = (cmd: string, key: string): import("@raabe/shell").Control => ({ type: "button", cmd, key, size: "large" });
+    const charts = this.charts;
+    const colors = (k: number, label: string): MenuEntry => ({ label, checked: charts.colors() === k, hover: () => charts.previewColors(k), run: () => { charts.previewColors(null); charts.setColors(k); } });
     return this.chartTabDef ??= {
       id: "chartDesign", label: "Diagrammentwurf", key: "JC", contextual: true, shrink: [],
       groups: [
-        { id: "layouts", label: "Diagrammlayouts", key: "ZL", icon: "chart-recommended", controls: [b("chart.addElement", "A"),
-          { type: "dropdown", cmd: "chart.quickLayout", key: "L", size: "large", menu: Array.from({ length: 11 }, (_, i) => ({ label: `Layout ${i + 1}`, run: () => this.charts.quickLayout(i + 1) })) }] },
+        { id: "layouts", label: "Diagrammlayouts", key: "ZL", icon: "chart-recommended", controls: [
+          { type: "dropdown", cmd: "chart.addElement", key: "D", size: "large", get menu() { return charts.elementsMenu(); } },
+          { type: "dropdown", cmd: "chart.quickLayout", key: "C", size: "large", get menu() {
+            return Array.from({ length: charts.layoutCount() }, (_, i) => ({ label: `Layout ${i + 1}`, hover: () => charts.previewLayout(i + 1), run: () => { charts.previewLayout(null); charts.quickLayout(i + 1); } }));
+          } }] },
         { id: "styles", label: "Diagrammformatvorlagen", key: "ZS", icon: "styles", controls: [
-          { type: "dropdown", cmd: "chart.colors", key: "H", size: "large", menu: [
-            { heading: "Farbig" }, ...[10, 11, 12, 13].map((k) => ({ label: `Farbige Palette ${k - 9}`, run: () => this.charts.setColors(k) })),
-            { heading: "Monochromatisch" }, ...Array.from({ length: 13 }, (_, i) => ({ label: `Monochromatische Palette ${i + 1}`, run: () => this.charts.setColors(14 + i) })),
-          ] },
-          b("chart.styles", "S")] },
-        { id: "data", label: "Daten", key: "ZD", icon: "table", controls: [b("chart.switchRowCol", "W"), b("chart.selectData", "E")] },
-        { id: "type", label: "Typ", key: "ZT", icon: "chart-column", controls: [b("chart.changeType", "C")] },
-        { id: "place", label: "Ort", key: "ZO", icon: "position", controls: [b("chart.move", "V")] },
+          { type: "dropdown", cmd: "chart.colors", key: "F", size: "large", get menu() {
+            return [{ heading: "Bunt" }, ...[10, 11, 12, 13].map((k) => colors(k, `Farbige Palette ${k - 9}`)),
+              { heading: "Einfarbig" }, ...Array.from({ length: 13 }, (_, i) => colors(14 + i, `Monochrome Palette ${i + 1}`))];
+          } },
+          { type: "tiles", cmd: "chart.styles", key: "S", get count() { return charts.styleCount(); }, visible: 6, fill: true, size: [62, 46],
+            render: (i) => { const t = charts.styleTile(i, 58, 42); return t ? (t as unknown as HTMLElement) : null; },
+            tip: (i) => `Formatvorlage ${i + 1}`,
+            pick: (i) => { charts.previewStyle(null); charts.applyStyle(i); },
+            hover: (i) => charts.previewStyle(i),
+            current: () => charts.styleCurrent(),
+            redraw: () => charts.styleKey(),
+            panel: (close) => {
+              const grid = h("div", { class: "chart-style-panel", style: "display:grid;grid-template-columns:repeat(4,92px);gap:4px;padding:6px" });
+              for (let i = 0; i < charts.styleCount(); i++) {
+                const t = h("button", { class: "tile", "aria-label": `Formatvorlage ${i + 1}`, "data-tip": `Formatvorlage ${i + 1}`, style: "padding:2px;border:1px solid #d6d6d6;background:#fff" });
+                const svg = charts.styleTile(i, 86, 62);
+                if (svg) t.append(svg);
+                t.addEventListener("mouseenter", () => charts.previewStyle(i));
+                t.addEventListener("mouseleave", () => charts.previewStyle(null));
+                t.addEventListener("click", () => { charts.previewStyle(null); close(); charts.applyStyle(i); });
+                grid.append(t);
+              }
+              return grid;
+            } } as import("@raabe/shell").Control] },
+        { id: "data", label: "Daten", key: "ZD", icon: "table", controls: [b("chart.switchRowCol", "E"), b("chart.selectData", "T")] },
+        { id: "type", label: "Typ", key: "ZT", icon: "chart-column", controls: [b("chart.changeType", "I")] },
+        { id: "place", label: "Ort", key: "ZO", icon: "position", controls: [b("chart.move", "G")] },
       ],
     };
   }
 
-  /** Format (chart tools): Aktuelle Auswahl; the shape and WordArt groups follow (EXCEL-INVENTORY). */
+  /** Format (chart tools), the groups and keytips German Excel 365 shows (D-115). */
   private chartFormatTabDef: import("@raabe/shell").Tab | null = null;
   private chartFormatTab(): import("@raabe/shell").Tab {
+    const charts = this.charts;
+    const CM = 96 / 2.54;
+    const fmtCm = (cm: number) => `${cm.toLocaleString("de-DE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} cm`;
+    const parseCm = (v: string) => Number(v.replace(/[^\d,.-]/g, "").replace(",", "."));
+    void CM;
+    const size = (cmd: string, label: string, key: string, side: "w" | "h"): import("@raabe/shell").Control => ({
+      type: "spinner", cmd, label, key, icon: side === "h" ? "shape-height" : "shape-width",
+      value: () => { const s = charts.sizeCm(); return s ? fmtCm(side === "w" ? s.w : s.h) : ""; },
+      commit: (v) => { const n = parseCm(v); if (n > 0) charts.setSizeCm(side === "w" ? n : null, side === "h" ? n : null); },
+      step: (d) => { const s = charts.sizeCm(); if (s) { const cur = side === "w" ? s.w : s.h; const n = Math.max(0.1, Math.round((cur + d * 0.1) * 100) / 100); charts.setSizeCm(side === "w" ? n : null, side === "h" ? n : null); } },
+    });
+    const noFill = (what: "fill" | "line"): MenuEntry[] => [{ label: what === "fill" ? "Keine Füllung" : "Keine Kontur", run: () => charts.setElementColor(what, null) }];
     return this.chartFormatTabDef ??= {
-      id: "chartFormat", label: "Format", key: "JO", contextual: true, shrink: [],
+      id: "chartFormat", label: "Format", key: "JY", contextual: true, shrink: [],
       groups: [
-        { id: "current", label: "Aktuelle Auswahl", key: "ZA", icon: "format-picture", controls: [{ type: "stack", items: [
-          { type: "combo", cmd: "chart.element", width: 160, key: "E", value: () => this.charts.elementName(), options: () => [{ items: this.charts.elementNames() }], commit: (v) => this.charts.chooseElement(v) },
-          { type: "button", cmd: "chart.formatSelection", key: "M", size: "small" },
-          { type: "button", cmd: "chart.resetStyle", key: "A", size: "small" },
+        { id: "current", label: "Aktuelle Auswahl", key: "ZL", icon: "format-picture", controls: [{ type: "stack", items: [
+          { type: "combo", cmd: "chart.element", width: 160, key: "A1", value: () => this.charts.elementName(), options: () => [{ items: this.charts.elementNames() }], commit: (v) => this.charts.chooseElement(v) },
+          { type: "button", cmd: "chart.formatSelection", key: "U", size: "small" },
+          { type: "button", cmd: "chart.resetStyle", key: "V1", size: "small" },
         ] }] },
+        { id: "insertShapes", label: "Formen einfügen", key: "ZH", icon: "shapes", controls: [
+          { type: "dropdown", cmd: "chart.insertShape", key: "2", size: "large", menu: [], popup: (close) => this.shapes.gallery(close) },
+          { type: "button", cmd: "chart.changeShape", key: "Ä", size: "small" }] },
+        { id: "shapeStyles", label: "Formenarten", key: "ZY", icon: "shape-fill", launcher: { cmd: "chart.formatSelection", key: "BB" }, controls: [{ type: "stack", items: [
+          { type: "color", cmd: "chart.fill", key: "Ü", palette: "font", current: () => "#ED7D31", pick: (c) => charts.setElementColor("fill", c), showLabel: true, extra: () => noFill("fill") },
+          { type: "color", cmd: "chart.outline", key: "V2", palette: "font", current: () => "#4472C4", pick: (c) => charts.setElementColor("line", c), showLabel: true, extra: () => noFill("line") },
+          { type: "button", cmd: "chart.shapeEffects", key: "MO", size: "small" },
+        ] }] },
+        { id: "wordArt", label: "WordArt-Formate", key: "ZS", icon: "font-color", controls: [{ type: "stack", items: [
+          { type: "color", cmd: "chart.textFill", key: "4", palette: "font", current: () => "#000000", pick: (c) => charts.setElementColor("text", c), showLabel: true },
+          { type: "button", cmd: "chart.textOutline", key: "TE", size: "small" },
+          { type: "button", cmd: "chart.textEffects", key: "IE", size: "small" },
+        ] }] },
+        { id: "access", label: "Barrierefreiheit", key: "Z1", icon: "alt-text", controls: [{ type: "button", cmd: "chart.altText", key: "AT", size: "large" }] },
+        { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: [{ type: "stack", items: [
+          { type: "split", cmd: "chart.forward", key: "GE", size: "small", menu: [{ cmd: "chart.forward" }, { cmd: "chart.bringToFront" }] },
+          { type: "split", cmd: "chart.backward", key: "GH", size: "small", menu: [{ cmd: "chart.backward" }, { cmd: "chart.sendToBack" }] },
+          { type: "button", cmd: "chart.selectionPane", key: "Q", size: "small" },
+        ] }, { type: "stack", items: [
+          { type: "button", cmd: "chart.align", key: "DA", size: "small" },
+          { type: "button", cmd: "chart.group", key: "GR", size: "small" },
+          { type: "button", cmd: "chart.rotate", key: "DR", size: "small" },
+        ] }] },
+        { id: "size", label: "Größe", key: "ZZ", icon: "shape-height", launcher: { cmd: "chart.formatSelection", key: "ß" }, controls: [{ type: "stack", items: [
+          size("chart.height", "Höhe:", "H", "h"), size("chart.width", "Breite:", "RR", "w")] }] },
       ],
     };
   }

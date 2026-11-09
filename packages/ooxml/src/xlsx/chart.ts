@@ -16,6 +16,7 @@ import {
   readFormat, readShape, readText, scalingXml, setImageSink, spPrXml, takeImages, tickXml, trendlineXml, type Reader,
 } from "./chartfmt";
 import type { AxisOptions, ChartFormat, DataLabelOptions, DataPoint, ElementFormat, ErrorBars, MarkerSymbol, TextFormat, Trendline } from "@raabe/charts";
+import { applyFilterRead, filterXml, unfilterXml, withHiddenCats } from "./chartfilter";
 
 export const CHART_CONTENT_TYPE = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml";
 export const CHART_REL_TYPE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart";
@@ -145,7 +146,7 @@ function trendline(s: ChartSeries, i: number): string {
 }
 
 function errBars(s: ChartSeries, scatter: boolean): string {
-  return s.errorBars ? errBarsXml(s.errorBars, scatter, `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln>`) : "";
+  return s.errorBars ? errBarsXml(s.errorBars, scatter, `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln>`, numData) : "";
 }
 
 const MARKER_NONE = '<c:marker><c:symbol val="none"/></c:marker>';
@@ -433,9 +434,10 @@ function signature(m: ChartModel): string {
     kind: m.kind, title: m.title, axisTitles: m.axisTitles, legend: m.legend, dataLabels: m.dataLabels, gridlines: m.gridlines,
     format: m.format, gapWidth: m.gapWidth, overlap: m.overlap, firstSliceAngle: m.firstSliceAngle, holeSize: m.holeSize, colors: m.colors,
     view3D: m.view3D, splitCount: m.splitCount, secondSize: m.secondSize, bubbleScale: m.bubbleScale, varyColors: m.varyColors,
+    hiddenCats: m.hiddenCats, dispBlanksAs: m.dispBlanksAs, showHidden: m.showHidden, naAsBlank: m.naAsBlank, dataTable: m.dataTable,
     series: m.series.map((s) => ({ name: s.name?.ref ?? s.name?.text, cat: s.cat?.ref, val: s.val.ref, color: s.color, trendline: s.trendline,
       fill: s.fill, line: s.line, marker: s.marker, smooth: s.smooth, invertIfNegative: s.invertIfNegative, errorBars: s.errorBars,
-      kind: s.kind, secondary: s.secondary, size: s.size?.ref, totals: s.totals, effects: s.effects, explosion: s.explosion, points: s.points })),
+      kind: s.kind, secondary: s.secondary, size: s.size?.ref, totals: s.totals, effects: s.effects, explosion: s.explosion, points: s.points, filtered: s.filtered })),
   });
 }
 
@@ -461,6 +463,13 @@ export function chartToXmlWithImages(model: ChartModel): { xml: string; images: 
 export function chartToXml(model: ChartModel): string {
   const raw = rawOf(model);
   if (raw && raw.sig === signature(model)) return raw.xml;
+  if (isChartEx(model)) return plainChartXml(model);
+  // Diagrammfilter, Datentabelle, Ausgeblendete und leere Zellen in Excel's form (D-116, chartfilter.ts).
+  const { model: shown, full } = withHiddenCats(model);
+  return filterXml(plainChartXml(shown), model, full);
+}
+
+function plainChartXml(model: ChartModel): string {
   // A Farben ändern scheme other than Farbig: its colours are written as the series' own (no colour part is written).
   const m: ChartModel = model.colors && model.colors !== 10 && !isPie(model.kind)
     ? { ...model, series: model.series.map((s, i) => (s.color ? s : { ...s, color: paletteColor(model, i, model.series.length, OFFICE_ACCENTS) })) }
@@ -839,6 +848,18 @@ function groupKind(xml: string, g: El, volume: boolean): ChartKind {
  * is written back unchanged unless it is edited.
  */
 export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellAnchor; name?: string; image?: (rId: string) => string | undefined }): ChartModel {
+  if (!xml.includes("c15:filtered") && !xml.includes("c15:fullRef") && !/<c:dTable>|<c:dispBlanksAs val="(?:zero|span)"|<c:plotVisOnly val="0"|dispNaAsBlank val="0"|<c:catAx>(?:(?!<\/c:catAx>)[\s\S])*<c:minorGridlines>/.test(xml)) {
+    return plainChartFromXml(xml, anchor);
+  }
+  // Diagrammfilter and the display options (D-116, chartfilter.ts): read in the plain form, the file's XML kept.
+  const r = unfilterXml(xml);
+  const m = plainChartFromXml(r.xml, anchor);
+  applyFilterRead(m, r);
+  if (rawOf(m)) m.raw = { xml, sig: signature(m) } satisfies RawChart;
+  return m;
+}
+
+function plainChartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellAnchor; name?: string; image?: (rId: string) => string | undefined }): ChartModel {
   const from = anchor?.from ?? { col: 0, row: 0, x: 0, y: 0 }, to = anchor?.to ?? { col: 8, row: 15, x: 0, y: 0 };
   const rootEl = root(xml);
   if (rootEl.name === "cx:chartSpace") return chartExFromXml(xml, rootEl, from, to, anchor?.name);
@@ -969,6 +990,10 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
       const esh = readShape(rd, find(xml, eb, "c:spPr"));
       if (esh.line && esh.line.type !== "auto") e.line = esh.line;
       if (esh.effects) e.effects = esh.effects;
+      for (const side of ["plus", "minus"] as const) {
+        const d = readData(xml, find(xml, eb, `c:${side}`));
+        if (d) e[side] = { ref: d.ref, cache: d.cache.map((x) => (typeof x === "number" ? x : null)), format: d.format };
+      }
       out.errorBars = e;
     }
     if (val(xml, find(xml, s, "c:dLbls", "c:showVal")) === "1") dataLabels = true;

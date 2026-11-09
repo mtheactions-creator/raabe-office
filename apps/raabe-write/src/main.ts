@@ -1,6 +1,6 @@
 // RaabeWrite entry point.
 
-import { browserPlatform, isTauri, tauriPlatform } from "@raabe/shell";
+import { browserPlatform, installLostMouseUp, isTauri, tauriPlatform } from "@raabe/shell";
 import { installProbe, makePara, probeFor, type DocState, type Para } from "@raabe/text-engine";
 import fixtures from "../../../prototypes/src/shared/fixtures.json";
 import { WriteApp } from "./app";
@@ -17,6 +17,7 @@ function fixture(name: string): Partial<DocState> {
   return { paras: out };
 }
 
+installLostMouseUp();
 const feel = (window as unknown as { __FEEL?: string }).__FEEL;
 const app = new WriteApp(isTauri() ? tauriPlatform() : browserPlatform(), feel ? fixture(feel) : undefined);
 // The dev server always exposes the probe, so the browser pane can inspect the document.

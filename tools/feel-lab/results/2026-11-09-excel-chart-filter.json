@@ -1,0 +1,3333 @@
+{
+ "cases": {
+  "plain": {
+   "sheet": "C1",
+   "kind": "column",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 201
+  },
+  "series2-filtered": {
+   "sheet": "C2",
+   "kind": "column",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": true,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 2,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 201
+  },
+  "cat3-filtered": {
+   "sheet": "C3",
+   "kind": "column",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": true
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 201
+  },
+  "series-and-cat-filtered": {
+   "sheet": "C4",
+   "kind": "column",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": true,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": true
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 2,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 201
+  },
+  "line-series2-filtered": {
+   "sheet": "C5",
+   "kind": "line",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": true,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 2,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 227
+  },
+  "line-cat2-filtered": {
+   "sheet": "C6",
+   "kind": "line",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": true
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 227
+  },
+  "pie-cat2-filtered": {
+   "sheet": "C7",
+   "kind": "pie",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": true
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 251
+  },
+  "scatter-series1-filtered": {
+   "sheet": "C8",
+   "kind": "scatter",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": true,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "read_error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, 'S', 'Die Auswahl ist ungültig.', None, 0, -2146827284), None)",
+   "style_id": 240
+  },
+  "area-series1-filtered": {
+   "sheet": "C9",
+   "kind": "area",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": true,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 2,
+   "blanks": 2,
+   "plotVisibleOnly": true,
+   "style_id": 276
+  },
+  "bar-series3-filtered": {
+   "sheet": "C10",
+   "kind": "bar",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": true,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 2,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 216
+  },
+  "blanks-zero": {
+   "sheet": "C11",
+   "kind": "line",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 2,
+   "plotVisibleOnly": true,
+   "style_id": 227
+  },
+  "blanks-span": {
+   "sheet": "C12",
+   "kind": "line",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 3,
+   "plotVisibleOnly": true,
+   "style_id": 227
+  },
+  "hidden-shown": {
+   "sheet": "C13",
+   "kind": "column",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": false,
+   "style_id": 201
+  },
+  "datatable-keys": {
+   "sheet": "C14",
+   "kind": "column",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 201
+  },
+  "datatable-nokeys": {
+   "sheet": "C15",
+   "kind": "column",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 201
+  },
+  "title-overlay": {
+   "sheet": "C16",
+   "kind": "column",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 201
+  },
+  "legend-top": {
+   "sheet": "C17",
+   "kind": "column",
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, 'S', 'Dieses Objekt besitzt keine Legende.', None, 0, -2146827284), None)",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 201
+  },
+  "errorbars-stderr": {
+   "sheet": "C18",
+   "kind": "column",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 201
+  },
+  "labels-inend": {
+   "sheet": "C19",
+   "kind": "column",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 201
+  },
+  "axes-off": {
+   "sheet": "C20",
+   "kind": "column",
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2147467259), None)",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 201
+  },
+  "style-column-1": {
+   "sheet": "C21",
+   "kind": "column",
+   "gallery_index": 1,
+   "default_style": 201,
+   "style": 201,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 201
+  },
+  "style-column-2": {
+   "sheet": "C22",
+   "kind": "column",
+   "gallery_index": 2,
+   "default_style": 201,
+   "style": 202,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 202
+  },
+  "style-column-3": {
+   "sheet": "C23",
+   "kind": "column",
+   "gallery_index": 3,
+   "default_style": 201,
+   "style": 203,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 203
+  },
+  "style-column-4": {
+   "sheet": "C24",
+   "kind": "column",
+   "gallery_index": 4,
+   "default_style": 201,
+   "style": 205,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 205
+  },
+  "style-column-5": {
+   "sheet": "C25",
+   "kind": "column",
+   "gallery_index": 5,
+   "default_style": 201,
+   "style": 206,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 206
+  },
+  "style-column-6": {
+   "sheet": "C26",
+   "kind": "column",
+   "gallery_index": 6,
+   "default_style": 201,
+   "style": 207,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 207
+  },
+  "style-column-7": {
+   "sheet": "C27",
+   "kind": "column",
+   "gallery_index": 7,
+   "default_style": 201,
+   "style": 208,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 208
+  },
+  "style-column-8": {
+   "sheet": "C28",
+   "kind": "column",
+   "gallery_index": 8,
+   "default_style": 201,
+   "style": 209,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 209
+  },
+  "style-column-9": {
+   "sheet": "C29",
+   "kind": "column",
+   "gallery_index": 9,
+   "default_style": 201,
+   "style": 210,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 210
+  },
+  "style-column-10": {
+   "sheet": "C30",
+   "kind": "column",
+   "gallery_index": 10,
+   "default_style": 201,
+   "style": 211,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 211
+  },
+  "style-column-11": {
+   "sheet": "C31",
+   "kind": "column",
+   "gallery_index": 11,
+   "default_style": 201,
+   "style": 212,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 212
+  },
+  "style-column-12": {
+   "sheet": "C32",
+   "kind": "column",
+   "gallery_index": 12,
+   "default_style": 201,
+   "style": 213,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 213
+  },
+  "style-column-13": {
+   "sheet": "C33",
+   "kind": "column",
+   "gallery_index": 13,
+   "default_style": 201,
+   "style": 215,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 215
+  },
+  "style-column-14": {
+   "sheet": "C34",
+   "kind": "column",
+   "gallery_index": 14,
+   "default_style": 201,
+   "style": 340,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 340
+  },
+  "style-line-1": {
+   "sheet": "C35",
+   "kind": "line",
+   "gallery_index": 1,
+   "default_style": 227,
+   "style": 227,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 227
+  },
+  "style-line-2": {
+   "sheet": "C36",
+   "kind": "line",
+   "gallery_index": 2,
+   "default_style": 227,
+   "style": 228,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 228
+  },
+  "style-line-3": {
+   "sheet": "C37",
+   "kind": "line",
+   "gallery_index": 3,
+   "default_style": 227,
+   "style": 230,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 230
+  },
+  "style-line-4": {
+   "sheet": "C38",
+   "kind": "line",
+   "gallery_index": 4,
+   "default_style": 227,
+   "style": 231,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 231
+  },
+  "style-line-5": {
+   "sheet": "C39",
+   "kind": "line",
+   "gallery_index": 5,
+   "default_style": 227,
+   "style": 232,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 232
+  },
+  "style-line-6": {
+   "sheet": "C40",
+   "kind": "line",
+   "gallery_index": 6,
+   "default_style": 227,
+   "style": 233,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 233
+  },
+  "style-line-7": {
+   "sheet": "C41",
+   "kind": "line",
+   "gallery_index": 7,
+   "default_style": 227,
+   "style": 234,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 234
+  },
+  "style-line-8": {
+   "sheet": "C42",
+   "kind": "line",
+   "gallery_index": 8,
+   "default_style": 227,
+   "style": 235,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 235
+  },
+  "style-line-9": {
+   "sheet": "C43",
+   "kind": "line",
+   "gallery_index": 9,
+   "default_style": 227,
+   "style": 236,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 236
+  },
+  "style-line-10": {
+   "sheet": "C44",
+   "kind": "line",
+   "gallery_index": 10,
+   "default_style": 227,
+   "style": 237,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 237
+  },
+  "style-line-11": {
+   "sheet": "C45",
+   "kind": "line",
+   "gallery_index": 11,
+   "default_style": 227,
+   "style": 239,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 239
+  },
+  "style-line-12": {
+   "sheet": "C46",
+   "kind": "line",
+   "gallery_index": 12,
+   "default_style": 227,
+   "style": 332,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 332
+  },
+  "style-line-13": {
+   "sheet": "C47",
+   "kind": "line",
+   "gallery_index": 13,
+   "default_style": 227,
+   "style": 342,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 342
+  },
+  "style-line-14": {
+   "sheet": "C48",
+   "kind": "line",
+   "gallery_index": 14,
+   "default_style": 227,
+   "error": "gallery item not found",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 227
+  },
+  "style-bar-1": {
+   "sheet": "C49",
+   "kind": "bar",
+   "gallery_index": 1,
+   "default_style": 216,
+   "style": 216,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 216
+  },
+  "style-bar-2": {
+   "sheet": "C50",
+   "kind": "bar",
+   "gallery_index": 2,
+   "default_style": 216,
+   "style": 217,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 217
+  },
+  "style-bar-3": {
+   "sheet": "C51",
+   "kind": "bar",
+   "gallery_index": 3,
+   "default_style": 216,
+   "style": 218,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 218
+  },
+  "style-bar-4": {
+   "sheet": "C52",
+   "kind": "bar",
+   "gallery_index": 4,
+   "default_style": 216,
+   "style": 219,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 219
+  },
+  "style-bar-5": {
+   "sheet": "C53",
+   "kind": "bar",
+   "gallery_index": 5,
+   "default_style": 216,
+   "style": 220,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 220
+  },
+  "style-bar-6": {
+   "sheet": "C54",
+   "kind": "bar",
+   "gallery_index": 6,
+   "default_style": 216,
+   "style": 221,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 221
+  },
+  "style-bar-7": {
+   "sheet": "C55",
+   "kind": "bar",
+   "gallery_index": 7,
+   "default_style": 216,
+   "style": 222,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 222
+  },
+  "style-bar-8": {
+   "sheet": "C56",
+   "kind": "bar",
+   "gallery_index": 8,
+   "default_style": 216,
+   "style": 223,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 223
+  },
+  "style-bar-9": {
+   "sheet": "C57",
+   "kind": "bar",
+   "gallery_index": 9,
+   "default_style": 216,
+   "style": 224,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 224
+  },
+  "style-bar-10": {
+   "sheet": "C58",
+   "kind": "bar",
+   "gallery_index": 10,
+   "default_style": 216,
+   "style": 225,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 225
+  },
+  "style-bar-11": {
+   "sheet": "C59",
+   "kind": "bar",
+   "gallery_index": 11,
+   "default_style": 216,
+   "style": 339,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 339
+  },
+  "style-bar-12": {
+   "sheet": "C60",
+   "kind": "bar",
+   "gallery_index": 12,
+   "default_style": 216,
+   "style": 341,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 341
+  },
+  "style-bar-13": {
+   "sheet": "C61",
+   "kind": "bar",
+   "gallery_index": 13,
+   "default_style": 216,
+   "error": "gallery item not found",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 216
+  },
+  "style-bar-14": {
+   "sheet": "C62",
+   "kind": "bar",
+   "gallery_index": 14,
+   "default_style": 216,
+   "error": "gallery item not found",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    },
+    {
+     "name": "Süd",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$C$1,Daten!$A$2:$A$5,Daten!$C$2:$C$5,2)"
+    },
+    {
+     "name": "West",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$D$1,Daten!$A$2:$A$5,Daten!$D$2:$D$5,3)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 3,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 216
+  },
+  "style-pie-1": {
+   "sheet": "C63",
+   "kind": "pie",
+   "gallery_index": 1,
+   "default_style": 251,
+   "style": 251,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 251
+  },
+  "style-pie-2": {
+   "sheet": "C64",
+   "kind": "pie",
+   "gallery_index": 2,
+   "default_style": 251,
+   "style": 252,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 252
+  },
+  "style-pie-3": {
+   "sheet": "C65",
+   "kind": "pie",
+   "gallery_index": 3,
+   "default_style": 251,
+   "style": 253,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 253
+  },
+  "style-pie-4": {
+   "sheet": "C66",
+   "kind": "pie",
+   "gallery_index": 4,
+   "default_style": 251,
+   "style": 254,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 254
+  },
+  "style-pie-5": {
+   "sheet": "C67",
+   "kind": "pie",
+   "gallery_index": 5,
+   "default_style": 251,
+   "style": 255,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 255
+  },
+  "style-pie-6": {
+   "sheet": "C68",
+   "kind": "pie",
+   "gallery_index": 6,
+   "default_style": 251,
+   "style": 256,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 256
+  },
+  "style-pie-7": {
+   "sheet": "C69",
+   "kind": "pie",
+   "gallery_index": 7,
+   "default_style": 251,
+   "style": 257,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 257
+  },
+  "style-pie-8": {
+   "sheet": "C70",
+   "kind": "pie",
+   "gallery_index": 8,
+   "default_style": 251,
+   "style": 258,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 258
+  },
+  "style-pie-9": {
+   "sheet": "C71",
+   "kind": "pie",
+   "gallery_index": 9,
+   "default_style": 251,
+   "style": 259,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 259
+  },
+  "style-pie-10": {
+   "sheet": "C72",
+   "kind": "pie",
+   "gallery_index": 10,
+   "default_style": 251,
+   "style": 260,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 260
+  },
+  "style-pie-11": {
+   "sheet": "C73",
+   "kind": "pie",
+   "gallery_index": 11,
+   "default_style": 251,
+   "style": 261,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 261
+  },
+  "style-pie-12": {
+   "sheet": "C74",
+   "kind": "pie",
+   "gallery_index": 12,
+   "default_style": 251,
+   "style": 344,
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 344
+  },
+  "style-pie-13": {
+   "sheet": "C75",
+   "kind": "pie",
+   "gallery_index": 13,
+   "default_style": 251,
+   "error": "gallery item not found",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 251
+  },
+  "style-pie-14": {
+   "sheet": "C76",
+   "kind": "pie",
+   "gallery_index": 14,
+   "default_style": 251,
+   "error": "gallery item not found",
+   "series": [
+    {
+     "name": "Nord",
+     "filtered": false,
+     "formula": "=SERIES(Daten!$B$1,Daten!$A$2:$A$5,Daten!$B$2:$B$5,1)"
+    }
+   ],
+   "categories": [
+    {
+     "name": "Jan",
+     "filtered": false
+    },
+    {
+     "name": "Feb",
+     "filtered": false
+    },
+    {
+     "name": "Mrz",
+     "filtered": false
+    },
+    {
+     "name": "Apr",
+     "filtered": false
+    }
+   ],
+   "visible_series": 1,
+   "blanks": 1,
+   "plotVisibleOnly": true,
+   "style_id": 251
+  }
+ },
+ "gallery": {
+  "column": [
+   "Formatvorlage 1",
+   "Formatvorlage 2",
+   "Formatvorlage 3",
+   "Formatvorlage 4",
+   "Formatvorlage 5",
+   "Formatvorlage 6",
+   "Formatvorlage 7",
+   "Formatvorlage 8",
+   "Formatvorlage 9",
+   "Formatvorlage 10",
+   "Formatvorlage 11",
+   "Formatvorlage 12",
+   "Formatvorlage 13",
+   "Formatvorlage 14"
+  ],
+  "line": [
+   "Formatvorlage 1",
+   "Formatvorlage 2",
+   "Formatvorlage 3",
+   "Formatvorlage 4",
+   "Formatvorlage 5",
+   "Formatvorlage 6",
+   "Formatvorlage 7",
+   "Formatvorlage 8",
+   "Formatvorlage 9",
+   "Formatvorlage 10",
+   "Formatvorlage 11",
+   "Formatvorlage 12",
+   "Formatvorlage 13"
+  ],
+  "bar": [
+   "Formatvorlage 1",
+   "Formatvorlage 2",
+   "Formatvorlage 3",
+   "Formatvorlage 4",
+   "Formatvorlage 5",
+   "Formatvorlage 6",
+   "Formatvorlage 7",
+   "Formatvorlage 8",
+   "Formatvorlage 9",
+   "Formatvorlage 10",
+   "Formatvorlage 11",
+   "Formatvorlage 12"
+  ],
+  "pie": [
+   "Formatvorlage 1",
+   "Formatvorlage 2",
+   "Formatvorlage 3",
+   "Formatvorlage 4",
+   "Formatvorlage 5",
+   "Formatvorlage 6",
+   "Formatvorlage 7",
+   "Formatvorlage 8",
+   "Formatvorlage 9",
+   "Formatvorlage 10",
+   "Formatvorlage 11",
+   "Formatvorlage 12"
+  ]
+ }
+}

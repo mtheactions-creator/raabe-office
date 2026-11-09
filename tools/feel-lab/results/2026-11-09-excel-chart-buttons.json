@@ -1,0 +1,10093 @@
+{
+ "ribbon": {
+  "Diagrammentwurf": {
+   "key": "Alt, J C",
+   "controls": [
+    {
+     "type": "Group",
+     "name": "Diagrammentwurf",
+     "key": "Alt, J C",
+     "enabled": true,
+     "rect": [
+      -3980,
+      119,
+      2324,
+      149
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Diagrammlayouts",
+     "key": "Alt, J C, Z L",
+     "enabled": true,
+     "rect": [
+      -3980,
+      122,
+      294,
+      143
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Diagrammelement hinzufügen",
+     "key": "Alt, J C, D",
+     "enabled": true,
+     "rect": [
+      -3968,
+      125,
+      155,
+      114
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Schnelllayout",
+     "key": "Alt, J C, C",
+     "enabled": true,
+     "rect": [
+      -3810,
+      125,
+      112,
+      114
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Diagrammformatvorlagen",
+     "key": "Alt, J C, Z S",
+     "enabled": true,
+     "rect": [
+      -3686,
+      122,
+      1207,
+      143
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Farben ändern",
+     "key": "Alt, J C, F",
+     "enabled": true,
+     "rect": [
+      -3674,
+      125,
+      80,
+      114
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J C, S",
+     "enabled": true,
+     "rect": [
+      -3591,
+      132,
+      1100,
+      94
+     ]
+    },
+    {
+     "type": "DataGrid",
+     "name": "Schnellformatvorlagen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3588,
+      139,
+      1056,
+      168
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J C, S",
+     "enabled": true,
+     "rect": [
+      -2531,
+      136,
+      36,
+      90
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Daten",
+     "key": "Alt, J C, Z D",
+     "enabled": true,
+     "rect": [
+      -2479,
+      122,
+      217,
+      143
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Zeile/Spalte tauschen",
+     "key": "Alt, J C, E",
+     "enabled": true,
+     "rect": [
+      -2467,
+      125,
+      100,
+      114
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Daten auswählen...",
+     "key": "Alt, J C, T",
+     "enabled": true,
+     "rect": [
+      -2364,
+      125,
+      90,
+      114
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Typ",
+     "key": "Alt, J C, Z T",
+     "enabled": true,
+     "rect": [
+      -2262,
+      122,
+      142,
+      143
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Diagrammtyp ändern...",
+     "key": "Alt, J C, I",
+     "enabled": true,
+     "rect": [
+      -2250,
+      125,
+      118,
+      114
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Ort",
+     "key": "Alt, J C, Z O",
+     "enabled": true,
+     "rect": [
+      -2120,
+      122,
+      125,
+      143
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Diagramm verschieben...",
+     "key": "Alt, J C, G",
+     "enabled": true,
+     "rect": [
+      -2108,
+      125,
+      101,
+      114
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Menüband-Anzeigeoptionen",
+     "key": "Alt, Z R",
+     "enabled": true,
+     "rect": [
+      -1650,
+      232,
+      30,
+      30
+     ]
+    },
+    {
+     "type": "ComboBox",
+     "name": "Namenfeld",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3985,
+      281,
+      150,
+      34
+     ]
+    },
+    {
+     "type": "Edit",
+     "name": "Namenfeld",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3982,
+      284,
+      118,
+      28
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true,
+     "rect": [
+      -3860,
+      282,
+      24,
+      32
+     ]
+    },
+    {
+     "type": "Edit",
+     "name": "Bearbeitungsleiste",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3670,
+      268,
+      2068,
+      57
+     ]
+    }
+   ]
+  },
+  "Format": {
+   "key": "Alt, J Y",
+   "controls": [
+    {
+     "type": "Group",
+     "name": "Format",
+     "key": "Alt, J Y",
+     "enabled": true,
+     "rect": [
+      -3980,
+      119,
+      2324,
+      150
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Aktuelle Auswahl",
+     "key": "Alt, J Y, Z L",
+     "enabled": true,
+     "rect": [
+      -3980,
+      122,
+      266,
+      144
+     ]
+    },
+    {
+     "type": "ComboBox",
+     "name": "Diagrammelemente",
+     "key": "Alt, J Y, A 1",
+     "enabled": true,
+     "rect": [
+      -3968,
+      125,
+      242,
+      36
+     ]
+    },
+    {
+     "type": "Edit",
+     "name": "Diagrammelemente",
+     "key": "Alt, J Y, A 1",
+     "enabled": true,
+     "rect": [
+      -3967,
+      127,
+      222,
+      31
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3745,
+      126,
+      18,
+      34
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Auswahl formatieren",
+     "key": "Alt, J Y, U",
+     "enabled": true,
+     "rect": [
+      -3968,
+      164,
+      213,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Auf Formatvorl. zurücks.",
+     "key": "Alt, J Y, V 1",
+     "enabled": true,
+     "rect": [
+      -3968,
+      203,
+      242,
+      36
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Formen einfügen",
+     "key": "Alt, J Y, Z H",
+     "enabled": true,
+     "rect": [
+      -3714,
+      122,
+      259,
+      144
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Formen",
+     "key": "Alt, J Y, 2",
+     "enabled": true,
+     "rect": [
+      -3702,
+      125,
+      152,
+      113
+     ]
+    },
+    {
+     "type": "DataGrid",
+     "name": "Formen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3699,
+      129,
+      108,
+      2160
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Formen",
+     "key": "Alt, J Y, 2",
+     "enabled": true,
+     "rect": [
+      -3590,
+      128,
+      36,
+      110
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Form ändern",
+     "key": "Alt, J Y, Ä",
+     "enabled": false,
+     "rect": [
+      -3547,
+      125,
+      80,
+      114
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Formenarten",
+     "key": "Alt, J Y, Z Y",
+     "enabled": true,
+     "rect": [
+      -3455,
+      122,
+      486,
+      144
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J Y, N C",
+     "enabled": true,
+     "rect": [
+      -3443,
+      132,
+      296,
+      94
+     ]
+    },
+    {
+     "type": "DataGrid",
+     "name": "Schnellformatvorlagen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3440,
+      139,
+      252,
+      2184
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J Y, N C",
+     "enabled": true,
+     "rect": [
+      -3187,
+      136,
+      36,
+      90
+     ]
+    },
+    {
+     "type": "SplitButton",
+     "name": "Fülleffekt",
+     "key": "Alt, J Y, Ü",
+     "enabled": true,
+     "rect": [
+      -3144,
+      125,
+      133,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Fülleffekt Orange, Akzent 2",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3144,
+      125,
+      36,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J Y, Ü",
+     "enabled": true,
+     "rect": [
+      -3108,
+      125,
+      97,
+      36
+     ]
+    },
+    {
+     "type": "SplitButton",
+     "name": "Formkontur",
+     "key": "Alt, J Y, V 2",
+     "enabled": true,
+     "rect": [
+      -3144,
+      164,
+      155,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Formkontur Dunkelblaugrün, Akzent 1",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3144,
+      164,
+      36,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J Y, V 2",
+     "enabled": true,
+     "rect": [
+      -3108,
+      164,
+      119,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Formeffekte",
+     "key": "Alt, J Y, M O",
+     "enabled": true,
+     "rect": [
+      -3144,
+      203,
+      163,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Objekt formatieren...",
+     "key": "Alt, J Y, B B",
+     "enabled": true,
+     "rect": [
+      -2993,
+      242,
+      24,
+      24
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "WordArt-Formate",
+     "key": "Alt, J Y, Z S",
+     "enabled": true,
+     "rect": [
+      -2969,
+      122,
+      394,
+      144
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J Y, C",
+     "enabled": true,
+     "rect": [
+      -2957,
+      132,
+      296,
+      94
+     ]
+    },
+    {
+     "type": "DataGrid",
+     "name": "Schnellformatvorlagen",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -2954,
+      139,
+      252,
+      588
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Schnellformatvorlagen",
+     "key": "Alt, J Y, C",
+     "enabled": true,
+     "rect": [
+      -2701,
+      136,
+      36,
+      90
+     ]
+    },
+    {
+     "type": "SplitButton",
+     "name": "Textfüllung",
+     "key": "Alt, J Y, 4",
+     "enabled": true,
+     "rect": [
+      -2658,
+      125,
+      71,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Textfüllung RGB(0, 0, 0)",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -2658,
+      125,
+      36,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J Y, 4",
+     "enabled": true,
+     "rect": [
+      -2622,
+      125,
+      35,
+      36
+     ]
+    },
+    {
+     "type": "SplitButton",
+     "name": "Textkontur",
+     "key": "Alt, J Y, T E",
+     "enabled": true,
+     "rect": [
+      -2658,
+      164,
+      71,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Textkontur RGB(0, 0, 0)",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -2658,
+      164,
+      36,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J Y, T E",
+     "enabled": true,
+     "rect": [
+      -2622,
+      164,
+      35,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Texteffekte",
+     "key": "Alt, J Y, I E",
+     "enabled": true,
+     "rect": [
+      -2658,
+      203,
+      60,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Texteffekte formatieren...",
+     "key": "Alt, J Y, O",
+     "enabled": true,
+     "rect": [
+      -2599,
+      242,
+      24,
+      24
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Barrierefreiheit",
+     "key": "Alt, J Y, Z 1",
+     "enabled": true,
+     "rect": [
+      -2575,
+      122,
+      136,
+      144
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Alternativtext",
+     "key": "Alt, J Y, A T",
+     "enabled": true,
+     "rect": [
+      -2563,
+      125,
+      112,
+      114
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Anordnen",
+     "key": "Alt, J Y, Z A",
+     "enabled": true,
+     "rect": [
+      -2439,
+      122,
+      411,
+      144
+     ]
+    },
+    {
+     "type": "SplitButton",
+     "name": "Ebene nach vorne",
+     "key": "Alt, J Y, G E",
+     "enabled": false,
+     "rect": [
+      -2427,
+      125,
+      225,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Ebene nach vorne",
+     "key": "",
+     "enabled": false,
+     "rect": [
+      -2427,
+      125,
+      190,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J Y, G E",
+     "enabled": false,
+     "rect": [
+      -2237,
+      125,
+      35,
+      36
+     ]
+    },
+    {
+     "type": "SplitButton",
+     "name": "Ebene nach hinten",
+     "key": "Alt, J Y, G H",
+     "enabled": false,
+     "rect": [
+      -2427,
+      164,
+      229,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Ebene nach hinten",
+     "key": "",
+     "enabled": false,
+     "rect": [
+      -2427,
+      164,
+      194,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Weitere Optionen",
+     "key": "Alt, J Y, G H",
+     "enabled": false,
+     "rect": [
+      -2233,
+      164,
+      35,
+      36
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Auswahlbereich...",
+     "key": "Alt, J Y, Q",
+     "enabled": true,
+     "rect": [
+      -2427,
+      203,
+      173,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Ausrichten",
+     "key": "Alt, J Y, D A",
+     "enabled": true,
+     "rect": [
+      -2195,
+      125,
+      150,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Gruppieren",
+     "key": "Alt, J Y, G R",
+     "enabled": false,
+     "rect": [
+      -2195,
+      164,
+      155,
+      36
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Drehen",
+     "key": "Alt, J Y, D R",
+     "enabled": false,
+     "rect": [
+      -2195,
+      203,
+      124,
+      36
+     ]
+    },
+    {
+     "type": "Group",
+     "name": "Größe",
+     "key": "Alt, J Y, Z Z",
+     "enabled": true,
+     "rect": [
+      -2028,
+      122,
+      169,
+      144
+     ]
+    },
+    {
+     "type": "Spinner",
+     "name": "Formenhöhe",
+     "key": "Alt, J Y, H",
+     "enabled": true,
+     "rect": [
+      -1983,
+      139,
+      85,
+      31
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -1898,
+      138,
+      26,
+      17
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -1898,
+      155,
+      26,
+      17
+     ]
+    },
+    {
+     "type": "Spinner",
+     "name": "Formenbreite",
+     "key": "Alt, J Y, R R",
+     "enabled": true,
+     "rect": [
+      -1983,
+      187,
+      85,
+      31
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Mehr",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -1898,
+      186,
+      26,
+      17
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Weniger",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -1898,
+      203,
+      26,
+      17
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Größe und Eigenschaften...",
+     "key": "Alt, J Y, ß",
+     "enabled": true,
+     "rect": [
+      -1883,
+      242,
+      24,
+      24
+     ]
+    },
+    {
+     "type": "MenuItem",
+     "name": "Menüband-Anzeigeoptionen",
+     "key": "Alt, Z R",
+     "enabled": true,
+     "rect": [
+      -1650,
+      233,
+      30,
+      30
+     ]
+    },
+    {
+     "type": "ComboBox",
+     "name": "Namenfeld",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3985,
+      282,
+      150,
+      34
+     ]
+    },
+    {
+     "type": "Edit",
+     "name": "Namenfeld",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3982,
+      285,
+      118,
+      28
+     ]
+    },
+    {
+     "type": "Button",
+     "name": "Öffnen",
+     "key": "Alt+Nach-Unten-Taste",
+     "enabled": true,
+     "rect": [
+      -3860,
+      283,
+      24,
+      32
+     ]
+    },
+    {
+     "type": "Edit",
+     "name": "Bearbeitungsleiste",
+     "key": "",
+     "enabled": true,
+     "rect": [
+      -3670,
+      269,
+      2068,
+      57
+     ]
+    }
+   ]
+  }
+ },
+ "scale": 1.5,
+ "chart_rect": [
+  740,
+  423,
+  722,
+  434
+ ],
+ "side_buttons": [
+  {
+   "uia_name": "Element hinzufügen",
+   "rect": [
+    1479,
+    424,
+    42,
+    42
+   ],
+   "css": {
+    "dx_from_chart_right": 11.3,
+    "dy_from_chart_top": 0.7,
+    "w": 28.0,
+    "h": 28.0
+   }
+  },
+  {
+   "uia_name": "Formatvorlagen",
+   "rect": [
+    1479,
+    481,
+    42,
+    42
+   ],
+   "css": {
+    "dx_from_chart_right": 11.3,
+    "dy_from_chart_top": 38.7,
+    "w": 28.0,
+    "h": 28.0
+   }
+  },
+  {
+   "uia_name": "Datenlayout",
+   "rect": [
+    1479,
+    538,
+    42,
+    42
+   ],
+   "css": {
+    "dx_from_chart_right": 11.3,
+    "dy_from_chart_top": 76.7,
+    "w": 28.0,
+    "h": 28.0
+   }
+  }
+ ],
+ "flyouts": {
+  "Element hinzufügen": {
+   "main": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       431,
+       284,
+       334
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammelemente",
+       "enabled": true,
+       "rect": [
+        1539,
+        431,
+        284,
+        334
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Diagrammelemente",
+       "enabled": true,
+       "rect": [
+        1548,
+        442,
+        266,
+        28
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Achsen",
+       "enabled": true,
+       "rect": [
+        1548,
+        475,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Achsentitel",
+       "enabled": true,
+       "rect": [
+        1548,
+        506,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Diagrammtitel",
+       "enabled": true,
+       "rect": [
+        1548,
+        537,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Datenbeschriftungen",
+       "enabled": true,
+       "rect": [
+        1548,
+        568,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Datentabelle",
+       "enabled": true,
+       "rect": [
+        1548,
+        599,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Fehlerindikatoren",
+       "enabled": true,
+       "rect": [
+        1548,
+        630,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Gitternetzlinien",
+       "enabled": true,
+       "rect": [
+        1548,
+        661,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Legende",
+       "enabled": true,
+       "rect": [
+        1548,
+        692,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Trendlinie",
+       "enabled": true,
+       "rect": [
+        1548,
+        723,
+        220,
+        31
+       ]
+      }
+     ]
+    },
+    {
+     "window": {
+      "type": "Menu",
+      "class": "NetUIGalleryContainer",
+      "rect": [
+       1548,
+       475,
+       220,
+       279
+      ]
+     },
+     "items": [
+      {
+       "type": "MenuItem",
+       "name": "Achsen",
+       "enabled": true,
+       "rect": [
+        1548,
+        475,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Achsentitel",
+       "enabled": true,
+       "rect": [
+        1548,
+        506,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Diagrammtitel",
+       "enabled": true,
+       "rect": [
+        1548,
+        537,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Datenbeschriftungen",
+       "enabled": true,
+       "rect": [
+        1548,
+        568,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Datentabelle",
+       "enabled": true,
+       "rect": [
+        1548,
+        599,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Fehlerindikatoren",
+       "enabled": true,
+       "rect": [
+        1548,
+        630,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Gitternetzlinien",
+       "enabled": true,
+       "rect": [
+        1548,
+        661,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Legende",
+       "enabled": true,
+       "rect": [
+        1548,
+        692,
+        220,
+        31
+       ]
+      },
+      {
+       "type": "MenuItem",
+       "name": "Trendlinie",
+       "enabled": true,
+       "rect": [
+        1548,
+        723,
+        220,
+        31
+       ]
+      }
+     ]
+    },
+    {
+     "window": {
+      "type": "Menu",
+      "class": "NetUIGalleryContainer",
+      "rect": [
+       1768,
+       475,
+       46,
+       279
+      ]
+     },
+     "items": []
+    }
+   ],
+   "subs": {}
+  },
+  "Formatvorlagen": {
+   "main": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       488,
+       337,
+       594
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammformatvorlagen",
+       "enabled": true,
+       "rect": [
+        1539,
+        488,
+        337,
+        594
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Formatvorlage",
+       "enabled": true,
+       "rect": [
+        1548,
+        494,
+        139,
+        45
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Farbe",
+       "enabled": true,
+       "rect": [
+        1687,
+        494,
+        67,
+        45
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        548,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        725,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        902,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        1079,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 5",
+       "enabled": true,
+       "rect": [
+        1551,
+        1256,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 6",
+       "enabled": true,
+       "rect": [
+        1551,
+        1433,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 7",
+       "enabled": true,
+       "rect": [
+        1551,
+        1610,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 8",
+       "enabled": true,
+       "rect": [
+        1551,
+        1787,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 9",
+       "enabled": true,
+       "rect": [
+        1551,
+        1964,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 10",
+       "enabled": true,
+       "rect": [
+        1551,
+        2141,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 11",
+       "enabled": true,
+       "rect": [
+        1551,
+        2318,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 12",
+       "enabled": true,
+       "rect": [
+        1551,
+        2495,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 13",
+       "enabled": true,
+       "rect": [
+        1551,
+        2672,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 14",
+       "enabled": true,
+       "rect": [
+        1551,
+        2849,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach oben",
+       "enabled": true,
+       "rect": [
+        1838,
+        548,
+        26,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach oben",
+       "enabled": true,
+       "rect": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "type": "Thumb",
+       "name": "Position",
+       "enabled": true,
+       "rect": [
+        1838,
+        574,
+        26,
+        102
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        676,
+        26,
+        377
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        1053,
+        26,
+        26
+       ]
+      }
+     ]
+    },
+    {
+     "window": {
+      "type": "Menu",
+      "class": "NetUIGalleryContainer",
+      "rect": [
+       1548,
+       545,
+       319,
+       537
+      ]
+     },
+     "items": [
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        548,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        725,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        902,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        1079,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 5",
+       "enabled": true,
+       "rect": [
+        1551,
+        1256,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 6",
+       "enabled": true,
+       "rect": [
+        1551,
+        1433,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 7",
+       "enabled": true,
+       "rect": [
+        1551,
+        1610,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 8",
+       "enabled": true,
+       "rect": [
+        1551,
+        1787,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 9",
+       "enabled": true,
+       "rect": [
+        1551,
+        1964,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 10",
+       "enabled": true,
+       "rect": [
+        1551,
+        2141,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 11",
+       "enabled": true,
+       "rect": [
+        1551,
+        2318,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 12",
+       "enabled": true,
+       "rect": [
+        1551,
+        2495,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 13",
+       "enabled": true,
+       "rect": [
+        1551,
+        2672,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 14",
+       "enabled": true,
+       "rect": [
+        1551,
+        2849,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach oben",
+       "enabled": true,
+       "rect": [
+        1838,
+        548,
+        26,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach oben",
+       "enabled": true,
+       "rect": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "type": "Thumb",
+       "name": "Position",
+       "enabled": true,
+       "rect": [
+        1838,
+        574,
+        26,
+        102
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        676,
+        26,
+        377
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        1053,
+        26,
+        26
+       ]
+      }
+     ]
+    }
+   ],
+   "tab:Formatvorlage": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       488,
+       337,
+       594
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammformatvorlagen",
+       "enabled": true,
+       "rect": [
+        1539,
+        488,
+        337,
+        594
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Formatvorlage",
+       "enabled": true,
+       "rect": [
+        1548,
+        494,
+        139,
+        45
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Farbe",
+       "enabled": true,
+       "rect": [
+        1687,
+        494,
+        67,
+        45
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        548,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        725,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        902,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        1079,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 5",
+       "enabled": true,
+       "rect": [
+        1551,
+        1256,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 6",
+       "enabled": true,
+       "rect": [
+        1551,
+        1433,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 7",
+       "enabled": true,
+       "rect": [
+        1551,
+        1610,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 8",
+       "enabled": true,
+       "rect": [
+        1551,
+        1787,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 9",
+       "enabled": true,
+       "rect": [
+        1551,
+        1964,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 10",
+       "enabled": true,
+       "rect": [
+        1551,
+        2141,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 11",
+       "enabled": true,
+       "rect": [
+        1551,
+        2318,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 12",
+       "enabled": true,
+       "rect": [
+        1551,
+        2495,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 13",
+       "enabled": true,
+       "rect": [
+        1551,
+        2672,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 14",
+       "enabled": true,
+       "rect": [
+        1551,
+        2849,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach oben",
+       "enabled": true,
+       "rect": [
+        1838,
+        548,
+        26,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach oben",
+       "enabled": true,
+       "rect": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "type": "Thumb",
+       "name": "Position",
+       "enabled": true,
+       "rect": [
+        1838,
+        574,
+        26,
+        102
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        676,
+        26,
+        377
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        1053,
+        26,
+        26
+       ]
+      }
+     ]
+    },
+    {
+     "window": {
+      "type": "Menu",
+      "class": "NetUIGalleryContainer",
+      "rect": [
+       1548,
+       545,
+       319,
+       537
+      ]
+     },
+     "items": [
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        548,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        725,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        902,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        1079,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 5",
+       "enabled": true,
+       "rect": [
+        1551,
+        1256,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 6",
+       "enabled": true,
+       "rect": [
+        1551,
+        1433,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 7",
+       "enabled": true,
+       "rect": [
+        1551,
+        1610,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 8",
+       "enabled": true,
+       "rect": [
+        1551,
+        1787,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 9",
+       "enabled": true,
+       "rect": [
+        1551,
+        1964,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 10",
+       "enabled": true,
+       "rect": [
+        1551,
+        2141,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 11",
+       "enabled": true,
+       "rect": [
+        1551,
+        2318,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 12",
+       "enabled": true,
+       "rect": [
+        1551,
+        2495,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 13",
+       "enabled": true,
+       "rect": [
+        1551,
+        2672,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Formatvorlage 14",
+       "enabled": true,
+       "rect": [
+        1551,
+        2849,
+        287,
+        177
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach oben",
+       "enabled": true,
+       "rect": [
+        1838,
+        548,
+        26,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach oben",
+       "enabled": true,
+       "rect": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "type": "Thumb",
+       "name": "Position",
+       "enabled": true,
+       "rect": [
+        1838,
+        574,
+        26,
+        102
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        676,
+        26,
+        377
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach unten",
+       "enabled": true,
+       "rect": [
+        1838,
+        1053,
+        26,
+        26
+       ]
+      }
+     ]
+    }
+   ],
+   "tab:Farbe": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       488,
+       337,
+       594
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammformatvorlagen",
+       "enabled": true,
+       "rect": [
+        1539,
+        488,
+        337,
+        594
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Formatvorlage",
+       "enabled": true,
+       "rect": [
+        1548,
+        494,
+        139,
+        45
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Farbe",
+       "enabled": true,
+       "rect": [
+        1687,
+        494,
+        67,
+        45
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Bunt",
+       "enabled": true,
+       "rect": [
+        1551,
+        548,
+        286,
+        220
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        584,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        630,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        676,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        722,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Einfarbig",
+       "enabled": true,
+       "rect": [
+        1551,
+        768,
+        286,
+        634
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        804,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        850,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        896,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        942,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 5",
+       "enabled": true,
+       "rect": [
+        1551,
+        988,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 6",
+       "enabled": true,
+       "rect": [
+        1551,
+        1034,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 7",
+       "enabled": true,
+       "rect": [
+        1551,
+        1080,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 8",
+       "enabled": true,
+       "rect": [
+        1551,
+        1126,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 9",
+       "enabled": true,
+       "rect": [
+        1551,
+        1172,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 10",
+       "enabled": true,
+       "rect": [
+        1551,
+        1218,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 11",
+       "enabled": true,
+       "rect": [
+        1551,
+        1264,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 12",
+       "enabled": true,
+       "rect": [
+        1551,
+        1310,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 13",
+       "enabled": true,
+       "rect": [
+        1551,
+        1356,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach oben",
+       "enabled": true,
+       "rect": [
+        1837,
+        548,
+        26,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach oben",
+       "enabled": true,
+       "rect": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "type": "Thumb",
+       "name": "Position",
+       "enabled": true,
+       "rect": [
+        1837,
+        574,
+        26,
+        246
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach unten",
+       "enabled": true,
+       "rect": [
+        1837,
+        820,
+        26,
+        188
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach unten",
+       "enabled": true,
+       "rect": [
+        1837,
+        1008,
+        26,
+        26
+       ]
+      }
+     ]
+    },
+    {
+     "window": {
+      "type": "Menu",
+      "class": "NetUIGalleryContainer",
+      "rect": [
+       1548,
+       545,
+       318,
+       492
+      ]
+     },
+     "items": [
+      {
+       "type": "Group",
+       "name": "Bunt",
+       "enabled": true,
+       "rect": [
+        1551,
+        548,
+        286,
+        220
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        584,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        630,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        676,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Farbige Palette 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        722,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Einfarbig",
+       "enabled": true,
+       "rect": [
+        1551,
+        768,
+        286,
+        634
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 1",
+       "enabled": true,
+       "rect": [
+        1551,
+        804,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 2",
+       "enabled": true,
+       "rect": [
+        1551,
+        850,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 3",
+       "enabled": true,
+       "rect": [
+        1551,
+        896,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 4",
+       "enabled": true,
+       "rect": [
+        1551,
+        942,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 5",
+       "enabled": true,
+       "rect": [
+        1551,
+        988,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 6",
+       "enabled": true,
+       "rect": [
+        1551,
+        1034,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 7",
+       "enabled": true,
+       "rect": [
+        1551,
+        1080,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 8",
+       "enabled": true,
+       "rect": [
+        1551,
+        1126,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 9",
+       "enabled": true,
+       "rect": [
+        1551,
+        1172,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 10",
+       "enabled": true,
+       "rect": [
+        1551,
+        1218,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 11",
+       "enabled": true,
+       "rect": [
+        1551,
+        1264,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 12",
+       "enabled": true,
+       "rect": [
+        1551,
+        1310,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "ListItem",
+       "name": "Monochrome Palette 13",
+       "enabled": true,
+       "rect": [
+        1551,
+        1356,
+        286,
+        46
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach oben",
+       "enabled": true,
+       "rect": [
+        1837,
+        548,
+        26,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach oben",
+       "enabled": true,
+       "rect": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      {
+       "type": "Thumb",
+       "name": "Position",
+       "enabled": true,
+       "rect": [
+        1837,
+        574,
+        26,
+        246
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Seite nach unten",
+       "enabled": true,
+       "rect": [
+        1837,
+        820,
+        26,
+        188
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Zeile nach unten",
+       "enabled": true,
+       "rect": [
+        1837,
+        1008,
+        26,
+        26
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "Datenlayout": {
+   "main": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       545,
+       333,
+       659
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammfilterung",
+       "enabled": true,
+       "rect": [
+        1539,
+        545,
+        333,
+        659
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Werte",
+       "enabled": true,
+       "rect": [
+        1548,
+        551,
+        64,
+        46
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Namen",
+       "enabled": true,
+       "rect": [
+        1612,
+        551,
+        78,
+        46
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1549,
+        604,
+        287,
+        207
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1549,
+        604,
+        287,
+        27
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1578,
+        605,
+        96,
+        25
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "(Alle auswählen)",
+       "enabled": true,
+       "rect": [
+        1581,
+        643,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Nord",
+       "enabled": true,
+       "rect": [
+        1581,
+        687,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Süd",
+       "enabled": true,
+       "rect": [
+        1581,
+        731,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "West",
+       "enabled": true,
+       "rect": [
+        1581,
+        775,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1549,
+        820,
+        287,
+        251
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1549,
+        820,
+        287,
+        27
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1578,
+        821,
+        96,
+        25
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "(Alle auswählen)",
+       "enabled": true,
+       "rect": [
+        1581,
+        859,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Jan",
+       "enabled": true,
+       "rect": [
+        1581,
+        903,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Feb",
+       "enabled": true,
+       "rect": [
+        1581,
+        947,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Mrz",
+       "enabled": true,
+       "rect": [
+        1581,
+        991,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Apr",
+       "enabled": true,
+       "rect": [
+        1581,
+        1035,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Anwenden",
+       "enabled": true,
+       "rect": [
+        1554,
+        1162,
+        100,
+        39
+       ]
+      },
+      {
+       "type": "Hyperlink",
+       "name": "Daten auswählen...",
+       "enabled": true,
+       "rect": [
+        1707,
+        1168,
+        150,
+        27
+       ]
+      }
+     ]
+    }
+   ],
+   "tab:Werte": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       545,
+       333,
+       659
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammfilterung",
+       "enabled": true,
+       "rect": [
+        1539,
+        545,
+        333,
+        659
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Werte",
+       "enabled": true,
+       "rect": [
+        1548,
+        551,
+        64,
+        46
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Namen",
+       "enabled": true,
+       "rect": [
+        1612,
+        551,
+        78,
+        46
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1549,
+        604,
+        287,
+        207
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1549,
+        604,
+        287,
+        27
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1578,
+        605,
+        96,
+        25
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "(Alle auswählen)",
+       "enabled": true,
+       "rect": [
+        1581,
+        643,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Nord",
+       "enabled": true,
+       "rect": [
+        1581,
+        687,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Süd",
+       "enabled": true,
+       "rect": [
+        1581,
+        731,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "West",
+       "enabled": true,
+       "rect": [
+        1581,
+        775,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1549,
+        820,
+        287,
+        251
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1549,
+        820,
+        287,
+        27
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1578,
+        821,
+        96,
+        25
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "(Alle auswählen)",
+       "enabled": true,
+       "rect": [
+        1581,
+        859,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Jan",
+       "enabled": true,
+       "rect": [
+        1581,
+        903,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Feb",
+       "enabled": true,
+       "rect": [
+        1581,
+        947,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Mrz",
+       "enabled": true,
+       "rect": [
+        1581,
+        991,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Apr",
+       "enabled": true,
+       "rect": [
+        1581,
+        1035,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Anwenden",
+       "enabled": true,
+       "rect": [
+        1554,
+        1162,
+        100,
+        39
+       ]
+      },
+      {
+       "type": "Hyperlink",
+       "name": "Daten auswählen...",
+       "enabled": true,
+       "rect": [
+        1707,
+        1168,
+        150,
+        27
+       ]
+      }
+     ]
+    }
+   ],
+   "tab:Namen": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "MsoWorkPane",
+      "rect": [
+       1539,
+       545,
+       333,
+       659
+      ]
+     },
+     "items": [
+      {
+       "type": "Custom",
+       "name": "Diagrammfilterung",
+       "enabled": true,
+       "rect": [
+        1539,
+        545,
+        333,
+        659
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Werte",
+       "enabled": true,
+       "rect": [
+        1548,
+        551,
+        64,
+        46
+       ]
+      },
+      {
+       "type": "TabItem",
+       "name": "Namen",
+       "enabled": true,
+       "rect": [
+        1612,
+        551,
+        78,
+        46
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1549,
+        604,
+        287,
+        146
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1549,
+        604,
+        287,
+        27
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Datenreihe",
+       "enabled": true,
+       "rect": [
+        1578,
+        605,
+        96,
+        25
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "Zeile 1\r\n    Nord; Süd; West",
+       "enabled": true,
+       "rect": [
+        1581,
+        652,
+        254,
+        53
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "(Keine)",
+       "enabled": true,
+       "rect": [
+        1581,
+        714,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1549,
+        759,
+        287,
+        146
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1549,
+        759,
+        287,
+        27
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Kategorien",
+       "enabled": true,
+       "rect": [
+        1578,
+        760,
+        96,
+        25
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "Spalte A\r\n    Jan; Feb; Mrz; Apr",
+       "enabled": true,
+       "rect": [
+        1581,
+        807,
+        254,
+        53
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "(Keine)",
+       "enabled": true,
+       "rect": [
+        1581,
+        869,
+        254,
+        31
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Anwenden",
+       "enabled": true,
+       "rect": [
+        1554,
+        1162,
+        100,
+        39
+       ]
+      },
+      {
+       "type": "Hyperlink",
+       "name": "Daten auswählen...",
+       "enabled": true,
+       "rect": [
+        1707,
+        1168,
+        150,
+        27
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "context_menus": {
+  "Diagrammbereich": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      750,
+      848,
+      343,
+      960
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Ausschneiden",
+      "enabled": true,
+      "rect": [
+       752,
+       896,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kopieren",
+      "enabled": true,
+      "rect": [
+       752,
+       940,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Menu",
+      "name": "Einfügeoptionen",
+      "enabled": true,
+      "rect": [
+       800,
+       987,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       800,
+       987,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       800,
+       1030,
+       44,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Inhalte einfügen...",
+      "enabled": false,
+      "rect": [
+       752,
+       1078,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       752,
+       1125,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       752,
+       1172,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       752,
+       1219,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       752,
+       1263,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       752,
+       1307,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagramm verschieben...",
+      "enabled": true,
+      "rect": [
+       752,
+       1351,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       752,
+       1395,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gruppieren",
+      "enabled": false,
+      "rect": [
+       752,
+       1442,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1486,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1486,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Vordergrund",
+      "enabled": true,
+      "rect": [
+       1058,
+       1486,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1530,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1530,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Hintergrund",
+      "enabled": true,
+      "rect": [
+       1058,
+       1530,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Grafik speichern...",
+      "enabled": true,
+      "rect": [
+       752,
+       1577,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Makro zuweisen...",
+      "enabled": true,
+      "rect": [
+       752,
+       1624,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Alternativtext anzeigen...",
+      "enabled": true,
+      "rect": [
+       752,
+       1671,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammbereich formatieren...",
+      "enabled": true,
+      "rect": [
+       752,
+       1715,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "PivotChart-Optionen...",
+      "enabled": false,
+      "rect": [
+       752,
+       1762,
+       339,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      752,
+      850,
+      339,
+      956
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Ausschneiden",
+      "enabled": true,
+      "rect": [
+       752,
+       896,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kopieren",
+      "enabled": true,
+      "rect": [
+       752,
+       940,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Menu",
+      "name": "Einfügeoptionen",
+      "enabled": true,
+      "rect": [
+       800,
+       987,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       800,
+       987,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       800,
+       1030,
+       44,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Inhalte einfügen...",
+      "enabled": false,
+      "rect": [
+       752,
+       1078,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       752,
+       1125,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       752,
+       1172,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       752,
+       1219,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       752,
+       1263,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       752,
+       1307,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagramm verschieben...",
+      "enabled": true,
+      "rect": [
+       752,
+       1351,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       752,
+       1395,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gruppieren",
+      "enabled": false,
+      "rect": [
+       752,
+       1442,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1486,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1486,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Vordergrund",
+      "enabled": true,
+      "rect": [
+       1058,
+       1486,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1530,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       752,
+       1530,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Hintergrund",
+      "enabled": true,
+      "rect": [
+       1058,
+       1530,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Grafik speichern...",
+      "enabled": true,
+      "rect": [
+       752,
+       1577,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Makro zuweisen...",
+      "enabled": true,
+      "rect": [
+       752,
+       1624,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Alternativtext anzeigen...",
+      "enabled": true,
+      "rect": [
+       752,
+       1671,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammbereich formatieren...",
+      "enabled": true,
+      "rect": [
+       752,
+       1715,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "PivotChart-Optionen...",
+      "enabled": false,
+      "rect": [
+       752,
+       1762,
+       339,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      800,
+      987,
+      291,
+      87
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       800,
+       987,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       800,
+       1030,
+       44,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      750,
+      729,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       755,
+       734,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       758,
+       734,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       824,
+       734,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       997,
+       759,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Diagrammtitel": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1102,
+      460,
+      334,
+      411
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1104,
+       508,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1104,
+       552,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Text bearbeiten",
+      "enabled": true,
+      "rect": [
+       1104,
+       599,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1104,
+       643,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1104,
+       690,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1104,
+       734,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1104,
+       778,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtitel formatieren...",
+      "enabled": true,
+      "rect": [
+       1104,
+       825,
+       330,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1104,
+      462,
+      330,
+      407
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1104,
+       508,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1104,
+       552,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Text bearbeiten",
+      "enabled": true,
+      "rect": [
+       1104,
+       599,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1104,
+       643,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1104,
+       690,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1104,
+       734,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1104,
+       778,
+       330,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtitel formatieren...",
+      "enabled": true,
+      "rect": [
+       1104,
+       825,
+       330,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1102,
+      341,
+      254,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1107,
+       346,
+       244,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Formatvorlage",
+      "enabled": true,
+      "rect": [
+       1110,
+       346,
+       113,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       1226,
+       346,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1292,
+       346,
+       59,
+       86
+      ]
+     }
+    ]
+   }
+  ],
+  "Legende": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1104,
+      829,
+      285,
+      321
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1106,
+       831,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1106,
+       875,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1106,
+       922,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1106,
+       969,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1106,
+       1013,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1106,
+       1057,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Legende formatieren...",
+      "enabled": true,
+      "rect": [
+       1106,
+       1104,
+       281,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1106,
+      831,
+      281,
+      317
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1106,
+       831,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1106,
+       875,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1106,
+       922,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1106,
+       969,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1106,
+       1013,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1106,
+       1057,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Legende formatieren...",
+      "enabled": true,
+      "rect": [
+       1106,
+       1104,
+       281,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1104,
+      710,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1109,
+       715,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       1112,
+       715,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1178,
+       715,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1351,
+       740,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Reihe \"Nord\" Legendeneintrag": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1051,
+      829,
+      285,
+      321
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1053,
+       831,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1053,
+       875,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1053,
+       922,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1053,
+       969,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1053,
+       1013,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1053,
+       1057,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Legende formatieren...",
+      "enabled": true,
+      "rect": [
+       1053,
+       1104,
+       281,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1053,
+      831,
+      281,
+      317
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1053,
+       831,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1053,
+       875,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1053,
+       922,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1053,
+       969,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1053,
+       1013,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1053,
+       1057,
+       281,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Legende formatieren...",
+      "enabled": true,
+      "rect": [
+       1053,
+       1104,
+       281,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1051,
+      710,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1056,
+       715,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       1059,
+       715,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1125,
+       715,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1298,
+       740,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Zeichnungsfläche": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1110,
+      519,
+      338,
+      318
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1112,
+       521,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1112,
+       565,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1112,
+       612,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       1112,
+       656,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1112,
+       700,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1112,
+       744,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Zeichnungsfläche formatieren...",
+      "enabled": true,
+      "rect": [
+       1112,
+       791,
+       334,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1112,
+      521,
+      334,
+      314
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1112,
+       521,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1112,
+       565,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1112,
+       612,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       1112,
+       656,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1112,
+       700,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1112,
+       744,
+       334,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Zeichnungsfläche formatieren...",
+      "enabled": true,
+      "rect": [
+       1112,
+       791,
+       334,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1110,
+      400,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1115,
+       405,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       1118,
+       405,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1184,
+       405,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1357,
+       430,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Vertikal (Wert) Achse": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      759,
+      630,
+      343,
+      960
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Ausschneiden",
+      "enabled": true,
+      "rect": [
+       761,
+       678,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kopieren",
+      "enabled": true,
+      "rect": [
+       761,
+       722,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Menu",
+      "name": "Einfügeoptionen",
+      "enabled": true,
+      "rect": [
+       809,
+       769,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       809,
+       769,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       809,
+       812,
+       44,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Inhalte einfügen...",
+      "enabled": false,
+      "rect": [
+       761,
+       860,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       761,
+       907,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       761,
+       954,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       761,
+       1001,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       761,
+       1045,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       761,
+       1089,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagramm verschieben...",
+      "enabled": true,
+      "rect": [
+       761,
+       1133,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       761,
+       1177,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gruppieren",
+      "enabled": false,
+      "rect": [
+       761,
+       1224,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1268,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1268,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Vordergrund",
+      "enabled": true,
+      "rect": [
+       1067,
+       1268,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1312,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1312,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Hintergrund",
+      "enabled": true,
+      "rect": [
+       1067,
+       1312,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Grafik speichern...",
+      "enabled": true,
+      "rect": [
+       761,
+       1359,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Makro zuweisen...",
+      "enabled": true,
+      "rect": [
+       761,
+       1406,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Alternativtext anzeigen...",
+      "enabled": true,
+      "rect": [
+       761,
+       1453,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammbereich formatieren...",
+      "enabled": true,
+      "rect": [
+       761,
+       1497,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "PivotChart-Optionen...",
+      "enabled": false,
+      "rect": [
+       761,
+       1544,
+       339,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      761,
+      632,
+      339,
+      956
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Ausschneiden",
+      "enabled": true,
+      "rect": [
+       761,
+       678,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kopieren",
+      "enabled": true,
+      "rect": [
+       761,
+       722,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Menu",
+      "name": "Einfügeoptionen",
+      "enabled": true,
+      "rect": [
+       809,
+       769,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       809,
+       769,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       809,
+       812,
+       44,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Inhalte einfügen...",
+      "enabled": false,
+      "rect": [
+       761,
+       860,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       761,
+       907,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       761,
+       954,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       761,
+       1001,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       761,
+       1045,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       761,
+       1089,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagramm verschieben...",
+      "enabled": true,
+      "rect": [
+       761,
+       1133,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       761,
+       1177,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gruppieren",
+      "enabled": false,
+      "rect": [
+       761,
+       1224,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1268,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1268,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Vordergrund",
+      "enabled": true,
+      "rect": [
+       1067,
+       1268,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1312,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       761,
+       1312,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Hintergrund",
+      "enabled": true,
+      "rect": [
+       1067,
+       1312,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Grafik speichern...",
+      "enabled": true,
+      "rect": [
+       761,
+       1359,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Makro zuweisen...",
+      "enabled": true,
+      "rect": [
+       761,
+       1406,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Alternativtext anzeigen...",
+      "enabled": true,
+      "rect": [
+       761,
+       1453,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammbereich formatieren...",
+      "enabled": true,
+      "rect": [
+       761,
+       1497,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "PivotChart-Optionen...",
+      "enabled": false,
+      "rect": [
+       761,
+       1544,
+       339,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      809,
+      769,
+      291,
+      87
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       809,
+       769,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       809,
+       812,
+       44,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      759,
+      511,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       764,
+       516,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       767,
+       516,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       833,
+       516,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1006,
+       541,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Horizontal (Kategorie) Achse": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1111,
+      780,
+      343,
+      960
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Ausschneiden",
+      "enabled": true,
+      "rect": [
+       1113,
+       828,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kopieren",
+      "enabled": true,
+      "rect": [
+       1113,
+       872,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Menu",
+      "name": "Einfügeoptionen",
+      "enabled": true,
+      "rect": [
+       1161,
+       919,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       1161,
+       919,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       1161,
+       962,
+       44,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Inhalte einfügen...",
+      "enabled": false,
+      "rect": [
+       1113,
+       1010,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1113,
+       1057,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1104,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1151,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1195,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1239,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagramm verschieben...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1283,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1113,
+       1327,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gruppieren",
+      "enabled": false,
+      "rect": [
+       1113,
+       1374,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1418,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1418,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Vordergrund",
+      "enabled": true,
+      "rect": [
+       1419,
+       1418,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1462,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1462,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Hintergrund",
+      "enabled": true,
+      "rect": [
+       1419,
+       1462,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Grafik speichern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1509,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Makro zuweisen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1556,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Alternativtext anzeigen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1603,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammbereich formatieren...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1647,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "PivotChart-Optionen...",
+      "enabled": false,
+      "rect": [
+       1113,
+       1694,
+       339,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1113,
+      782,
+      339,
+      956
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Ausschneiden",
+      "enabled": true,
+      "rect": [
+       1113,
+       828,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kopieren",
+      "enabled": true,
+      "rect": [
+       1113,
+       872,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Menu",
+      "name": "Einfügeoptionen",
+      "enabled": true,
+      "rect": [
+       1161,
+       919,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       1161,
+       919,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       1161,
+       962,
+       44,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Inhalte einfügen...",
+      "enabled": false,
+      "rect": [
+       1113,
+       1010,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1113,
+       1057,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Schriftart...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1104,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1151,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Vorlage speichern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1195,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1239,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagramm verschieben...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1283,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1113,
+       1327,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gruppieren",
+      "enabled": false,
+      "rect": [
+       1113,
+       1374,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1418,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Vordergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1418,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Vordergrund",
+      "enabled": true,
+      "rect": [
+       1419,
+       1418,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1462,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "In den Hintergrund",
+      "enabled": false,
+      "rect": [
+       1113,
+       1462,
+       305,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "In den Hintergrund",
+      "enabled": true,
+      "rect": [
+       1419,
+       1462,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Als Grafik speichern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1509,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Makro zuweisen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1556,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Alternativtext anzeigen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1603,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammbereich formatieren...",
+      "enabled": true,
+      "rect": [
+       1113,
+       1647,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "PivotChart-Optionen...",
+      "enabled": false,
+      "rect": [
+       1113,
+       1694,
+       339,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1161,
+      919,
+      291,
+      87
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Einfügeoptionen",
+      "enabled": false,
+      "rect": [
+       1161,
+       919,
+       291,
+       87
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Einfügen",
+      "enabled": false,
+      "rect": [
+       1161,
+       962,
+       44,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1111,
+      661,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1116,
+       666,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       1119,
+       666,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1185,
+       666,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1358,
+       691,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Vertikal (Wert) Achse Hauptgitternetz": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1111,
+      612,
+      319,
+      318
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1113,
+       614,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1113,
+       658,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       705,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       749,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1113,
+       793,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gitternetzlinien formatieren...",
+      "enabled": true,
+      "rect": [
+       1113,
+       840,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Achse formatieren...",
+      "enabled": true,
+      "rect": [
+       1113,
+       884,
+       315,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1113,
+      614,
+      315,
+      314
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1113,
+       614,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1113,
+       658,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1113,
+       705,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1113,
+       749,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1113,
+       793,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Gitternetzlinien formatieren...",
+      "enabled": true,
+      "rect": [
+       1113,
+       840,
+       315,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Achse formatieren...",
+      "enabled": true,
+      "rect": [
+       1113,
+       884,
+       315,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1111,
+      493,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1116,
+       498,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung",
+      "enabled": false,
+      "rect": [
+       1119,
+       498,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1185,
+       498,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1358,
+       523,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Reihe \"Nord\"": [
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1073,
+      669,
+      377,
+      362
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1075,
+       671,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1075,
+       715,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Datenreihen-Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1075,
+       762,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1075,
+       806,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1075,
+       850,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "Datenbeschriftungen hinzufügen",
+      "enabled": true,
+      "rect": [
+       1075,
+       897,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Datenbeschriftungen hinzufügen",
+      "enabled": true,
+      "rect": [
+       1075,
+       897,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Datenbeschriftungen hinzufügen",
+      "enabled": true,
+      "rect": [
+       1415,
+       897,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Trendlinie hinzufügen...",
+      "enabled": true,
+      "rect": [
+       1075,
+       941,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Datenreihen formatieren...",
+      "enabled": true,
+      "rect": [
+       1075,
+       985,
+       373,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUITWMenuContainer",
+     "rect": [
+      1075,
+      671,
+      373,
+      358
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Löschen",
+      "enabled": true,
+      "rect": [
+       1075,
+       671,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Auf Formatvorl. zurücks.",
+      "enabled": true,
+      "rect": [
+       1075,
+       715,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Datenreihen-Diagrammtyp ändern...",
+      "enabled": true,
+      "rect": [
+       1075,
+       762,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Daten auswählen...",
+      "enabled": true,
+      "rect": [
+       1075,
+       806,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "3D-Drehung...",
+      "enabled": false,
+      "rect": [
+       1075,
+       850,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "SplitButton",
+      "name": "Datenbeschriftungen hinzufügen",
+      "enabled": true,
+      "rect": [
+       1075,
+       897,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Datenbeschriftungen hinzufügen",
+      "enabled": true,
+      "rect": [
+       1075,
+       897,
+       339,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Datenbeschriftungen hinzufügen",
+      "enabled": true,
+      "rect": [
+       1415,
+       897,
+       33,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Trendlinie hinzufügen...",
+      "enabled": true,
+      "rect": [
+       1075,
+       941,
+       373,
+       44
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Datenreihen formatieren...",
+      "enabled": true,
+      "rect": [
+       1075,
+       985,
+       373,
+       44
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "ToolBar",
+     "class": "NetUIToolWindow",
+     "rect": [
+      1073,
+      550,
+      271,
+      96
+     ]
+    },
+    "items": [
+     {
+      "type": "Group",
+      "name": "Minileiste",
+      "enabled": true,
+      "rect": [
+       1078,
+       555,
+       261,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Füllung Orange, Akzent 2",
+      "enabled": true,
+      "rect": [
+       1081,
+       555,
+       63,
+       86
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Kontur Dunkelblaugrün, Akzent 1",
+      "enabled": true,
+      "rect": [
+       1147,
+       555,
+       59,
+       86
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Öffnen",
+      "enabled": true,
+      "rect": [
+       1320,
+       580,
+       19,
+       36
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "chart_parts": [
+  {
+   "type": "Group",
+   "name": "Diagrammbereich",
+   "rect": [
+    741,
+    424,
+    720,
+    432
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    741,
+    424,
+    720,
+    432
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    780,
+    498,
+    659,
+    266
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    780,
+    497,
+    660,
+    230
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    780,
+    498,
+    659,
+    266
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    811,
+    574,
+    523,
+    190
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    848,
+    536,
+    523,
+    228
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    884,
+    574,
+    524,
+    190
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    -2147483648,
+    -2147483648,
+    0,
+    0
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    752,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    714,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    676,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    638,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    600,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    562,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    524,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    754,
+    486,
+    9,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    780,
+    763,
+    660,
+    2
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    -2147483648,
+    -2147483648,
+    0,
+    0
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    850,
+    775,
+    24,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1014,
+    775,
+    26,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1179,
+    775,
+    26,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1344,
+    775,
+    25,
+    22
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    746,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    708,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    670,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    632,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    594,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    556,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    518,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    743,
+    480,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    839,
+    769,
+    46,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1002,
+    769,
+    50,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1167,
+    769,
+    49,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1333,
+    769,
+    47,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1004,
+    430,
+    194,
+    60
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1005,
+    810,
+    192,
+    34
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1020,
+    822,
+    10,
+    10
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1022,
+    809,
+    59,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1083,
+    822,
+    10,
+    10
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1086,
+    809,
+    51,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1139,
+    822,
+    9,
+    10
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    1141,
+    809,
+    60,
+    40
+   ]
+  },
+  {
+   "type": "Image",
+   "name": "",
+   "rect": [
+    740,
+    423,
+    722,
+    434
+   ]
+  },
+  {
+   "type": "Edit",
+   "name": "Diagrammtitel",
+   "rect": [
+    1004,
+    430,
+    194,
+    60
+   ]
+  },
+  {
+   "type": "List",
+   "name": "Legende",
+   "rect": [
+    1005,
+    809,
+    196,
+    40
+   ]
+  },
+  {
+   "type": "ListItem",
+   "name": "Reihe \"Nord\" Legendeneintrag",
+   "rect": [
+    1020,
+    809,
+    61,
+    40
+   ]
+  },
+  {
+   "type": "ListItem",
+   "name": "Reihe \"Süd\" Legendeneintrag",
+   "rect": [
+    1083,
+    809,
+    54,
+    40
+   ]
+  },
+  {
+   "type": "ListItem",
+   "name": "Reihe \"West\" Legendeneintrag",
+   "rect": [
+    1139,
+    809,
+    62,
+    40
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Zeichnungsfläche",
+   "rect": [
+    780,
+    498,
+    659,
+    266
+   ]
+  },
+  {
+   "type": "Header",
+   "name": "Vertikal (Wert) Achse",
+   "rect": [
+    754,
+    486,
+    9,
+    288
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 0",
+   "rect": [
+    743,
+    746,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 1",
+   "rect": [
+    743,
+    708,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 2",
+   "rect": [
+    743,
+    670,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 3",
+   "rect": [
+    743,
+    632,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 4",
+   "rect": [
+    743,
+    594,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 5",
+   "rect": [
+    743,
+    556,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 6",
+   "rect": [
+    743,
+    518,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Wert: 7",
+   "rect": [
+    743,
+    480,
+    31,
+    40
+   ]
+  },
+  {
+   "type": "Header",
+   "name": "Horizontal (Kategorie) Achse",
+   "rect": [
+    780,
+    763,
+    660,
+    34
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Kategorie: Jan",
+   "rect": [
+    839,
+    769,
+    46,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Kategorie: Feb",
+   "rect": [
+    1002,
+    769,
+    50,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Kategorie: Mrz",
+   "rect": [
+    1167,
+    769,
+    49,
+    40
+   ]
+  },
+  {
+   "type": "HeaderItem",
+   "name": "Achsenbeschriftung Kategorie: Apr",
+   "rect": [
+    1333,
+    769,
+    47,
+    40
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Vertikal (Wert) Achse Hauptgitternetz",
+   "rect": [
+    780,
+    497,
+    660,
+    230
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Nord\"",
+   "rect": [
+    811,
+    574,
+    523,
+    190
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Nord\" Punkt \"Jan\"\r\nWert: 3",
+   "rect": [
+    811,
+    650,
+    29,
+    115
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Nord\" Punkt \"Feb\"\r\nWert: 5",
+   "rect": [
+    976,
+    574,
+    29,
+    191
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Nord\" Punkt \"Mrz\"\r\nWert: 2",
+   "rect": [
+    1140,
+    688,
+    30,
+    77
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Nord\" Punkt \"Apr\"\r\nWert: 4",
+   "rect": [
+    1305,
+    612,
+    30,
+    153
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Süd\"",
+   "rect": [
+    848,
+    536,
+    523,
+    228
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Süd\" Punkt \"Jan\"\r\nWert: 4",
+   "rect": [
+    847,
+    612,
+    30,
+    153
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Süd\" Punkt \"Feb\"\r\nWert: 2",
+   "rect": [
+    1012,
+    688,
+    30,
+    77
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Süd\" Punkt \"Mrz\"\r\nWert: 6",
+   "rect": [
+    1177,
+    536,
+    30,
+    229
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"Süd\" Punkt \"Apr\"\r\nWert: 3",
+   "rect": [
+    1342,
+    650,
+    29,
+    115
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"West\"",
+   "rect": [
+    884,
+    574,
+    524,
+    190
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"West\" Punkt \"Jan\"\r\nWert: 2",
+   "rect": [
+    884,
+    688,
+    30,
+    77
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"West\" Punkt \"Feb\"\r\nWert: 3",
+   "rect": [
+    1049,
+    650,
+    29,
+    115
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"West\" Punkt \"Mrz\"\r\nWert: 4",
+   "rect": [
+    1213,
+    612,
+    30,
+    153
+   ]
+  },
+  {
+   "type": "Group",
+   "name": "Reihe \"West\" Punkt \"Apr\"\r\nWert: 5",
+   "rect": [
+    1378,
+    574,
+    30,
+    191
+   ]
+  }
+ ],
+ "ranges_capture": {
+  "cells": "A1:E6",
+  "px": [
+   82,
+   395,
+   300,
+   87
+  ]
+ },
+ "ranges_cells": {
+  "A2": [
+   0,
+   14,
+   60,
+   29
+  ],
+  "B1": [
+   60,
+   0,
+   120,
+   14
+  ],
+  "B2": [
+   60,
+   14,
+   120,
+   29
+  ],
+  "C3": [
+   120,
+   29,
+   180,
+   43
+  ],
+  "D5": [
+   180,
+   58,
+   240,
+   72
+  ],
+  "A5": [
+   0,
+   58,
+   60,
+   72
+  ]
+ },
+ "element_submenus": {
+  "Achsen": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      476,
+      224,
+      115
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Primär horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       487,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primär vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       518,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       549,
+       206,
+       31
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      487,
+      206,
+      93
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Primär horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       487,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primär vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       518,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       549,
+       206,
+       31
+      ]
+     }
+    ]
+   }
+  ],
+  "Achsentitel": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      507,
+      224,
+      115
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Primär horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       518,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primär vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       549,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       580,
+       206,
+       31
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      518,
+      206,
+      93
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Primär horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       518,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primär vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       549,
+       206,
+       31
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       580,
+       206,
+       31
+      ]
+     }
+    ]
+   }
+  ],
+  "Diagrammtitel": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      538,
+      225,
+      130
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Über Diagramm",
+      "enabled": true,
+      "rect": [
+       1837,
+       549,
+       207,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Zentrierte Überlagerung",
+      "enabled": true,
+      "rect": [
+       1837,
+       585,
+       207,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       621,
+       207,
+       36
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      549,
+      207,
+      108
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Über Diagramm",
+      "enabled": true,
+      "rect": [
+       1837,
+       549,
+       207,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Zentrierte Überlagerung",
+      "enabled": true,
+      "rect": [
+       1837,
+       585,
+       207,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       621,
+       207,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Datenbeschriftungen": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      569,
+      206,
+      238
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Zentriert",
+      "enabled": true,
+      "rect": [
+       1837,
+       580,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Am Ende innerhalb",
+      "enabled": true,
+      "rect": [
+       1837,
+       616,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Am Anfang innerhalb",
+      "enabled": true,
+      "rect": [
+       1837,
+       652,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Am Ende außerhalb",
+      "enabled": true,
+      "rect": [
+       1837,
+       688,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Datenlegende",
+      "enabled": true,
+      "rect": [
+       1837,
+       724,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       760,
+       188,
+       36
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      580,
+      188,
+      216
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Zentriert",
+      "enabled": true,
+      "rect": [
+       1837,
+       580,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Am Ende innerhalb",
+      "enabled": true,
+      "rect": [
+       1837,
+       616,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Am Anfang innerhalb",
+      "enabled": true,
+      "rect": [
+       1837,
+       652,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Am Ende außerhalb",
+      "enabled": true,
+      "rect": [
+       1837,
+       688,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Datenlegende",
+      "enabled": true,
+      "rect": [
+       1837,
+       724,
+       188,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       760,
+       188,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Datentabelle": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      600,
+      230,
+      130
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Mit Legendensymbolen",
+      "enabled": true,
+      "rect": [
+       1837,
+       611,
+       212,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Ohne Legendensymbole",
+      "enabled": true,
+      "rect": [
+       1837,
+       647,
+       212,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       683,
+       212,
+       36
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      611,
+      212,
+      108
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Mit Legendensymbolen",
+      "enabled": true,
+      "rect": [
+       1837,
+       611,
+       212,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Ohne Legendensymbole",
+      "enabled": true,
+      "rect": [
+       1837,
+       647,
+       212,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       683,
+       212,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Fehlerindikatoren": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      631,
+      203,
+      166
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Standardfehler",
+      "enabled": true,
+      "rect": [
+       1837,
+       642,
+       185,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Prozentsatz",
+      "enabled": true,
+      "rect": [
+       1837,
+       678,
+       185,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Standardabweichung",
+      "enabled": true,
+      "rect": [
+       1837,
+       714,
+       185,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       750,
+       185,
+       36
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      642,
+      185,
+      144
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Standardfehler",
+      "enabled": true,
+      "rect": [
+       1837,
+       642,
+       185,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Prozentsatz",
+      "enabled": true,
+      "rect": [
+       1837,
+       678,
+       185,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Standardabweichung",
+      "enabled": true,
+      "rect": [
+       1837,
+       714,
+       185,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       750,
+       185,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Gitternetzlinien": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      662,
+      321,
+      177
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hauptgitter horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       673,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hauptgitter vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       704,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hilfsgitter horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       735,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hilfsgitter vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       766,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       797,
+       303,
+       31
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      673,
+      303,
+      155
+     ]
+    },
+    "items": [
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hauptgitter horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       673,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hauptgitter vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       704,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hilfsgitter horizontal",
+      "enabled": true,
+      "rect": [
+       1837,
+       735,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "MenuItem",
+      "name": "Primäres Hilfsgitter vertikal",
+      "enabled": true,
+      "rect": [
+       1837,
+       766,
+       303,
+       31
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       797,
+       303,
+       31
+      ]
+     }
+    ]
+   }
+  ],
+  "Legende": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      693,
+      188,
+      202
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Rechts",
+      "enabled": true,
+      "rect": [
+       1837,
+       704,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Oben",
+      "enabled": true,
+      "rect": [
+       1837,
+       740,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Links",
+      "enabled": true,
+      "rect": [
+       1837,
+       776,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Unten",
+      "enabled": true,
+      "rect": [
+       1837,
+       812,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       848,
+       170,
+       36
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      704,
+      170,
+      180
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Rechts",
+      "enabled": true,
+      "rect": [
+       1837,
+       704,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Oben",
+      "enabled": true,
+      "rect": [
+       1837,
+       740,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Links",
+      "enabled": true,
+      "rect": [
+       1837,
+       776,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Unten",
+      "enabled": true,
+      "rect": [
+       1837,
+       812,
+       170,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       848,
+       170,
+       36
+      ]
+     }
+    ]
+   }
+  ],
+  "Trendlinie": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "MsoWorkPane",
+     "rect": [
+      1828,
+      724,
+      371,
+      202
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Linear",
+      "enabled": true,
+      "rect": [
+       1837,
+       735,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Exponential",
+      "enabled": true,
+      "rect": [
+       1837,
+       771,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Lineare Prognose",
+      "enabled": true,
+      "rect": [
+       1837,
+       807,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Gleitender Durchschnitt für zwei Zeiträume",
+      "enabled": true,
+      "rect": [
+       1837,
+       843,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       879,
+       353,
+       36
+      ]
+     }
+    ]
+   },
+   {
+    "window": {
+     "type": "Menu",
+     "class": "NetUIGalleryContainer",
+     "rect": [
+      1837,
+      735,
+      353,
+      180
+     ]
+    },
+    "items": [
+     {
+      "type": "ListItem",
+      "name": "Linear",
+      "enabled": true,
+      "rect": [
+       1837,
+       735,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Exponential",
+      "enabled": true,
+      "rect": [
+       1837,
+       771,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Lineare Prognose",
+      "enabled": true,
+      "rect": [
+       1837,
+       807,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Gleitender Durchschnitt für zwei Zeiträume",
+      "enabled": true,
+      "rect": [
+       1837,
+       843,
+       353,
+       36
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Weitere Optionen...",
+      "enabled": true,
+      "rect": [
+       1837,
+       879,
+       353,
+       36
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "select_data": {
+  "window": {
+   "type": "Window",
+   "name": "Datenquelle auswählen",
+   "id": "",
+   "class": "NUIDialog",
+   "key": "",
+   "enabled": true,
+   "rect": [
+    1506,
+    892,
+    937,
+    501
+   ]
+  },
+  "controls": [
+   {
+    "window": {
+     "type": "Window",
+     "class": "NUIDialog",
+     "rect": [
+      1506,
+      892,
+      937,
+      501
+     ]
+    },
+    "items": [
+     {
+      "type": "Window",
+      "name": "Datenquelle auswählen",
+      "enabled": true,
+      "rect": [
+       1517,
+       937,
+       915,
+       445
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Diagrammdatenbereich",
+      "enabled": true,
+      "rect": [
+       1541,
+       948,
+       169,
+       27
+      ]
+     },
+     {
+      "type": "Edit",
+      "name": "Diagrammdatenbereich",
+      "enabled": true,
+      "rect": [
+       1724,
+       948,
+       684,
+       29
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Zeile/Spalte tauschen",
+      "enabled": true,
+      "rect": [
+       1873,
+       1029,
+       203,
+       38
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Legendeneinträge (Reihen)",
+      "enabled": true,
+      "rect": [
+       1526,
+       1087,
+       189,
+       24
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Datenreihe hinzufügen",
+      "enabled": true,
+      "rect": [
+       1527,
+       1112,
+       135,
+       38
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Datenreihe bearbeiten",
+      "enabled": true,
+      "rect": [
+       1662,
+       1112,
+       129,
+       38
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Datenreihe entfernen",
+      "enabled": true,
+      "rect": [
+       1791,
+       1112,
+       122,
+       38
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Nach oben",
+      "enabled": false,
+      "rect": [
+       1913,
+       1112,
+       38,
+       38
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Nach unten",
+      "enabled": true,
+      "rect": [
+       1951,
+       1112,
+       38,
+       38
+      ]
+     },
+     {
+      "type": "List",
+      "name": "Legendeneinträge (Reihen)",
+      "enabled": true,
+      "rect": [
+       1527,
+       1156,
+       462,
+       160
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Nord",
+      "enabled": true,
+      "rect": [
+       1527,
+       1156,
+       462,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "Nord",
+      "enabled": true,
+      "rect": [
+       1530,
+       1156,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Nord",
+      "enabled": true,
+      "rect": [
+       1580,
+       1156,
+       38,
+       32
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Süd",
+      "enabled": true,
+      "rect": [
+       1527,
+       1188,
+       462,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "Süd",
+      "enabled": true,
+      "rect": [
+       1530,
+       1188,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Süd",
+      "enabled": true,
+      "rect": [
+       1580,
+       1188,
+       29,
+       32
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "West",
+      "enabled": true,
+      "rect": [
+       1527,
+       1220,
+       462,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "West",
+      "enabled": true,
+      "rect": [
+       1530,
+       1220,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "West",
+      "enabled": true,
+      "rect": [
+       1580,
+       1220,
+       37,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Horizontale Achsenbeschriftungen (Rubrik)",
+      "enabled": true,
+      "rect": [
+       2004,
+       1087,
+       300,
+       24
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Kategorie bearbeiten",
+      "enabled": true,
+      "rect": [
+       2005,
+       1112,
+       129,
+       38
+      ]
+     },
+     {
+      "type": "List",
+      "name": "Horizontale Achsenbeschriftungen (Rubrik)",
+      "enabled": true,
+      "rect": [
+       2005,
+       1151,
+       417,
+       160
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Jan",
+      "enabled": true,
+      "rect": [
+       2005,
+       1151,
+       417,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "Jan",
+      "enabled": true,
+      "rect": [
+       2008,
+       1151,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Jan",
+      "enabled": true,
+      "rect": [
+       2058,
+       1151,
+       25,
+       32
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Feb",
+      "enabled": true,
+      "rect": [
+       2005,
+       1183,
+       417,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "Feb",
+      "enabled": true,
+      "rect": [
+       2008,
+       1183,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Feb",
+      "enabled": true,
+      "rect": [
+       2058,
+       1183,
+       27,
+       32
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Mrz",
+      "enabled": true,
+      "rect": [
+       2005,
+       1215,
+       417,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "Mrz",
+      "enabled": true,
+      "rect": [
+       2008,
+       1215,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Mrz",
+      "enabled": true,
+      "rect": [
+       2058,
+       1215,
+       29,
+       32
+      ]
+     },
+     {
+      "type": "ListItem",
+      "name": "Apr",
+      "enabled": true,
+      "rect": [
+       2005,
+       1247,
+       417,
+       32
+      ]
+     },
+     {
+      "type": "CheckBox",
+      "name": "Apr",
+      "enabled": true,
+      "rect": [
+       2008,
+       1247,
+       36,
+       32
+      ]
+     },
+     {
+      "type": "Text",
+      "name": "Apr",
+      "enabled": true,
+      "rect": [
+       2058,
+       1247,
+       27,
+       32
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Ausgeblendete und leere Zellen",
+      "enabled": true,
+      "rect": [
+       1526,
+       1335,
+       246,
+       36
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "OK",
+      "enabled": true,
+      "rect": [
+       2183,
+       1335,
+       113,
+       36
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Abbrechen",
+      "enabled": true,
+      "rect": [
+       2310,
+       1335,
+       113,
+       36
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Direkthilfe",
+      "enabled": true,
+      "rect": [
+       2291,
+       893,
+       71,
+       44
+      ]
+     },
+     {
+      "type": "Button",
+      "name": "Schließen",
+      "enabled": true,
+      "rect": [
+       2362,
+       893,
+       71,
+       44
+      ]
+     }
+    ]
+   }
+  ],
+  "subs": {
+   "Hinzufügen": [
+    {
+     "window": {
+      "type": "ToolTip",
+      "class": "tooltips_class32",
+      "rect": [
+       1594,
+       1141,
+       211,
+       55
+      ]
+     },
+     "items": []
+    },
+    {
+     "window": {
+      "type": "Pane",
+      "class": "SysShadow",
+      "rect": [
+       1594,
+       1141,
+       216,
+       60
+      ]
+     },
+     "items": []
+    },
+    {
+     "window": {
+      "type": "Window",
+      "class": "NUIDialog",
+      "rect": [
+       1732,
+       1018,
+       485,
+       249
+      ]
+     },
+     "items": [
+      {
+       "type": "Window",
+       "name": "Datenreihe bearbeiten",
+       "enabled": true,
+       "rect": [
+        1743,
+        1063,
+        463,
+        193
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Reihenname",
+       "enabled": true,
+       "rect": [
+        1752,
+        1074,
+        92,
+        21
+       ]
+      },
+      {
+       "type": "Edit",
+       "name": "Reihenname",
+       "enabled": true,
+       "rect": [
+        1752,
+        1100,
+        300,
+        29
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Bereich auswählen",
+       "enabled": false,
+       "rect": [
+        2066,
+        1104,
+        131,
+        21
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Reihenwerte",
+       "enabled": true,
+       "rect": [
+        1752,
+        1139,
+        92,
+        21
+       ]
+      },
+      {
+       "type": "Edit",
+       "name": "Reihenwerte",
+       "enabled": true,
+       "rect": [
+        1752,
+        1165,
+        300,
+        29
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "= 1",
+       "enabled": true,
+       "rect": [
+        2066,
+        1169,
+        131,
+        21
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "OK",
+       "enabled": true,
+       "rect": [
+        1957,
+        1209,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Abbrechen",
+       "enabled": true,
+       "rect": [
+        2084,
+        1209,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Direkthilfe",
+       "enabled": true,
+       "rect": [
+        2065,
+        1019,
+        71,
+        44
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Schließen",
+       "enabled": true,
+       "rect": [
+        2136,
+        1019,
+        71,
+        44
+       ]
+      }
+     ]
+    }
+   ],
+   "Bearbeiten": [
+    {
+     "window": {
+      "type": "ToolTip",
+      "class": "tooltips_class32",
+      "rect": [
+       1726,
+       1141,
+       211,
+       55
+      ]
+     },
+     "items": []
+    },
+    {
+     "window": {
+      "type": "Pane",
+      "class": "SysShadow",
+      "rect": [
+       1726,
+       1141,
+       216,
+       60
+      ]
+     },
+     "items": []
+    },
+    {
+     "window": {
+      "type": "Window",
+      "class": "NUIDialog",
+      "rect": [
+       1734,
+       1018,
+       480,
+       249
+      ]
+     },
+     "items": [
+      {
+       "type": "Window",
+       "name": "Datenreihe bearbeiten",
+       "enabled": true,
+       "rect": [
+        1745,
+        1063,
+        458,
+        193
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Reihenname",
+       "enabled": true,
+       "rect": [
+        1754,
+        1074,
+        92,
+        21
+       ]
+      },
+      {
+       "type": "Edit",
+       "name": "Reihenname",
+       "enabled": true,
+       "rect": [
+        1754,
+        1100,
+        300,
+        29
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "= Nord",
+       "enabled": true,
+       "rect": [
+        2068,
+        1104,
+        53,
+        21
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Reihenwerte",
+       "enabled": true,
+       "rect": [
+        1754,
+        1139,
+        92,
+        21
+       ]
+      },
+      {
+       "type": "Edit",
+       "name": "Reihenwerte",
+       "enabled": true,
+       "rect": [
+        1754,
+        1165,
+        300,
+        29
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "= 3; 5; 2; 4",
+       "enabled": true,
+       "rect": [
+        2068,
+        1169,
+        126,
+        21
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "OK",
+       "enabled": true,
+       "rect": [
+        1954,
+        1209,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Abbrechen",
+       "enabled": true,
+       "rect": [
+        2081,
+        1209,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Direkthilfe",
+       "enabled": true,
+       "rect": [
+        2062,
+        1019,
+        71,
+        44
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Schließen",
+       "enabled": true,
+       "rect": [
+        2133,
+        1019,
+        71,
+        44
+       ]
+      }
+     ]
+    }
+   ],
+   "Ausgeblendete und leere Zellen": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "NUIDialog",
+      "rect": [
+       1709,
+       1008,
+       530,
+       269
+      ]
+     },
+     "items": [
+      {
+       "type": "Window",
+       "name": "Ausgeblendete und leere Zelleneinstellungen",
+       "enabled": true,
+       "rect": [
+        1720,
+        1053,
+        508,
+        213
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Leere Zellen anzeigen als",
+       "enabled": true,
+       "rect": [
+        1729,
+        1064,
+        178,
+        21
+       ]
+      },
+      {
+       "type": "Group",
+       "name": "Leere Zellen anzeigen als",
+       "enabled": true,
+       "rect": [
+        1921,
+        1064,
+        298,
+        88
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "Lücken",
+       "enabled": true,
+       "rect": [
+        1921,
+        1064,
+        81,
+        26
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "Null",
+       "enabled": true,
+       "rect": [
+        1921,
+        1095,
+        61,
+        26
+       ]
+      },
+      {
+       "type": "RadioButton",
+       "name": "Datenpunkte mit einer Linie verbinden",
+       "enabled": false,
+       "rect": [
+        1921,
+        1126,
+        298,
+        26
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "\"#N/V\" als leere Zelle anzeigen",
+       "enabled": true,
+       "rect": [
+        1729,
+        1157,
+        245,
+        26
+       ]
+      },
+      {
+       "type": "CheckBox",
+       "name": "Daten in ausgeblendeten Zeilen und Spalten anzeigen",
+       "enabled": true,
+       "rect": [
+        1729,
+        1188,
+        403,
+        26
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "OK",
+       "enabled": true,
+       "rect": [
+        1979,
+        1219,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Abbrechen",
+       "enabled": true,
+       "rect": [
+        2106,
+        1219,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Direkthilfe",
+       "enabled": true,
+       "rect": [
+        2087,
+        1009,
+        71,
+        44
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Schließen",
+       "enabled": true,
+       "rect": [
+        2158,
+        1009,
+        71,
+        44
+       ]
+      }
+     ]
+    }
+   ],
+   "Kategorie bearbeiten": [
+    {
+     "window": {
+      "type": "Window",
+      "class": "NUIDialog",
+      "rect": [
+       1734,
+       1055,
+       480,
+       174
+      ]
+     },
+     "items": [
+      {
+       "type": "Window",
+       "name": "Achsenbeschriftungen",
+       "enabled": true,
+       "rect": [
+        1745,
+        1100,
+        458,
+        118
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "Achsenbeschriftungsbereich",
+       "enabled": true,
+       "rect": [
+        1754,
+        1111,
+        200,
+        21
+       ]
+      },
+      {
+       "type": "Edit",
+       "name": "Achsenbeschriftungsbereich",
+       "enabled": true,
+       "rect": [
+        1754,
+        1137,
+        300,
+        29
+       ]
+      },
+      {
+       "type": "Text",
+       "name": "= Jan; Feb; Mrz;...",
+       "enabled": true,
+       "rect": [
+        2068,
+        1141,
+        118,
+        21
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "OK",
+       "enabled": true,
+       "rect": [
+        1954,
+        1171,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Abbrechen",
+       "enabled": true,
+       "rect": [
+        2081,
+        1171,
+        113,
+        36
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Direkthilfe",
+       "enabled": true,
+       "rect": [
+        2062,
+        1056,
+        71,
+        44
+       ]
+      },
+      {
+       "type": "Button",
+       "name": "Schließen",
+       "enabled": true,
+       "rect": [
+        2133,
+        1056,
+        71,
+        44
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

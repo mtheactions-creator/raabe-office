@@ -163,6 +163,12 @@ export function forecastFeature(app: CalcApp) {
       { name: { ref: `${q(sheet.name)}!$B$1` }, val: { ref: ref(1, 2, endRow), cache: [] }, ...(line ? { line: { type: "solid", width: 2.25 } } : {}) },
       { name: { ref: `${q(sheet.name)}!$C$1` }, cat, val: { ref: ref(2, 2, endRow), cache: [] }, ...(line ? { line: { type: "solid", width: 2 } } : {}) },
     ];
+    // Columns: the interval as Fehlerindikatoren on the forecast, plus and minus from the Konfidenzintervall column, grey at
+    // 40 % opacity (recorded from Excel's file, D-125).
+    if (conf && !line) {
+      const amount = { ref: ref(3, 2, endRow), cache: [] as (number | null)[] };
+      series[1].errorBars = { dir: "both", type: "cust", plus: amount, minus: { ...amount, cache: [] }, line: { type: "solid", width: 0.75, color: "#595959", transparency: 59.608 } };
+    }
     if (conf && line) for (const c of [3, 4]) series.push({ name: { ref: `${q(sheet.name)}!$${colName(c)}$1` }, cat, val: { ref: ref(c, 2, endRow), cache: [] }, line: { type: "solid", width: 1, color: accent2 }, color: accent2 });
     const m = newChart(line ? "line" : "column", series, at(x0, y0), at(x0 + pt(724.5), y0 + pt(346.5)));
     m.title = { show: false };
