@@ -2261,9 +2261,13 @@ export class Editor {
     if (this.doc.activeStory !== MAIN || this.inTable()) return;
     this.snapshot();
     const [from, to] = this.range();
-    if (cmp(from, to) !== 0) this.doc.delete(from, to);
+    // Word puts a section break before the selection and keeps the selected text (recorded 2026-11-09, D-135); only
+    // page and column breaks replace it. The selection stays on the same text after the break.
     const at = E.insertSectionBreak(this.doc, from, start, this.typingProps());
-    this.setSel(at, at);
+    if (cmp(from, to) !== 0) {
+      const end = from.p === to.p ? { p: at.p, o: at.o + to.o - from.o } : { p: to.p + at.p - from.p, o: to.o };
+      this.setSel(at, end);
+    } else this.setSel(at, at);
     this.update({ scroll: true });
   }
 
