@@ -1,0 +1,2129 @@
+{
+ "date": "2026-11-09",
+ "summary": {
+  "ok": 75,
+  "disabled": 9
+ },
+ "rows": [
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Seitenränder [dropdown]",
+   "setup": "text",
+   "effects": [
+    "popups",
+    "popSig"
+   ],
+   "kind": "popup",
+   "items": [
+    "NormalOben: 2,5 cm Unten: 2 cm Links: 2,5 cm Rechts: 2,5 cm",
+    "SchmalOben: 1,27 cm Unten: 1,27 cm Links: 1,27 cm Rechts: 1,27 cm",
+    "MittelOben: 2,54 cm Unten: 2,54 cm Links: 1,91 cm Rechts: 1,91 cm",
+    "BreitOben: 2,54 cm Unten: 2,54 cm Links: 5,08 cm Rechts: 5,08 cm",
+    "Benutzerdefinierte Seitenränder..."
+   ],
+   "n": 5,
+   "status": "ok",
+   "secs": 2.1
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Seitenränder [dropdown] > NormalOben: 2,5 cm Unten: 2 cm Links: 2,5 cm Rechts: 2,5 cm",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0001.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.5
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Seitenränder [dropdown] > SchmalOben: 1,27 cm Unten: 1,27 cm Links: 1,27 cm Rechts: 1,27 cm",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0002.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.6
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Seitenränder [dropdown] > MittelOben: 2,54 cm Unten: 2,54 cm Links: 1,91 cm Rechts: 1,91 cm",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0003.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 2.5
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Seitenränder [dropdown] > BreitOben: 2,54 cm Unten: 2,54 cm Links: 5,08 cm Rechts: 5,08 cm",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0004.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.7
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Seitenränder [dropdown] > Benutzerdefinierte Seitenränder...",
+   "setup": "text",
+   "effects": [
+    "dialogs",
+    "popups",
+    "popSig"
+   ],
+   "kind": "dialog",
+   "dialog": {
+    "title": "Seite einrichten",
+    "controls": [
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Schließen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1070,
+      "y": 365,
+      "w": 32,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Seitenränder",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 700,
+      "y": 405,
+      "w": 101,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Papier",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 785,
+      "y": 405,
+      "w": 61,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Layout",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 851,
+      "y": 405,
+      "w": 64,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "2,5 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 762,
+      "y": 473,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "2 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 968,
+      "y": 473,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "2,5 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 762,
+      "y": 507,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "2,5 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 968,
+      "y": 507,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "0 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 762,
+      "y": 541,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "radio",
+      "label": "Hochformat",
+      "value": true,
+      "primary": false,
+      "disabled": false,
+      "x": 661,
+      "y": 614,
+      "w": 13,
+      "h": 13
+     },
+     {
+      "tag": "input",
+      "type": "radio",
+      "label": "Querformat",
+      "value": false,
+      "primary": false,
+      "disabled": false,
+      "x": 661,
+      "y": 643,
+      "w": 13,
+      "h": 13
+     },
+     {
+      "tag": "select",
+      "type": "select-one",
+      "label": "",
+      "value": "section",
+      "options": 2,
+      "primary": false,
+      "disabled": true,
+      "x": 833,
+      "y": 687,
+      "w": 153,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "OK",
+      "value": "",
+      "primary": true,
+      "disabled": false,
+      "x": 930,
+      "y": 744,
+      "w": 88,
+      "h": 30
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Abbrechen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1026,
+      "y": 744,
+      "w": 88,
+      "h": 30
+     }
+    ]
+   },
+   "status": "ok",
+   "secs": 1.4
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Seitenränder [dropdown] > Benutzerdefinierte Seitenränder... > Esc",
+   "setup": "text",
+   "status": "ok",
+   "errors": [],
+   "note": "",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Seitenränder [dropdown] > Benutzerdefinierte Seitenränder... > OK",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "dialogs"
+   ],
+   "saved": "0005.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.7
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Ausrichtung [dropdown]",
+   "setup": "text",
+   "effects": [
+    "popups",
+    "popSig"
+   ],
+   "kind": "popup",
+   "items": [
+    "Hochformat",
+    "Querformat"
+   ],
+   "n": 2,
+   "status": "ok",
+   "secs": 0.7
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Ausrichtung [dropdown] > Hochformat",
+   "setup": "text",
+   "effects": [
+    "popups",
+    "popSig"
+   ],
+   "status": "ok",
+   "secs": 1.1
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Ausrichtung [dropdown] > Querformat",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0006.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Format [dropdown]",
+   "setup": "text",
+   "effects": [
+    "popups",
+    "popSig"
+   ],
+   "kind": "popup",
+   "items": [
+    "A329,7 cm x 42 cm",
+    "A421 cm x 29,7 cm",
+    "A514,8 cm x 21 cm",
+    "B5 (JIS)18,2 cm x 25,7 cm",
+    "Letter21,59 cm x 27,94 cm",
+    "Legal21,59 cm x 35,56 cm",
+    "Weitere Papierformate..."
+   ],
+   "n": 7,
+   "status": "ok",
+   "secs": 0.7
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Format [dropdown] > A329,7 cm x 42 cm",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0007.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.4
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Format [dropdown] > A421 cm x 29,7 cm",
+   "setup": "text",
+   "effects": [
+    "popups",
+    "popSig"
+   ],
+   "status": "ok",
+   "secs": 1.1
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Format [dropdown] > A514,8 cm x 21 cm",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0008.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Format [dropdown] > B5 (JIS)18,2 cm x 25,7 cm",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0009.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Format [dropdown] > Letter21,59 cm x 27,94 cm",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0010.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Format [dropdown] > Legal21,59 cm x 35,56 cm",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0011.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Format [dropdown] > Weitere Papierformate...",
+   "setup": "text",
+   "effects": [
+    "dialogs",
+    "popups",
+    "popSig"
+   ],
+   "kind": "dialog",
+   "dialog": {
+    "title": "Seite einrichten",
+    "controls": [
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Schließen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1070,
+      "y": 434,
+      "w": 32,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Seitenränder",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 699,
+      "y": 474,
+      "w": 98,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Papier",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 783,
+      "y": 474,
+      "w": 62,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Layout",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 850,
+      "y": 474,
+      "w": 64,
+      "h": 28
+     },
+     {
+      "tag": "select",
+      "type": "select-one",
+      "label": "Papierformat",
+      "value": "A4",
+      "options": 7,
+      "primary": false,
+      "disabled": false,
+      "x": 744,
+      "y": 542,
+      "w": 189,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "21 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 741,
+      "y": 578,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "29,7 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 955,
+      "y": 578,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "select",
+      "type": "select-one",
+      "label": "",
+      "value": "section",
+      "options": 2,
+      "primary": false,
+      "disabled": true,
+      "x": 833,
+      "y": 618,
+      "w": 153,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "OK",
+      "value": "",
+      "primary": true,
+      "disabled": false,
+      "x": 930,
+      "y": 675,
+      "w": 88,
+      "h": 30
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Abbrechen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1026,
+      "y": 675,
+      "w": 88,
+      "h": 30
+     }
+    ]
+   },
+   "status": "ok",
+   "secs": 1.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Format [dropdown] > Weitere Papierformate... > Esc",
+   "setup": "text",
+   "status": "ok",
+   "errors": [],
+   "note": "",
+   "secs": 1.2
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Format [dropdown] > Weitere Papierformate... > OK",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "dialogs"
+   ],
+   "saved": "0012.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.6
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Spalten [dropdown]",
+   "setup": "text",
+   "effects": [
+    "popups",
+    "popSig"
+   ],
+   "kind": "popup",
+   "items": [
+    "Eins",
+    "Zwei",
+    "Drei",
+    "Links",
+    "Rechts",
+    "Weitere Spalten..."
+   ],
+   "n": 6,
+   "status": "ok",
+   "secs": 0.6
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Spalten [dropdown] > Eins",
+   "setup": "text",
+   "effects": [
+    "popups",
+    "popSig"
+   ],
+   "status": "ok",
+   "secs": 1.1
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Spalten [dropdown] > Zwei",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0013.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Spalten [dropdown] > Drei",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0014.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Spalten [dropdown] > Links",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0015.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Spalten [dropdown] > Rechts",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0016.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.4
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Spalten [dropdown] > Weitere Spalten...",
+   "setup": "text",
+   "effects": [
+    "dialogs",
+    "popups",
+    "popSig"
+   ],
+   "kind": "dialog",
+   "dialog": {
+    "title": "Spalten",
+    "controls": [
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Schließen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1016,
+      "y": 471,
+      "w": 32,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "number",
+      "label": "",
+      "value": "1",
+      "primary": false,
+      "disabled": false,
+      "x": 808,
+      "y": 526,
+      "w": 70,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "1,25 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 959,
+      "y": 526,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "checkbox",
+      "label": "Zwischenlinie",
+      "value": false,
+      "primary": false,
+      "disabled": false,
+      "x": 714,
+      "y": 575,
+      "w": 13,
+      "h": 13
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "OK",
+      "value": "",
+      "primary": true,
+      "disabled": false,
+      "x": 876,
+      "y": 638,
+      "w": 88,
+      "h": 30
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Abbrechen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 972,
+      "y": 638,
+      "w": 88,
+      "h": 30
+     }
+    ]
+   },
+   "status": "ok",
+   "secs": 1.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Spalten [dropdown] > Weitere Spalten... > Esc",
+   "setup": "text",
+   "status": "ok",
+   "errors": [],
+   "note": "",
+   "secs": 1.1
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Spalten [dropdown] > Weitere Spalten... > OK",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "dialogs"
+   ],
+   "saved": "0017.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.5
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Umbrüche [dropdown]",
+   "setup": "text",
+   "effects": [
+    "popups",
+    "popSig"
+   ],
+   "kind": "popup",
+   "items": [
+    "Seite",
+    "Spalte",
+    "Textumbruch",
+    "Nächste Seite",
+    "Fortlaufend",
+    "Gerade Seite",
+    "Ungerade Seite"
+   ],
+   "n": 7,
+   "status": "ok",
+   "secs": 0.7
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Umbrüche [dropdown] > Seite",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "status",
+    "popups",
+    "sel",
+    "popSig"
+   ],
+   "saved": "0018.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Umbrüche [dropdown] > Spalte",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "status",
+    "popups",
+    "sel",
+    "popSig"
+   ],
+   "saved": "0019.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Umbrüche [dropdown] > Textumbruch",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "status",
+    "popups",
+    "sel",
+    "popSig"
+   ],
+   "saved": "0020.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.6
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Umbrüche [dropdown] > Nächste Seite",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "status",
+    "popups",
+    "sel",
+    "popSig"
+   ],
+   "saved": "0021.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Umbrüche [dropdown] > Fortlaufend",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "sel",
+    "popSig"
+   ],
+   "saved": "0022.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Umbrüche [dropdown] > Gerade Seite",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "status",
+    "popups",
+    "sel",
+    "popSig"
+   ],
+   "saved": "0023.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Umbrüche [dropdown] > Ungerade Seite",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "status",
+    "popups",
+    "sel",
+    "popSig"
+   ],
+   "saved": "0024.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Zeilennummern [dropdown]",
+   "setup": "text",
+   "effects": [
+    "popups",
+    "popSig"
+   ],
+   "kind": "popup",
+   "items": [
+    "Keine",
+    "Fortlaufend",
+    "Jede Seite neu beginnen",
+    "Jeden Abschnitt neu beginnen",
+    "Für aktuellen Absatz unterdrücken",
+    "Zeilennummerierungsoptionen..."
+   ],
+   "n": 6,
+   "status": "ok",
+   "secs": 0.7
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Zeilennummern [dropdown] > Keine",
+   "setup": "text",
+   "effects": [
+    "popups",
+    "popSig"
+   ],
+   "status": "ok",
+   "secs": 1.1
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Zeilennummern [dropdown] > Fortlaufend",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0025.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Zeilennummern [dropdown] > Jede Seite neu beginnen",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0026.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.4
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Zeilennummern [dropdown] > Jeden Abschnitt neu beginnen",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0027.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.4
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Zeilennummern [dropdown] > Für aktuellen Absatz unterdrücken",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0028.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Zeilennummern [dropdown] > Zeilennummerierungsoptionen...",
+   "setup": "text",
+   "effects": [
+    "dialogs",
+    "popups",
+    "popSig"
+   ],
+   "kind": "dialog",
+   "dialog": {
+    "title": "Seite einrichten",
+    "controls": [
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Schließen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1070,
+      "y": 373,
+      "w": 32,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Seitenränder",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 699,
+      "y": 413,
+      "w": 98,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Papier",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 782,
+      "y": 413,
+      "w": 61,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Layout",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 849,
+      "y": 413,
+      "w": 65,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "checkbox",
+      "label": "Gerade/ungerade anders",
+      "value": false,
+      "primary": false,
+      "disabled": false,
+      "x": 660,
+      "y": 487,
+      "w": 13,
+      "h": 13
+     },
+     {
+      "tag": "input",
+      "type": "checkbox",
+      "label": "Erste Seite anders",
+      "value": false,
+      "primary": false,
+      "disabled": false,
+      "x": 660,
+      "y": 517,
+      "w": 13,
+      "h": 13
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "1,25 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 810,
+      "y": 556,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "1,25 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 1025,
+      "y": 556,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Zeilennummern...",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 712,
+      "y": 633,
+      "w": 124,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Rahmen...",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 822,
+      "y": 633,
+      "w": 81,
+      "h": 28
+     },
+     {
+      "tag": "select",
+      "type": "select-one",
+      "label": "",
+      "value": "section",
+      "options": 2,
+      "primary": false,
+      "disabled": true,
+      "x": 833,
+      "y": 679,
+      "w": 153,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "OK",
+      "value": "",
+      "primary": true,
+      "disabled": false,
+      "x": 930,
+      "y": 736,
+      "w": 88,
+      "h": 30
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Abbrechen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1026,
+      "y": 736,
+      "w": 88,
+      "h": 30
+     }
+    ]
+   },
+   "status": "ok",
+   "secs": 1.1
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Zeilennummern [dropdown] > Zeilennummerierungsoptionen... > Esc",
+   "setup": "text",
+   "status": "ok",
+   "errors": [],
+   "note": "",
+   "secs": 1.1
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Zeilennummern [dropdown] > Zeilennummerierungsoptionen... > OK",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "dialogs"
+   ],
+   "saved": "0029.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.6
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Silbentrennung [dropdown]",
+   "setup": "text",
+   "effects": [
+    "popups",
+    "popSig"
+   ],
+   "kind": "popup",
+   "items": [
+    "Keine",
+    "Automatisch",
+    "Manuell",
+    "Silbentrennungsoptionen..."
+   ],
+   "n": 4,
+   "status": "ok",
+   "secs": 0.7
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Silbentrennung [dropdown] > Keine",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0030.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.4
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Silbentrennung [dropdown] > Automatisch",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "popups",
+    "popSig"
+   ],
+   "saved": "0031.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Silbentrennung [dropdown] > Manuell",
+   "setup": "text",
+   "effects": [
+    "dialogs",
+    "popups",
+    "popSig"
+   ],
+   "kind": "dialog",
+   "dialog": {
+    "title": "RaabeWrite",
+    "controls": [
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Schließen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1043,
+      "y": 510,
+      "w": 32,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "OK",
+      "value": "",
+      "primary": true,
+      "disabled": false,
+      "x": 999,
+      "y": 599,
+      "w": 88,
+      "h": 30
+     }
+    ]
+   },
+   "status": "ok",
+   "secs": 1.1
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Silbentrennung [dropdown] > Manuell > Esc",
+   "setup": "text",
+   "status": "ok",
+   "errors": [],
+   "note": "",
+   "secs": 1.1
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Silbentrennung [dropdown] > Manuell > OK",
+   "setup": "text",
+   "effects": [
+    "dialogs"
+   ],
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Silbentrennung [dropdown] > Silbentrennungsoptionen...",
+   "setup": "text",
+   "effects": [
+    "dialogs",
+    "popups",
+    "popSig"
+   ],
+   "kind": "dialog",
+   "dialog": {
+    "title": "Silbentrennung",
+    "controls": [
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Schließen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1050,
+      "y": 420,
+      "w": 32,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "checkbox",
+      "label": "Automatische Silbentrennung",
+      "value": false,
+      "primary": false,
+      "disabled": false,
+      "x": 680,
+      "y": 465,
+      "w": 13,
+      "h": 13
+     },
+     {
+      "tag": "input",
+      "type": "checkbox",
+      "label": "Wörter in Großbuchstaben trennen",
+      "value": true,
+      "primary": false,
+      "disabled": false,
+      "x": 680,
+      "y": 513,
+      "w": 13,
+      "h": 13
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "Silbentrennzone:",
+      "value": "0,75 cm",
+      "primary": false,
+      "disabled": true,
+      "x": 1005,
+      "y": 561,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "Aufeinanderfolgende Trennstriche:",
+      "value": "Unbegrenzt",
+      "primary": false,
+      "disabled": false,
+      "x": 1005,
+      "y": 597,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Manuell...",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 710,
+      "y": 633,
+      "w": 80,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "OK",
+      "value": "",
+      "primary": true,
+      "disabled": false,
+      "x": 910,
+      "y": 690,
+      "w": 88,
+      "h": 30
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Abbrechen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1006,
+      "y": 690,
+      "w": 88,
+      "h": 30
+     }
+    ]
+   },
+   "status": "ok",
+   "secs": 1.1
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Silbentrennung [dropdown] > Silbentrennungsoptionen... > Esc",
+   "setup": "text",
+   "status": "ok",
+   "errors": [],
+   "note": "",
+   "secs": 1.1
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Silbentrennung [dropdown] > Silbentrennungsoptionen... > OK",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "dialogs"
+   ],
+   "saved": "0032.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.7
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Seite einrichten [launcher]",
+   "setup": "text",
+   "effects": [
+    "dialogs"
+   ],
+   "kind": "dialog",
+   "dialog": {
+    "title": "Seite einrichten",
+    "controls": [
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Schließen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1070,
+      "y": 365,
+      "w": 32,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Seitenränder",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 700,
+      "y": 405,
+      "w": 101,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Papier",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 785,
+      "y": 405,
+      "w": 61,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Layout",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 851,
+      "y": 405,
+      "w": 64,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "2,5 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 762,
+      "y": 473,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "2 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 968,
+      "y": 473,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "2,5 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 762,
+      "y": 507,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "2,5 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 968,
+      "y": 507,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "0 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 762,
+      "y": 541,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "radio",
+      "label": "Hochformat",
+      "value": true,
+      "primary": false,
+      "disabled": false,
+      "x": 661,
+      "y": 614,
+      "w": 13,
+      "h": 13
+     },
+     {
+      "tag": "input",
+      "type": "radio",
+      "label": "Querformat",
+      "value": false,
+      "primary": false,
+      "disabled": false,
+      "x": 661,
+      "y": 643,
+      "w": 13,
+      "h": 13
+     },
+     {
+      "tag": "select",
+      "type": "select-one",
+      "label": "",
+      "value": "section",
+      "options": 2,
+      "primary": false,
+      "disabled": true,
+      "x": 833,
+      "y": 687,
+      "w": 153,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "OK",
+      "value": "",
+      "primary": true,
+      "disabled": false,
+      "x": 930,
+      "y": 744,
+      "w": 88,
+      "h": 30
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Abbrechen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1026,
+      "y": 744,
+      "w": 88,
+      "h": 30
+     }
+    ]
+   },
+   "status": "ok",
+   "secs": 0.8
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Seite einrichten [launcher] > Esc",
+   "setup": "text",
+   "status": "ok",
+   "errors": [],
+   "note": "",
+   "secs": 0.8
+  },
+  {
+   "tab": "Layout",
+   "path": "Seite einrichten / Seite einrichten [launcher] > OK",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "dialogs"
+   ],
+   "saved": "0033.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Links: [spinner-input] = 1",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "combos"
+   ],
+   "saved": "0034.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 0.9
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Mehr [spinner-step]",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "combos"
+   ],
+   "saved": "0035.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 0.9
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Weniger [spinner-step]",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "combos"
+   ],
+   "saved": "0036.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Rechts: [spinner-input] = 1",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "combos"
+   ],
+   "saved": "0037.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Mehr [spinner-step]",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "combos"
+   ],
+   "saved": "0038.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.3
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Weniger [spinner-step]",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "combos"
+   ],
+   "saved": "0039.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.4
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Vor: [spinner-input] = 1",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "combos"
+   ],
+   "saved": "0040.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.2
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Mehr [spinner-step]",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "combos"
+   ],
+   "saved": "0041.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Weniger [spinner-step]",
+   "setup": "text",
+   "effects": [
+    "doc"
+   ],
+   "saved": "0042.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 0.9
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Nach: [spinner-input] = 1",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "combos"
+   ],
+   "saved": "0043.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 0.9
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Mehr [spinner-step]",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "combos"
+   ],
+   "saved": "0044.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Weniger [spinner-step]",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "combos"
+   ],
+   "saved": "0045.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.4
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Absatz... [launcher]",
+   "setup": "text",
+   "effects": [
+    "dialogs"
+   ],
+   "kind": "dialog",
+   "dialog": {
+    "title": "Absatz",
+    "controls": [
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Schließen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1120,
+      "y": 338,
+      "w": 32,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Einzüge und Abstände",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 678,
+      "y": 378,
+      "w": 158,
+      "h": 28
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Zeilen- und Seitenumbruch",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 852,
+      "y": 378,
+      "w": 182,
+      "h": 28
+     },
+     {
+      "tag": "select",
+      "type": "select-one",
+      "label": "Ausrichtung:LinksZentriertRechtsBlocksatz",
+      "value": "left",
+      "options": 4,
+      "primary": false,
+      "disabled": false,
+      "x": 723,
+      "y": 456,
+      "w": 87,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "0 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 695,
+      "y": 531,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "select",
+      "type": "select-one",
+      "label": "",
+      "value": "none",
+      "options": 3,
+      "primary": false,
+      "disabled": false,
+      "x": 1028,
+      "y": 531,
+      "w": 184,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "(ohne)Erste ZeileHängend",
+      "value": "0 cm",
+      "primary": false,
+      "disabled": false,
+      "x": 695,
+      "y": 565,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 981,
+      "y": 565,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "0 Pt.",
+      "primary": false,
+      "disabled": false,
+      "x": 687,
+      "y": 631,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "select",
+      "type": "select-one",
+      "label": "",
+      "value": "multiple",
+      "options": 6,
+      "primary": false,
+      "disabled": false,
+      "x": 1026,
+      "y": 631,
+      "w": 187,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "Einfach1,5 ZeilenDoppeltMindestensGenauMehrfach",
+      "value": "8 Pt.",
+      "primary": false,
+      "disabled": false,
+      "x": 687,
+      "y": 665,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "text",
+      "label": "",
+      "value": "1,08",
+      "primary": false,
+      "disabled": false,
+      "x": 978,
+      "y": 665,
+      "w": 90,
+      "h": 28
+     },
+     {
+      "tag": "input",
+      "type": "checkbox",
+      "label": "Keinen Abstand zwischen Absätzen gleicher Formatvorlage einfügen",
+      "value": false,
+      "primary": false,
+      "disabled": false,
+      "x": 610,
+      "y": 699,
+      "w": 13,
+      "h": 13
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "OK",
+      "value": "",
+      "primary": true,
+      "disabled": false,
+      "x": 980,
+      "y": 771,
+      "w": 88,
+      "h": 30
+     },
+     {
+      "tag": "button",
+      "type": "submit",
+      "label": "Abbrechen",
+      "value": "",
+      "primary": false,
+      "disabled": false,
+      "x": 1076,
+      "y": 771,
+      "w": 88,
+      "h": 30
+     }
+    ]
+   },
+   "status": "ok",
+   "secs": 0.8
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Absatz... [launcher] > Esc",
+   "setup": "text",
+   "status": "ok",
+   "errors": [],
+   "note": "",
+   "secs": 1.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Absatz / Absatz... [launcher] > OK",
+   "setup": "text",
+   "effects": [
+    "doc",
+    "dialogs"
+   ],
+   "saved": "0046.docx",
+   "undo": true,
+   "status": "ok",
+   "secs": 1.5
+  },
+  {
+   "tab": "Layout",
+   "path": "Anordnen / Position [dropdown]",
+   "setup": "text",
+   "status": "disabled",
+   "tip": "Objekt positionieren.\nFestlegen, wo das markierte Objekt auf der Seite steht. Der Text fließt automatisch darum herum.\nN",
+   "secs": 0.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Anordnen / Textumbruch [dropdown]",
+   "setup": "text",
+   "status": "disabled",
+   "tip": "Textumbruch\nFestlegen, wie der Text um das markierte Objekt fließt: in der Zeile, rundherum, davor oder dahinter.\nNoch n",
+   "secs": 0.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Anordnen / Ebene nach vorne [split-main]",
+   "setup": "text",
+   "status": "disabled",
+   "tip": "Eine Ebene nach vorne\nDas markierte Objekt eine Ebene oder ganz nach vorne verschieben, sodass es weniger verdeckt wird.",
+   "secs": 0.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Anordnen / Weitere Optionen [split-arrow]",
+   "setup": "text",
+   "status": "disabled",
+   "tip": "",
+   "secs": 0.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Anordnen / Ebene nach hinten [split-main]",
+   "setup": "text",
+   "status": "disabled",
+   "tip": "Eine Ebene nach hinten\nDas markierte Objekt eine Ebene oder ganz nach hinten verschieben, sodass es stärker verdeckt wir",
+   "secs": 0.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Anordnen / Weitere Optionen [split-arrow]",
+   "setup": "text",
+   "status": "disabled",
+   "tip": "",
+   "secs": 0.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Anordnen / Auswahlbereich [button]",
+   "setup": "text",
+   "effects": [
+    "checked",
+    "panes"
+   ],
+   "status": "ok",
+   "secs": 0.7
+  },
+  {
+   "tab": "Layout",
+   "path": "Anordnen / Ausrichten [dropdown]",
+   "setup": "text",
+   "status": "disabled",
+   "tip": "Objekte ausrichten\nDie markierten Objekte an den Rändern der Seite oder aneinander ausrichten oder gleichmäßig verteilen",
+   "secs": 0.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Anordnen / Gruppieren [dropdown]",
+   "setup": "text",
+   "status": "disabled",
+   "tip": "Objekte gruppieren\nObjekte zusammenfassen, damit sie sich wie ein einziges Objekt verschieben und formatieren lassen.\nNo",
+   "secs": 0.0
+  },
+  {
+   "tab": "Layout",
+   "path": "Anordnen / Drehen [dropdown]",
+   "setup": "text",
+   "status": "disabled",
+   "tip": "Objekte drehen\nDas markierte Objekt drehen oder spiegeln.\nNoch nicht verfügbar",
+   "secs": 0.0
+  }
+ ]
+}
