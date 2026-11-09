@@ -232,6 +232,16 @@ describe("the pane's options in the file", () => {
     expect(back.series[1].secondary).toBe(true);
   });
 
+  it("writes the axes an XY series on the Sekundärachse refers to (Excel refused the file without them)", () => {
+    const m = chart("scatter");
+    m.series[0].secondary = true;
+    const xml = chartToXml(m);
+    const ids = (tag: string) => [...xml.matchAll(new RegExp(`<c:${tag}><c:axId val="(\\d+)"/>`, "g"))].map((x) => x[1]);
+    const used = [...xml.matchAll(/<c:scatterChart>[\s\S]*?<\/c:scatterChart>/g)].flatMap((g) => [...g[0].matchAll(/<c:axId val="(\d+)"\/>/g)].map((x) => x[1]));
+    for (const id of used) expect(ids("valAx")).toContain(id);
+    expect(roundTrip(m).series[0].secondary).toBe(true);
+  });
+
   it("writes a picture fill with a relationship placeholder the drawing replaces", () => {
     const png = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==";
     const m = chart("column", { format: { plot: { fill: { type: "picture", picture: { src: png, tile: true, transparency: 20 } } } } });

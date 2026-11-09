@@ -1,0 +1,655 @@
+{
+ "date": "2026-11-09",
+ "passed": 21,
+ "total": 25,
+ "rows": [
+  {
+   "setting": "Wertachse: Einfarbige Linie",
+   "patch": {
+    "format": {
+     "valAxis": {
+      "line": {
+       "type": "solid",
+       "color": "#C00000",
+       "width": 2
+      }
+     }
+    }
+   },
+   "ours_box": [
+    0.05416666666666667,
+    0.16777777777777778,
+    0.058854166666666666,
+    0.7988888888888889
+   ],
+   "excel_box": [
+    0.05405405405405406,
+    0.17162471395881007,
+    0.058212058212058215,
+    0.8421052631578947
+   ],
+   "iou": 0.79,
+   "ok": true
+  },
+  {
+   "setting": "Wertachse: Haupttyp Außen (mit Linie)",
+   "patch": {
+    "format": {
+     "valAxis": {
+      "line": {
+       "type": "solid",
+       "color": "#C00000",
+       "width": 2
+      },
+      "majorTick": "out"
+     }
+    }
+   },
+   "ours_box": [
+    0.050520833333333334,
+    0.16333333333333333,
+    0.058854166666666666,
+    0.8033333333333333
+   ],
+   "excel_box": [
+    0.05093555093555094,
+    0.16704805491990846,
+    0.058212058212058215,
+    0.8466819221967964
+   ],
+   "iou": 0.82,
+   "ok": true
+  },
+  {
+   "setting": "Wertachse: Maximum 100, Hauptstriche 25",
+   "patch": {
+    "format": {
+     "valAxis": {
+      "max": 100,
+      "majorUnit": 25
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.9555555555555556
+   ],
+   "excel_box": [
+    0.015592515592515593,
+    0.15789473684210525,
+    0.91995841995842,
+    0.8535469107551488
+   ],
+   "iou": 0.66,
+   "ok": true
+  },
+  {
+   "setting": "Wertachse: Logarithmische Skalierung",
+   "patch": {
+    "format": {
+     "valAxis": {
+      "logBase": 10
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.8677777777777778
+   ],
+   "excel_box": [
+    0.015592515592515593,
+    0.15789473684210525,
+    0.91995841995842,
+    0.8581235697940504
+   ],
+   "iou": 0.73,
+   "ok": true
+  },
+  {
+   "setting": "Wertachse: Werte in umgekehrter Reihenfolge",
+   "patch": {
+    "format": {
+     "valAxis": {
+      "reverse": true
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.8633333333333333
+   ],
+   "excel_box": [
+    0.015592515592515593,
+    0.15789473684210525,
+    0.91995841995842,
+    0.8535469107551488
+   ],
+   "iou": 0.73,
+   "ok": true
+  },
+  {
+   "setting": "Wertachse: Horizontale Achse schneidet bei 30",
+   "patch": {
+    "format": {
+     "valAxis": {
+      "crosses": 30
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.9555555555555556
+   ],
+   "excel_box": [
+    0.11330561330561331,
+    0.505720823798627,
+    0.91995841995842,
+    0.8306636155606407
+   ],
+   "iou": 0.27,
+   "ok": false
+  },
+  {
+   "setting": "Wertachse: Anzeigeeinheiten Hunderte",
+   "patch": {
+    "format": {
+     "valAxis": {
+      "dispUnits": "hundreds"
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.8155555555555556
+   ],
+   "excel_box": [
+    0.015592515592515593,
+    0.15789473684210525,
+    0.9230769230769231,
+    0.8604118993135011
+   ],
+   "iou": 0.7,
+   "ok": true
+  },
+  {
+   "setting": "Wertachse: Beschriftungsposition Hoch",
+   "patch": {
+    "format": {
+     "valAxis": {
+      "labelPos": "high"
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.81
+   ],
+   "excel_box": [
+    0.015592515592515593,
+    0.15789473684210525,
+    0.9854469854469855,
+    0.8535469107551488
+   ],
+   "iou": 0.74,
+   "ok": true
+  },
+  {
+   "setting": "Kategorieachse: Beschriftungsposition Niedrig",
+   "patch": {
+    "format": {
+     "catAxis": {
+      "labelPos": "low"
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.9555555555555556
+   ],
+   "excel_box": [
+    0.015592515592515593,
+    0.23569794050343248,
+    0.91995841995842,
+    0.8581235697940504
+   ],
+   "iou": 0.59,
+   "ok": true
+  },
+  {
+   "setting": "Kategorieachse: Bei größter Rubrik",
+   "patch": {
+    "format": {
+     "catAxis": {
+      "crosses": "max"
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.81
+   ],
+   "excel_box": [
+    0.015592515592515593,
+    0.15789473684210525,
+    0.9854469854469855,
+    0.8535469107551488
+   ],
+   "iou": 0.74,
+   "ok": true
+  },
+  {
+   "setting": "Kategorieachse: Abstand zur Achse 500",
+   "patch": {
+    "format": {
+     "catAxis": {
+      "lblOffset": 500
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.81
+   ],
+   "excel_box": [
+    0.015592515592515593,
+    0.2379862700228833,
+    0.91995841995842,
+    0.8627002288329519
+   ],
+   "iou": 0.6,
+   "ok": true
+  },
+  {
+   "setting": "Kategorieachse: Kategorien umgekehrt",
+   "patch": {
+    "format": {
+     "catAxis": {
+      "reverse": true
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.9555555555555556
+   ],
+   "excel_box": [
+    0.015592515592515593,
+    0.15789473684210525,
+    0.9854469854469855,
+    0.8535469107551488
+   ],
+   "iou": 0.71,
+   "ok": true
+  },
+  {
+   "setting": "Zeichnungsfläche: Farbverlauf",
+   "patch": {
+    "format": {
+     "plot": {
+      "fill": {
+       "type": "gradient",
+       "gradient": {
+        "kind": "linear",
+        "angle": 90,
+        "stops": [
+         {
+          "pos": 0,
+          "color": "#FFFFFF"
+         },
+         {
+          "pos": 100,
+          "color": "#4472C4"
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.7977777777777778
+   ],
+   "excel_box": [
+    0.056133056133056136,
+    0.4576659038901602,
+    0.9760914760914761,
+    0.8398169336384439
+   ],
+   "iou": 0.37,
+   "ok": true
+  },
+  {
+   "setting": "Diagrammbereich: Musterfüllung",
+   "patch": {
+    "format": {
+     "chart": {
+      "fill": {
+       "type": "pattern",
+       "pattern": {
+        "preset": "dkUpDiag",
+        "fg": "#A5A5A5",
+        "bg": "#FFFFFF"
+       }
+      }
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.9977777777777778
+   ],
+   "excel_box": [
+    0.002079002079002079,
+    0.004576659038901602,
+    0.997920997920998,
+    0.9954233409610984
+   ],
+   "iou": 0.99,
+   "ok": true
+  },
+  {
+   "setting": "Diagrammbereich: Rahmen doppelt 4 Pt.",
+   "patch": {
+    "format": {
+     "chart": {
+      "line": {
+       "type": "solid",
+       "color": "#000000",
+       "width": 4,
+       "compound": "dbl"
+      }
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "excel_box": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "iou": 1.0,
+   "ok": true
+  },
+  {
+   "setting": "Hauptgitternetz: Strich",
+   "patch": {
+    "format": {
+     "majorGrid": {
+      "line": {
+       "type": "solid",
+       "color": "#7F7F7F",
+       "width": 1,
+       "dash": "dash"
+      }
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.8011111111111111
+   ],
+   "excel_box": [
+    0.056133056133056136,
+    0.16933638443935928,
+    0.9760914760914761,
+    0.8443935926773455
+   ],
+   "iou": 0.69,
+   "ok": true
+  },
+  {
+   "setting": "Legende: Oben rechts",
+   "patch": {
+    "legend": "tr"
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.95
+   ],
+   "excel_box": [
+    0.015592515592515593,
+    0.15789473684210525,
+    0.9771309771309772,
+    0.9427917620137299
+   ],
+   "iou": 0.79,
+   "ok": true
+  },
+  {
+   "setting": "Titel: 20 Pt. fett",
+   "patch": {
+    "format": {
+     "title": {
+      "text": {
+       "size": 20,
+       "bold": true
+      }
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.9555555555555556
+   ],
+   "excel_box": [
+    0.02079002079002079,
+    0.05491990846681922,
+    0.91995841995842,
+    0.8352402745995423
+   ],
+   "iou": 0.73,
+   "ok": true
+  },
+  {
+   "setting": "Reihe A: Schatten",
+   "patch": {
+    "series0": {
+     "effects": {
+      "shadow": {
+       "color": "#000000",
+       "transparency": 40,
+       "blur": 4,
+       "angle": 45,
+       "distance": 6
+      }
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.74
+   ],
+   "excel_box": [
+    0.12058212058212059,
+    0.7322654462242563,
+    0.8648648648648649,
+    0.7894736842105263
+   ],
+   "iou": 0.01,
+   "ok": false
+  },
+  {
+   "setting": "Reihe A: Leuchten 8 Pt.",
+   "patch": {
+    "series0": {
+     "effects": {
+      "glow": {
+       "color": "#FFC000",
+       "size": 8,
+       "transparency": 40
+      }
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.0011111111111111111
+   ],
+   "excel_box": null,
+   "iou": 0.0,
+   "ok": false
+  },
+  {
+   "setting": "Reihe B: Musterfüllung",
+   "patch": {
+    "series1": {
+     "fill": {
+      "type": "pattern",
+      "pattern": {
+       "preset": "pct50",
+       "fg": "#ED7D31",
+       "bg": "#FFFFFF"
+      }
+     }
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.9555555555555556
+   ],
+   "excel_box": [
+    0.1787941787941788,
+    0.2562929061784897,
+    0.91995841995842,
+    0.9427917620137299
+   ],
+   "iou": 0.53,
+   "ok": true
+  },
+  {
+   "setting": "Reihe A: Punkt 3 eigene Farbe",
+   "patch": {
+    "series0": {
+     "points": [
+      {
+       "idx": 2,
+       "fill": {
+        "type": "solid",
+        "color": "#00B050"
+       }
+      }
+     ]
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.72
+   ],
+   "excel_box": [
+    0.5727650727650727,
+    0.7162471395881007,
+    0.6247401247401247,
+    0.7574370709382151
+   ],
+   "iou": 0.0,
+   "ok": false
+  },
+  {
+   "setting": "Reihen: Abstandsbreite 50",
+   "patch": {
+    "gapWidth": 50
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.7277777777777777
+   ],
+   "excel_box": [
+    0.07692307692307693,
+    0.2562929061784897,
+    0.9553014553014553,
+    0.7665903890160183
+   ],
+   "iou": 0.54,
+   "ok": true
+  },
+  {
+   "setting": "Reihe B auf der Sekundärachse",
+   "patch": {
+    "series1": {
+     "secondary": true
+    }
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    0.9822222222222222
+   ],
+   "excel_box": [
+    0.015592515592515593,
+    0.15789473684210525,
+    0.9854469854469855,
+    0.8535469107551488
+   ],
+   "iou": 0.69,
+   "ok": true
+  },
+  {
+   "setting": "Datenbeschriftungen",
+   "patch": {
+    "dataLabels": true
+   },
+   "ours_box": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "excel_box": [
+    0.13513513513513514,
+    0.19908466819221968,
+    0.9033264033264033,
+    0.8260869565217391
+   ],
+   "iou": 0.48,
+   "ok": true
+  }
+ ]
+}

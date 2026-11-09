@@ -354,8 +354,16 @@ function plotAreaGroups(m: ChartModel): string {
   if (main.family === "scatter" || main.family === "bubble") {
     const cat = m.series[0]?.cat;
     const xFmt = cat && cat.cache.some((v) => typeof v === "string") ? null : cat?.format ?? "General";
-    return out + valAx(xFmt, AX_CAT, AX_VAL, "b", t.cat, "midCat", true, m.gridlines, f?.catAxis, f?.valAxis, f, at?.cat, false)
+    const primary = valAx(xFmt, AX_CAT, AX_VAL, "b", t.cat, "midCat", true, m.gridlines, f?.catAxis, f?.valAxis, f, at?.cat, false)
       + valAx(vFmt, AX_VAL, AX_CAT, "l", t.val, "midCat", true, m.gridlines, f?.valAxis, f?.catAxis, f, at?.val);
+    const g2 = groups.find((g) => g.secondary);
+    if (!g2) return out + primary;
+    // Sekundärachse of XY charts (D-111): a Y axis on the right and a hidden X axis of its own (Excel); without
+    // them the part referred to axes it did not have and Excel refused the file.
+    const fmt2 = m.series[g2.idx[0]]?.val.format ?? "General";
+    return out + primary
+      + valAx(fmt2, AX_VAL2, AX_CAT2, "r", undefined, "midCat", false, false, f?.valAxis2, { crosses: "max" }, undefined, undefined, false)
+      + valAx(xFmt, AX_CAT2, AX_VAL2, "b", undefined, "midCat", false, false, { visible: false }, undefined, undefined, undefined, false);
   }
   const bar = main.dir === "bar";
   const between = main.family === "area" || main.family === "surface" ? "midCat" : "between";

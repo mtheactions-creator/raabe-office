@@ -492,7 +492,11 @@ def excel_check(path: Path, models: list[dict], kind: str) -> list[dict]:
     x = ExcelTarget(visible=False)
     out: list[dict] = []
     try:
-        wb = x.app.Workbooks.Open(str(path))
+        try:
+            wb = x.app.Workbooks.Open(str(path))
+        except Exception as e:  # noqa: BLE001
+            # Excel refused the file: one record that says so (the sweep goes on with the next chart type).
+            return [{"index": -1, "label": "(file)", "error": f"Excel did not open the file: {str(e)[:120]}"}]
         ws = wb.Worksheets(1)
         pics = TMP / f"pics-{kind}"
         pics.mkdir(parents=True, exist_ok=True)
