@@ -167,7 +167,7 @@ describe("the pane's options in the file", () => {
   });
 
   it("keeps a date axis and display units without label", () => {
-    const m = chart("line", { format: { catAxis: { axisType: "date", baseTimeUnit: "months", majorUnit: 2, majorTimeUnit: "months" }, valAxis: { dispUnits: 500, dispUnitsLabel: false } } });
+    const m = chart("line", { format: { catAxis: { axisType: "date", baseTimeUnit: "months", majorUnit: 1, majorTimeUnit: "years" }, valAxis: { dispUnits: 500, dispUnitsLabel: false } } });
     m.series.forEach((s) => { s.cat = { cache: [45000, 45031, 45061, 45092], format: "mmm yy" }; });
     const back = roundTrip(m);
     expect(back.format?.catAxis).toEqual(m.format!.catAxis);

@@ -152,7 +152,10 @@ def axis_checks(ax: str, new: dict | None, old: dict | None, other: str) -> list
         out.append((f"{other}.HasAxis({ax.split('(')[1].rstrip(')')})", new.get("visible") is not False))
     out += shape_checks(ax, new, old)
     t, ot = new.get("text") or {}, old.get("text") or {}
-    out += text_checks(f"{ax}.TickLabels" if False else ax, t, ot)
+    # An axis' text is its TickLabels.Font in the object model (Axis.Format has no TextFrame2).
+    for k, prop, conv in [("size", "Size", lambda v: v), ("bold", "Bold", bool), ("italic", "Italic", bool), ("color", "Color", rgb)]:
+        if differs(t.get(k), ot.get(k)) and t.get(k) is not None:
+            out.append((f"{ax}.TickLabels.Font.{prop}", conv(t[k])))
     if differs((t.get("box") or {}).get("rotation"), (ot.get("box") or {}).get("rotation")) and (t.get("box") or {}).get("rotation") is not None:
         out.append((f"{ax}.TickLabels.Orientation", -t["box"]["rotation"]))
     return out

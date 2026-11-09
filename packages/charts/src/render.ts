@@ -770,7 +770,11 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
     // Below the plot: its labels (22.6 pt to the legend or the chart's edge) and an axis title.
     const bottomTitle = (hasCatTitle && !bar) || (hasValTitle && bar);
     const hSize = bar ? vt0.size : ct0.size;
-    const hRoom = (hTexts.some((t) => t) ? 22.6 + (hSize - LOOK.labelSize) + (bar ? 0 : (offset - 1) * 2.92) : 10.5)
+    // Category labels "Achsennah" at an axis inside the plot (negative values) stand in the plot: Excel keeps
+    // only a small margin below it (measured against Excel's export, results/2026-11-09-calc-chartpane-pictures.json).
+    const cv = typeof va?.crosses === "number" ? va.crosses : va?.crosses === "max" ? vScale.max : vScale.log ? vScale.min : 0;
+    const hInterior = !bar && !scatter && !xa?.labelPos && cv > vScale.min && cv < vScale.max;
+    const hRoom = (hTexts.some((t) => t) ? (hInterior ? 13.6 : 22.6 + (hSize - LOOK.labelSize) + (bar ? 0 : (offset - 1) * 2.92)) : 10.5)
       + (catRot && !bar ? Math.max(0, ...hTexts.map((t) => c.measure(t, hSize))) * Math.abs(Math.sin((catRot * Math.PI) / 180)) : 0)
       + (unitLabel && bar ? 12 : 0);
     const bottom = area.bottom - (hEnd ? 10.5 : hRoom) - (bottomTitle ? titleRoom + 2 : 0);

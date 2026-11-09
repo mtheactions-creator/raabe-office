@@ -68,7 +68,9 @@ def apply_js(patch: dict) -> str:
 
 
 def changed_box(a: Image.Image, b: Image.Image) -> tuple[float, float, float, float] | None:
-    a, b = a.convert("RGB"), b.convert("RGB").resize(a.size)
+    # A quarter of the size: anti-aliasing shifted by a fraction of a pixel is not a change.
+    size = (max(1, a.width // 4), max(1, a.height // 4))
+    a, b = a.convert("RGB").resize(size, Image.BOX), b.convert("RGB").resize(size, Image.BOX)
     diff = ImageChops.difference(a, b).convert("L").point(lambda v: 255 if v > 40 else 0)
     box = diff.getbbox()
     if not box:

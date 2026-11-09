@@ -449,9 +449,10 @@ export function readAxis(r: Reader, ax: El, isVal: boolean): AxisOptions | undef
     if (ax.name === "c:dateAx") {
       o.axisType = "date";
       const bu = r.val(r.find(ax, "c:baseTimeUnit")), mtu = r.val(r.find(ax, "c:majorTimeUnit")), ntu = r.val(r.find(ax, "c:minorTimeUnit"));
-      if (bu) o.baseTimeUnit = bu as AxisOptions["baseTimeUnit"];
-      if (mtu) o.majorTimeUnit = mtu as AxisOptions["majorTimeUnit"];
-      if (ntu) o.minorTimeUnit = ntu as AxisOptions["minorTimeUnit"];
+      // Tage is the default Basis; a unit equal to the Basis is the default of Haupt- and Hilfseinheit.
+      if (bu && bu !== "days") o.baseTimeUnit = bu as AxisOptions["baseTimeUnit"];
+      if (mtu && mtu !== (bu ?? "days")) o.majorTimeUnit = mtu as AxisOptions["majorTimeUnit"];
+      if (ntu && ntu !== (bu ?? "days")) o.minorTimeUnit = ntu as AxisOptions["minorTimeUnit"];
       const mu = num(r.find(ax, "c:majorUnit")), nu = num(r.find(ax, "c:minorUnit"));
       if (mu !== undefined) o.majorUnit = mu;
       if (nu !== undefined) o.minorUnit = nu;
