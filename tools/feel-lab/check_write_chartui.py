@@ -160,7 +160,9 @@ class Run:
         self.cases: list[dict] = []
 
     def check(self, name: str, ok: bool, detail="") -> None:
-        self.cases.append({"case": name, "passed": bool(ok), "detail": "" if ok else str(detail)[:600]})
+        # Measured values (picture differences) are kept for passed cases too.
+        keep = not ok or isinstance(detail, (int, float))
+        self.cases.append({"case": name, "passed": bool(ok), "detail": str(detail)[:600] if keep else ""})
         print(("PASS " if ok else "FAIL ") + name + ("" if ok else f"  {str(detail)[:300]}"), flush=True)
 
 
