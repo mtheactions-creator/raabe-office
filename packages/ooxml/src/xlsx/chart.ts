@@ -12,8 +12,8 @@ import {
 } from "@raabe/charts";
 import { attrs, child, children, esc, escText, root, text, unesc, type El } from "./xml";
 import {
-  bodyPrAttrs, crossesXml, defRPrAttrs, dispUnitsXml, effectLstXml, errBarsXml, fillXml, labelFlags, labelsRangeExt, lineXml, markerXml, readAxis, readCrossing,
-  readFormat, readShape, readText, scalingXml, setImageSink, spPrXml, takeImages, tickXml, trendlineXml, type Reader,
+  HIDDEN_NOFILL, bodyPrAttrs, crossesXml, defRPrAttrs, dispUnitsXml, effectLstXml, errBarsXml, fillXml, labelFlags, labelsRangeExt, lineXml, markerXml, readAxis, readCrossing,
+  readFormat, readShape, readText, scalingXml, setImageSink, sp3dXml, spPrXml, takeImages, tickXml, trendlineXml, type Reader,
 } from "./chartfmt";
 import type { AxisOptions, ChartFormat, DataLabelOptions, DataPoint, ElementFormat, ErrorBars, MarkerSymbol, TextFormat, Trendline } from "@raabe/charts";
 import { applyFilterRead, filterXml, unfilterXml, withHiddenCats } from "./chartfilter";
@@ -250,7 +250,7 @@ function catAx(pos: string, titleText: string | undefined, f?: ChartFormat, id =
   const numFmt = o?.numFmt ? `<c:numFmt formatCode="${esc(o.numFmt)}" sourceLinked="0"/>` : '<c:numFmt formatCode="General" sourceLinked="1"/>';
   const date = o?.axisType === "date";
   const tag = date ? "c:dateAx" : "c:catAx";
-  const shape = `<c:spPr>${fillXml(o?.fill, NONE_FILL)}${lineXml(o?.line, GRID_LINE)}${effectLstXml(o?.effects)}</c:spPr>`;
+  const shape = `<c:spPr>${fillXml(o?.fill, NONE_FILL)}${lineXml(o?.line, GRID_LINE)}${effectLstXml(o?.effects)}${sp3dXml(o?.effects?.format3d)}${o?.fill?.type === "none" ? HIDDEN_NOFILL : ""}</c:spPr>`;
   const head = `<${tag}><c:axId val="${id}"/>${scalingXml(o)}<c:delete val="${o?.visible === false ? 1 : 0}"/><c:axPos val="${pos}"/>${grid}${axisTitle(titleText, pos === "l", f?.axisTitles?.cat)}${numFmt}${tickXml("majorTickMark", o?.majorTick)}${tickXml("minorTickMark", o?.minorTick)}<c:tickLblPos val="${o?.labelPos ?? "nextTo"}"/>${shape}${txPr(900, "-60000000", "", o?.text)}<c:crossAx val="${cross}"/>${crossesXml(deleted ? undefined : f?.valAxis)}`;
   const offset = `<c:lblOffset val="${o?.lblOffset ?? 100}"/>`;
   if (date) {
@@ -274,7 +274,7 @@ function valAx(fmt: string | null, id: number, cross: number, pos: string, title
   const units = (o?.majorUnit !== undefined ? `<c:majorUnit val="${o.majorUnit}"/>` : "") + (o?.minorUnit !== undefined ? `<c:minorUnit val="${o.minorUnit}"/>` : "");
   // Achsenposition of the category axis (Auf / Zwischen Teilstrichen) is the value axis' crossBetween.
   const cb = crossing?.onTicks === true ? "midCat" : crossing?.onTicks === false ? "between" : between;
-  return `<c:valAx><c:axId val="${id}"/>${scalingXml(o)}<c:delete val="${o?.visible === false ? 1 : 0}"/><c:axPos val="${pos}"/>${majorGrid}${minorGrid}${axisTitle(titleText, pos === "l", titleFmt)}${numFmt}${tickXml("majorTickMark", o?.majorTick)}${tickXml("minorTickMark", o?.minorTick)}<c:tickLblPos val="${o?.labelPos ?? "nextTo"}"/><c:spPr>${fillXml(o?.fill, NONE_FILL)}${lineXml(o?.line, autoLine)}${effectLstXml(o?.effects)}</c:spPr>${txPr(900, "-60000000", "", o?.text)}<c:crossAx val="${cross}"/>${crossesXml(crossing)}<c:crossBetween val="${cb}"/>${units}${dispUnitsXml(o)}</c:valAx>`;
+  return `<c:valAx><c:axId val="${id}"/>${scalingXml(o)}<c:delete val="${o?.visible === false ? 1 : 0}"/><c:axPos val="${pos}"/>${majorGrid}${minorGrid}${axisTitle(titleText, pos === "l", titleFmt)}${numFmt}${tickXml("majorTickMark", o?.majorTick)}${tickXml("minorTickMark", o?.minorTick)}<c:tickLblPos val="${o?.labelPos ?? "nextTo"}"/><c:spPr>${fillXml(o?.fill, NONE_FILL)}${lineXml(o?.line, autoLine)}${effectLstXml(o?.effects)}${sp3dXml(o?.effects?.format3d)}${o?.fill?.type === "none" ? HIDDEN_NOFILL : ""}</c:spPr>${txPr(900, "-60000000", "", o?.text)}<c:crossAx val="${cross}"/>${crossesXml(crossing)}<c:crossBetween val="${cb}"/>${units}${dispUnitsXml(o)}</c:valAx>`;
 }
 
 /** Series axis (Tiefenachse) of 3-D charts with series in depth and of surfaces. */

@@ -27,11 +27,22 @@ function srgb(color: string, transparency?: number): string {
   return transparency ? `<a:srgbClr val="${hex}"><a:alpha val="${Math.round((100 - transparency) * 1000)}"/></a:srgbClr>` : `<a:srgbClr val="${hex}"/>`;
 }
 
+/** A stop's colour: Helligkeit as lumMod/lumOff (Excel: +40 % is lumMod 60000 lumOff 40000, -30 % lumMod 70000), a design colour as a:schemeClr (D-155). */
+function stopColor(st: Gradient["stops"][number]): string {
+  const b = st.brightness ? Math.max(-100, Math.min(100, st.brightness)) / 100 : 0;
+  const mods = (b > 0 ? `<a:lumMod val="${Math.round((1 - b) * 100000)}"/><a:lumOff val="${Math.round(b * 100000)}"/>` : b < 0 ? `<a:lumMod val="${Math.round((1 + b) * 100000)}"/>` : "")
+    + (st.transparency ? `<a:alpha val="${Math.round((100 - st.transparency) * 1000)}"/>` : "");
+  if (st.theme) return mods ? `<a:schemeClr val="${st.theme}">${mods}</a:schemeClr>` : `<a:schemeClr val="${st.theme}"/>`;
+  const hex = st.color.replace("#", "").slice(0, 6).toUpperCase();
+  return mods ? `<a:srgbClr val="${hex}">${mods}</a:srgbClr>` : `<a:srgbClr val="${hex}"/>`;
+}
+
 function gradXml(g: Gradient): string {
-  const stops = [...g.stops].sort((a, b) => a.pos - b.pos).map((s) => `<a:gs pos="${Math.round(s.pos * 1000)}">${srgb(s.color, s.transparency)}</a:gs>`).join("");
+  const stops = [...g.stops].sort((a, b) => a.pos - b.pos).map((s) => `<a:gs pos="${Math.round(s.pos * 1000)}">${stopColor(s)}</a:gs>`).join("");
+  const fo = g.focus ?? { l: 50, t: 50, r: 50, b: 50 };
   const shade = g.kind === "linear"
     ? `<a:lin ang="${Math.round((((g.angle ?? 0) % 360) + 360) % 360 * 60000)}" scaled="1"/>`
-    : `<a:path path="${g.kind === "radial" ? "circle" : g.kind === "rect" ? "rect" : "shape"}"><a:fillToRect l="50000" t="50000" r="50000" b="50000"/></a:path>`;
+    : `<a:path path="${g.kind === "radial" ? "circle" : g.kind === "rect" ? "rect" : "shape"}"><a:fillToRect l="${Math.round(fo.l * 1000)}" t="${Math.round(fo.t * 1000)}" r="${Math.round(fo.r * 1000)}" b="${Math.round(fo.b * 1000)}"/></a:path>`;
   return `<a:gradFill flip="none" rotWithShape="${g.rotWithShape === false ? 0 : 1}"><a:gsLst>${stops}</a:gsLst>${shade}<a:tileRect/></a:gradFill>`;
 }
 
@@ -90,7 +101,11 @@ export function effectLstXml(e: Effects | undefined): string {
   if (s?.inner) out += `<a:innerShdw blurRad="${emu(s.blur ?? 4)}" dist="${emu(s.distance ?? 3)}" dir="${dir}">${shadowColor}</a:innerShdw>`;
   if (s && !s.inner) {
     const sc = Math.round((s.size ?? 100) * 1000);
-    out += `<a:outerShdw blurRad="${emu(s.blur ?? 4)}" dist="${emu(s.distance ?? 3)}" dir="${dir}"${sc !== 100000 ? ` sx="${sc}" sy="${sc}"` : ""} algn="tl" rotWithShape="0">${shadowColor}</a:outerShdw>`;
+    const p = s.persp;
+    const scale = p
+      ? `${p.sx !== undefined && p.sx !== 100 ? ` sx="${Math.round(p.sx * 1000)}"` : ""} sy="${Math.round(p.sy * 1000)}"${p.kx ? ` kx="${Math.round(p.kx * 60000)}"` : ""} algn="${p.align}"`
+      : `${sc !== 100000 ? ` sx="${sc}" sy="${sc}"` : ""} algn="tl"`;
+    out += `<a:outerShdw blurRad="${emu(s.blur ?? 4)}" dist="${emu(s.distance ?? 3)}" dir="${dir}"${scale} rotWithShape="0">${shadowColor}</a:outerShdw>`;
   }
   const rf = e.reflection;
   if (rf) out += `<a:reflection blurRad="${emu(rf.blur)}" stA="${Math.round((100 - rf.transparency) * 1000)}" endPos="${Math.round(rf.size * 1000)}" dist="${emu(rf.distance)}" dir="5400000" sy="-100000" algn="bl" rotWithShape="0"/>`;
@@ -107,6 +122,9 @@ export function sp3dXml(f: Format3D | undefined): string {
   const clr = (tag: string, c?: string) => (c ? `<a:${tag}>${srgb(c)}</a:${tag}>` : "");
   return `${scene}<a:sp3d${attr}>${bevel("bevelT", f.top)}${bevel("bevelB", f.bottom)}${clr("extrusionClr", f.depth?.color)}${clr("contourClr", f.contour?.color)}</a:sp3d>`;
 }
+
+/** What Excel adds to an axis' c:spPr for Keine Füllung (its automatic fill is a:noFill as well, D-155). */
+export const HIDDEN_NOFILL = '<a:extLst><a:ext uri="{909E8E84-426E-40DD-AFC4-6F175D3DCCD1}"><a14:hiddenFill xmlns:a14="http://schemas.microsoft.com/office/drawing/2010/main"><a:noFill/></a14:hiddenFill></a:ext></a:extLst>';
 
 /** c:spPr from a format; `autoFill` / `autoLine` are Excel's defaults for the element. */
 export function spPrXml(fmt: { fill?: Fill; line?: Line; effects?: Effects } | undefined, autoFill: string, autoLine: string): string {
@@ -220,18 +238,44 @@ function colorOf(r: Reader, holder: El | undefined): { color?: string; transpare
 
 const kidsOf = (r: Reader, el: El) => children(r.xml, el.open, el.close);
 
+/** Helligkeit of a stop's colour from lumMod/lumOff (D-155), in %. */
+function brightnessOf(r: Reader, c: El | undefined): number | undefined {
+  if (!c) return undefined;
+  const mod = r.find(c, "a:lumMod"), off = r.find(c, "a:lumOff");
+  const m = mod ? Number(attrs(r.xml, mod).val) / 100000 : 1, o = off ? Number(attrs(r.xml, off).val) / 100000 : 0;
+  if (!mod && !off) return undefined;
+  const b = o > 0 ? o : m - 1;
+  return Math.round(b * 1000) / 10 || undefined;
+}
+
+/** The colour of a design colour's name in Office's default theme (stops read without the workbook's theme). */
+const THEME_HEX: Record<string, string> = { dk1: "#000000", lt1: "#FFFFFF", tx1: "#000000", bg1: "#FFFFFF", dk2: "#44546A", lt2: "#E7E6E6", tx2: "#44546A", bg2: "#E7E6E6",
+  accent1: "#4472C4", accent2: "#ED7D31", accent3: "#A5A5A5", accent4: "#FFC000", accent5: "#5B9BD5", accent6: "#70AD47" };
+
 function readGradient(r: Reader, g: El): Gradient | undefined {
   const lst = r.find(g, "a:gsLst");
   if (!lst) return undefined;
   const stops = kidsOf(r, lst).filter((k) => k.name === "a:gs").map((gs) => {
-    const c = colorOf(r, gs);
-    return { pos: Math.round(Number(attrs(r.xml, gs).pos ?? 0) / 100) / 10, color: c.color ?? "#FFFFFF", ...(c.transparency ? { transparency: c.transparency } : {}) };
+    const sc = r.find(gs, "a:schemeClr");
+    const c = sc ? { color: THEME_HEX[attrs(r.xml, sc).val ?? ""] } : colorOf(r, gs);
+    const alpha = sc ? r.find(sc, "a:alpha") : undefined;
+    const tr = sc ? (alpha ? Math.round(100 - Number(attrs(r.xml, alpha).val) / 1000) : 0) : c.transparency;
+    const b = brightnessOf(r, sc ?? r.find(gs, "a:srgbClr"));
+    return { pos: Math.round(Number(attrs(r.xml, gs).pos ?? 0) / 100) / 10, color: c.color ?? "#FFFFFF", ...(tr ? { transparency: tr } : {}),
+      ...(b ? { brightness: b } : {}), ...(sc ? { theme: attrs(r.xml, sc).val } : {}) };
   });
   if (!stops.length) return undefined;
   const lin = r.find(g, "a:lin"), path = r.find(g, "a:path");
   const out: Gradient = { kind: "linear", stops };
   if (lin) out.angle = Math.round(Number(attrs(r.xml, lin).ang ?? 0) / 60000);
-  else if (path) { const p = attrs(r.xml, path).path; out.kind = p === "circle" ? "radial" : p === "rect" ? "rect" : "path"; }
+  else if (path) {
+    const p = attrs(r.xml, path).path;
+    out.kind = p === "circle" ? "radial" : p === "rect" ? "rect" : "path";
+    const ft = r.find(path, "a:fillToRect");
+    const fa = ft ? attrs(r.xml, ft) : {};
+    const fo = { l: Number(fa.l ?? 0) / 1000, t: Number(fa.t ?? 0) / 1000, r: Number(fa.r ?? 0) / 1000, b: Number(fa.b ?? 0) / 1000 };
+    if (ft && (fo.l !== 50 || fo.t !== 50 || fo.r !== 50 || fo.b !== 50)) out.focus = fo;
+  }
   if (attrs(r.xml, g).rotWithShape === "0") out.rotWithShape = false;
   return out;
 }
@@ -318,7 +362,11 @@ export function readEffects(r: Reader, holder: El | undefined): Effects | undefi
       const a = attrs(r.xml, sh), c = colorOf(r, sh);
       out.shadow = { color: c.color ?? "#000000", transparency: c.transparency ?? 0, blur: pt(a.blurRad) ?? 0, distance: pt(a.dist) ?? 0, angle: Math.round(Number(a.dir ?? 0) / 60000) };
       if (sh.name === "a:innerShdw") out.shadow.inner = true;
-      if (a.sx && Number(a.sx) !== 100000) out.shadow.size = Number(a.sx) / 1000;
+      const sx = Number(a.sx ?? 100000), sy = Number(a.sy ?? 100000);
+      if (sh.name === "a:outerShdw" && (sx !== sy || a.kx || (a.algn && a.algn !== "tl"))) {
+        // Perspektive (D-155): scaled and skewed about a corner.
+        out.shadow.persp = { sy: sy / 1000, align: a.algn ?? "b", ...(sx !== 100000 ? { sx: sx / 1000 } : {}), ...(a.kx ? { kx: Math.round(Number(a.kx) / 600) / 100 } : {}) };
+      } else if (a.sx && sx !== 100000) out.shadow.size = sx / 1000;
     }
     const rf = r.find(lst, "a:reflection");
     if (rf) {
@@ -466,7 +514,10 @@ export function readAxis(r: Reader, ax: El, isVal: boolean): AxisOptions | undef
   }
   const f = readFormat(r, r.find(ax, "c:spPr"), r.find(ax, "c:txPr"), 900, "-60000000");
   if (f?.line) o.line = f.line;
-  if (f?.fill && f.fill.type !== "none") o.fill = f.fill;
+  // Excel's automatic axis fill is a:noFill too; Keine Füllung chosen in the pane adds a14:hiddenFill (D-155).
+  const sp = r.find(ax, "c:spPr");
+  const hidden = !!sp && r.xml.slice(sp.start, sp.end).includes("<a14:hiddenFill");
+  if (f?.fill && (f.fill.type !== "none" || hidden)) o.fill = f.fill;
   if (f?.effects) o.effects = f.effects;
   if (f?.text) o.text = f.text;
   return Object.keys(o).length ? o : undefined;

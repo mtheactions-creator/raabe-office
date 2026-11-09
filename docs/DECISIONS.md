@@ -4003,3 +4003,38 @@ margin then; fixed). The miss: Abstand zur Achse 500 with labels inside the plot
   pane shows Automatisch after reopening. A Bild- oder Texturfüllung without a chosen picture is not saved.
 - The Alternativtext section stays in Größe und Eigenschaften (Excel 365 moved it to a pane of its own).
 - The Einheiten fields keep Excel's accessible names "Hauptstriche" / "Teilstriche" as their labels.
+
+## D-155 RaabeCalc charts: what D-114 and D-118 left out, recorded in Excel and built (2026-11-09)
+
+Recorded first in an Excel of our own (`probe_excel_chart_followup.py`: COM for the file side, the chart area's Format
+pane through UI Automation for the galleries, no real input; `results/2026-11-09-excel-chart-followup.json` holds
+Excel's XML for each setting, never Office's texture bitmaps), then built the same way:
+- **Voreingestellte Farbverläufe**: Excel's 30 entries (Heller Farbverlauf, Lichtakzent oben, Mittlerer Farbverlauf,
+  Lichtakzent unten, Radialer Farbverlauf, each in Akzent 1-6). Their stops are a design colour with Helligkeit, so a
+  stop keeps `theme` (written as a:schemeClr) and `brightness`; radial ones keep their focus (`Gradient.focus`,
+  a:fillToRect, drawn as the gradient's centre). All 30 write the stops and shading Excel writes (unit test).
+- **Helligkeit** of a gradient stop (-100 … 100 %): lumMod/lumOff on the stop's colour as Excel writes it (+40 % is
+  lumMod 60000 lumOff 40000, -30 % lumMod 70000), drawn and read back.
+- **Textur**: the 24 entries under Excel's names, with tiles of our own (drawn from colours and a grain per texture,
+  `charts/textures.ts`; Office's bitmaps are not ours to ship). Choosing Bild- oder Texturfüllung fills with the first
+  texture at once, tiled, as Excel does; so the choice is now saved (it was lost without a picture). The pane
+  recognises a texture by its picture after reopening.
+- **Perspektive** shadows: Excel's five presets (a:outerShdw with sx/sy/kx/algn, `Shadow.persp`), written as Excel
+  writes them and recognised again after reopening. Drawn as an offset shadow: an SVG filter cannot skew, so the
+  slanted shape of Excel's shadow is not reproduced (the file is exact).
+- **Benutzerdefiniert** error amounts: the radio (Excel starts with ={1} above and below) and **Wert angeben**, which
+  opens Benutzerdefinierte Fehlerindikatoren with Positiver / Negativer Fehlerwert (labels recorded from Excel's
+  dialog); the fields take a range pointed at in the sheet or typed, or values (={1;2;3}); a single value is every
+  point's amount, as in Excel.
+- **3D-Format on axes** (Excel's axis pane has it): offered, saved in the axis' c:spPr and read back.
+- **An axis' Keine Füllung**: Excel writes a:noFill for the automatic axis fill too, and adds a14:hiddenFill for an
+  explicit Keine Füllung; we write and read it the same way, so it no longer comes back as Automatisch.
+- **The chart style part**: styleN.xml and colorsN.xml are written for every chart (RaabeCalc wrote none), and the
+  style part's id is the chosen Diagrammformatvorlage, which is what Excel reports as Chart.ChartStyle (it reported 2).
+  A style part Excel wrote is kept, only its id follows. Its content stays the default style's description (Excel
+  uses it for elements added later), the chart's look itself is in the chart part as before (D-118).
+- **Datentabelle on horizontal bar charts**: drawn (was left out). The categories stay on the vertical axis, the table
+  stands under the value labels with the categories as columns, as Excel's PDF export of a bar chart shows it.
+- **Datenquelle auswählen**: the shrunk dialog (Dialog reduzieren) keeps its top left corner where the dialog stood,
+  as Excel's; it was centred (D-117's own choice, now dropped).
+Still not built: 3D-Drehung of text, X-/Y-Skalierung, Ausrichtung and Spiegelungstyp of tiled textures.

@@ -221,7 +221,7 @@ function buildScene(full: ChartModel, W: number, H: number, opts: RenderOptions)
   else if (info.family === "surface") scene = drawSurface(c, area);
   else if (info.d3 && info.family !== "bubble") scene = draw3D(c, area);
   // Datentabelle under the plot (D-115, datatable.ts).
-  else if (m.dataTable && !isBar(m.kind) && !isScatter(m.kind)) scene = withDataTable(c, area, drawAxes, { catText: (i) => catText(c, m.series[0], i), seriesName: (i) => seriesName(m.series[i], i) });
+  else if (m.dataTable && !isScatter(m.kind)) scene = withDataTable(c, area, drawAxes, { catText: (i) => catText(c, m.series[0], i), seriesName: (i) => seriesName(m.series[i], i) });
   else scene = drawAxes(c, area);
   c.parts.push({ name: "plot", box: scene.plot });
   // An axis' own Füllung (and Effekte): a box under its labels, as Excel fills the axis' label area.
@@ -1043,7 +1043,9 @@ function drawErrorBar(c: Ctx, s: ChartSeries, si: number, x: number, v: number, 
   const e = s.errorBars!;
   if (e.type === "cust") {
     // Benutzerdefiniert (D-125): the amounts from cells; a point without either amount gets no bar.
-    const up = e.plus?.cache[i], down = e.minus?.cache[i];
+    // A single typed value ("={1}") is every point's amount, as in Excel (D-155).
+    const at = (d: typeof e.plus) => (d && !d.ref && d.cache.length === 1 ? d.cache[0] : d?.cache[i]);
+    const up = at(e.plus), down = at(e.minus);
     if ((up === null || up === undefined) && (down === null || down === undefined)) return;
     const ln = linePaint(e.line, { color: "#595959", width: 0.75 });
     if (!ln) return;

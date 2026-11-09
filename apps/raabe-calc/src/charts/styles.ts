@@ -17,6 +17,9 @@ interface StyleRef { id: number; chart: ElRef; plot: ElRef; title: ElRef; legend
 let theme: Record<string, string> = { dk1: "#000000", lt1: "#FFFFFF", dk2: "#44546A", lt2: "#E7E6E6",
   accent1: "#4472C4", accent2: "#ED7D31", accent3: "#A5A5A5", accent4: "#FFC000", accent5: "#5B9BD5", accent6: "#70AD47" };
 
+/** The design colours in use (accent1 … as "#RRGGBB"). */
+export function styleTheme(): Readonly<Record<string, string>> { return theme; }
+
 /** The workbook's design colours (dk1, lt1, accent1 … as "#RRGGBB"). */
 export function setStyleTheme(t: Record<string, unknown>): void {
   const next = { ...theme };
