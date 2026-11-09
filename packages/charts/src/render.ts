@@ -9,7 +9,7 @@
 import { autoScale, maxIntervals, scaleFrac, ticks, type AxisScale } from "./scale";
 import { formatGeneral, r2Text, type NumberFormatter } from "./format";
 import { fitTrend, histogramBins } from "./stats";
-import { beginDefs, effectFilter, endDefs, fillPaint, fixedScale, linePaint, textAttrs, textLook, unitDivisor, withAlpha, type Stroke } from "./paint";
+import { beginDefs, effectFilter, endDefs, fillPaint, setBaseText, fixedScale, linePaint, textAttrs, textLook, unitDivisor, withAlpha, type Stroke } from "./paint";
 import { schemeColor } from "./colors";
 import {
   DEFAULT_AXIS_TITLE, LOOK, OFFICE_ACCENTS, isBar, isPie, isScatter, lum, seriesColor, titleText,
@@ -127,12 +127,14 @@ export interface Ctx {
 /** The chart's shapes for a size in pt. */
 export function chartScene(m: ChartModel, W: number, H: number, opts: RenderOptions = {}): Scene {
   const defs = beginDefs();
+  setBaseText(m.format?.chart?.text);
   try {
     const scene = buildScene(m, W, H, opts);
     if (defs.list.length) scene.defs = defs.list;
     return scene;
   } finally {
     endDefs();
+    setBaseText(undefined);
   }
 }
 

@@ -266,6 +266,9 @@ def close(a, b) -> bool:
         return bool(a) == bool(b) if isinstance(a, (bool, int)) and isinstance(b, (bool, int)) else a == b
     if isinstance(a, (int, float)) and isinstance(b, (int, float)):
         return abs(float(a) - float(b)) < 0.02
+    if isinstance(a, str) and isinstance(b, str):
+        # COM gives some number formats in the local form ("0,000" for the file's "0.000").
+        return a == b or a.replace(",", ".") == b.replace(",", ".")
     return a == b
 
 

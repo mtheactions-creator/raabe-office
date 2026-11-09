@@ -221,7 +221,8 @@ export function lineSection(t: FmtTarget, o: LineOptions): PaneSection {
       const l = t.get()?.line;
       const set = (line: Line | undefined) => t.change((x) => { if (line) x.line = line; else delete x.line; });
       const patch = (p: Partial<Line>) => {
-        const next: Line = { ...(l ?? { type: "auto" }), ...p };
+        const cur: Line = !l || l.type === "auto" ? { ...l, type: "solid", color: l?.color ?? o.autoColor } : l;
+        const next: Line = { ...cur, ...p };
         for (const k of Object.keys(next) as (keyof Line)[]) if (next[k] === undefined) delete next[k];
         set(next);
       };

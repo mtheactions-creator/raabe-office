@@ -202,7 +202,7 @@ function ser(m: ChartModel, s: ChartSeries, i: number): string {
         return `<c:dPt><c:idx val="${k}"/><c:bubble3D val="0"/>${ex}${spPrXml({ fill: p?.fill ?? s.fill, line: p?.line ?? s.line, effects: p?.effects ?? s.effects }, own ? "" : `<a:solidFill>${slice(k)}</a:solidFill>`, ln)}</c:dPt>`;
       }).join("");
       const explosion = s.explosion ? `<c:explosion val="${s.explosion}"/>` : "";
-      return `${head}${own || s.effects ? spPrXml(s, own ? "" : "", ln) : ""}${explosion}${pts}${labels}${catData("cat", s.cat)}${numData("val", s.val)}${ext}</c:ser>`;
+      return `${head}${own || s.effects || s.line ? spPrXml(s, "", ln) : ""}${explosion}${pts}${labels}${catData("cat", s.cat)}${numData("val", s.val)}${ext}</c:ser>`;
     }
     case "bubble": {
       // Blase: the accent at 75 % opacity (Excel's style 201), 3-D bubbles shaded.
@@ -475,7 +475,7 @@ export function chartToXml(model: ChartModel): string {
   return HEAD + `<c:chartSpace xmlns:c="${NS_C}" xmlns:a="${NS_A}" xmlns:r="${NS_R}"><c:date1904 val="0"/><c:lang val="de-DE"/><c:roundedCorners val="${roundedCorners}"/>`
     + `<c:chart>${title}${view3DXml(m)}<c:plotArea><c:layout/>${plotArea(m)}${spPrXml(f?.plot, NONE_FILL, NONE_LINE)}</c:plotArea>${legend}<c:plotVisOnly val="1"/><c:dispBlanksAs val="gap"/></c:chart>`
     + spPrXml(f?.chart, '<a:solidFill><a:schemeClr val="bg1"/></a:solidFill>', `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr">${LINE_GREY}<a:round/></a:ln>`)
-    + `<c:txPr><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr/></a:pPr><a:endParaRPr lang="de-DE"/></a:p></c:txPr>`
+    + (f?.chart?.text ? txPr(1000, "0", "", f.chart.text) : `<c:txPr><a:bodyPr/><a:lstStyle/><a:p><a:pPr><a:defRPr/></a:pPr><a:endParaRPr lang="de-DE"/></a:p></c:txPr>`)
     + `<c:printSettings><c:headerFooter/><c:pageMargins b="0.78740157499999996" l="0.7" r="0.7" t="0.78740157499999996" header="0.3" footer="0.3"/><c:pageSetup/></c:printSettings></c:chartSpace>`;
 }
 
@@ -908,7 +908,10 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
     }
     // The Format pane's settings of the series.
     const shape = readShape(rd, find(xml, s, "c:spPr"));
-    if (shape.fill?.type === "none" || shape.fill?.transparency || (shape.fill && shape.fill.type !== "solid")) out.fill = shape.fill;
+    // Pies keep a solid series fill as their fill (their slices take it instead of the accents).
+    const pieFamily = ["pie", "doughnut", "ofPie"].includes(kindInfo(gk).family);
+    if (shape.fill?.type === "none" || shape.fill?.transparency || (shape.fill && shape.fill.type !== "solid") || (pieFamily && shape.fill)) out.fill = shape.fill;
+    if (pieFamily && shape.fill?.type === "solid") delete out.color;
     if (shape.effects) out.effects = shape.effects;
     const exp = val(xml, find(xml, s, "c:explosion"));
     if (exp !== undefined && Number(exp)) out.explosion = Number(exp);
@@ -1022,7 +1025,9 @@ export function chartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellA
   const chartSp: ChartFormat["chart"] = readShape(rd, find(xml, space, "c:spPr"));
   if (chartSp.line?.type === "auto" && !chartSp.line.width && !chartSp.line.dash && !chartSp.line.compound) delete chartSp.line;
   if (val(xml, find(xml, space, "c:roundedCorners")) === "1") chartSp.roundedCorners = true;
-  put("chart", chartSp.fill || chartSp.line || chartSp.effects || chartSp.roundedCorners ? chartSp : undefined);
+  const chartText = readText(rd, find(xml, space, "c:txPr"), 1000);
+  if (chartText) chartSp.text = chartText;
+  put("chart", chartSp.fill || chartSp.line || chartSp.effects || chartSp.roundedCorners || chartSp.text ? chartSp : undefined);
   // Elements that have no fill and no line by default: "none" is their automatic look.
   const noneIsAuto = <T extends ElementFormat>(x: T | undefined): T | undefined => {
     if (!x) return x;

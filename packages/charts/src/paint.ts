@@ -247,10 +247,16 @@ export function effectFilter(e: Effects | undefined): string | undefined {
   return id ? `url(#${id})` : undefined;
 }
 
-/** Text paint: own size, colour, weight, fill, outline and effects, else the automatic ones. */
-export function textLook(t: TextFormat | undefined, auto: { size: number; color: string }): {
+/** The chart area's text format while a scene is built: the default of every text in the chart (D-111). */
+let baseText: TextFormat | undefined;
+export function setBaseText(t: TextFormat | undefined): void { baseText = t && Object.keys(t).length ? t : undefined; }
+
+/** Text paint: own size, colour, weight, fill, outline and effects, else the chart area's, else the automatic ones. */
+export function textLook(own: TextFormat | undefined, auto: { size: number; color: string }): {
   size: number; fill: string; bold?: boolean; italic?: boolean; underline?: boolean; strike?: boolean; font?: string; outline?: Stroke | null; filter?: string; rotate?: number; reflection?: { opacity: number; dist: number; blur: number };
 } {
+  const t: TextFormat | undefined = baseText ? { ...baseText, ...own, ...(own?.color || own?.fill ? {} : {}) } : own;
+  if (baseText && own && (own.color || own.fill)) { t!.color = own.color; t!.fill = own.fill; }
   let fill = t?.color ?? auto.color;
   if (t?.fill && t.fill.type !== "auto") fill = t.fill.type === "solid" ? withAlpha(t.fill.color ?? fill, t.fill.transparency) : fillPaint(t.fill, fill) ?? fill;
   const out: ReturnType<typeof textLook> = { size: t?.size ?? auto.size, fill, bold: t?.bold, italic: t?.italic };
