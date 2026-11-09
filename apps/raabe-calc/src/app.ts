@@ -10,7 +10,7 @@ import {
 import { readXlsx, writeXlsx, newWorkbook } from "@raabe/ooxml";
 import { onFontAlias, setCloudFonts } from "@raabe/text-engine";
 import {
-  Backstage, Commands, Keytips, Ribbon, TaskPane, TitleBar, baseName, h, icon, installTooltips, messageBox, showDialog, showMenu,
+  Backstage, Commands, Keytips, Ribbon, TaskPane, TitleBar, baseName, h, icon, installTooltips, messageBox, showDialog, showFontColors, showMenu,
   type BackstageEntry, type MenuEntry, type Platform,
 } from "@raabe/shell";
 import { COMMANDS } from "./command-list";
@@ -1035,7 +1035,7 @@ export class CalcApp {
   }
 
   /** Rows without their own height grow with larger fonts and wrapped text (Excel). */
-  private autoRowHeights(r: Rect, force = false): void {
+  autoRowHeights(r: Rect, force = false): void {
     const sheet = this.sheet;
     const rows = new Set<number>();
     for (let row = r.r0; row <= Math.min(r.r1, r.r0 + 5000); row++) {
@@ -1106,18 +1106,34 @@ export class CalcApp {
   }
 
   formatSel(label: string, change: (s: CellStyle) => void): void {
-    this.change(label, () => A.format(this.ctx, this.sheet, this.grid.selection, change));
+    this.change(label, () => {
+      A.format(this.ctx, this.sheet, this.grid.selection, change);
+      // A number format from the ribbon widens columns of standard width whose numbers no longer fit (Excel:
+      // Datum, lang turns 10,27 into 21,27 rather than showing ####, D-142).
+      if (label === "Zahlenformat") this.autoWiden(this.grid.selection);
+    });
     // F4 and Strg+Y (with nothing to redo) repeat the last formatting on the new selection (Excel).
     this.lastRepeat = { label, run: () => this.formatSel(label, change) };
   }
 
   private lastRepeat: { label: string; run: () => void } | null = null;
 
+  /**
+   * A format that changes how tall the text is (Schriftgrad, Textumbruch, Drehen): the rows without a
+   * height of their own fit in the same undo step, so one Strg+Z takes back both (Excel, D-142).
+   */
+  formatSelFit(label: string, change: (s: CellStyle) => void): void {
+    this.change(label, () => {
+      A.format(this.ctx, this.sheet, this.grid.selection, change);
+      for (const r of this.grid.selection) this.autoRowHeights(r);
+    });
+    this.lastRepeat = { label, run: () => this.formatSelFit(label, change) };
+  }
+
   /** Ausrichtung > Text drehen: the angle, and the rows grow for it (Excel). */
   private rotateText(deg: number): void {
     const cur = this.activeStyle().rotation;
-    this.formatSel("Ausrichtung", (s) => { s.rotation = cur === deg ? undefined : deg; });
-    this.change("Zeilenhöhe", () => this.autoRowHeights(this.grid.selection.at(-1)!));
+    this.formatSelFit("Ausrichtung", (s) => { s.rotation = cur === deg ? undefined : deg; });
   }
 
   private toggleFont(key: "bold" | "italic" | "strike"): void {
@@ -1167,8 +1183,24 @@ export class CalcApp {
   }
   private lastBorder = "bottom";
 
-  private merge(kind: "center" | "across" | "merge" | "unmerge"): void {
-    const sel = this.grid.selection;
+  private async merge(kind: "center" | "across" | "merge" | "unmerge"): Promise<void> {
+    const sel = this.grid.selection.map((r) => ({ ...r }));
+    if (kind !== "unmerge") {
+      // Excel asks before values other than the top-left one (of each row for Verbinden über) are lost.
+      const lost = sel.some((r) => {
+        for (const [k, c] of this.sheet.cells) {
+          const row = Math.floor(k / MAX_COLS), col = k % MAX_COLS;
+          if (row < r.r0 || row > r.r1 || col < r.c0 || col > r.c1 || (c.v === null && !c.f) || col === r.c0 && (row === r.r0 || kind === "across")) continue;
+          return true;
+        }
+        return false;
+      });
+      if (lost) {
+        const ok = await showDialog({ title: "RaabeCalc", body: "Beim Verbinden bleibt nur der Wert der Zelle oben links erhalten; die Werte der anderen Zellen gehen verloren.",
+          buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+        if (!ok) return;
+      }
+    }
     this.change("Verbinden", () => {
       this.history.merges(this.sheet);
       for (const r of sel) {
@@ -1177,12 +1209,13 @@ export class CalcApp {
         const parts = kind === "across" ? Array.from({ length: r.r1 - r.r0 + 1 }, (_, i) => ({ r0: r.r0 + i, r1: r.r0 + i, c0: r.c0, c1: r.c1 })) : [r];
         for (const p of parts) {
           if (p.r0 === p.r1 && p.c0 === p.c1) continue;
-          // Excel keeps only the top-left value.
+          // Excel keeps only the top-left value, and the whole area takes the top-left cell's format.
           this.history.cells(this.sheet, p);
+          const s = this.sheet.get(p.r0, p.c0)?.s;
           for (let row = p.r0; row <= p.r1; row++) for (let col = p.c0; col <= p.c1; col++) {
             if (row === p.r0 && col === p.c0) continue;
             const c = this.sheet.get(row, col);
-            if (c) this.sheet.set(row, col, { v: null, s: c.s });
+            if (c || s !== undefined) this.sheet.set(row, col, s === undefined ? undefined : { v: null, s });
           }
           this.sheet.merges.push(p);
         }
@@ -1616,9 +1649,20 @@ export class CalcApp {
     });
   }
 
+  /**
+   * Registerfarbe: Excel's colour palette (Designfarben, Standardfarben, Keine Farbe, Weitere Farben...) for the
+   * active sheet's tab. The menu showed the colours' codes as text ("#C00000") before (D-142).
+   */
+  tabColorPalette(anchor: DOMRect): void {
+    showFontColors(anchor, (v) => {
+      if (this.protection.bookLocked()) return;
+      const hex = v === "auto" ? undefined : this.designs.pick(v)?.hex;
+      this.change("Registerfarbe", () => { this.history.whole(this.sheet); this.sheet.tabColor = hex; });
+    }, undefined, undefined, this.designs.paletteTheme(), "Weitere Farben...", "Keine Farbe");
+  }
+
   private sheetMenu(e: MouseEvent): void {
     const i = this.wb.active;
-    const colors = ["#C00000", "#FF0000", "#FFC000", "#FFFF00", "#92D050", "#00B050", "#00B0F0", "#0070C0", "#002060", "#7030A0"];
     const entries: MenuEntry[] = [
       { label: "Einfügen...", run: () => void this.commands.run("cells.insertSheet") },
       { label: "Löschen", run: () => void this.commands.run("cells.deleteSheet"), disabled: this.wb.sheets.filter((s) => !s.hidden).length < 2 },
@@ -1626,11 +1670,9 @@ export class CalcApp {
       { label: "Verschieben oder kopieren...", run: () => void this.dlg.moveSheet() },
       "-",
       { label: "Code anzeigen", run: () => {}, disabled: true },
-      { label: "Blatt schützen...", run: () => {}, disabled: true },
-      { label: "Registerfarbe", submenu: [
-        { label: "Keine Farbe", disabled: this.protection.bookLocked(), run: () => this.change("Registerfarbe", () => { this.history.whole(this.sheet); this.sheet.tabColor = undefined; }) },
-        ...colors.map((c) => ({ label: c, icon: undefined, disabled: this.protection.bookLocked(), run: () => this.change("Registerfarbe", () => { this.history.whole(this.sheet); this.sheet.tabColor = c; }) })),
-      ] },
+      // Blatt schützen works here as on the ribbon (it was greyed out); Registerfarbe shows Excel's palette.
+      { label: "Blatt schützen...", run: () => void this.commands.run("cells.protectSheet"), disabled: !this.commands.isEnabled("cells.protectSheet") },
+      { label: "Registerfarbe", disabled: this.protection.bookLocked(), run: () => this.tabColorPalette(new DOMRect(e.clientX, e.clientY, 0, 0)) },
       "-",
       { label: "Ausblenden", run: () => void this.commands.run("cells.hideSheet"), disabled: this.wb.sheets.filter((s) => !s.hidden).length < 2 },
       { label: "Einblenden...", run: () => void this.commands.run("cells.unhideSheet"), disabled: !this.wb.sheets.some((s) => s.hidden) },
@@ -1762,6 +1804,8 @@ export class CalcApp {
       this.change("AutoSumme", () => {
         for (const t of targets) A.enter(this.ctx, this.sheet, { r0: t.row, c0: t.col, r1: t.row, c1: t.col }, `=${fn}(${rangeName(t.ref)})`);
       });
+      // The selection takes in the results below it (Excel: B2:G5 becomes B2:G6).
+      if (!lastRowEmpty) this.grid.select({ ...sel, r1: sel.r1 + 1 }, { ...this.sheet.view.active });
       return;
     }
     const { r0: row, c0: col } = sel;
@@ -1884,7 +1928,7 @@ export class CalcApp {
     }, undefined, () => st()[key] === value || (key === "v" && value === "bottom" && !st().v));
     align("v", "top", "align.top"); align("v", "center", "align.middle"); align("v", "bottom", "align.bottom");
     align("h", "left", "align.left"); align("h", "center", "align.center"); align("h", "right", "align.right");
-    run("align.wrap", () => { const on = !st().wrap; this.formatSel("Textumbruch", (s) => { s.wrap = on || undefined; }); this.change("Zeilenhöhe", () => this.autoRowHeights(this.grid.selection.at(-1)!)); }, undefined, () => !!st().wrap);
+    run("align.wrap", () => { const on = !st().wrap; this.formatSelFit("Textumbruch", (s) => { s.wrap = on || undefined; }); }, undefined, () => !!st().wrap);
     run("align.indentMore", () => this.formatSel("Einzug", (s) => { s.indent = Math.min(250, (s.indent ?? 0) + 1); if (!s.h || s.h === "general" || s.h === "center") s.h = "left"; }));
     run("align.indentLess", () => this.formatSel("Einzug", (s) => { s.indent = Math.max(0, (s.indent ?? 0) - 1) || undefined; }));
     run("align.mergeCenter", () => this.merge(this.hasMergeInSelection() ? "unmerge" : "center"), undefined, () => this.hasMergeInSelection());
@@ -1906,6 +1950,11 @@ export class CalcApp {
     run("styles.conditional", () => {});
     run("styles.table", () => {});
     run("styles.cell", () => {});
+    // Seitenlayout > Designs, Farben, Schriftarten open their galleries; without a command behind them
+    // the buttons stayed grey and the galleries could not be reached by hand (D-142).
+    run("layout.themes", () => {});
+    run("layout.colors", () => {});
+    run("layout.fonts", () => {});
 
     const selRect = () => this.grid.selection.at(-1)!;
     const rowsOf = (r: Rect) => ({ at: r.r0, count: r.r1 - r.r0 + 1 });
@@ -1969,6 +2018,11 @@ export class CalcApp {
     run("cells.lock", () => { const on = st().locked === false; this.formatSel("Zelle sperren", (s) => { s.locked = on ? undefined : false; }); }, undefined, () => st().locked !== false);
     run("cells.insertMenu", () => void this.commands.run("cells.insert"));
     run("cells.deleteMenu", () => void this.commands.run("cells.delete"));
+    run("cells.insertButton", () => void this.commands.run("cells.insert"), () => this.commands.isEnabled("cells.insert"));
+    run("cells.deleteButton", () => void this.commands.run("cells.delete"), () => this.commands.isEnabled("cells.delete"));
+    run("edit.autosumButton", () => void this.commands.run("edit.autosum"), () => this.commands.isEnabled("edit.autosum"));
+    // Menus: open only (a dropdown is enabled when one of its entries is).
+    for (const id of ["edit.fillMenu", "edit.clearMenu", "data.sortMenu", "edit.findMenu"]) run(id, () => {});
 
     run("edit.autosum", () => this.autoSum("SUMME"));
     run("edit.autoAverage", () => this.autoSum("MITTELWERT"));
@@ -2186,8 +2240,8 @@ export class CalcApp {
     for (const id of ["formulas.recent", "formulas.financial", "formulas.logical", "formulas.text", "formulas.dateTime", "formulas.lookup", "formulas.math", "formulas.more"]) run(id, () => {});
     run("formulas.nameManager", () => void this.dlg.nameManager());
     run("formulas.defineName", () => void this.dlg.defineName());
-    run("formulas.createFromSelection", () => void this.dlg.defineName());
-    run("formulas.showFormulas", () => { this.showFormulas = !this.showFormulas; document.body.classList.toggle("show-formulas", this.showFormulas); this.grid.contentChanged(); }, undefined, () => this.showFormulas);
+    run("formulas.createFromSelection", () => void this.dlg.createFromSelection());
+    run("formulas.showFormulas", () => { this.showFormulas = !this.showFormulas; this.grid.contentChanged(); this.commands.refresh?.(); }, undefined, () => this.showFormulas);
     run("formulas.calcOptions", () => {});
     // Berechnungsoptionen: Manuell leaves formulas until F9 (the status bar says "Berechnen").
     const setMode = (m: "autoNoTable" | "manual" | undefined) => () => {
@@ -2545,7 +2599,9 @@ export class CalcApp {
   /** Excel's task pane at the right (Format panes). */
   readonly taskPane = new TaskPane();
 
-  showFormulas = false;
+  /** Formeln anzeigen: a setting of each sheet's window, saved with the file (Excel's showFormulas, D-142). */
+  get showFormulas(): boolean { return !!this.sheet?.view.showFormulas; }
+  set showFormulas(on: boolean) { if (this.sheet) this.sheet.view.showFormulas = on || undefined; }
   showNotes = false;
 
   private activeCellNote(): string | undefined {
@@ -2557,8 +2613,7 @@ export class CalcApp {
     const sizes = [8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72];
     const cur = this.activeStyle().font.size;
     const next = d > 0 ? sizes.find((s) => s > cur) ?? Math.min(409, cur + 10) : [...sizes].reverse().find((s) => s < cur) ?? Math.max(1, cur - 1);
-    this.formatSel("Schriftgrad", (s) => { s.font.size = next; });
-    this.change("Zeilenhöhe", () => this.autoRowHeights(this.grid.selection.at(-1)!));
+    this.formatSelFit("Schriftgrad", (s) => { s.font.size = next; });
   }
 
   private toggleView(key: "showGrid" | "showHeaders"): void {
@@ -2763,11 +2818,11 @@ export class CalcApp {
         { label: "Filter", submenu: [{ cmd: "data.filterClear" }, { cmd: "data.filterReapply" }, { label: "Nach dem Wert der ausgewählten Zelle filtern", run: () => this.dlg.filterByActive() }] },
         { label: "Sortieren", submenu: [{ cmd: "data.sortAsc", label: "Nach Größe sortieren (aufsteigend)" }, { cmd: "data.sortDesc", label: "Nach Größe sortieren (absteigend)" }, { cmd: "data.sort", label: "Benutzerdefiniertes Sortieren..." }] },
         "-",
-        { label: "Neuer Kommentar", run: () => {}, disabled: true },
+        { label: "Neuer Kommentar", run: () => void this.commands.run("insert.comment"), disabled: !this.commands.isEnabled("insert.comment") },
         note ? { cmd: "review.editNote" } : { cmd: "review.newNote", label: "Neue Notiz" },
         ...(note ? [{ cmd: "review.deleteNote" } as MenuEntry] : []),
         { cmd: "cells.formatDialog" },
-        { label: "Dropdown-Auswahlliste...", run: () => {}, disabled: true },
+        { label: "Dropdown-Auswahlliste...", run: () => this.grid.pickList() },
         { label: "Namen definieren...", run: () => void this.dlg.defineName() },
         { cmd: "insert.link" }];
     }
@@ -2791,8 +2846,7 @@ export class CalcApp {
       setSize: (v) => {
         const n = Number(v.replace(",", "."));
         if (!(n >= 1 && n <= 409)) { void messageBox("RaabeCalc", "Die Zahl muss zwischen 1 und 409 liegen."); return; }
-        this.formatSel("Schriftgrad", (s) => { s.font.size = n; });
-        this.change("Zeilenhöhe", () => this.autoRowHeights(this.grid.selection.at(-1)!));
+        this.formatSelFit("Schriftgrad", (s) => { s.font.size = n; });
         this.recorder.font();
       },
       fontColor: () => this.designs.pick(this.lastFontColor)?.hex ?? this.lastFontColor,
@@ -2850,12 +2904,12 @@ export class CalcApp {
           { label: "Farbskalen", submenu: () => this.dlg.conditionalScaleMenu() },
           { label: "Symbolsätze", submenu: () => this.dlg.conditionalIconMenu() },
           "-",
-          { label: "Neue Regel...", run: () => {}, disabled: true },
+          { label: "Neue Regel...", run: () => void this.dlg.newRule(1) },
           { label: "Regeln löschen", submenu: [
             { label: "Regeln in ausgewählten Zellen löschen", run: () => this.dlg.clearConditional(true) },
             { label: "Regeln im gesamten Blatt löschen", run: () => this.dlg.clearConditional(false) },
           ] },
-          { label: "Regeln verwalten...", run: () => {}, disabled: true },
+          { label: "Regeln verwalten...", run: () => void this.dlg.manageRules() },
         ],
         insertCells: [{ cmd: "cells.insertDialog" }, { cmd: "cells.insertRows" }, { cmd: "cells.insertCols" }, "-", { cmd: "cells.insertSheet" }],
         deleteCells: [{ label: "Zellen löschen...", run: () => void this.dlg.deleteCells() }, { cmd: "cells.deleteRows" }, { cmd: "cells.deleteCols" }, "-", { cmd: "cells.deleteSheet" }],
@@ -2864,7 +2918,7 @@ export class CalcApp {
           { heading: "Sichtbarkeit" },
           { label: "Ausblenden und Einblenden", submenu: [{ cmd: "cells.hideRows" }, { cmd: "cells.hideCols" }, { cmd: "cells.hideSheet" }, "-", { cmd: "cells.unhideRows" }, { cmd: "cells.unhideCols" }, { cmd: "cells.unhideSheet" }] },
           { heading: "Blätter anordnen" }, { cmd: "cells.renameSheet" }, { cmd: "cells.moveSheet" },
-          { label: "Registerfarbe", submenu: ["#C00000", "#FF0000", "#FFC000", "#FFFF00", "#92D050", "#00B050", "#00B0F0", "#0070C0", "#002060", "#7030A0"].map((col) => ({ label: col, run: () => { if (this.protection.bookLocked()) return; this.change("Registerfarbe", () => { this.history.whole(this.sheet); this.sheet.tabColor = col; }); } })) },
+          { label: "Registerfarbe", run: () => this.tabColorPalette(document.querySelector("[data-keytip=FF]")?.getBoundingClientRect() ?? new DOMRect(200, 120, 0, 0)) },
           { heading: "Schutz" }, { cmd: "cells.protectSheet" }, { cmd: "cells.lock" }, { cmd: "cells.formatDialog" },
         ],
         autosum: [{ cmd: "edit.autosum" }, { cmd: "edit.autoAverage" }, { cmd: "edit.autoCount" }, { cmd: "edit.autoMax" }, { cmd: "edit.autoMin" }, "-", { cmd: "formulas.insertFunction", label: "Weitere Funktionen..." }],
@@ -2908,7 +2962,9 @@ export class CalcApp {
         fitWidth: ["Automatisch", "1 Seite", "2 Seiten", "3 Seiten"].map((l, i) => ({ label: l, run: () => this.print.setFit("width", i) })),
         fitHeight: ["Automatisch", "1 Seite", "2 Seiten", "3 Seiten"].map((l, i) => ({ label: l, run: () => this.print.setFit("height", i) })),
         align: () => this.shapes.arrange.alignMenu(),
-        rotate: this.shapes.rotateMenu,
+        // Drehen acts on selected objects only: with cells selected Excel greys it (D-142).
+        rotate: this.shapes.rotateMenu.map((e) => (typeof e === "object" && "run" in e
+          ? Object.defineProperty({ ...e }, "disabled", { get: () => this.shapes.count() === 0, enumerable: true }) : e)),
         group: this.shapes.grouping.menu,
       },
       panels: { cellStyles: (close) => this.dlg.cellStylesPanel(close), tableStyles: (close) => this.dlg.tableStylesPanel(close), shapes: (close) => this.shapes.gallery(close),

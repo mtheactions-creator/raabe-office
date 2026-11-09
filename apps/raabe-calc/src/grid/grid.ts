@@ -2371,7 +2371,7 @@ export class Grid {
   }
 
   /** Dropdown-Auswahlliste: the different texts above and below in the column, sorted; the chosen one is entered. */
-  private pickList(typing = false): void {
+  pickList(typing = false): void {
     const { row, col } = this.active;
     const seen = new Map<string, string>();
     const scan = (dir: 1 | -1) => {

@@ -4,7 +4,7 @@
 // Notizen, Funktion einfügen, Zoom, Inhalte einfügen, bedingte Formatierung.
 
 import {
-  MAX_COLS, MAX_ROWS, cellName, colName, FUNCTIONS_DE, FORMAT_CATEGORIES, localFormat, fileFormat, parseRange, rangeName,
+  MAX_COLS, MAX_ROWS, cellName, colName, FUNCTIONS_DE, FORMAT_CATEGORIES, localFormat, fileFormat, parseRange, rangeName, shiftFormula,
   type Cell, type CondRule, type Rect, type Sheet,
 } from "@raabe/sheet-engine";
 import { colorGrid, h, messageBox, showDialog, showMenu, type MenuEntry } from "@raabe/shell";
@@ -13,6 +13,7 @@ import * as A from "./actions";
 import { shown, editText } from "./engine";
 import { DEFAULT_COL_CHARS, charsToPx, shownChars, shownToChars } from "./grid/metrics";
 import type { Settings } from "./store";
+import { condRules, hexColor, textRule } from "./condrules";
 import { CUSTOM_OPS, NUMBER_FILTERS, TEXT_FILTERS, fromCustom, passes, prepare as prepareFilter, toCustom } from "./filters";
 
 const field = (label: string, input: HTMLElement) => h("label", { class: "field" }, label, input);
@@ -112,6 +113,26 @@ export function dialogs(app: CalcApp) {
     const showSample = () => {
       try { preview.textContent = shown(sample, { ...st, numFmt: fileFormat(codeBox.value) }).text || " "; } catch { preview.textContent = "Ungültiges Format"; }
     };
+    // Dezimalstellen and 1.000er-Trennzeichen of the number categories (Excel's Zahlen tab, D-142): they
+    // rewrite the code picked in the list.
+    const DEC_CATS = ["Zahl", "Währung", "Buchhaltung", "Prozent", "Wissenschaft"];
+    const decimals = h("input", { type: "number", min: "0", max: "30", value: "2", style: "width:60px", "aria-label": "Dezimalstellen:" }) as HTMLInputElement;
+    const thousands = checkbox("1.000er-Trennzeichen verwenden (.)");
+    const decRow = h("div", null, field("Dezimalstellen:", decimals));
+    const applyDigits = (code: string) => {
+      const n = Math.max(0, Math.min(30, Math.round(num(decimals.value) || 0)));
+      // The first number of each section only (not the exponent of 0,00E+00).
+      let out = code.split(";").map((sec) => sec.replace(/((?:#,##)?0)(\.0+)?/, (_m, i: string) => i + (n ? "." + "0".repeat(n) : ""))).join(";").replace(/"-"\?+/g, `"-"${"?".repeat(n)}`);
+      if (catList.value === "Zahl") out = thousands.input.checked ? out.replace(/(^|[^#,0.])0(?=[.;_ \\]|$)/g, "$1#,##0") : out.replace(/#,##0/g, "0");
+      return out;
+    };
+    const showDigits = () => {
+      decRow.hidden = !DEC_CATS.includes(catList.value);
+      thousands.el.hidden = catList.value !== "Zahl";
+    };
+    const digitsChanged = () => { if (codeList.value) { codeBox.value = localFormat(applyDigits(codeList.value)); showSample(); } };
+    decimals.oninput = digitsChanged;
+    thousands.input.onchange = digitsChanged;
     const fillCodes = () => {
       const c = cats.find((x) => x.name === catList.value);
       codeList.replaceChildren(...(c?.codes ?? []).map((f) => h("option", { value: f }, localFormat(f))));
@@ -119,20 +140,46 @@ export function dialogs(app: CalcApp) {
         const cur = c.codes.find((f) => f === st.numFmt) ?? c.codes[0];
         codeList.value = cur;
         codeBox.value = localFormat(cur);
+        const m = /0\.(0+)/.exec(cur.split(";")[0]);
+        decimals.value = String(m ? m[1].length : 0);
+        thousands.input.checked = cur.includes("#,##0");
       }
       if (c?.name === "Standard") codeBox.value = "Standard";
       if (c?.name === "Text") codeBox.value = "@";
+      showDigits();
       showSample();
     };
-    const curCat = cats.find((c) => c.codes.includes(st.numFmt))?.name ?? (st.numFmt === "General" ? "Standard" : "Benutzerdefiniert");
+    // A code that is a category's code with other decimals (0,000) belongs to that category.
+    let curCat = cats.find((c) => c.codes.includes(st.numFmt))?.name ?? (st.numFmt === "General" ? "Standard" : "Benutzerdefiniert");
+    let curBase: string | null = null;
+    if (curCat === "Benutzerdefiniert") {
+      const m = /0\.(0+)/.exec(st.numFmt.split(";")[0]);
+      decimals.value = String(m ? m[1].length : 0);
+      for (const c of cats.filter((x) => DEC_CATS.includes(x.name))) {
+        catList.value = c.name;
+        for (const th of [false, true]) {
+          thousands.input.checked = th;
+          const hit = c.codes.find((f) => applyDigits(f) === st.numFmt);
+          if (hit && !curBase) { curCat = c.name; curBase = hit; }
+        }
+      }
+    }
     catList.value = curCat;
     catList.onchange = fillCodes;
-    codeList.onchange = () => { codeBox.value = localFormat(codeList.value); showSample(); };
+    codeList.onchange = () => { codeBox.value = localFormat(DEC_CATS.includes(catList.value) ? applyDigits(codeList.value) : codeList.value); showSample(); };
     codeBox.oninput = showSample;
-    if (curCat !== "Benutzerdefiniert") fillCodes();
-    else { codeList.replaceChildren(...(cats.find((c) => c.name === "Benutzerdefiniert")?.codes ?? []).map((f) => h("option", { value: f }, localFormat(f)))); showSample(); }
+    if (curBase) {
+      const keep = decimals.value, th = st.numFmt.includes("#,##0");
+      fillCodes();
+      codeList.value = curBase;
+      decimals.value = keep;
+      thousands.input.checked = th;
+      codeBox.value = localFormat(st.numFmt);
+      showSample();
+    } else if (curCat !== "Benutzerdefiniert") fillCodes();
+    else { codeList.replaceChildren(...(cats.find((c) => c.name === "Benutzerdefiniert")?.codes ?? []).map((f) => h("option", { value: f }, localFormat(f)))); showDigits(); showSample(); }
     panels.Zahlen = h("div", { class: "fc-num" }, h("div", null, h("div", { class: "fc-label" }, "Kategorie:"), catList),
-      h("div", { class: "fc-right" }, h("div", { class: "fc-label" }, "Beispiel"), preview, h("div", { class: "fc-label" }, "Typ:"), codeBox, codeList));
+      h("div", { class: "fc-right" }, h("div", { class: "fc-label" }, "Beispiel"), preview, decRow, thousands.el, h("div", { class: "fc-label" }, "Typ:"), codeBox, codeList));
 
     // Ausrichtung.
     const hSel = h("select", null, ...[["general", "Standard"], ["left", "Links (Einzug)"], ["center", "Zentriert"], ["right", "Rechts (Einzug)"], ["fill", "Ausfüllen"], ["justify", "Blocksatz"], ["centerContinuous", "Über Auswahl zentrieren"], ["distributed", "Verteilt (Einzug)"]]
@@ -163,7 +210,8 @@ export function dialogs(app: CalcApp) {
     let lineStyle = "thin";
     const styleSel = h("select", null, ...[["thin", "Dünn"], ["medium", "Mittel"], ["thick", "Dick"], ["double", "Doppelt"], ["dotted", "Gepunktet"], ["dashed", "Gestrichelt"], ["hair", "Haarlinie"]]
       .map(([v, l]) => h("option", { value: v }, l))) as HTMLSelectElement;
-    styleSel.onchange = () => { lineStyle = styleSel.value; };
+    // The line style chosen applies to the sides already set as well (Excel draws the sides with the style picked).
+    styleSel.onchange = () => { lineStyle = styleSel.value; for (const k of ["top", "bottom", "left", "right"] as const) if (borders[k]) borders[k] = { style: lineStyle }; };
     const sideBox = (k: "top" | "bottom" | "left" | "right", label: string) => {
       const c = checkbox(label, !!borders[k]);
       c.input.onchange = () => { borders[k] = c.input.checked ? { style: lineStyle } : undefined; };
@@ -174,14 +222,14 @@ export function dialogs(app: CalcApp) {
     panels.Rahmen = h("div", null, field("Linienart:", styleSel), h("div", { class: "fc-label" }, "Voreinstellungen"),
       h("div", { class: "fc-presets" },
         h("button", { type: "button", onclick: () => { preset = "none"; for (const s of sides) s.input.checked = false; for (const k of ["top", "bottom", "left", "right"] as const) borders[k] = undefined; } }, "Keine"),
-        h("button", { type: "button", onclick: () => { preset = "outline"; for (const s of sides) s.input.checked = true; } }, "Außen"),
+        h("button", { type: "button", onclick: () => { preset = "outline"; for (const s of sides) s.input.checked = true; for (const k of ["top", "bottom", "left", "right"] as const) borders[k] = { style: lineStyle }; } }, "Außen"),
         h("button", { type: "button", onclick: () => { preset = "inside"; } }, "Innen")),
       h("div", { class: "fc-label" }, "Rahmen"), ...sides.map((s) => s.el));
 
     // Ausfüllen.
     let fill = st.fill ?? "";
     const fillSample = h("div", { class: "fc-fill-sample", style: `background:${fill || "#fff"}` });
-    const grid = colorGrid((c) => { fill = c; fillSample.style.background = c || "#fff"; });
+    const grid = colorGrid((c) => { fill = hexColor(c); fillSample.style.background = fill || "#fff"; });
     panels.Ausfüllen = h("div", null, h("button", { type: "button", onclick: () => { fill = ""; fillSample.style.background = "#fff"; } }, "Keine Farbe"),
       h("div", { class: "fc-palette" }, ...grid), h("div", { class: "fc-label" }, "Beispiel"), fillSample);
 
@@ -197,37 +245,52 @@ export function dialogs(app: CalcApp) {
     for (const t of tabs) nav.append(h("button", { type: "button", "data-tab": t, role: "tab", onclick: () => show(t) }, t));
     body.append(...Object.values(panels));
     show(tab);
+    // What the dialog showed when it opened: OK changes only what the user changed in it, every other
+    // property keeps each selected cell's own value (Excel; a mixed selection must not take the active
+    // cell's format, D-142).
+    const shownAt = () => ({
+      code: codeBox.value, h: hSel.value, v: vSel.value, indent: indent.value, rot: rot.value, wrap: wrap.input.checked, shrink: shrink.input.checked,
+      name: fName.value.trim(), size: fSize.value.trim(), style: fStyle.value, under: fUnder.value, color: fColor, strike: strike.input.checked,
+      sup: sup.input.checked, sub: sub.input.checked, fill, locked: locked.input.checked, hidden: hidden.input.checked,
+    });
+    const initial = shownAt();
     const ok = await showDialog({ title: "Zellen formatieren", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
     if (!ok) return;
+    const now = shownAt();
+    const changed = (k: keyof typeof now) => now[k] !== initial[k];
     let code: string;
     try { code = codeBox.value === "Standard" ? "General" : fileFormat(codeBox.value); } catch { code = st.numFmt; }
     const before = app.activeStyle();
     const changedBorders = JSON.stringify(borders) !== JSON.stringify(before.borders) || preset !== null;
     app.change("Zellen formatieren", () => {
       A.format(app.ctx, sheet(), app.grid.selection, (s) => {
-        s.numFmt = code;
-        s.h = hSel.value === "general" ? undefined : hSel.value as never;
-        s.v = vSel.value === "bottom" ? undefined : vSel.value as never;
-        s.indent = Number(indent.value) || undefined;
+        if (changed("code")) s.numFmt = code;
+        if (changed("h")) s.h = hSel.value === "general" ? undefined : hSel.value as never;
+        if (changed("v")) s.v = vSel.value === "bottom" ? undefined : vSel.value as never;
+        if (changed("indent")) s.indent = Number(indent.value) || undefined;
         const deg = Number(rot.value) || 0;
-        s.rotation = deg === 0 ? undefined : deg > 0 ? deg : 90 - deg;
-        s.wrap = wrap.input.checked || undefined;
-        s.shrink = shrink.input.checked || undefined;
-        s.font.name = fName.value.trim() || s.font.name;
+        if (changed("rot")) s.rotation = deg === 0 ? undefined : deg > 0 ? deg : 90 - deg;
+        if (changed("wrap")) s.wrap = wrap.input.checked || undefined;
+        if (changed("shrink")) s.shrink = shrink.input.checked || undefined;
+        if (changed("name")) s.font.name = fName.value.trim() || s.font.name;
         const size = num(fSize.value);
-        if (size >= 1 && size <= 409) s.font.size = size;
-        s.font.bold = fStyle.value.includes("Fett") || undefined;
-        s.font.italic = fStyle.value.includes("Kursiv") || undefined;
-        s.font.underline = (fUnder.value || undefined) as never;
-        s.font.color = fColor || undefined;
-        s.font.strike = strike.input.checked || undefined;
-        s.font.vertAlign = sup.input.checked ? "superscript" : sub.input.checked ? "subscript" : undefined;
-        s.fill = fill || undefined;
-        if (fill !== (before.fill ?? "")) s.fillXml = undefined;
-        s.locked = locked.input.checked ? undefined : false;
-        s.hidden = hidden.input.checked || undefined;
+        if (changed("size") && size >= 1 && size <= 409) s.font.size = size;
+        if (changed("style")) {
+          s.font.bold = fStyle.value.includes("Fett") || undefined;
+          s.font.italic = fStyle.value.includes("Kursiv") || undefined;
+        }
+        if (changed("under")) s.font.underline = (fUnder.value || undefined) as never;
+        if (changed("color")) s.font.color = fColor || undefined;
+        if (changed("strike")) s.font.strike = strike.input.checked || undefined;
+        if (changed("sup") || changed("sub")) s.font.vertAlign = sup.input.checked ? "superscript" : sub.input.checked ? "subscript" : undefined;
+        if (changed("fill")) { s.fill = fill || undefined; s.fillXml = undefined; }
+        if (changed("locked")) s.locked = locked.input.checked ? undefined : false;
+        if (changed("hidden")) s.hidden = hidden.input.checked || undefined;
       });
       if (changedBorders) applyBorderSides(borders, preset, lineStyle);
+      if (changed("code")) app.autoWiden(app.grid.selection);
+      // Taller text (Schriftgrad, Zeilenumbruch, Drehung): the rows fit in the same step (Excel).
+      if (changed("size") || changed("wrap") || changed("rot") || changed("name")) for (const r of app.grid.selection) app.autoRowHeights(r);
       const merged = app.sheet.merges.some((m) => A.overlaps(m, sel()));
       if (mergeBox.input.checked !== merged) {
         app.history.merges(sheet());
@@ -256,7 +319,7 @@ export function dialogs(app: CalcApp) {
 
   function openColors(anchor: HTMLElement, pick: (hex: string) => void): void {
     const pop = h("div", { class: "menu fc-pop" }, h("button", { type: "button", onclick: () => { pick(""); pop.remove(); } }, "Automatisch"),
-      h("div", { class: "fc-palette" }, ...colorGrid((c) => { pick(c); pop.remove(); })));
+      h("div", { class: "fc-palette" }, ...colorGrid((c) => { pick(hexColor(c)); pop.remove(); })));
     const r = anchor.getBoundingClientRect();
     pop.style.cssText = `position:fixed;left:${r.left}px;top:${r.bottom + 2}px;z-index:90`;
     document.body.append(pop);
@@ -348,9 +411,12 @@ export function dialogs(app: CalcApp) {
   // ----- sorting and filtering ----------------------------------------------------------------------
 
   /** The range to sort: the selection, or the current region around the active cell, with Excel's header guess. */
-  function sortRange(): { rect: Rect; header: boolean } {
-    let r = sel();
+  function sortRange(from: Rect = sel()): { rect: Rect; header: boolean } {
+    let r = from;
     if (r.r0 === r.r1 && r.c0 === r.c1) r = app.grid.currentRegion(r.r0, r.c0);
+    // Whole rows or columns: only as far as there is data.
+    const used = sheet().usedRange();
+    if (used && (r.r1 > used.r1 || r.c1 > used.c1)) r = { ...r, r1: Math.max(r.r0, Math.min(r.r1, used.r1)), c1: Math.max(r.c0, Math.min(r.c1, used.c1)) };
     const firstRowText = range(r.c0, r.c1).every((c) => typeof sheet().get(r.r0, c)?.v === "string");
     const secondRowHasNumbers = range(r.c0, r.c1).some((c) => typeof sheet().get(r.r0 + 1, c)?.v === "number");
     return { rect: r, header: firstRowText && (secondRowHasNumbers || r.r1 > r.r0) && r.r1 > r.r0 && !range(r.c0, r.c1).every((c) => typeof sheet().get(r.r0 + 1, c)?.v === "string" && firstRowText && false) };
@@ -379,11 +445,22 @@ export function dialogs(app: CalcApp) {
         }
         return 0;
       });
-      rows.forEach((cells, i) => cells.forEach((c, j) => {
-        const row = rect.r0 + i, col = rect.c0 + j;
-        sheet().set(row, col, c.v === null && c.s === undefined && !c.f ? undefined : { ...c });
-      }));
+      placeRows(rect, rows, origin);
       moveThreads(rect, rows.map((cells) => origin.get(cells)!));
+    });
+  }
+
+  /**
+   * Puts sorted rows into place. A formula moves with its row as if copied there: its relative
+   * references follow (=B3*2 from row 3 becomes =B2*2 in row 2), absolute ones stay (Excel, D-142).
+   */
+  function placeRows(rect: Rect, rows: Cell[][], origin: Map<Cell[], number>): void {
+    rows.forEach((cells, i) => {
+      const row = rect.r0 + i, d = row - origin.get(cells)!;
+      cells.forEach((c, j) => {
+        const col = rect.c0 + j;
+        sheet().set(row, col, c.v === null && c.s === undefined && !c.f ? undefined : { ...c, ...(c.f !== undefined && d ? { f: shiftFormula(c.f, d, 0) } : {}) });
+      });
     });
   }
 
@@ -406,22 +483,49 @@ export function dialogs(app: CalcApp) {
         const st = app.wb.styles.get(cells[col - rect.c0].s);
         return passes({ color }, cells[col - rect.c0], "", { fill: st.fill, color: st.font.color });
       };
+      const origin = new Map(rows.map((cells, i) => [cells, rect.r0 + i]));
       const sorted = [...rows.filter(hit), ...rows.filter((x) => !hit(x))];
-      sorted.forEach((cells, i) => cells.forEach((c, j) => {
-        sheet().set(rect.r0 + i, rect.c0 + j, c.v === null && c.s === undefined && !c.f ? undefined : { ...c });
-      }));
+      placeRows(rect, sorted, origin);
     });
   }
 
-  function sortQuick(asc: boolean): void {
-    const { rect, header } = sortRange();
+  /**
+   * Sortierwarnung: a selection of several cells with data beside it. Excel asks whether to take the
+   * neighbouring columns along (Markierung erweitern, the default) or to sort the selection alone,
+   * which tears the rows apart (D-142). Null: Abbrechen.
+   */
+  async function sortTarget(): Promise<{ rect: Rect; header: boolean } | null> {
+    const s = sel();
+    if (s.r0 === s.r1 && s.c0 === s.c1) return sortRange();
+    const used = sheet().usedRange();
+    if (!used) return sortRange();
+    const top = Math.min(s.r0, used.r1), left = Math.min(s.c0, used.c1);
+    const near = app.grid.currentRegion(top, left);
+    const region = { r0: Math.min(near.r0, s.r0), c0: Math.min(near.c0, s.c0), r1: Math.max(near.r1, Math.min(s.r1, used.r1)), c1: Math.max(near.c1, Math.min(s.c1, used.c1)) };
+    if (region.c0 >= s.c0 && region.c1 <= s.c1) return sortRange();
+    const body = h("div", null, h("p", null, "Neben der Markierung stehen weitere Daten. Wenn die Markierung nicht erweitert wird, bleiben sie, wo sie sind, und gehören danach nicht mehr zu ihren Zeilen."),
+      h("div", { class: "fc-label" }, "Wie möchten Sie fortfahren?"),
+      radio("sortw", "Markierung erweitern", "expand", true), radio("sortw", "Mit bestehender Markierung fortfahren", "keep"));
+    const ok = await showDialog({ title: "Sortierwarnung", body, buttons: [{ label: "Sortieren", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return null;
+    if (picked(body, "sortw") !== "expand") return sortRange(s);
+    app.grid.select(region, { ...app.sheet.view.active });
+    return sortRange(region);
+  }
+
+  async function sortQuick(asc: boolean): Promise<void> {
+    const target = await sortTarget();
+    if (!target) return;
+    const { rect, header } = target;
     const body = header ? { ...rect, r0: rect.r0 + 1 } : rect;
     if (body.r0 > body.r1) return;
     doSort(body, [{ col: app.sheet.view.active.col, asc }]);
   }
 
   async function sort(): Promise<void> {
-    const { rect, header } = sortRange();
+    const target = await sortTarget();
+    if (!target) return;
+    const { rect, header } = target;
     const hasHeader = checkbox("Daten haben Überschriften", header);
     const colSel = h("select", null) as HTMLSelectElement;
     const fill = () => {
@@ -499,11 +603,16 @@ export function dialogs(app: CalcApp) {
 
   function filterByActive(): void {
     const a = app.sheet.view.active;
-    if (!sheet().autoFilter) { const { rect } = sortRange(); app.change("Filtern", () => { app.history.whole(sheet()); sheet().autoFilter = { ref: rect, columns: {} }; }); }
-    const f = sheet().autoFilter!;
     const c = sheet().get(a.row, a.col);
     const t = shown(c, app.wb.styles.get(c?.s)).text;
-    app.change("Filtern", () => { app.history.whole(sheet()); f.columns[a.col - f.ref.c0] = { values: [t] }; applyFilter(); });
+    // One undo step, as in Excel: switching the AutoFilter on (when it was off) and filtering by the value (D-142).
+    app.change("Filtern", () => {
+      app.history.whole(sheet());
+      if (!sheet().autoFilter) sheet().autoFilter = { ref: sortRange().rect, columns: {} };
+      const f = sheet().autoFilter!;
+      f.columns[a.col - f.ref.c0] = { values: [t] };
+      applyFilter();
+    });
   }
 
   /**
@@ -801,6 +910,9 @@ export function dialogs(app: CalcApp) {
     });
   }
 
+  /** Neue Regel..., Weitere Regeln... and Regeln verwalten... (condrules.ts, D-143). */
+  const cr = condRules(app, addRule);
+
   const PRESETS: Record<string, CondRule["format"]> = {
     "Hellrote Füllung 2 mit dunkelrotem Text": { fill: "#FFC7CE", color: "#9C0006" },
     "Gelbe Füllung mit dunkelgelbem Text": { fill: "#FFEB9C", color: "#9C5700" },
@@ -827,34 +939,100 @@ export function dialogs(app: CalcApp) {
       { label: "Kleiner als...", run: () => void ruleDialog("Kleiner als", "Zellen formatieren, die KLEINER SIND ALS:", 1, (v, f) => ({ type: "cellIs", operator: "lessThan", formulas: [toFile(v[0])], format: f })) },
       { label: "Zwischen...", run: () => void ruleDialog("Zwischen", "Zellen formatieren, die ZWISCHEN folgenden Werten liegen:", 2, (v, f) => ({ type: "cellIs", operator: "between", formulas: [toFile(v[0]), toFile(v[1])], format: f })) },
       { label: "Gleich...", run: () => void ruleDialog("Gleich", "Zellen formatieren, die GLEICH SIND:", 1, (v, f) => ({ type: "cellIs", operator: "equal", formulas: [toFile(v[0])], format: f })) },
-      { label: "Textinhalt...", run: () => void ruleDialog("Textinhalt", "Zellen formatieren, die folgenden Text enthalten:", 1, (v, f) => ({ type: "containsText", operator: "containsText", text: v[0], format: f })) },
-      { label: "Doppelte Werte...", run: () => void addRule({ type: "duplicateValues", format: PRESETS["Hellrote Füllung 2 mit dunkelrotem Text"] }) },
+      { label: "Textinhalt...", run: () => void ruleDialog("Textinhalt", "Zellen formatieren, die folgenden Text enthalten:", 1, (v, f) => textRule("containsText", v[0], app.grid.selection[0], f)) },
+      { label: "Datum...", run: () => void dateRuleDialog() },
+      { label: "Doppelte Werte...", run: () => void duplicateDialog() },
+      "-",
+      { label: "Weitere Regeln...", run: () => void cr.newRule(1) },
     ];
+  }
+
+  /** The preset list of the rule dialogs ("Zu übernehmendes Format"). */
+  const presetSelect = () => h("select", { "aria-label": "Zu übernehmendes Format" }, ...Object.keys(PRESETS).map((k) => h("option", { value: k }, k))) as HTMLSelectElement;
+  const ruleOk = (title: string, body: HTMLElement) => showDialog({ title, body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+  const row = (...kids: (HTMLElement | string)[]) => h("div", { style: "display:flex;gap:8px;align-items:center" }, ...kids);
+
+  /** Obere/Untere 10 Elemente / %: how many (1 to 1000 items, 1 to 100 %), then the format (Excel's dialogs, D-143). */
+  async function topDialog(bottom: boolean, percent: boolean): Promise<void> {
+    const title = `${bottom ? "Untere" : "Obere"} 10 ${percent ? "%" : "Elemente"}`;
+    const n = h("input", { type: "number", min: "1", max: percent ? "100" : "1000", value: "10", style: "width:64px", "aria-label": bottom ? "Zellen mit den niedrigsten Werten formatieren" : "Zellen mit den höchsten Werten formatieren" }) as HTMLInputElement;
+    const preset = presetSelect();
+    const body = h("div", null, h("p", null, bottom ? "Zellen mit den niedrigsten Werten formatieren:" : "Zellen mit den höchsten Werten formatieren:"), row(n, h("span", null, percent ? "% mit" : "mit"), preset));
+    if (!await ruleOk(title, body)) return;
+    const v = Math.round(num(n.value));
+    if (!(v >= 1 && v <= (percent ? 100 : 1000))) return void messageBox("RaabeCalc", percent ? "Geben Sie eine ganze Zahl zwischen 1 und 100 ein." : "Geben Sie eine ganze Zahl zwischen 1 und 1000 ein.");
+    void addRule({ type: "top10", rank: v, ...(percent ? { percent: true } : {}), ...(bottom ? { bottom: true } : {}), format: PRESETS[preset.value] });
+  }
+
+  async function averageDialog(above: boolean): Promise<void> {
+    const preset = presetSelect();
+    const body = h("div", null, h("p", null, above ? "Zellen formatieren, die ÜBER DEM DURCHSCHNITT liegen:" : "Zellen formatieren, die UNTER DEM DURCHSCHNITT liegen:"), row(h("span", null, "Für ausgewählten Bereich mit"), preset));
+    if (!await ruleOk(above ? "Über dem Durchschnitt" : "Unter dem Durchschnitt", body)) return;
+    void addRule({ type: "aboveAverage", above, format: PRESETS[preset.value] });
+  }
+
+  async function duplicateDialog(): Promise<void> {
+    const kind = h("select", { "aria-label": "Zellen formatieren, die folgende Werte enthalten" }, h("option", { value: "dup" }, "Doppelte"), h("option", { value: "uni" }, "Eindeutige")) as HTMLSelectElement;
+    const preset = presetSelect();
+    const body = h("div", null, h("p", null, "Zellen formatieren, die folgende Werte enthalten:"), row(kind, h("span", null, "Werte mit"), preset));
+    if (!await ruleOk("Doppelte Werte", body)) return;
+    void addRule({ type: kind.value === "uni" ? "uniqueValues" : "duplicateValues", format: PRESETS[preset.value] });
+  }
+
+  /** Datum: the periods of Excel's list and the formula Excel writes for each (top-left cell `c`). */
+  const PERIODS: [string, string, (c: string) => string][] = [
+    ["yesterday", "Gestern", (c) => `FLOOR(${c},1)=TODAY()-1`],
+    ["today", "Heute", (c) => `FLOOR(${c},1)=TODAY()`],
+    ["tomorrow", "Morgen", (c) => `FLOOR(${c},1)=TODAY()+1`],
+    ["last7Days", "In den letzten 7 Tagen", (c) => `AND(TODAY()-FLOOR(${c},1)<=6,FLOOR(${c},1)<=TODAY())`],
+    ["lastWeek", "Letzte Woche", (c) => `AND(TODAY()-ROUNDDOWN(${c},0)>=(WEEKDAY(TODAY())),TODAY()-ROUNDDOWN(${c},0)<(WEEKDAY(TODAY())+7))`],
+    ["thisWeek", "Diese Woche", (c) => `AND(TODAY()-ROUNDDOWN(${c},0)<=WEEKDAY(TODAY())-1,ROUNDDOWN(${c},0)-TODAY()<=7-WEEKDAY(TODAY()))`],
+    ["nextWeek", "Nächste Woche", (c) => `AND(ROUNDDOWN(${c},0)-TODAY()>(7-WEEKDAY(TODAY())),ROUNDDOWN(${c},0)-TODAY()<(15-WEEKDAY(TODAY())))`],
+    ["lastMonth", "Letzter Monat", (c) => `AND(MONTH(${c})=MONTH(EDATE(TODAY(),0-1)),YEAR(${c})=YEAR(EDATE(TODAY(),0-1)))`],
+    ["thisMonth", "Dieser Monat", (c) => `AND(MONTH(${c})=MONTH(TODAY()),YEAR(${c})=YEAR(TODAY()))`],
+    ["nextMonth", "Nächster Monat", (c) => `AND(MONTH(${c})=MONTH(EDATE(TODAY(),0+1)),YEAR(${c})=YEAR(EDATE(TODAY(),0+1)))`],
+  ];
+
+  async function dateRuleDialog(): Promise<void> {
+    const period = h("select", { "aria-label": "Zellen mit Datum formatieren" }, ...PERIODS.map(([v, l]) => h("option", { value: v }, l))) as HTMLSelectElement;
+    const preset = presetSelect();
+    const body = h("div", null, h("p", null, "Zellen mit Datum formatieren:"), row(period, h("span", null, "mit"), preset));
+    if (!await ruleOk("Datum", body)) return;
+    const p = PERIODS.find((x) => x[0] === period.value)!;
+    const tl = app.grid.selection[0];
+    void addRule({ type: "timePeriod", timePeriod: p[0], formulas: [p[2](cellName(tl.r0, tl.c0))], format: PRESETS[preset.value] });
   }
 
   function conditionalTopMenu(): MenuEntry[] {
     return [
-      { label: "Obere 10 Elemente...", run: () => void addRule({ type: "top10", rank: 10, format: PRESETS["Hellrote Füllung 2 mit dunkelrotem Text"] }) },
-      { label: "Obere 10 %...", run: () => void addRule({ type: "top10", rank: 10, percent: true, format: PRESETS["Hellrote Füllung 2 mit dunkelrotem Text"] }) },
-      { label: "Untere 10 Elemente...", run: () => void addRule({ type: "top10", rank: 10, bottom: true, format: PRESETS["Hellrote Füllung 2 mit dunkelrotem Text"] }) },
-      { label: "Untere 10 %...", run: () => void addRule({ type: "top10", rank: 10, bottom: true, percent: true, format: PRESETS["Hellrote Füllung 2 mit dunkelrotem Text"] }) },
-      { label: "Über dem Durchschnitt...", run: () => void addRule({ type: "aboveAverage", above: true, format: PRESETS["Hellrote Füllung 2 mit dunkelrotem Text"] }) },
-      { label: "Unter dem Durchschnitt...", run: () => void addRule({ type: "aboveAverage", above: false, format: PRESETS["Hellrote Füllung 2 mit dunkelrotem Text"] }) },
+      { label: "Obere 10 Elemente...", run: () => void topDialog(false, false) },
+      { label: "Obere 10 %...", run: () => void topDialog(false, true) },
+      { label: "Untere 10 Elemente...", run: () => void topDialog(true, false) },
+      { label: "Untere 10 %...", run: () => void topDialog(true, true) },
+      { label: "Über dem Durchschnitt...", run: () => void averageDialog(true) },
+      { label: "Unter dem Durchschnitt...", run: () => void averageDialog(false) },
+      "-",
+      { label: "Weitere Regeln...", run: () => void cr.newRule(2) },
     ];
   }
 
   function conditionalBarMenu(): MenuEntry[] {
-    const bars: [string, string][] = [["Blaue Datenleiste", "#638EC6"], ["Grüne Datenleiste", "#63BE7B"], ["Rote Datenleiste", "#FF555A"], ["Orangefarbene Datenleiste", "#FFB628"], ["Hellblaue Datenleiste", "#008AEF"], ["Lila Datenleiste", "#D6007B"]];
-    return bars.map(([l, c]) => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c] }) }));
+    // Excel's names (recorded in the inventory, D-143); the gradient bars (Farbverlauf). Einfarbige Füllung needs
+    // Excel 2010's extension of the rule and is left for later.
+    const bars: [string, string][] = [["Blauer Datenbalken", "#638EC6"], ["Grüner Datenbalken", "#63C384"], ["Roter Datenbalken", "#FF555A"], ["Orangefarbener Datenbalken", "#FFB628"], ["Hellblauer Datenbalken", "#008AEF"], ["Lilafarbener Datenbalken", "#D6007B"]];
+    return [{ heading: "Farbverlauf" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c] }) })), "-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) }];
   }
 
   function conditionalScaleMenu(): MenuEntry[] {
+    // Excel's twelve scales by its names. A name lists the colours from the highest value down; the rule keeps
+    // them from the lowest up (Grün-Gelb-Rot: lowest red, highest green, D-143).
+    const R = "#F8696B", Y = "#FFEB84", G = "#63BE7B", W = "#FCFCFF", B = "#5A8AC6", Y2 = "#FFEF9C";
     const scales: [string, string[]][] = [
-      ["Grün - Gelb - Rot", ["#F8696B", "#FFEB84", "#63BE7B"].reverse()], ["Rot - Gelb - Grün", ["#F8696B", "#FFEB84", "#63BE7B"]],
-      ["Grün - Weiß - Rot", ["#63BE7B", "#FCFCFF", "#F8696B"]], ["Rot - Weiß - Grün", ["#F8696B", "#FCFCFF", "#63BE7B"]],
-      ["Weiß - Rot", ["#FCFCFF", "#F8696B"]], ["Grün - Weiß", ["#63BE7B", "#FCFCFF"]],
+      ["Grün-Gelb-Rot", [R, Y, G]], ["Rot-Gelb-Grün", [G, Y, R]], ["Grün-Weiß-Rot", [R, W, G]], ["Rot-Weiß-Grün", [G, W, R]],
+      ["Blau-Weiß-Rot", [R, W, B]], ["Rot-Weiß-Blau", [B, W, R]], ["Weiß-Rot", [R, W]], ["Rot-Weiß", [W, R]],
+      ["Grün-Weiß", [W, G]], ["Weiß-Grün", [G, W]], ["Grün-Gelb", [Y2, G]], ["Gelb-Grün", [G, Y2]],
     ];
-    return scales.map(([l, c]) => ({ label: `Farbskala ${l}`, run: () => void addRule({ type: "colorScale", colors: c }) }));
+    return [...scales.map(([l, c]): MenuEntry => ({ label: `${l}-Farbskala`, run: () => void addRule({ type: "colorScale", colors: c }) })), "-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) }];
   }
 
   /** Symbolsätze, in the gallery's groups (Richtungen, Formen, Indikatoren, Bewertungen). */
@@ -864,15 +1042,42 @@ export function dialogs(app: CalcApp) {
       out.push({ heading: group });
       for (const [label, set] of sets) out.push({ label, run: () => void addRule(iconRule(set)) });
     }
+    out.push("-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) });
     return out;
   }
 
   function clearConditional(selection: boolean): void {
+    // Nothing to delete: no undo step (Excel).
+    const list = sheet().conditional ?? [];
+    if (!list.some((f) => !selection || f.ref.some((r) => app.grid.selection.some((s) => A.overlaps(r, s))))) return;
     app.change("Regeln löschen", () => {
       app.history.whole(sheet());
       if (!selection) { sheet().conditional = undefined; return; }
-      sheet().conditional = (sheet().conditional ?? []).filter((f) => !f.ref.some((r) => app.grid.selection.some((s) => A.overlaps(r, s))));
+      // Excel takes the selected cells out of each rule's range; a rule left without cells goes.
+      const out = [];
+      for (const f of sheet().conditional ?? []) {
+        let ref = f.ref;
+        for (const s of app.grid.selection) ref = ref.flatMap((r) => subtract(r, s));
+        if (!ref.length) continue;
+        // The formulas are written for the range's top-left cell: when that moves, they move with it.
+        const dr = ref[0].r0 - f.ref[0].r0, dc = ref[0].c0 - f.ref[0].c0;
+        const rules = dr || dc ? f.rules.map((r) => (r.formulas ? { ...r, formulas: r.formulas.map((x) => shiftFormula(x, dr, dc)) } : r)) : f.rules;
+        out.push({ ...f, ref, rules });
+      }
+      sheet().conditional = out.length ? out : undefined;
     });
+  }
+
+  /** A rectangle without the cells of another: up to four rectangles (above, below, left, right). */
+  function subtract(r: Rect, s: Rect): Rect[] {
+    if (!A.overlaps(r, s)) return [r];
+    const out: Rect[] = [];
+    if (s.r0 > r.r0) out.push({ ...r, r1: s.r0 - 1 });
+    if (s.r1 < r.r1) out.push({ ...r, r0: s.r1 + 1 });
+    const r0 = Math.max(r.r0, s.r0), r1 = Math.min(r.r1, s.r1);
+    if (s.c0 > r.c0) out.push({ r0, r1, c0: r.c0, c1: s.c0 - 1 });
+    if (s.c1 < r.c1) out.push({ r0, r1, c0: s.c1 + 1, c1: r.c1 });
+    return out;
   }
 
   // ----- names, notes, links, symbols, functions ----------------------------------------------------------
@@ -889,6 +1094,48 @@ export function dialogs(app: CalcApp) {
     app.change("Namen definieren", () => {
       app.history.sheets();
       app.wb.names = [...app.wb.names.filter((x) => x.name.toLowerCase() !== n.toLowerCase()), { name: n, ref: ref.value.replace(/^=/, "") }];
+    });
+  }
+
+  /**
+   * Aus Auswahl erstellen (Strg+Umschalt+F3): names from the labels in the selection's top row, left
+   * column, bottom row or right column, each naming the cells beside it (Excel's dialog, D-142).
+   */
+  async function createFromSelection(): Promise<void> {
+    const r = sel();
+    const isText = (row: number, col: number) => typeof sheet().get(row, col)?.v === "string";
+    const multiRow = r.r1 > r.r0, multiCol = r.c1 > r.c0;
+    const topGuess = multiRow && range(r.c0 + (multiCol ? 1 : 0), r.c1).some((c) => isText(r.r0, c));
+    const leftGuess = multiCol && range(r.r0 + (multiRow ? 1 : 0), r.r1).some((row) => isText(row, r.c0));
+    const top = checkbox("Oberster Zeile", topGuess), left = checkbox("Linker Spalte", leftGuess), bottom = checkbox("Unterster Zeile"), right = checkbox("Rechter Spalte");
+    const body = h("div", null, h("div", { class: "fc-label" }, "Namen erstellen aus den Werten in:"), top.el, left.el, bottom.el, right.el);
+    const ok = await showDialog({ title: "Namen aus Auswahl erstellen", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    if (!ok) return;
+    const t = top.input.checked, l = left.input.checked, b = bottom.input.checked, rt = right.input.checked;
+    if (!(t || l || b || rt)) return;
+    const body0 = { r0: r.r0 + (t ? 1 : 0), r1: r.r1 - (b ? 1 : 0), c0: r.c0 + (l ? 1 : 0), c1: r.c1 - (rt ? 1 : 0) };
+    if (body0.r0 > body0.r1 || body0.c0 > body0.c1) return void messageBox("RaabeCalc", "Aus dieser Auswahl lassen sich keine Namen bilden.");
+    const clean = (v: unknown) => {
+      let n = String(v ?? "").trim().replace(/\s+/g, "_").replace(/[^A-Za-z0-9ÄÖÜäöüß_.\\]/g, "");
+      if (!n) return "";
+      if (/^\d/.test(n) || /^[A-Za-z]{1,3}\d+$/.test(n) || /^[rcRC]$/.test(n)) n = "_" + n;
+      return n;
+    };
+    const abs = (x: Rect) => `${quoteSheet(sheet().name)}!${rangeName(x).replace(/([A-Z]+)(\d+)/g, "$$$1$$$2")}`;
+    const made: { name: string; ref: string }[] = [];
+    const add = (label: unknown, x: Rect) => { const n = clean(label); if (n && !made.some((m) => m.name.toLowerCase() === n.toLowerCase())) made.push({ name: n, ref: abs(x) }); };
+    for (let c = body0.c0; c <= body0.c1; c++) {
+      if (t) add(sheet().get(r.r0, c)?.v, { r0: body0.r0, r1: body0.r1, c0: c, c1: c });
+      if (b) add(sheet().get(r.r1, c)?.v, { r0: body0.r0, r1: body0.r1, c0: c, c1: c });
+    }
+    for (let row = body0.r0; row <= body0.r1; row++) {
+      if (l) add(sheet().get(row, r.c0)?.v, { r0: row, r1: row, c0: body0.c0, c1: body0.c1 });
+      if (rt) add(sheet().get(row, r.c1)?.v, { r0: row, r1: row, c0: body0.c0, c1: body0.c1 });
+    }
+    if (!made.length) return;
+    app.change("Namen erstellen", () => {
+      app.history.sheets();
+      app.wb.names = [...app.wb.names.filter((x) => !made.some((m) => m.name.toLowerCase() === x.name.toLowerCase())), ...made];
     });
   }
 
@@ -922,7 +1169,7 @@ export function dialogs(app: CalcApp) {
     if (!ok || !address.value.trim()) return;
     app.change("Link", () => {
       app.history.cell(sheet(), a.row, a.col);
-      const s = app.wb.styles.derive(c?.s, (st) => { st.font.color = "#0563C1"; st.font.underline = "single"; });
+      const s = app.wb.styles.derive(c?.s, (st) => { st.font.color = "#0563C1"; st.font.theme = { t: 10 }; st.font.underline = "single"; });
       sheet().set(a.row, a.col, { ...(c ?? { v: null }), v: shownText.value || address.value, link: address.value.trim(), s });
     });
   }
@@ -1031,7 +1278,7 @@ export function dialogs(app: CalcApp) {
   return {
     colWidth, defaultWidth, rowHeight, insertCells, deleteCells, formatCells, find, goto, sortQuick, sort, hasFilter, toggleFilter, clearFilter,
     reapplyFilter, filterByActive, filterMenu, textToColumns, removeDuplicates, series, tableStylesPanel, formatAsTable, cellStylesPanel,
-    addRule, conditionalIconMenu, conditionalHighlightMenu, conditionalTopMenu, conditionalBarMenu, conditionalScaleMenu, clearConditional, defineName, nameManager, note, link,
+    addRule, newRule: cr.newRule, manageRules: cr.manager, conditionalIconMenu, conditionalHighlightMenu, conditionalTopMenu, conditionalBarMenu, conditionalScaleMenu, clearConditional, defineName, createFromSelection, nameManager, note, link,
     symbol, insertFunction, moveSheet, unhideSheet, zoom, statistics, options, pasteSpecial,
   };
 }

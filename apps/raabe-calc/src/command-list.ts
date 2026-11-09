@@ -450,4 +450,15 @@ export const COMMANDS: Command[] = [
   later("sheet.selectAll", "Alle Blätter auswählen", undefined),
   cmd("cells.insertMenu", "Einfügen...", "cells-insert"),
   cmd("cells.deleteMenu", "Löschen...", "cells-delete"),
+
+  // ----- the ribbon's split buttons and menus under Excel's names (D-142) -----------------------
+  // Their name (tooltip title, accessible name) is the label they show, as in Excel; the commands they
+  // run or open keep their own names in menus and in the search.
+  cmd("cells.insertButton", "Einfügen", "cells-insert", { shortcut: "Strg++", hidden: true }),
+  cmd("cells.deleteButton", "Löschen", "cells-delete", { shortcut: "Strg+-", hidden: true }),
+  cmd("edit.autosumButton", "AutoSumme", "autosum", { shortcut: "Alt+=", hidden: true }),
+  cmd("edit.fillMenu", "Ausfüllen", "fill-down", { hidden: true }),
+  cmd("edit.clearMenu", "Löschen", "eraser", { hidden: true }),
+  cmd("data.sortMenu", "Sortieren und Filtern", "sort-custom", { hidden: true }),
+  cmd("edit.findMenu", "Suchen und Auswählen", "find", { hidden: true }),
 ];

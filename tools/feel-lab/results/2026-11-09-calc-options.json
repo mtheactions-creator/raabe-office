@@ -1,0 +1,5950 @@
+{
+ "options": [
+  {
+   "path": "cell",
+   "kind": "context",
+   "opens": "menu (19)",
+   "status": "ok"
+  },
+  {
+   "path": "cell > Ausschneiden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "cell > Kopieren",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "cell > Einfügen (E)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "cell > Werte (W)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "cell > Formeln (F)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "cell > Transponieren (T)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "cell > Formatierung (R)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "cell > Zellen einfügen...",
+   "kind": "entry",
+   "opens": "Zellen einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "cell > Zellen löschen...",
+   "kind": "entry",
+   "opens": "Löschen",
+   "status": "ok"
+  },
+  {
+   "path": "cell > Inhalte löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "cell > Filter",
+   "kind": "entry",
+   "opens": "menu (22)",
+   "status": "ok"
+  },
+  {
+   "path": "cell > Filter > › Nach dem Wert der ausgewählten Zelle filtern",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "cell > Sortieren",
+   "kind": "entry",
+   "opens": "menu (22)",
+   "status": "ok"
+  },
+  {
+   "path": "cell > Sortieren > › Nach Größe sortieren (aufsteigend)",
+   "kind": "entry",
+   "opens": "Sortierwarnung",
+   "status": "ok"
+  },
+  {
+   "path": "cell > Sortieren > › Nach Größe sortieren (absteigend)",
+   "kind": "entry",
+   "opens": "Sortierwarnung",
+   "status": "ok"
+  },
+  {
+   "path": "cell > Sortieren > › Benutzerdefiniertes Sortieren...",
+   "kind": "entry",
+   "opens": "Sortierwarnung",
+   "status": "ok"
+  },
+  {
+   "path": "cell > Neuer Kommentar",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "cell > Neue Notiz",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "cell > Zellen formatieren...",
+   "kind": "entry",
+   "opens": "Zellen formatieren",
+   "status": "ok"
+  },
+  {
+   "path": "cell > Dropdown-Auswahlliste...",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "cell > Namen definieren...",
+   "kind": "entry",
+   "opens": "Neuer Name",
+   "status": "ok"
+  },
+  {
+   "path": "cell > Link",
+   "kind": "entry",
+   "opens": "Link einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "row",
+   "kind": "context",
+   "opens": "menu (15)",
+   "status": "ok"
+  },
+  {
+   "path": "row > Ausschneiden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "row > Kopieren",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "row > Einfügen (E)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "row > Werte (W)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "row > Formeln (F)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "row > Transponieren (T)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "row > Formatierung (R)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "row > Zellen einfügen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "row > Zellen löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "row > Inhalte löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "row > Zellen formatieren...",
+   "kind": "entry",
+   "opens": "Zellen formatieren",
+   "status": "ok"
+  },
+  {
+   "path": "row > Zeilenhöhe...",
+   "kind": "entry",
+   "opens": "Zeilenhöhe",
+   "status": "ok"
+  },
+  {
+   "path": "row > Ausblenden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "row > Einblenden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "col",
+   "kind": "context",
+   "opens": "menu (15)",
+   "status": "ok"
+  },
+  {
+   "path": "col > Ausschneiden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "col > Kopieren",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "col > Einfügen (E)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "col > Werte (W)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "col > Formeln (F)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "col > Transponieren (T)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "col > Formatierung (R)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "col > Zellen einfügen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "col > Zellen löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "col > Inhalte löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "col > Zellen formatieren...",
+   "kind": "entry",
+   "opens": "Zellen formatieren",
+   "status": "ok"
+  },
+  {
+   "path": "col > Spaltenbreite...",
+   "kind": "entry",
+   "opens": "Spaltenbreite",
+   "status": "ok"
+  },
+  {
+   "path": "col > Ausblenden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "col > Einblenden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "sheettab",
+   "kind": "context",
+   "opens": "menu (10)",
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Einfügen...",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Löschen",
+   "kind": "entry",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Umbenennen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Verschieben oder kopieren...",
+   "kind": "entry",
+   "opens": "Verschieben oder kopieren",
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Blatt schützen...",
+   "kind": "entry",
+   "opens": "Blatt schützen",
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Registerfarbe",
+   "kind": "entry",
+   "opens": "menu (73)",
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Registerfarbe > Weiß, Hintergrund 1",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Registerfarbe > Grün, Akzent 6",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Registerfarbe > Blau, Akzent 5, heller 80%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Registerfarbe > Gold, Akzent 4, heller 60%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Registerfarbe > Grau, Akzent 3, heller 40%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Registerfarbe > Orange, Akzent 2, dunkler 25%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Registerfarbe > Blau, Akzent 1, dunkler 50%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Registerfarbe > Gelb",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "sheettab > Ausblenden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "statusbar",
+   "kind": "context",
+   "opens": "menu (6)",
+   "status": "ok"
+  },
+  {
+   "path": "statusbar > Mittelwert",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "statusbar > Anzahl",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "statusbar > Numerische Zählung",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "statusbar > Minimum",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "statusbar > Maximum",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "statusbar > Summe",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton",
+   "kind": "context",
+   "opens": "menu (13)",
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > ↑Nach Größe sortieren (aufsteigend)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > ↓Nach Größe sortieren (absteigend)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Zahlenfilter›",
+   "kind": "entry",
+   "opens": "menu (11)",
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Zahlenfilter› > Ist gleich...",
+   "kind": "entry",
+   "opens": "Benutzerdefinierter AutoFilter",
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Zahlenfilter› > Ist nicht gleich...",
+   "kind": "entry",
+   "opens": "Benutzerdefinierter AutoFilter",
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Zahlenfilter› > Größer als...",
+   "kind": "entry",
+   "opens": "Benutzerdefinierter AutoFilter",
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Zahlenfilter› > Größer oder gleich...",
+   "kind": "entry",
+   "opens": "Benutzerdefinierter AutoFilter",
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Zahlenfilter› > Kleiner als...",
+   "kind": "entry",
+   "opens": "Benutzerdefinierter AutoFilter",
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Zahlenfilter› > Kleiner oder gleich...",
+   "kind": "entry",
+   "opens": "Benutzerdefinierter AutoFilter",
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Zahlenfilter› > Zwischen...",
+   "kind": "entry",
+   "opens": "Benutzerdefinierter AutoFilter",
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Zahlenfilter› > Top 10...",
+   "kind": "entry",
+   "opens": "Top 10 AutoFilter",
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Zahlenfilter› > Über dem Durchschnitt",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Zahlenfilter› > Unter dem Durchschnitt",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Zahlenfilter› > Benutzerdefinierter Filter...",
+   "kind": "entry",
+   "opens": "Benutzerdefinierter AutoFilter",
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > OK",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "filterbutton > Abbrechen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Zurück",
+   "kind": null,
+   "opens": null,
+   "status": "skipped (native window or closes the workbook)"
+  },
+  {
+   "path": "Datei > Startseite",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Startseite > Leere Arbeitsmappe",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Startseite > Notenliste",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Startseite > Notenspiegel",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Startseite > Messwerte",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Neu",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Neu > Leere Arbeitsmappe",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Neu > Notenliste",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Neu > Notenspiegel",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Neu > Messwerte",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Öffnen",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Öffnen > Durchsuchen",
+   "kind": null,
+   "opens": null,
+   "status": "skipped (prints or opens a native window)"
+  },
+  {
+   "path": "Datei > Informationen",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Speichern",
+   "kind": null,
+   "opens": null,
+   "status": "skipped (native window or closes the workbook)"
+  },
+  {
+   "path": "Datei > Speichern unter",
+   "kind": null,
+   "opens": null,
+   "status": "skipped (native window or closes the workbook)"
+  },
+  {
+   "path": "Datei > Drucken",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Drucken",
+   "kind": null,
+   "opens": null,
+   "status": "skipped (prints or opens a native window)"
+  },
+  {
+   "path": "Datei > Drucken > Druckbereich = Aktive Blätter drucken",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Druckbereich = Gesamte Arbeitsmappe drucken",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Druckbereich = Auswahl drucken",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > HochformatQuerformat = Hochformat",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > HochformatQuerformat = Querformat",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > A4 (21,0 x 29,7 cm)A3 (29,7 x 42,0 cm)A5 (14,8 x 21,0 cm)Let = A4 (21,0 x 29,7 cm)",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > A4 (21,0 x 29,7 cm)A3 (29,7 x 42,0 cm)A5 (14,8 x 21,0 cm)Let = A3 (29,7 x 42,0 cm)",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > A4 (21,0 x 29,7 cm)A3 (29,7 x 42,0 cm)A5 (14,8 x 21,0 cm)Let = A5 (14,8 x 21,0 cm)",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > A4 (21,0 x 29,7 cm)A3 (29,7 x 42,0 cm)A5 (14,8 x 21,0 cm)Let = Letter (21,6 x 27,9 cm)",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > A4 (21,0 x 29,7 cm)A3 (29,7 x 42,0 cm)A5 (14,8 x 21,0 cm)Let = Legal (21,6 x 35,6 cm)",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Seitenränder = Normale Seitenränder",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Seitenränder = Breite Seitenränder",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Seitenränder = Schmale Seitenränder",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Seitenränder = Benutzerdefinierte Seitenränder",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Skalierung = Keine Skalierung",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Skalierung = Blatt auf einer Seite darstellen",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Skalierung = Alle Spalten auf einer Seite darstellen",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Skalierung = Alle Zeilen auf einer Seite darstellen",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Skalierung = Benutzerdefinierte Skalierungsoptionen...",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > Seite einrichten",
+   "kind": "backstage",
+   "opens": "Seite einrichten",
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > ◀",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Drucken > ▶",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Exportieren",
+   "kind": "backstage",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Datei > Exportieren > PDF-Dokument erstellen",
+   "kind": null,
+   "opens": null,
+   "status": "skipped (prints or opens a native window)"
+  },
+  {
+   "path": "Datei > Exportieren > Als CSV speichern",
+   "kind": null,
+   "opens": null,
+   "status": "skipped (prints or opens a native window)"
+  },
+  {
+   "path": "Datei > Schließen",
+   "kind": null,
+   "opens": null,
+   "status": "skipped (native window or closes the workbook)"
+  },
+  {
+   "path": "Datei > Optionen",
+   "kind": "backstage",
+   "opens": "Optionen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Einfügen",
+   "kind": "split-main",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Einfügen ▾",
+   "kind": "split-arrow",
+   "opens": "menu (6)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Einfügen ▾ > Einfügen (E)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Einfügen ▾ > Formeln (F)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Einfügen ▾ > Transponieren (T)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Einfügen ▾ > Werte (W)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Einfügen ▾ > Formatierung (R)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Ausschneiden",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Kopieren",
+   "kind": "split-main",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Kopieren ▾",
+   "kind": "split-arrow",
+   "opens": "menu (2)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Kopieren ▾ > Kopieren",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Format übertragen",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zwischenablage|Office-Zwischenablage",
+   "kind": "launcher",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Start > Schriftart|Schriftart",
+   "kind": "combo",
+   "opens": "menu (46)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftart > Calibri Light (Überschriften)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftart > Arial Rounded MT Bold",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftart > Berlin Sans FB Demi",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftart > Bookshelf Symbol 7",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftart > Californian FB",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftart > Cascadia Code",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftart > Century Schoolbook",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftart > Cooper Black",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad",
+   "kind": "combo",
+   "opens": "menu (16)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 8",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 9",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 10",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 11",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 12",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 14",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 16",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 18",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 20",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 22",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 24",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 26",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 28",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 36",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 48",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad > 72",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad vergrößern",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftgrad verkleinern",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Fett",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Kursiv",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Unterstreichen",
+   "kind": "split-main",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Unterstreichen ▾",
+   "kind": "split-arrow",
+   "opens": "menu (2)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Unterstreichen ▾ > UUnterstreichen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Unterstreichen ▾ > UDoppelt unterstreichen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen",
+   "kind": "split-main",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾",
+   "kind": "split-arrow",
+   "opens": "menu (19)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Rahmenlinie unten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Rahmenlinie oben",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Rahmenlinie links",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Rahmenlinie rechts",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Kein Rahmen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Alle Rahmenlinien",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Rahmenlinien außen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Dicke Rahmenlinie außen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Doppelte Rahmenlinien unten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Dicke Rahmenlinie unten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Rahmenlinie oben und unten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Rahmenlinie oben und dicke unten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Rahmenlinie oben und doppelte unten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Rahmenlinie zeichnen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Rahmenraster zeichnen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Rahmenlinie löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe",
+   "kind": "entry",
+   "opens": "menu (90)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Automatisch",
+   "kind": "entry",
+   "opens": "menu (90)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Automatisch > Rahmenlinie unten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Automatisch > Rahmenlinie oben und dicke unten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Automatisch > › Hintergrund 2",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Automatisch > › Text 2, heller 50%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Automatisch > › Akzent 2, heller 35%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Automatisch > › Akzent 3, heller 25%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Automatisch > › Akzent 4, heller 15%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Automatisch > › Akzent 5, heller 5%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Akzent 4",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Akzent 3, heller 50%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Akzent 2, heller 35%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Akzent 1, heller 25%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Text 2, heller 15%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Hintergrund 2, heller 5%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienfarbe > › Rot",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Linienart",
+   "kind": "entry",
+   "opens": "menu (32)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Rahmen ▾ > Weitere Rahmenlinien...",
+   "kind": "entry",
+   "opens": "Zellen formatieren",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Füllfarbe",
+   "kind": "split-main",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Füllfarbe ▾",
+   "kind": "split-arrow",
+   "opens": "menu (73)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Füllfarbe ▾ > Weiß, Hintergrund 1",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Füllfarbe ▾ > Grün, Akzent 6",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Füllfarbe ▾ > Blau, Akzent 5, heller 80%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Füllfarbe ▾ > Gold, Akzent 4, heller 60%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Füllfarbe ▾ > Grau, Akzent 3, heller 40%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Füllfarbe ▾ > Orange, Akzent 2, dunkler 25%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Füllfarbe ▾ > Blau, Akzent 1, dunkler 50%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Füllfarbe ▾ > Gelb",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftfarbe",
+   "kind": "split-main",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftfarbe ▾",
+   "kind": "split-arrow",
+   "opens": "menu (73)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftfarbe ▾ > Automatisch",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftfarbe ▾ > Blau, Akzent 5",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftfarbe ▾ > Gold, Akzent 4, heller 80%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftfarbe ▾ > Grau, Akzent 3, heller 60%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftfarbe ▾ > Orange, Akzent 2, heller 40%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftfarbe ▾ > Blau, Akzent 1, dunkler 25%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftfarbe ▾ > Blaugrau, Text 2, dunkler 50%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Schriftfarbe ▾ > Orange",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Schriftart|Zellenschriftart formatieren",
+   "kind": "launcher",
+   "opens": "Zellen formatieren",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Oben ausrichten",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Zentriert ausrichten",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Unten ausrichten",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Ausrichtung",
+   "kind": "dropdown",
+   "opens": "menu (6)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Ausrichtung > Gegen den Uhrzeigersinn drehen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Ausrichtung > Im Uhrzeigersinn drehen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Ausrichtung > Vertikaler Text",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Ausrichtung > Text nach oben drehen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Ausrichtung > Text nach unten drehen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Ausrichtung > Zellenausrichtung formatieren",
+   "kind": "entry",
+   "opens": "Zellen formatieren",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Textumbruch",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Linksbündig",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Zentriert",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Rechtsbündig",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Einzug verkleinern",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Einzug vergrößern",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Verbinden und zentrieren",
+   "kind": "split-main",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Verbinden und zentrieren ▾",
+   "kind": "split-arrow",
+   "opens": "menu (4)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Verbinden und zentrieren ▾ > Verbinden und zentrieren",
+   "kind": "entry",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Verbinden und zentrieren ▾ > Verbinden über",
+   "kind": "entry",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Verbinden und zentrieren ▾ > Zellen verbinden",
+   "kind": "entry",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Verbinden und zentrieren ▾ > Zellverbund aufheben",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Ausrichtung|Zellenausrichtung formatieren",
+   "kind": "launcher",
+   "opens": "Zellen formatieren",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zahlenformat",
+   "kind": "combo",
+   "opens": "menu (11)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zahlenformat > Standard",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zahlenformat > Zahl",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zahlenformat > Währung",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zahlenformat > Buchhaltung",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zahlenformat > Datum, kurz",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zahlenformat > Datum, lang",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zahlenformat > Uhrzeit",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zahlenformat > Prozent",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zahlenformat > Bruch",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zahlenformat > Wissenschaft",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zahlenformat > Text",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Buchhaltungszahlenformat",
+   "kind": "split-main",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Buchhaltungszahlenformat ▾",
+   "kind": "split-arrow",
+   "opens": "menu (3)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Buchhaltungszahlenformat ▾ > € Deutsch (Deutschland)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Buchhaltungszahlenformat ▾ > $ Englisch (Vereinigte Staaten)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Buchhaltungszahlenformat ▾ > Weitere Buchhaltungsformate...",
+   "kind": "entry",
+   "opens": "Zellen formatieren",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Prozentformat",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|1.000er-Trennzeichen",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Dezimalstelle hinzufügen",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Dezimalstelle entfernen",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zahl|Zellennummer formatieren",
+   "kind": "launcher",
+   "opens": "Zellen formatieren",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung",
+   "kind": "dropdown",
+   "opens": "menu (8)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln zum Hervorheben von Zellen",
+   "kind": "entry",
+   "opens": "menu (16)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln zum Hervorheben von Zellen > › Größer als...",
+   "kind": "entry",
+   "opens": "Größer als",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln zum Hervorheben von Zellen > › Kleiner als...",
+   "kind": "entry",
+   "opens": "Kleiner als",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln zum Hervorheben von Zellen > › Zwischen...",
+   "kind": "entry",
+   "opens": "Zwischen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln zum Hervorheben von Zellen > › Gleich...",
+   "kind": "entry",
+   "opens": "Gleich",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln zum Hervorheben von Zellen > › Textinhalt...",
+   "kind": "entry",
+   "opens": "Textinhalt",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln zum Hervorheben von Zellen > › Datum...",
+   "kind": "entry",
+   "opens": "Datum",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln zum Hervorheben von Zellen > › Doppelte Werte...",
+   "kind": "entry",
+   "opens": "Doppelte Werte",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln zum Hervorheben von Zellen > › Weitere Regeln...",
+   "kind": "entry",
+   "opens": "Neue Formatierungsregel",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln für oberste/unterste Werte",
+   "kind": "entry",
+   "opens": "menu (15)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln für oberste/unterste Werte > › Obere 10 Elemente...",
+   "kind": "entry",
+   "opens": "Obere 10 Elemente",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln für oberste/unterste Werte > › Obere 10 %...",
+   "kind": "entry",
+   "opens": "Obere 10 %",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln für oberste/unterste Werte > › Untere 10 Elemente...",
+   "kind": "entry",
+   "opens": "Untere 10 Elemente",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln für oberste/unterste Werte > › Untere 10 %...",
+   "kind": "entry",
+   "opens": "Untere 10 %",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln für oberste/unterste Werte > › Über dem Durchschnitt...",
+   "kind": "entry",
+   "opens": "Über dem Durchschnitt",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln für oberste/unterste Werte > › Unter dem Durchschnitt...",
+   "kind": "entry",
+   "opens": "Unter dem Durchschnitt",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln für oberste/unterste Werte > › Weitere Regeln...",
+   "kind": "entry",
+   "opens": "Neue Formatierungsregel",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Datenbalken",
+   "kind": "entry",
+   "opens": "menu (15)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Datenbalken > › Blauer Datenbalken",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Datenbalken > › Grüner Datenbalken",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Datenbalken > › Roter Datenbalken",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Datenbalken > › Orangefarbener Datenbalken",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Datenbalken > › Hellblauer Datenbalken",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Datenbalken > › Lilafarbener Datenbalken",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Datenbalken > › Weitere Regeln...",
+   "kind": "entry",
+   "opens": "Neue Formatierungsregel",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen",
+   "kind": "entry",
+   "opens": "menu (21)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Grün-Gelb-Rot-Farbskala",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Rot-Gelb-Grün-Farbskala",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Grün-Weiß-Rot-Farbskala",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Rot-Weiß-Grün-Farbskala",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Blau-Weiß-Rot-Farbskala",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Rot-Weiß-Blau-Farbskala",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Weiß-Rot-Farbskala",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Rot-Weiß-Farbskala",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Grün-Weiß-Farbskala",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Weiß-Grün-Farbskala",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Grün-Gelb-Farbskala",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Gelb-Grün-Farbskala",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Farbskalen > › Weitere Regeln...",
+   "kind": "entry",
+   "opens": "Neue Formatierungsregel",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze",
+   "kind": "entry",
+   "opens": "menu (29)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 3 Pfeile (farbig)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 3 Pfeile (grau)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 3 Dreiecke",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 4 Pfeile (grau)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 4 Pfeile (farbig)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 5 Pfeile (grau)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 5 Pfeile (farbig)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 3 Ampeln (ohne Rand)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 3 Ampeln (mit Rand)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 3 Zeichen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 4 Ampeln",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › Rot/Schwarz",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 3 Symbole (mit Kreis)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 3 Symbole (ohne Kreis)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 3 Kennzeichen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 3 Sterne",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 4 Bewertungen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 5 Viertel",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 5 Bewertungen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › 5 Kästchen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Symbolsätze > › Weitere Regeln...",
+   "kind": "entry",
+   "opens": "Neue Formatierungsregel",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Neue Regel...",
+   "kind": "entry",
+   "opens": "Neue Formatierungsregel",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln löschen",
+   "kind": "entry",
+   "opens": "menu (10)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln löschen > › Regeln in ausgewählten Zellen löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln löschen > › Regeln im gesamten Blatt löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Bedingte Formatierung > Regeln verwalten...",
+   "kind": "entry",
+   "opens": "Manager für Regeln zur bedingten Formatierung",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Als Tabelle formatieren",
+   "kind": "dropdown",
+   "opens": "menu (60)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Als Tabelle formatieren > Tabellenformat - Hell 1",
+   "kind": "entry",
+   "opens": "Tabelle erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Als Tabelle formatieren > Tabellenformat - Hell 8",
+   "kind": "entry",
+   "opens": "Tabelle erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Als Tabelle formatieren > Tabellenformat - Hell 16",
+   "kind": "entry",
+   "opens": "Tabelle erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Als Tabelle formatieren > Tabellenformat - Mittel 2",
+   "kind": "entry",
+   "opens": "Tabelle erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Als Tabelle formatieren > Tabellenformat - Mittel 10",
+   "kind": "entry",
+   "opens": "Tabelle erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Als Tabelle formatieren > Tabellenformat - Mittel 17",
+   "kind": "entry",
+   "opens": "Tabelle erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Als Tabelle formatieren > Tabellenformat - Mittel 25",
+   "kind": "entry",
+   "opens": "Tabelle erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Als Tabelle formatieren > Tabellenformat - Dunkel 4",
+   "kind": "entry",
+   "opens": "Tabelle erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen",
+   "kind": "dropdown",
+   "opens": "menu (14)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Gut",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Neutral",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Schlecht",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Ausgabe",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Berechnung",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Eingabe",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Notiz",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Warnender Text",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Erklärender Text",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Überschrift",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Überschrift 1",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Überschrift 2",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Ergebnis",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Formatvorlagen|Zellenformatvorlagen > Standard",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Einfügen",
+   "kind": "split-main",
+   "opens": "Zellen einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Einfügen ▾",
+   "kind": "split-arrow",
+   "opens": "menu (4)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Einfügen ▾ > Zellen einfügen...",
+   "kind": "entry",
+   "opens": "Zellen einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Einfügen ▾ > Blattzeilen einfügen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Einfügen ▾ > Blattspalten einfügen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Einfügen ▾ > Blatt einfügen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Löschen",
+   "kind": "split-main",
+   "opens": "Löschen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Löschen ▾",
+   "kind": "split-arrow",
+   "opens": "menu (4)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Löschen ▾ > Zellen löschen...",
+   "kind": "entry",
+   "opens": "Löschen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Löschen ▾ > Blattzeilen löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Löschen ▾ > Blattspalten löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Löschen ▾ > Blatt löschen",
+   "kind": "entry",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format",
+   "kind": "dropdown",
+   "opens": "menu (12)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Zeilenhöhe...",
+   "kind": "entry",
+   "opens": "Zeilenhöhe",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Zeilenhöhe automatisch anpassen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Spaltenbreite...",
+   "kind": "entry",
+   "opens": "Spaltenbreite",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Spaltenbreite automatisch anpassen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Standardbreite...",
+   "kind": "entry",
+   "opens": "Standardbreite",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Ausblenden und Einblenden",
+   "kind": "entry",
+   "opens": "menu (18)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Ausblenden und Einblenden > › Zeilen ausblenden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Ausblenden und Einblenden > › Spalten ausblenden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Ausblenden und Einblenden > › Blatt ausblenden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Ausblenden und Einblenden > › Zeilen einblenden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Ausblenden und Einblenden > › Spalten einblenden",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Blatt umbenennen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Blatt verschieben/kopieren...",
+   "kind": "entry",
+   "opens": "Verschieben oder kopieren",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Registerfarbe",
+   "kind": "entry",
+   "opens": "menu (73)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Registerfarbe > Weiß, Hintergrund 1",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Registerfarbe > Grün, Akzent 6",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Registerfarbe > Blau, Akzent 5, heller 80%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Registerfarbe > Gold, Akzent 4, heller 60%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Registerfarbe > Grau, Akzent 3, heller 40%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Registerfarbe > Orange, Akzent 2, dunkler 25%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Registerfarbe > Blau, Akzent 1, dunkler 50%",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Registerfarbe > Gelb",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Blatt schützen...",
+   "kind": "entry",
+   "opens": "Blatt schützen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Zelle sperren",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Zellen|Format > Zellen formatieren...",
+   "kind": "entry",
+   "opens": "Zellen formatieren",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|AutoSumme",
+   "kind": "split-main",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|AutoSumme ▾",
+   "kind": "split-arrow",
+   "opens": "menu (6)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|AutoSumme ▾ > Summe",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|AutoSumme ▾ > Mittelwert",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|AutoSumme ▾ > Anzahl Zahlen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|AutoSumme ▾ > Max",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|AutoSumme ▾ > Min",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|AutoSumme ▾ > Weitere Funktionen...",
+   "kind": "entry",
+   "opens": "Funktion einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Ausfüllen",
+   "kind": "dropdown",
+   "opens": "menu (8)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Ausfüllen > Unten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Ausfüllen > Rechts",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Ausfüllen > Oben",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Ausfüllen > Links",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Ausfüllen > Datenreihe...",
+   "kind": "entry",
+   "opens": "Reihe",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Ausfüllen > Blitzvorschau",
+   "kind": "entry",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Löschen",
+   "kind": "dropdown",
+   "opens": "menu (6)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Löschen > Alle löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Löschen > Formate löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Löschen > Inhalte löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Löschen > Kommentare und Notizen löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Löschen > Links löschen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Löschen > Links entfernen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Sortieren und Filtern",
+   "kind": "dropdown",
+   "opens": "menu (6)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Sortieren und Filtern > Von A bis Z sortieren",
+   "kind": "entry",
+   "opens": "Sortierwarnung",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Sortieren und Filtern > Von Z bis A sortieren",
+   "kind": "entry",
+   "opens": "Sortierwarnung",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Sortieren und Filtern > Benutzerdefiniertes Sortieren...",
+   "kind": "entry",
+   "opens": "Sortierwarnung",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Sortieren und Filtern > Filtern",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Suchen und Auswählen",
+   "kind": "dropdown",
+   "opens": "menu (11)",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Suchen und Auswählen > Suchen...",
+   "kind": "entry",
+   "opens": "Suchen und Ersetzen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Suchen und Auswählen > Ersetzen...",
+   "kind": "entry",
+   "opens": "Suchen und Ersetzen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Suchen und Auswählen > Gehe zu...",
+   "kind": "entry",
+   "opens": "Gehe zu",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Suchen und Auswählen > Inhalte auswählen...",
+   "kind": "entry",
+   "opens": "Inhalte auswählen",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Suchen und Auswählen > Formeln",
+   "kind": "entry",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Suchen und Auswählen > Notizen",
+   "kind": "entry",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Suchen und Auswählen > Bedingte Formatierung",
+   "kind": "entry",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Suchen und Auswählen > Konstanten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Suchen und Auswählen > Datenüberprüfung",
+   "kind": "entry",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Start > Bearbeiten|Suchen und Auswählen > Auswahlbereich...",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Tabellen|PivotTable",
+   "kind": "button",
+   "opens": "PivotTable aus Tabelle oder Bereich",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Tabellen|Empfohlene PivotTables",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Einfügen > Tabellen|Tabelle",
+   "kind": "button",
+   "opens": "Tabelle erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Illustrationen|Bilder",
+   "kind": "dropdown",
+   "opens": "menu (3)",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Illustrationen|Bilder > Dieses Gerät...",
+   "kind": null,
+   "opens": null,
+   "status": "skipped (native window)"
+  },
+  {
+   "path": "Einfügen > Illustrationen|Formen",
+   "kind": "dropdown",
+   "opens": "menu (43)",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Illustrationen|Formen > Linie",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Illustrationen|Formen > Verbinder: gewinkelt mit Doppelpfeil",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Illustrationen|Formen > Freihandform: Form",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Illustrationen|Formen > Rechteck: diagonal liegende Ecken abgeschnitten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Illustrationen|Formen > Textfeld",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Illustrationen|Formen > Trapez",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Illustrationen|Formen > Zehneck",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Illustrationen|Formen > Rahmen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Illustrationen|Piktogramme",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Einfügen > Diagramme|Empfohlene Diagramme",
+   "kind": "button",
+   "opens": "Diagramm einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen",
+   "kind": "dropdown",
+   "opens": "menu (14)",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > Gruppierte Säulen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > Gestapelte Säulen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > Gestapelte Säulen (100 %)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > 3D-Säulen (gruppiert)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > Gestapelte 3D-Säulen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > Gestapelte 3D-Säulen (100 %)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > 3D-Säulen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > Gruppierte Balken",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > Gestapelte Balken",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > Gestapelte Balken (100 %)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > Gruppierte 3D-Balken",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > Gestapelte 3D-Balken",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > Gestapelte 3D-Balken (100 %)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Säulen- oder Balkendiagramm einfügen > Weitere Säulendiagramme...",
+   "kind": "entry",
+   "opens": "Diagramm einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Hierarchiediagramm einfügen",
+   "kind": "dropdown",
+   "opens": "menu (3)",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Hierarchiediagramm einfügen > Treemap",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Hierarchiediagramm einfügen > Sunburst",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Hierarchiediagramm einfügen > Weitere Hierarchiediagramme...",
+   "kind": "entry",
+   "opens": "Diagramm einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Statistikdiagramm einfügen",
+   "kind": "dropdown",
+   "opens": "menu (4)",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Statistikdiagramm einfügen > Histogramm",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Statistikdiagramm einfügen > Pareto",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Statistikdiagramm einfügen > Kastengrafik",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Statistikdiagramm einfügen > Weitere Statistikdiagramme...",
+   "kind": "entry",
+   "opens": "Diagramm einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen",
+   "kind": "dropdown",
+   "opens": "menu (14)",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > Linie",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > Gestapelte Linie",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > Gestapelte Linie (100 %)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > Linie mit Datenpunkten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > Gestapelte Linie mit Datenpunkten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > Gestapelte Linie mit Datenpunkten (100 %)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > 3D-Linie",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > Fläche",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > Gestapelte Fläche",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > Gestapelte Fläche (100 %)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > 3D-Fläche",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > Gestapelte 3D-Fläche",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > Gestapelte 3D-Fläche (100 %)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Linien- oder Flächendiagramm einfügen > Weitere Liniendiagramme...",
+   "kind": "entry",
+   "opens": "Diagramm einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Kreis- oder Ringdiagramm einfügen",
+   "kind": "dropdown",
+   "opens": "menu (6)",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Kreis- oder Ringdiagramm einfügen > Kreis",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Kreis- oder Ringdiagramm einfügen > Kreis aus Kreis",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Kreis- oder Ringdiagramm einfügen > Balken aus Kreis",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Kreis- oder Ringdiagramm einfügen > 3D-Kreis",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Kreis- oder Ringdiagramm einfügen > Ring",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Kreis- oder Ringdiagramm einfügen > Weitere Kreisdiagramme...",
+   "kind": "entry",
+   "opens": "Diagramm einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Punkt (XY)- oder Blasendiagramm einfügen",
+   "kind": "dropdown",
+   "opens": "menu (8)",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Punkt (XY)- oder Blasendiagramm einfügen > Punkt (XY)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Punkt (XY)- oder Blasendiagramm einfügen > Punkte mit interpolierten Linien und Datendarstellungen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Punkt (XY)- oder Blasendiagramm einfügen > Punkte mit interpolierten Linien",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Punkt (XY)- oder Blasendiagramm einfügen > Punkte mit geraden Linien und Datendarstellungen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Punkt (XY)- oder Blasendiagramm einfügen > Punkte mit geraden Linien",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Punkt (XY)- oder Blasendiagramm einfügen > Blase",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Punkt (XY)- oder Blasendiagramm einfügen > 3D-Blase",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Punkt (XY)- oder Blasendiagramm einfügen > Weitere Punktdiagramme (XY)...",
+   "kind": "entry",
+   "opens": "Diagramm einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen",
+   "kind": "dropdown",
+   "opens": "menu (14)",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > Wasserfall",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > Trichter",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > Höchst-Tiefst-Schlusskurs",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > Eröffnungs-Höchst-Tiefst-Schlusskurs",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > Volumen-Höchst-Tiefst-Schlusskurs",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > Volumen-Eröffnungs-Höchst-Tiefst-Schlusskurs",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > 3D-Oberfläche",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > 3D-Oberfläche (Drahtmodell)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > Kontur",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > Kontur (Drahtmodell)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > Netz",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > Netz mit Datenpunkten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > Gefülltes Netz",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen > Weitere Kursdiagramme...",
+   "kind": "entry",
+   "opens": "Diagramm einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Verbunddiagramm einfügen",
+   "kind": "dropdown",
+   "opens": "menu (4)",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Verbunddiagramm einfügen > Gruppierte Säulen/Linien",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Verbunddiagramm einfügen > Gruppierte Säulen/Linien auf der Sekundärachse",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Verbunddiagramm einfügen > Gestapelte Flächen/Gruppierte Säulen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Verbunddiagramm einfügen > Benutzerdefiniertes Kombinationsdiagramm erstellen...",
+   "kind": "entry",
+   "opens": "Diagramm einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Diagramme|Karten",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Einfügen > Diagramme|PivotChart",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Einfügen > Diagramme|Empfohlene Diagramme#2",
+   "kind": "launcher",
+   "opens": "Diagramm einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Sparklines|Linie",
+   "kind": "button",
+   "opens": "Sparklines erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Sparklines|Säule",
+   "kind": "button",
+   "opens": "Sparklines erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Sparklines|Gewinn/Verlust",
+   "kind": "button",
+   "opens": "Sparklines erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Filter|Datenschnitt",
+   "kind": "button",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Filter|Zeitachse",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Einfügen > Links|Link",
+   "kind": "button",
+   "opens": "Link einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Kommentare|Kommentar",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Text|Textfeld",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Text|Kopf- und Fußzeile",
+   "kind": "button",
+   "opens": "Seite einrichten",
+   "status": "ok"
+  },
+  {
+   "path": "Einfügen > Text|WordArt",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Einfügen > Symbole|Formel",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Einfügen > Symbole|Symbol",
+   "kind": "button",
+   "opens": "Symbol",
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Rückgängig|Rückgängig",
+   "kind": "button",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Zeichnen > Rückgängig|Wiederholen",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Auswählen",
+   "kind": "gallery-item",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Lassoauswahl",
+   "kind": "gallery-item",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Radierer",
+   "kind": "gallery-item",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Stift: Schwarz, 0.35 mm",
+   "kind": "gallery-item",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Stift: Rot, 0.35 mm",
+   "kind": "gallery-item",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Stift: Galaxie, 0.5 mm",
+   "kind": "gallery-item",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Bleistift: Grau, 0.5 mm",
+   "kind": "gallery-item",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Textmarker: Gelb, 6 mm, an Text ausrichten: Aus",
+   "kind": "gallery-item",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Füllfederhalter: Dunkelblau, 1 mm",
+   "kind": "gallery-item",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Pinselstift: Grün, 1 mm",
+   "kind": "gallery-item",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Aktionsstift",
+   "kind": "gallery-item",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Weitere",
+   "kind": "gallery-more",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Hinzufügen",
+   "kind": "dropdown",
+   "opens": "menu (6)",
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Hinzufügen > Stift",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Hinzufügen > Textmarker",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Hinzufügen > Füllfederhalter",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Hinzufügen > Pinselstift",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Zeichentools|Hinzufügen > Bleistift",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Konvertieren|Freihand in Form",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Zeichnen > Konvertieren|Freihand in Gleichung",
+   "kind": "button",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Zeichnen > Wiedergeben|Wiedergabe in Freihand",
+   "kind": "button",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs",
+   "kind": "dropdown",
+   "opens": "menu (28)",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Office",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Office 2013 – 2022",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Facette",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Fetzen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Integral",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Ion",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Ion-Sitzungssaal",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Katalog",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Organisch",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Rückblick",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Segment",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Ausschnitt",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Aussicht",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Badge",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Basis",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Berlin",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Damast",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Dividende",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Gebändert",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Holzart",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Kondensstreifen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Metropolitan",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Netz",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Paket",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Rahmen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Savon",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Schaltkreis",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Designs > Schiefer",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben",
+   "kind": "dropdown",
+   "opens": "menu (22)",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Office",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Office 2013 – 2022",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Office 2007 - 2010",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Graustufe",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Warmes Blau",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Blau",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Blau II",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Blaugrün",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Grün",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Grüngelb",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Gelb",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Gelborange",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Orange",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Orangerot",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Rotorange",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Rot",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Rotviolett",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Violett",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Violett II",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Galathea",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Papier",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Farben > Laufschrift",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Schriftarten",
+   "kind": "dropdown",
+   "opens": "menu (10)",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Schriftarten > Office, Überschriftenschriftart: Aptos Display, Textschriftart: Aptos",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Schriftarten > Office 2013 – 2022, Überschriftenschriftart: Calibri Light, Textschriftart: Calibri",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Schriftarten > Office 2007 - 2010, Überschriftenschriftart: Calibri, Textschriftart: Calibri",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Schriftarten > Calibri, Überschriftenschriftart: Calibri, Textschriftart: Calibri",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Schriftarten > Arial, Überschriftenschriftart: Arial, Textschriftart: Arial",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Schriftarten > Corbel, Überschriftenschriftart: Corbel, Textschriftart: Corbel",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Schriftarten > Candara, Überschriftenschriftart: Candara, Textschriftart: Candara",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Schriftarten > Century Gothic, Überschriftenschriftart: Century Gothic, Textschriftart: Century Gothic",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Schriftarten > TW Cen MT, Überschriftenschriftart: Tw Cen MT, Textschriftart: Tw Cen MT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Schriftarten > Cambria, Überschriftenschriftart: Cambria, Textschriftart: Cambria",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Designs|Effekte",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Seitenränder",
+   "kind": "dropdown",
+   "opens": "menu (4)",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Seitenränder > Normale Seitenränder (Oben: 1,9 cm Unten: 1,9 cm Links: 1,8 cm Rechts: 1,8 cm)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Seitenränder > Breite Seitenränder (Oben: 2,5 cm Unten: 2,5 cm Links: 2,5 cm Rechts: 2,5 cm)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Seitenränder > Schmale Seitenränder (Oben: 1,9 cm Unten: 1,9 cm Links: 0,6 cm Rechts: 0,6 cm)",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Seitenränder > Benutzerdefinierte Seitenränder...",
+   "kind": "entry",
+   "opens": "Seite einrichten",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Ausrichtung",
+   "kind": "dropdown",
+   "opens": "menu (2)",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Ausrichtung > Hochformat",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Ausrichtung > Querformat",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Format",
+   "kind": "dropdown",
+   "opens": "menu (5)",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Format > A4 21,0 cm x 29,7 cm",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Format > A3 29,7 cm x 42,0 cm",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Format > A5 14,8 cm x 21,0 cm",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Format > Letter 21,6 cm x 27,9 cm",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Format > Legal 21,6 cm x 35,6 cm",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Druckbereich",
+   "kind": "dropdown",
+   "opens": "menu (2)",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Druckbereich > Druckbereich festlegen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Druckbereich > Druckbereich aufheben",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Umbrüche",
+   "kind": "dropdown",
+   "opens": "menu (3)",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Umbrüche > Seitenumbruch einfügen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Hintergrund...",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Drucktitel",
+   "kind": "button",
+   "opens": "Seite einrichten",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Seite einrichten|Seite einrichten",
+   "kind": "launcher",
+   "opens": "Seite einrichten",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Breite",
+   "kind": "dropdown",
+   "opens": "menu (4)",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Breite > Automatisch",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Breite > 1 Seite",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Breite > 2 Seiten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Breite > 3 Seiten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Höhe",
+   "kind": "dropdown",
+   "opens": "menu (4)",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Höhe > Automatisch",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Höhe > 1 Seite",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Höhe > 2 Seiten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Höhe > 3 Seiten",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Skalierung: Feld",
+   "kind": "spinner",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Skalierung: Mehr",
+   "kind": "spinner",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Skalierung: Weniger",
+   "kind": "spinner",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > An Format anpassen|Seite einrichten",
+   "kind": "launcher",
+   "opens": "Seite einrichten",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Blattoptionen|Anzeigen",
+   "kind": "check",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Blattoptionen|Drucken",
+   "kind": "check",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Blattoptionen|Anzeigen#2",
+   "kind": "check",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Blattoptionen|Drucken#2",
+   "kind": "check",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Blattoptionen|Seite einrichten",
+   "kind": "launcher",
+   "opens": "Seite einrichten",
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Anordnen|Ebene nach vorne",
+   "kind": "split-main",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Seitenlayout > Anordnen|Ebene nach vorne ▾",
+   "kind": "split-arrow",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Seitenlayout > Anordnen|Ebene nach hinten",
+   "kind": "split-main",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Seitenlayout > Anordnen|Ebene nach hinten ▾",
+   "kind": "split-arrow",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Seitenlayout > Anordnen|Auswahlbereich...",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Seitenlayout > Anordnen|Ausrichten",
+   "kind": "dropdown",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Seitenlayout > Anordnen|Gruppieren",
+   "kind": "dropdown",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Seitenlayout > Anordnen|Drehen",
+   "kind": "dropdown",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Funktion einfügen...",
+   "kind": "button",
+   "opens": "Funktion einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Summe",
+   "kind": "split-main",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Summe ▾",
+   "kind": "split-arrow",
+   "opens": "menu (6)",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Summe ▾ > Summe",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Summe ▾ > Mittelwert",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Summe ▾ > Anzahl Zahlen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Summe ▾ > Max",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Summe ▾ > Min",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Summe ▾ > Weitere Funktionen...",
+   "kind": "entry",
+   "opens": "Funktion einfügen",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Zuletzt verwendet",
+   "kind": "dropdown",
+   "opens": "menu (10)",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Zuletzt verwendet > SUMME",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Zuletzt verwendet > MITTELWERT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Zuletzt verwendet > WENN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Zuletzt verwendet > MAX",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Zuletzt verwendet > MIN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Zuletzt verwendet > ANZAHL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Zuletzt verwendet > SVERWEIS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Zuletzt verwendet > RUNDEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Zuletzt verwendet > ZÄHLENWENN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Zuletzt verwendet > SUMMEWENN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Finanzmathematik",
+   "kind": "dropdown",
+   "opens": "menu (8)",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Finanzmathematik > BW",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Finanzmathematik > KAPZ",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Finanzmathematik > NBW",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Finanzmathematik > RMZ",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Finanzmathematik > ZINS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Finanzmathematik > ZINSZ",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Finanzmathematik > ZW",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Finanzmathematik > ZZR",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Logisch",
+   "kind": "dropdown",
+   "opens": "menu (11)",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Logisch > FALSCH",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Logisch > NICHT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Logisch > ODER",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Logisch > UND",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Logisch > WAHR",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Logisch > WENN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Logisch > WENNFEHLER",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Logisch > WENNNV",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Logisch > WENNS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Logisch > XODER",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Logisch > ERSTERWERT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text",
+   "kind": "dropdown",
+   "opens": "menu (22)",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > CODE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > ERSETZEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > FINDEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > GLÄTTEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > GROSS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > GROSS2",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > IDENTISCH",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > KLEIN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > LÄNGE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > LINKS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > RECHTS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > SÄUBERN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > SUCHEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > TEIL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > TEXT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > TEXTKETTE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > TEXTVERKETTEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > VERKETTEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > WECHSELN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > WERT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > WIEDERHOLEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Text > ZEICHEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit",
+   "kind": "dropdown",
+   "opens": "menu (21)",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > ARBEITSTAG",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > DATEDIF",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > DATUM",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > DATWERT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > EDATUM",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > HEUTE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > ISOKALENDERWOCHE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > JAHR",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > JETZT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > KALENDERWOCHE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > MINUTE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > MONAT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > MONATSENDE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > NETTOARBEITSTAGE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > SEKUNDE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > STUNDE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > TAG",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > TAGE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > WOCHENTAG",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > ZEIT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Datum u. Uhrzeit > ZEITWERT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen",
+   "kind": "dropdown",
+   "opens": "menu (16)",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > ADRESSE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > BEREICH.VERSCHIEBEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > INDEX",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > INDIREKT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > SPALTE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > SPALTEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > SVERWEIS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > VERGLEICH",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > WAHL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > WVERWEIS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > XVERWEIS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > ZEILE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > ZEILEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > FILTER",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > SORTIEREN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Nachschlagen und Verweisen > EINDEUTIG",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie",
+   "kind": "dropdown",
+   "opens": "menu (40)",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > ABRUNDEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > ABS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > ARCCOS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > ARCSIN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > ARCTAN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > AUFRUNDEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > BOGENMASS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > COS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > EXP",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > FAKULTÄT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > GANZZAHL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > GERADE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > GGT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > GRAD",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > KGV",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > KOMBINATIONEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > KÜRZEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > LN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > LOG",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > LOG10",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > OBERGRENZE.MATHEMATIK",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > PI",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > POTENZ",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > PRODUKT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > QUADRATESUMME",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > REST",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > RUNDEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > SIN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > SUMME",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > SUMMENPRODUKT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > SUMMEWENN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > SUMMEWENNS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > TAN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > UNGERADE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > UNTERGRENZE.MATHEMATIK",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > VORZEICHEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > VRUNDEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > WURZEL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > ZUFALLSBEREICH",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mathematik und Trigonometrie > ZUFALLSZAHL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen",
+   "kind": "dropdown",
+   "opens": "menu (2)",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik",
+   "kind": "entry",
+   "opens": "menu (37)",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › ANZAHL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › ANZAHL2",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › ANZAHLLEEREZELLEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › BESTIMMTHEITSMASS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › BINOM.VERT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › GEOMITTEL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › KGRÖSSTE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › KKLEINSTE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › KORREL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › MAX",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › MAXWENNS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › MEDIAN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › MIN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › MINWENNS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › MITTELABW",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › MITTELWERT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › MITTELWERTWENN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › MITTELWERTWENNS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › MODUS.EINF",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › NORM.INV",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › NORM.S.VERT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › NORM.VERT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › POISSON.VERT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › QUANTIL.INKL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › QUARTILE.INKL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › RANG.GLEICH",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › STABW.N",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › STABW.S",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › STEIGUNG",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › ACHSENABSCHNITT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › VAR.P",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › VAR.S",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › VARIATIONEN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › ZÄHLENWENN",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Statistik > › ZÄHLENWENNS",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Informationen",
+   "kind": "entry",
+   "opens": "menu (12)",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Informationen > › ISTFEHL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Informationen > › ISTFEHLER",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Informationen > › ISTGERADE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Informationen > › ISTLEER",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Informationen > › ISTLOG",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Informationen > › ISTNV",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Informationen > › ISTTEXT",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Informationen > › ISTUNGERADE",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Informationen > › ISTZAHL",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Funktionsbibliothek|Mehr Funktionen > Informationen > › NV",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Definierte Namen|Namens-Manager",
+   "kind": "button",
+   "opens": "Namens-Manager",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Definierte Namen|Namen definieren",
+   "kind": "button",
+   "opens": "Neuer Name",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Definierte Namen|Aus Auswahl erstellen",
+   "kind": "button",
+   "opens": "Namen aus Auswahl erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Formelüberwachung|Spur zum Vorgänger",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Formelüberwachung|Spur zum Nachfolger",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Formelüberwachung|Pfeile entfernen",
+   "kind": "button",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Formeln > Formelüberwachung|Formeln anzeigen",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Formelüberwachung|Fehlerüberprüfung",
+   "kind": "button",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Formelüberwachung|Formelauswertung",
+   "kind": "button",
+   "opens": "Formel auswerten",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Berechnung|Berechnungsoptionen",
+   "kind": "dropdown",
+   "opens": "menu (3)",
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Berechnung|Berechnungsoptionen > Automatisch",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Berechnung|Berechnungsoptionen > Automatisch außer bei Datentabellen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Berechnung|Berechnungsoptionen > Manuell",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Berechnung|Neu berechnen",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Formeln > Berechnung|Blatt berechnen",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Daten abrufen und transformieren|Daten abrufen",
+   "kind": "dropdown",
+   "opens": "menu (10)",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Daten abrufen und transformieren|Daten abrufen > Aus Datei",
+   "kind": null,
+   "opens": null,
+   "status": "skipped (native window)"
+  },
+  {
+   "path": "Daten > Daten abrufen und transformieren|Daten abrufen > Aus Datenbank",
+   "kind": "entry",
+   "opens": "menu (14)",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Daten abrufen und transformieren|Daten abrufen > Aus anderen Quellen",
+   "kind": "entry",
+   "opens": "menu (17)",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Daten abrufen und transformieren|Daten abrufen > Aus anderen Quellen > › Aus Tabelle/Bereich",
+   "kind": "entry",
+   "opens": "Tabelle erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Daten abrufen und transformieren|Aus Text/CSV",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Daten abrufen und transformieren|Aus dem Web",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Daten > Daten abrufen und transformieren|Aus Tabelle/Bereich",
+   "kind": "button",
+   "opens": "Tabelle erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Daten abrufen und transformieren|Zuletzt verwendete Quellen",
+   "kind": "button",
+   "opens": "Zuletzt verwendete Quellen",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Daten abrufen und transformieren|Vorhandene Verbindungen",
+   "kind": "button",
+   "opens": "Vorhandene Verbindungen",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Abfragen & Verbindungen|Alle aktualisieren",
+   "kind": "button",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Daten > Sortieren und Filtern|Von A bis Z sortieren",
+   "kind": "button",
+   "opens": "Sortierwarnung",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Sortieren und Filtern|Von Z bis A sortieren",
+   "kind": "button",
+   "opens": "Sortierwarnung",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Sortieren und Filtern|Sortieren...",
+   "kind": "button",
+   "opens": "Sortierwarnung",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Sortieren und Filtern|Filtern",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Sortieren und Filtern|Löschen",
+   "kind": "button",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Daten > Sortieren und Filtern|Erneut anwenden",
+   "kind": "button",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Daten > Sortieren und Filtern|Erweitert...",
+   "kind": "button",
+   "opens": "Spezialfilter",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Datentools|Text in Spalten...",
+   "kind": "button",
+   "opens": "Textkonvertierungs-Assistent",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Datentools|Blitzvorschau",
+   "kind": "button",
+   "opens": "RaabeCalc",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Datentools|Duplikate entfernen",
+   "kind": "button",
+   "opens": "Duplikate entfernen",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Datentools|Datenüberprüfung...",
+   "kind": "split-main",
+   "opens": "Datenüberprüfung",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Datentools|Datenüberprüfung... ▾",
+   "kind": "split-arrow",
+   "opens": "menu (3)",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Datentools|Datenüberprüfung... ▾ > Datenüberprüfung...",
+   "kind": "entry",
+   "opens": "Datenüberprüfung",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Datentools|Datenüberprüfung... ▾ > Ungültige Daten einkreisen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Datentools|Konsolidieren...",
+   "kind": "button",
+   "opens": "Konsolidieren",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Prognose|Was-wäre-wenn-Analyse",
+   "kind": "dropdown",
+   "opens": "menu (3)",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Prognose|Was-wäre-wenn-Analyse > Szenario-Manager...",
+   "kind": "entry",
+   "opens": "Szenario-Manager",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Prognose|Was-wäre-wenn-Analyse > Zielwertsuche...",
+   "kind": "entry",
+   "opens": "Zielwertsuche",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Prognose|Was-wäre-wenn-Analyse > Datentabelle...",
+   "kind": "entry",
+   "opens": "Datentabelle",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Prognose|Prognoseblatt",
+   "kind": "button",
+   "opens": "Prognosearbeitsblatt erstellen",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Gliederung|Gruppieren",
+   "kind": "button",
+   "opens": "Gruppieren",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Gliederung|Gruppierung aufheben",
+   "kind": "button",
+   "opens": "Gruppierung aufheben",
+   "status": "ok"
+  },
+  {
+   "path": "Daten > Gliederung|Teilergebnis",
+   "kind": "button",
+   "opens": "Teilergebnisse",
+   "status": "ok"
+  },
+  {
+   "path": "Überprüfen > Rechtschreibung|Rechtschreibung...",
+   "kind": "button",
+   "opens": "Rechtschreibung",
+   "status": "ok"
+  },
+  {
+   "path": "Überprüfen > Rechtschreibung|Thesaurus...",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Überprüfen > Rechtschreibung|Arbeitsmappenstatistiken",
+   "kind": "button",
+   "opens": "Arbeitsmappenstatistiken",
+   "status": "ok"
+  },
+  {
+   "path": "Überprüfen > Barrierefreiheit|Barrierefreiheit überprüfen",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Überprüfen > Sprache|Übersetzen",
+   "kind": "button",
+   "opens": null,
+   "status": "deferred (SCOPE: later)"
+  },
+  {
+   "path": "Überprüfen > Kommentare|Neuer Kommentar",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Überprüfen > Kommentare|Löschen",
+   "kind": "button",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Überprüfen > Kommentare|Vorheriger Kommentar",
+   "kind": "button",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Überprüfen > Kommentare|Nächster Kommentar",
+   "kind": "button",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Überprüfen > Kommentare|Kommentare anzeigen",
+   "kind": "button",
+   "opens": "menu (2)",
+   "status": "ok"
+  },
+  {
+   "path": "Überprüfen > Kommentare|Kommentare anzeigen > Neu",
+   "kind": "entry",
+   "opens": null,
+   "status": "not found"
+  },
+  {
+   "path": "Überprüfen > Kommentare|Kommentare anzeigen > Schließen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Überprüfen > Notizen|Notizen",
+   "kind": "dropdown",
+   "opens": "menu (4)",
+   "status": "ok"
+  },
+  {
+   "path": "Überprüfen > Notizen|Notizen > Neue Notiz",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Überprüfen > Notizen|Notizen > Alle Notizen anzeigen",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Überprüfen > Schützen|Blatt schützen...",
+   "kind": "button",
+   "opens": "Blatt schützen",
+   "status": "ok"
+  },
+  {
+   "path": "Überprüfen > Schützen|Arbeitsmappe schützen...",
+   "kind": "button",
+   "opens": "Struktur und Fenster schützen",
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Arbeitsmappenansichten|Normal",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Arbeitsmappenansichten|Umbruchvorschau",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Arbeitsmappenansichten|Seitenlayout",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Arbeitsmappenansichten|Benutzerdef. Ansichten...",
+   "kind": "button",
+   "opens": "Benutzerdefinierte Ansichten",
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Anzeigen|Lineal",
+   "kind": "check",
+   "opens": null,
+   "status": "disabled"
+  },
+  {
+   "path": "Ansicht > Anzeigen|Gitternetzlinien",
+   "kind": "check",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Anzeigen|Bearbeitungsleiste",
+   "kind": "check",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Anzeigen|Überschriften",
+   "kind": "check",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Zoom|Zoom...",
+   "kind": "button",
+   "opens": "Zoom",
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Zoom|100%",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Zoom|Auswahl vergrößern",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Neues Fenster",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Alle anordnen",
+   "kind": "button",
+   "opens": "Fenster anordnen",
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster fixieren",
+   "kind": "dropdown",
+   "opens": "menu (3)",
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster fixieren > Fenster fixieren",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster fixieren > Oberste Zeile fixieren",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster fixieren > Erste Spalte fixieren",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Teilen",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Ausblenden",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Einblenden...",
+   "kind": "button",
+   "opens": "Einblenden",
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Nebeneinander anzeigen",
+   "kind": "button",
+   "opens": "Nebeneinander vergleichen",
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Synchrones Scrollen",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fensterposition zurücksetzen",
+   "kind": "button",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster wechseln",
+   "kind": "dropdown",
+   "opens": "menu (9)",
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster wechseln > 1 Mappe1",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster wechseln > 2 Mappe2",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster wechseln > 3 Mappe3",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster wechseln > 4 Mappe4",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster wechseln > 5 Mappe5",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster wechseln > 6 Mappe6",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster wechseln > 7 Mappe7",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster wechseln > 8 Mappe8",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Fenster|Fenster wechseln > 9 Mappe9",
+   "kind": "entry",
+   "opens": null,
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Makros|Makros",
+   "kind": "split-main",
+   "opens": "Makro",
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Makros|Makros ▾",
+   "kind": "split-arrow",
+   "opens": "menu (3)",
+   "status": "ok"
+  },
+  {
+   "path": "Ansicht > Makros|Makros ▾ > Makros anzeigen",
+   "kind": "entry",
+   "opens": "Makro",
+   "status": "ok"
+  }
+ ]
+}

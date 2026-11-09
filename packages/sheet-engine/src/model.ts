@@ -207,6 +207,8 @@ export interface View {
   zoom: number;
   showGrid: boolean;
   showHeaders: boolean;
+  /** Formeln anzeigen (the file's showFormulas). */
+  showFormulas?: boolean;
   /** Fenster fixieren: rows above `row` and columns left of `col` stay put (0 = none). */
   freeze?: { row: number; col: number };
   /**
@@ -293,6 +295,8 @@ export interface CondRule {
   bottom?: boolean;
   /** aboveAverage: false = below. */
   above?: boolean;
+  /** timePeriod (Datum...): today, yesterday, last7Days …; the rule's formula does the test, as Excel writes it. */
+  timePeriod?: string;
   stopIfTrue?: boolean;
   /** The format applied (from the file's dxf): font colour, bold/italic, fill. */
   format?: { color?: string; fill?: string; bold?: boolean; italic?: boolean; underline?: boolean; strike?: boolean; border?: string };
