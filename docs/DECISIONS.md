@@ -3512,6 +3512,13 @@ back as a colour the pie ignores, error bar effects not saved, details of an aut
 the Sekundärachse written without their secondary axes (Excel refused the file). COM misses that remain are
 mostly text formats Excel does not report through TextFrame2 for chart text it builds itself, and settings Excel
 ignores (a format code "Probe 1").
+On the merged build with those fixes (results/2026-11-09-calc-chartpane-line.json, -others.json): line 1177
+controls used, 1169 changed, 1169 undone, 977 back on reopening, COM 1424 of 1428; scatter 787 / 785 / 785 /
+589, COM 979 of 981; combo 879 / 851 / 837 / 398, and Excel refused that file: every series moved to the
+Sekundärachse left the part without a primary group (fixed: written on the primary axes). Line series' own line
+details and marker defaults on reading, trendline and error bar effects in the drawing were fixed after it.
+Settings revealed by Datumsachse on text categories (Grenzen, Hauptstriche) change nothing visible, as in Excel
+with text categories.
 `check_calc_chartpane_real.py` (OS mouse and keyboard under the real-input lock): 12 of 12 (slider drag, spin
 button, colour palette, native dropdowns, typing and Enter, Strg+Z, a gradient stop dragged, a stop added).
 `compare_calc_chartpane_pictures.py`: for 24 of 25 settings our drawing and Excel's export of our file change
