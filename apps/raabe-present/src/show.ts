@@ -123,7 +123,13 @@ export class SlideShow {
       this.bind(this.proot, ink, stage);
       this.proot.focus();
     } else {
-      if (!reading) void document.documentElement.requestFullscreen?.().catch(() => {});
+      if (!reading) {
+        void document.documentElement.requestFullscreen?.().catch(() => {});
+        // Esc with the OS keyboard leaves the browser's full screen before the page sees the key (real input, D-137:
+        // the show stayed on in a window): leaving full screen ends the show, as Esc does in PowerPoint.
+        const left = () => { if (!document.fullscreenElement) { document.removeEventListener("fullscreenchange", left); if (!this.ended) this.end(); } };
+        document.addEventListener("fullscreenchange", left);
+      }
       this.root.focus();
     }
     this.clock = window.setInterval(() => this.tick(), 1000);

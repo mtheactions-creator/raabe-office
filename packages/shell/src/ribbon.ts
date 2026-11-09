@@ -542,7 +542,8 @@ export class Ribbon {
       }
       case "spinner": {
         const c2 = c;
-        const input = h("input", { type: "text", "aria-label": c.label, spellcheck: false });
+        // A spinner without a label of its own (Übergänge > Nach) is named by its command, as Office names it.
+        const input = h("input", { type: "text", "aria-label": c.label || this.commands.get(c.cmd).label, spellcheck: false });
         const done = () => this.opts.onDone?.();
         input.addEventListener("keydown", (e) => {
           if (e.key === "Enter") { e.preventDefault(); c2.commit?.(input.value); done(); }

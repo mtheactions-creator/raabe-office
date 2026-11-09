@@ -85,7 +85,8 @@ export class BackgroundPane {
         { type: "radio", label: "Bild- oder Texturfüllung", checked: () => kind() === "blipFill", pick: () => void this.picture() },
         { type: "check", label: "Hintergrundgrafiken ausblenden", value: () => this.app.deck.pptx.doc(this.app.slidePath()!).documentElement.getAttribute("showMasterSp") === "0", set: (on) => this.hideGraphics(on) },
       ];
-      if (kind() === "solidFill" || !kind()) c.push({ type: "color", label: "Farbe", value: () => this.current(), set: (hex) => this.setBg(`<a:solidFill><a:srgbClr val="${(hex ?? "#FFFFFF").slice(1).toUpperCase()}"/></a:solidFill>`) });
+      // The palette hands its colours without "#" (by hand, D-140: slice(1) cut off the first digit, which PowerPoint refuses).
+      if (kind() === "solidFill" || !kind()) c.push({ type: "color", label: "Farbe", value: () => this.current(), set: (hex) => this.setBg(`<a:solidFill><a:srgbClr val="${(hex ?? "#FFFFFF").replace("#", "").toUpperCase()}"/></a:solidFill>`) });
       c.push({ type: "button", label: "Auf alle anwenden", run: () => { const f = this.own(); this.setBg(f ? new XMLSerializer().serializeToString(f) : null, true); } },
         { type: "button", label: "Hintergrund zurücksetzen", run: () => this.setBg(null) });
       return c;

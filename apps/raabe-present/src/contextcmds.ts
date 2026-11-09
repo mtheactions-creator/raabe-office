@@ -299,7 +299,19 @@ export function tableInsertAt(app: PresentApp, where: "above" | "below" | "left"
       const nc = col.cloneNode(false) as Element;
       if (where === "left") col.before(nc); else col.after(nc);
       for (const tr of rows) { const tc = kids(tr, "tc")[c.c]; if (!tc) continue; const x = empty(tc); if (where === "left") tc.before(x); else tc.after(x); }
-      if (ext) ext.setAttribute("cx", String((num(ext, "cx") ?? 0) + (num(col, "w") ?? 0)));
+      // PowerPoint keeps the table's width: the columns, the new one as wide as its neighbour, shrink alike to fit
+      // (measured with ExecuteMso TableInsertColumnsRight/Left, compare_present_office.py, D-138).
+      const grid = kids(kid(t.tbl, "tblGrid"), "gridCol");
+      const before = grid.reduce((s, g) => s + (num(g, "w") ?? 0), 0) - (num(nc, "w") ?? 0);
+      const after = before + (num(nc, "w") ?? 0);
+      if (before > 0 && after > 0) {
+        let used = 0;
+        grid.forEach((g, i) => {
+          const w = i === grid.length - 1 ? before - used : Math.round(((num(g, "w") ?? 0) * before) / after);
+          g.setAttribute("w", String(w));
+          used += w;
+        });
+      }
     }
   });
 }
@@ -387,6 +399,7 @@ export function implementContext(app: PresentApp): void {
   impl("shape.quickStyles", () => {}, shapes);
   impl("wordart.quickStyles", () => {}, () => shapes() || !!app.editor.text);
   impl("wordart.fill", () => void app.commands.run("font.color"), shapes);
+  impl("wordart.dialog", () => app.openTextOptions(), () => shapes() || !!app.editor.text);
   impl("wordart.outline", () => app.setTextOutline({ color: app.textOutlineColor() === "none" ? "000000" : app.textOutlineColor() }), shapes);
   impl("pic.corrections", () => {}, pic);
   impl("pic.color", () => {}, pic);

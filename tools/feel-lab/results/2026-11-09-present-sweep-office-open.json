@@ -1,0 +1,12 @@
+{
+ "date": "2026-11-09",
+ "opened": 599,
+ "total": 600,
+ "failed": [
+  {
+   "file": "0128.pptx",
+   "dir": "saved-present-sweep-exe-a",
+   "error": "(-2147352567, 'Ausnahmefehler aufgetreten.', (0, None, None, None, 0, -2147023504), None)"
+  }
+ ]
+}
