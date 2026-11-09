@@ -99,6 +99,17 @@ interface FrameDrag { start: number; end: number; text: string; rect: Rect; anch
 
 const REF_COLORS = ["#0070c0", "#c00000", "#7030a0", "#00b050", "#c55a11", "#2e75b6", "#bf8f00"];
 const PT = 96 / 72;
+// Namenfeld and Bearbeitungsleiste (D-120, recorded in Excel at 150 %: results/2026-11-09-excel-formulabar.json), CSS px.
+// Excel's Namenfeld cannot get narrower than it starts (100 px with its arrow), and grows until
+// 157 px are left right of it for the handle, the buttons and the formula bar.
+const NAMEBOX_MIN = 100;
+const NAMEBOX_MAX = 10000;
+/** The bar's left padding plus the room Excel leaves right of the Namenfeld. */
+const NAMEBOX_KEEP = 6 + 157;
+const FBAR_HEIGHT = 33;
+const FX_LINE = 18;
+const FX_EXPANDED_LINES = 3;
+const FX_MAX_LINES = 40;
 
 export class Grid {
   readonly el: HTMLElement;
@@ -138,16 +149,74 @@ export class Grid {
     const cancel = h("button", { class: "fx-btn", "aria-label": "Abbrechen", "data-tip": "Abbrechen", onclick: () => this.cancelEdit() }, "✕");
     const ok = h("button", { class: "fx-btn", "aria-label": "Eingeben", "data-tip": "Eingeben", onclick: () => this.commitEdit("none") }, "✓");
     const insertFn = h("button", { class: "fx-btn fx-fn", "aria-label": "Funktion einfügen", "data-tip": "Funktion einfügen", onclick: () => this.startFormulaFromButton() }, h("i", {}, "fx"));
+    const nameWrap = h("div", { class: "namebox-wrap" }, this.nameBox, h("button", { class: "namebox-dd", "aria-label": "Namenfeld", tabindex: "-1",
+      onmousedown: (e: MouseEvent) => { e.preventDefault(); this.host.namesMenu((e.currentTarget as HTMLElement).closest(".namebox-wrap")!.getBoundingClientRect()); } }, "⌄"));
+    // The dots between Namenfeld and the buttons: dragged, they make the Namenfeld wider or narrower (D-120).
+    const sep = h("div", { class: "fbar-sep", "aria-label": "Namenfeld-Breite", role: "separator", "aria-orientation": "vertical" }, "⋮");
+    sep.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      sep.setPointerCapture(e.pointerId);
+      const x0 = e.clientX, w0 = nameWrap.getBoundingClientRect().width;
+      const move = (m: PointerEvent) => this.setNameBoxWidth(w0 + m.clientX - x0);
+      const up = () => { sep.removeEventListener("pointermove", move); sep.removeEventListener("pointerup", up); sep.removeEventListener("lostpointercapture", up); };
+      sep.addEventListener("pointermove", move);
+      sep.addEventListener("pointerup", up);
+      sep.addEventListener("lostpointercapture", up);
+    });
+    // Bearbeitungsleiste erweitern: the chevron at its right end (3 lines, recorded; in German Excel Strg+Umschalt+U underlines);
+    // the lower edge can be dragged (our own: Excel's edge drag was not caught by the probe).
+    this.fxExpand = h("button", { class: "fx-expand", "aria-label": "Bearbeitungsleiste erweitern", "data-tip": "Bearbeitungsleiste erweitern", tabindex: "-1",
+      onmousedown: (e: MouseEvent) => { e.preventDefault(); this.toggleFormulaBar(); } }, "⌄");
+    const edge = h("div", { class: "fbar-edge", "aria-hidden": "true" });
+    edge.addEventListener("pointerdown", (e) => {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      edge.setPointerCapture(e.pointerId);
+      const y0 = e.clientY, n0 = this.fbarLines;
+      const move = (m: PointerEvent) => this.setFormulaBarLines(n0 + Math.round((m.clientY - y0) / FX_LINE));
+      const up = () => { edge.removeEventListener("pointermove", move); edge.removeEventListener("pointerup", up); edge.removeEventListener("lostpointercapture", up); };
+      edge.addEventListener("pointermove", move);
+      edge.addEventListener("pointerup", up);
+      edge.addEventListener("lostpointercapture", up);
+    });
     this.formulaBar = h("div", { class: "fbar" },
-      h("div", { class: "namebox-wrap" }, this.nameBox, h("button", { class: "namebox-dd", "aria-label": "Namenfeld", tabindex: "-1",
-        onmousedown: (e: MouseEvent) => { e.preventDefault(); this.host.namesMenu((e.currentTarget as HTMLElement).closest(".namebox-wrap")!.getBoundingClientRect()); } }, "⌄")),
-      h("div", { class: "fbar-sep" }, "⋮"),
+      nameWrap,
+      sep,
       h("div", { class: "fx-btns" }, cancel, ok, insertFn),
-      h("div", { class: "fx-wrap" }, this.fxTint, this.fx));
+      h("div", { class: "fx-wrap" }, this.fxTint, this.fx, this.fxExpand), edge);
     this.hscroll = h("div", { class: "hscroll" }, h("div"));
     this.el = h("div", { class: "gridwrap" }, this.canvas, this.editorTint, this.editor, this.vscroll, this.ac);
     this.installEvents();
     new ResizeObserver(() => this.resize()).observe(this.el);
+  }
+
+  // ----- Namenfeld and Bearbeitungsleiste (D-120) ------------------------------------------------
+
+  private fxExpand!: HTMLButtonElement;
+  /** Lines the Bearbeitungsleiste shows (Excel's FormulaBarHeight); 1 is the collapsed bar. */
+  fbarLines = 1;
+  /** The height the chevron expands to: the last one dragged, Excel's 3 lines at first. */
+  private fbarExpanded = FX_EXPANDED_LINES;
+
+  setNameBoxWidth(px: number): void {
+    const w = Math.round(Math.max(NAMEBOX_MIN, Math.min(NAMEBOX_MAX, px, this.formulaBar.getBoundingClientRect().width - NAMEBOX_KEEP)));
+    (this.formulaBar.querySelector(".namebox-wrap") as HTMLElement).style.width = `${w}px`;
+  }
+
+  setFormulaBarLines(n: number): void {
+    n = Math.max(1, Math.min(FX_MAX_LINES, Math.round(n)));
+    this.fbarLines = n;
+    if (n > 1) this.fbarExpanded = n;
+    this.formulaBar.classList.toggle("expanded", n > 1);
+    this.formulaBar.style.height = n > 1 ? `${FBAR_HEIGHT + (n - 1) * FX_LINE}px` : "";
+    this.fxExpand.textContent = n > 1 ? "⌃" : "⌄";
+    this.fxExpand.setAttribute("aria-label", n > 1 ? "Bearbeitungsleiste reduzieren" : "Bearbeitungsleiste erweitern");
+    this.fxExpand.dataset.tip = `${n > 1 ? "Bearbeitungsleiste reduzieren" : "Bearbeitungsleiste erweitern"}`;
+  }
+
+  toggleFormulaBar(): void {
+    this.setFormulaBarLines(this.fbarLines > 1 ? 1 : this.fbarExpanded);
   }
 
   // ----- state -----------------------------------------------------------------------------

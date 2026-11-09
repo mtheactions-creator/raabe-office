@@ -234,6 +234,18 @@ export function slicersFeature(app: CalcApp) {
     }
   }
 
+  /** The item Umschalt+click starts from: the one clicked last (D-122). */
+  let anchorItem: { s: Slicer; i: number } | null = null;
+  /** The last click on the slicer was on an item (Alt+S does nothing then). */
+  let itemClicked = false;
+
+  /** The items from i to j (in the order shown), with `keep` (Strg: the items chosen before). */
+  function rangeSelect(c: SlicerCache, list: SlicerItem[], i: number, j: number, keep: string[]): void {
+    const [a, b] = [Math.min(i, j), Math.max(i, j)];
+    const span = list.slice(a, b + 1).map((x) => x.text);
+    select(c, [...new Set([...keep, ...span])]);
+  }
+
   /** A click on a button: one item, or (Strg / Mehrfachauswahl) the item added or taken away. */
   function clickItem(s: Slicer, it: SlicerItem, add: boolean): void {
     const c = cacheOf(s);
@@ -245,7 +257,8 @@ export function slicersFeature(app: CalcApp) {
       // Unfiltered, the first click with Mehrfachauswahl takes the item away (Excel).
       const sel = list.filter((i) => i.selected).map((i) => i.text);
       chosen = sel.includes(it.text) ? sel.filter((x) => x !== it.text) : [...sel, it.text];
-      if (!chosen.length) return;
+      // Strg+click on the only chosen item: Excel clears the filter (all items chosen again, recorded D-122).
+      if (!chosen.length) { select(c, null); return; }
     } else {
       if (isFiltered && list.filter((i) => i.selected).length === 1 && it.selected) return;
       chosen = [it.text];
@@ -614,12 +627,38 @@ export function slicersFeature(app: CalcApp) {
     const handle = t.closest<HTMLElement>(".sl-h")?.dataset.h as Handle | undefined;
     choose(s);
     e.focus({ preventScroll: true });
+    itemClicked = !!btn;
     const c = cacheOf(s);
     if (act === "multi") { multi = !multi; refresh(); return; }
     if (act === "clear") { if (c) select(c, null, "Filter löschen"); return; }
     if (btn && c) {
-      const it = items(c)[Number(btn.dataset.item)];
-      if (it) clickItem(s, it, ev.ctrlKey);
+      // D-122: dragging over the buttons chooses the items between (with Strg: added to the choice); Umschalt+click
+      // chooses from the item clicked last to this one.
+      const list = items(c);
+      const i0 = Number(btn.dataset.item);
+      const before = list.filter((i) => i.selected).map((i) => i.text);
+      const filtered = before.length < list.length;
+      let i1 = i0, dragged = false;
+      const at = (m: PointerEvent): number | null => {
+        const el = (document.elementFromPoint(m.clientX, m.clientY) as HTMLElement | null)?.closest<HTMLElement>(".sl-btn");
+        return el && e.contains(el) ? Number(el.dataset.item) : null;
+      };
+      const mark = () => {
+        const [a, b] = [Math.min(i0, i1), Math.max(i0, i1)];
+        e.querySelectorAll<HTMLElement>(".sl-btn").forEach((x) => x.classList.toggle("sl-dragging", Number(x.dataset.item) >= a && Number(x.dataset.item) <= b));
+      };
+      const mv = (m: PointerEvent) => { const j = at(m); if (j === null || j === i1) return; i1 = j; dragged = true; mark(); };
+      const upb = () => {
+        removeEventListener("pointermove", mv);
+        removeEventListener("pointerup", upb);
+        e.querySelectorAll(".sl-dragging").forEach((x) => x.classList.remove("sl-dragging"));
+        if (dragged) rangeSelect(c, list, i0, i1, ev.ctrlKey && filtered ? before : []);
+        else if (ev.shiftKey && anchorItem && anchorItem.s === s) rangeSelect(c, list, anchorItem.i, i0, (ev.ctrlKey || multi) && filtered ? before : []);
+        else { const it = list[i0]; if (it) clickItem(s, it, ev.ctrlKey); }
+        if (!ev.shiftKey) anchorItem = { s, i: dragged ? i0 : i0 };
+      };
+      addEventListener("pointermove", mv);
+      addEventListener("pointerup", upb);
       return;
     }
     // Header, border or handle: move or size.
@@ -659,7 +698,8 @@ export function slicersFeature(app: CalcApp) {
     const c = cacheOf(s);
     if (ev.key === "Delete") { ev.preventDefault(); remove(s); return; }
     if (ev.altKey && (ev.key === "c" || ev.key === "C") && c) { ev.preventDefault(); select(c, null, "Filter löschen"); return; }
-    if (ev.altKey && (ev.key === "s" || ev.key === "S")) { ev.preventDefault(); multi = !multi; refresh(); return; }
+    // Alt+S: only while the slicer itself is chosen; after a click on an item Excel ignores it (recorded, D-122).
+    if (ev.altKey && (ev.key === "s" || ev.key === "S") && !itemClicked) { ev.preventDefault(); multi = !multi; refresh(); return; }
     if (ev.key === "Escape") { ev.preventDefault(); choose(null); app.grid.focus(); return; }
     const d: Record<string, [number, number]> = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
     if (d[ev.key]) {

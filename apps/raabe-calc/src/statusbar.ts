@@ -30,6 +30,8 @@ export class CalcStatusBar {
   private stats = h("div", { class: "stats" });
   private slider = h("input", { type: "range", min: "0", max: "100", step: "0.5", "aria-label": "Zoom" }) as HTMLInputElement;
   private pct = h("button", { class: "cell pct", "data-tip": "Zoom" });
+  /** Makroaufzeichnung (D-119): starts Makro aufzeichnen, or ends a recording. */
+  private rec = h("button", { class: "cell recbtn", "aria-label": "Makroaufzeichnung Wird nicht aufgezeichnet", "data-tip": "Makro aufzeichnen" });
 
   /** What the statistics show; Excel's default is Mittelwert, Anzahl and Summe. */
   private shown: Record<string, boolean> = { avg: true, count: true, numbers: false, min: false, max: false, sum: true };
@@ -42,19 +44,29 @@ export class CalcStatusBar {
       commands.onRefresh(() => { b.disabled = !commands.isEnabled(id); b.classList.toggle("checked", commands.isChecked(id)); });
       return b;
     });
+    this.rec.onclick = () => void commands.run("view.recordMacro");
+    this.setRecording(false);
     this.slider.oninput = () => onZoom(Math.round(sliderToZoom(Number(this.slider.value))));
     this.pct.onclick = () => void commands.run("view.zoomDialog");
     const step = (d: number) => () => {
       const z = sliderToZoom(Number(this.slider.value));
       onZoom(Math.max(10, Math.min(400, Math.round((z + d) / 10) * 10)));
     };
-    this.el = h("div", { class: "statusbar", role: "status", oncontextmenu: (e: MouseEvent) => this.menu(e) }, this.mode, this.message, this.flags,
+    this.el = h("div", { class: "statusbar", role: "status", oncontextmenu: (e: MouseEvent) => this.menu(e) }, this.mode, this.message, this.rec, this.flags,
       h("div", { class: "right" }, this.stats, ...views,
         h("div", { class: "zoom" },
           h("button", { "aria-label": "Verkleinern", "data-tip": "Verkleinern", onclick: step(-10) }, "−"),
           this.slider,
           h("button", { "aria-label": "Vergrößern", "data-tip": "Vergrößern", onclick: step(10) }, "+")),
         this.pct));
+  }
+
+  /** While a macro is recorded the button shows a square and ends the recording (Excel). */
+  setRecording(on: boolean): void {
+    this.rec.setAttribute("aria-label", `Makroaufzeichnung ${on ? "Wird aufgezeichnet" : "Wird nicht aufgezeichnet"}`);
+    this.rec.dataset.tip = on ? "Aufzeichnung beenden" : "Makro aufzeichnen";
+    this.rec.classList.toggle("on", on);
+    this.rec.replaceChildren(on ? h("span", { class: "rec-stop" }) : icon("slide-record"));
   }
 
   setMode(text: string): void {

@@ -6,7 +6,7 @@
 /* Namenfeld | ⋮ | ✕ ✓ fx | Bearbeitungsleiste */
 .fbar { flex: none; display: flex; align-items: stretch; height: 33px; padding: 4px 4px 6px 6px; gap: 0; background: var(--chrome); border-bottom: 1px solid #d4d4d4; }
 .no-fbar .fbar { display: none; }
-.namebox-wrap { position: relative; width: 112px; display: flex; background: #fff; border: 1px solid #c6c6c6; }
+.namebox-wrap { position: relative; width: 100px; flex: none; display: flex; background: #fff; border: 1px solid #c6c6c6; }
 .namebox { flex: 1; min-width: 0; border: 0; padding: 0 4px; font: 12px var(--font); outline: none; }
 .namebox-dd { width: 16px; border: 0; background: none; color: var(--text-2); font-size: 11px; }
 .fbar-sep { width: 14px; display: flex; align-items: center; justify-content: center; color: #9a9a9a; cursor: col-resize; }
@@ -14,8 +14,21 @@
 .fx-btn { width: 24px; height: 22px; border: 0; background: none; color: #6a6a6a; font-size: 13px; border-radius: 3px; }
 .fx-btn:hover { background: var(--hover); }
 .fx-fn i { font-family: "Times New Roman", serif; font-size: 14px; }
-.fx-wrap { flex: 1; display: flex; background: #fff; border: 1px solid #c6c6c6; }
+.fx-wrap { flex: 1; min-width: 0; display: flex; background: #fff; border: 1px solid #c6c6c6; }
 .fx-input { flex: 1; resize: none; border: 0; outline: none; padding: 2px 4px; font: 14.667px "Calibri", Carlito, sans-serif; line-height: 18px; white-space: pre; overflow: hidden; user-select: text; -webkit-user-select: text; }
+/* D-120: the Namenfeld's handle, the expand chevron and the lower edge; expanded, the bar shows several lines. */
+.fbar { position: relative; }
+.fbar-sep { cursor: ew-resize; user-select: none; }
+.fx-expand { flex: none; width: 20px; align-self: flex-start; height: 21px; border: 0; background: none; color: #555; font-size: 12px; line-height: 21px; padding: 0; }
+.fx-expand:hover { background: var(--hover); }
+.fbar-edge { position: absolute; left: 0; right: 0; bottom: 0; height: 5px; cursor: ns-resize; }
+.fbar.expanded .namebox-wrap, .fbar.expanded .fbar-sep, .fbar.expanded .fx-btns { align-self: flex-start; height: 23px; }
+.fbar.expanded .fx-input { white-space: pre-wrap; overflow-y: auto; }
+/* D-119: the status bar's Makroaufzeichnung button (a square while recording). */
+.statusbar .recbtn { width: 24px; justify-content: center; padding: 0; }
+.statusbar .recbtn .rec-stop { width: 9px; height: 9px; background: #444; display: inline-block; }
+/* D-122: the buttons a drag over a slicer is choosing. */
+.slicer-layer .sl-btn.sl-dragging { outline: 2px solid #217346; outline-offset: -2px; }
 
 /* The grid: canvas, the vertical scroll bar on the right, the cell editor over the canvas. */
 .gridwrap { flex: 1; position: relative; min-height: 0; overflow: hidden; outline: none; }

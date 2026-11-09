@@ -1,0 +1,428 @@
+{
+ "counts": {
+  "keytips": "10/10",
+  "formulabar": "10/10",
+  "slicers": "11/11"
+ },
+ "report": {
+  "keytips": [
+   {
+    "check": "Alt, F, M opens Makros' menu with K, R, V",
+    "ok": true,
+    "detail": [
+     [
+      "Makros anzeigen",
+      "K"
+     ],
+     [
+      "Makro aufzeichnen...",
+      "R"
+     ],
+     [
+      "Relative Verweise verwenden",
+      "V"
+     ]
+    ]
+   },
+   {
+    "check": "the menu shows its keytips",
+    "ok": true,
+    "detail": [
+     "K",
+     "R",
+     "V"
+    ]
+   },
+   {
+    "check": "K: Makros anzeigen (the Makro dialog)",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "V: Relative Verweise verwenden on",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "the menu shows Relative Verweise verwenden checked",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "V again: off",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "R: Makro aufzeichnen starts a recording",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "the status bar says it is recording",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "while recording: Aufzeichnung beenden with A",
+    "ok": true,
+    "detail": [
+     [
+      "Makros anzeigen",
+      "K"
+     ],
+     [
+      "Aufzeichnung beenden",
+      "A"
+     ],
+     [
+      "Relative Verweise verwenden",
+      "V"
+     ]
+    ]
+   },
+   {
+    "check": "A ends the recording",
+    "ok": true,
+    "detail": null
+   }
+  ],
+  "formulabar": [
+   {
+    "check": "Namenfeld starts as wide as Excel's",
+    "ok": true,
+    "detail": [
+     100,
+     100.0
+    ]
+   },
+   {
+    "check": "the handle has the left-right pointer",
+    "ok": true,
+    "detail": null
+   },
+   {
+    "check": "dragged far left: Excel's smallest Namenfeld",
+    "ok": true,
+    "detail": [
+     100,
+     100.0
+    ]
+   },
+   {
+    "check": "dragged 160 px right: 160 px wider",
+    "ok": true,
+    "detail": [
+     100,
+     260
+    ]
+   },
+   {
+    "check": "dragged far right: the room Excel leaves the buttons and the bar",
+    "ok": true,
+    "detail": [
+     1155,
+     156.99999970197678,
+     156.66666666666666
+    ]
+   },
+   {
+    "check": "the chevron expands to Excel's height",
+    "ok": true,
+    "detail": [
+     3,
+     3
+    ]
+   },
+   {
+    "check": "the chevron again collapses",
+    "ok": true,
+    "detail": 1
+   },
+   {
+    "check": "Strg+Umschalt+U underlines, as in German Excel (the bar stays)",
+    "ok": true,
+    "detail": [
+     1
+    ]
+   },
+   {
+    "check": "the lower edge dragged four lines down: four lines more",
+    "ok": true,
+    "detail": 7
+   },
+   {
+    "check": "dragged up: back to one line",
+    "ok": true,
+    "detail": 1
+   }
+  ],
+  "slicers": [
+   {
+    "check": "Datenschnitt click",
+    "ok": true,
+    "detail": {
+     "excel": [
+      "Deutsch"
+     ],
+     "raabecalc": [
+      {
+       "selected": [
+        "Deutsch"
+       ],
+       "multi": false
+      }
+     ]
+    }
+   },
+   {
+    "check": "Datenschnitt click_twice_same",
+    "ok": true,
+    "detail": {
+     "excel": [
+      "Deutsch"
+     ],
+     "raabecalc": [
+      {
+       "selected": [
+        "Deutsch"
+       ],
+       "multi": false
+      },
+      {
+       "selected": [
+        "Deutsch"
+       ],
+       "multi": false
+      }
+     ]
+    }
+   },
+   {
+    "check": "Datenschnitt ctrl_from_all",
+    "ok": true,
+    "detail": {
+     "excel": [
+      "Bio",
+      "Deutsch",
+      "Kunst",
+      "Mathe"
+     ],
+     "raabecalc": [
+      {
+       "selected": [
+        "Bio",
+        "Deutsch",
+        "Kunst",
+        "Mathe"
+       ],
+       "multi": false
+      }
+     ]
+    }
+   },
+   {
+    "check": "Datenschnitt click_then_ctrl",
+    "ok": true,
+    "detail": {
+     "excel": [
+      "Bio",
+      "Kunst"
+     ],
+     "raabecalc": [
+      {
+       "selected": [
+        "Bio"
+       ],
+       "multi": false
+      },
+      {
+       "selected": [
+        "Bio",
+        "Kunst"
+       ],
+       "multi": false
+      }
+     ]
+    }
+   },
+   {
+    "check": "Datenschnitt ctrl_off_last",
+    "ok": true,
+    "detail": {
+     "excel": [
+      "Bio",
+      "Deutsch",
+      "Englisch",
+      "Kunst",
+      "Mathe"
+     ],
+     "raabecalc": [
+      {
+       "selected": [
+        "Bio"
+       ],
+       "multi": false
+      },
+      {
+       "selected": [
+        "Bio",
+        "Deutsch",
+        "Englisch",
+        "Kunst",
+        "Mathe"
+       ],
+       "multi": false
+      }
+     ]
+    }
+   },
+   {
+    "check": "Datenschnitt shift_range",
+    "ok": true,
+    "detail": {
+     "excel": [
+      "Deutsch",
+      "Englisch",
+      "Kunst"
+     ],
+     "raabecalc": [
+      {
+       "selected": [
+        "Deutsch"
+       ],
+       "multi": false
+      },
+      {
+       "selected": [
+        "Deutsch",
+        "Englisch",
+        "Kunst"
+       ],
+       "multi": false
+      }
+     ]
+    }
+   },
+   {
+    "check": "Datenschnitt shift_from_all",
+    "ok": true,
+    "detail": {
+     "excel": [
+      "Deutsch",
+      "Englisch",
+      "Kunst"
+     ],
+     "raabecalc": [
+      {
+       "selected": [
+        "Deutsch",
+        "Englisch",
+        "Kunst"
+       ],
+       "multi": false
+      }
+     ]
+    }
+   },
+   {
+    "check": "Datenschnitt drag_range",
+    "ok": true,
+    "detail": {
+     "excel": [
+      "Bio",
+      "Deutsch",
+      "Englisch"
+     ],
+     "raabecalc": [
+      {
+       "selected": [
+        "Bio",
+        "Deutsch",
+        "Englisch"
+       ],
+       "multi": false
+      }
+     ]
+    }
+   },
+   {
+    "check": "Datenschnitt drag_up",
+    "ok": true,
+    "detail": {
+     "excel": [
+      "Englisch",
+      "Kunst",
+      "Mathe"
+     ],
+     "raabecalc": [
+      {
+       "selected": [
+        "Englisch",
+        "Kunst",
+        "Mathe"
+       ],
+       "multi": false
+      }
+     ]
+    }
+   },
+   {
+    "check": "Datenschnitt ctrl_drag_add",
+    "ok": true,
+    "detail": {
+     "excel": [
+      "Bio",
+      "Englisch",
+      "Kunst"
+     ],
+     "raabecalc": [
+      {
+       "selected": [
+        "Bio"
+       ],
+       "multi": false
+      },
+      {
+       "selected": [
+        "Bio",
+        "Englisch",
+        "Kunst"
+       ],
+       "multi": false
+      }
+     ]
+    }
+   },
+   {
+    "check": "Datenschnitt alt_s_click",
+    "ok": true,
+    "detail": {
+     "excel": [
+      "Englisch"
+     ],
+     "raabecalc": [
+      {
+       "selected": [
+        "Bio"
+       ],
+       "multi": false
+      },
+      {
+       "selected": [
+        "Bio"
+       ],
+       "multi": false
+      },
+      {
+       "selected": [
+        "Englisch"
+       ],
+       "multi": false
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

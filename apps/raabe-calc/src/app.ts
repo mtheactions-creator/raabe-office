@@ -48,6 +48,7 @@ import { shapesFeature } from "./shapes";
 import { borderDrawFeature } from "./borderdraw";
 import { whatIfFeature } from "./whatif";
 import { macroDialog, messageBar, modulesOf, runMacro, setModules } from "./macros";
+import { MacroRecorder, macroShortcuts } from "./recorder";
 import { scenarioFeature } from "./scenarios";
 import { consolidateFeature } from "./consolidate";
 import { tablesFeature } from "./tables";
@@ -56,6 +57,7 @@ import { designsFeature } from "./designs";
 import { advancedFilterFeature } from "./advfilter";
 import { pivotsFeature } from "./pivots";
 import { slicersFeature } from "./slicers";
+import { timelinesFeature } from "./timelines";
 import { getDataFeature } from "./getdata";
 import { forecastFeature } from "./forecast";
 import { commentsFeature } from "./comments";
@@ -111,6 +113,8 @@ export class CalcApp {
   private statusBar: CalcStatusBar;
   /** The message bar of a workbook with macros (D-091). */
   private macroSlot = h("div");
+  /** Makro aufzeichnen (D-119). */
+  readonly recorder = new MacroRecorder(this);
   private copied: Copied | null = null;
   private fontList: string[] = [];
   private lastFontColor = "#FF0000";
@@ -141,6 +145,8 @@ export class CalcApp {
   readonly pivots = pivotsFeature(this);
   /** Datenschnitte (D-092). */
   readonly slicers = slicersFeature(this);
+  /** Zeitachsen (D-121). */
+  readonly timelines = timelinesFeature(this);
   /** Daten abrufen (local) and Prognoseblatt (D-092). */
   readonly getData = getDataFeature(this);
   readonly forecast = forecastFeature(this);
@@ -654,12 +660,14 @@ export class CalcApp {
     this.lastFontColor = value;
     const p = this.designs.pick(value);
     this.formatSel("Schriftfarbe", (s) => { s.font.color = p?.hex; if (p?.theme) s.font.theme = p.theme; else delete s.font.theme; });
+    this.recorder.fontColor();
   }
 
   private setFillColor(value: string): void {
     this.lastFill = value;
     const p = this.designs.pick(value);
     this.formatSel("Füllfarbe", (s) => { s.fill = p?.hex; s.fillXml = undefined; if (p?.theme) s.fillTheme = p.theme; else delete s.fillTheme; });
+    this.recorder.fill();
   }
 
   /** Zahl als Text gespeichert > In eine Zahl umwandeln for one cell. */
@@ -770,6 +778,7 @@ export class CalcApp {
         if (!this.whatIf.guard(targets)) return;
         this.change("Eingabe", () => {
           A.enter(this.ctx, this.sheet, targets, text);
+          this.recorder.commit(targets, this.sheet);
           this.tables.afterEntry(this.sheet, targets, text);
           // Formulas are worked out first, so the column can widen for their result (an error too).
           if (text.startsWith("=") && (targets.r1 - targets.r0 + 1) * (targets.c1 - targets.c0 + 1) <= 400) {
@@ -788,7 +797,7 @@ export class CalcApp {
       clearContents: () => {
         this.grid.setMarquee(null);
         if (!this.grid.selection.every((r) => this.whatIf.guard(r))) return;
-        if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection));
+        if (this.protection.guard("edit.clearContents")) { this.recorder.before("edit.clearContents"); this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, this.grid.selection)); this.recorder.command("edit.clearContents"); }
       },
       clearRange: (r) => { if (this.protection.guard("edit.clearContents")) this.change("Löschen", () => A.clearContents(this.ctx, this.sheet, [r])); },
       formulaProblem: (row, col, text) => {
@@ -818,7 +827,7 @@ export class CalcApp {
         if (!this.protection.guardRects([rect])) return;
         this.change(dir === "down" || dir === "right" ? "Zellen einfügen" : "Zellen löschen", () => A.shiftCells(this.ctx, this.sheet, rect, dir));
       },
-      fill: (source, target, ctrl) => { if (this.protection.guardRects([target])) this.fillWithOptions(source, target, ctrl ? "toggle" : "auto"); },
+      fill: (source, target, ctrl) => { if (this.protection.guardRects([target])) { this.recorder.autoFill(target); this.fillWithOptions(source, target, ctrl ? "toggle" : "auto"); } },
       move: (source, to, copy) => this.protection.on() ? void this.protection.canEdit(this.sheet.view.active.row, this.sheet.view.active.col) : this.change(copy ? "Kopieren" : "Verschieben", () => {
         if (copy) A.copyCells(this.ctx, { sheet: this.sheet, rect: source }, this.sheet, to);
         else A.moveCells(this.ctx, this.sheet, source, to);
@@ -830,9 +839,19 @@ export class CalcApp {
         this.change("Verschieben", () => { dst = A.moveInsert(this.ctx, this.sheet, source, at, rows); });
         return dst;
       },
-      resizeCols: (cols, px, before) => { if (this.protection.enabled("cells.colWidth")) this.setColWidths(cols, px, before); },
-      resizeRows: (rows, px, before) => { if (this.protection.enabled("cells.rowHeight")) this.setRowHeights(rows, px, before); },
-      autofitCols: (cols) => { if (this.protection.enabled("cells.autofitCols")) this.autofitCols(cols); },
+      resizeCols: (cols, px, before) => {
+        if (!this.protection.enabled("cells.colWidth")) return;
+        this.setColWidths(cols, px, before);
+        const w = this.sheet.cols.get(cols[0])?.width;
+        if (w !== undefined) this.recorder.columnWidth(cols, shownChars(w));
+      },
+      resizeRows: (rows, px, before) => {
+        if (!this.protection.enabled("cells.rowHeight")) return;
+        this.setRowHeights(rows, px, before);
+        const ht = this.sheet.rows.get(rows[0])?.height;
+        if (ht !== undefined) this.recorder.rowHeight(rows, ht);
+      },
+      autofitCols: (cols) => { if (this.protection.enabled("cells.autofitCols")) { this.recorder.autofitColumns(cols); this.autofitCols(cols); } },
       autofitRows: (rows) => !this.protection.enabled("cells.autofitRows") ? undefined : this.change("Zeilenhöhe", () => this.autoRowHeights({ r0: Math.min(...rows), c0: 0, r1: Math.max(...rows), c1: MAX_COLS - 1 }, true)),
       selectionChanged: () => {
         this.charts.deselect();
@@ -848,7 +867,7 @@ export class CalcApp {
         this.statusBar.setMessage(on ? "Ziel wählen, mit Eingabe oder Strg+V einfügen" : null);
         // Once the copy mode ends (Esc, Entf, F2, typing, a pasted cut), Strg+V no longer pastes
         // it: Excel empties the clipboard then (recorded). Text copied elsewhere still pastes.
-        if (!on && this.copied) { this.spent = this.copied; this.copied = null; }
+        if (!on && this.copied) { this.spent = this.copied; this.copied = null; this.recorder.copyModeEnded(); }
       },
       modeChanged: (mode: Mode) => {
         this.statusBar.setMode(mode === "ready" ? "Bereit" : mode === "enter" ? "Eingeben" : mode === "edit" ? "Bearbeiten" : "Zeigen");
@@ -930,7 +949,7 @@ export class CalcApp {
       circles: () => this.circles.get(this.sheet) ?? [],
       canEdit: (row, col) => this.protection.canEdit(row, col),
       validate: (row, col, text) => (this.validation.quickCheck(row, col, text) ? "ok" : this.validation.check(row, col, text)),
-      painted: () => { this.pageLayout.paint(); this.pictures.place(); this.slicers.place(); this.shapes.place(); this.ink.place(); this.splitUi?.place(); this.validation.place(); this.quick.place(); this.windows.painted(); },
+      painted: () => { this.pageLayout.paint(); this.pictures.place(); this.slicers.place(); this.timelines.place(); this.shapes.place(); this.ink.place(); this.splitUi?.place(); this.validation.place(); this.quick.place(); this.windows.painted(); },
       nextUnlocked: (row, col, back) => this.protection.nextUnlocked(row, col, back),
     };
   }
@@ -1462,10 +1481,13 @@ export class CalcApp {
       this.wb.sheets.splice(at, 0, s);
       this.wb.active = at;
     });
+    this.recorder.sheetAdded(after);
   }
 
   /** Strg+Umschalt+1/4/5: the format, and the column widens when the number no longer fits (Excel). */
   private numberFormatKey(code: string): void {
+    this.recorder.before("number");
+    this.recorder.numberFormat(code);
     this.change("Zahlenformat", () => {
       A.format(this.ctx, this.sheet, this.grid.selection, (s) => { s.numFmt = code; });
       this.autoWiden(this.grid.selection);
@@ -1532,6 +1554,7 @@ export class CalcApp {
       return "invalid";
     }
     const old = this.wb.sheets[i].name;
+    if (old !== name) this.recorder.renamed(old, name);
     this.change("Umbenennen", () => {
       this.history.sheets();
       this.wb.sheets[i].name = name;
@@ -1758,12 +1781,35 @@ export class CalcApp {
 
   // ----- commands ---------------------------------------------------------------------------------
 
+  /** A command run while a macro is recorded: the selection it works on first, then Excel's lines for it. */
+  private recorded(id: string, fn: () => void | Promise<void>): void | Promise<void> {
+    const rec = this.recorder;
+    // Only the command the user chose is written (Strg++ runs Zeilen einfügen inside itself).
+    if (!rec.recording || this.recordDepth > 0) return fn();
+    rec.before(id);
+    const shape = rec.shape();
+    this.recordDepth++;
+    let r: void | Promise<void>;
+    try { r = fn(); } finally { this.recordDepth--; }
+    if (r instanceof Promise) return r.then(() => rec.after(id, shape));
+    rec.after(id, shape);
+  }
+  private recordDepth = 0;
+
+  /** Makro aufzeichnen started or stopped: menu entry, status bar button. */
+  recordingChanged(): void {
+    const on = this.recorder.recording;
+    this.commands.get("view.recordMacro").label = on ? "Aufzeichnung beenden" : "Makro aufzeichnen...";
+    this.statusBar.setRecording(on);
+    this.commands.refresh();
+  }
+
   private implementCommands(): void {
     const c = this.commands;
     // Blatt schützen decides first: commands it does not allow are greyed out, changes to locked
     // cells are refused with a message.
     const run = (id: string, fn: () => void | Promise<void>, enabled?: () => boolean, checked?: () => boolean) =>
-      c.implement(id, { run: () => (this.protection.guard(id) ? fn() : undefined), enabled: () => this.protection.enabled(id) && !(this.protection.bookLocked() && this.protection.structureCommand(id)) && (enabled ? enabled() : true), checked });
+      c.implement(id, { run: () => (this.protection.guard(id) ? this.recorded(id, fn) : undefined), enabled: () => this.protection.enabled(id) && !(this.protection.bookLocked() && this.protection.structureCommand(id)) && (enabled ? enabled() : true), checked });
     const notEditing = () => !this.grid?.isEditing;
     const st = () => this.activeStyle();
 
@@ -2109,6 +2155,7 @@ export class CalcApp {
     run("insert.sparkWinLoss", () => void this.sparklineDialog("stacked"), notEditing);
     this.sparklines.implement(run);
     this.slicers.implement(run);
+    this.timelines.implement(run);
     this.getData.implement(run);
     this.forecast.implement(run);
     run("insert.comment", () => this.comments.newComment(), notEditing);
@@ -2194,6 +2241,8 @@ export class CalcApp {
     run("view.zoom100", () => this.setZoom(100));
     run("view.zoomSelection", () => this.zoomToSelection());
     run("view.macros", () => macroDialog(this));
+    run("view.recordMacro", () => this.recorder.dialog());
+    run("view.relativeRefs", () => { this.recorder.relative = !this.recorder.relative; }, undefined, () => this.recorder.relative);
     run("view.freeze", () => {});
     run("view.freezePanes", () => {
       // Fenster fixieren on a split freezes at the bars; Fixierung aufheben gives the split back (recorded, D-093).
@@ -2226,7 +2275,7 @@ export class CalcApp {
   private sparkWas = false;
   private sparkTabs(): void {
     const on = !!this.sparklines.current();
-    if (on === this.sparkWas || this.charts.selected() || this.shapes.selected() || this.slicers.selected()) return;
+    if (on === this.sparkWas || this.charts.selected() || this.shapes.selected() || this.slicers.selected() || this.timelines.selected()) return;
     this.sparkWas = on;
     this.ribbon.setContextual(on ? [this.sparklines.tab()] : []);
   }
@@ -2234,7 +2283,7 @@ export class CalcApp {
   private tableWas = false;
   private tableTabs(): void {
     const on = !!this.tables.current();
-    if (on === this.tableWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected() || this.slicers.selected() || this.pivots.current()) return;
+    if (on === this.tableWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected() || this.slicers.selected() || this.timelines.selected() || this.pivots.current()) return;
     this.tableWas = on;
     this.ribbon.setContextual(on ? [this.tableDesignTab()] : []);
   }
@@ -2267,7 +2316,7 @@ export class CalcApp {
   private pivotWas = false;
   private pivotTabs(): void {
     const on = !!this.pivots.current();
-    if (on === this.pivotWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected() || this.slicers.selected()) return;
+    if (on === this.pivotWas || this.charts.selected() || this.shapes.selected() || this.pictures.selected() || this.slicers.selected() || this.timelines.selected()) return;
     this.pivotWas = on;
     this.ribbon.setContextual(on ? [this.pivotAnalyzeTab(), this.pivotDesignTab()] : []);
   }
@@ -2279,9 +2328,10 @@ export class CalcApp {
       id: "pivotAnalyze", label: "PivotTable-Analyse", key: "JT", contextual: true, shrink: [],
       groups: [
         // Group keytips as recorded (probe_excel_slicer_ui.py): Filtern Z S, Daten Z D, Aktionen Z C, Einblenden Z W.
-        { id: "filter", label: "Filtern", key: "ZS", icon: "filter", controls: [b("pivot.slicer", "9")] },
-        { id: "data", label: "Daten", key: "ZD", icon: "reapply", controls: [b("pivot.refresh", "F")] },
-        { id: "actions", label: "Aktionen", key: "ZC", icon: "delete", controls: [b("pivot.delete", "C")] },
+        // Zeitachse einfügen C, Aktualisieren A, Löschen ß as recorded (probe_excel_slicer_ui.py, D-121).
+        { id: "filter", label: "Filtern", key: "ZS", icon: "filter", controls: [b("pivot.slicer", "9"), b("pivot.timeline", "C")] },
+        { id: "data", label: "Daten", key: "ZD", icon: "reapply", controls: [b("pivot.refresh", "A")] },
+        { id: "actions", label: "Aktionen", key: "ZC", icon: "delete", controls: [b("pivot.delete", "ß")] },
         { id: "show", label: "Einblenden", key: "ZW", icon: "table", controls: [b("pivot.fieldList", "L")] },
       ],
     };
@@ -2315,10 +2365,21 @@ export class CalcApp {
   /** Datenschnitt appears while a slicer is selected (Excel's contextual tab, D-092). */
   slicerSelectionChanged(): void {
     const on = !!this.slicers.selected();
-    if (on) { this.shapes.deselect(); this.pictures.deselect(); }
+    if (on) { this.shapes.deselect(); this.pictures.deselect(); this.timelines.deselect(); }
+    if (!on && this.timelines.selected()) return;
     this.ribbon.setContextual(on ? [this.slicers.tab()] : []);
     if (on) this.ribbon.select("slicer");
     else { this.tableWas = false; this.pivotWas = false; this.sparkWas = false; this.tableTabs(); this.pivotTabs(); }
+    this.updateChrome();
+  }
+
+  /** Zeitachse appears while a timeline is selected (Excel's contextual tab, D-121). */
+  timelineSelectionChanged(): void {
+    const on = !!this.timelines.selected();
+    if (on) { this.shapes.deselect(); this.pictures.deselect(); this.slicers.deselect(); }
+    this.ribbon.setContextual(on ? [this.timelines.tab()] : this.slicers.selected() ? [this.slicers.tab()] : []);
+    if (on) this.ribbon.select("timeline");
+    else if (!this.slicers.selected()) { this.tableWas = false; this.pivotWas = false; this.sparkWas = false; this.tableTabs(); this.pivotTabs(); }
     this.updateChrome();
   }
 
@@ -2596,6 +2657,11 @@ export class CalcApp {
     const code = /^[a-zäöü]$/i.test(k) && /^[a-z]$/i.test(k) ? "Key" + k.toUpperCase() : e.code;
     const run = (id: string) => { void this.commands.run(id); return true; };
     if (this.painter && k === "Escape") { this.painter = null; document.body.classList.remove("painting"); return true; }
+    if (e.ctrlKey && !e.altKey && /^Key[A-Z]$/.test(code) && this.wb.vba) {
+      const letter = shift ? code.slice(3) : code.slice(3).toLowerCase();
+      const macro = macroShortcuts(modulesOf(this).map((m) => m.code).join("\n")).get(letter);
+      if (macro) { void runMacro(this, macro); return true; }
+    }
     if (k === "F12" && !ctrl) return run("file.saveAs");
     if (k === "F8" && e.altKey && !e.ctrlKey && !shift) return run("view.macros");
     if (k === "F7" && !ctrl && !shift && !e.altKey) return run("review.spelling");
@@ -2721,12 +2787,13 @@ export class CalcApp {
       fontName: () => this.activeStyle().font.name,
       fontSize: () => String(this.activeStyle().font.size).replace(".", ","),
       fontOptions,
-      setFont: (name) => this.formatSel("Schriftart", (s) => { s.font.name = name.replace(/ \((Überschriften|Textkörper)\)$/, ""); }),
+      setFont: (name) => { this.formatSel("Schriftart", (s) => { s.font.name = name.replace(/ \((Überschriften|Textkörper)\)$/, ""); }); this.recorder.font(); },
       setSize: (v) => {
         const n = Number(v.replace(",", "."));
         if (!(n >= 1 && n <= 409)) { void messageBox("RaabeCalc", "Die Zahl muss zwischen 1 und 409 liegen."); return; }
         this.formatSel("Schriftgrad", (s) => { s.font.size = n; });
         this.change("Zeilenhöhe", () => this.autoRowHeights(this.grid.selection.at(-1)!));
+        this.recorder.font();
       },
       fontColor: () => this.designs.pick(this.lastFontColor)?.hex ?? this.lastFontColor,
       setFontColor: (hex) => this.setFontColor(hex),
@@ -2735,6 +2802,7 @@ export class CalcApp {
       paletteTheme: () => this.designs.paletteTheme(),
       drawTab: () => this.ink.tab(),
       windowsMenu: () => this.windows.switchMenu(),
+      recording: () => this.recorder.recording,
       numberFormat: () => {
         const code = this.activeStyle().numFmt;
         return RIBBON_FORMATS.find((f) => f.code === code)?.label ?? (code === "General" ? "Standard" : code === "0%" ? "Prozent" : /[dmy]/i.test(code) && !/h/.test(code) ? "Datum" : /0\.0*E/.test(code) ? "Wissenschaft" : "Benutzerdefiniert");
@@ -2742,7 +2810,7 @@ export class CalcApp {
       numberFormats: () => [{ items: RIBBON_FORMATS.map((f) => f.label) }],
       setNumberFormat: (label) => {
         const f = RIBBON_FORMATS.find((x) => x.label === label);
-        if (f) this.formatSel("Zahlenformat", (s) => { s.numFmt = f.code; });
+        if (f) { this.formatSel("Zahlenformat", (s) => { s.numFmt = f.code; }); this.recorder.numberFormat(f.code); }
       },
       // Livevorschau as in Excel: fonts, sizes and colours show on the selection while the mouse is over them.
       preview: {
@@ -3025,7 +3093,7 @@ export class CalcApp {
           const own = "popup" in c && c.popup ? { panel: true } : c.type === "color" ? { panel: true } : {};
           return [{ ...base, type: (c as { type: string }).type, ...menu, ...own }];
         };
-        const tabs = [...ribbonTabs(this.ribbonContext()), this.chartTab(), this.chartFormatTab(), this.shapeTab(), this.pictureUi.tab, this.pivotAnalyzeTab(), this.pivotDesignTab(), this.sparklines.tab(), this.slicers.tab()];
+        const tabs = [...ribbonTabs(this.ribbonContext()), this.chartTab(), this.chartFormatTab(), this.shapeTab(), this.pictureUi.tab, this.pivotAnalyzeTab(), this.pivotDesignTab(), this.sparklines.tab(), this.slicers.tab(), this.timelines.tab()];
         return tabs.map((t) => ({
           name: t.label, contextual: !!t.contextual,
           groups: t.groups.map((g) => ({ name: g.label, launcher: g.launcher ? cmdItem(g.launcher.cmd) : undefined, controls: g.controls.flatMap(ctl) })),

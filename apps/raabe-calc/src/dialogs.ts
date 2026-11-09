@@ -357,6 +357,7 @@ export function dialogs(app: CalcApp) {
   }
 
   function doSort(rect: Rect, keys: { col: number; asc: boolean }[]): void {
+    app.recorder.sort(sheet(), rect, keys);
     app.change("Sortieren", () => {
       app.history.cells(sheet(), rect);
       const rows: Cell[][] = [];

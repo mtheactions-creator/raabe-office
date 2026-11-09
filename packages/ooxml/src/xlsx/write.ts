@@ -6,6 +6,7 @@
 
 import { pivotKey, writePivots, type PivotCacheRef } from "./pivots";
 import { planSlicers } from "./slicers";
+import { planTimelines } from "./timelines";
 import { writeTables } from "./tables";
 import { consolidateXml, scenariosXml } from "./scenarios";
 import { strFromU8, strToU8, zipSync } from "fflate";
@@ -140,6 +141,8 @@ function writePackageNow(wb: Workbook, options: XlsxWriteOptions): Record<string
   let tableId = Math.max(0, ...wb.sheets.flatMap((sh) => (sh.tables ?? []).map((t) => t.id ?? 0))) + 1;
   // Datenschnitte (D-092): kept as read, or all their parts written anew after a change.
   const slicers = planSlicers(wb, pw, raw.wbPath, pivotKey as (p: never) => string);
+  // Zeitachsen (D-121): the same; a PivotTable with a slicer and a timeline gets one x14 id.
+  const timelines = planTimelines(wb, pw, raw.wbPath, pivotKey as (p: never) => string, (s, p) => slicers.pivotCacheId(s, p));
   wb.sheets.forEach((sheet, i) => {
     const sr = sheet.raw as SheetRaw | undefined;
     const own = !!sr && !used.has(sr.part) && !!raw.files[sr.part];
@@ -150,9 +153,13 @@ function writePackageNow(wb: Workbook, options: XlsxWriteOptions): Record<string
     w.windowTabs = (wb.windows ?? []).map((x, k) => (k === 0 ? i === wb.active : x.active === i));
     w.nextTableId = () => tableId++;
     w.tableNames = new Set(wb.sheets.flatMap((s) => (s.tables ?? []).map((t) => t.name.toLowerCase())));
-    pw.setPart(part, slicers.sheetXml(sheet, part, w.xml()), CT.worksheet);
+    pw.setPart(part, timelines.sheetXml(sheet, part, slicers.sheetXml(sheet, part, w.xml())), CT.worksheet);
     if (w.formulaWithoutValue) needsCalc = true;
-    caches.push(...writePivots(pw, sheet, part, raw.wbPath, pivotData, () => cacheId++, { fields: (p) => slicers.pivotFields(sheet.name, p.name), cacheId: (p) => slicers.pivotCacheId(sheet.name, p.name) }));
+    caches.push(...writePivots(pw, sheet, part, raw.wbPath, pivotData, () => cacheId++, {
+      fields: (p) => slicers.pivotFields(sheet.name, p.name),
+      cacheId: (p) => slicers.pivotCacheId(sheet.name, p.name) ?? timelines.pivotCacheId(sheet.name, p.name),
+      dates: (p) => timelines.dateFields(sheet.name, p.name),
+    }));
     let rid = own ? wbRels.list.find((r) => isRel(r.type, RT.worksheet) && resolveTarget(raw.wbPath, r.target) === part)?.id : undefined;
     if (!rid) rid = pw.link(raw.wbPath, RT.worksheet, part);
     const sheetId = own ? sr!.sheetId : ++maxId;
@@ -196,7 +203,8 @@ function writePackageNow(wb: Workbook, options: XlsxWriteOptions): Record<string
     pw.removePart(resolveTarget(raw.wbPath, vbaRel.target));
     removeRel(wbRels, vbaRel.id);
   }
-  pw.setPart(raw.wbPath, slicers.finish(workbookXml(wb, raw, entries, needsCalc, caches), new Map(entries.map((e) => [e.name, e.sheetId]))), macroFile ? CT_MAIN_MACROS : CT_MAIN);
+  const sheetIds = new Map(entries.map((e) => [e.name, e.sheetId]));
+  pw.setPart(raw.wbPath, timelines.finish(slicers.finish(workbookXml(wb, raw, entries, needsCalc, caches), sheetIds), sheetIds), macroFile ? CT_MAIN_MACROS : CT_MAIN);
   props(pw, wb, raw, options);
 
   const files = pw.finish();

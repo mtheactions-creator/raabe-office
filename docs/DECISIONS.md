@@ -3429,3 +3429,143 @@ Einfarbig (Monochrome Palette 1-13) with their colours. Not the same: gradient a
 13 …) are drawn with their first colour; text in capitals and letter spacing of some styles are left out; other
 chart types use the column (area, combo …) or line (scatter, radar) styles; the chart style part is not written, so
 Excel reports ChartStyle 2 for our charts (the look itself is in the chart part).
+
+## D-121 RaabeCalc: Zeitachse (timelines for PivotTables) as Excel 365 makes, saves and filters them (2026-11-09)
+
+Open item of D-092, recorded in our own invisible Excel and built the same way.
+- **Recorded:** `probe_excel_timeline.py` (COM): a table of 24 dated marks, PivotTables over it and timelines
+  (`SlicerCaches.Add2(..., SlicerCacheType:=xlTimeline)`): Excel's defaults (262.5 x 108 pt, level Monate, style
+  TimeSlicerStyleLight1, cache "NativeZeitachse_Datum", then "...Datum1"), filters at all four levels, the Anzeigen options
+  off, a style and caption, one timeline on two PivotTables, ClearDateFilter; every timeline's and cache's properties, the
+  PivotTables' reports, Excel's rendering (CopyPicture) and the 12 built-in styles' elements (`gen_timeline_styles.py`
+  writes `timeline-styles.gen.ts`). Fixture `excel-timeline.xlsx` (anonymized, save path removed). `probe_excel_timeline_ui.py`
+  (UI Automation, holding the real-input lock for its short run because invoking makes Excel the foreground window): the
+  contextual tab Zeitachse (J L) with its groups and keytips (Zeitachse Z 1: Zeitachsenbeschriftung T, Berichtsverbindungen
+  E; Zeitachsen-Formatvorlagen Z Q: S; Anordnen Z A: G E, G H, Q, D A, G R, D R; Größe Z Z: Höhe H, Breite R R, launcher ß;
+  Anzeigen Z 2: Kopfzeile K, Auswahlbeschriftung A, Scrollleiste O, Zeitebene I) and the Berichtsverbindungen dialog.
+  The Zeitachsen einfügen dialog itself did not open through UI Automation; ours lists the date fields like Datenschnitt
+  auswählen.
+- **File** (`ooxml/xlsx/timelines.ts`): timelineCache parts (PivotTables, state with the x14 pivotCacheId, filterType
+  dateBetween/unknown, selection, bounds from 1 January of the first year to 1 January after the last), timeline parts per
+  sheet (level, selectionLevel, scrollPosition, options that are off, style), the x15 extLst entries of workbook and sheet,
+  the drawing's tsle:timeslicer anchor, the NativeZeitachse_ names. Kept byte for byte while unchanged, written anew after a
+  change. The filter itself is the PivotTable's `<filter type="dateBetween">` in whole days (useWholeDay), read into the new
+  `PivotTable.dateFilters` and applied by `computePivot`; a rewritten PivotTable lists a timeline's field as dates (`<d>`)
+  and writes the filter as Excel does. PivotTables whose source is a table's name (Excel's default for a PivotTable from a
+  table) were skipped by the reader before; they are now read (`sourceTable`, resolved to the table's range).
+- **The timeline** (`timelines.ts`): Einfügen > Zeitachse (I Ö) and PivotTable-Analyse > Zeitachse einfügen (C) open
+  Zeitachsen einfügen; the control as measured on Excel's rendering (header 28 px, label row 26 px, period area 66 px with
+  the blocks 17 px high, scroll bar 24 px; periods 54 / 34.67 / 42.67 / 30.67 px wide for Jahre / Quartale / Monate / Tage;
+  selected blocks as one gradient band). Click takes a period, Umschalt+click extends, dragging across periods selects
+  them, the selection's edges widen or narrow it, dragging inside it moves it, Filter löschen in the header (and Alt+C)
+  takes all, the Zeitebene menu, the scroll bar's arrows, track and thumb, the mouse wheel. The selection label as Excel
+  writes it ("Okt 2025 - Jan 2026", "Q1 - Q2 2026", "4 - 21 Sep 2025", "2026", "Alle Zeiträume"). Hiding a part shrinks
+  the frame by that part's height, as Excel's does (108 pt to 52.5 pt with all four off). Connected PivotTables filter
+  together; a newly connected one takes the timeline's filter. The tab Zeitachse with Excel's groups, labels and keytips;
+  moving, sizing, Entf, arrows. Timelines are part of the sheet's undo state. Corrected on the way: PivotTable-Analyse's
+  keytips Aktualisieren A and Löschen ß (recorded; they were guesses).
+- **Measured:** xlsx-timelines.test 7 (every cache and timeline as COM reports it, each PivotTable's date filter and its
+  report with Excel's values, parts kept byte for byte, a changed filter and a new timeline in Excel's form and read back),
+  timeline.test 6 (periods, bounds, labels, the filter). `check_calc_timeline.py` (the real exe off screen, trusted DevTools
+  input, no OS mouse): Excel -> RaabeCalc 49/49 (8 recorded states: selection, level, caption, style, options and every
+  PivotTable report with Excel's values); RaabeCalc by hand -> Excel 42/42 (Alt, I, Ö and the dialog; a click on Okt 2025
+  after scrolling back with the arrows; Umschalt+click on Jan 2026; the right edge dragged to Mrz 2026; Zeitebene Quartale
+  through its menu and a drag over Q1-Q2 2026; Filter löschen; Kopfzeile off through Alt, J, L, K: after each step Excel
+  opens RaabeCalc's file with the same filter, level and header and computes the same report).
+- **Not built / differences:** the hover looks of the blocks; the periods' labels in the upper row are drawn in the
+  period-label colour (Excel tints the year of the selection); the drag of a selection beyond the visible strip does not
+  scroll it; several timelines selected at once (Ausrichten, Gruppieren greyed); timelines on Excel tables do not exist in
+  Excel either (only PivotTables, and data-model sources are out, D-080); Filterverbindungen is not offered. The scroll
+  position Excel saves is kept, but a new timeline starts at the latest periods with data (Excel's own choice was not
+  recorded through input). The inventory (EXCEL-INVENTORY.md) was not regenerated.
+
+## D-119 RaabeCalc: Makro aufzeichnen, written as Excel's macro recorder writes it (2026-11-09)
+
+Excel 365's recorder was recorded by hand: `probe_excel_recorder.py` drives our own visible Excel with real input under
+the real-input lock (keys and clicks only while our Excel is in front; every key waits until it is), with the cases of
+`recorder_cases.py`. Makro aufzeichnen is opened by its keytips, the dialog filled by keys, OK clicked, the recording
+ended with the status bar's button. The VBA is read from the saved .xlsm by `feellab/vbasource.py` (MS-OVBA, without
+access to Excel's VBA object model, which stays off), the end state through COM (results/2026-11-09-excel-recorder.json).
+Two of Excel's runs lost the first keys after the dialog (Excel busy starting the recorder): those cases were taken as
+what Excel received (Füllfarbe on A1; the fill handle to B5), written in recorder_cases.py.
+- **Recorded and built** (`recorder.ts`):
+  - A selection is written only when the next action needs it, the last of a row of moves (Umschalt+Rechts twice gives
+    one `Range("A1:C1").Select`), and once more when the recording ends; `Range("B4").Activate` when the active cell is
+    not the first of the selection; whole rows and columns as `Rows("2:2")`, `Columns("B:B")`.
+  - Entries: `ActiveCell.FormulaR1C1 = "..."`, the value in US form ("3.5", "2/1/2026", "50%", quotes doubled),
+    formulas in R1C1 from the cell (`=SUM(R[-2]C:R[-1]C)`; sheet-engine `formula/r1c1.ts` both ways); Strg+Eingabe
+    `Selection.FormulaR1C1`.
+  - Commands: `Selection.Font.Bold = True` (Italic, Underline, Strikethrough); Zentriert and the other alignments as the
+    whole `With Selection` block (.HorizontalAlignment ... .MergeCells); Schriftgrad and Schriftart as the whole
+    `With Selection.Font` block (.Name, .Size, .Strikethrough, .Superscript, .Subscript, .OutlineFont, .Shadow,
+    .Underline, .ThemeColor, .TintAndShade, .ThemeFont); Füllfarbe as `With Selection.Interior` (.Pattern = xlSolid,
+    .PatternColorIndex, .Color = 65535, .TintAndShade, .PatternTintAndShade); Strg+Umschalt+5
+    `Selection.NumberFormat = "0%"`; Strg+U `Selection.FillDown`; the fill handle `Selection.AutoFill
+    Destination:=Range("B1:B5"), Type:=xlFillDefault` and the new selection; Daten > A-Z / Z-A as Excel's Sort block on
+    `ActiveWorkbook.Worksheets("…").Sort` (SortFields.Clear, SortFields.Add2 Key with the data rows, SetRange without the
+    header row, Header = xlNo, MatchCase, Orientation, SortMethod = xlPinYin, Apply); Strg++ on rows
+    `Selection.Insert Shift:=xlDown` (on columns xlToRight), Strg+- `Selection.Delete Shift:=xlUp`; Umschalt+F11
+    `Sheets.Add`; Strg+Bild ab `ActiveSheet.Next.Select` (the pending selection first); renaming a tab
+    `Sheets("Tabelle1").Select` and `Sheets("Tabelle1").Name = "Noten"`; Strg+C `Selection.Copy`, Strg+V
+    `ActiveSheet.Paste`, Esc `Application.CutCopyMode = False`, Entf `Selection.ClearContents`; a double-click on a
+    column header's border `Columns("A:A").EntireColumn.AutoFit`; Strg+9 `Selection.EntireRow.Hidden = True`.
+    Only the command the user chose is written (Strg++ runs Zeilen einfügen inside itself: one line).
+  - A statement longer than 75 characters is broken with " _" after the token that passes it (the SortFields line).
+  - The head: `Attribute Name.VB_Description = "…"` when there is a description, `Attribute
+    Name.VB_ProcData.VB_Invoke_Func = "q\n14"` (" \n14" without shortcut), then the comment block (name + " Makro", the
+    description, "Tastenkombination: Strg+q").
+  - The first recording of a session starts a new module (Modul1, or the next free number); later ones are added to it.
+- **The UI**: Ansicht > Makros (keytips recorded, D-120); the dialog Makro aufzeichnen with Excel's labels and tab order:
+  Makroname (Makro1, the next free name), Tastenkombination "Strg+" and one letter, Makro speichern in, Beschreibung;
+  OK checks the name (a letter first, no spaces, not a cell address). While recording the menu says Aufzeichnung beenden
+  and the status bar's Makroaufzeichnung button (right of the cell mode, as Excel's) ends it; otherwise it starts
+  Makro aufzeichnen. Relative Verweise verwenden is a checked menu entry. A macro's Strg+letter runs it, before
+  RaabeCalc's own shortcut of that letter (as in Excel). A box chosen by its keytip keeps the focus (Alt, R, H C, then
+  typing the size works; before, the grid took the focus back: shell keytips.ts, also for RaabeWrite and RaabePresent).
+- **The object model** (`macros.ts`) runs what the recorder writes: FormulaR1C1/Formula2R1C1/Formula2 (US values as
+  Excel reads them), Activate inside the selection (keeps the selection), Copy/Cut without Destination and
+  ActiveSheet.Paste, CutCopyMode, Worksheet.Sort (SortFields.Add/Add2, SetRange, Header, Apply), Worksheet.Next and
+  Previous, the members of the font, interior and alignment blocks, Style = "Percent"/"Comma"/"Currency",
+  ActiveWindow.SelectedSheets.Delete, Rows("1:1")/Columns("A:A") of a range, FillUp/FillLeft, the xl constants of all these.
+- **Measured**: `check_calc_recorder.py` (the real exe off screen, all input as trusted DevTools key and mouse events: Alt, F, M, R, the dialog typed, OK clicked, the case's keys and clicks, the status bar's button), 9 cases with Excel's recording by hand: the macro's text line for line Excel's 8/9 (Format differs only in .ThemeFont: the harness gives Excel's workbook Calibri as a plain font, ours has it as the design font, so both are right for their workbook); the workbook RaabeCalc's recording left the same as Excel's by hand 9/9; Excel's recorded macros run in RaabeCalc give Excel's workbook 9/9; RaabeCalc's recorded macros saved as .xlsm and run by our own invisible Excel give Excel's workbook 9/9; the recorded shortcut Strg+q runs the macro 1/1 (results/2026-11-09-calc-recorder.json). At the first run 4/9 texts were the same (Strg++ wrote two lines, a stray Sheets(...).Select before Sheets.Add, Alt, R, H C lost the box's focus). recorder.test 11 (the line break, the shortcut attribute, US values, Excel's 7 recorded macros on a workbook without the app give Excel's cells), r1c1.test 2.
+- **Not recorded / differences**: Relative Verweise verwenden: Excel's relative recording could not be made (in the
+  runs where the case got through, the toggle had not taken; reading its state through UI Automation failed), so the
+  relative form (`ActiveCell.Offset(1, 0).Range("A1").Select`, `ActiveCell.Offset(r, c).Rows("1:1").EntireRow.Select`)
+  is ours, from Excel's documented recorder output, not compared. Makro speichern in offers only "Diese Arbeitsmappe"
+  (no Persönliche Makroarbeitsmappe: it would live outside the workbook; no new workbook). Not written yet: the Format
+  Cells dialog, borders, merging with its alignment block, conditional formats, charts, tables, filters, Suchen und
+  Ersetzen, paste options, shapes and the insert-cells dialog (Excel writes them; RaabeCalc records nothing for them).
+  Colours from the palette are written as .Color numbers; Excel writes design colours as .ThemeColor and .TintAndShade.
+
+## D-120 RaabeCalc: Makros keytips, the Namenfeld's handle, the expanded Bearbeitungsleiste (2026-11-09)
+
+- **Keytips** recorded in our own Excel through UI Automation: Ansicht > Makros is Alt, F, M (the group's own keytip
+  Z M); its menu Makros anzeigen K, Makro aufzeichnen... R (Aufzeichnung beenden A while recording), Relative Verweise
+  verwenden V. Menus opened by a keytip now show their entries' keytips (shell: `MenuEntry.key`, keytip scope "menu";
+  Esc closes the menu).
+- **Namenfeld** recorded by hand (`probe_excel_formulabar.py`, real input under the lock): the dots right of the
+  Namenfeld show the left-right pointer and drag it; it cannot get narrower than it starts (150 px at 150 %, so 100 px:
+  our Namenfeld is now 100 px wide, it was 112) and grows until 157 px are left right of it. A double-click on the dots
+  does nothing. RaabeCalc does not save the width.
+- **Bearbeitungsleiste**: the chevron at its right end expands it to 3 lines (FormulaBarHeight 3) and collapses it
+  again; in German Excel Strg+Umschalt+U underlines (recorded: FormulaBarHeight stays 1, Font.Underline 2), so RaabeCalc
+  keeps Strg+Umschalt+U for Unterstrichen and the chevron has no shortcut. The lower edge of the bar can be dragged by
+  whole lines (ours: the probe did not catch Excel's edge, so its behaviour is not recorded).
+- **Measured**: `check_calc_misc.py` (the real exe, trusted DevTools input; results/2026-11-09-calc-misc.json): keytips 10/10 (Alt, F, M opens the menu with K, R, V and their badges; K the Makro dialog; V on and off, shown checked; R starts recording and the status bar says so; A ends it); Namenfeld and Bearbeitungsleiste 10/10 (start width, pointer, smallest width, a 160 px drag, largest width leaving Excel's 157 px, chevron 3 lines and back, Strg+Umschalt+U underlines, the edge 4 lines down and back up). Once the first keys after the window came up were lost (7/10); the check waits a moment now.
+
+## D-122 RaabeCalc: Datenschnitt, several items at once as Excel does it (2026-11-09)
+
+Recorded by hand in our own Excel (`probe_excel_slicer_multi.py`, real input under the lock; a table with five subjects
+and a slicer, each case from all items chosen; results/2026-11-09-excel-slicer-multi.json):
+- a click chooses one item; a second click on it changes nothing; Strg+click from all takes the item away; after a
+  click Strg+click adds; Strg+click on the only chosen item clears the filter (all items again; RaabeCalc kept the item
+  before);
+- dragging over the buttons chooses the items between (down and up), with Strg added to the choice;
+- Umschalt+click chooses from the item clicked last (a plain click; it stays across cases) to this one, also from all;
+- Alt+S right after a click on an item does nothing (the next click chooses one item): Alt+S only works while the slicer
+  itself is chosen.
+Built in `slicers.ts` (drag with the buttons marked, Umschalt range, the cleared filter, Alt+S). Mehrfachauswahl,
+Strg+click and Alt+S on a chosen slicer were there (D-092).
+- **Measured**: check_calc_misc.py: all 11 recorded cases replayed with clicks, Strg/Umschalt+clicks, drags and Alt+S on one slicer as in Excel: 11/11 the same items chosen (before the fixes: Strg+click on the last item and Umschalt+click differed).
+- **Not recorded**: the cases with the Mehrfachauswahl button (UI Automation lost the button in Excel's slicer after
+  the eleventh case); RaabeCalc's Mehrfachauswahl behaves as D-092 built it.
