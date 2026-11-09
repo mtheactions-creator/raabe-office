@@ -1054,7 +1054,7 @@ function drawErrorBar(c: Ctx, s: ChartSeries, si: number, x: number, v: number, 
       if (e.dir !== "minus") d += `M${f(x - cap)} ${f(y1)}H${f(x + cap)}`;
       if (e.dir !== "plus") d += `M${f(x - cap)} ${f(y0)}H${f(x + cap)}`;
     }
-    c.prims.push({ t: "path", d, ...ln, part: `errbars:${si}` });
+    c.prims.push({ t: "path", d, ...ln, ...(e.effects ? { filter: effectFilter(e.effects) } : {}), part: `errbars:${si}` });
     return;
   }
   const vals = s.val.cache.filter((y): y is number => y !== null && isFinite(y));
@@ -1077,7 +1077,7 @@ function drawErrorBar(c: Ctx, s: ChartSeries, si: number, x: number, v: number, 
     if (e.dir !== "minus") d += `M${f(x - cap)} ${f(y1)}H${f(x + cap)}`;
     if (e.dir !== "plus") d += `M${f(x - cap)} ${f(y0)}H${f(x + cap)}`;
   }
-  c.prims.push({ t: "path", d, ...ln, part: `errbars:${si}` });
+  c.prims.push({ t: "path", d, ...ln, ...(e.effects ? { filter: effectFilter(e.effects) } : {}), part: `errbars:${si}` });
 }
 
 export function clipStart(c: Ctx, plot: Box): void {
@@ -1414,7 +1414,7 @@ function drawTrendline(c: Ctx, s: ChartSeries, si: number, plot: Box, xPos: (x: 
   }
   const path = tl.type === "movingAvg" ? fit.points!.map(([x, y], k) => `${k ? "L" : "M"}${f(xPos(x))} ${f(vPos(y))}`).join("") : pts.join("");
   const tln = linePaint(tl.line, { color: c.color(si), width: 1.5 });
-  if (tln) c.prims.push({ t: "path", d: path, stroke: tln.stroke, sw: tln.sw, dash: tl.line?.dash ? tln.dash : "0.1 3", cap: "round", part: `trend:${si}` });
+  if (tln) c.prims.push({ t: "path", d: path, stroke: tln.stroke, sw: tln.sw, dash: tl.line?.dash ? tln.dash : "0.1 3", cap: "round", ...(tl.effects ? { filter: effectFilter(tl.effects) } : {}), part: `trend:${si}` });
   const lines: string[] = [];
   if (tl.showEq && fit.equation) lines.push(fit.equation);
   if (tl.showR2 && fit.r2 !== undefined) lines.push(r2Text(fit.r2));
