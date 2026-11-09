@@ -920,13 +920,20 @@ ALREADY = [
 NO_UNDO_IN_WORD = [r"Änderungen nachverfolgen \[split-main\]$", r"Änderungen nachverfolgen$",
                    # Closing a header opened empty drops the empty header again (no edit to take back; Word keeps an empty part).
                    r"Kopf- und Fußzeile schließen \[button\]$"]
+# Options the sweep cannot finish the way a student does; counted as not tested (not passed), each with its reason.
+UNTESTED = [
+    # Freihandform and Kurve are drawn point by point and finished with a double click; the sweep only drags.
+    r"(Freihandform: Form|Kurve|Freihand: Skizze)( \[gallery-item\])?$",
+    # Rahmenpipette waits for a click on a border; the sweep's click does not land on the table's border line.
+    r"> Rahmenpipette$",
+]
 FAIL = {"error", "undo", "crash", "esc", "docchange-on-open", "noeffect"}
 
 
 def classify(rows: list[dict]) -> dict:
     """passed / failed / greyed per the sweep's rows (ALREADY counts as passed)."""
     import re
-    out = {"options": len(rows), "passed": 0, "failed": 0, "greyed": 0, "deferred": 0, "fields": 0, "failures": []}
+    out = {"options": len(rows), "passed": 0, "failed": 0, "untested": 0, "greyed": 0, "deferred": 0, "fields": 0, "failures": []}
     for r in rows:
         st = r["status"]
         key = f"{r['tab']} > {r['path']}"
@@ -940,8 +947,12 @@ def classify(rows: list[dict]) -> dict:
             st = "ok"
         if st == "undo" and any(re.search(p, key) for p in NO_UNDO_IN_WORD):
             st = "ok"
+        if st == "noeffect" and any(re.search(p, key) for p in UNTESTED):
+            st = "untested"
         if st in ("ok", "native"):
             out["passed"] += 1
+        elif st == "untested":
+            out["untested"] += 1
         elif st == "deferred":
             out["deferred"] += 1
         elif st == "disabled":
