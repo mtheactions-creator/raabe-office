@@ -1,0 +1,71 @@
+{
+ "passed": 13,
+ "total": 13,
+ "cases": [
+  {
+   "case": "real click selects the chart",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "real click opens Diagrammelemente",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "hovering Legende shows its arrow",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "the arrow opens Legende's side menu",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Legende > Oben with the real mouse",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "a click in the sheet closes the flyout and deselects",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "Livevorschau with the real mouse (shown on hover, gone after)",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "a real click applies Formatvorlage 3",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "hovering West fades Nord and Süd",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "untick West, Anwenden",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "real drag of the values' corner to C4: two series, three months",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "real drag over A1:B5 while the dialog is shrunk",
+   "passed": true,
+   "detail": ""
+  },
+  {
+   "case": "OK: one series Nord",
+   "passed": true,
+   "detail": ""
+  }
+ ]
+}

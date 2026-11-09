@@ -19,6 +19,8 @@ import { barDefaults, chartGroups, isChartExKind, kindInfo, type ChartGroup } fr
 import { draw3D, draw3DPie, drawSurface } from "./render3d";
 import { drawOfPie, drawRadar } from "./renderspecial";
 import { drawChartEx, chartExLegend } from "./renderex";
+import { visibleModel } from "./filter";
+import { withDataTable } from "./datatable";
 
 export type Measure = (text: string, sizePt: number) => number;
 
@@ -115,8 +117,10 @@ export interface Ctx {
 }
 
 /** The chart's shapes for a size in pt. */
-export function chartScene(m: ChartModel, W: number, H: number, opts: RenderOptions = {}): Scene {
+export function chartScene(full: ChartModel, W: number, H: number, opts: RenderOptions = {}): Scene {
   const accents = opts.accents ?? OFFICE_ACCENTS;
+  // Diagrammfilter (D-116): what is filtered out is not drawn.
+  const m = visibleModel(full, accents).model;
   const fmt = (v: number, format?: string) => {
     if (opts.format && format && format !== "General") {
       try { return opts.format(v, format); } catch { /* fall back */ }
@@ -168,6 +172,8 @@ export function chartScene(m: ChartModel, W: number, H: number, opts: RenderOpti
   else if (info.family === "radar") scene = drawRadar(c, area);
   else if (info.family === "surface") scene = drawSurface(c, area);
   else if (info.d3 && info.family !== "bubble") scene = draw3D(c, area);
+  // Datentabelle under the plot (D-115, datatable.ts).
+  else if (m.dataTable && !isBar(m.kind) && !isScatter(m.kind)) scene = withDataTable(c, area, drawAxes, { catText: (i) => catText(c, m.series[0], i), seriesName: (i) => seriesName(m.series[i], i) });
   else scene = drawAxes(c, area);
   c.parts.push({ name: "plot", box: scene.plot });
   return { width: W, height: H, prims: c.prims, parts: c.parts, ...scene };
@@ -952,7 +958,8 @@ function drawLines(c: Ctx, catCenter: (i: number) => number, vPos: (v: number) =
     // Runs of points without gaps, drawn straight or smoothed (Linie glätten).
     const runs: [number, number][][] = [[]];
     vals.forEach((v, i) => {
-      if (v === null || !isFinite(v)) { if (runs.at(-1)!.length) runs.push([]); return; }
+      // Leere Zellen: a gap, unless "Datenpunkte mit einer Linie verbinden" (dispBlanksAs span, D-117).
+      if (v === null || !isFinite(v)) { if (runs.at(-1)!.length && c.m.dispBlanksAs !== "span") runs.push([]); return; }
       runs.at(-1)!.push([catCenter(i), vPos(v)]);
     });
     const d = runs.filter((r) => r.length).map((r) => (s.smooth && r.length > 2 ? smoothPath(r) : r.map(([x, y], i) => `${i ? "L" : "M"}${f(x)} ${f(y)}`).join(""))).join("");
@@ -1096,6 +1103,8 @@ export function renderChart(model: ChartModel, width: number, height: number, op
   svg.setAttribute("height", String(height));
   svg.setAttribute("viewBox", `0 0 ${scene.width} ${scene.height}`);
   svg.setAttribute("font-family", LOOK.font);
+  // The plot area's box (pt) for hit tests: an unformatted plot area draws nothing to click on (D-115).
+  svg.dataset.plot = [scene.plot.x, scene.plot.y, scene.plot.w, scene.plot.h].map((v) => Math.round(v * 10) / 10).join(",");
   svg.innerHTML = sceneMarkup(scene);
   return svg;
 }
