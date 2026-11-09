@@ -3927,3 +3927,25 @@ The audit pressed some shortcuts with key events no keyboard sends, so 15 of its
   (the shell's Keytips take a list of key codes an app uses with Alt, empty for RaabeCalc and RaabePresent).
 - Strg+Alt shortcuts (Fußnote, Endnote, Kommentar, Format übertragen/einfügen) go by the key's code, not its
   character, so an AltGr character on the key cannot break them.
+
+## D-151 RaabeWrite: the audit's run B again, and the options one click cannot finish (2026-11-09)
+
+- **Run B again** on the exe with D-149/D-150 (the sweep's German key events, the comment cards and the focus as
+  effects, Kopieren checked on the clipboard, the paste entries of the context menus with something on the clipboard,
+  "already so" options each with its reason in `ALREADY`/`RECORDED_NOTHING`): 3139 options (this run walked every
+  gallery entry), 2981 passed, 29 failed, 14 untested, 92 greyed, 10 deferred, 13 fields
+  (results/2026-11-09-write-sweep-b-after.json); before: 1515 options, 57 failed. Every shortcut passes now and does
+  the same as its command; Annehmen/Ablehnen, Annehmen und weiter and Zurück pass. Left: 16 of the 29 are buttons of
+  the Startseite/Öffnen pages (templates and recent files clicked without a visible change the sweep can see), the
+  "none" entries of Bildformat/Formformat/Texteffekte that are already so, Kopieren/paste in two context menus, Markup >
+  Kommentare (the comment cards' visibility is not seen by the sweep run that recorded it), Vorherige Endnote with
+  no endnote before the caret. Start and Tabellenlayout again: 906 options, 886 passed, 6 failed (Kontur > Keine Kontur
+  and Weitere Leuchtfarben entries: already so).
+- **By hand** (`check_write_byhand.py`, trusted DevTools input into the exe, results/2026-11-09-write-byhand.json):
+  Freihandform: Form (open and closed), Kurve and Freihand: Skizze pass (pointer, shape, a:custGeom with a:lnTo /
+  a:cubicBezTo, a:close when closed, Strg+Z): 4 of 4. Zuschneiden (ribbon and context menu) shows the crop marks and
+  Enter ends it, but the check's drag of the right crop mark did not crop (no a:srcRect): open, not yet told apart from
+  a fault of the check. Rahmenpipette shows the pipette mode, but the check's click did not land on the border line:
+  open. 4 of 7.
+- Not re-measured before the deadline: the Word comparison of the new runs (Leere Seite, Kein Leerraum, the column
+  widths, Word opening every file incl. the one after Strg+N).

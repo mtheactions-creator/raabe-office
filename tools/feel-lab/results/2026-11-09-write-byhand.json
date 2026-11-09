@@ -1,0 +1,109 @@
+{
+ "date": "2026-11-09",
+ "summary": {
+  "cases": 7,
+  "passed": 4
+ },
+ "rows": [
+  {
+   "case": "Bildformat > Zuschneiden",
+   "ok_marks": true,
+   "ok_doc": true,
+   "ok_narrower": false,
+   "ok_ended_by_enter": true,
+   "ok_file": false,
+   "srcRect": null,
+   "width": [
+    160,
+    null
+   ],
+   "ok_undo": false,
+   "errors": [],
+   "passed": false
+  },
+  {
+   "case": "Kontextmenü > Zuschneiden",
+   "ok_marks": true,
+   "ok_doc": true,
+   "ok_narrower": false,
+   "ok_ended_by_enter": true,
+   "ok_file": false,
+   "srcRect": null,
+   "width": [
+    160,
+    null
+   ],
+   "ok_undo": false,
+   "errors": [],
+   "passed": false
+  },
+  {
+   "case": "Einfügen > Formen > Freihandform: Form",
+   "ok_armed": true,
+   "cursor": "crosshair",
+   "ok_doc": true,
+   "ok_shape_tab": true,
+   "ok_file": true,
+   "ok_closed": true,
+   "segments": 3,
+   "ok_undo": true,
+   "errors": [],
+   "passed": true
+  },
+  {
+   "case": "Einfügen > Formen > Kurve",
+   "ok_armed": true,
+   "cursor": "crosshair",
+   "ok_doc": true,
+   "ok_shape_tab": true,
+   "ok_file": true,
+   "ok_closed": true,
+   "segments": 3,
+   "ok_undo": true,
+   "errors": [],
+   "passed": true
+  },
+  {
+   "case": "Einfügen > Formen > Freihand: Skizze",
+   "ok_armed": true,
+   "cursor": "crosshair",
+   "ok_doc": true,
+   "ok_shape_tab": true,
+   "ok_file": true,
+   "ok_closed": true,
+   "segments": 20,
+   "ok_undo": true,
+   "errors": [],
+   "passed": true
+  },
+  {
+   "case": "Einfügen > Formen > Freihandform: Form (geschlossen)",
+   "ok_armed": true,
+   "cursor": "crosshair",
+   "ok_doc": true,
+   "ok_shape_tab": true,
+   "ok_file": true,
+   "ok_closed": true,
+   "segments": 4,
+   "ok_undo": true,
+   "errors": [],
+   "passed": true
+  },
+  {
+   "case": "Tabellenentwurf > Rahmen > Rahmenpipette",
+   "ok_pipette": true,
+   "cursor": "",
+   "ok_picked": false,
+   "pen": [
+    "Einfache einfarbige Linie|½ Pt.",
+    "Einfache einfarbige Linie|½ Pt."
+   ],
+   "ok_painter_on": false,
+   "ok_painted": false,
+   "ok_esc_ends": true,
+   "ok_undo": false,
+   "errors": [],
+   "passed": false
+  }
+ ]
+}
