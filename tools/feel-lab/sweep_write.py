@@ -1034,6 +1034,9 @@ def run_word(args) -> None:
             dO = ws.delta(base_o, after_o)
             item["ours"] = dO
             op = OPS.get(key) or OPS_NO_GROUP.get(re.sub(r"> [^>]*? / ", "> ", key, count=1))
+            # The notes and revisions set-ups add notes, a comment and changes first, which Word's side does not.
+            if r.get("setup") in ("notes", "revisions", "shape", "math", "headerFooter"):
+                op = None
             if op:
                 n += 1
                 wf = wdir / f"w{n:04d}.docx"
