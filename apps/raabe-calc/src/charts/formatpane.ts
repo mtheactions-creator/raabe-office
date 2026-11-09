@@ -183,6 +183,24 @@ export function slot(m: ChartModel, e: ChartElement, create: boolean): Fmt | und
   }
 }
 
+/** JSON without empty objects (a format slot created and left empty is no change). */
+function canonJson(v: unknown): string {
+  const strip = (x: unknown): unknown => {
+    if (Array.isArray(x)) return x.map(strip);
+    if (x && typeof x === "object") {
+      const out: Record<string, unknown> = {};
+      for (const [k, y] of Object.entries(x)) {
+        const s = strip(y);
+        if (s === undefined || (s && typeof s === "object" && !Array.isArray(s) && !Object.keys(s).length)) continue;
+        out[k] = s;
+      }
+      return out;
+    }
+    return x;
+  };
+  return JSON.stringify(strip(v));
+}
+
 /** Drops a data point's entry when it holds nothing any more. */
 function tidyPoints(m: ChartModel): void {
   for (const s of m.series) {
@@ -215,7 +233,7 @@ export function formatPane(m: ChartModel, e: ChartElement, outer: PaneHost): Pan
       tidyPoints(probe);
       const { raw: _r, ...now } = probe as ChartModel & { raw?: unknown };
       void _r;
-      if (JSON.stringify(now) === JSON.stringify(rest)) return;
+      if (canonJson(now) === canonJson(rest)) return;
       outer.edit(fn);
     },
   };
