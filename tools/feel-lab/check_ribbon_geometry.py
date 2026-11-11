@@ -125,12 +125,18 @@ def main() -> None:
             n_ok = sum(g["controls_ok"] for g in r["groups"].values())
             n = sum(g["controls_office"] for g in r["groups"].values())
             gw = sum(1 for g in r["groups"].values() if not any(d.startswith("width") for d in g["diffs"]))
-            print(f"{app} {tab}: {n_ok}/{n} controls within {TOL} px; group widths within {TOL} px {gw}/{len(r['groups'])}; "
-                  f"missing {r['missing_groups']}; extra {r['extra_groups']}")
+            g10 = sum(1 for g in r["groups"].values() if abs(g["ours"][2] - g["office"][2]) <= 10)
+            r["groups_within_10px"] = g10
+            print(f"{app} {tab}: {n_ok}/{n} controls within {TOL} px; group widths within {TOL} px {gw}/{len(r['groups'])}, "
+                  f"within 10 px {g10}/{len(r['groups'])}; missing {r['missing_groups']}; extra {r['extra_groups']}")
             if "-v" in sys.argv:
                 for name, g in r["groups"].items():
                     for x in g["diffs"][:8]:
                         print("   ", name, "-", x)
+    for app, tabs in out["apps"].items():
+        ok = sum(t.get("groups_within_10px", 0) for t in tabs.values())
+        n = sum(len(t.get("groups", {})) for t in tabs.values())
+        print(f"{app}: groups within 10 px of Office's width {ok}/{n}")
     path = HERE / "results" / f"{out['date']}-ribbon-geometry.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     print("wrote", path.name)

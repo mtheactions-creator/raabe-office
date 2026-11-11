@@ -1,0 +1,735 @@
+{
+ "date": "2026-11-11",
+ "reference": "2026-11-11-office-ribbon-galleries.json",
+ "tolerance_px": 10.0,
+ "apps": {
+  "write": {
+   "Start": [
+    {
+     "window": 3000,
+     "group": "Formatvorlagen",
+     "office_width": 801.3,
+     "office_tiles": 7,
+     "ours_width": 908.6,
+     "ours_tiles": 8,
+     "counted": false
+    },
+    {
+     "window": 2850,
+     "group": "Formatvorlagen",
+     "office_width": 693.3,
+     "office_tiles": 6,
+     "ours_width": 800.6,
+     "ours_tiles": 7,
+     "counted": false
+    },
+    {
+     "window": 2700,
+     "group": "Formatvorlagen",
+     "office_width": 585.3,
+     "office_tiles": 5,
+     "ours_width": 800.6,
+     "ours_tiles": 7,
+     "counted": false
+    },
+    {
+     "window": 2550,
+     "group": "Formatvorlagen",
+     "office_width": 585.3,
+     "office_tiles": 5,
+     "ours_width": 692.6,
+     "ours_tiles": 6,
+     "counted": false
+    },
+    {
+     "window": 2400,
+     "group": "Formatvorlagen",
+     "office_width": 477.3,
+     "office_tiles": 4,
+     "ours_width": 584.6,
+     "ours_tiles": 5,
+     "counted": false
+    },
+    {
+     "window": 2250,
+     "group": "Formatvorlagen",
+     "office_width": 369.3,
+     "office_tiles": 3,
+     "ours_width": 476.6,
+     "ours_tiles": 4,
+     "counted": false
+    },
+    {
+     "window": 2100,
+     "group": "Formatvorlagen",
+     "office_width": 369.3,
+     "office_tiles": 3,
+     "ours_width": 368.6,
+     "ours_tiles": 3,
+     "counted": false
+    },
+    {
+     "window": 1950,
+     "group": "Formatvorlagen",
+     "office_width": 369.3,
+     "office_tiles": 3,
+     "ours_width": 368.6,
+     "ours_tiles": 3,
+     "counted": false
+    },
+    {
+     "window": 1800,
+     "group": "Formatvorlagen",
+     "office_width": 105.3,
+     "office_tiles": 0,
+     "ours_width": 368.6,
+     "ours_tiles": 3,
+     "counted": false
+    },
+    {
+     "window": 1650,
+     "group": "Formatvorlagen",
+     "office_width": 105.3,
+     "office_tiles": 0,
+     "ours_width": 126.4,
+     "ours_tiles": 0,
+     "counted": false
+    },
+    {
+     "window": 1500,
+     "group": "Formatvorlagen",
+     "office_width": 105.3,
+     "office_tiles": 0,
+     "ours_width": 126.4,
+     "ours_tiles": 0,
+     "counted": false
+    },
+    {
+     "window": 1350,
+     "group": "Formatvorlagen",
+     "office_width": 105.3,
+     "office_tiles": 0,
+     "ours_width": 126.4,
+     "ours_tiles": 0,
+     "counted": false
+    },
+    {
+     "window": 1200,
+     "group": "Formatvorlagen",
+     "office_width": 105.3,
+     "office_tiles": 0,
+     "ours_width": 126.4,
+     "ours_tiles": 0,
+     "counted": false
+    }
+   ],
+   "Entwurf": [
+    {
+     "window": 3000,
+     "group": "Dokumentformatierung",
+     "office_width": 1654.7,
+     "office_tiles": 18,
+     "ours_width": 1655.3,
+     "ours_tiles": 18,
+     "counted": true
+    },
+    {
+     "window": 2850,
+     "group": "Dokumentformatierung",
+     "office_width": 1582.7,
+     "office_tiles": 17,
+     "ours_width": 1583.3,
+     "ours_tiles": 17,
+     "counted": true
+    },
+    {
+     "window": 2700,
+     "group": "Dokumentformatierung",
+     "office_width": 1438.7,
+     "office_tiles": 15,
+     "ours_width": 1439.3,
+     "ours_tiles": 15,
+     "counted": true
+    },
+    {
+     "window": 2550,
+     "group": "Dokumentformatierung",
+     "office_width": 1366.7,
+     "office_tiles": 14,
+     "ours_width": 1367.3,
+     "ours_tiles": 14,
+     "counted": true
+    },
+    {
+     "window": 2400,
+     "group": "Dokumentformatierung",
+     "office_width": 1294.7,
+     "office_tiles": 13,
+     "ours_width": 1295.3,
+     "ours_tiles": 13,
+     "counted": true
+    },
+    {
+     "window": 2250,
+     "group": "Dokumentformatierung",
+     "office_width": 1150.7,
+     "office_tiles": 11,
+     "ours_width": 1151.3,
+     "ours_tiles": 11,
+     "counted": true
+    },
+    {
+     "window": 2100,
+     "group": "Dokumentformatierung",
+     "office_width": 1078.7,
+     "office_tiles": 10,
+     "ours_width": 1079.3,
+     "ours_tiles": 10,
+     "counted": true
+    },
+    {
+     "window": 1950,
+     "group": "Dokumentformatierung",
+     "office_width": 1006.7,
+     "office_tiles": 9,
+     "ours_width": 935.3,
+     "ours_tiles": 8,
+     "counted": true
+    },
+    {
+     "window": 1800,
+     "group": "Dokumentformatierung",
+     "office_width": 862.7,
+     "office_tiles": 7,
+     "ours_width": 863.3,
+     "ours_tiles": 7,
+     "counted": true
+    },
+    {
+     "window": 1650,
+     "group": "Dokumentformatierung",
+     "office_width": 790.7,
+     "office_tiles": 6,
+     "ours_width": 791.3,
+     "ours_tiles": 6,
+     "counted": true
+    },
+    {
+     "window": 1500,
+     "group": "Dokumentformatierung",
+     "office_width": 646.7,
+     "office_tiles": 4,
+     "ours_width": 647.3,
+     "ours_tiles": 4,
+     "counted": true
+    },
+    {
+     "window": 1350,
+     "group": "Dokumentformatierung",
+     "office_width": 574.7,
+     "office_tiles": 3,
+     "ours_width": 575.3,
+     "ours_tiles": 3,
+     "counted": true
+    },
+    {
+     "window": 1200,
+     "group": "Dokumentformatierung",
+     "office_width": 439.3,
+     "office_tiles": 0,
+     "ours_width": 441.1,
+     "ours_tiles": 0,
+     "counted": true
+    }
+   ],
+   "summary": {
+    "cases": 13,
+    "same_tiles": 12,
+    "width_within_10px": 12
+   }
+  },
+  "present": {
+   "Start": [
+    {
+     "window": 3000,
+     "group": "Zeichnen",
+     "office_width": 444.7,
+     "office_tiles": 6,
+     "ours_width": 446.9,
+     "ours_tiles": 6,
+     "counted": false
+    },
+    {
+     "window": 2850,
+     "group": "Zeichnen",
+     "office_width": 444.7,
+     "office_tiles": 6,
+     "ours_width": 446.9,
+     "ours_tiles": 6,
+     "counted": false
+    },
+    {
+     "window": 2700,
+     "group": "Zeichnen",
+     "office_width": 444.7,
+     "office_tiles": 6,
+     "ours_width": 446.9,
+     "ours_tiles": 6,
+     "counted": false
+    },
+    {
+     "window": 2550,
+     "group": "Zeichnen",
+     "office_width": 317.3,
+     "office_tiles": 0,
+     "ours_width": 446.9,
+     "ours_tiles": 6,
+     "counted": false
+    },
+    {
+     "window": 2400,
+     "group": "Zeichnen",
+     "office_width": 256.0,
+     "office_tiles": 0,
+     "ours_width": 446.9,
+     "ours_tiles": 6,
+     "counted": false
+    },
+    {
+     "window": 2250,
+     "group": "Zeichnen",
+     "office_width": 256.0,
+     "office_tiles": 0,
+     "ours_width": 320.8,
+     "ours_tiles": 0,
+     "counted": false
+    },
+    {
+     "window": 2100,
+     "group": "Zeichnen",
+     "office_width": 256.0,
+     "office_tiles": 0,
+     "ours_width": 251,
+     "ours_tiles": 0,
+     "counted": false
+    },
+    {
+     "window": 1950,
+     "group": "Zeichnen",
+     "office_width": 64.7,
+     "office_tiles": 0,
+     "ours_width": 251,
+     "ours_tiles": 0,
+     "counted": false
+    },
+    {
+     "window": 1800,
+     "group": "Zeichnen",
+     "office_width": 64.7,
+     "office_tiles": 0,
+     "ours_width": 251,
+     "ours_tiles": 0,
+     "counted": false
+    },
+    {
+     "window": 1650,
+     "group": "Zeichnen",
+     "office_width": 64.7,
+     "office_tiles": 0,
+     "ours_width": 70.2,
+     "ours_tiles": 0,
+     "counted": false
+    },
+    {
+     "window": 1500,
+     "group": "Zeichnen",
+     "office_width": 64.7,
+     "office_tiles": 0,
+     "ours_width": 70.2,
+     "ours_tiles": 0,
+     "counted": false
+    },
+    {
+     "window": 1350,
+     "group": "Zeichnen",
+     "office_width": 64.7,
+     "office_tiles": 0,
+     "ours_width": 70.2,
+     "ours_tiles": 0,
+     "counted": false
+    },
+    {
+     "window": 1200,
+     "group": "Zeichnen",
+     "office_width": 64.7,
+     "office_tiles": 0,
+     "ours_width": 70.2,
+     "ours_tiles": 0,
+     "counted": false
+    }
+   ],
+   "Entwurf": [
+    {
+     "window": 3000,
+     "group": "Designs",
+     "office_width": 1352.0,
+     "office_tiles": 14,
+     "ours_width": 977.5,
+     "ours_tiles": 10,
+     "counted": true
+    },
+    {
+     "window": 2850,
+     "group": "Designs",
+     "office_width": 1258.7,
+     "office_tiles": 13,
+     "ours_width": 977.5,
+     "ours_tiles": 10,
+     "counted": true
+    },
+    {
+     "window": 2700,
+     "group": "Designs",
+     "office_width": 1072.0,
+     "office_tiles": 11,
+     "ours_width": 977.5,
+     "ours_tiles": 10,
+     "counted": true
+    },
+    {
+     "window": 2550,
+     "group": "Designs",
+     "office_width": 978.7,
+     "office_tiles": 10,
+     "ours_width": 977.5,
+     "ours_tiles": 10,
+     "counted": true
+    },
+    {
+     "window": 2400,
+     "group": "Designs",
+     "office_width": 885.3,
+     "office_tiles": 9,
+     "ours_width": 977.5,
+     "ours_tiles": 10,
+     "counted": true
+    },
+    {
+     "window": 2250,
+     "group": "Designs",
+     "office_width": 792.0,
+     "office_tiles": 8,
+     "ours_width": 884.3,
+     "ours_tiles": 9,
+     "counted": true
+    },
+    {
+     "window": 2100,
+     "group": "Designs",
+     "office_width": 698.7,
+     "office_tiles": 7,
+     "ours_width": 791,
+     "ours_tiles": 8,
+     "counted": true
+    },
+    {
+     "window": 1950,
+     "group": "Designs",
+     "office_width": 605.3,
+     "office_tiles": 6,
+     "ours_width": 697.7,
+     "ours_tiles": 7,
+     "counted": true
+    },
+    {
+     "window": 1800,
+     "group": "Designs",
+     "office_width": 512.0,
+     "office_tiles": 5,
+     "ours_width": 604.4,
+     "ours_tiles": 6,
+     "counted": true
+    },
+    {
+     "window": 1650,
+     "group": "Designs",
+     "office_width": 418.7,
+     "office_tiles": 4,
+     "ours_width": 511.1,
+     "ours_tiles": 5,
+     "counted": true
+    },
+    {
+     "window": 1500,
+     "group": "Designs",
+     "office_width": 418.7,
+     "office_tiles": 4,
+     "ours_width": 417.8,
+     "ours_tiles": 4,
+     "counted": true
+    },
+    {
+     "window": 1350,
+     "group": "Designs",
+     "office_width": 418.7,
+     "office_tiles": 4,
+     "ours_width": 417.8,
+     "ours_tiles": 4,
+     "counted": true
+    },
+    {
+     "window": 1200,
+     "group": "Designs",
+     "office_width": 63.3,
+     "office_tiles": 0,
+     "ours_width": 604.4,
+     "ours_tiles": 6,
+     "counted": true
+    }
+   ],
+   "Übergänge": [
+    {
+     "window": 3000,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 1524.7,
+     "office_tiles": 17,
+     "ours_width": 1524.5,
+     "ours_tiles": 17,
+     "counted": true
+    },
+    {
+     "window": 2850,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 1442.7,
+     "office_tiles": 16,
+     "ours_width": 1442.5,
+     "ours_tiles": 16,
+     "counted": true
+    },
+    {
+     "window": 2700,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 1360.7,
+     "office_tiles": 15,
+     "ours_width": 1360.5,
+     "ours_tiles": 15,
+     "counted": true
+    },
+    {
+     "window": 2550,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 1196.7,
+     "office_tiles": 13,
+     "ours_width": 1196.5,
+     "ours_tiles": 13,
+     "counted": true
+    },
+    {
+     "window": 2400,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 1114.7,
+     "office_tiles": 12,
+     "ours_width": 1114.5,
+     "ours_tiles": 12,
+     "counted": true
+    },
+    {
+     "window": 2250,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 1032.7,
+     "office_tiles": 11,
+     "ours_width": 1032.5,
+     "ours_tiles": 11,
+     "counted": true
+    },
+    {
+     "window": 2100,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 950.7,
+     "office_tiles": 10,
+     "ours_width": 950.5,
+     "ours_tiles": 10,
+     "counted": true
+    },
+    {
+     "window": 1950,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 786.7,
+     "office_tiles": 8,
+     "ours_width": 868.5,
+     "ours_tiles": 9,
+     "counted": true
+    },
+    {
+     "window": 1800,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 704.7,
+     "office_tiles": 7,
+     "ours_width": 704.5,
+     "ours_tiles": 7,
+     "counted": true
+    },
+    {
+     "window": 1650,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 622.7,
+     "office_tiles": 6,
+     "ours_width": 622.5,
+     "ours_tiles": 6,
+     "counted": true
+    },
+    {
+     "window": 1500,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 540.7,
+     "office_tiles": 5,
+     "ours_width": 540.5,
+     "ours_tiles": 5,
+     "counted": true
+    },
+    {
+     "window": 1350,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 458.7,
+     "office_tiles": 4,
+     "ours_width": 458.5,
+     "ours_tiles": 4,
+     "counted": true
+    },
+    {
+     "window": 1200,
+     "group": "Übergang zu dieser Folie",
+     "office_width": 376.7,
+     "office_tiles": 3,
+     "ours_width": 540.5,
+     "ours_tiles": 5,
+     "counted": true
+    }
+   ],
+   "Animationen": [
+    {
+     "window": 3000,
+     "group": "Animation",
+     "office_width": 1278.7,
+     "office_tiles": 14,
+     "ours_width": 1278.5,
+     "ours_tiles": 14,
+     "counted": true
+    },
+    {
+     "window": 2850,
+     "group": "Animation",
+     "office_width": 1196.7,
+     "office_tiles": 13,
+     "ours_width": 1196.5,
+     "ours_tiles": 13,
+     "counted": true
+    },
+    {
+     "window": 2700,
+     "group": "Animation",
+     "office_width": 1032.7,
+     "office_tiles": 11,
+     "ours_width": 1114.5,
+     "ours_tiles": 12,
+     "counted": true
+    },
+    {
+     "window": 2550,
+     "group": "Animation",
+     "office_width": 950.7,
+     "office_tiles": 10,
+     "ours_width": 950.5,
+     "ours_tiles": 10,
+     "counted": true
+    },
+    {
+     "window": 2400,
+     "group": "Animation",
+     "office_width": 868.7,
+     "office_tiles": 9,
+     "ours_width": 868.5,
+     "ours_tiles": 9,
+     "counted": true
+    },
+    {
+     "window": 2250,
+     "group": "Animation",
+     "office_width": 786.7,
+     "office_tiles": 8,
+     "ours_width": 786.5,
+     "ours_tiles": 8,
+     "counted": true
+    },
+    {
+     "window": 2100,
+     "group": "Animation",
+     "office_width": 704.7,
+     "office_tiles": 7,
+     "ours_width": 704.5,
+     "ours_tiles": 7,
+     "counted": true
+    },
+    {
+     "window": 1950,
+     "group": "Animation",
+     "office_width": 540.7,
+     "office_tiles": 5,
+     "ours_width": 540.5,
+     "ours_tiles": 5,
+     "counted": true
+    },
+    {
+     "window": 1800,
+     "group": "Animation",
+     "office_width": 458.7,
+     "office_tiles": 4,
+     "ours_width": 458.5,
+     "ours_tiles": 4,
+     "counted": true
+    },
+    {
+     "window": 1650,
+     "group": "Animation",
+     "office_width": 376.7,
+     "office_tiles": 3,
+     "ours_width": 376.5,
+     "ours_tiles": 3,
+     "counted": true
+    },
+    {
+     "window": 1500,
+     "group": "Animation",
+     "office_width": 181.3,
+     "office_tiles": 0,
+     "ours_width": 182.6,
+     "ours_tiles": 0,
+     "counted": true
+    },
+    {
+     "window": 1350,
+     "group": "Animation",
+     "office_width": 181.3,
+     "office_tiles": 0,
+     "ours_width": 182.6,
+     "ours_tiles": 0,
+     "counted": true
+    },
+    {
+     "window": 1200,
+     "group": "Animation",
+     "office_width": 72.7,
+     "office_tiles": 0,
+     "ours_width": 76.7,
+     "ours_tiles": 0,
+     "counted": true
+    }
+   ],
+   "summary": {
+    "cases": 39,
+    "same_tiles": 26,
+    "width_within_10px": 26
+   }
+  }
+ }
+}

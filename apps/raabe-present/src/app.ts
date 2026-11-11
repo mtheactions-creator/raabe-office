@@ -2285,11 +2285,14 @@ export class PresentApp implements EditorHost, PanelHost {
 
   // ----- galleries -------------------------------------------------------------------------------------------
 
-  /** Formformat > Formen einfügen: the shapes as a gallery in the ribbon (three rows, as PowerPoint's). */
-  shapeTiles(): Control {
+  /**
+   * The shapes as a gallery in the ribbon: Formformat > Formen einfügen, and Start > Zeichnen at a wide window (six
+   * columns, three rows of 24 px tiles, as PowerPoint's; D-181).
+   */
+  shapeTiles(cmd = "insert.shapes", key = "2"): Control {
     const items = PRESENT_SHAPES.flatMap((g) => g.items);
     return {
-      type: "tiles", cmd: "insert.shapes", key: "2", count: items.length, visible: 18, size: [22, 22], cls: "shape-tiles-ribbon pp-rows",
+      type: "tiles", cmd, key, name: "Formen", count: items.length, visible: 18, size: [24, 24], cls: "shape-tiles-ribbon pp-rows",
       render: (i) => h("span", { class: "shape-ico" }, shapeIcon(items[i])),
       tip: (i) => items[i].label,
       pick: (i) => { const it = items[i]; if (it.tool.kind === "textbox") this.startTool({ kind: "textbox" }); else this.startTool({ kind: "shape", prst: it.tool.geometry, head: !!it.tool.pic?.line?.head, tail: !!it.tool.pic?.line?.tail, freeform: it.tool.freeform }); },
@@ -2413,7 +2416,7 @@ export class PresentApp implements EditorHost, PanelHost {
       const d = DESIGNS[i];
       const sample = new Deck(newPptx(d));
       const size = sample.pptx.slideSize;
-      const tw = 80, s = tw / (size.cx / EMU_PX);
+      const tw = 84, s = tw / (size.cx / EMU_PX);
       const box = h("div", { class: "design-tile", style: `width:${tw}px;height:${Math.round((size.cy / EMU_PX) * s)}px` });
       const r = renderSlide(sample.view(sample.slides[0].path), size, { editing: false, image: () => undefined, pptx: sample.pptx });
       r.el.style.transform = `scale(${s})`; r.el.style.transformOrigin = "0 0";
@@ -2421,7 +2424,8 @@ export class PresentApp implements EditorHost, PanelHost {
       return box;
     };
     return {
-      type: "tiles", cmd: "design.themes", key: "G", count: DESIGNS.length, visible: DESIGNS.length, size: [84, 50], cls: "design-tiles",
+      // PowerPoint's gallery (recorded, D-180): 93.3 x 56 px tiles, as many as the free width allows, at least four.
+      type: "tiles", cmd: "design.themes", key: "G", name: "Designs", count: DESIGNS.length, visible: 4, fill: true, size: [85.3, 48], cls: "design-tiles",
       render: (i) => { let t = this.designThumbs.get(i); if (!t) { t = thumb(i); this.designThumbs.set(i, t); } return t.cloneNode(true) as HTMLElement; },
       tip: (i) => (DESIGNS[i].name === "Office" ? "Office-Design" : DESIGNS[i].name),
       pick: (i) => this.applyDesign(DESIGNS[i]),
@@ -2439,7 +2443,9 @@ export class PresentApp implements EditorHost, PanelHost {
       : [{ label: "Ohne", run: () => void import("./animations").then((m) => { const p = this.slidePath(); const root = p ? this.deck.pptx.doc(p).documentElement : null; const timing = root && kid(root, "timing"); if (timing) this.editor.edit("Animation entfernen", () => { for (const id of this.editor.sel) m.removeEffects(timing, id); m.tidyTiming(root!); }); }) },
         ...ANIMATION_GROUPS.flatMap((g) => g.items.filter((it) => g.cls !== "path" || it.preset !== 0).map((it) => ({ label: it.label, run: () => void import("./animations").then((m) => m.addAnimation(this, g.cls, it, false)) })))];
     return {
-      type: "tiles", cmd: kind === "trans" ? "trans.gallery" : "anim.gallery", key: kind === "trans" ? "Ü" : "N", count: items.length, visible: 6, size: [62, 58], cls: "fx-tiles",
+      // PowerPoint's galleries (recorded, D-180): 82 x 56.7 px tiles, as many as the free width allows, at least three.
+      type: "tiles", cmd: kind === "trans" ? "trans.gallery" : "anim.gallery", key: kind === "trans" ? "Ü" : "N", name: kind === "trans" ? "Übergangseffekte" : "Animationsstil",
+      count: items.length, visible: 3, fill: true, size: [74, 48.7], cls: "fx-tiles",
       render: (i) => h("div", { class: "pfx-tile" }, icon(i === 0 ? "close-x" : kind === "trans" ? "transition" : "animation"), h("span", null, items[i].label)),
       tip: (i) => items[i].label,
       pick: (i) => items[i].run(),
@@ -3404,6 +3410,7 @@ export class PresentApp implements EditorHost, PanelHost {
       outlineExtra: () => this.outlineExtra(), fillExtra: () => this.fillExtra(),
       designTiles: () => this.designTiles(),
       fxTiles: (kind) => this.fxTiles(kind),
+      shapeTiles: () => this.shapeTiles("draw.shapes", "23"),
       setLine: (hex) => this.setLine(hex.replace("#", "").toUpperCase()),
       preview: { font: () => {}, size: () => {} },
       menus: {

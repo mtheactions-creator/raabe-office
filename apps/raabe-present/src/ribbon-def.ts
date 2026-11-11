@@ -37,6 +37,8 @@ export interface RibbonContext {
   designTiles(): Control;
   /** Übergänge / Animationen: the effects as a gallery in the ribbon (PowerPoint). */
   fxTiles(kind: "trans" | "anim"): Control;
+  /** Start > Zeichnen at a wide window: the shapes as a gallery in the ribbon (PowerPoint, D-181). */
+  shapeTiles(): Control;
   preview: { font(name: string): void; size(value: string): void };
   menus: {
     paste: MenuEntry[]; layouts: () => MenuEntry[]; section: MenuEntry[]; spacing: MenuEntry[]; case: MenuEntry[];
@@ -81,7 +83,8 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     {
       id: "start", label: "Start", key: "R",
       // First from PowerPoint's widest layouts to its usual ones (D-159), from the right; then its sequence.
-      shrink: ["editing", "drawing", "paragraph", "slides", "editing", "drawing", "paragraph", "font", "slides", "clipboard"],
+      // Zeichnen first gives up its shapes gallery for the Formen button, then the labels of its stack (D-181).
+      shrink: ["drawing", "drawing", "editing", "paragraph", "slides", "editing", "drawing", "paragraph", "font", "slides", "clipboard"],
       groups: [
         { id: "clipboard", label: "Zwischenablage", key: "ZZ", icon: "paste", wide: false, controls: [split("edit.paste", "V1", "large", m.paste), stack(b("edit.cut", "X"), split("edit.copy", "C", "small", [{ cmd: "edit.copy" }, { cmd: "edit.duplicate" }]), b("edit.formatPainter", "FO"))] },
         // The widest layouts are PowerPoint's at a wide window (labels beside the small icons, D-158); the ones before
@@ -106,12 +109,16 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
             [split("para.bullets", "ÖU", "small", m.bullets), split("para.numbering", "AN", "small", m.numbering), b("para.levelDown", "DI"), b("para.levelUp", "ÄI"), dd("para.lineSpacing", "IZ", "small", m.lineSpacing), "gap", dd("para.direction", "MT", "small", m.direction)],
             [b("para.left", "II"), b("para.center", "RZ"), b("para.right", "RE"), b("para.justify", "OL"), dd("para.columns", "HS", "small", m.columns), "gap", dd("para.alignText", "PE", "small", m.alignText), lazy("para.smartArt", "NI", "small", m.smartArtConvert)])]],
         },
+        // PowerPoint's layouts, recorded (D-181): the shapes gallery with the labelled stack, then the Formen button with
+        // it, then the stack's icons alone.
         {
-          id: "drawing", label: "Zeichnen", key: "ZD", icon: "shapes", launcher: { cmd: "draw.format", key: "BB" },
-          controls: [panel("draw.shapes", "23", "large", p.shapes), lazy("draw.arrange", "G", "large", m.arrange), panel("draw.quickStyles", "NC", "large", p.quickStyles),
+          id: "drawing", label: "Zeichnen", key: "ZD", icon: "shapes", launcher: { cmd: "draw.format", key: "BB" }, wide: false,
+          controls: [ctx.shapeTiles(), lazy("draw.arrange", "G", "large", m.arrange), panel("draw.quickStyles", "NC", "large", p.quickStyles),
             stack({ ...color("draw.fill", "Ü", ctx.fillColor, ctx.setFill, "font", true), extra: () => ctx.fillExtra() } as Control, { ...color("draw.outline", "V2", ctx.lineColor, ctx.setLine, "font", true), extra: () => ctx.outlineExtra() } as Control, dd("draw.effects", "MO", "medium", m.effects))],
           smaller: [[panel("draw.shapes", "23", "large", p.shapes), lazy("draw.arrange", "G", "large", m.arrange), panel("draw.quickStyles", "NC", "large", p.quickStyles),
-            stack({ ...color("draw.fill", "Ü", ctx.fillColor, ctx.setFill, "font", true), extra: () => ctx.fillExtra() } as Control, { ...color("draw.outline", "V2", ctx.lineColor, ctx.setLine, "font", true), extra: () => ctx.outlineExtra() } as Control, dd("draw.effects", "MO", "small", m.effects))]],
+            stack({ ...color("draw.fill", "Ü", ctx.fillColor, ctx.setFill, "font", true), extra: () => ctx.fillExtra() } as Control, { ...color("draw.outline", "V2", ctx.lineColor, ctx.setLine, "font", true), extra: () => ctx.outlineExtra() } as Control, dd("draw.effects", "MO", "medium", m.effects))],
+          [panel("draw.shapes", "23", "large", p.shapes), lazy("draw.arrange", "G", "large", m.arrange), panel("draw.quickStyles", "NC", "large", p.quickStyles),
+            stack({ ...color("draw.fill", "Ü", ctx.fillColor, ctx.setFill, "font"), extra: () => ctx.fillExtra() } as Control, { ...color("draw.outline", "V2", ctx.lineColor, ctx.setLine, "font"), extra: () => ctx.outlineExtra() } as Control, dd("draw.effects", "MO", "small", m.effects))]],
         },
         { id: "editing", label: "Bearbeiten", key: "ZB", icon: "find",
           controls: [stack(split("edit.find", "FD", "medium", m.find), split("edit.replace", "R", "medium", [{ cmd: "edit.replace" }, { cmd: "edit.replaceFonts" }]), dd("edit.select", "SL", "medium", m.select))],
@@ -120,7 +127,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     },
     {
       id: "insert", label: "Einfügen", key: "I",
-      shrink: ["media", "symbols", "text", "comments", "links", "illustrations", "images", "tables", "slides"],
+      shrink: ["text", "media", "symbols", "text", "comments", "links", "illustrations", "images", "tables", "slides"],
       groups: [
         { id: "slides", label: "Folien", key: "ZF", icon: "slide-add", controls: [splitPanel("slide.new", "SI", "large", p.newSlide)] },
         { id: "tables", label: "Tabellen", key: "ZT", icon: "table", controls: [panel("insert.table", "LA", "large", p.table)] },
@@ -128,8 +135,12 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "illustrations", label: "Illustrationen", key: "ZI", icon: "shapes", controls: [panel("insert.shapes", "2", "large", p.shapes), b("insert.smartArt", "M", "large"), panel("insert.chart", "I", "large", p.chart)] },
         { id: "links", label: "Links", key: "ZL", icon: "link", controls: [lazy("insert.zoom", "Y", "large", m.zooms), b("insert.link", "H1", "large"), b("insert.action", "T", "large")] },
         { id: "comments", label: "Kommentare", key: "ZK", icon: "comment", controls: [b("insert.comment", "N", "large")] },
-        { id: "text", label: "Text", key: "ZX", icon: "text-box", controls: [split("insert.textBox", "LT", "large", m.textBox), b("insert.headerFooter", "KO", "large"), panel("insert.wordArt", "W", "large", p.wordArt),
-          stack(b("insert.dateTime", "D"), b("insert.slideNumber", "H2"), b("insert.object", "9"))] },
+        // At a wide window PowerPoint shows all six as large buttons (recorded, D-183); then the last three as a stack.
+        { id: "text", label: "Text", key: "ZX", icon: "text-box", wide: false,
+          controls: [split("insert.textBox", "LT", "large", m.textBox), b("insert.headerFooter", "KO", "large"), panel("insert.wordArt", "W", "large", p.wordArt),
+            b("insert.dateTime", "D", "large"), b("insert.slideNumber", "H2", "large"), b("insert.object", "9", "large")],
+          smaller: [[split("insert.textBox", "LT", "large", m.textBox), b("insert.headerFooter", "KO", "large"), panel("insert.wordArt", "W", "large", p.wordArt),
+            stack(b("insert.dateTime", "D"), b("insert.slideNumber", "H2"), b("insert.object", "9"))]] },
         { id: "symbols", label: "Symbole", key: "ZS", icon: "equation", controls: [lazy("insert.symbols", "ZS", "large", () => [{ cmd: "insert.equation" }, { label: "Integriert", submenu: () => m.equations() }, { cmd: "insert.symbol" }])] },
         { id: "media", label: "Medien", key: "ZM", icon: "picture", controls: [dd("insert.media", "ZM", "large", [{ cmd: "insert.video" }, { cmd: "insert.audio" }, { cmd: "insert.screenRecording" }])] },
       ],
@@ -147,10 +158,11 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     },
     {
       id: "design", label: "Entwurf", key: "U2",
+      // The gallery first gives up tiles down to four (D-180), then Folien and Anpassen go, then the gallery becomes a button.
       shrink: ["customize", "variants", "themes"],
       groups: [
         // PowerPoint shows the designs as a gallery in the ribbon and Anpassen as five large buttons (UI screenshot, D-072).
-        { id: "themes", label: "Designs", key: "ZT", icon: "themes", controls: [ctx.designTiles()] },
+        { id: "themes", label: "Designs", key: "ZT", icon: "themes", controls: [ctx.designTiles()], smaller: [[panel("design.themes", "G", "large", p.themes)]] },
         { id: "variants", label: "Anpassen", key: "ZV", icon: "colors", controls: [b("design.variants", "V", "large"), lazy("design.colors", "F", "large", m.colors), lazy("design.fonts", "6", "large", m.fonts), lazy("design.effects", "E", "large", m.themeEffects), lazy("design.background", "R", "large", m.bgStyles)] },
         { id: "customize", label: "Folien", key: "ZA", icon: "page-size", controls: [panel("slide.layout", "OA", "large", p.layout), dd("design.slideSize", "Ö", "large", m.slideSize)] },
       ],
@@ -160,7 +172,8 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       shrink: ["timing", "gallery", "preview"],
       groups: [
         { id: "preview", label: "Vorschau", key: "ZV", icon: "eye", controls: [b("trans.preview", "V", "large")] },
-        { id: "gallery", label: "Übergang zu dieser Folie", key: "ZU", icon: "transition", controls: [ctx.fxTiles("trans"), lazy("trans.options", "E", "large", m.transOptions)] },
+        { id: "gallery", label: "Übergang zu dieser Folie", key: "ZU", icon: "transition", controls: [ctx.fxTiles("trans"), lazy("trans.options", "E", "large", m.transOptions)],
+          smaller: [[panel("trans.gallery", "Ü", "large", p.transitions), lazy("trans.options", "E", "large", m.transOptions)]] },
         { id: "timing", label: "Anzeigedauer", key: "ZA", icon: "time", controls: [
           stack(lazy("trans.sound", "S", "medium", m.sounds), spin("trans.duration", "Dauer:", "D", ctx.spin.transDuration), b("trans.applyAll", "F", "medium")),
           stack({ type: "check", cmd: "trans.onClick", key: "B" }, rows([{ type: "check", cmd: "trans.after", key: "N" }, spin("trans.afterTime", "", "A", ctx.spin.transAfter)]))] },
@@ -168,10 +181,13 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     },
     {
       id: "animations", label: "Animationen", key: "V",
-      shrink: ["timing", "advanced", "gallery", "preview"],
+      // PowerPoint (recorded, D-180): the gallery gives up tiles down to three, becomes the Animationsstil button, and the
+      // group collapses before the others shrink.
+      shrink: ["gallery", "gallery", "timing", "advanced", "preview"],
       groups: [
         { id: "preview", label: "Vorschau", key: "ZV", icon: "eye", controls: [b("anim.preview", "U", "large")] },
-        { id: "gallery", label: "Animation", key: "ZA", icon: "animation", launcher: { cmd: "anim.more", key: "W" }, controls: [ctx.fxTiles("anim"), lazy("anim.options", "E", "large", m.animOptions)] },
+        { id: "gallery", label: "Animation", key: "ZA", icon: "animation", launcher: { cmd: "anim.more", key: "W" }, controls: [ctx.fxTiles("anim"), lazy("anim.options", "E", "large", m.animOptions)],
+          smaller: [[panel("anim.gallery", "N", "large", p.animations), lazy("anim.options", "E", "large", m.animOptions)]] },
         { id: "advanced", label: "Erweiterte Animation", key: "ZE", icon: "animation", controls: [panel("anim.add", "Q", "large", p.addAnim), stack(b("anim.pane", "I", "medium"), lazy("anim.trigger", "T", "medium", m.triggers), b("anim.painter", "M", "medium"))] },
         { id: "timing", label: "Anzeigedauer", key: "ZD", icon: "time", controls: [
           stack(dd("anim.start", "S", "medium", m.animStart, "Start:"), spin("anim.duration", "Dauer:", "D", ctx.spin.animDuration), spin("anim.delay", "Verzögerung:", "R", ctx.spin.animDelay)),

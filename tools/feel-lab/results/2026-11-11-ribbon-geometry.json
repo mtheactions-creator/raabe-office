@@ -171,7 +171,8 @@
      }
     },
     "missing_groups": [],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 5
    },
    "Einfügen": {
     "groups": {
@@ -206,20 +207,17 @@
       "ours": [
        191.5,
        0,
-       119,
+       184.8,
        96
       ],
       "diffs": [
-       "width 119 vs 305.3",
+       "width 184.8 vs 305.3",
        "left 191.5 vs 249.3",
-       "Bilder: dx 0.0 dy -1.0 dw 61.7 dh -52.0",
-       "Formen: dx -43.4 dy 25.0 dw 57.0 dh -52.0",
-       "Piktogramme: dx -91.4 dy 51.0 dw 26.3 dh -52.0",
        "control missing: 3D-Modelle",
        "control missing: SmartArt...",
        "control missing: Screenshot"
       ],
-      "controls_ok": 0,
+      "controls_ok": 3,
       "controls_matched": 3,
       "controls_office": 6
      },
@@ -231,14 +229,14 @@
        96.0
       ],
       "ours": [
-       310.5,
+       376.3,
        0,
        274.3,
        96
       ],
       "diffs": [
        "width 274.3 vs 316.0",
-       "left 310.5 vs 663.3",
+       "left 376.3 vs 663.3",
        "Kreis- oder Ringdiagramm einfügen: dx 42.6 dy -27.0 dw 0.0 dh 0.0",
        "Statistikdiagramm einfügen: dx 42.6 dy -27.0 dw 0.0 dh 0.0",
        "Punkt (XY)- oder Blasendiagramm einfügen: dx 42.6 dy -27.0 dw 0.0 dh 0.0",
@@ -260,14 +258,14 @@
        96.0
       ],
       "ours": [
-       584.8,
+       650.6,
        0,
        128.3,
        96
       ],
       "diffs": [
        "width 128.3 vs 151.3",
-       "left 584.8 vs 979.3",
+       "left 650.6 vs 979.3",
        "Linie: dx 0.0 dy -1.0 dw 71.0 dh -52.0",
        "Säule: dx -43.4 dy 25.0 dw 71.0 dh -52.0",
        "Gewinn/Verlust: dx -86.7 dy 51.0 dw 63.6 dh -52.0"
@@ -284,14 +282,14 @@
        96.0
       ],
       "ours": [
-       713.2,
+       779,
        0,
        114.9,
        96
       ],
       "diffs": [
        "width 114.9 vs 143.3",
-       "left 713.2 vs 1130.7",
+       "left 779 vs 1130.7",
        "Datenschnitt: dx 0.0 dy -1.0 dw 27.6 dh -52.0",
        "Zeitachse: dx -73.3 dy 25.0 dw 44.9 dh -52.0"
       ],
@@ -307,13 +305,13 @@
        96.0
       ],
       "ours": [
-       828.1,
+       893.9,
        0,
        57.3,
        96
       ],
       "diffs": [
-       "left 828.1 vs 1274.0"
+       "left 893.9 vs 1274.0"
       ],
       "controls_ok": 1,
       "controls_matched": 1,
@@ -327,13 +325,13 @@
        96.0
       ],
       "ours": [
-       885.4,
+       951.2,
        0,
        84.5,
        96
       ],
       "diffs": [
-       "left 885.4 vs 1331.3"
+       "left 951.2 vs 1331.3"
       ],
       "controls_ok": 1,
       "controls_matched": 1,
@@ -347,21 +345,19 @@
        96.0
       ],
       "ours": [
-       969.9,
+       1035.7,
        0,
-       147.5,
+       177.2,
        96
       ],
       "diffs": [
-       "width 147.5 vs 292.7",
-       "left 969.9 vs 1414.7",
-       "Textfeld: dx 0.0 dy -1.0 dw 86.2 dh -52.0",
+       "width 177.2 vs 292.7",
+       "left 1035.7 vs 1414.7",
        "control missing: Kopf- und Fußzeile...",
-       "WordArt: dx -108.6 dy 51.0 dw 80.8 dh -52.0",
        "control missing: Signaturzeile",
        "control missing: Objekt..."
       ],
-      "controls_ok": 0,
+      "controls_ok": 2,
       "controls_matched": 2,
       "controls_office": 5
      },
@@ -373,13 +369,13 @@
        96.0
       ],
       "ours": [
-       1117.4,
+       1212.9,
        0,
        105.8,
        96
       ],
       "diffs": [
-       "left 1117.4 vs 1707.3",
+       "left 1212.9 vs 1707.3",
        "control missing: Symbol..."
       ],
       "controls_ok": 1,
@@ -390,7 +386,8 @@
     "missing_groups": [
      "Steuerelemente"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 3
    },
    "Seitenlayout": {
     "groups": {
@@ -527,7 +524,8 @@
      }
     },
     "missing_groups": [],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 2
    },
    "Formeln": {
     "groups": {
@@ -636,7 +634,8 @@
     "missing_groups": [
      "Python (Vorschau)"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 3
    },
    "Daten": {
     "groups": {
@@ -797,7 +796,8 @@
     "missing_groups": [
      "Datentypen"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 2
    },
    "Überprüfen": {
     "groups": {
@@ -921,7 +921,8 @@
      "Änderungen",
      "Freihand"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 2
    },
    "Ansicht": {
     "groups": {
@@ -1052,7 +1053,8 @@
     "missing_groups": [
      "Tabellenansicht"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 2
    }
   },
   "write": {
@@ -1141,16 +1143,16 @@
       "ours": [
        759.1,
        0,
-       903.3,
+       908.6,
        96
       ],
       "diffs": [
-       "width 903.3 vs 801.3",
+       "width 908.6 vs 801.3",
        "left 759.1 vs 762.0",
-       "Formatvorlagen: dx 871.3 dy 70.3 dw -769.3 dh -46.7",
+       "Formatvorlagen: dx 876.6 dy 70.3 dw -769.3 dh -46.7",
        "control missing: Formatvorlagen...",
-       "Formatvorlagen: dx 112.6 dy 67.7 dw -8.0 dh -44.0",
-       "Formatvorlagen: dx 869.3 dy 65.7 dw -740.0 dh -152.0"
+       "Formatvorlagen: dx 117.9 dy 67.7 dw -8.0 dh -44.0",
+       "Formatvorlagen: dx 874.6 dy 65.7 dw -740.0 dh -152.0"
       ],
       "controls_ok": 0,
       "controls_matched": 3,
@@ -1164,14 +1166,14 @@
        96.0
       ],
       "ours": [
-       1662.4,
+       1667.7,
        0,
        115.4,
        96
       ],
       "diffs": [
        "width 115.4 vs 112.7",
-       "left 1662.4 vs 1563.3",
+       "left 1667.7 vs 1563.3",
        "Suchen: dx 0.0 dy -1.0 dw 4.7 dh 0.0",
        "control missing: Ersetzen...",
        "Markieren: dx 0.0 dy -1.0 dw 2.7 dh 0.0"
@@ -1182,7 +1184,8 @@
      }
     },
     "missing_groups": [],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 4
    },
    "Einfügen": {
     "groups": {
@@ -1370,7 +1373,8 @@
      "Medien",
      "eSignature"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 6
    },
    "Entwurf": {
     "groups": {
@@ -1384,21 +1388,16 @@
       "ours": [
        0,
        0,
-       441.1,
+       1655.3,
        96
       ],
       "diffs": [
-       "width 441.1 vs 1654.7",
-       "Formatvorlagensatz: dx 0.3 dy -5.7 dw -1214.9 dh 13.3",
-       "Farben: dx -1214.7 dy -1.0 dw 0.6 dh 0.0",
-       "Schriftarten: dx -1214.1 dy -1.0 dw 1.7 dh 0.0",
-       "Absatzabstand: dx -1212.4 dy -1.0 dw 26.9 dh 0.0",
-       "Effekte: dx -1212.4 dy -1.0 dw 69.5 dh 0.0",
-       "Als Standard festlegen: dx -1212.4 dy -1.0 dw -1.1 dh 0.0",
-       "Formatvorlagensatz: dx -1298.4 dy -8.3 dw 86.4 dh 16.0",
-       "Formatvorlagensatz: dx -1.7 dy -10.3 dw -1185.6 dh -36.0"
+       "Absatzabstand: dx 1.8 dy -1.0 dw 26.9 dh 0.0",
+       "Effekte: dx 1.8 dy -1.0 dw 69.5 dh 0.0",
+       "Formatvorlagensatz: dx -1298.4 dy -2.6 dw 1300.6 dh 2.7",
+       "Formatvorlagensatz: dx -1.7 dy -4.6 dw 28.6 dh -49.3"
       ],
-      "controls_ok": 1,
+      "controls_ok": 5,
       "controls_matched": 9,
       "controls_office": 9
      },
@@ -1410,14 +1409,13 @@
        95.3
       ],
       "ours": [
-       441.1,
+       1655.3,
        0,
        242.8,
        96
       ],
       "diffs": [
        "width 242.8 vs 237.3",
-       "left 441.1 vs 1654.7",
        "Wasserzeichen: dx 0.0 dy -1.0 dw 2.2 dh 0.0",
        "Seitenfarbe: dx 2.2 dy -1.0 dw 1.4 dh 0.0",
        "control missing: Seitenränder..."
@@ -1428,7 +1426,8 @@
      }
     },
     "missing_groups": [],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 2
    },
    "Layout": {
     "groups": {
@@ -1516,7 +1515,8 @@
      }
     },
     "missing_groups": [],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 2
    },
    "Referenzen": {
     "groups": {
@@ -1622,7 +1622,8 @@
      "Index",
      "Rechtsgrundlagenverzeichnis"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 3
    },
    "Sendungen": {
     "error": "tab not in our app"
@@ -1737,7 +1738,8 @@
      "Schützen",
      "Freihand"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 2
    },
    "Ansicht": {
     "groups": {
@@ -1817,7 +1819,8 @@
      "Makros",
      "SharePoint"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 2
    }
   },
   "present": {
@@ -1933,23 +1936,19 @@
       "ours": [
        945.5,
        0,
-       320.8,
+       446.9,
        96
       ],
       "diffs": [
-       "width 320.8 vs 444.7",
+       "width 446.9 vs 444.7",
        "left 945.5 vs 960.7",
-       "Formen: dx 0.0 dy -1.0 dw -126.8 dh 0.7",
-       "Anordnen: dx -126.8 dy -1.0 dw 0.7 dh 0.0",
-       "Schnellformatvorlagen: dx -126.1 dy -1.0 dw 1.2 dh 0.0",
-       "Fülleffekt: dx -125.0 dy -1.0 dw 21.1 dh 0.0",
-       "Formkontur: dx -125.0 dy -1.0 dw 6.5 dh 0.0",
-       "Formeffekte: dx -125.0 dy -1.0 dw 1.1 dh 0.0",
-       "Objekt formatieren...: dx -131.8 dy -2.0 dw 0.0 dh 0.0",
-       "Formen: dx -146.6 dy -3.0 dw 22.5 dh 2.7",
-       "Formen: dx -2.0 dy -3.7 dw -97.5 dh -692.0"
+       "Fülleffekt: dx 1.2 dy -1.0 dw 21.1 dh 0.0",
+       "Formkontur: dx 1.2 dy -1.0 dw 6.5 dh 0.0",
+       "Objekt formatieren...: dx -5.7 dy -1.7 dw 0.0 dh 0.0",
+       "Formen: dx -146.6 dy -2.0 dw 148.6 dh 2.0",
+       "Formen: dx -2.0 dy -2.7 dw 28.6 dh -692.7"
       ],
-      "controls_ok": 0,
+      "controls_ok": 4,
       "controls_matched": 9,
       "controls_office": 9
      },
@@ -1961,14 +1960,14 @@
        96.0
       ],
       "ours": [
-       1266.3,
+       1392.4,
        0,
        115.4,
        96
       ],
       "diffs": [
        "width 115.4 vs 158.0",
-       "left 1266.3 vs 1405.3",
+       "left 1392.4 vs 1405.3",
        "control missing: Suchen und Ersetzen",
        "control missing: Schriftarten ersetzen...",
        "Markieren: dx 0.0 dy -1.0 dw 2.7 dh 0.0"
@@ -1979,7 +1978,8 @@
      }
     },
     "missing_groups": [],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 4
    },
    "Einfügen": {
     "groups": {
@@ -2118,18 +2118,18 @@
       "ours": [
        712.1,
        0,
-       306.4,
+       367,
        96
       ],
       "diffs": [
-       "width 306.4 vs 369.3",
+       "width 367 vs 369.3",
        "left 712.1 vs 908.7",
        "Textfeld: dx 0.0 dy -1.0 dw -4.0 dh 0.0",
        "Kopf- und Fußzeile...: dx -4.0 dy -1.0 dw 0.0 dh 0.0",
        "WordArt: dx -4.0 dy -1.0 dw 0.3 dh 0.0",
-       "Datum und Uhrzeit...: dx -3.7 dy -1.0 dw 67.5 dh -52.0",
-       "Foliennummer: dx -71.0 dy 25.0 dw 51.5 dh -52.0",
-       "Objekt...: dx -154.4 dy 51.0 dw 91.5 dh -52.0"
+       "Datum und Uhrzeit...: dx -3.7 dy -1.0 dw 0.4 dh 0.0",
+       "Foliennummer: dx -3.4 dy -1.0 dw 1.2 dh 0.0",
+       "Objekt...: dx -2.3 dy -1.0 dw 0.0 dh 0.0"
       ],
       "controls_ok": 0,
       "controls_matched": 6,
@@ -2143,14 +2143,14 @@
        95.3
       ],
       "ours": [
-       1018.5,
+       1079.1,
        0,
        67.4,
        96
       ],
       "diffs": [
        "width 67.4 vs 105.3",
-       "left 1018.5 vs 1278.0",
+       "left 1079.1 vs 1278.0",
        "control missing: Formel",
        "control missing: Symbol..."
       ],
@@ -2166,14 +2166,14 @@
        95.3
       ],
       "ours": [
-       1085.9,
+       1146.6,
        0,
        62.1,
        96
       ],
       "diffs": [
        "width 62.1 vs 232.0",
-       "left 1085.9 vs 1383.3",
+       "left 1146.6 vs 1383.3",
        "control missing: Video",
        "control missing: Audio",
        "control missing: Bildschirmaufzeichnung..."
@@ -2186,7 +2186,8 @@
     "missing_groups": [
      "Kamera"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 6
    },
    "Entwurf": {
     "groups": {
@@ -2200,17 +2201,17 @@
       "ours": [
        0,
        0,
-       977.3,
+       977.5,
        96
       ],
       "diffs": [
-       "width 977.3 vs 1352.0",
-       "control missing: Designs",
-       "control missing: Designs",
-       "control missing: Designs"
+       "width 977.5 vs 1352.0",
+       "Designs: dx 0.0 dy 0.0 dw -374.5 dh 0.0",
+       "Designs: dx -1309.3 dy -2.6 dw 937.5 dh 2.7",
+       "Designs: dx -2.0 dy -4.6 dw -345.2 dh -105.3"
       ],
       "controls_ok": 0,
-      "controls_matched": 0,
+      "controls_matched": 3,
       "controls_office": 3
      },
      "Anpassen": {
@@ -2221,14 +2222,14 @@
        95.3
       ],
       "ours": [
-       977.3,
+       977.5,
        0,
        343.2,
        96
       ],
       "diffs": [
        "width 343.2 vs 337.3",
-       "left 977.3 vs 1352.0",
+       "left 977.5 vs 1352.0",
        "Schriftarten: dx 2.4 dy -1.0 dw 1.7 dh 0.0",
        "Effekte: dx 4.0 dy -1.0 dw 0.9 dh 0.0",
        "Hintergrundformate: dx 4.9 dy -1.0 dw 1.1 dh 0.0"
@@ -2245,13 +2246,13 @@
        95.3
       ],
       "ours": [
-       1320.5,
+       1320.7,
        0,
        128.3,
        96
       ],
       "diffs": [
-       "left 1320.5 vs 1689.3"
+       "left 1320.7 vs 1689.3"
       ],
       "controls_ok": 2,
       "controls_matched": 2,
@@ -2261,7 +2262,8 @@
     "missing_groups": [
      "Bearbeiten"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 2
    },
    "Übergänge": {
     "groups": {
@@ -2293,18 +2295,15 @@
       "ours": [
        70.2,
        0,
-       555.2,
+       1524.5,
        96
       ],
       "diffs": [
-       "width 555.2 vs 1524.7",
-       "control missing: Übergangseffekte",
-       "Effektoptionen: dx -970.0 dy -1.0 dw 0.5 dh 0.0",
-       "control missing: Übergangseffekte",
-       "control missing: Übergangseffekte"
+       "Übergangseffekte: dx -1396.7 dy -2.6 dw 1398.6 dh 2.7",
+       "Übergangseffekte: dx -2.0 dy -4.0 dw 28.6 dh -107.3"
       ],
-      "controls_ok": 0,
-      "controls_matched": 1,
+      "controls_ok": 2,
+      "controls_matched": 4,
       "controls_office": 4
      },
      "Anzeigedauer": {
@@ -2315,14 +2314,13 @@
        95.3
       ],
       "ours": [
-       625.4,
+       1594.7,
        0,
-       394.1,
+       308.1,
        96
       ],
       "diffs": [
-       "width 394.1 vs 311.3",
-       "left 625.4 vs 1594.0",
+       "width 308.1 vs 311.3",
        "Sound: dx -63.3 dy -1.0 dw 66.0 dh 0.0",
        "Mehr: dx 16.7 dy 0.0 dw -3.3 dh -1.0",
        "Weniger: dx 16.7 dy -1.0 dw -3.3 dh -1.0",
@@ -2338,7 +2336,8 @@
      }
     },
     "missing_groups": [],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 3
    },
    "Animationen": {
     "groups": {
@@ -2370,18 +2369,15 @@
       "ours": [
        70.2,
        0,
-       555.2,
+       1278.5,
        96
       ],
       "diffs": [
-       "width 555.2 vs 1278.7",
-       "control missing: Animationsstil",
-       "Effektoptionen: dx -724.0 dy -1.0 dw 0.5 dh 0.0",
-       "control missing: Animationsstil",
-       "control missing: Animationsstil"
+       "Animationsstil: dx -1150.7 dy -2.6 dw 1152.6 dh 2.7",
+       "Animationsstil: dx -2.0 dy -4.0 dw 28.6 dh -164.0"
       ],
-      "controls_ok": 0,
-      "controls_matched": 1,
+      "controls_ok": 2,
+      "controls_matched": 4,
       "controls_office": 4
      },
      "Erweiterte Animation": {
@@ -2392,13 +2388,12 @@
        95.3
       ],
       "ours": [
-       625.4,
+       1348.7,
        0,
        244.1,
        96
       ],
       "diffs": [
-       "left 625.4 vs 1348.0",
        "Animation hinzufügen: dx 0.0 dy -1.0 dw 2.1 dh 0.0",
        "Animationsbereich: dx 2.1 dy -1.0 dw 17.4 dh 0.0",
        "Trigger: dx 2.1 dy -1.0 dw 68.0 dh 0.0",
@@ -2416,21 +2411,21 @@
        95.3
       ],
       "ours": [
-       869.5,
+       1592.8,
        0,
        311.5,
        96
       ],
       "diffs": [
        "width 311.5 vs 325.3",
-       "left 869.5 vs 1590.7",
+       "left 1592.8 vs 1590.7",
        "Start: dx -70.0 dy -1.0 dw 66.0 dh 0.0",
        "Mehr: dx 13.4 dy 0.0 dw -3.3 dh -1.0",
        "Weniger: dx 13.4 dy -1.0 dw -3.3 dh -1.0",
        "Mehr: dx -0.6 dy -26.0 dw -3.3 dh -1.0",
        "Weniger: dx -0.6 dy -27.0 dw -3.3 dh -1.0",
-       "Früher: dx -14.6 dy -3.0 dw 67.4 dh 0.0",
-       "Später: dx -14.6 dy -3.0 dw 66.8 dh 0.0"
+       "Früher: dx -14.7 dy -3.0 dw 67.4 dh 0.0",
+       "Später: dx -14.7 dy -3.0 dw 66.8 dh 0.0"
       ],
       "controls_ok": 0,
       "controls_matched": 7,
@@ -2438,7 +2433,8 @@
      }
     },
     "missing_groups": [],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 3
    },
    "Bildschirmpräsentation": {
     "groups": {
@@ -2518,7 +2514,8 @@
     "missing_groups": [
      "Untertitel und Untertitel für Hörgeschädigte"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 0
    },
    "Überprüfen": {
     "groups": {
@@ -2613,7 +2610,8 @@
     "missing_groups": [
      "Aktivität"
     ],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 2
    },
    "Ansicht": {
     "groups": {
@@ -2779,7 +2777,8 @@
      }
     },
     "missing_groups": [],
-    "extra_groups": []
+    "extra_groups": [],
+    "groups_within_10px": 6
    }
   }
  }

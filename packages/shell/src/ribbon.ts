@@ -64,6 +64,8 @@ export type Control =
       type: "tiles"; cmd: string; key?: string; count: number; visible: number; fill?: boolean; size: [number, number]; cls?: string;
       /** With `fill`: the most tiles shown in the ribbon (Word's Tabellenformatvorlagen: 14). */
       max?: number;
+      /** The gallery's accessible name, as Office names it (Übergangseffekte, Animationsstil, Designs …). */
+      name?: string;
       render: (i: number) => HTMLElement | null; tip: (i: number) => string; pick: (i: number) => void;
       hover?: (i: number | null) => void; current?: () => number | undefined; redraw: () => string; panel: (close: () => void) => HTMLElement;
     }
@@ -159,6 +161,36 @@ function largeLabel(text: string, withChevron: boolean, cmd?: string): Node[] {
   if (!withChevron) return [txt];
   if (lines.length > 1) { txt.append(chev()); return [txt]; }
   return [txt, chev()];
+}
+
+/** The "Weitere" button of an inline gallery: a chevron under a bar (drawn here, as Office's scroll column has it). */
+const GALLERY_MORE_SVG = '<svg viewBox="0 0 10 8" width="10" height="8" aria-hidden="true"><path d="M1 .5h8" stroke="currentColor" stroke-width="1"/>' +
+  '<path d="M1.75 3.25 5 6.5l3.25-3.25" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+/**
+ * The scroll column at the right of an inline gallery (Office's: Zeile nach oben, Zeile nach unten, Weitere; D-180).
+ * `show(row)` shows that row of the gallery; `more` opens the full gallery.
+ */
+function galleryScroll(keytip: string | undefined, scope: string, more: (at: DOMRect) => void): { el: HTMLElement; up: HTMLButtonElement; down: HTMLButtonElement } {
+  const up = h("button", { "aria-label": "Zeile nach oben", tabIndex: -1 }, icon("chevron-up")) as HTMLButtonElement;
+  const down = h("button", { "aria-label": "Zeile nach unten", tabIndex: -1 }, icon("chevron-down")) as HTMLButtonElement;
+  const moreBtn = h("button", { class: "more", "aria-label": "Weitere", "data-keytip": keytip, "data-keytip-scope": scope });
+  moreBtn.innerHTML = GALLERY_MORE_SVG;
+  moreBtn.onclick = () => more(moreBtn.getBoundingClientRect());
+  return { el: h("div", { class: "scroll" }, up, down, moreBtn), up, down };
+}
+
+/**
+ * Shows one row of an inline gallery: `cols` items from row `row` on (the others hidden), and sets the scroll
+ * buttons. Office's galleries scroll their entries by rows of what the ribbon shows.
+ */
+export function showGalleryRow(items: HTMLElement[], cols: number, row: number, up: HTMLButtonElement, down: HTMLButtonElement): number {
+  const rows = Math.max(1, Math.ceil(items.length / Math.max(1, cols)));
+  const r = Math.max(0, Math.min(rows - 1, row));
+  items.forEach((it, i) => { it.style.display = i >= r * cols && i < (r + 1) * cols ? "" : "none"; });
+  up.disabled = r === 0;
+  down.disabled = r >= rows - 1;
+  return r;
 }
 
 /** Office's dialog launcher: a corner with a diagonal arrow (drawn here; no Fluent equivalent). */
@@ -547,31 +579,21 @@ export class Ribbon {
       }
       case "gallery": {
         const items = h("div", { class: "items" });
-        for (const it of c.items.slice(0, c.visible)) {
+        // All entries are there; one row of them shows (`visible`, or with `fill` as many as the free width allows,
+        // see fitGallery), and the scroll column moves through the rows (D-180).
+        const list: HTMLElement[] = c.items.map((it, i) => {
           const b = h("button", {
-            class: "item", "data-tip": this.commands.tooltip(it.cmd), style: "",
+            class: `item${i >= c.visible ? " extra" : ""}`, "data-tip": this.commands.tooltip(it.cmd), style: "",
             onclick: () => { c.hover?.(null); void this.commands.run(it.cmd); },
           }, h("span", { style: it.preview }, this.commands.get(it.cmd).label));
           this.bind(b, it.cmd);
           if (c.hover) { b.addEventListener("mouseenter", () => c.hover!(it.cmd)); b.addEventListener("mouseleave", () => c.hover!(null)); }
           items.append(b);
-        }
-        const more = h("button", { "aria-label": "Weitere", "data-keytip": c.key, "data-keytip-scope": this.scope() }, icon("chevron-down"));
-        more.onclick = () => showMenu(this.commands, c.items.map((i) => ({ cmd: i.cmd })), more.getBoundingClientRect());
-        const el = h("div", { class: `rgallery${c.fill ? " fill" : ""}`, role: "listbox", "data-min": String(c.visible) }, items,
-          h("div", { class: "scroll" }, h("button", { disabled: true }, icon("chevron-up")), more));
-        if (c.fill) {
-          // All items are there; fitGallery() shows as many as the free width allows.
-          for (const it of c.items.slice(c.visible)) {
-            const b = h("button", {
-              class: "item extra", "data-tip": this.commands.tooltip(it.cmd), style: "display:none",
-              onclick: () => { c.hover?.(null); void this.commands.run(it.cmd); },
-            }, h("span", { style: it.preview }, this.commands.get(it.cmd).label));
-            this.bind(b, it.cmd);
-            if (c.hover) { b.addEventListener("mouseenter", () => c.hover!(it.cmd)); b.addEventListener("mouseleave", () => c.hover!(null)); }
-            items.append(b);
-          }
-        }
+          return b;
+        });
+        const sc = galleryScroll(c.key, this.scope(), (at) => showMenu(this.commands, c.items.map((i) => ({ cmd: i.cmd })), at));
+        const el = h("div", { class: `rgallery${c.fill ? " fill" : ""}`, role: "listbox", "data-min": String(c.visible) }, items, sc.el);
+        this.rowGallery(el, list, c.visible, sc);
         return el;
       }
       case "tiles": {
@@ -585,7 +607,7 @@ export class Ribbon {
           }) as HTMLButtonElement;
           b.addEventListener("mouseenter", () => c.hover?.(i));
           b.addEventListener("mouseleave", () => c.hover?.(null));
-          if (i < c.visible || c.fill) items.append(b);
+          items.append(b);
           buttons.push(b);
         }
         let drawn = "";
@@ -600,10 +622,13 @@ export class Ribbon {
           const cur = c.current?.();
           buttons.forEach((b, i) => b.classList.toggle("on", cur === i));
         });
-        const more = h("button", { "aria-label": "Weitere", "data-keytip": c.key, "data-keytip-scope": this.scope() }, icon("chevron-down"));
-        more.onclick = () => showPopup(c.panel(closePopup), more.getBoundingClientRect(), () => this.opts.onDone?.());
-        return h("div", { class: `rgallery tiles${c.fill ? " fill" : ""}${c.cls ? ` ${c.cls}` : ""}`, role: "listbox", "data-min": String(c.visible), ...(c.max ? { "data-max": String(c.max) } : {}) }, items,
-          h("div", { class: "scroll" }, h("button", { disabled: true }, icon("chevron-up")), more));
+        const sc = galleryScroll(c.key, this.scope(), (at) => showPopup(c.panel(closePopup), at, () => this.opts.onDone?.()));
+        const el = h("div", {
+          class: `rgallery tiles${c.fill ? " fill" : ""}${c.cls ? ` ${c.cls}` : ""}`, role: "listbox", "data-min": String(c.visible),
+          ...(c.max ? { "data-max": String(c.max) } : {}), ...(c.name ? { "aria-label": c.name } : {}),
+        }, items, sc.el);
+        this.rowGallery(el, buttons, c.visible, sc);
+        return el;
       }
       case "spinner": {
         const c2 = c;
@@ -621,7 +646,8 @@ export class Ribbon {
           h("button", { tabIndex: -1, "aria-label": "Mehr", onclick: () => c2.step?.(1) }, icon("chevron-up")),
           h("button", { tabIndex: -1, "aria-label": "Weniger", onclick: () => c2.step?.(-1) }, icon("chevron-down")));
         const el = h("div", { class: "rspinner", "data-tip": this.commands.tooltip(c.cmd), "data-keytip": c.key, "data-keytip-scope": this.scope() },
-          icon(c.icon), h("span", { class: "lbl" }, c.label), h("span", { class: "spinbox" }, input, arrows));
+          // A spinner without a label (Übergänge > Nach) is only its box, beside the check box that names it (D-180).
+          ...(c.label || c.icon ? [icon(c.icon), h("span", { class: "lbl" }, c.label)] : []), h("span", { class: "spinbox" }, input, arrows));
         this.updaters.push(() => {
           const on = this.commands.isEnabled(c2.cmd);
           input.disabled = !on;
@@ -746,15 +772,39 @@ export class Ribbon {
     this.fitGallery();
   }
 
-  /** Word's style gallery shows as many styles as the free width allows. */
+  /** Sets the number of entries an inline gallery shows per row (fitGallery), per gallery element. */
+  private galleryCols = new WeakMap<HTMLElement, (cols: number) => void>();
+
+  /** An inline gallery shows one row of `cols` entries; its scroll buttons move through the rows (D-180). */
+  private rowGallery(el: HTMLElement, items: HTMLElement[], cols: number, sc: { up: HTMLButtonElement; down: HTMLButtonElement }): void {
+    let row = 0;
+    const show = () => { row = showGalleryRow(items, cols, row, sc.up, sc.down); };
+    sc.up.onclick = () => { row--; show(); };
+    sc.down.onclick = () => { row++; show(); };
+    this.galleryCols.set(el, (n) => { if (n !== cols) { row = Math.floor((row * cols) / Math.max(1, n)); cols = n; } show(); });
+    show();
+  }
+
+  /**
+   * Office's inline galleries (Word's styles and style sets, PowerPoint's Designs, Übergänge, Animationen …) show as
+   * many entries as the free width allows, from their least (`visible`) up to `max` or all of them (D-180).
+   */
   private fitGallery(): void {
+    // Two galleries on one tab share the free width, the first one first.
+    let room = this.galleryRoom;
     for (const gal of Array.from(this.card.querySelectorAll<HTMLElement>(".rgallery.fill"))) {
       const items = Array.from(gal.querySelectorAll<HTMLElement>(".item"));
       const min = Number(gal.dataset.min) || 1;
-      const itemW = items[0]?.offsetWidth || 108;
-      const extra = Math.max(0, Math.floor(this.galleryRoom / itemW));
+      const box = gal.querySelector<HTMLElement>(".items");
+      const gap = box ? parseFloat(getComputedStyle(box).columnGap) || 0 : 0;
+      const itemW = (items.find((it) => it.style.display !== "none")?.offsetWidth || 108) + gap;
+      const extra = Math.max(0, Math.floor(room / itemW));
       const max = Number(gal.dataset.max) || Infinity;
-      items.forEach((it, i) => { it.style.display = i < Math.min(max, min + extra) ? "" : "none"; });
+      const cols = Math.max(min, Math.min(max, items.length, min + extra));
+      room -= Math.max(0, cols - min) * itemW;
+      const set = this.galleryCols.get(gal);
+      if (set) set(cols);
+      else items.forEach((it, i) => { it.style.display = i < cols ? "" : "none"; });
       // Names wider than their tile: cut at the right (see .item.long).
       for (const it of items) {
         const span = it.firstElementChild as HTMLElement | null;

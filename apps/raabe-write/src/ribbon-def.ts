@@ -14,6 +14,8 @@ export interface RibbonContext {
   fontName(): string;
   /** Formatvorlagen: Livevorschau of the gallery entry under the mouse (null ends it). */
   styleHover?(cmd: string | null): void;
+  /** Entwurf > Formatvorlagensatz as Word's inline gallery (D-182). */
+  styleSets?: { count: number; render(i: number): HTMLElement | null; tip(i: number): string; pick(i: number): void; hover(i: number | null): void; redraw(): string };
   fontSize(): string;
   fontOptions(): { heading?: string; items: string[] }[];
   setFont(name: string): void;
@@ -220,7 +222,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         {
           id: "styles", label: "Formatvorlagen", key: "ZS", icon: "fonts",
           launcher: { cmd: "style.pane", key: "RF" },
-          controls: [{ type: "gallery", key: "K", visible: 4, fill: true, items: GALLERY.map((g) => ({ cmd: g.cmd, preview: g.preview })), hover: ctx.styleHover ? (c) => ctx.styleHover!(c) : undefined }],
+          controls: [{ type: "gallery", key: "K", visible: 3, fill: true, items: GALLERY.map((g) => ({ cmd: g.cmd, preview: g.preview })), hover: ctx.styleHover ? (c) => ctx.styleHover!(c) : undefined }],
           smaller: [[{ type: "dropdown", cmd: "style.pane", key: "K", size: "large", label: "Formatvorlagen", menu: styleMenu }]],
         },
         {
@@ -266,12 +268,20 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
     },
     {
       id: "design", label: "Entwurf", key: "Ä",
+      // Word (recorded, D-182): the style sets as a gallery that fills the free width (at least three), then a button.
       shrink: ["docFormat", "pageBackground"],
       groups: [
         { id: "docFormat", label: "Dokumentformatierung", key: "Z1", icon: "themes",
-          controls: [panel("design.themes", "N", "large", ctx.panels.themes), panel("design.styleSet", "J", "large", ctx.panels.styleSet),
+          controls: [panel("design.themes", "N", "large", ctx.panels.themes),
+            ctx.styleSets
+              ? { type: "tiles", cmd: "design.styleSet", key: "J", name: "Formatvorlagensatz", visible: 3, fill: true, size: [64, 48], cls: "dz-settiles", ...ctx.styleSets,
+                panel: (close) => ctx.panels.styleSet(close) }
+              : panel("design.styleSet", "J", "large", ctx.panels.styleSet),
             panel("design.colors", "F", "large", ctx.panels.colors), panel("design.fonts", "6", "large", ctx.panels.fonts),
-            stack(dd("design.paragraphSpacing", "BA", "medium", undefined, ctx.panels.paragraphSpacing), panel("design.effects", "E", "medium", ctx.panels.effects), b("design.setDefault", "S", "medium"))] },
+            stack(dd("design.paragraphSpacing", "BA", "medium", undefined, ctx.panels.paragraphSpacing), panel("design.effects", "E", "medium", ctx.panels.effects), b("design.setDefault", "S", "medium"))],
+          smaller: [[panel("design.themes", "N", "large", ctx.panels.themes), panel("design.styleSet", "J", "large", ctx.panels.styleSet),
+            panel("design.colors", "F", "large", ctx.panels.colors), panel("design.fonts", "6", "large", ctx.panels.fonts),
+            stack(dd("design.paragraphSpacing", "BA", "medium", undefined, ctx.panels.paragraphSpacing), panel("design.effects", "E", "medium", ctx.panels.effects), b("design.setDefault", "S", "medium"))]] },
         { id: "pageBackground", label: "Seitenhintergrund", key: "ZB", icon: "page-color",
           controls: [panel("design.watermark", "W", "large", ctx.panels.watermark), panel("design.pageColor", "PC", "large", ctx.panels.pageColor), b("design.pageBorders", "T", "large")] },
       ],

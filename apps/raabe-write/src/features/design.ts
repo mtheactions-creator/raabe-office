@@ -108,7 +108,8 @@ export function designFeature(api: AppApi) {
     }
     return sheet;
   };
-  const styleTile = (name: string, sheet: StyleSheet, pick: () => void) => {
+  /** A style set's page: Titel, Überschrift 1 and body text in the set's styles. */
+  const setPage = (sheet: StyleSheet) => {
     const look = (n: string) => {
       const id = sheet.idForName(n) ?? sheet.defaultParagraphStyle;
       const ch = sheet.resolveChar(id, {});
@@ -118,12 +119,34 @@ export function designFeature(api: AppApi) {
         `font-weight:${ch.bold ? 700 : 400};font-style:${ch.italic ? "italic" : "normal"};${ch.caps ? "text-transform:uppercase;" : ""}${ch.smallCaps ? "font-variant:small-caps;" : ""}` +
         `text-align:${p.align === "both" ? "left" : p.align};${b ? `border-bottom:1px solid #${b.color === "auto" ? "000" : b.color};` : ""}${p.shading?.fill && p.shading.fill !== "auto" ? `background:#${p.shading.fill};` : ""}`;
     };
-    return h("button", { class: "dz-set", "data-tip": name, "aria-label": name, onclick: pick },
-      h("span", { class: "dz-setpage" },
-        h("span", { style: look("title") }, "Titel"),
-        h("span", { style: look("heading 1") }, "Überschrift 1"),
-        h("span", { class: "dz-body", style: look("normal") }, "Auf der Registerkarte „Einfügen“ enthalten die Kataloge Elemente, die mit dem generellen Layout des Dokuments koordiniert werden sollten.")),
-      h("span", { class: "dz-name" }, name));
+    return h("span", { class: "dz-setpage" },
+      h("span", { style: look("title") }, "Titel"),
+      h("span", { style: look("heading 1") }, "Überschrift 1"),
+      h("span", { class: "dz-body", style: look("normal") }, "Auf der Registerkarte „Einfügen“ enthalten die Kataloge Elemente, die mit dem generellen Layout des Dokuments koordiniert werden sollten."));
+  };
+  const styleTile = (name: string, sheet: StyleSheet, pick: () => void) =>
+    h("button", { class: "dz-set", "data-tip": name, "aria-label": name, onclick: pick }, setPage(sheet), h("span", { class: "dz-name" }, name));
+
+  /**
+   * Entwurf > Formatvorlagensatz in the ribbon: Word's inline gallery (recorded, D-182), the document's own set first,
+   * then the built-in ones; each tile is the set's page, drawn by us. Livevorschau while the mouse is over a tile.
+   */
+  const sheetKeys = new WeakMap<StyleSheet, number>();
+  let nextKey = 0;
+  const sheetOf = (e: Editor, i: number) => (i === 0 ? e.doc.styles : previewSheet(e, STYLE_SETS[i - 1].set));
+  const styleSetTiles = {
+    count: 1 + STYLE_SETS.length,
+    render: (i: number) => { const e = ed(); return e ? h("span", { class: "dz-rset" }, setPage(sheetOf(e, i))) : null; },
+    tip: (i: number) => (i === 0 ? "Dokument" : STYLE_SETS[i - 1].name),
+    pick: (i: number) => { c.hover(null); if (i > 0) apply((x) => x.applyStyleSet(STYLE_SETS[i - 1].set)); },
+    hover: (i: number | null) => { c.hover(i === null || i === 0 ? null : () => { ed()?.applyStyleSet(STYLE_SETS[i - 1].set); }); },
+    redraw: () => {
+      const e = ed();
+      if (!e) return "";
+      let k = sheetKeys.get(e.doc.styles);
+      if (k === undefined) { k = ++nextKey; sheetKeys.set(e.doc.styles, k); }
+      return String(k);
+    },
   };
   const styleSetPanel = (close: () => void) => {
     const e = ed();
@@ -303,5 +326,5 @@ export function designFeature(api: AppApi) {
 
   for (const id of ["design.themes", "design.styleSet", "design.colors", "design.fonts", "design.paragraphSpacing", "design.effects"]) c.implement(id, { run: () => {}, enabled: has });
   c.implement("design.setDefault", { run: () => void setDefault(), enabled: has });
-  return { themesPanel, styleSetPanel, colorsPanel, fontsPanel, effectsPanel, get spacingMenu() { return spacingMenu(); } };
+  return { themesPanel, styleSetPanel, styleSetTiles, colorsPanel, fontsPanel, effectsPanel, get spacingMenu() { return spacingMenu(); } };
 }
