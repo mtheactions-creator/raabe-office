@@ -310,7 +310,7 @@ export function chartToolsFeature(api: AppApi, docArea: HTMLElement, dock: Dock,
 
   // ----- the Format pane ---------------------------------------------------------------------------------
   const pane = new TaskPane(docArea);
-  dock.add(pane.el, "right", 300);
+  dock.add(pane.el, "right", 275);
   let paneOpen = false;
   pane.onClose = () => { paneOpen = false; dock.layout(); };
   function showPane(m: ChartModel): void {

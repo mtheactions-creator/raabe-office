@@ -1,0 +1,1211 @@
+{
+ "excel": {
+  "scale": 1.5,
+  "elements": [
+   {
+    "depth": 1,
+    "type": "Pane",
+    "name": "Diagrammbereich formatieren",
+    "class": "NetUINativeHWNDHost",
+    "rect": [
+     5.3,
+     4.7,
+     274.7,
+     28.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Pane",
+    "name": "",
+    "class": "NetUIHWNDElement",
+    "rect": [
+     5.3,
+     4.7,
+     274.7,
+     28.0
+    ]
+   },
+   {
+    "depth": 4,
+    "type": "MenuItem",
+    "name": "Optionen für den Aufgabenbereich",
+    "class": "NetUIStickyButton",
+    "rect": [
+     220.0,
+     8.7,
+     24.0,
+     24.0
+    ]
+   },
+   {
+    "depth": 4,
+    "type": "Button",
+    "name": "Bereich schließen",
+    "class": "NetUISimpleButton",
+    "rect": [
+     252.0,
+     8.7,
+     24.0,
+     24.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Pane",
+    "name": "",
+    "class": "NUIPane",
+    "rect": [
+     5.3,
+     32.7,
+     274.7,
+     1055.3
+    ]
+   },
+   {
+    "depth": 3,
+    "type": "Pane",
+    "name": "",
+    "class": "NetUIHWNDElement",
+    "rect": [
+     5.3,
+     32.7,
+     274.7,
+     1055.3
+    ]
+   },
+   {
+    "depth": 4,
+    "type": "Custom",
+    "name": "Diagrammbereich formatieren",
+    "class": "NetUInetpane",
+    "rect": [
+     5.3,
+     32.7,
+     274.7,
+     1055.3
+    ]
+   },
+   {
+    "depth": 5,
+    "type": "Pane",
+    "name": "",
+    "class": "NetUIPanViewer",
+    "rect": [
+     13.3,
+     40.0,
+     260.7,
+     38.0
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "Group",
+    "name": "",
+    "class": "NetUIElement",
+    "rect": [
+     13.3,
+     40.0,
+     260.7,
+     38.0
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "MenuItem",
+    "name": "Diagrammelemente",
+    "class": "NetUIAnchor",
+    "rect": [
+     13.3,
+     40.0,
+     16.0,
+     38.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "Button",
+    "name": "Diagrammelemente",
+    "class": "NetUIRibbonButton",
+    "rect": [
+     13.3,
+     40.0,
+     16.0,
+     38.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "TabItem",
+    "name": "Diagrammoptionen",
+    "class": "NetUITabHeader",
+    "rect": [
+     32.0,
+     44.0,
+     120.7,
+     30.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "TabItem",
+    "name": "Textoptionen",
+    "class": "NetUITabHeader",
+    "rect": [
+     152.7,
+     44.0,
+     88.7,
+     30.0
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "ListItem",
+    "name": "Füllung und Linie",
+    "class": "NetUIGalleryButton",
+    "rect": [
+     13.3,
+     86.0,
+     30.7,
+     30.7
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "ListItem",
+    "name": "Effekte",
+    "class": "NetUIGalleryButton",
+    "rect": [
+     50.7,
+     86.0,
+     30.7,
+     30.7
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "ListItem",
+    "name": "Größe und Eigenschaften",
+    "class": "NetUIGalleryButton",
+    "rect": [
+     88.0,
+     86.0,
+     30.7,
+     30.7
+    ]
+   },
+   {
+    "depth": 5,
+    "type": "Pane",
+    "name": "",
+    "class": "NetUIScrollViewer",
+    "rect": [
+     11.3,
+     136.0,
+     262.7,
+     940.7
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "Group",
+    "name": "Füllung",
+    "class": "NetUIElement",
+    "rect": [
+     11.3,
+     136.0,
+     245.3,
+     220.7
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Button",
+    "name": "Füllung",
+    "class": "NetUIRibbonButton",
+    "rect": [
+     14.0,
+     138.0,
+     240.0,
+     18.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "Text",
+    "name": "Füllung",
+    "class": "NetUILabel",
+    "rect": [
+     33.3,
+     138.7,
+     44.0,
+     16.7
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Group",
+    "name": "Füllung",
+    "class": "NetUIRadioGroup",
+    "rect": [
+     32.7,
+     168.0,
+     221.3,
+     140.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Keine Füllung",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     168.0,
+     92.0,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Einfarbige Füllung",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     192.0,
+     116.7,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Farbverlauf",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     216.0,
+     80.0,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Bild- oder Texturfüllung",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     240.0,
+     144.7,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Musterfüllung",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     264.0,
+     95.3,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Automatisch",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     288.0,
+     88.7,
+     20.7
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Text",
+    "name": "Farbe",
+    "class": "NetUILabel",
+    "rect": [
+     42.7,
+     321.3,
+     30.7,
+     27.3
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "MenuItem",
+    "name": "Füllfarbe RGB(255, 255, 255)",
+    "class": "NetUIStickyButton",
+    "rect": [
+     210.0,
+     321.3,
+     44.0,
+     27.3
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "Group",
+    "name": "Rahmen",
+    "class": "NetUIElement",
+    "rect": [
+     11.3,
+     362.7,
+     245.3,
+     22.0
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Button",
+    "name": "Rahmen",
+    "class": "NetUIRibbonButton",
+    "rect": [
+     14.0,
+     364.7,
+     240.0,
+     18.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "Text",
+    "name": "Rahmen",
+    "class": "NetUILabel",
+    "rect": [
+     33.3,
+     365.3,
+     48.7,
+     16.7
+    ]
+   }
+  ],
+  "title": {
+   "x": 12.7,
+   "y": 14.7,
+   "w": 192.0,
+   "h": 14.7
+  }
+ },
+ "word": {
+  "scale": 1.5,
+  "elements": [
+   {
+    "depth": 1,
+    "type": "Pane",
+    "name": "Diagrammbereich formatieren",
+    "class": "NetUINativeHWNDHost",
+    "rect": [
+     5.3,
+     4.7,
+     179.3,
+     28.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Pane",
+    "name": "",
+    "class": "NetUIHWNDElement",
+    "rect": [
+     5.3,
+     4.7,
+     179.3,
+     28.0
+    ]
+   },
+   {
+    "depth": 4,
+    "type": "MenuItem",
+    "name": "Optionen für den Aufgabenbereich",
+    "class": "NetUIStickyButton",
+    "rect": [
+     124.7,
+     8.7,
+     24.0,
+     24.0
+    ]
+   },
+   {
+    "depth": 4,
+    "type": "Button",
+    "name": "Bereich schließen",
+    "class": "NetUISimpleButton",
+    "rect": [
+     156.7,
+     8.7,
+     24.0,
+     24.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Pane",
+    "name": "",
+    "class": "NUIPane",
+    "rect": [
+     5.3,
+     32.7,
+     179.3,
+     1093.3
+    ]
+   },
+   {
+    "depth": 3,
+    "type": "Pane",
+    "name": "",
+    "class": "NetUIHWNDElement",
+    "rect": [
+     5.3,
+     32.7,
+     179.3,
+     1093.3
+    ]
+   },
+   {
+    "depth": 4,
+    "type": "Custom",
+    "name": "Diagrammbereich formatieren",
+    "class": "NetUInetpane",
+    "rect": [
+     5.3,
+     32.7,
+     179.3,
+     1093.3
+    ]
+   },
+   {
+    "depth": 5,
+    "type": "Pane",
+    "name": "",
+    "class": "NetUIPanViewer",
+    "rect": [
+     13.3,
+     40.0,
+     165.3,
+     38.0
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "Group",
+    "name": "",
+    "class": "NetUIElement",
+    "rect": [
+     13.3,
+     40.0,
+     165.3,
+     38.0
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "MenuItem",
+    "name": "Diagrammelemente",
+    "class": "NetUIAnchor",
+    "rect": [
+     13.3,
+     40.0,
+     16.0,
+     38.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "Button",
+    "name": "Diagrammelemente",
+    "class": "NetUIRibbonButton",
+    "rect": [
+     13.3,
+     40.0,
+     16.0,
+     38.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "TabItem",
+    "name": "Diagrammoptionen",
+    "class": "NetUITabHeader",
+    "rect": [
+     32.0,
+     44.0,
+     120.7,
+     30.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "TabItem",
+    "name": "Textoptionen",
+    "class": "NetUITabHeader",
+    "rect": [
+     152.7,
+     44.0,
+     88.7,
+     30.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "Button",
+    "name": "Spalte nach rechts",
+    "class": "NetUIRepeatButton",
+    "rect": [
+     152.0,
+     40.0,
+     24.0,
+     38.0
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "ListItem",
+    "name": "Füllung und Linie",
+    "class": "NetUIGalleryButton",
+    "rect": [
+     13.3,
+     86.0,
+     30.7,
+     30.7
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "ListItem",
+    "name": "Effekte",
+    "class": "NetUIGalleryButton",
+    "rect": [
+     50.7,
+     86.0,
+     30.7,
+     30.7
+    ]
+   },
+   {
+    "depth": 5,
+    "type": "Pane",
+    "name": "",
+    "class": "NetUIScrollViewer",
+    "rect": [
+     11.3,
+     136.0,
+     167.3,
+     978.7
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "Group",
+    "name": "Füllung",
+    "class": "NetUIElement",
+    "rect": [
+     11.3,
+     136.0,
+     168.7,
+     220.7
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Button",
+    "name": "Füllung",
+    "class": "NetUIRibbonButton",
+    "rect": [
+     14.0,
+     138.0,
+     163.3,
+     18.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "Text",
+    "name": "Füllung",
+    "class": "NetUILabel",
+    "rect": [
+     33.3,
+     138.7,
+     44.0,
+     16.7
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Group",
+    "name": "Füllung",
+    "class": "NetUIRadioGroup",
+    "rect": [
+     32.7,
+     168.0,
+     144.7,
+     140.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Keine Füllung",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     168.0,
+     92.0,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Einfarbige Füllung",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     192.0,
+     116.7,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Farbverlauf",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     216.0,
+     80.0,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Bild- oder Texturfüllung",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     240.0,
+     144.7,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Musterfüllung",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     264.0,
+     95.3,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Automatisch",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     288.0,
+     88.7,
+     20.7
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Text",
+    "name": "Farbe",
+    "class": "NetUILabel",
+    "rect": [
+     42.7,
+     321.3,
+     30.7,
+     27.3
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "MenuItem",
+    "name": "Füllfarbe RGB(255, 255, 255)",
+    "class": "NetUIStickyButton",
+    "rect": [
+     133.3,
+     321.3,
+     44.0,
+     27.3
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "Group",
+    "name": "Rahmen",
+    "class": "NetUIElement",
+    "rect": [
+     11.3,
+     362.7,
+     168.7,
+     22.0
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Button",
+    "name": "Rahmen",
+    "class": "NetUIRibbonButton",
+    "rect": [
+     14.0,
+     364.7,
+     163.3,
+     18.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "Text",
+    "name": "Rahmen",
+    "class": "NetUILabel",
+    "rect": [
+     33.3,
+     365.3,
+     48.7,
+     16.7
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Button",
+    "name": "Spalte nach links",
+    "class": "NetUIRepeatButton",
+    "rect": [
+     11.3,
+     1097.3,
+     17.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Button",
+    "name": "Seite nach rechts",
+    "class": "NetUIRepeatButton",
+    "rect": [
+     130.7,
+     1097.3,
+     13.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Button",
+    "name": "Spalte nach rechts",
+    "class": "NetUIRepeatButton",
+    "rect": [
+     144.0,
+     1097.3,
+     17.3,
+     17.3
+    ]
+   }
+  ]
+ },
+ "powerpoint": {
+  "scale": 1.5,
+  "elements": [
+   {
+    "depth": 1,
+    "type": "Pane",
+    "name": "Diagrammbereich formatieren",
+    "class": "NetUINativeHWNDHost",
+    "rect": [
+     5.3,
+     4.7,
+     274.7,
+     28.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Pane",
+    "name": "",
+    "class": "NetUIHWNDElement",
+    "rect": [
+     5.3,
+     4.7,
+     274.7,
+     28.0
+    ]
+   },
+   {
+    "depth": 4,
+    "type": "MenuItem",
+    "name": "Optionen für den Aufgabenbereich",
+    "class": "NetUIStickyButton",
+    "rect": [
+     220.0,
+     8.7,
+     24.0,
+     24.0
+    ]
+   },
+   {
+    "depth": 4,
+    "type": "Button",
+    "name": "Bereich schließen",
+    "class": "NetUISimpleButton",
+    "rect": [
+     252.0,
+     8.7,
+     24.0,
+     24.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Pane",
+    "name": "",
+    "class": "NUIPane",
+    "rect": [
+     5.3,
+     32.7,
+     274.7,
+     1093.3
+    ]
+   },
+   {
+    "depth": 3,
+    "type": "Pane",
+    "name": "",
+    "class": "NetUIHWNDElement",
+    "rect": [
+     5.3,
+     32.7,
+     274.7,
+     1093.3
+    ]
+   },
+   {
+    "depth": 4,
+    "type": "Custom",
+    "name": "Diagrammbereich formatieren",
+    "class": "NetUInetpane",
+    "rect": [
+     5.3,
+     32.7,
+     274.7,
+     1093.3
+    ]
+   },
+   {
+    "depth": 5,
+    "type": "Pane",
+    "name": "",
+    "class": "NetUIPanViewer",
+    "rect": [
+     13.3,
+     40.0,
+     260.7,
+     38.0
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "Group",
+    "name": "",
+    "class": "NetUIElement",
+    "rect": [
+     13.3,
+     40.0,
+     260.7,
+     38.0
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "MenuItem",
+    "name": "Diagrammelemente",
+    "class": "NetUIAnchor",
+    "rect": [
+     13.3,
+     40.0,
+     16.0,
+     38.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "Button",
+    "name": "Diagrammelemente",
+    "class": "NetUIRibbonButton",
+    "rect": [
+     13.3,
+     40.0,
+     16.0,
+     38.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "TabItem",
+    "name": "Diagrammoptionen",
+    "class": "NetUITabHeader",
+    "rect": [
+     32.0,
+     44.0,
+     120.7,
+     30.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "TabItem",
+    "name": "Textoptionen",
+    "class": "NetUITabHeader",
+    "rect": [
+     152.7,
+     44.0,
+     88.7,
+     30.0
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "ListItem",
+    "name": "Füllung und Linie",
+    "class": "NetUIGalleryButton",
+    "rect": [
+     13.3,
+     86.0,
+     30.7,
+     30.7
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "ListItem",
+    "name": "Effekte",
+    "class": "NetUIGalleryButton",
+    "rect": [
+     50.7,
+     86.0,
+     30.7,
+     30.7
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "ListItem",
+    "name": "Größe und Eigenschaften",
+    "class": "NetUIGalleryButton",
+    "rect": [
+     88.0,
+     86.0,
+     30.7,
+     30.7
+    ]
+   },
+   {
+    "depth": 5,
+    "type": "Pane",
+    "name": "",
+    "class": "NetUIScrollViewer",
+    "rect": [
+     11.3,
+     136.0,
+     262.7,
+     978.7
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "Group",
+    "name": "Füllung",
+    "class": "NetUIElement",
+    "rect": [
+     11.3,
+     136.0,
+     245.3,
+     220.7
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Button",
+    "name": "Füllung",
+    "class": "NetUIRibbonButton",
+    "rect": [
+     14.0,
+     138.0,
+     240.0,
+     18.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "Text",
+    "name": "Füllung",
+    "class": "NetUILabel",
+    "rect": [
+     33.3,
+     138.7,
+     44.0,
+     16.7
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Group",
+    "name": "Füllung",
+    "class": "NetUIRadioGroup",
+    "rect": [
+     32.7,
+     168.0,
+     221.3,
+     140.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Keine Füllung",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     168.0,
+     92.0,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Einfarbige Füllung",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     192.0,
+     116.7,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Farbverlauf",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     216.0,
+     80.0,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Bild- oder Texturfüllung",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     240.0,
+     144.7,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Musterfüllung",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     264.0,
+     95.3,
+     20.7
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "RadioButton",
+    "name": "Automatisch",
+    "class": "NetUIRadioButton",
+    "rect": [
+     32.7,
+     288.0,
+     88.7,
+     20.7
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Text",
+    "name": "Farbe",
+    "class": "NetUILabel",
+    "rect": [
+     42.7,
+     321.3,
+     30.7,
+     27.3
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "MenuItem",
+    "name": "Füllfarbe RGB(0, 0, 0)",
+    "class": "NetUIStickyButton",
+    "rect": [
+     210.0,
+     321.3,
+     44.0,
+     27.3
+    ]
+   },
+   {
+    "depth": 6,
+    "type": "Group",
+    "name": "Rahmen",
+    "class": "NetUIElement",
+    "rect": [
+     11.3,
+     362.7,
+     245.3,
+     22.0
+    ]
+   },
+   {
+    "depth": 7,
+    "type": "Button",
+    "name": "Rahmen",
+    "class": "NetUIRibbonButton",
+    "rect": [
+     14.0,
+     364.7,
+     240.0,
+     18.0
+    ]
+   },
+   {
+    "depth": 8,
+    "type": "Text",
+    "name": "Rahmen",
+    "class": "NetUILabel",
+    "rect": [
+     33.3,
+     365.3,
+     48.7,
+     16.7
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,663 @@
+{
+ "what": "Our chart Format pane against Office's, CSS px from the pane's content edge (tolerance 2 px)",
+ "calc": {
+  "passed": true,
+  "fails": [],
+  "office": {
+   "width": 274.7,
+   "parts": {
+    "close": [
+     246.7,
+     4.0,
+     24.0,
+     24.0
+    ],
+    "anchor": [
+     8.0,
+     35.3,
+     16.0,
+     38.0
+    ],
+    "set:Diagrammoptionen": [
+     26.7,
+     39.3,
+     120.7,
+     30.0
+    ],
+    "set:Textoptionen": [
+     147.4,
+     39.3,
+     88.7,
+     30.0
+    ],
+    "tab:Füllung und Linie": [
+     8.0,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "tab:Effekte": [
+     45.4,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "tab:Größe und Eigenschaften": [
+     82.7,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "section:Füllung": [
+     8.7,
+     133.3,
+     240.0,
+     18.0
+    ],
+    "radio:Keine Füllung": [
+     27.4,
+     163.3,
+     92.0,
+     20.7
+    ],
+    "radio:Einfarbige Füllung": [
+     27.4,
+     187.3,
+     116.7,
+     20.7
+    ],
+    "radio:Farbverlauf": [
+     27.4,
+     211.3,
+     80.0,
+     20.7
+    ],
+    "radio:Bild- oder Texturfüllung": [
+     27.4,
+     235.3,
+     144.7,
+     20.7
+    ],
+    "radio:Musterfüllung": [
+     27.4,
+     259.3,
+     95.3,
+     20.7
+    ],
+    "radio:Automatisch": [
+     27.4,
+     283.3,
+     88.7,
+     20.7
+    ],
+    "label:Farbe": [
+     37.4,
+     316.6,
+     30.7,
+     27.3
+    ],
+    "color:Farbe": [
+     204.7,
+     316.6,
+     44.0,
+     27.3
+    ],
+    "section:Rahmen": [
+     8.7,
+     360.0,
+     240.0,
+     18.0
+    ]
+   }
+  },
+  "ours": {
+   "width": 274,
+   "parts": {
+    "close": [
+     246,
+     4,
+     24,
+     24
+    ],
+    "anchor": [
+     7.7,
+     35.3,
+     16,
+     38
+    ],
+    "set:Diagrammoptionen": [
+     26.4,
+     39.3,
+     126.6,
+     30
+    ],
+    "set:Textoptionen": [
+     153,
+     39.3,
+     88.9,
+     30
+    ],
+    "tab:Füllung und Linie": [
+     7.7,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "tab:Effekte": [
+     45,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "tab:Größe und Eigenschaften": [
+     82.3,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "section:Füllung": [
+     8.4,
+     133.3,
+     240,
+     18
+    ],
+    "section:Rahmen": [
+     8.4,
+     359.8,
+     240,
+     18
+    ],
+    "radio:Keine Füllung": [
+     27.1,
+     163.3,
+     221.6,
+     20.7
+    ],
+    "radio:Einfarbige Füllung": [
+     27.1,
+     187.3,
+     221.6,
+     20.7
+    ],
+    "radio:Farbverlauf": [
+     27.1,
+     211.3,
+     221.6,
+     20.7
+    ],
+    "radio:Bild- oder Texturfüllung": [
+     27.1,
+     235.3,
+     221.6,
+     20.7
+    ],
+    "radio:Musterfüllung": [
+     27.1,
+     259.2,
+     221.6,
+     20.7
+    ],
+    "radio:Automatisch": [
+     27.1,
+     283.2,
+     221.6,
+     20.7
+    ],
+    "label:Farbe": [
+     37.1,
+     316.5,
+     159.6,
+     27.3
+    ],
+    "color:Farbe": [
+     204.7,
+     316.5,
+     44,
+     27.3
+    ]
+   }
+  },
+  "errors": [],
+  "parts": 18
+ },
+ "write": {
+  "passed": true,
+  "fails": [],
+  "office": {
+   "width": 274.7,
+   "parts": {
+    "close": [
+     246.7,
+     4.0,
+     24.0,
+     24.0
+    ],
+    "anchor": [
+     8.0,
+     35.3,
+     16.0,
+     38.0
+    ],
+    "set:Diagrammoptionen": [
+     26.7,
+     39.3,
+     120.7,
+     30.0
+    ],
+    "set:Textoptionen": [
+     147.4,
+     39.3,
+     88.7,
+     30.0
+    ],
+    "tab:Füllung und Linie": [
+     8.0,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "tab:Effekte": [
+     45.4,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "tab:Größe und Eigenschaften": [
+     82.7,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "section:Füllung": [
+     8.7,
+     133.3,
+     240.0,
+     18.0
+    ],
+    "radio:Keine Füllung": [
+     27.4,
+     163.3,
+     92.0,
+     20.7
+    ],
+    "radio:Einfarbige Füllung": [
+     27.4,
+     187.3,
+     116.7,
+     20.7
+    ],
+    "radio:Farbverlauf": [
+     27.4,
+     211.3,
+     80.0,
+     20.7
+    ],
+    "radio:Bild- oder Texturfüllung": [
+     27.4,
+     235.3,
+     144.7,
+     20.7
+    ],
+    "radio:Musterfüllung": [
+     27.4,
+     259.3,
+     95.3,
+     20.7
+    ],
+    "radio:Automatisch": [
+     27.4,
+     283.3,
+     88.7,
+     20.7
+    ],
+    "label:Farbe": [
+     37.4,
+     316.6,
+     30.7,
+     27.3
+    ],
+    "color:Farbe": [
+     204.7,
+     316.6,
+     44.0,
+     27.3
+    ],
+    "section:Rahmen": [
+     8.7,
+     360.0,
+     240.0,
+     18.0
+    ]
+   }
+  },
+  "ours": {
+   "width": 274,
+   "parts": {
+    "close": [
+     246,
+     4,
+     24,
+     24
+    ],
+    "anchor": [
+     7.7,
+     35.3,
+     16,
+     38
+    ],
+    "set:Diagrammoptionen": [
+     26.4,
+     39.3,
+     126.6,
+     30
+    ],
+    "set:Textoptionen": [
+     153,
+     39.3,
+     88.9,
+     30
+    ],
+    "tab:Füllung und Linie": [
+     7.7,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "tab:Effekte": [
+     45,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "tab:Größe und Eigenschaften": [
+     82.3,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "section:Füllung": [
+     8.4,
+     133.3,
+     240,
+     18
+    ],
+    "section:Rahmen": [
+     8.4,
+     359.8,
+     240,
+     18
+    ],
+    "radio:Keine Füllung": [
+     27.1,
+     163.3,
+     221.6,
+     20.7
+    ],
+    "radio:Einfarbige Füllung": [
+     27.1,
+     187.3,
+     221.6,
+     20.7
+    ],
+    "radio:Farbverlauf": [
+     27.1,
+     211.3,
+     221.6,
+     20.7
+    ],
+    "radio:Bild- oder Texturfüllung": [
+     27.1,
+     235.3,
+     221.6,
+     20.7
+    ],
+    "radio:Musterfüllung": [
+     27.1,
+     259.2,
+     221.6,
+     20.7
+    ],
+    "radio:Automatisch": [
+     27.1,
+     283.2,
+     221.6,
+     20.7
+    ],
+    "label:Farbe": [
+     37.1,
+     316.5,
+     159.6,
+     27.3
+    ],
+    "color:Farbe": [
+     204.7,
+     316.5,
+     44,
+     27.3
+    ]
+   }
+  },
+  "errors": [],
+  "parts": 18
+ },
+ "present": {
+  "passed": true,
+  "fails": [],
+  "office": {
+   "width": 274.7,
+   "parts": {
+    "close": [
+     246.7,
+     4.0,
+     24.0,
+     24.0
+    ],
+    "anchor": [
+     8.0,
+     35.3,
+     16.0,
+     38.0
+    ],
+    "set:Diagrammoptionen": [
+     26.7,
+     39.3,
+     120.7,
+     30.0
+    ],
+    "set:Textoptionen": [
+     147.4,
+     39.3,
+     88.7,
+     30.0
+    ],
+    "tab:Füllung und Linie": [
+     8.0,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "tab:Effekte": [
+     45.4,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "tab:Größe und Eigenschaften": [
+     82.7,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "section:Füllung": [
+     8.7,
+     133.3,
+     240.0,
+     18.0
+    ],
+    "radio:Keine Füllung": [
+     27.4,
+     163.3,
+     92.0,
+     20.7
+    ],
+    "radio:Einfarbige Füllung": [
+     27.4,
+     187.3,
+     116.7,
+     20.7
+    ],
+    "radio:Farbverlauf": [
+     27.4,
+     211.3,
+     80.0,
+     20.7
+    ],
+    "radio:Bild- oder Texturfüllung": [
+     27.4,
+     235.3,
+     144.7,
+     20.7
+    ],
+    "radio:Musterfüllung": [
+     27.4,
+     259.3,
+     95.3,
+     20.7
+    ],
+    "radio:Automatisch": [
+     27.4,
+     283.3,
+     88.7,
+     20.7
+    ],
+    "label:Farbe": [
+     37.4,
+     316.6,
+     30.7,
+     27.3
+    ],
+    "color:Farbe": [
+     204.7,
+     316.6,
+     44.0,
+     27.3
+    ],
+    "section:Rahmen": [
+     8.7,
+     360.0,
+     240.0,
+     18.0
+    ]
+   }
+  },
+  "ours": {
+   "width": 274,
+   "parts": {
+    "close": [
+     246,
+     4,
+     24,
+     24
+    ],
+    "anchor": [
+     7.7,
+     35.3,
+     16,
+     38
+    ],
+    "set:Diagrammoptionen": [
+     26.4,
+     39.3,
+     126.6,
+     30
+    ],
+    "set:Textoptionen": [
+     153,
+     39.3,
+     88.9,
+     30
+    ],
+    "tab:Füllung und Linie": [
+     7.7,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "tab:Effekte": [
+     45,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "tab:Größe und Eigenschaften": [
+     82.3,
+     81.3,
+     30.7,
+     30.7
+    ],
+    "section:Füllung": [
+     8.4,
+     133.3,
+     240,
+     18
+    ],
+    "section:Rahmen": [
+     8.4,
+     359.8,
+     240,
+     18
+    ],
+    "radio:Keine Füllung": [
+     27.1,
+     163.3,
+     221.6,
+     20.7
+    ],
+    "radio:Einfarbige Füllung": [
+     27.1,
+     187.3,
+     221.6,
+     20.7
+    ],
+    "radio:Farbverlauf": [
+     27.1,
+     211.3,
+     221.6,
+     20.7
+    ],
+    "radio:Bild- oder Texturfüllung": [
+     27.1,
+     235.3,
+     221.6,
+     20.7
+    ],
+    "radio:Musterfüllung": [
+     27.1,
+     259.2,
+     221.6,
+     20.7
+    ],
+    "radio:Automatisch": [
+     27.1,
+     283.2,
+     221.6,
+     20.7
+    ],
+    "label:Farbe": [
+     37.1,
+     316.5,
+     159.6,
+     27.3
+    ],
+    "color:Farbe": [
+     204.7,
+     316.5,
+     44,
+     27.3
+    ]
+   }
+  },
+  "errors": [],
+  "parts": 18
+ }
+}

@@ -60,6 +60,24 @@ export interface PaneSpec {
   sets: PaneSet[];
   /** The elements the first set's dropdown offers (Diagrammbereich, Zeichnungsfläche, Achsen …). */
   choices?: { label: string; pick: () => void }[];
+  /** The name of the chevron that opens `choices` (Excel: "Diagrammelemente"). */
+  choicesLabel?: string;
+}
+
+/** Office's pane chevrons (D-172): pointing down when open, right when closed; 8 px, drawn as a path. */
+function chevron(open: boolean): SVGSVGElement {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("width", "10");
+  svg.setAttribute("height", "10");
+  svg.setAttribute("viewBox", "0 0 10 10");
+  svg.setAttribute("aria-hidden", "true");
+  const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  p.setAttribute("d", open ? "M1.5 3.5 5 7l3.5-3.5" : "M3.5 1.5 7 5l-3.5 3.5");
+  p.setAttribute("fill", "none");
+  p.setAttribute("stroke", "currentColor");
+  p.setAttribute("stroke-width", "1.2");
+  svg.append(p);
+  return svg;
 }
 
 export class TaskPane {
@@ -120,14 +138,21 @@ export class TaskPane {
     const active = document.activeElement as HTMLElement | null;
     const focusLabel = active && this.el.contains(active) ? active.getAttribute("aria-label") : null;
     const focusClass = typeof active?.className === "string" ? active.className.split(" ")[0] : undefined;
-    const sets = h("div", { class: "tp-sets" }, ...spec.sets.map((s, i) => {
+    // Office's row (D-172): a small chevron before the first option set opens the list of elements; a click on the
+    // active first set opens it too.
+    const menuAt = (anchor: HTMLElement) => {
+      const list = h("div", { class: "menu" }, ...spec.choices!.map((c) => h("button", { type: "button", class: "item", onclick: () => { closePopup(); c.pick(); } }, c.label)));
+      showPopup(list, anchor.getBoundingClientRect());
+    };
+    const anchor = h("button", { type: "button", class: "tp-anchor", "aria-label": spec.choicesLabel ?? "Optionen", disabled: !spec.choices?.length },
+      chevron(true));
+    if (spec.choices?.length) anchor.addEventListener("click", () => menuAt(anchor));
+    const sets = h("div", { class: "tp-sets" }, anchor, ...spec.sets.map((s, i) => {
       const b = h("button", { type: "button", class: `tp-set${i === this.set ? " on" : ""}` }, s.label);
       if (i === 0 && spec.choices?.length) {
-        b.append(h("span", { class: "tp-chev" }, "˅"));
         b.addEventListener("click", () => {
           if (this.set !== 0) { this.set = 0; this.tab = 0; this.render(); return; }
-          const list = h("div", { class: "menu" }, ...spec.choices!.map((c) => h("button", { type: "button", class: "item", onclick: () => { closePopup(); c.pick(); } }, c.label)));
-          showPopup(list, b.getBoundingClientRect());
+          menuAt(anchor);
         });
       } else b.addEventListener("click", () => { this.set = i; this.tab = 0; this.render(); });
       return b;
@@ -153,7 +178,7 @@ export class TaskPane {
     const head = h("button", { type: "button", class: "tp-sec-head", "aria-expanded": String(open), onclick: () => {
       if (open) { this.opened.delete(key); this.closed.add(key); } else { this.closed.delete(key); this.opened.add(key); }
       this.render();
-    } }, h("span", { class: "tp-tri" }, open ? "◢" : "▷"), s.title);
+    } }, h("span", { class: "tp-tri" }, chevron(open)), s.title);
     const box = h("div", { class: "tp-sec" }, head);
     if (open) box.append(h("div", { class: "tp-sec-body" }, ...s.controls().map((c) => this.control(c))));
     return box;

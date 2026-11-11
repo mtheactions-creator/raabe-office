@@ -1,0 +1,1640 @@
+{
+ "Zellen formatieren": {
+  "scale": 1.5,
+  "window": [
+   601.3,
+   520.0
+  ],
+  "client": [
+   586.7,
+   482.7
+  ],
+  "titlebar": 30.0,
+  "elements": [
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Bildlauf nach oben",
+    "class": "",
+    "rect": [
+     132.0,
+     58.7,
+     17.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Bildlauf nach unten",
+    "class": "",
+    "rect": [
+     132.0,
+     321.3,
+     17.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Direkthilfe",
+    "class": "",
+    "rect": [
+     492.7,
+     -29.3,
+     47.3,
+     29.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Schließen",
+    "class": "",
+    "rect": [
+     540.0,
+     -29.3,
+     47.3,
+     29.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Tab",
+    "name": "Zellen formatieren",
+    "class": "",
+    "rect": [
+     6.7,
+     7.3,
+     573.3,
+     22.7
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "TabItem",
+    "name": "Zahlen",
+    "class": "",
+    "rect": [
+     6.7,
+     8.7,
+     60.0,
+     20.7
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Kategorie:",
+    "class": "",
+    "rect": [
+     16.7,
+     40.0,
+     46.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "List",
+    "name": "Kategorie:",
+    "class": "",
+    "rect": [
+     16.7,
+     57.3,
+     134.0,
+     282.7
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Standard",
+    "class": "",
+    "rect": [
+     16.7,
+     57.3,
+     134.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Zahl",
+    "class": "",
+    "rect": [
+     16.7,
+     71.3,
+     134.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Währung",
+    "class": "",
+    "rect": [
+     16.7,
+     85.3,
+     134.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Buchhaltung",
+    "class": "",
+    "rect": [
+     16.7,
+     99.3,
+     134.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Datum",
+    "class": "",
+    "rect": [
+     16.7,
+     113.3,
+     134.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Uhrzeit",
+    "class": "",
+    "rect": [
+     16.7,
+     127.3,
+     134.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Prozent",
+    "class": "",
+    "rect": [
+     16.7,
+     141.3,
+     134.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Bruch",
+    "class": "",
+    "rect": [
+     16.7,
+     155.3,
+     134.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Wissenschaft",
+    "class": "",
+    "rect": [
+     16.7,
+     169.3,
+     134.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Text",
+    "class": "",
+    "rect": [
+     16.7,
+     183.3,
+     134.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Sonderformat",
+    "class": "",
+    "rect": [
+     16.7,
+     197.3,
+     134.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Benutzerdefiniert",
+    "class": "",
+    "rect": [
+     16.7,
+     211.3,
+     134.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Group",
+    "name": "Beispiel",
+    "class": "",
+    "rect": [
+     160.7,
+     57.3,
+     409.3,
+     42.7
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "1234,5",
+    "class": "",
+    "rect": [
+     170.7,
+     78.7,
+     389.3,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Standardzellen haben kein bestimmtes Zahlenformat.",
+    "class": "",
+    "rect": [
+     160.7,
+     103.3,
+     409.3,
+     246.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Button",
+    "name": "OK",
+    "class": "",
+    "rect": [
+     402.7,
+     450.0,
+     84.0,
+     25.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Button",
+    "name": "Abbrechen",
+    "class": "",
+    "rect": [
+     496.0,
+     450.0,
+     84.0,
+     25.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Image",
+    "name": "",
+    "class": "",
+    "rect": [
+     6.7,
+     30.0,
+     573.3,
+     412.0
+    ]
+   }
+  ]
+ },
+ "Absatz": {
+  "scale": 1.5,
+  "window": [
+   474.0,
+   584.7
+  ],
+  "client": [
+   459.3,
+   547.3
+  ],
+  "titlebar": 30.0,
+  "elements": [
+   {
+    "depth": 1,
+    "type": "Edit",
+    "name": "RichEdit Control",
+    "class": "RichEdit20W",
+    "rect": [
+     124.0,
+     162.7,
+     44.0,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Edit",
+    "name": "RichEdit Control",
+    "class": "RichEdit20W",
+    "rect": [
+     124.0,
+     188.0,
+     44.0,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Edit",
+    "name": "RichEdit Control",
+    "class": "RichEdit20W",
+    "rect": [
+     380.0,
+     188.0,
+     44.0,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Edit",
+    "name": "RichEdit Control",
+    "class": "RichEdit20W",
+    "rect": [
+     124.0,
+     281.3,
+     44.0,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Edit",
+    "name": "RichEdit Control",
+    "class": "RichEdit20W",
+    "rect": [
+     124.0,
+     306.7,
+     44.0,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Edit",
+    "name": "RichEdit Control",
+    "class": "RichEdit20W",
+    "rect": [
+     380.0,
+     306.7,
+     44.0,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Pane",
+    "name": "",
+    "class": "_WwN",
+    "rect": [
+     26.7,
+     398.0,
+     416.0,
+     92.7
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Direkthilfe",
+    "class": "",
+    "rect": [
+     365.3,
+     -29.3,
+     47.3,
+     29.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Schließen",
+    "class": "",
+    "rect": [
+     412.7,
+     -29.3,
+     47.3,
+     29.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Tab",
+    "name": "",
+    "class": "",
+    "rect": [
+     6.7,
+     7.3,
+     446.0,
+     22.7
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "TabItem",
+    "name": "Einzüge und Abstände",
+    "class": "",
+    "rect": [
+     6.7,
+     8.7,
+     122.7,
+     20.7
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "TabItem",
+    "name": "Zeilen- und Seitenumbruch",
+    "class": "",
+    "rect": [
+     129.3,
+     8.7,
+     146.0,
+     20.7
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Allgemein",
+    "class": "",
+    "rect": [
+     16.7,
+     40.0,
+     426.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Ausrichtung:",
+    "class": "",
+    "rect": [
+     26.7,
+     65.3,
+     58.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "ComboBox",
+    "name": "Ausrichtung:",
+    "class": "",
+    "rect": [
+     122.7,
+     61.3,
+     100.7,
+     22.7
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Gliederungsebene:",
+    "class": "",
+    "rect": [
+     26.7,
+     91.3,
+     86.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "ComboBox",
+    "name": "Gliederungsebene:",
+    "class": "",
+    "rect": [
+     122.7,
+     87.3,
+     100.7,
+     22.7
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "CheckBox",
+    "name": "Standardmäßig reduziert",
+    "class": "",
+    "rect": [
+     233.3,
+     90.0,
+     135.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Einzug",
+    "class": "",
+    "rect": [
+     16.7,
+     139.3,
+     426.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Links:",
+    "class": "",
+    "rect": [
+     26.7,
+     164.0,
+     28.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Spinner",
+    "name": "Links:",
+    "class": "",
+    "rect": [
+     122.7,
+     160.7,
+     64.0,
+     21.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Rechts:",
+    "class": "",
+    "rect": [
+     26.7,
+     189.3,
+     32.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Spinner",
+    "name": "Rechts:",
+    "class": "",
+    "rect": [
+     122.7,
+     186.0,
+     64.0,
+     21.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Sondereinzug:",
+    "class": "",
+    "rect": [
+     233.3,
+     164.0,
+     66.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "ComboBox",
+    "name": "Sondereinzug:",
+    "class": "",
+    "rect": [
+     233.3,
+     185.3,
+     135.3,
+     22.7
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Um:",
+    "class": "",
+    "rect": [
+     378.7,
+     164.0,
+     18.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Spinner",
+    "name": "Um:",
+    "class": "",
+    "rect": [
+     378.7,
+     186.0,
+     64.0,
+     21.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "CheckBox",
+    "name": "Einzüge spiegeln",
+    "class": "",
+    "rect": [
+     26.7,
+     216.7,
+     97.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Abstand",
+    "class": "",
+    "rect": [
+     16.7,
+     258.0,
+     426.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Vor:",
+    "class": "",
+    "rect": [
+     26.7,
+     282.7,
+     18.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Spinner",
+    "name": "Vor:",
+    "class": "",
+    "rect": [
+     122.7,
+     279.3,
+     64.0,
+     21.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Nach:",
+    "class": "",
+    "rect": [
+     26.7,
+     308.0,
+     26.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Spinner",
+    "name": "Nach:",
+    "class": "",
+    "rect": [
+     122.7,
+     304.7,
+     64.0,
+     21.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Zeilenabstand:",
+    "class": "",
+    "rect": [
+     233.3,
+     282.7,
+     66.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "ComboBox",
+    "name": "Zeilenabstand:",
+    "class": "",
+    "rect": [
+     233.3,
+     304.0,
+     135.3,
+     22.7
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Von:",
+    "class": "",
+    "rect": [
+     378.7,
+     282.7,
+     20.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Spinner",
+    "name": "Von:",
+    "class": "",
+    "rect": [
+     378.7,
+     304.7,
+     64.0,
+     21.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "CheckBox",
+    "name": "Keinen Abstand zwischen Absätzen gleicher Formatierung einfügen",
+    "class": "",
+    "rect": [
+     26.7,
+     330.0,
+     330.0,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Vorschau",
+    "class": "",
+    "rect": [
+     16.7,
+     376.7,
+     426.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Button",
+    "name": "Tabstopps...",
+    "class": "",
+    "rect": [
+     6.0,
+     514.7,
+     84.0,
+     25.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Button",
+    "name": "Als Standard festlegen",
+    "class": "",
+    "rect": [
+     120.7,
+     514.7,
+     124.0,
+     25.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Button",
+    "name": "OK",
+    "class": "",
+    "rect": [
+     275.3,
+     514.7,
+     84.0,
+     25.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Button",
+    "name": "Abbrechen",
+    "class": "",
+    "rect": [
+     368.7,
+     514.7,
+     84.0,
+     25.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Image",
+    "name": "",
+    "class": "",
+    "rect": [
+     6.7,
+     30.0,
+     446.0,
+     476.7
+    ]
+   }
+  ]
+ },
+ "Schriftart": {
+  "scale": 1.5,
+  "window": [
+   444.7,
+   544.7
+  ],
+  "client": [
+   430.0,
+   507.3
+  ],
+  "titlebar": 30.0,
+  "elements": [
+   {
+    "depth": 1,
+    "type": "Edit",
+    "name": "RichEdit Control",
+    "class": "RichEdit20W",
+    "rect": [
+     36.7,
+     80.7,
+     196.0,
+     17.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Bildlauf nach oben",
+    "class": "",
+    "rect": [
+     215.3,
+     101.3,
+     17.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Seite nach oben",
+    "class": "",
+    "rect": [
+     215.3,
+     118.7,
+     17.3,
+     2.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Seite nach unten",
+    "class": "",
+    "rect": [
+     215.3,
+     138.0,
+     17.3,
+     16.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Bildlauf nach unten",
+    "class": "",
+    "rect": [
+     215.3,
+     154.0,
+     17.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Edit",
+    "name": "RichEdit Control",
+    "class": "RichEdit20W",
+    "rect": [
+     245.3,
+     80.7,
+     80.0,
+     17.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Bildlauf nach oben",
+    "class": "",
+    "rect": [
+     308.0,
+     101.3,
+     17.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Bildlauf nach unten",
+    "class": "",
+    "rect": [
+     308.0,
+     154.0,
+     17.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Edit",
+    "name": "RichEdit Control",
+    "class": "RichEdit20W",
+    "rect": [
+     338.0,
+     80.7,
+     64.7,
+     17.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Bildlauf nach oben",
+    "class": "",
+    "rect": [
+     385.3,
+     101.3,
+     17.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Seite nach oben",
+    "class": "",
+    "rect": [
+     385.3,
+     118.7,
+     17.3,
+     3.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Seite nach unten",
+    "class": "",
+    "rect": [
+     385.3,
+     139.3,
+     17.3,
+     14.7
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Bildlauf nach unten",
+    "class": "",
+    "rect": [
+     385.3,
+     154.0,
+     17.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Direkthilfe",
+    "class": "",
+    "rect": [
+     336.0,
+     -29.3,
+     47.3,
+     29.3
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "Button",
+    "name": "Schließen",
+    "class": "",
+    "rect": [
+     383.3,
+     -29.3,
+     47.3,
+     29.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Tab",
+    "name": "",
+    "class": "",
+    "rect": [
+     6.7,
+     7.3,
+     416.7,
+     22.7
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "TabItem",
+    "name": "Schriftart",
+    "class": "",
+    "rect": [
+     6.7,
+     8.7,
+     62.7,
+     20.7
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "TabItem",
+    "name": "Erweitert",
+    "class": "",
+    "rect": [
+     69.3,
+     8.7,
+     61.3,
+     20.7
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Schriftart:",
+    "class": "",
+    "rect": [
+     35.3,
+     61.3,
+     44.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Edit",
+    "name": "Schriftart:",
+    "class": "",
+    "rect": [
+     35.3,
+     78.7,
+     198.7,
+     21.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "List",
+    "name": "",
+    "class": "",
+    "rect": [
+     35.3,
+     100.0,
+     198.7,
+     72.7
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "BrowalliaUPC",
+    "class": "",
+    "rect": [
+     35.3,
+     100.0,
+     198.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Brush Script MT",
+    "class": "",
+    "rect": [
+     35.3,
+     114.0,
+     198.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Buxton Sketch",
+    "class": "",
+    "rect": [
+     35.3,
+     128.0,
+     198.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Calibri",
+    "class": "",
+    "rect": [
+     35.3,
+     142.0,
+     198.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Calibri Light",
+    "class": "",
+    "rect": [
+     35.3,
+     156.0,
+     198.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Schriftschnitt:",
+    "class": "",
+    "rect": [
+     244.0,
+     61.3,
+     62.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Edit",
+    "name": "Schriftschnitt:",
+    "class": "",
+    "rect": [
+     244.0,
+     78.7,
+     82.7,
+     21.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "List",
+    "name": "",
+    "class": "",
+    "rect": [
+     244.0,
+     100.0,
+     82.7,
+     72.7
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Normal",
+    "class": "",
+    "rect": [
+     244.0,
+     100.0,
+     82.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Kursiv",
+    "class": "",
+    "rect": [
+     244.0,
+     114.0,
+     82.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Fett",
+    "class": "",
+    "rect": [
+     244.0,
+     128.0,
+     82.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "Fett Kursiv",
+    "class": "",
+    "rect": [
+     244.0,
+     142.0,
+     82.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Größe:",
+    "class": "",
+    "rect": [
+     336.7,
+     61.3,
+     30.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Edit",
+    "name": "Größe:",
+    "class": "",
+    "rect": [
+     336.7,
+     78.7,
+     67.3,
+     21.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "List",
+    "name": "",
+    "class": "",
+    "rect": [
+     336.7,
+     100.0,
+     67.3,
+     72.7
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "10",
+    "class": "",
+    "rect": [
+     336.7,
+     100.0,
+     67.3,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "11",
+    "class": "",
+    "rect": [
+     336.7,
+     114.0,
+     67.3,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "12",
+    "class": "",
+    "rect": [
+     336.7,
+     128.0,
+     67.3,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "14",
+    "class": "",
+    "rect": [
+     336.7,
+     142.0,
+     67.3,
+     14.0
+    ]
+   },
+   {
+    "depth": 2,
+    "type": "ListItem",
+    "name": "16",
+    "class": "",
+    "rect": [
+     336.7,
+     156.0,
+     67.3,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Schriftfarbe:",
+    "class": "",
+    "rect": [
+     35.3,
+     181.3,
+     56.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Button",
+    "name": "Schriftfarbe (RGB(47;84;150))",
+    "class": "",
+    "rect": [
+     35.3,
+     198.7,
+     128.7,
+     21.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Unterstreichung:",
+    "class": "",
+    "rect": [
+     174.0,
+     181.3,
+     76.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "ComboBox",
+    "name": "Unterstreichung:",
+    "class": "",
+    "rect": [
+     174.0,
+     198.7,
+     91.3,
+     18.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Farbe:",
+    "class": "",
+    "rect": [
+     275.3,
+     181.3,
+     28.0,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Button",
+    "name": "Unterstreichungsfarbe (Automatisch)",
+    "class": "",
+    "rect": [
+     275.3,
+     198.7,
+     128.7,
+     21.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Effekte",
+    "class": "",
+    "rect": [
+     16.7,
+     226.7,
+     396.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "CheckBox",
+    "name": "Durchgestrichen",
+    "class": "",
+    "rect": [
+     26.7,
+     248.0,
+     96.0,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "CheckBox",
+    "name": "Doppelt durchgestrichen",
+    "class": "",
+    "rect": [
+     26.7,
+     268.7,
+     134.0,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "CheckBox",
+    "name": "Hochgestellt",
+    "class": "",
+    "rect": [
+     26.7,
+     289.3,
+     77.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "CheckBox",
+    "name": "Tiefgestellt",
+    "class": "",
+    "rect": [
+     26.7,
+     310.0,
+     70.0,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "CheckBox",
+    "name": "Kapitälchen",
+    "class": "",
+    "rect": [
+     279.3,
+     248.0,
+     73.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "CheckBox",
+    "name": "Großbuchstaben",
+    "class": "",
+    "rect": [
+     279.3,
+     268.7,
+     96.7,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "CheckBox",
+    "name": "Ausgeblendet",
+    "class": "",
+    "rect": [
+     279.3,
+     289.3,
+     83.3,
+     17.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Button",
+    "name": "Als Standard festlegen",
+    "class": "",
+    "rect": [
+     6.0,
+     474.7,
+     124.0,
+     25.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Button",
+    "name": "Texteffekte...",
+    "class": "",
+    "rect": [
+     139.3,
+     474.7,
+     84.0,
+     25.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Button",
+    "name": "OK",
+    "class": "",
+    "rect": [
+     246.0,
+     474.7,
+     84.0,
+     25.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Button",
+    "name": "Abbrechen",
+    "class": "",
+    "rect": [
+     339.3,
+     474.7,
+     84.0,
+     25.3
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Image",
+    "name": "",
+    "class": "",
+    "rect": [
+     26.7,
+     361.3,
+     386.7,
+     44.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Vorschau",
+    "class": "",
+    "rect": [
+     16.7,
+     340.0,
+     396.7,
+     14.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Text",
+    "name": "Die TrueType-Schriftart wird für den Ausdruck und die Anzeige verwendet.",
+    "class": "",
+    "rect": [
+     26.7,
+     408.7,
+     386.7,
+     42.0
+    ]
+   },
+   {
+    "depth": 1,
+    "type": "Image",
+    "name": "Die TrueType-Schriftart wird für den Ausdruck und die Anzeige verwendet.",
+    "class": "",
+    "rect": [
+     6.7,
+     30.0,
+     416.7,
+     436.7
+    ]
+   }
+  ]
+ }
+}
