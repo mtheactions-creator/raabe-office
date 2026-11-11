@@ -1,0 +1,40 @@
+{
+ "what": "RaabePresent's marks of a selected chart against powerpoint's (selmarks.compare)",
+ "parts": {
+  "column-chart": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    8,
+    8
+   ],
+   "size": [
+    "18x18",
+    "17x17"
+   ],
+   "ring": [
+    "#616161",
+    "#616161"
+   ],
+   "fill": [
+    "#FFFFFF",
+    "#FFFFFF"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 414.5,
+   "ours": "8 handles {'grey': 8} sizes {'18x18': 8}; lines #616161 t1 ink 158 box [0, 0, 1376, 570]",
+   "office": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #616161 t1 ink 158 box [1, 1, 961, 577]"
+  }
+ },
+ "dpr": 1.5,
+ "errors": [],
+ "passed": 1,
+ "judged": 1
+}
