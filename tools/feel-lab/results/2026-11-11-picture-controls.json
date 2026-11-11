@@ -1,17 +1,17 @@
 {
  "meta": {
-  "recorded": "2026-11-11",
-  "office": "results/2026-11-05-excel-inventory.json, results/2026-11-06-powerpoint-inventory.json (UI Automation types)",
-  "ours": "__calc.inventory(), __present.inventory() in a headless Edge on the dev servers",
-  "rule": "Office's side comes from the recorded inventories (our own Office instances, UI Automation; labels and control types\nonly, D-058): results/2026-11-05-excel-inventory.json and results/2026-11-06-powerpoint-inventory.json. UI Automation\nnames a gallery's entries ListItem and a menu's entries MenuItem; a dropdown whose entries are mostly ListItems is a\ngallery. Galleries whose entries Office draws as text (Zeilenabstand \"1,0\", the function lists of Mehr Funktionen) are\nlisted in TEXT_GALLERIES, looked at by eye in Office; everything else in a gallery is a picture (often with its name).\nThe Format panes are checked by unit tests against their own recordings (packages/chart-ui/test/panepictures.test.ts)."
+  "recorded": "2026-11-11/12",
+  "office": "results/2026-11-05-excel-inventory.json, results/2026-11-06-powerpoint-inventory.json, results/2026-11-12-word-inventory.json (UI Automation types)",
+  "ours": "__calc.inventory(), __present.inventory(), __app.inventory() in a headless Edge on the dev servers",
+  "rule": "Office's side comes from the recorded inventories (our own Office instances, UI Automation; labels and control types\nonly, D-058): results/2026-11-05-excel-inventory.json, results/2026-11-06-powerpoint-inventory.json and 2026-11-12-word-inventory.json. UI Automation\nnames a gallery's entries ListItem and a menu's entries MenuItem; a dropdown whose entries are mostly ListItems is a\ngallery. Galleries whose entries Office draws as text (Zeilenabstand \"1,0\", the function lists of Mehr Funktionen) are\nlisted in TEXT_GALLERIES, looked at by eye in Office; everything else in a gallery is a picture (often with its name).\nThe Format panes are checked by unit tests against their own recordings (packages/chart-ui/test/panepictures.test.ts)."
  },
  "summary": {
-  "office picture dropdowns": 174,
-  "ours picture": 156,
-  "ours text": 0,
-  "not built": 18,
-  "office text dropdowns": 181,
-  "known": 27,
+  "office picture dropdowns": 252,
+  "ours picture": 204,
+  "ours text": 1,
+  "not built": 47,
+  "office text dropdowns": 258,
+  "known": 1,
   "per app": {
    "excel": {
     "office pictures": 32,
@@ -22,6 +22,11 @@
     "office pictures": 142,
     "ours picture": 130,
     "ours text": 0
+   },
+   "word": {
+    "office pictures": 78,
+    "ours picture": 48,
+    "ours text": 1
    }
   }
  },
@@ -180,8 +185,7 @@
    "kind": "picture",
    "n": 21,
    "ours": "picture",
-   "status": "gleich",
-   "known": "colour rows of the chart palettes not built yet"
+   "status": "gleich"
   },
   {
    "office": "excel|Diagrammentwurf|Schnelllayout",
@@ -308,8 +312,7 @@
    "kind": "picture",
    "n": 4,
    "ours": "picture",
-   "status": "gleich",
-   "known": "combo charts are applied after insertion; their pictures not built yet"
+   "status": "gleich"
   },
   {
    "office": "excel|Einfügen|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen",
@@ -1112,8 +1115,7 @@
    "kind": "picture",
    "n": 38,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the previews need the selected picture; without one the inventory lists the names (to check by hand)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Bildformat|Farbe > Weitere Varianten",
@@ -1134,8 +1136,7 @@
    "kind": "picture",
    "n": 31,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the previews need the selected picture; without one the inventory lists the names (to check by hand)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Bildformat|Künstlerische Effekte",
@@ -1149,8 +1150,7 @@
    "kind": "picture",
    "n": 8,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the previews need the selected picture; without one the inventory lists the names (to check by hand)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Bildformat|Zuschneiden",
@@ -1164,8 +1164,7 @@
    "kind": "picture",
    "n": 159,
    "ours": "picture",
-   "status": "gleich",
-   "known": "shape icons exist (Formen gallery); this menu still lists names"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Bildformat|Zuschneiden > Seitenverhältnis",
@@ -1264,16 +1263,14 @@
    "kind": "picture",
    "n": 21,
    "ours": "picture",
-   "status": "gleich",
-   "known": "colour rows of the chart palettes not built yet"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Diagrammentwurf|Schnelllayout",
    "kind": "picture",
    "n": 11,
    "ours": "picture",
-   "status": "gleich",
-   "known": "layout pictures exist in RaabeCalc's ribbon gallery, not yet in RaabePresent's menu"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Einfügen|Bilder",
@@ -1357,8 +1354,7 @@
    "kind": "picture",
    "n": 15,
    "ours": "picture",
-   "status": "gleich",
-   "known": "theme effect previews (effectStyleLst on a sample shape) not built yet"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Entwurf|Farben",
@@ -1416,8 +1412,7 @@
    "kind": "picture",
    "n": 15,
    "ours": "picture",
-   "status": "gleich",
-   "known": "theme effect previews (effectStyleLst on a sample shape) not built yet"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Folienmaster|Farben",
@@ -1608,96 +1603,84 @@
    "kind": "picture",
    "n": 27,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formel|Bruch",
    "kind": "picture",
    "n": 9,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formel|Eckige Klammer",
    "kind": "picture",
    "n": 45,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formel|Formel",
    "kind": "picture",
    "n": 9,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formel|Funktion",
    "kind": "picture",
    "n": 31,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formel|Grenzwert und Logarithmus",
    "kind": "picture",
    "n": 8,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formel|Großer Operator",
    "kind": "picture",
    "n": 44,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formel|Hoch/Tief",
    "kind": "picture",
    "n": 8,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formel|Integral",
    "kind": "picture",
    "n": 21,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formel|Matrix",
    "kind": "picture",
    "n": 22,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formel|Operator",
    "kind": "picture",
    "n": 21,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formel|Wurzel",
    "kind": "picture",
    "n": 6,
    "ours": "picture",
-   "status": "gleich",
-   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formformat|Ausrichten",
@@ -1880,8 +1863,7 @@
    "kind": "picture",
    "n": 41,
    "ours": "picture",
-   "status": "gleich",
-   "known": "warped-text previews not built yet"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Formformat|Textfüllung",
@@ -1937,8 +1919,7 @@
    "kind": "picture",
    "n": 15,
    "ours": "picture",
-   "status": "gleich",
-   "known": "theme effect previews (effectStyleLst on a sample shape) not built yet"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Handzettelmaster|Farben",
@@ -1997,8 +1978,7 @@
    "kind": "picture",
    "n": 15,
    "ours": "picture",
-   "status": "gleich",
-   "known": "theme effect previews (effectStyleLst on a sample shape) not built yet"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Notizenmaster|Farben",
@@ -2043,8 +2023,7 @@
    "kind": "picture",
    "n": 43,
    "ours": "picture",
-   "status": "gleich",
-   "known": "SmartArt colour previews not built yet"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|SmartArt-Design|Form hinzufügen",
@@ -2235,8 +2214,7 @@
    "kind": "picture",
    "n": 21,
    "ours": "picture",
-   "status": "gleich",
-   "known": "SmartArt layout previews not built yet"
+   "status": "gleich"
   },
   {
    "office": "powerpoint|Start|Kopieren",
@@ -2572,8 +2550,8 @@
    "office": "powerpoint|Übergänge|Sound",
    "kind": "text",
    "n": 24,
-   "ours": "text",
-   "status": "gleich",
+   "ours": null,
+   "status": "fehlt",
    "by_eye": true
   },
   {
@@ -2596,6 +2574,1107 @@
    "n": 2,
    "ours": "text",
    "status": "gleich"
+  },
+  {
+   "office": "word|Ansicht|Anzeigen",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Ansicht|Fenster wechseln",
+   "kind": "text",
+   "n": 1,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Ansicht|Makros",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Bildformat|Ausrichten",
+   "kind": "text",
+   "n": 14,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Bild zurücksetzen",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Bild ändern",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Bildeffekte",
+   "kind": "text",
+   "n": 7,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Bildeffekte > Leuchteffekt",
+   "kind": "picture",
+   "n": 27,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Bildeffekte > Schatten",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Bildeffekte > Spiegelung",
+   "kind": "picture",
+   "n": 11,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Bildeffekte > Voreinstellung",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Bildlayout",
+   "kind": "picture",
+   "n": 36,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Bildrahmen",
+   "kind": "picture",
+   "n": 76,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Bildrahmen > Skizziert",
+   "kind": "picture",
+   "n": 5,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Bildformat|Bildrahmen > Stärke",
+   "kind": "picture",
+   "n": 10,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Bildformat|Drehen",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Bildformat|Farbe",
+   "kind": "picture",
+   "n": 38,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Farbe > Weitere Varianten",
+   "kind": "picture",
+   "n": 72,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Bildformat|Korrekturen",
+   "kind": "picture",
+   "n": 31,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Künstlerische Effekte",
+   "kind": "picture",
+   "n": 24,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Bildformat|Position",
+   "kind": "picture",
+   "n": 11,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Schnellformatvorlagen",
+   "kind": "picture",
+   "n": 28,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Textumbruch",
+   "kind": "text",
+   "n": 12,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Bildformat|Transparenz",
+   "kind": "picture",
+   "n": 8,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Zuschneiden",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Zuschneiden > Auf Form zuschneiden",
+   "kind": "picture",
+   "n": 147,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Bildformat|Zuschneiden > Seitenverhältnis",
+   "kind": "text",
+   "n": 11,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Einfügen|3D-Modelle",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Bilder",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Einfügen|Deckblatt",
+   "kind": "picture",
+   "n": 19,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Einfügen|Deckblatt > Weitere Deckblätter von Office.com",
+   "kind": "text",
+   "n": 1,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Formel",
+   "kind": "picture",
+   "n": 13,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Einfügen|Formel > Weitere Formeln von Office.com",
+   "kind": "picture",
+   "n": 38,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Formen",
+   "kind": "picture",
+   "n": 179,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Einfügen|Fußzeile",
+   "kind": "picture",
+   "n": 24,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Einfügen|Fußzeile > Weitere Fußzeilen von Office.com",
+   "kind": "text",
+   "n": 1,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Initiale",
+   "kind": "picture",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Kopfzeile",
+   "kind": "picture",
+   "n": 24,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Einfügen|Kopfzeile > Weitere Kopfzeilen von Office.com",
+   "kind": "text",
+   "n": 1,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Links",
+   "kind": "text",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Links > Link",
+   "kind": "picture",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Objekt...",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Schnellbausteine",
+   "kind": "text",
+   "n": 5,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Schnellbausteine > AutoText",
+   "kind": "picture",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Schnellbausteine > Dokumenteigenschaft",
+   "kind": "picture",
+   "n": 15,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Screenshot",
+   "kind": "picture",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Seitenzahl",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Einfügen|Seitenzahl > Aktuelle Position",
+   "kind": "picture",
+   "n": 19,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Seitenzahl > Seitenanfang",
+   "kind": "picture",
+   "n": 27,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Seitenzahl > Seitenende",
+   "kind": "picture",
+   "n": 60,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Seitenzahl > Seitenränder",
+   "kind": "picture",
+   "n": 16,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Signaturzeile",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Symbol",
+   "kind": "picture",
+   "n": 21,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Einfügen|Tabelle",
+   "kind": "picture",
+   "n": 47,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Einfügen|Tabelle > Schnelltabellen",
+   "kind": "picture",
+   "n": 10,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|Textfeld",
+   "kind": "picture",
+   "n": 38,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Einfügen|Textfeld > Weitere Textfelder von Office.com",
+   "kind": "text",
+   "n": 1,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Einfügen|WordArt",
+   "kind": "picture",
+   "n": 15,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Entwurf|Absatzabstand",
+   "kind": "text",
+   "n": 8,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Entwurf|Designs",
+   "kind": "picture",
+   "n": 35,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Entwurf|Effekte",
+   "kind": "picture",
+   "n": 15,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "only the Office effect set is built (the others are greyed); its previews come with the sets (D-165)"
+  },
+  {
+   "office": "word|Entwurf|Farben",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Entwurf|Formatvorlagensatz",
+   "kind": "picture",
+   "n": 21,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Entwurf|Schriftarten",
+   "kind": "text",
+   "n": 27,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Entwurf|Seitenfarbe",
+   "kind": "picture",
+   "n": 74,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Entwurf|Wasserzeichen",
+   "kind": "picture",
+   "n": 16,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Entwurf|Wasserzeichen > Weitere Wasserzeichen von Office.com",
+   "kind": "text",
+   "n": 1,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Formformat|Ausrichten",
+   "kind": "text",
+   "n": 14,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Drehen",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Formformat|Ebene nach hinten",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Ebene nach vorne",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Form bearbeiten",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Form bearbeiten > Form ändern",
+   "kind": "picture",
+   "n": 147,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Formeffekte",
+   "kind": "text",
+   "n": 7,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Formeffekte > 3D-Drehung",
+   "kind": "picture",
+   "n": 27,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Formeffekte > Abschrägung",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Formeffekte > Leuchteffekt",
+   "kind": "picture",
+   "n": 27,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Formformat|Formeffekte > Schatten",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Formeffekte > Spiegelung",
+   "kind": "picture",
+   "n": 11,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Formeffekte > Voreinstellung",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Formeffekte > Weiche Kanten",
+   "kind": "picture",
+   "n": 8,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Formen",
+   "kind": "picture",
+   "n": 178,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Formkontur",
+   "kind": "picture",
+   "n": 77,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Formkontur > Skizziert",
+   "kind": "picture",
+   "n": 5,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Formformat|Formkontur > Striche",
+   "kind": "picture",
+   "n": 9,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Formformat|Formkontur > Stärke",
+   "kind": "picture",
+   "n": 10,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Formformat|Fülleffekt",
+   "kind": "picture",
+   "n": 76,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Fülleffekt > Farbverlauf",
+   "kind": "picture",
+   "n": 28,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Formformat|Fülleffekt > Struktur",
+   "kind": "picture",
+   "n": 25,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Formformat|Größe",
+   "kind": "text",
+   "n": 5,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Formformat|Position",
+   "kind": "picture",
+   "n": 11,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Schnellformatvorlagen",
+   "kind": "picture",
+   "n": 80,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Schnellformatvorlagen > Alle",
+   "kind": "picture",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Formformat|Schnellformatvorlagen > Andere Designfüllungen",
+   "kind": "picture",
+   "n": 12,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Formformat|Schnellformatvorlagen > Katalogfilter",
+   "kind": "picture",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Formformat|Text ausrichten",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Formformat|Texteffekte",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Formformat|Texteffekte > Transformieren",
+   "kind": "picture",
+   "n": 41,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Formformat|Textumbruch",
+   "kind": "text",
+   "n": 12,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Layout|Ausrichten",
+   "kind": "text",
+   "n": 14,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Layout|Ausrichtung",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Layout|Format",
+   "kind": "text",
+   "n": 21,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Layout|Seitenränder",
+   "kind": "text",
+   "n": 7,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "word|Layout|Silbentrennung",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Layout|Spalten",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Layout|Umbrüche",
+   "kind": "text",
+   "n": 7,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Layout|Zeilennummern",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Referenzen|Anbieter ändern",
+   "kind": "picture",
+   "n": 11,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Referenzen|Formatvorlage",
+   "kind": "picture",
+   "n": 12,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Referenzen|Inhaltsverzeichnis",
+   "kind": "text",
+   "n": 7,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Referenzen|Inhaltsverzeichnis > Weitere Inhaltsverzeichnisse von Office.com",
+   "kind": "text",
+   "n": 1,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Referenzen|Literaturverzeichnis",
+   "kind": "picture",
+   "n": 5,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Referenzen|Nächste Fußnote",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Referenzen|Text hinzufügen",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Referenzen|Zitat einfügen",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Sendungen|Empfänger auswählen",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Sendungen|Seriendruck starten",
+   "kind": "text",
+   "n": 7,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Start|Aufzählungszeichen",
+   "kind": "picture",
+   "n": 10,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Start|Bearbeiten",
+   "kind": "text",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Start|Bearbeiten > Markieren",
+   "kind": "text",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Start|Bearbeiten > Suchen",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Start|Diktieren",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Start|Einfügen",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Start|Formatvorlagen",
+   "kind": "picture",
+   "n": 19,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Start|Liste mit mehreren Ebenen",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Start|Nummerierung",
+   "kind": "picture",
+   "n": 11,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Start|Schriftgrad",
+   "kind": "picture",
+   "n": 16,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Start|Zeilen- und Absatzabstand",
+   "kind": "text",
+   "n": 9,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Tabellenentwurf|Rahmen",
+   "kind": "text",
+   "n": 16,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "word|Tabellenentwurf|Rahmenarten",
+   "kind": "picture",
+   "n": 22,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Tabellenentwurf|Schattierung",
+   "kind": "picture",
+   "n": 73,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Tabellenentwurf|Stiftart",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Tabellenentwurf|Stiftfarbe",
+   "kind": "picture",
+   "n": 73,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Tabellenentwurf|Stiftstärke",
+   "kind": "picture",
+   "n": 9,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Tabellenentwurf|Tabellenformatvorlagen",
+   "kind": "picture",
+   "n": 108,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Überprüfen|Barrierefreiheit überprüfen",
+   "kind": "text",
+   "n": 5,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Freihand ausblenden",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Kommentare",
+   "kind": "text",
+   "n": 7,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Kommentare > Kommentare anzeigen",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Kommentare > Löschen",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Markup",
+   "kind": "text",
+   "n": 5,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Markup > Markup anzeigen",
+   "kind": "text",
+   "n": 6,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Markup > Sämtliches Markup filtern",
+   "kind": "text",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Markup > Überarbeitungsbereich",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Nachverfolgung",
+   "kind": "text",
+   "n": 8,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Nachverfolgung > Ablehnen",
+   "kind": "text",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Nachverfolgung > Annehmen",
+   "kind": "text",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Nachverfolgung > Änderungen nachverfolgen",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Rechtschreibung und Grammatik",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Überprüfen|Schützen",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Schützen > Autoren blockieren",
+   "kind": "text",
+   "n": 1,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Sprache",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "word|Überprüfen|Sprache > Sprache",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Sprache > Übersetzen",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "word|Überprüfen|Vergleichen",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
   }
  ]
 }

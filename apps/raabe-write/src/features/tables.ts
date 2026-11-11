@@ -144,7 +144,8 @@ export function tablesFeature(api: AppApi) {
     const cells: HTMLElement[] = [];
     for (let r = 0; r < ROWS; r++) {
       for (let k = 0; k < COLS; k++) {
-        const cell = h("div", { class: "cell" });
+        // Each cell is an entry of its own, named as Word names it ("3x2 Tabelle").
+        const cell = h("div", { class: "cell", role: "option", "aria-label": `${k + 1}x${r + 1} Tabelle` });
         cell.onmouseenter = () => {
           cells.forEach((x, i) => x.classList.toggle("on", Math.floor(i / COLS) <= r && i % COLS <= k));
           title.textContent = `Tabelle ${k + 1}x${r + 1}`;

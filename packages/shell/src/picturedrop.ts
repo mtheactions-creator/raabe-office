@@ -76,7 +76,7 @@ export function pictureMenu(entries: PictureEntry[], columns: number, size: [num
  */
 export function entryKind(el: Element): "picture" | "text" | "both" {
   const text = (el.textContent ?? "").replace(/\s+/g, " ").trim();
-  const graphic = [...el.querySelectorAll("svg, img, canvas, .pd-pic, .swatch, [style*='background']")].some((g) => {
+  const graphic = [...el.querySelectorAll("svg, img, canvas, .pd-pic, .swatch, [style*='background'], [style*='border'], math")].some((g) => {
     // A menu's 16 px icon is not a picture of the entry (Office's text menus have icons too).
     const w = Number(g.getAttribute("width")) || (g as HTMLElement).offsetWidth || 0;
     return !g.closest(".ico") && !(g.tagName.toLowerCase() === "svg" && w > 0 && w <= 20 && text);
@@ -84,6 +84,9 @@ export function entryKind(el: Element): "picture" | "text" | "both" {
   // An entry without a name of its own on it (a cell of the table grid) or with a one- or two-letter glyph (the WordArt
   // and Texteffekte previews, an "A" in the style) is a picture too.
   if (!text || text.length <= 2) return "picture";
+  // A gallery tile (its class says so) shows a drawing of the entry: a page, a watermark, a style; text inside it is part
+  // of that drawing (D-165).
+  if (typeof el.className === "string" && /(tile|thumb|mbuilt|dz-set)/.test(el.className)) return "both";
   if (graphic && text) return "both";
   return graphic ? "picture" : "text";
 }

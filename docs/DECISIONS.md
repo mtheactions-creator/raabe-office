@@ -4671,3 +4671,23 @@ Bildrahmen (Stärke, Striche, Pfeile), Textkontur (Stärke, Striche) and the For
 Not in RaabeCalc (its preview only changes cell formats, not shapes, charts or conditional formats) nor in
 RaabePresent (no preview mechanism yet); both are left for the step that gives them one. Unit test in
 `packages/shell/test/picturedrop.test.ts`.
+
+## D-165 Word's ribbon recorded; the picture sweep covers RaabeWrite (2026-11-12)
+
+**Recorded** with `probe_word_inventory.py`: a Word of our own, window off-screen, every ribbon tab (and the
+contextual Formformat, Bildformat, Tabellenentwurf, Layout from a shape, picture and table of its own document) read
+through UI Automation, each dropdown opened through ExpandCollapse only, submenus one level deep;
+`results/2026-11-12-word-inventory.json`, labels and control types only, entries naming the owner left out
+(`sanitize.clean`). Word's open dropdowns take the foreground even off-screen: the first run held it and blocked other
+sessions, so the probe now reads each tab under the real-input lock (released between tabs), collapses each dropdown
+until no popup of ours is left, and saves after every tab (a stopped run goes on from there).
+**Check**: `check_picture_controls.py` reads RaabeWrite's `__app.inventory()` too; its blocks, panels, flyouts and drawn
+combo entries (Stiftart, Stiftstärke) now say how they show. `entryKind` counts line samples drawn with borders and
+MathML as pictures and gallery tiles with a drawing inside (cover pages, style sets, built-in equations and
+bibliographies) as "both". Word gallery entries Office draws as an icon beside a name (Drehen, Textumbruch, Spalten,
+Umbrüche, Seitenränder …) are in TEXT_GALLERIES.
+**Fixed** in RaabeWrite: the Tabelle grid's cells are entries of their own ("3x2 Tabelle"); Auf Form zuschneiden shows
+the shape icons; Kopfzeile / Fußzeile show their designs on a page; Textfeld shows each design on a page.
+**Numbers** (all three apps): Office has 252 picture dropdowns (Excel 32, PowerPoint 142, Word 78); ours shows 204 as
+pictures (Word 48), 47 are not built, **1** is text and written down: Entwurf > Effekte in RaabeWrite, where only the
+Office set exists (the others are greyed), so its previews come with the sets.

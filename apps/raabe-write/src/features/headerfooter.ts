@@ -97,8 +97,10 @@ export function headerFooterFeature(api: AppApi) {
     e.changeSections((x) => ({ ...x, pageFormat: fmt.value === "decimal" ? undefined : fmt.value, pageStart: startAt.checked ? Math.max(0, Number(start.value) || 1) : undefined }), false);
   };
 
-  const headerMenu: MenuEntry[] = [{ heading: "Integriert" }, { cmd: "header.blank" }, { cmd: "header.blank3" }, "-", { cmd: "header.edit" }, { cmd: "header.remove" }];
-  const footerMenu: MenuEntry[] = [{ heading: "Integriert" }, { cmd: "footer.blank" }, { cmd: "footer.blank3" }, "-", { cmd: "footer.edit" }, { cmd: "footer.remove" }];
+  // Word's Integriert entries are pictures of the page with the design (D-165): drawn here as a page with its text boxes.
+  const design = (id: string, where: "header" | "footer", cols: 1 | 3): MenuEntry => ({ label: c.get(id).label, preview: hfPicture(where, cols), run: () => void c.run(id) });
+  const headerMenu: MenuEntry[] = [{ heading: "Integriert" }, design("header.blank", "header", 1), design("header.blank3", "header", 3), "-", { cmd: "header.edit" }, { cmd: "header.remove" }];
+  const footerMenu: MenuEntry[] = [{ heading: "Integriert" }, design("footer.blank", "footer", 1), design("footer.blank3", "footer", 3), "-", { cmd: "footer.edit" }, { cmd: "footer.remove" }];
   const pageNumberMenu: MenuEntry[] = [
     { heading: "Seitenanfang" }, { cmd: "pageNumber.topLeft" }, { cmd: "pageNumber.topCenter" }, { cmd: "pageNumber.topRight" },
     { heading: "Seitenende" }, { cmd: "pageNumber.bottomLeft" }, { cmd: "pageNumber.bottomCenter" }, { cmd: "pageNumber.bottomRight" }, { cmd: "pageNumber.ofPages" },
@@ -134,4 +136,15 @@ export function headerFooterFeature(api: AppApi) {
     ],
   };
   return { tab, headerMenu, footerMenu, pageNumberMenu };
+}
+
+/** A picture of a blank header or footer: the top or bottom of a page with one or three "[Hier eingeben]" boxes. */
+function hfPicture(where: "header" | "footer", cols: 1 | 3): HTMLElement {
+  const y = where === "header" ? 6 : 38;
+  const boxes = cols === 1 ? [[30, 36]] : [[6, 26], [43, 26], [80, 26]];
+  const el = document.createElement("span");
+  el.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="112" height="50" aria-hidden="true"><rect x=".5" y=".5" width="111" height="49" fill="#fff" stroke="#c8c6c4"/>`
+    + boxes.map(([x, w]) => `<rect x="${x}" y="${y}" width="${w}" height="6" fill="none" stroke="#7f7f7f" stroke-dasharray="2 1"/>`).join("")
+    + `<rect x="6" y="${where === "header" ? 20 : 8}" width="100" height="2" fill="#d9d9d9"/><rect x="6" y="${where === "header" ? 26 : 14}" width="80" height="2" fill="#d9d9d9"/></svg>`;
+  return el;
 }

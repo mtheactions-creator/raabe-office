@@ -4,8 +4,8 @@
 // Anordnen (Position, Textumbruch, Ebenen, Ausrichten, Drehen) and Größe (Zuschneiden, Höhe,
 // Breite). Gallery entries and presets were recorded from Word (picture-presets.ts).
 
-import { weightMenu, dashMenu, closePopup, colorGrid, h, showDialog, showMenu, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
-import { imageInfo, imageUrl, naturalSizePt, previewElement, removeBackground, type PictureFormat } from "@raabe/text-engine";
+import { pictureMenu, weightMenu, dashMenu, closePopup, colorGrid, h, showDialog, showMenu, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
+import { imageInfo, imageUrl, naturalSizePt, previewElement, removeBackground, shapeIcon, type PictureFormat } from "@raabe/text-engine";
 import { DEFAULT_THEME_COLORS, pictureFromSpPr } from "@raabe/ooxml";
 import { CM, fmtCm, parseNum, type AppApi } from "./api";
 import { GROUP_MENU } from "./groups";
@@ -289,7 +289,9 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
     ["parallelogram", "Parallelogramm"], ["trapezoid", "Trapez"], ["diamond", "Raute"], ["pentagon", "Fünfeck"], ["hexagon", "Sechseck"], ["octagon", "Achteck"],
     ["star5", "Stern: 5 Zacken"], ["heart", "Herz"], ["cloud", "Wolke"], ["flowChartPunchedCard", "Flussdiagramm: Lochkarte"]];
   const cropMenu: MenuEntry[] = [{ cmd: "picture.crop", label: "Zuschneiden" },
-    { label: "Auf Form zuschneiden", submenu: () => SHAPES.map(([g, l]) => ({ label: l, checked: (ed()?.pictureFormat()?.geometry ?? "rect") === g, run: () => set({ geometry: g === "rect" ? undefined : g, geometryAdj: undefined }) })) },
+    // The shapes as their icons, names as tooltips (Word's gallery, D-165).
+    { label: "Auf Form zuschneiden", submenu: () => [{ block: () => pictureMenu(SHAPES.map(([g, l]) => ({ value: g, label: l, svg: "", node: () => shapeIcon({ tool: { kind: "shape", geometry: g }, label: l }, 22) })), 6, [22, 22],
+      ed()?.pictureFormat()?.geometry ?? "rect", (g) => set({ geometry: g === "rect" ? undefined : g, geometryAdj: undefined })) }] },
     { label: "Seitenverhältnis", submenu: () => [{ heading: "Quadrat" }, ...ratios.slice(0, 1).map(([l, r]) => ({ label: l, run: () => ed()?.cropToRatio(r) })),
       { heading: "Hochformat" }, ...ratios.slice(1, 5).map(([l, r]) => ({ label: l, run: () => ed()?.cropToRatio(r) })),
       { heading: "Querformat" }, ...ratios.slice(5).map(([l, r]) => ({ label: l, run: () => ed()?.cropToRatio(r) }))] },
