@@ -1,0 +1,922 @@
+{
+ "date": "2026-11-11",
+ "app": "Excel",
+ "cases": {
+  "ctx_cell+click_cell": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "J5"
+  },
+  "ctx_cell+rclick_cell": {
+   "popup_open": true,
+   "popups": [
+    {
+     "w": 373,
+     "h": 957,
+     "rect": [
+      703,
+      543,
+      1076,
+      1500
+     ]
+    },
+    {
+     "w": 396,
+     "h": 82,
+     "rect": [
+      703,
+      438,
+      1099,
+      520
+     ]
+    }
+   ],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "F7",
+   "active": "F7",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "F7"
+  },
+  "ctx_cell+click_colhead": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "M"
+  },
+  "ctx_cell+click_sheettab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Tabelle3"
+  },
+  "ctx_cell+click_ribbontab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Einfügen",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Einfügen"
+  },
+  "ctx_cell+click_bold": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": true,
+   "d5_bold": false,
+   "target": "Fett"
+  },
+  "ctx_cell+click_fxbar": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "fx"
+  },
+  "ctx_cell+esc": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "esc"
+  },
+  "ctx_cell+click_other_app": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": false,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "other"
+  },
+  "ctx_colhead+click_cell": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "C:C",
+   "active": "C1",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "J5"
+  },
+  "ctx_colhead+rclick_cell": {
+   "popup_open": true,
+   "popups": [
+    {
+     "w": 373,
+     "h": 957,
+     "rect": [
+      703,
+      543,
+      1076,
+      1500
+     ]
+    },
+    {
+     "w": 396,
+     "h": 82,
+     "rect": [
+      703,
+      438,
+      1099,
+      520
+     ]
+    }
+   ],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "F7",
+   "active": "F7",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "F7"
+  },
+  "ctx_colhead+click_colhead": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "C:C",
+   "active": "C1",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "M"
+  },
+  "ctx_colhead+click_sheettab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "C:C",
+   "active": "C1",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Tabelle3"
+  },
+  "ctx_colhead+click_ribbontab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Einfügen",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "C:C",
+   "active": "C1",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Einfügen"
+  },
+  "ctx_colhead+click_bold": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "C:C",
+   "active": "C1",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Fett"
+  },
+  "ctx_colhead+click_fxbar": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "C:C",
+   "active": "C1",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "fx"
+  },
+  "ctx_colhead+esc": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "C:C",
+   "active": "C1",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "esc"
+  },
+  "ctx_colhead+click_other_app": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": false,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "C:C",
+   "active": "C1",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "other"
+  },
+  "ctx_rowhead+click_cell": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "4:4",
+   "active": "A4",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "D5"
+  },
+  "ctx_rowhead+rclick_cell": {
+   "popup_open": true,
+   "popups": [
+    {
+     "w": 373,
+     "h": 957,
+     "rect": [
+      703,
+      543,
+      1076,
+      1500
+     ]
+    },
+    {
+     "w": 396,
+     "h": 82,
+     "rect": [
+      703,
+      438,
+      1099,
+      520
+     ]
+    }
+   ],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "F7",
+   "active": "F7",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "F7"
+  },
+  "ctx_rowhead+click_colhead": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "4:4",
+   "active": "A4",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "E"
+  },
+  "ctx_rowhead+click_sheettab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "4:4",
+   "active": "A4",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Tabelle3"
+  },
+  "ctx_rowhead+click_ribbontab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Einfügen",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "4:4",
+   "active": "A4",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Einfügen"
+  },
+  "ctx_rowhead+click_bold": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "4:4",
+   "active": "A4",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Fett"
+  },
+  "ctx_rowhead+click_fxbar": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "4:4",
+   "active": "A4",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "fx"
+  },
+  "ctx_rowhead+esc": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "4:4",
+   "active": "A4",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "esc"
+  },
+  "ctx_rowhead+click_other_app": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": false,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "4:4",
+   "active": "A4",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "other"
+  },
+  "ctx_sheettab+click_cell": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "D5"
+  },
+  "ctx_sheettab+rclick_cell": {
+   "popup_open": true,
+   "popups": [
+    {
+     "w": 373,
+     "h": 957,
+     "rect": [
+      703,
+      543,
+      1076,
+      1500
+     ]
+    },
+    {
+     "w": 396,
+     "h": 82,
+     "rect": [
+      703,
+      438,
+      1099,
+      520
+     ]
+    }
+   ],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "F7",
+   "active": "F7",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "F7"
+  },
+  "ctx_sheettab+click_colhead": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "E"
+  },
+  "ctx_sheettab+click_sheettab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Tabelle5"
+  },
+  "ctx_sheettab+click_ribbontab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Einfügen",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Einfügen"
+  },
+  "ctx_sheettab+click_bold": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": true,
+   "d5_bold": false,
+   "target": "Fett"
+  },
+  "ctx_sheettab+click_fxbar": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "fx"
+  },
+  "ctx_sheettab+esc": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "esc"
+  },
+  "ctx_sheettab+click_other_app": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": false,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "other"
+  },
+  "dd_fill+click_cell": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "J5"
+  },
+  "dd_fill+rclick_cell": {
+   "popup_open": true,
+   "popups": [
+    {
+     "w": 373,
+     "h": 957,
+     "rect": [
+      1423,
+      572,
+      1796,
+      1529
+     ]
+    },
+    {
+     "w": 396,
+     "h": 82,
+     "rect": [
+      1423,
+      467,
+      1819,
+      549
+     ]
+    }
+   ],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "L8",
+   "active": "L8",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "L8"
+  },
+  "dd_fill+click_colhead": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "M"
+  },
+  "dd_fill+click_sheettab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Tabelle3"
+  },
+  "dd_fill+click_ribbontab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Einfügen",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Einfügen"
+  },
+  "dd_fill+click_bold": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": true,
+   "d5_bold": false,
+   "target": "Fett"
+  },
+  "dd_fill+click_fxbar": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "fx"
+  },
+  "dd_fill+esc": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "esc"
+  },
+  "dd_fill+click_other_app": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": false,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "other"
+  },
+  "gallery_styles+click_cell": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "D5"
+  },
+  "gallery_styles+rclick_cell": {
+   "popup_open": true,
+   "popups": [
+    {
+     "w": 373,
+     "h": 957,
+     "rect": [
+      703,
+      543,
+      1076,
+      1500
+     ]
+    },
+    {
+     "w": 396,
+     "h": 82,
+     "rect": [
+      703,
+      438,
+      1099,
+      520
+     ]
+    }
+   ],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "F7",
+   "active": "F7",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "F7"
+  },
+  "gallery_styles+click_colhead": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "E"
+  },
+  "gallery_styles+click_sheettab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Tabelle3"
+  },
+  "gallery_styles+click_ribbontab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Einfügen",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Einfügen"
+  },
+  "gallery_styles+click_bold": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": true,
+   "d5_bold": false,
+   "target": "Fett"
+  },
+  "gallery_styles+click_fxbar": {
+   "error": "every target under the popup"
+  },
+  "gallery_styles+esc": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "mode_after_esc": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "esc"
+  },
+  "gallery_styles+click_other_app": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": false,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "other"
+  },
+  "ctx_cell+click_zoomin": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "zoom": 256.0,
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Vergrößern"
+  },
+  "ctx_colhead+click_zoomin": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "zoom": 256.0,
+   "selection": "C:C",
+   "active": "C1",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Vergrößern"
+  },
+  "ctx_rowhead+click_zoomin": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "zoom": 256.0,
+   "selection": "4:4",
+   "active": "A4",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Vergrößern"
+  },
+  "ctx_sheettab+click_zoomin": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "zoom": 256.0,
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Vergrößern"
+  },
+  "dd_fill+click_zoomin": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "zoom": 256.0,
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Vergrößern"
+  },
+  "gallery_styles+click_zoomin": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "mode": "Bereit",
+   "sheet": "Tabelle1",
+   "zoom": 256.0,
+   "selection": "B2",
+   "active": "B2",
+   "b2_bold": false,
+   "d5_bold": false,
+   "target": "Vergrößern"
+  }
+ }
+}

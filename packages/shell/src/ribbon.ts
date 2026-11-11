@@ -239,12 +239,13 @@ export class Ribbon {
     if (this.minimized) {
       // "Nur Registerkarten anzeigen": clicking a tab shows the ribbon until the next click.
       this.card.classList.remove("hidden");
-      const away = (e: MouseEvent) => {
+      // pointerdown: the grid cancels pointerdown, so a mousedown listener never hears a press on the sheet (D-156).
+      const away = (e: PointerEvent) => {
         if (this.card.contains(e.target as Node) || this.tabRow.contains(e.target as Node)) return;
         if (this.minimized) this.card.classList.add("hidden");
-        removeEventListener("mousedown", away, true);
+        removeEventListener("pointerdown", away, true);
       };
-      setTimeout(() => addEventListener("mousedown", away, true));
+      setTimeout(() => addEventListener("pointerdown", away, true));
     }
     this.levels = new Map();
     this.render();
@@ -571,16 +572,27 @@ export class Ribbon {
       case "color": {
         const c2 = c;
         const cmdDef = this.commands.get(c.cmd);
+        // Office's colour button (D-157): the glyph over one thick bar in the last colour used. The main part applies
+        // that colour, the arrow opens the palette, and a pick there becomes the new last colour.
         const bar = h("span", { class: "colorbar" });
+        const hex6 = (v: string) => /^#?[0-9a-f]{6}$/i.test(v);
+        let last: string | null = null;
+        const shown = () => (last ?? c2.current()).replace(/^#/, "");
+        const pickColor = (v: string) => {
+          // Hex picks are remembered here; theme references and Automatisch the app keeps itself (its current()).
+          last = hex6(v) ? v : null;
+          c2.pick(v);
+        };
+        const glyph = h("span", { class: "color-ico" }, icon(cmdDef.icon === "font-color" ? "font-color-glyph" : cmdDef.icon), bar);
         const main = h("button", {
           class: "rb rb-small color-main", "data-tip": this.commands.tooltip(c.cmd), "aria-label": cmdDef.label,
-          onclick: () => { if (this.commands.isEnabled(c2.cmd)) { c2.pick(c2.current()); this.opts.onDone?.(); } },
-        }, ...(c.showLabel ? [h("span", { class: "color-col" }, icon(cmdDef.icon), bar), h("span", { class: "lbl" }, cmdDef.label)] : [icon(cmdDef.icon), bar]));
+          onclick: () => { if (this.commands.isEnabled(c2.cmd)) { const v = last ?? c2.current(); c2.pick(v); this.opts.onDone?.(); } },
+        }, ...(c.showLabel ? [glyph, h("span", { class: "lbl" }, cmdDef.label)] : [glyph]));
         if (c.showLabel) main.classList.add("labelled");
         const arrow = h("button", {
           class: "rb rb-small arrow", "aria-label": "Weitere Optionen", "data-keytip": c.key, "data-keytip-scope": this.scope(),
           onclick: () => {
-            const pick = (v: string) => { c2.pick(v); this.opts.onDone?.(); };
+            const pick = (v: string) => { pickColor(v); this.opts.onDone?.(); this.refresh(); };
             const hover = c2.preview ? { commands: this.commands, apply: c2.preview } : undefined;
             if (c2.palette === "font") showFontColors(arrow.getBoundingClientRect(), pick, hover, c2.extra ? this.paletteExtra(c2.extra()) : undefined, c2.theme?.(), c2.more, c2.noColor);
             else showHighlights(arrow.getBoundingClientRect(), pick, hover, c2.names);
@@ -589,9 +601,9 @@ export class Ribbon {
         this.updaters.push(() => {
           const on = this.commands.isEnabled(c2.cmd);
           main.disabled = !on; arrow.disabled = !on;
-          const cur = c2.current();
+          const cur = shown();
           const hex = c2.palette === "highlight" ? highlightHex(cur) : cur === "auto" ? "000000" : cur;
-          bar.style.background = cur === "none" ? "transparent" : `#${hex}`;
+          bar.style.background = cur === "none" ? "transparent" : `#${hex.replace(/^#/, "")}`;
         });
         return h("div", { class: "rsplit" }, main, arrow);
       }

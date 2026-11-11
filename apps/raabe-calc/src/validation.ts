@@ -9,7 +9,7 @@ import {
   toLocalFormula, validationAt, validationRanges, checkValue, listValues,
   type Rect, type Sheet, type Validation, type ValidationOperator, type ValidationType, type Value, type Workbook,
 } from "@raabe/sheet-engine";
-import { h, messageBox, showDialog } from "@raabe/shell";
+import { h, messageBox, pressOutside, showDialog } from "@raabe/shell";
 import type { CalcApp } from "./app";
 import * as A from "./actions";
 import { readInput, shown } from "./engine";
@@ -312,8 +312,8 @@ export function validationFeature(app: CalcApp, enter?: (target: Rect, text: str
     removeEventListener("pointerdown", outside, true);
   }
 
-  function outside(e: Event): void {
-    if (list && !list.el.contains(e.target as Node) && !(arrow && arrow.contains(e.target as Node))) closeList();
+  function outside(e: PointerEvent): void {
+    if (list && !list.el.contains(e.target as Node) && !(arrow && arrow.contains(e.target as Node))) pressOutside(e, closeList);
   }
 
   function listKey(e: KeyboardEvent): void {

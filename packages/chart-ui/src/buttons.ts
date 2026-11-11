@@ -10,7 +10,7 @@
 //   Datenquelle auswählen dialog.
 
 import { isPie, kindInfo, paletteColor, schemeColor, seriesName, visibleModel, type ChartModel } from "@raabe/charts";
-import { h } from "@raabe/shell";
+import { h, pressOutside } from "@raabe/shell";
 import { choiceLabel, elementEntries, type ElementEntry } from "./elements";
 import type { ChartElement } from "./formatpane";
 import { chartStyles, applyStyle, styleIndex } from "./styles";
@@ -165,7 +165,8 @@ export function chartButtons(host: ButtonsHost) {
     away = (e: PointerEvent) => {
       const t = e.target as Node;
       if (open?.el.contains(t) || open?.sub?.contains(t) || (t as HTMLElement).closest?.(".chart-btn")) return;
-      close();
+      // As Office's menus (D-156): a left press in the document is swallowed, the frame and a right press act.
+      pressOutside(e, close);
     };
     keyAway = (e: KeyboardEvent) => {
       if (e.key !== "Escape" || !open) return;

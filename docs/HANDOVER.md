@@ -23,7 +23,7 @@ what is not in the other docs. Read in this order:
   exe, so the 06:00 build went to another folder and the usual exe stayed old. If a build fails with "Zugriff verweigert"
   on the exe, the build did NOT replace it. Tell the owner, never close their window, rebuild once it is closed.
 
-## Next step: Step 11 "the app around the document like Office" (scope agreed, WAITING FOR THE OWNER'S GO)
+## Next step: Step 11 "the app around the document like Office" (owner's go 2026-11-11 evening, night run)
 
 The owner's first short test of RaabeCalc after the night run found four things. Their verdict: "Those are things that
 we need to get right in all three apps and in different variations."
@@ -77,7 +77,10 @@ the lock. Every fault becomes a lasting case. All three apps.
    - The glyph sits over one thick bar in the last used colour: red at first for Schriftfarbe, yellow for
      Hervorhebung.
    - The main part applies that colour; the arrow opens the palette. The bar follows the last pick.
-5. **Screen comparison with Office.** A new check compares the app's own UI with Office's for the same state: ribbon,
+5. **Pictures instead of text everywhere (owner, 2026-11-11).** Not only the list in point 3: an inventory of every
+   pane, dialog, dropdown and gallery in Office (UI Automation: are the entries pictures, text or both?) against the
+   same controls in our apps. A lasting check fails wherever Office shows a picture and we show text.
+6. **Screen comparison with Office.** A new check compares the app's own UI with Office's for the same state: ribbon,
    open menus, dialogs, panes, in all three apps. Every difference is fixed or written down as a deliberate decision.
 
 **Still to ask the owner before starting:**

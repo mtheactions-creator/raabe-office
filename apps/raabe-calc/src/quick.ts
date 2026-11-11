@@ -3,7 +3,7 @@
 // under it with the tabs Formatierung, Diagramme, Ergebnisse, Tabellen and Sparklines. Each tile
 // does what Excel's does (probe_excel_quickanalysis.py, results/2026-10-28-excel-quickanalysis.json).
 
-import { h, icon } from "@raabe/shell";
+import { h, icon, pressOutside, swallowPress } from "@raabe/shell";
 import type { Rect } from "@raabe/sheet-engine";
 import type { CalcApp } from "./app";
 
@@ -63,7 +63,12 @@ export function quickFeature(app: CalcApp, tiles: () => Record<string, QuickTile
     removeEventListener("pointerdown", outside, true);
     removeEventListener("keydown", keys, true);
   }
-  const outside = (e: Event) => { if (panel && !panel.contains(e.target as Node) && e.target !== button && !button.contains(e.target as Node)) close(); };
+  const outside = (e: PointerEvent) => {
+    if (!panel || panel.contains(e.target as Node)) return;
+    // The button again: only closes (D-156).
+    if (e.target === button || button.contains(e.target as Node)) { close(); swallowPress(e); return; }
+    pressOutside(e, close);
+  };
   const keys = (e: KeyboardEvent) => {
     if (!panel) return;
     if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close(); app.grid.focus(); }

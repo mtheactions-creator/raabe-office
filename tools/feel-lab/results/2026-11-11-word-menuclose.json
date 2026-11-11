@@ -1,0 +1,285 @@
+{
+ "date": "2026-11-11",
+ "app": "Word",
+ "cases": {
+  "ctx_text+click_text": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": false,
+   "target": "@1151"
+  },
+  "ctx_text+rclick_text": {
+   "popup_open": true,
+   "popups": [
+    {
+     "w": 334,
+     "h": 596,
+     "rect": [
+      1420,
+      958,
+      1754,
+      1554
+     ]
+    },
+    {
+     "w": 665,
+     "h": 96,
+     "rect": [
+      1420,
+      839,
+      2085,
+      935
+     ]
+    }
+   ],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "selection": [
+    1151,
+    1151
+   ],
+   "first_word_bold": false,
+   "target": "@1151"
+  },
+  "ctx_text+click_ribbontab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Einfügen",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": false,
+   "target": "Einfügen"
+  },
+  "ctx_text+click_bold": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": true,
+   "target": "Fett"
+  },
+  "ctx_text+esc": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": false,
+   "target": "esc"
+  },
+  "ctx_text+click_other_app": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": false,
+   "ribbon_tab": "Start",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": false,
+   "target": "other"
+  },
+  "dd_fontcolor+click_text": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": false,
+   "target": "@1151"
+  },
+  "dd_fontcolor+rclick_text": {
+   "popup_open": true,
+   "popups": [
+    {
+     "w": 334,
+     "h": 596,
+     "rect": [
+      1420,
+      958,
+      1754,
+      1554
+     ]
+    },
+    {
+     "w": 665,
+     "h": 96,
+     "rect": [
+      1420,
+      839,
+      2085,
+      935
+     ]
+    }
+   ],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "selection": [
+    1151,
+    1151
+   ],
+   "first_word_bold": false,
+   "target": "@1151"
+  },
+  "dd_fontcolor+click_ribbontab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Einfügen",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": false,
+   "target": "Einfügen"
+  },
+  "dd_fontcolor+click_bold": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": true,
+   "target": "Fett"
+  },
+  "dd_fontcolor+esc": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": false,
+   "target": "esc"
+  },
+  "dd_fontcolor+click_other_app": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": false,
+   "ribbon_tab": "Start",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": false,
+   "target": "other"
+  },
+  "gallery_bullets+click_text": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": false,
+   "target": "@1151"
+  },
+  "gallery_bullets+rclick_text": {
+   "popup_open": true,
+   "popups": [
+    {
+     "w": 334,
+     "h": 596,
+     "rect": [
+      1420,
+      958,
+      1754,
+      1554
+     ]
+    },
+    {
+     "w": 665,
+     "h": 96,
+     "rect": [
+      1420,
+      839,
+      2085,
+      935
+     ]
+    }
+   ],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "selection": [
+    1151,
+    1151
+   ],
+   "first_word_bold": false,
+   "target": "@1151"
+  },
+  "gallery_bullets+click_ribbontab": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Einfügen",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": false,
+   "target": "Einfügen"
+  },
+  "gallery_bullets+click_bold": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": true,
+   "target": "Fett"
+  },
+  "gallery_bullets+esc": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": true,
+   "ribbon_tab": "Start",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": false,
+   "target": "esc"
+  },
+  "gallery_bullets+click_other_app": {
+   "popup_open": false,
+   "popups": [],
+   "foreground_ours": false,
+   "ribbon_tab": "Start",
+   "selection": [
+    0,
+    5
+   ],
+   "first_word_bold": false,
+   "target": "other"
+  }
+ }
+}

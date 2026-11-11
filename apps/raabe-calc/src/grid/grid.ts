@@ -7,7 +7,7 @@ import {
   MAX_COLS, MAX_ROWS, cellName, colName, formulaRefs, inRect, normRect, parseRange, rangeName,
   type Rect, type Sheet, type Workbook,
 } from "@raabe/sheet-engine";
-import { h } from "@raabe/shell";
+import { h, pressOutside } from "@raabe/shell";
 import { checkEntry, editText } from "../engine";
 import { cssFont, draw, errorIndicator, expandToMerges, filterButton, placed, type DrawState, type Pane } from "./render";
 import { CondEval } from "./cond";
@@ -2411,7 +2411,7 @@ export class Grid {
       else if (ev.key === "Enter") { ev.preventDefault(); ev.stopPropagation(); if (index >= 0) take(index); else close(); }
       else if (ev.key === "Escape") { ev.preventDefault(); ev.stopPropagation(); close(); }
     };
-    const outside = (ev: Event) => { if (!list.contains(ev.target as Node)) close(); };
+    const outside = (ev: PointerEvent) => { if (!list.contains(ev.target as Node)) pressOutside(ev, close); };
     render();
     list.style.left = `${b.x}px`;
     list.style.top = `${b.y + b.h}px`;

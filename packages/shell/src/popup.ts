@@ -1,5 +1,5 @@
-// Menus, popups and tooltips. One popup is open at a time; it closes on outside click,
-// Escape, window blur or when another opens, as in Office.
+// Menus, popups and tooltips. One popup is open at a time; it closes on a press outside it,
+// Escape, window blur or when another opens, as in Office (D-156).
 
 import { h, icon } from "./dom";
 import type { Commands } from "./commands";
@@ -8,10 +8,56 @@ let open: { el: HTMLElement; close: () => void } | null = null;
 
 /** The control pressed last (the one that opens a popup), and when. */
 let lastDown: { el: Element; at: number } | null = null;
-addEventListener("mousedown", (e) => {
+addEventListener("pointerdown", (e) => {
   const el = (e.target as Element | null)?.closest?.("button, [role=button], .rcombo");
   lastDown = el ? { el, at: performance.now() } : null;
 }, true);
+
+/**
+ * The app's frame around the document: title bar, ribbon, status bar, task panes, dialogs, backstage. A press there
+ * while a popup is open closes the popup and still acts (Excel, Word and PowerPoint, recorded 2026-11-11: a ribbon
+ * tab switches, Fett applies, the zoom button zooms).
+ */
+export const FRAME_SELECTOR = ".titlebar, .tabrow, .ribbon-card, .mini-toolbar, .statusbar, .backstage, [role=complementary], [role=dialog]";
+
+/**
+ * A press outside an open popup, as Office handles it (D-156). The popup closes in every case (`close`). A left press
+ * in the document (a cell, a header, a sheet tab, the formula bar, the text, the slide, a thumbnail) does nothing
+ * else: Office swallows it, the selection stays. A right press there acts (it selects and opens the next context
+ * menu), and so does any press in the app's frame. Listen with `pointerdown` in the capture phase: a surface that
+ * cancels `pointerdown` (the grid does) stops the `mousedown` that would follow, so a `mousedown` listener never
+ * hears that press.
+ */
+export function pressOutside(e: PointerEvent, close: () => void): void {
+  close();
+  if (e.button !== 0) return;
+  const t = e.target as Element | null;
+  if (t?.closest?.(FRAME_SELECTOR)) return;
+  swallowPress(e);
+}
+
+/** Swallows a whole press: this pointerdown and the mouse and click events that follow it; focus stays where it was. */
+export function swallowPress(e: PointerEvent): void {
+  e.preventDefault();
+  e.stopImmediatePropagation();
+  const before = document.activeElement as HTMLElement | null;
+  // The click ends the swallowed press (its listener must be this one: it stops every later listener).
+  const block = (ev: Event) => { ev.preventDefault(); ev.stopImmediatePropagation(); if (ev.type === "click") setTimeout(end); };
+  const types = ["mousedown", "pointerup", "mouseup", "click", "dblclick", "auxclick"] as const;
+  for (const t of types) addEventListener(t, block, true);
+  let done = false;
+  const end = () => {
+    if (done) return;
+    done = true;
+    for (const t of types) removeEventListener(t, block, true);
+    removeEventListener("pointerdown", end, true);
+    // Chromium may still move the focus for a cancelled press (an input under the pointer): put it back.
+    if (before?.isConnected && document.activeElement !== before) before.focus({ preventScroll: true });
+  };
+  // The next press, or the timeout, ends it when no click follows (the pointer was released outside the window).
+  addEventListener("pointerdown", end, true);
+  setTimeout(end, 800);
+}
 
 /** The registry whose Livevorschau a menu started (it ends when the menu closes). */
 let hovered: Commands | null = null;
@@ -36,6 +82,11 @@ export function hoverPreview(commands: Commands, el: HTMLElement, target: string
 export function showPopup(el: HTMLElement, anchor: DOMRect, onClose?: () => void): void {
   closePopup();
   document.body.append(el);
+  // Every popup floats at its anchor. Panels without a look of their own (a gallery's tile panel) get the card of a
+  // menu; without this they were laid out at the bottom of the page.
+  const cs = getComputedStyle(el);
+  if (cs.position === "static") { el.style.position = "fixed"; el.style.zIndex = "70"; }
+  if (cs.backgroundColor === "rgba(0, 0, 0, 0)" && !el.classList.contains("menu-root")) el.classList.add("popup-card");
   const r = el.getBoundingClientRect();
   let x = anchor.left;
   let y = anchor.bottom + 2;
@@ -46,25 +97,29 @@ export function showPopup(el: HTMLElement, anchor: DOMRect, onClose?: () => void
   // The control that opened the popup: pressing it again closes the popup (Office), and the
   // click that follows must not open it anew.
   const opener = lastDown && performance.now() - lastDown.at < 1500 ? lastDown.el : null;
-  const outside = (e: MouseEvent) => {
+  const outside = (e: PointerEvent) => {
     if (el.contains(e.target as Node)) return;
     if (opener && opener.contains(e.target as Node)) {
-      const swallow = (c: MouseEvent) => { if (opener.contains(c.target as Node)) { c.stopImmediatePropagation(); c.preventDefault(); } };
-      addEventListener("click", swallow, { capture: true, once: true });
-      setTimeout(() => removeEventListener("click", swallow, true), 600);
+      // Pressing the opener again only closes the popup (Office): the press must not open it anew.
+      closePopup();
+      swallowPress(e);
+      return;
     }
-    closePopup();
+    pressOutside(e, closePopup);
   };
   const key = (e: KeyboardEvent) => { if (e.key === "Escape") { e.preventDefault(); closePopup(); } };
   setTimeout(() => {
-    addEventListener("mousedown", outside, true);
+    addEventListener("pointerdown", outside, true);
     addEventListener("keydown", key, true);
     addEventListener("blur", closePopup);
   });
+  // For tests and styles: whether a popup is open (check_menuclose_*.py).
+  document.documentElement.setAttribute("data-popup-open", "");
   open = {
     el,
     close: () => {
-      removeEventListener("mousedown", outside, true);
+      document.documentElement.removeAttribute("data-popup-open");
+      removeEventListener("pointerdown", outside, true);
       removeEventListener("keydown", key, true);
       removeEventListener("blur", closePopup);
       el.remove();
@@ -212,6 +267,6 @@ export function installTooltips(): void {
       tipEl.style.top = `${r.bottom + 6 + t.height > innerHeight ? r.top - t.height - 6 : r.bottom + 6}px`;
     }, 600);
   });
-  document.addEventListener("mousedown", hide, true);
+  document.addEventListener("pointerdown", hide, true);
   document.addEventListener("keydown", hide, true);
 }

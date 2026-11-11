@@ -1,0 +1,765 @@
+{
+ "date": "2026-11-11",
+ "reference": "2026-11-11",
+ "cases": {
+  "ctx_cell+click_cell": {
+   "target": "J5",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_cell+rclick_cell": {
+   "target": "F7",
+   "ours": {
+    "popup_open": true,
+    "selection": "F7",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_cell+click_colhead": {
+   "target": "E",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_cell+click_sheettab": {
+   "target": "Tabelle3",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_cell+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Einfügen",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_cell+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": true
+   },
+   "diff": {}
+  },
+  "ctx_cell+click_fxbar": {
+   "target": "fx",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_cell+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_cell+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_colhead+click_cell": {
+   "target": "J5",
+   "ours": {
+    "popup_open": false,
+    "selection": "C:C",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_colhead+rclick_cell": {
+   "target": "F7",
+   "ours": {
+    "popup_open": true,
+    "selection": "F7",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_colhead+click_colhead": {
+   "target": "M",
+   "ours": {
+    "popup_open": false,
+    "selection": "C:C",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_colhead+click_sheettab": {
+   "target": "Tabelle3",
+   "ours": {
+    "popup_open": false,
+    "selection": "C:C",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_colhead+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "selection": "C:C",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Einfügen",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_colhead+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "selection": "C:C",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_colhead+click_fxbar": {
+   "target": "fx",
+   "ours": {
+    "popup_open": false,
+    "selection": "C:C",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_colhead+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "selection": "C:C",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_colhead+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "selection": "C:C",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_rowhead+click_cell": {
+   "target": "D5",
+   "ours": {
+    "popup_open": false,
+    "selection": "4:4",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_rowhead+rclick_cell": {
+   "target": "F7",
+   "ours": {
+    "popup_open": true,
+    "selection": "F7",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_rowhead+click_colhead": {
+   "target": "E",
+   "ours": {
+    "popup_open": false,
+    "selection": "4:4",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_rowhead+click_sheettab": {
+   "target": "Tabelle3",
+   "ours": {
+    "popup_open": false,
+    "selection": "4:4",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_rowhead+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "selection": "4:4",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Einfügen",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_rowhead+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "selection": "4:4",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_rowhead+click_fxbar": {
+   "target": "fx",
+   "ours": {
+    "popup_open": false,
+    "selection": "4:4",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_rowhead+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "selection": "4:4",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_rowhead+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "selection": "4:4",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_sheettab+click_cell": {
+   "target": "D5",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_sheettab+rclick_cell": {
+   "target": "F7",
+   "ours": {
+    "popup_open": true,
+    "selection": "F7",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_sheettab+click_colhead": {
+   "target": "E",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_sheettab+click_sheettab": {
+   "error": "every target under the popup"
+  },
+  "ctx_sheettab+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Einfügen",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_sheettab+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": true
+   },
+   "diff": {}
+  },
+  "ctx_sheettab+click_fxbar": {
+   "target": "fx",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_sheettab+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_sheettab+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fill+click_cell": {
+   "target": "J5",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fill+rclick_cell": {
+   "target": "L8",
+   "ours": {
+    "popup_open": true,
+    "selection": "L8",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fill+click_colhead": {
+   "target": "M",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fill+click_sheettab": {
+   "target": "Tabelle3",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fill+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Einfügen",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fill+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": true
+   },
+   "diff": {}
+  },
+  "dd_fill+click_fxbar": {
+   "target": "fx",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fill+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fill+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_styles+click_cell": {
+   "target": "D5",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_styles+rclick_cell": {
+   "target": "F7",
+   "ours": {
+    "popup_open": true,
+    "selection": "F7",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_styles+click_colhead": {
+   "target": "E",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_styles+click_sheettab": {
+   "target": "Tabelle3",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_styles+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Einfügen",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_styles+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": true
+   },
+   "diff": {}
+  },
+  "gallery_styles+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_styles+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 100,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_cell+click_zoomin": {
+   "target": "Vergrößern",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 110,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_colhead+click_zoomin": {
+   "target": "Vergrößern",
+   "ours": {
+    "popup_open": false,
+    "selection": "C:C",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 110,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_rowhead+click_zoomin": {
+   "target": "Vergrößern",
+   "ours": {
+    "popup_open": false,
+    "selection": "4:4",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 110,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_sheettab+click_zoomin": {
+   "target": "Vergrößern",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 110,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fill+click_zoomin": {
+   "target": "Vergrößern",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 110,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_styles+click_zoomin": {
+   "target": "Vergrößern",
+   "ours": {
+    "popup_open": false,
+    "selection": "B2",
+    "sheet": "Tabelle1",
+    "mode": "Bereit",
+    "zoom": 110,
+    "ribbon_tab": "Start",
+    "b2_bold": false
+   },
+   "diff": {}
+  }
+ },
+ "passed": 58,
+ "total": 59
+}

@@ -7,7 +7,7 @@ import {
   MAX_COLS, MAX_ROWS, cellName, colName, FUNCTIONS_DE, FORMAT_CATEGORIES, localFormat, fileFormat, parseRange, rangeName, shiftFormula,
   type Cell, type CondRule, type Rect, type Sheet,
 } from "@raabe/sheet-engine";
-import { colorGrid, h, messageBox, showDialog, showMenu, type MenuEntry } from "@raabe/shell";
+import { colorGrid, h, messageBox, pressOutside, showDialog, showMenu, type MenuEntry } from "@raabe/shell";
 import type { CalcApp } from "./app";
 import * as A from "./actions";
 import { shown, editText } from "./engine";
@@ -962,7 +962,8 @@ export function dialogs(app: CalcApp) {
     };
     const panel = h("div", { class: "filter-panel" });
     const close = () => { panel.remove(); removeEventListener("pointerdown", outside, true); removeEventListener("keydown", keys, true); app.grid.focus(); };
-    const outside = (e: Event) => { if (!panel.contains(e.target as Node)) close(); };
+    // A press outside closes the panel as Office closes its menus (D-156).
+    const outside = (e: PointerEvent) => { if (!panel.contains(e.target as Node) && !(e.target as Element).closest?.(".menu-root")) pressOutside(e, close); };
     const keys = (e: KeyboardEvent) => { if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close(); } };
     const item = (label: string, run: (() => void) | null, icon = "") =>
       h("button", { type: "button", class: "filter-item", disabled: run ? undefined : true, onclick: () => { close(); run?.(); } }, h("span", { class: "fi-icon" }, icon), label);

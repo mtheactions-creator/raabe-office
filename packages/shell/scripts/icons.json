@@ -42,6 +42,7 @@
   "text-effects": "text_effects",
   "highlight": "highlight",
   "font-color": "text_color",
+  "font-color-glyph": "custom:color-a",
   "bullets": "text_bullet_list_ltr",
   "numbering": "text_number_list_ltr",
   "multilevel": "text_bullet_list_tree",

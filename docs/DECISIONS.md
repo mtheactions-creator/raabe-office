@@ -4368,3 +4368,55 @@ Rahmenlinien; a pattern with its colour on a background; 50% Grau; Fülleffekte 
 Compare cases: the pointer dragged to 45 degrees, -30 typed, vertical text, a font with Schriftschnitt, Grad,
 Unterstreichung and Durchgestrichen from the lists, Hochgestellt after Tiefgestellt, Standardschrift on a mixed
 selection.
+
+## D-156 Menus close as Office's: a press outside closes the popup, and in the document it does nothing else (2026-11-11)
+
+The owner's first test of the night run: after a right click in RaabeCalc's sheet the context menu stayed open on the
+next left click into another cell. **Cause:** the shared popup code closed popups on a capturing `mousedown`; the grid
+cancels `pointerdown` (to keep the focus in its editor), and a cancelled `pointerdown` stops the `mousedown` that would
+follow, so the popup never heard the press. Every surface that cancels `pointerdown` had the fault (the grid, chart
+handles, splitters), and so had the "Nur Registerkarten anzeigen" ribbon and the tooltips.
+
+**Recorded first** (`probe_excel_menuclose.py`, `probe_word_menuclose.py`, `probe_powerpoint_menuclose.py`: our own
+Office, real input under the lock, a click target chosen outside every open popup so no click lands on a menu item;
+`results/2026-11-11-*-menuclose.json`). Openers: context menus of a cell, a column and a row header, a sheet tab, the
+text, a shape, a thumbnail, the empty slide; the Füllfarbe/Schriftfarbe palettes; the Zellenformatvorlagen,
+Aufzählungszeichen and Layout galleries. All three apps follow one rule:
+- A **left press in the document** (a cell, a header, a sheet tab, the formula bar, the text, the slide, a shape, a
+  thumbnail) closes the popup and **does nothing else**: the selection stays, the sheet stays, the formula bar is not
+  entered. This is not what the step's scope expected ("the click still does its normal job"); we follow Office, since
+  that is the muscle memory the suite is for.
+- A **right press in the document** closes the popup and acts: it selects there and opens that place's context menu.
+- A press in the **app's frame** closes the popup and acts: a ribbon tab switches, Fett applies, the status bar's
+  Vergrößern zooms.
+- **Esc** closes it (the selection stays), and so does a **click into another program** (the window's blur).
+
+**Built** once in the shell: `pressOutside` and `swallowPress` (`packages/shell/src/popup.ts`). Popups listen for a
+capturing `pointerdown`; the frame is `FRAME_SELECTOR` (title bar, tab row, ribbon, mini toolbar, status bar,
+backstage, task panes and dialogs); a swallowed press also swallows its mousedown, mouseup and click, and puts the focus
+back if Chromium moved it; it ends with its click or the next press. Pressing the opener again only closes the popup.
+The app-specific popups use the same rule: RaabeCalc's AutoFilter panel, the cell pick list (Alt+Nach-unten), the
+validation list, Schnellanalyse, and the chart buttons' flyouts (`@raabe/chart-ui`, all three apps).
+
+Found on the way: a popup without a position of its own (the Zellenformatvorlagen gallery's tile panel, the table and
+design galleries) was laid out at the bottom of the page instead of under its button. `showPopup` now makes every popup
+float at its anchor and gives a panel without a background the card of a menu.
+
+**Measured:** `check_menuclose_calc.py` runs Excel's cases in RaabeCalc with trusted DevTools input and compares what
+changed (popup open, selection moved, sheet, ribbon tab, zoom, Fett, edit mode): 58 of 58 as in Excel (one case skipped
+on both sides: every sheet-tab target lay under the menu). Unit tests in `packages/shell/test/popup.test.ts`.
+
+## D-157 Colour buttons as Office's: the glyph over one thick bar in the last colour used (2026-11-11)
+
+The owner found the font colour icon confusing in all three apps: an "A", a bar beneath it, and our colour bar beneath
+that. **Cause:** Fluent's `text_color` glyph has an outlined box under the "A" (meant to be filled with the colour); we
+drew our own bar below it. Measured in Excel and Word at 150 % (`check_colorbuttons.py`): a 16 px icon box, the glyph in
+its top 11 px, one bar of 16 x 4 px in rows 12 to 16, no outline.
+- Our own "A" (`custom-icons/color-a.svg`, icon `font-color-glyph`) replaces Fluent's in every colour button; the other
+  glyphs (Füllfarbe, Schattierung, Formkontur, Fülleffekt, Hervorhebung) are drawn in the same 13 px over the bar.
+- The bar shows the **last colour used** with that button; the main part applies it, the arrow opens the palette, and a
+  pick there becomes the new last colour. Before any pick it is Office's start colour from the app (red for
+  Schriftfarbe, yellow for Füllfarbe and Texthervorhebungsfarbe). The ribbon remembers hex picks itself, so controls
+  whose `current()` was fixed (the chart Format tab's Fülleffekt/Formkontur/Textfüllung) now follow the last pick too;
+  theme references and Automatisch stay with the app.
+- A `#` in an app's colour value no longer makes the bar's CSS invalid.
