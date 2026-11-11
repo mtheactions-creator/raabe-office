@@ -4,15 +4,13 @@
 // (text-effects.gen.ts, recorded with probe_word_texteffects.py); the rest (Kontur colours and
 // widths, Leuchten colours, the pane's settings) changes those elements as Word does.
 
-import { closePopup, colorDialog, colorGrid, h, hoverPreview, icon, type MenuEntry } from "@raabe/shell";
+import { closePopup, colorDialog, colorGrid, h, hoverPreview, icon, pictureDropdown, pictureMenu, pictures, weightPicture, type MenuEntry } from "@raabe/shell";
 import { fxColor, fxColorXml, fxNumbers, fxParts, fxSet, outlineXml, textFxCss, type TextFxPart } from "@raabe/text-engine";
 import type { AppApi } from "./api";
 import type { Dock } from "./dock";
 import { GLOWS, REFLECTIONS, SHADOWS, TEXTFX_PRESETS } from "./text-effects.gen";
 
 const WIDTHS = [0.25, 0.5, 0.75, 1, 1.5, 2.25, 3, 4.5, 6];
-const DASHES: [string, string][] = [["solid", "Durchgezogen"], ["sysDot", "Runder Punkt"], ["sysDash", "Quadratischer Punkt"], ["dash", "Strich"],
-  ["dashDot", "Strich-Punkt"], ["lgDash", "Langer Strich"], ["lgDashDot", "Langer Strich-Punkt"], ["lgDashDotDot", "Langer Strich-Punkt-Punkt"]];
 const NUMBER_FORMS: [string, string | null, string | null][] = [["Standard", null, null], ["Proportionale Lineatur", "lining", "proportional"],
   ["Tabularische Lineatur", "lining", "tabular"], ["Proportional Old-Formatvorlage", "oldStyle", "proportional"], ["Tabellarisch Old-Formatvorlage", "oldStyle", "tabular"]];
 // "Keine" is written as w14:val="none" (Word), so it also switches off ligatures the style turns on (D-134).
@@ -96,14 +94,14 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
     { block: () => h("div", { class: "fx-palette" }, ...colorGrid((hex, ref) => { const p = outlineParts(); change("textOutline", outlineXml(fxColorXml(hex, ref), p.w || 0.75, p.dash)); }, colors(), { commands: api.commands, apply: (hex, ref) => { const p = outlineParts(); change("textOutline", outlineXml(fxColorXml(hex, ref), p.w || 0.75, p.dash)); } })) },
     { label: "Keine Kontur", run: () => change("textOutline", null) },
     { label: "Weitere Konturfarben...", icon: "colors", run: () => pickColor((hex) => { const p = outlineParts(); change("textOutline", outlineXml(fxColorXml(hex), p.w || 0.75, p.dash)); }) },
+    // Stärke shows each line with its name, Striche the dashes as pictures (Word's menus; D-162).
     { label: "Stärke", icon: "line-weight", submenu: () => WIDTHS.map((w): MenuEntry => ({
-      label: `${w.toLocaleString("de-DE")} Pt.`, get checked() { return Math.abs(outlineParts().w - w) < 0.01; },
+      label: `${w.toLocaleString("de-DE")} Pt.`, preview: weightPicture(w),
       run: () => { const p = outlineParts(); change("textOutline", outlineXml(p.colorXml ?? fxColorXml("000000"), w, p.dash)); },
     })) },
-    { label: "Striche", icon: "dash-style", submenu: () => DASHES.map(([v, l]): MenuEntry => ({
-      label: l, get checked() { return outlineParts().dash === v; },
-      run: () => { const p = outlineParts(); change("textOutline", outlineXml(p.colorXml ?? fxColorXml("000000"), p.w || 0.75, v)); },
-    })) },
+    { label: "Striche", icon: "dash-style", submenu: () => [{ block: () => pictureMenu(pictures.dashEntries(), 1, pictures.PIC_SIZE.dash, outlineParts().dash, (v) => {
+      const p = outlineParts(); change("textOutline", outlineXml(p.colorXml ?? fxColorXml("000000"), p.w || 0.75, v));
+    }) }] },
   ];
 
   // Weitere Farben...: Office's Farben dialog (D-134).
@@ -281,9 +279,8 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
       const okind = !o || /<w14:noFill\/>/.test(o) ? "none" : "solid";
       const op = outlineParts();
       const oradio = (k: string, label: string, run: () => void) => h("label", { class: "check" }, h("input", { type: "radio", name: "fxline", checked: okind === k, onchange: run }), label);
-      const dashSel = h("select", {}, ...DASHES.map(([v, l]) => h("option", { value: v }, l))) as HTMLSelectElement;
-      dashSel.value = op.dash;
-      dashSel.onchange = () => change("textOutline", outlineXml(op.colorXml ?? fxColorXml("000000"), op.w || 0.75, dashSel.value));
+      const dashSel = pictureDropdown({ label: "Strichtyp", entries: pictures.dashEntries(), columns: 1, size: pictures.PIC_SIZE.dash, value: () => op.dash,
+        set: (v) => change("textOutline", outlineXml(op.colorXml ?? fxColorXml("000000"), op.w || 0.75, v)) });
       body.append(section("Textkontur",
         oradio("none", "Keine Linie", () => change("textOutline", null)),
         oradio("solid", "Einfarbige Linie", () => change("textOutline", outlineXml(fxColorXml("000000"), 0.75))),
@@ -291,11 +288,15 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
           slider("Breite", op.w, 0, 20, "Pt.", (v) => change("textOutline", outlineXml(op.colorXml ?? fxColorXml("000000"), v, op.dash)), 0.25),
           h("label", { class: "fx-field" }, h("span", null, "Strichtyp"), dashSel)] : [])));
     } else {
+      // Voreinstellungen: Word's pictures of the effect on an "A" (D-161), not the names.
       const presetSel = (list: readonly { name: string; xml: string | null }[], part: TextFxPart, cur: string | undefined) => {
-        const s = h("select", {}, ...list.map((x, i) => h("option", { value: String(i) }, x.name))) as HTMLSelectElement;
         const hit = list.findIndex((x) => (x.xml ?? "") === (cur ?? ""));
-        s.value = String(hit >= 0 ? hit : 0);
-        s.onchange = () => change(part, list[Number(s.value)].xml);
+        const s = pictureDropdown({
+          label: "Voreinstellungen", columns: part === "glow" ? 6 : 3, size: [44, 44], value: () => String(hit >= 0 ? hit : 0),
+          entries: list.map((x, i) => ({ value: String(i), label: x.name, svg: "", ...(i ? {} : { columns: 1 }),
+            node: () => h("span", { class: "fx-tile-a", style: textFxCss(x.xml ?? "", colors()) }, "A") })),
+          set: (v) => change(part, list[Number(v)].xml),
+        });
         return h("label", { class: "fx-field" }, h("span", null, "Voreinstellungen"), s);
       };
       const sh = parts.shadow, n = fxNumbers(sh);

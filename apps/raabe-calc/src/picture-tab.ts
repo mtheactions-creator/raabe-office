@@ -8,7 +8,7 @@
 // presets are Office's (recorded from Word, shared in text-engine; Excel's 28 picture styles write the
 // same DrawingML, picture-styles-excel.test.ts). Also the task panes Grafik formatieren and Alternativtext.
 
-import { closePopup, colorGrid, h, showDialog, type Command, type Control, type MenuEntry, type PaneControl, type PaneSection, type PaneSpec, type Tab } from "@raabe/shell";
+import { closePopup, colorGrid, dashMenu, h, pictures, showDialog, weightMenu, type Command, type Control, type MenuEntry, type PaneControl, type PaneSection, type PaneSpec, type Tab } from "@raabe/shell";
 import {
   BEVELS, BRIGHT_CONTRAST, EFFECT_PRESETS, GLOWS, PICTURE_STYLES, REFLECTIONS, ROTATIONS_3D, SATURATION, SHADOWS, SHARPEN, SOFT_EDGES, TEMPERATURE, TRANSPARENCY,
   previewElement, recolorGallery, removeBackground, type GalleryItem, type PictureFormat, type PicturePreset,
@@ -251,14 +251,12 @@ export function pictureTab(app: CalcApp) {
   };
   run("pic.border", () => {});
   const weights = [0.25, 0.5, 0.75, 1, 1.5, 2.25, 3, 4.5, 6];
-  const dashes: [string, string][] = [["solid", "Durchgezogen"], ["sysDot", "Rundpunkt"], ["sysDash", "Quadratpunkt"], ["dash", "Strich"], ["dashDot", "Strich-Punkt"],
-    ["lgDash", "Langer Strich"], ["lgDashDot", "Lang-Strich-Punkt"], ["lgDashDotDot", "Lang-Strich-Punkt-Punkt"]];
   const moreLines: MenuEntry = { label: "Weitere Linien...", run: () => pics.openPane("fill") };
   const borderExtra = (): MenuEntry[] => [
     { label: "Keine Kontur", run: () => setLine(null) },
-    { label: "Stärke", submenu: () => [...weights.map((w): MenuEntry => ({ label: `${w.toLocaleString("de-DE")} Pt.`, checked: lineOf()?.width === w, run: () => setLine({ width: w }) })), "-", moreLines] },
+    { label: "Stärke", submenu: () => [...weightMenu(weights.map((w): [string, number] => [`${w.toLocaleString("de-DE")} Pt.`, w]), (w) => setLine({ width: w })), "-", moreLines] },
     { label: "Skizziert", submenu: [], disabled: true },
-    { label: "Striche", submenu: () => [...dashes.map(([v, l]): MenuEntry => ({ label: l, checked: (lineOf()?.dash ?? "solid") === v, run: () => setLine({ dash: v === "solid" ? undefined : v }) })), "-", moreLines] },
+    { label: "Striche", submenu: () => [dashMenu(lineOf()?.dash ?? "solid", (v) => setLine({ dash: v === "solid" ? undefined : v })), "-", moreLines] },
   ];
   const border: Control = {
     type: "color", cmd: "pic.border", key: "V", palette: "font", showLabel: true, more: "Weitere Konturfarben...",
@@ -414,7 +412,7 @@ export function pictureTab(app: CalcApp) {
         c2.push({ type: "color", label: "Farbe", value: () => `#${l.color}`, set: (hex) => setLine({ color: (hex ?? "#000000").replace("#", "").toUpperCase() }) });
         c2.push({ type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => Math.round((l.transparency ?? 0) * 100), set: (v) => setLine({ transparency: v / 100 || undefined }) });
         c2.push({ type: "number", label: "Breite", unit: " Pt.", min: 0, max: 1584, step: 0.25, decimals: 2, value: () => l.width, set: (v) => setLine({ width: v }) });
-        c2.push({ type: "select", label: "Strichtyp", options: dashes.map(([value, label]) => ({ value, label })), value: () => l.dash ?? "solid", set: (v) => setLine({ dash: v === "solid" ? undefined : v }) });
+        c2.push({ type: "picture", label: "Strichtyp", options: pictures.dashEntries(), columns: 1, size: pictures.PIC_SIZE.dash, value: () => l.dash ?? "solid", set: (v) => setLine({ dash: v === "solid" ? undefined : v }) });
       }
       return c2;
     } };

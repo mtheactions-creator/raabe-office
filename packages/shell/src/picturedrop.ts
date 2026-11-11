@@ -14,6 +14,8 @@ export interface PictureEntry {
   label: string;
   /** The picture: SVG markup of our own (a whole <svg>). */
   svg: string;
+  /** Or a picture drawn as an element (an effect preset drawn by the app's own renderer); wins over `svg`. */
+  node?: () => Element;
   /** A heading above this entry starts a new group (Schatten: Außen, Innen, Perspektive). */
   group?: string;
   /** A group of its own with this many columns (the "Kein Schatten" tile above the grid). */
@@ -40,11 +42,35 @@ export interface PictureDropSpec {
 
 let openFor: HTMLElement | null = null;
 
+/**
+ * The same pictures inside a menu (a ribbon submenu such as Formkontur > Striche, which Office shows as pictures):
+ * a block of picture buttons for a `{ block }` menu entry; a pick closes the menu.
+ */
+export function pictureMenu(entries: PictureEntry[], columns: number, size: [number, number], value: string | undefined, pick: (v: string) => void): HTMLElement {
+  const grid = h("div", { class: "pd-grid pd-menu", role: "listbox", style: `grid-template-columns:repeat(${columns}, auto)` });
+  for (const e of entries) {
+    const pic = h("span", { class: "pd-pic", style: `width:${size[0]}px;height:${size[1]}px` });
+    if (e.node) pic.append(e.node()); else pic.innerHTML = e.svg;
+    const on = e.value === value;
+    grid.append(h("button", { type: "button", role: "option", class: `pd-item${on ? " on" : ""}`, "aria-selected": String(on), "aria-label": e.label, "data-tip": e.label,
+      "data-value": e.value, onclick: () => { closePopup(); pick(e.value); } }, pic));
+  }
+  return grid;
+}
+
+/** A line of a weight (Stärke menus: Office shows the line and its name). */
+export function weightPicture(pt: number, w = 64, hgt = 14): HTMLElement {
+  const s = h("span", { class: "pd-pic", style: `width:${w}px;height:${hgt}px` });
+  const px = Math.max(0.75, pt * (96 / 72));
+  s.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${hgt}" aria-hidden="true"><rect x="0" y="${(hgt - px) / 2}" width="${w}" height="${px}" fill="#404040"/></svg>`;
+  return s;
+}
+
 /** The closed box (a button). */
 export function pictureDropdown(spec: PictureDropSpec): HTMLButtonElement {
   const cur = spec.entries.find((e) => e.value === spec.value());
   const pic = h("span", { class: "pd-pic", style: `width:${spec.size[0]}px;height:${spec.size[1]}px` });
-  pic.innerHTML = cur?.svg ?? "";
+  if (cur?.node) pic.append(cur.node()); else pic.innerHTML = cur?.svg ?? "";
   const box = h("button", {
     type: "button", class: "picdrop", disabled: !!spec.disabled, "aria-haspopup": "listbox", "aria-expanded": "false",
     "aria-label": spec.label, "data-tip": cur ? `${spec.label}: ${cur.label}` : spec.label, "data-value": cur?.value ?? "",
@@ -77,7 +103,7 @@ function openList(box: HTMLButtonElement, spec: PictureDropSpec): void {
       list.append(grid);
     }
     const pic = h("span", { class: "pd-pic", style: `width:${spec.size[0]}px;height:${spec.size[1]}px` });
-    pic.innerHTML = e.svg;
+    if (e.node) pic.append(e.node()); else pic.innerHTML = e.svg;
     const on = e.value === value;
     const b = h("button", {
       type: "button", role: "option", class: `pd-item${on ? " on" : ""}`, "aria-selected": String(on), "aria-label": e.label,

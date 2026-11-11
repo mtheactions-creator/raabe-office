@@ -5,7 +5,8 @@
 // (bevelT, bevelB, extrusion, contour, material), as PowerPoint writes them.
 
 import { PptxDom } from "@raabe/ooxml";
-import type { PaneControl, PaneSection, PaneTab } from "@raabe/shell";
+import { pictures, type PaneControl, type PaneSection, type PaneTab } from "@raabe/shell";
+import { presetTile } from "./presettiles";
 import { GLOWS, REFLECTIONS, ROTATIONS_3D, SHADOWS, SOFT_EDGES, type PicturePreset } from "./effect-presets";
 import { applyPart, type Part } from "./shapefx";
 
@@ -47,13 +48,6 @@ function setColor(el: Element, hex: string | null, alpha: number): void {
   el.prepend(c);
 }
 
-const MATERIALS: [string, string][] = [["warmMatte", "Warme Mattierung"], ["matte", "Matt"], ["plastic", "Plastik"], ["metal", "Metall"], ["dkEdge", "Dunkle Kante"], ["softEdge", "Weiche Kante"],
-  ["flat", "Flach"], ["legacyWireframe", "Drahtmodell"], ["powder", "Puder"], ["translucentPowder", "Transparentes Puder"], ["clear", "Klar"], ["softmetal", "Weiches Metall"]];
-const RIGS: [string, string][] = [["threePt", "Drei Punkte"], ["balanced", "Ausgeglichen"], ["soft", "Weich"], ["harsh", "Hart"], ["flood", "Flutlicht"], ["contrasting", "Kontrastreich"],
-  ["morning", "Morgen"], ["sunrise", "Sonnenaufgang"], ["sunset", "Sonnenuntergang"], ["chilly", "Kühl"], ["freezing", "Eiskalt"], ["flat", "Flach"], ["twoPt", "Zwei Punkte"], ["glow", "Leuchten"], ["brightRoom", "Heller Raum"]];
-const BEVELS: [string, string][] = [["circle", "Kreis"], ["relaxedInset", "Leicht eingesetzt"], ["cross", "Kreuz"], ["coolSlant", "Kühle Neigung"], ["angle", "Winkel"], ["softRound", "Weiche Rundung"],
-  ["convex", "Konvex"], ["slope", "Schräge"], ["divot", "Kerbe"], ["riblet", "Rippe"], ["hardEdge", "Harte Kante"], ["artDeco", "Art déco"]];
-
 /** An element's XML without namespace declarations, to compare an effect with a preset's. */
 const plain = (el: Element): string => new XMLSerializer().serializeToString(el).replace(/ xmlns(:\w+)?="[^"]*"/g, "");
 
@@ -73,9 +67,9 @@ export function effectsTab(spPr: () => Element | undefined, edit: Edit): PaneTab
   const presets = (list: readonly (PicturePreset & { id: string })[], tag: string, part: Part, label: string, el: Element | undefined): PaneControl => {
     const cur = el ? plain(el) : "";
     const hit = el ? list.slice(1).find((p) => { const x = presetEl(p, tag); return !!x && plain(x) === cur; }) : undefined;
-    const options = list.map((p, i) => ({ value: i ? p.id : "", label: p.label }));
-    if (el && !hit) options.push({ value: "custom", label: "Benutzerdefiniert" });
-    return { type: "select", label: "Voreinstellungen", options, value: () => (el ? (hit?.id ?? "custom") : ""),
+    // PowerPoint's Voreinstellungen are galleries of pictures (D-161): each preset drawn on a shape by our renderer.
+    const options = list.map((p, i) => ({ value: i ? p.id : "", label: p.label, svg: "", node: () => presetTile(i ? p : null, 56, 56), ...(i ? {} : { columns: 1 }) }));
+    return { type: "picture", label: "Voreinstellungen", options, columns: part === "glow" ? 6 : part === "rotation" ? 4 : 3, size: [56, 56], value: () => (el ? (hit?.id ?? "custom") : ""),
       set: (v) => { if (v === "custom") return; edit((sp) => applyPart(sp, part, list.find((p) => p.id === v && v) ?? null), label); } };
   };
 
@@ -139,7 +133,8 @@ export function effectsTab(spPr: () => Element | undefined, edit: Edit): PaneTab
     const b = sp3d() ? kid(sp3d(), name) : undefined;
     const set = (fn: (e: Element) => void) => with3d((s) => fn(ensure(s, name, SP3D_ORDER, { w: "76200", h: "76200" })), "3D-Format");
     return [
-      { type: "select", label: title, options: [{ value: "", label: "Keine" }, ...BEVELS.map(([value, label]) => ({ value, label }))], value: () => (b ? b.getAttribute("prst") ?? "circle" : ""),
+      { type: "picture", label: title, options: pictures.bevelEntries().map((x) => (x.value === "none" ? { ...x, value: "" } : x)), columns: 4, size: pictures.PIC_SIZE.tile,
+        value: () => (b ? b.getAttribute("prst") ?? "circle" : ""),
         set: (v) => (v ? set((e) => (v === "circle" ? e.removeAttribute("prst") : e.setAttribute("prst", v))) : with3d((s) => kid(s, name)?.remove(), "3D-Format")) },
       { type: "number", label: "Breite", unit: " Pt.", min: 0, max: 1584, step: 0.5, decimals: 1, value: () => num(b, "w", 76200) / PT, set: (v) => set((e) => e.setAttribute("w", String(Math.round(v * PT)))), disabled: () => !b },
       { type: "number", label: "Höhe", unit: " Pt.", min: 0, max: 1584, step: 0.5, decimals: 1, value: () => num(b, "h", 76200) / PT, set: (v) => set((e) => e.setAttribute("h", String(Math.round(v * PT)))), disabled: () => !b },
@@ -159,9 +154,9 @@ export function effectsTab(spPr: () => Element | undefined, edit: Edit): PaneTab
       { type: "color", label: "Farbe", value: () => clr("contourClr"), set: (hex) => with3d((e) => setColor(ensure(e, "contourClr", SP3D_ORDER), hex, 0), "3D-Format") },
       { type: "number", label: "Größe", unit: " Pt.", min: 0, max: 1584, step: 0.5, decimals: 1, value: () => num(s, "contourW") / PT, set: (v) => with3d((e) => e.setAttribute("contourW", String(Math.round(v * PT))), "3D-Format") },
       { type: "heading", label: "Material" },
-      { type: "select", label: "Material", options: MATERIALS.map(([value, label]) => ({ value, label })), value: () => s?.getAttribute("prstMaterial") ?? "warmMatte", set: (v) => with3d((e) => e.setAttribute("prstMaterial", v), "3D-Format") },
+      { type: "picture", label: "Material", options: pictures.materialEntries(), columns: 4, size: pictures.PIC_SIZE.tile, value: () => s?.getAttribute("prstMaterial") ?? "warmMatte", set: (v) => with3d((e) => e.setAttribute("prstMaterial", v), "3D-Format") },
       { type: "heading", label: "Beleuchtung" },
-      { type: "select", label: "Beleuchtung", options: RIGS.map(([value, label]) => ({ value, label })), value: () => lr?.getAttribute("rig") ?? "threePt",
+      { type: "picture", label: "Beleuchtung", options: pictures.lightingEntries(), columns: 4, size: pictures.PIC_SIZE.tile, value: () => lr?.getAttribute("rig") ?? "threePt",
         set: (v) => with3d((e) => { const l = kid(kid(e.parentElement!, "scene3d"), "lightRig"); l?.setAttribute("rig", v); }, "3D-Format") },
       { type: "number", label: "Winkel", unit: "°", min: 0, max: 359.9, value: () => Math.round(num(lr ? kid(lr, "rot") : undefined, "rev") / ANG),
         set: (v) => with3d((e) => { const l = kid(kid(e.parentElement!, "scene3d"), "lightRig"); if (!l) return; let r = kid(l, "rot"); if (!r) { r = make(l.ownerDocument, "a:rot", { lat: "0", lon: "0", rev: "0" }); l.append(r); } r.setAttribute("rev", String(Math.round(v * ANG))); }, "3D-Format") },

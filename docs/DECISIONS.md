@@ -4480,3 +4480,25 @@ not offer are still read from files). Richtung's entries carry Excel's names ("L
 `check_calc_chartpane.py` drives a picture dropdown as a student would (click, arrow key, Enter).
 Not built: Livevorschau while the mouse is over an entry (Excel previews in the chart); "Weitere Pfeile..." and the
 picture entry of Markierungstyp.
+
+## D-162 Picture dropdowns and picture menus in the apps' own panes and line menus (2026-11-11)
+
+D-161's control, used outside the chart pane in all three apps, with Office's entries and names in place of our own
+(we had "Durchgehend", "Rundpunkt", "Quadratpunkt"; Office says Uni, Runder Punkt, Viereckiger Punkt):
+- **Form formatieren / Grafik formatieren** (RaabeCalc `shapes.ts`, `picture-tab.ts`; RaabePresent `formatpane.ts`;
+  RaabeWrite `format-pane.ts`): Strichtyp, Verbundtyp, Start-/Endpfeiltyp and -größe as picture dropdowns. RaabeCalc's
+  shape pane had five arrow types under wrong names ("Offener Pfeil" for stealth); it now offers Office's six.
+  Abschlusstyp and Anschlusstyp stay text lists, as in Office, with Office's names (Rechteckig, Abschrägung).
+- **RaabePresent's Effekte**: the Voreinstellungen of Schatten, Spiegelung, Leuchten, Weiche Kanten and 3D-Drehung,
+  Abschrägung oben/unten, Material and Beleuchtung are picture dropdowns. Each preset is drawn by applying its XML to
+  a small blue rectangle with our own shape renderer (`presettiles.ts`), so the picture is the effect itself, not a
+  copy of PowerPoint's thumbnail. Material, Beleuchtung and Abschrägung carry Office's names now (we had our own:
+  "Warme Mattierung", "Kreis", "Drei Punkte").
+- **RaabeWrite's Texteffekte formatieren**: Strichtyp and the Voreinstellungen of Schatten, Spiegelung and Leuchten
+  (an "A" with the effect, as Word's galleries) are picture dropdowns.
+- **The line submenus** (Formkontur, Bildrahmen, Textkontur in all three apps): Striche and Pfeile show pictures only
+  (their names are tooltips), Stärke each line with its name, as Office's menus (`packages/shell/src/linemenus.ts`).
+- **RaabePresent's Formeffekte / Texteffekte menus** (Voreinstellung, Schatten, Spiegelung, Leuchteffekt, Weiche Kanten,
+  Abschrägung, 3D-Drehung): galleries of pictures with Office's group headings instead of lists of names. Texteffekte
+  draw the effect on a shape, not on an "A" (a deliberate simplification; the effect is the same).
+- Zellen formatieren > Rahmen (RaabeCalc) already shows Excel's line styles as pictures (D-147); unchanged.

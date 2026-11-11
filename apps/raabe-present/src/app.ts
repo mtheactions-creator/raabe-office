@@ -7,15 +7,12 @@ import { onFontAlias, setCloudFonts } from "@raabe/text-engine";
 import { colorXml, specHex } from "./colors";
 import { colorWord } from "./quickstyles";
 import { Pptx, newPptx, PptxDom, phOf, type ShapeView, type DesignSpec } from "@raabe/ooxml";
-import {
-  Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, HIGHLIGHTS, highlightHex, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup,
-  type BackstageEntry, type Control, type Group, type MenuEntry, type Platform, type Tab,
-} from "@raabe/shell";
+import { weightMenu, dashMenu, arrowStyleMenu, Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, HIGHLIGHTS, highlightHex, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup, type BackstageEntry, type Control, type Group, type MenuEntry, type Platform, type Tab,  } from "@raabe/shell";
 import { SHAPE_GALLERY, shapeIcon, type GalleryEntry } from "@raabe/text-engine";
 import { COMMANDS } from "./command-list";
 import { ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { Deck, defaultMasterPlaceholder } from "./deck";
-import { LINE_DASHES, LINE_WEIGHTS } from "./lines";
+import { LINE_WEIGHTS } from "./lines";
 import { quickStylesPanel } from "./quickstyles";
 import { wordArtInsertPanel } from "./wordart";
 import { setShowFlag, showFlag } from "./showsetup";
@@ -1079,15 +1076,16 @@ export class PresentApp implements EditorHost, PanelHost {
         }
       });
     };
-    return [...ARROWS.map(([hd, tl], i) => ({ label: `Pfeilart ${i + 1}`, run: () => set(hd, tl) })), "-", { label: "Weitere Pfeile...", run: () => void this.commands.run("draw.format") }];
+    void ARROWS;
+    return [arrowStyleMenu((hd, tl) => set(hd, tl)), "-", { label: "Weitere Pfeile...", run: () => void this.commands.run("draw.format") }];
   }
 
   outlineExtra(): MenuEntry[] {
     return [{ label: "Keine Kontur", run: () => this.setLine(null) },
       this.pipette((hex) => this.setLine(hex)),
-      { label: "Stärke", submenu: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => this.setLine(undefined, w) })) },
+      { label: "Stärke", submenu: () => weightMenu(LINE_WEIGHTS, (w) => this.setLine(undefined, w)) },
       { label: "Skizziert", submenu: () => sketchMenu(this) },
-      { label: "Striche", submenu: () => LINE_DASHES.map(([label, d]) => ({ label, run: () => this.setLine(undefined, undefined, d) })) },
+      { label: "Striche", submenu: () => [dashMenu(undefined, (d) => this.setLine(undefined, undefined, d))] },
       { label: "Pfeile", submenu: () => this.arrowEntries() }];
   }
 
@@ -1167,8 +1165,8 @@ export class PresentApp implements EditorHost, PanelHost {
   textOutlineExtra(): MenuEntry[] {
     return [{ label: "Keine Kontur", run: () => this.setTextOutline({ color: null }) },
       this.pipette((hex) => this.setTextOutline({ color: hex })),
-      { label: "Stärke", submenu: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => this.setTextOutline({ width: Math.round(w * 12700) }) })) },
-      { label: "Striche", submenu: () => LINE_DASHES.map(([label, d]) => ({ label, run: () => this.setTextOutline({ dash: d }) })) }];
+      { label: "Stärke", submenu: () => weightMenu(LINE_WEIGHTS, (w) => this.setTextOutline({ width: Math.round(w * 12700) })) },
+      { label: "Striche", submenu: () => [dashMenu(undefined, (d) => this.setTextOutline({ dash: d }))] }];
   }
 
   private setLine(hex: string | null | undefined, width?: number, dash?: string): void {

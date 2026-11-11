@@ -5,7 +5,7 @@
 // and a value field per setting. Changes apply at once; dragging a slider is one undo step. The
 // "…optionen" entries of the ribbon's menus open their section here, as in Word.
 
-import { closePopup, colorDialog, colorGrid, h, icon, showMenu, showPopup } from "@raabe/shell";
+import { closePopup, colorDialog, colorGrid, h, icon, pictureDropdown, pictures, showMenu, showPopup, type PictureEntry } from "@raabe/shell";
 import type { PictureFormat, PictureShadow, ShapeInfo } from "@raabe/text-engine";
 import { DEFAULT_THEME_COLORS, pictureFromSpPr } from "@raabe/ooxml";
 import { CM, parseNum, type AppApi } from "./api";
@@ -31,16 +31,8 @@ const TAB_OF: Record<FormatSection, PaneTab> = {
 /** Opens the pane (at a section); the feature fills it in. */
 export const FORMAT_PANE = { open: (_section?: FormatSection) => {} };
 
-const DASHES: [string, string][] = [["solid", "Durchgezogen"], ["sysDot", "Rundpunkt"], ["sysDash", "Quadratpunkt"], ["dash", "Strich"], ["dashDot", "Strich-Punkt"],
-  ["lgDash", "Langer Strich"], ["lgDashDot", "Lang-Strich-Punkt"], ["lgDashDotDot", "Lang-Strich-Punkt-Punkt"]];
-const COMPOUNDS: [string, string][] = [["sng", "Einfach"], ["dbl", "Doppelt"], ["thickThin", "Dick-Dünn"], ["thinThick", "Dünn-Dick"], ["tri", "Dreifach"]];
-const CAPS: [string, string][] = [["sq", "Quadratisch"], ["rnd", "Rund"], ["flat", "Flach"]];
-const JOINS: [string, string][] = [["round", "Rund"], ["bevel", "Abgeschrägt"], ["miter", "Winkel"]];
-const ARROWS: [string, string][] = [["none", "Kein Pfeil"], ["triangle", "Pfeil"], ["arrow", "Offener Pfeil"], ["stealth", "Spitzer Pfeil"],
-  ["diamond", "Rautenförmiger Pfeil"], ["oval", "Ovaler Pfeil"]];
-const ARROW_SIZES: [string, string][] = ["sm", "med", "lg"].flatMap((w) => ["sm", "med", "lg"].map((l): [string, string] =>
-  [`${w}/${l}`, `${{ sm: "Schmal", med: "Mittel", lg: "Breit" }[w]}, ${{ sm: "kurz", med: "mittel", lg: "lang" }[l]}`]));
-
+const CAPS: [string, string][] = [["sq", "Rechteckig"], ["rnd", "Rund"], ["flat", "Flach"]];
+const JOINS: [string, string][] = [["round", "Rund"], ["bevel", "Abschrägung"], ["miter", "Winkel"]];
 const DEFAULT_SHADOW: PictureShadow = { kind: "outer", color: "000000", transparency: 0.6, blur: 4, dist: 3, dir: 45, sx: 1, sy: 1 };
 const DEFAULT_REFLECTION = { size: 0.5, dist: 0, transparency: 0.5, blur: 0.5 };
 const DEFAULT_GLOW = { color: "4472C4", radius: 5, transparency: 0.6 };
@@ -199,6 +191,20 @@ export function formatPaneFeature(api: AppApi, docArea: HTMLElement, dock: Dock,
     show();
     return h("div", { class: `fp-row fp-choice${disabled ? " off" : ""}` }, h("span", { class: "fp-label" }, label), b);
   };
+  /** A picture dropdown (D-161): Verbundtyp, Strichtyp, the arrows; the box is made anew when the value changes. */
+  const picChoice = (label: string, entries: () => PictureEntry[], columns: number, size: [number, number], get: () => string, put: (v: string) => void, disabled = false): HTMLElement => {
+    const slot = h("span");
+    const show = () => {
+      if (slot.firstElementChild?.getAttribute("aria-expanded") === "true") return;
+      const had = slot.contains(document.activeElement);
+      const box = pictureDropdown({ label, entries: entries(), columns, size, value: get, set: put, disabled });
+      slot.replaceChildren(box);
+      if (had) box.focus({ preventScroll: true });
+    };
+    syncs.push(show);
+    show();
+    return h("div", { class: `fp-row fp-choice${disabled ? " off" : ""}` }, h("span", { class: "fp-label" }, label), slot);
+  };
   /** Voreinstellungen: the ribbon's gallery for this setting, as a dropdown. */
   const presets = (label: string, iconName: string, sections: () => GallerySection[], disabled = false): HTMLElement => {
     const b = h("button", { class: "fp-drop", "aria-label": label, "data-tip": label, disabled }, icon(iconName), icon("chevron-down")) as HTMLButtonElement;
@@ -332,17 +338,18 @@ export function formatPaneFeature(api: AppApi, docArea: HTMLElement, dock: Dock,
     if (!ln) return out;
     const cur = () => { const x = target(); return x ? lineOf(x) : null; };
     const arrows = isLineShape(t);
-    const end = (which: "head" | "tail", label: string) => choice(label, ARROWS, () => cur()?.[which]?.type ?? "none",
+    const end = (which: "head" | "tail", label: string) => picChoice(label, () => pictures.arrowEntries(which === "head" ? "start" : "end"), 3, pictures.PIC_SIZE.arrow, () => cur()?.[which]?.type ?? "none",
       (v) => setLine({ [which]: v === "none" ? undefined : { ...(cur()?.[which] ?? {}), type: v } } as Partial<Line>), !arrows);
-    const size = (which: "head" | "tail", label: string) => choice(label, ARROW_SIZES, () => `${cur()?.[which]?.w ?? "med"}/${cur()?.[which]?.len ?? "med"}`,
-      (v) => { const [w, len] = v.split("/") as ("sm" | "med" | "lg")[]; const e0 = cur()?.[which]; if (e0) setLine({ [which]: { ...e0, w, len } } as Partial<Line>); },
+    const size = (which: "head" | "tail", label: string) => picChoice(label, () => pictures.arrowSizeEntries(which === "head" ? "start" : "end"), 3, pictures.PIC_SIZE.arrow,
+      () => `${cur()?.[which]?.w ?? "med"},${cur()?.[which]?.len ?? "med"}`,
+      (v) => { const [w, len] = v.split(",") as ("sm" | "med" | "lg")[]; const e0 = cur()?.[which]; if (e0) setLine({ [which]: { ...e0, w, len } } as Partial<Line>); },
       !arrows || !ln[which]);
     out.push(rule(),
       colorRow("Farbe", () => cur()?.color ?? null, (hex) => setLine({ color: hex })),
       num({ label: "Transparenz", unit: "%", min: 0, max: 100, get: () => Math.round((cur()?.transparency ?? 0) * 100), put: (v, start) => setLine({ transparency: v / 100 || undefined }, start) }),
       num({ label: "Stärke", unit: "Pt.", min: 0, max: 1584, step: 0.25, slider: false, decimals: 2, get: () => cur()?.width ?? 0, put: (v, start) => setLine({ width: v }, start) }),
-      choice("Verbundtyp", COMPOUNDS, () => cur()?.compound ?? "sng", (v) => setLine({ compound: v === "sng" ? undefined : v })),
-      choice("Strichtyp", DASHES, () => cur()?.dash ?? "solid", (v) => setLine({ dash: v === "solid" ? undefined : v })),
+      picChoice("Verbundtyp", pictures.compoundEntries, 1, pictures.PIC_SIZE.compound, () => cur()?.compound ?? "sng", (v) => setLine({ compound: v === "sng" ? undefined : v })),
+      picChoice("Strichtyp", pictures.dashEntries, 1, pictures.PIC_SIZE.dash, () => cur()?.dash ?? "solid", (v) => setLine({ dash: v === "solid" ? undefined : v })),
       choice("Abschlusstyp", CAPS, () => cur()?.cap ?? "flat", (v) => setLine({ cap: v === "flat" ? undefined : v })),
       choice("Anschlusstyp", JOINS, () => cur()?.join ?? (cur()?.miter ? "miter" : "round"), (v) => setLine({ join: v, miter: v === "miter" ? true : undefined })),
       end("head", "Startpfeiltyp"), size("head", "Startpfeilgröße"), end("tail", "Endpfeiltyp"), size("tail", "Endpfeilgröße"));

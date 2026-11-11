@@ -20,6 +20,27 @@ export const dashEntries = (): PictureEntry[] => DASH_TYPES.map(([value, label])
 export const compoundEntries = (): PictureEntry[] => COMPOUND_TYPES.map(([value, label]) => ({ value, label, svg: compoundPicture(value, ...PIC_SIZE.compound) }));
 export const arrowEntries = (end: "start" | "end"): PictureEntry[] => ARROW_TYPES.map(([value, label]) => ({ value, label, svg: arrowPicture(value, end, ...PIC_SIZE.arrow) }));
 /** Pfeilgröße 1-9 as "w,len" (sm/med/lg): width small to large, each with length short to long (Excel's order). */
+/** 3D-Format: Abschrägung, Material and Beleuchtung as Office's galleries (labels and groups recorded in Excel). */
+export const BEVEL_TYPES: [string, string][] = [
+  ["circle", "Rund"], ["relaxedInset", "Leichte Absenkung"], ["cross", "Säule"], ["coolSlant", "Schräge"], ["angle", "Starke Abschrägung"], ["softRound", "Weiche Abrundung"],
+  ["convex", "Konvex"], ["slope", "Silhouette"], ["divot", "Ringförmige Absenkung"], ["riblet", "Säule auf abgerundetem Sockel"], ["hardEdge", "Gewölbter Rand"], ["artDeco", "Rund konvex"],
+];
+export const MATERIAL_TYPES: [string, string, string][] = [
+  ["matte", "Matt", "Standard"], ["warmMatte", "Warm matt", "Standard"], ["plastic", "Plastik", "Standard"], ["metal", "Metall", "Standard"],
+  ["dkEdge", "Dunkle Kante", "Spezialeffekt"], ["softEdge", "Helle Kante", "Spezialeffekt"], ["flat", "Flach", "Spezialeffekt"], ["legacyWireframe", "Drahtmodell", "Spezialeffekt"],
+  ["powder", "Pulver", "Durchsichtig"], ["translucentPowder", "Durchsichtiges Pulver", "Durchsichtig"], ["clear", "Transparent", "Durchsichtig"],
+];
+export const LIGHT_TYPES: [string, string, string][] = [
+  ["threePt", "Drei Lichtpunkte", "Neutral"], ["balanced", "Gleichmäßig", "Neutral"], ["soft", "Weich", "Neutral"], ["harsh", "Hart", "Neutral"], ["flood", "Flutlicht", "Neutral"],
+  ["contrasting", "Kontrast", "Neutral"], ["morning", "Früher Morgen", "Warm"], ["sunrise", "Sonnenaufgang", "Warm"], ["sunset", "Sonnenuntergang", "Warm"], ["chilly", "Kühl", "Kalt"],
+  ["freezing", "Kalt", "Kalt"], ["flat", "Flach", "Spezialeffekt"], ["twoPt", "Zwei Lichtpunkte", "Spezialeffekt"], ["glow", "Leuchteffekt", "Spezialeffekt"], ["brightRoom", "Heller Raum", "Spezialeffekt"],
+];
+export const bevelEntries = (): PictureEntry[] => [
+  { value: "none", label: "Keine Abschrägung", svg: bevelPicture("none", ...PIC_SIZE.tile), group: "Keine Abschrägung", columns: 1 },
+  ...BEVEL_TYPES.map(([value, label]) => ({ value, label, svg: bevelPicture(value, ...PIC_SIZE.tile), group: "Abschrägung" })),
+];
+export const materialEntries = (): PictureEntry[] => MATERIAL_TYPES.map(([value, label, group]) => ({ value, label, group, svg: materialPicture(value, ...PIC_SIZE.tile) }));
+export const lightingEntries = (): PictureEntry[] => LIGHT_TYPES.map(([value, label, group]) => ({ value, label, group, svg: lightingPicture(value, ...PIC_SIZE.tile) }));
 export const arrowSizeEntries = (end: "start" | "end"): PictureEntry[] => ["sm", "med", "lg"].flatMap((w, i) => ["sm", "med", "lg"].map((len, j) => ({
   value: `${w},${len}`, label: `Pfeil ${end === "start" ? "L" : "R"} Größe ${i * 3 + j + 1}`, svg: arrowSizePicture(w, len, end, ...PIC_SIZE.arrow),
 })));
