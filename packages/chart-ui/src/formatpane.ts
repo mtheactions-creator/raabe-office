@@ -5,7 +5,7 @@
 // element's own options in paneoptions.ts, text and size in panetext.ts.
 
 import { isBar, isPie, isScatter, kindInfo, seriesColor, seriesName, type ChartModel, type DataPoint, type Effects, type ElementFormat, type Fill, type Line } from "@raabe/charts";
-import type { PaneControl, PaneSection, PaneSpec, PaneTab } from "@raabe/shell";
+import { pictures, type PaneControl, type PaneSection, type PaneSpec, type PaneTab } from "@raabe/shell";
 import { effectSections, fillSection, lineSection, type FmtTarget } from "./panefill";
 import type { SelectDataHost } from "./selectdata";
 import { axisSections, errorSections, labelSections, pointSections, seriesSections, trendSections } from "./paneoptions";
@@ -340,7 +340,9 @@ function markerSections(m: ChartModel, e: Extract<ChartElement, { kind: "series"
         { type: "radio", label: "Automatisch", checked: () => !mk?.symbol || mk.symbol === "auto", pick: () => edit(() => undefined, true) },
         { type: "radio", label: "Keine", checked: () => mk?.symbol === "none", pick: () => edit((x) => { x.symbol = "none"; }) },
         { type: "radio", label: "Integriert", checked: () => integrated, pick: () => edit((x) => { x.symbol = "circle"; x.size = x.size ?? 5; }) },
-        { type: "select", label: "Typ", options: symbols, value: () => (integrated ? mk!.symbol! : "circle"), set: (v) => edit((x) => { x.symbol = v as typeof x.symbol; }), disabled: () => !integrated },
+        // Excel's Typ is a list of the symbols' pictures (recorded 2026-11-11), D-161.
+        { type: "picture", label: "Typ", options: symbols.map((o) => ({ ...o, svg: pictures.markerPicture(o.value, 28, 28, auto) })), columns: 1, size: [28, 28],
+          value: () => (integrated ? mk!.symbol! : "circle"), set: (v) => edit((x) => { x.symbol = v as typeof x.symbol; }), disabled: () => !integrated },
         { type: "number", label: "Größe", min: 2, max: 72, value: () => mk?.size ?? 5, set: (v) => edit((x) => { x.size = Math.round(v); }), disabled: () => !integrated },
       ];
     } },

@@ -101,7 +101,7 @@ class Driver:
         self.cdp("Input.dispatchMouseEvent", {"type": "mouseReleased", "x": x1, "y": y1, "button": "left", "buttons": 0, "clickCount": 1})
         time.sleep(0.05)
 
-    KEYS = {"Enter": 13, "ArrowDown": 40, "ArrowUp": 38, "Escape": 27, "Tab": 9, "a": 65, "z": 90, "1": 49, "Home": 36, "End": 35}
+    KEYS = {"Enter": 13, "ArrowDown": 40, "ArrowUp": 38, "ArrowLeft": 37, "ArrowRight": 39, "Escape": 27, "Tab": 9, "a": 65, "z": 90, "1": 49, "Home": 36, "End": 35}
 
     def key(self, key: str, ctrl: bool = False) -> None:
         code = self.KEYS[key]
@@ -135,6 +135,7 @@ PANE = r"""(() => {
       else if (el.querySelector('input[type=radio]')) kind = 'radio';
       else if (el.querySelector('input[type=checkbox]')) kind = 'check';
       else if (el.querySelector('select')) kind = 'select';
+      else if (el.querySelector('.picdrop')) kind = 'picture';
       else if (el.querySelector('input.tp-num')) kind = 'number';
       else if (el.querySelector('.tp-color')) kind = 'color';
       else if (el.querySelector('input.tp-text')) kind = 'text';
@@ -146,6 +147,7 @@ PANE = r"""(() => {
       const c = { kind, label, disabled, checked, id: si + ':' + ci };
       if (kind === 'radio' || kind === 'check') c.at = r(el.querySelector('input'));
       if (kind === 'select') { const s = el.querySelector('select'); c.at = r(s); c.value = s.value; c.n = s.options.length; c.index = s.selectedIndex; }
+      if (kind === 'picture') { const b = el.querySelector('.picdrop'); c.at = r(b); c.value = b.dataset.value; c.disabled = b.disabled; }
       if (kind === 'number') { c.at = r(el.querySelector('input.tp-num')); c.value = el.querySelector('input.tp-num').value; const up = el.querySelector('.tp-spin button'); if (up) c.up = r(up); const sl = el.querySelector('.tp-slider'); if (sl) { c.slider = r(sl); } const rs = el.querySelector('.tp-reset'); if (rs && !rs.disabled) c.reset = r(rs); }
       if (kind === 'color') c.at = r(el.querySelector('.tp-color'));
       if (kind === 'text') { c.at = r(el.querySelector('input.tp-text')); c.value = el.querySelector('input.tp-text').value; }
@@ -253,6 +255,16 @@ class Sweep:
             d.js(f"(() => {{ const s = [...document.querySelectorAll('.taskpane select')].find((x) => {{ const b = x.getBoundingClientRect(); return Math.abs(b.left + b.width / 2 - {c['at'][0]}) < 2 && Math.abs(b.top + b.height / 2 - {c['at'][1]}) < 2; }}); s && s.focus(); }})()")
             d.key("ArrowUp" if c["index"] == c["n"] - 1 else "ArrowDown")
             return "arrow key"
+        if k == "picture":
+            # A picture dropdown (D-161): opened with a click, the next picture by arrow key, picked with Enter.
+            d.click(*c["at"][:2])
+            time.sleep(0.1)
+            last = d.js("(() => { const l = document.querySelector('.picdrop-list'); if (!l) return null; const i = [...l.querySelectorAll('.pd-item')]; return i.findIndex((x) => x === document.activeElement) === i.length - 1; })()")
+            if last is None:
+                return None
+            d.key("ArrowLeft" if last else "ArrowRight")
+            d.key("Enter")
+            return "picture"
         if k == "number":
             if c.get("slider"):
                 x, y, w, _ = c["slider"]
@@ -381,7 +393,7 @@ class Sweep:
             self.models.append({"label": f"{el} / {sec} / {c['label']} ({how})", "model": json.loads(after["model"]), "base": json.loads(before["model"]), "drawn": drawn})
             rec["file_index"] = len(self.models) - 1
             # Controls this choice revealed (Farbverlauf's stops, Musterfüllung's tiles …) are used before it is undone.
-            if depth < 2 and c["kind"] in ("radio", "select", "check"):
+            if depth < 2 and c["kind"] in ("radio", "select", "picture", "check"):
                 p = self.pane()
                 if p and ki < len(p["secs"]):
                     fresh = [(k, x) for k, x in enumerate(p["secs"][ki]["controls"]) if (x["kind"], x["label"]) not in shown]

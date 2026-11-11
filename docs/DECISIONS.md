@@ -4447,3 +4447,36 @@ picked in a fresh pane of ours too, and the controls it adds must follow in Exce
   Datenreihenoptionen; line and scatter series have 3D-Format; the gradient bar is called Farbverlaufstopps.
 - Not compared: Excel's Markierung page is a page switch (Linie / Markierung) in Excel; ours shows its three sections
   after the Linie section (Markierungsoptionen, Markierungsfüllung, Markierungsrahmen), compared under those names.
+
+## D-161 One picture dropdown for every pane: Office's pictures instead of our text lists (2026-11-11)
+
+The owner: "RaabeOffice uses text where MS Office uses symbols, e.g. the end-arrow types in the chart's Format pane".
+**Recorded first** (`probe_excel_picturedrops.py`: our own invisible Excel, the Format panes of a line series, the chart
+area and a shape; every dropdown opened through ExpandCollapse, its open list read through UI Automation, a picture of
+our own Excel's popup window by PrintWindow into `captures/`, not committed; `results/2026-11-11-excel-picturedrops.json`).
+Excel's pane has two kinds of dropdown: **picture lists** (entries are pictures only, the name is the tooltip; the closed
+box shows the current picture) and **text lists** (Abschlusstyp, Anschlusstyp, Typ, Ausrichtung, Spiegelungstyp).
+Layout at 150 % (px / 1.5 = CSS px): Verbundtyp a list of 5 (72 x 24), Strichtyp a list of 8 (104 x 20), the arrow
+types a grid of 3 x 2 and the arrow sizes 3 x 3 (33 x 33), Markierungstyp a list of symbols (28 x 28), Schatten 3
+columns in groups Kein Schatten / Außen / Innen / Perspektive (56), Leuchten Kein Leuchteffekt + 6 columns of
+Leuchteffektvarianten (56), Weiche Kanten 3 columns (44), Spiegelung 3 columns (66), Abschrägung 4 columns (56),
+Material 4 columns in Standard / Spezialeffekt / Durchsichtig, Beleuchtung 4 columns in Neutral / Warm / Kalt /
+Spezialeffekt (56), Voreingestellte Farbverläufe 6 columns (62), Richtung 5 columns (62), Textur 5 columns (88).
+
+**Built once** in the shell: `pictureDropdown` (`packages/shell/src/picturedrop.ts`) and the task pane's control
+`type: "picture"`. The box shows the current value's picture (its name is the tooltip and the accessible name); the
+list opens with `showPopup`, so it closes by D-156's rule. Keyboard as Office's pane galleries: Enter, Leertaste,
+Alt+Nach-unten or F4 open; the arrow keys move (in a grid by place, so groups of other widths work), Pos1 / Ende jump;
+Enter or Leertaste picks; Esc closes; the focus goes back to the box (the pane keeps it across its redraw). Picking
+the value it already has makes no undo step. The pictures are ours (`packages/shell/src/pictures.ts`, SVG): they show
+the same thing as Office's (a dashed line, an arrowhead, a shadow to the lower right) in our own drawing; Material and
+Beleuchtung are drawn as lit balls, not Office's slabs. Our own pictures, not Office's bitmaps, also for textures (D-155).
+
+**Used** in the chart Format pane (all three apps): Verbundtyp, Strichtyp, Start-/Endpfeiltyp and -größe, Markierungstyp,
+the Voreinstellungen of Schatten, Spiegelung, Leuchten and Weiche Kanten, Abschrägung oben/unten, Material,
+Beleuchtung, Voreingestellte Farbverläufe, Richtung (in the gradient's own colours) and Textur. Musterfüllung was
+already a grid; it now has Excel's 48 patterns in Excel's order under Excel's names (the six OOXML presets Excel does
+not offer are still read from files). Richtung's entries carry Excel's names ("Linear unten"). The sweep
+`check_calc_chartpane.py` drives a picture dropdown as a student would (click, arrow key, Enter).
+Not built: Livevorschau while the mouse is over an entry (Excel previews in the chart); "Weitere Pfeile..." and the
+picture entry of Markierungstyp.

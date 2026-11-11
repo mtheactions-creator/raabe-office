@@ -14,6 +14,8 @@ export { showDialog, messageBox, type DialogButton } from "./dialog";
 export { colorDialog, installDialogDrag } from "./color-dialog";
 export { showMenu, showPopup, closePopup, hoverPreview, installTooltips, pressOutside, swallowPress, FRAME_SELECTOR, type MenuEntry } from "./popup";
 export { TaskPane, type PaneSpec, type PaneSet, type PaneTab, type PaneSection, type PaneControl } from "./taskpane";
+export { pictureDropdown, type PictureEntry, type PictureDropSpec } from "./picturedrop";
+export * as pictures from "./pictures";
 export { colorGrid, showFontColors, showHighlights, highlightHex, HIGHLIGHTS, type PaletteHover, type PaletteTheme } from "./palette";
 export { baseName, dirName, type Platform, type RecoveryEntry, type FileInfo, type GrammarIssue, type ThesaurusResult } from "./platform";
 export { tauriPlatform } from "./platform-tauri";
