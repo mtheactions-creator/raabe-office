@@ -4,7 +4,7 @@ import "./theme.css";
 
 export { h, icon } from "./dom";
 export { Commands, type Command, type HoverTarget } from "./commands";
-export { Ribbon, type Tab, type Group, type Control, type Size } from "./ribbon";
+export { Ribbon, largeOf, type Tab, type Group, type Control, type Size } from "./ribbon";
 export { TitleBar, type DocTab } from "./titlebar";
 export { StatusBar, type StatusInfo } from "./statusbar";
 export { Backstage, type BackstageEntry } from "./backstage";

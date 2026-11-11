@@ -126,7 +126,10 @@ def select_ours(app: str, side, kind: str) -> None:
         side.js("(() => { __app.newDoc(); __app.closeOthers && __app.closeOthers(); })()")
         time.sleep(0.5)
         if kind == "picture":
-            side.js(f"__app.insertPicture({json.dumps(path)})")
+            # From bytes (the dev platform has no files): the picture in the first line, then selected.
+            side.js(f"""(() => {{ const e = __app.editor(); const s = atob({json.dumps(b64)}); const b = new Uint8Array(s.length);
+              for (let i = 0; i < s.length; i++) b[i] = s.charCodeAt(i);
+              e.insertImage({{ bytes: b, type: 'image/png' }}, 160, 107); e.select({{ p: 0, o: 0 }}, {{ p: 0, o: 1 }}); }})()""")
         elif kind == "shape":
             side.js("__app.editor().insertShape('rect', 'shape', 0, 200, 200, 133, 80)")
         elif kind == "table":
@@ -139,6 +142,8 @@ def select_ours(app: str, side, kind: str) -> None:
     if kind == "picture":
         side.js("__calc.app.pictures.insertPicture({ from: { col: 5, row: 1, x: 0, y: 0 }, to: { col: 7, row: 6, x: 0, y: 0 }, "
                 f"size: {{ w: 160, h: 107 }}, src: 'data:image/png;base64,{b64}', name: 'Bild 1' }})")
+        time.sleep(0.3)
+        side.js("(() => { const p = __calc.app.sheet.pictures; __calc.app.pictures.select(p[p.length - 1]); })()")
     elif kind == "shape":
         from feellab.cdpinput import Cdp
         side.js("__calc.app.shapes.startDraw('rect')")
@@ -151,6 +156,69 @@ def select_ours(app: str, side, kind: str) -> None:
         side.js("(() => { const a = __calc.app; a.grid.select(__calc.parse('A1:C4')); a.charts.insert('column'); })()")
 
 
+DEV_PORTS = {"calc": 5195, "write": 5294, "present": 5296}
+
+
+class DevSide:
+    """`--dev`: the app from its dev server (`npx vite --port <DEV_PORTS>` in the app's folder) in a headless Edge of our
+    own, 2000 x 1366 CSS px at 150 % (the WIDE window's client area); quicker than a release build while matching."""
+
+    def __init__(self, app: str):
+        import subprocess
+        import tempfile
+        import urllib.request
+
+        import websocket
+        from feellab.present_page import EDGE
+        self.port = 9490 + list(DEV_PORTS).index(app)
+        self.profile = Path(tempfile.gettempdir()) / f"raabe-ribbon-dev-{app}"
+        url = f"http://localhost:{DEV_PORTS[app]}/"
+        self.proc = subprocess.Popen([EDGE, "--headless=new", "--inprivate", f"--remote-debugging-port={self.port}", f"--user-data-dir={self.profile}",
+                                     "--window-size=2000,1366", "--force-device-scale-factor=1.5", "--no-first-run", "--disable-sync", url],
+                                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        self._id = 0
+        self.ws = None
+        ready = {"calc": "typeof window.__calc === 'object'", "present": "typeof window.__present === 'object' && !!window.__present.app",
+                 "write": "typeof window.__app === 'object'"}[app]
+        for _ in range(240):
+            try:
+                with urllib.request.urlopen(f"http://127.0.0.1:{self.port}/json/list", timeout=2) as r:
+                    pages = [p for p in json.load(r) if p.get("type") == "page" and p.get("url", "").startswith(url)]
+                if pages and self.ws is None:
+                    self.ws = websocket.create_connection(pages[0]["webSocketDebuggerUrl"], suppress_origin=True, timeout=180)
+                if self.ws is not None and self.js(ready):
+                    break
+            except Exception:  # noqa: BLE001
+                pass
+            time.sleep(0.25)
+        else:
+            self.close()
+            raise RuntimeError(f"{url} not ready")
+        self.hwnd = 0
+
+    def js(self, expression: str):
+        self._id += 1
+        self.ws.send(json.dumps({"id": self._id, "method": "Runtime.evaluate", "params": {"expression": expression, "returnByValue": True, "awaitPromise": True}}))
+        while True:
+            msg = json.loads(self.ws.recv())
+            if msg.get("id") == self._id:
+                res = msg["result"]
+                if "exceptionDetails" in res:
+                    raise RuntimeError(json.dumps(res["exceptionDetails"])[:1000])
+                return res["result"].get("value")
+
+    def close(self) -> None:
+        import subprocess
+        try:
+            self.ws and self.ws.close()
+        except Exception:  # noqa: BLE001
+            pass
+        # Only the Edge started with our own profile is ended.
+        subprocess.run(["powershell", "-NoProfile", "-Command",
+                        "Get-CimInstance Win32_Process -Filter \"Name='msedge.exe'\" | Where-Object { $_.CommandLine -like '*" + self.profile.name + "*' }"
+                        " | ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }"], capture_output=True)
+
+
 def ours_context(app: str, ctx: dict[str, list[str]]) -> dict[str, list[dict] | None]:
     """Our contextual tabs: for each kind of selection, its tabs as JS_OURS measures them."""
     from feellab import winapi
@@ -158,10 +226,12 @@ def ours_context(app: str, ctx: dict[str, list[str]]) -> dict[str, list[dict] | 
     from feellab.present_catalogue import PresentSide
     from feellab.targets import raabe_write
     from probe_office_ribbon_geometry import WIDE
-    side = CalcSide() if app == "calc" else PresentSide() if app == "present" else raabe_write()
+    dev = "--dev" in sys.argv
+    side = DevSide(app) if dev else CalcSide() if app == "calc" else PresentSide() if app == "present" else raabe_write()
     res: dict = {}
     try:
-        winapi.place(side.hwnd, *WIDE)
+        if not dev:
+            winapi.place(side.hwnd, *WIDE)
         time.sleep(1.0)
         for kind, names in ctx.items():
             try:
@@ -216,7 +286,11 @@ def main_context(apps: list[str], ref: dict, ref_name: str) -> None:
                 for gname, g in r["groups"].items():
                     for x in g["diffs"][:12]:
                         print("   ", gname, "-", x)
-    path = HERE / "results" / f"{out['date']}-ribbon-geometry-context.json"
+    if "--dev" in sys.argv:
+        import tempfile
+        path = Path(tempfile.gettempdir()) / "raabe-ribbon-geometry-context-dev.json"
+    else:
+        path = HERE / "results" / f"{out['date']}-ribbon-geometry-context.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     print("wrote", path.name)
 

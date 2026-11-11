@@ -470,7 +470,7 @@ export function tablesFeature(api: AppApi) {
   const width: Control = { type: "spinner", cmd: "table.width", label: "Breite:", key: "B", value: widthValue, commit: setWidth, step: stepWidth };
   const layoutTab: Tab = {
     id: "tableLayout", label: "Layout", key: "JL", contextual: true,
-    shrink: ["table", "draw", "merge", "rowsCols", "size", "data", "alignment", "size", "merge", "draw", "rowsCols", "table"],
+    shrink: ["table", "draw", "merge", "rowsCols", "cellSize", "data", "alignment", "cellSize", "merge", "draw", "rowsCols", "table"],
     groups: [
       { id: "table", label: "Tabelle", key: "ZT", icon: "table",
         controls: [select("large"), b("table.gridlines", "ß", "large"), b("table.properties", "IE", "large")],
@@ -478,13 +478,13 @@ export function tablesFeature(api: AppApi) {
       { id: "draw", label: "Zeichnen", key: "ZD1", icon: "table-draw",
         controls: [b("table.draw", "AA", "large"), b("table.eraser", "R", "large")],
         smaller: [[stack(b("table.draw", "AA", "medium"), b("table.eraser", "R", "medium"))]] },
-      { id: "rowsCols", label: "Zeilen und Spalten", key: "ZR", icon: "table-insert-row", launcher: { cmd: "table.insertCells", key: "EZ" },
+      { id: "rowsCols", label: "Zeilen und Spalten", key: "ZR", icon: "table-insert-row", launcher: { cmd: "table.insertCells", key: "EZ" }, sepAfter: [0],
         controls: [del, b("table.insertAbove", "Ü", "large"), b("table.insertBelow", "FA", "large"), b("table.insertLeft", "Q", "large"), b("table.insertRight", "K", "large")],
         smaller: [[del, b("table.insertAbove", "Ü", "large"), stack(b("table.insertBelow", "FA", "medium"), b("table.insertLeft", "Q", "medium"), b("table.insertRight", "K", "medium"))]] },
       { id: "merge", label: "Zusammenführen", key: "ZM", icon: "table-merge",
         controls: [b("table.merge", "LE", "large"), b("table.split", "NE", "large"), b("table.splitTable", "TT", "large")],
         smaller: [[stack(b("table.merge", "LE", "medium"), b("table.split", "NE", "medium"), b("table.splitTable", "TT", "medium"))]] },
-      { id: "size", label: "Zellengröße", key: "ZS", icon: "table-cols-even", launcher: { cmd: "table.properties", key: "IE" },
+      { id: "cellSize", label: "Zellengröße", key: "ZS", icon: "table-cols-even", launcher: { cmd: "table.properties", key: "IE" },
         controls: [autofit("large"), stack(height, width), stack(b("table.distributeRows", "V", "medium"), b("table.distributeColumns", "SP", "medium"))],
         smaller: [[stack(height, width, autofit("medium")), stack(b("table.distributeRows", "V"), b("table.distributeColumns", "SP"))]] },
       { id: "alignment", label: "Ausrichtung", key: "ZA", icon: "cell-top-left",

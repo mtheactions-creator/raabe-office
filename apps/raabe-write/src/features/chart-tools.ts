@@ -11,7 +11,7 @@ import {
 } from "@raabe/chart-ui";
 import { renderChart, seriesName, visibleModel, type ChartKind, type ChartModel } from "@raabe/charts";
 import { DEFAULT_THEME_COLORS, chartFromXml, chartImage, chartSvg, chartToXml } from "@raabe/ooxml";
-import { TaskPane, h, showDialog, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
+import { TaskPane, h, largeOf, showDialog, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
 import type { Dock } from "./dock";
 import { CM, type AppApi } from "./api";
 import { GROUP_MENU } from "./groups";
@@ -476,8 +476,9 @@ export function chartToolsFeature(api: AppApi, docArea: HTMLElement, dock: Dock,
         { type: "dropdown", cmd: "wchart.colors", key: "F", size: "large", get menu() {
           return [{ heading: "Bunt" }, ...COLOR_SETS.slice(0, 4).map(([k, l]) => colorMenu(k, l)), { heading: "Einfarbig" }, ...COLOR_SETS.slice(4).map(([k, l]) => colorMenu(k, l))];
         } },
-        { type: "tiles", cmd: "wchart.styles", key: "S", get count() { const m = selected(); return m ? chartStyles(m).length : 0; }, visible: 6, fill: true, size: [62, 46],
-          render: (i) => { const look = styleLook(i); return look ? (tile(look, 58, 42) as unknown as HTMLElement) : null; },
+        // Word's gallery: at most eight 88 px tiles (D-187).
+        { type: "tiles", cmd: "wchart.styles", key: "S", get count() { const m = selected(); return m ? chartStyles(m).length : 0; }, visible: 4, fill: true, max: 8, size: [79, 48],
+          render: (i) => { const look = styleLook(i); return look ? (tile(look, 76, 44) as unknown as HTMLElement) : null; },
           tip: (i) => `Formatvorlage ${i + 1}`,
           pick: (i) => { preview(null); const m = selected(); if (m) { setStyleTheme(theme()); edit(m, (x) => applyStyle(x, i)); } },
           hover: (i) => preview(i === null ? null : styleLook(i)),
@@ -540,14 +541,23 @@ export function chartToolsFeature(api: AppApi, docArea: HTMLElement, dock: Dock,
           { type: "button", cmd: "wchart.textEffects", key: "IE", size: "small" },
         ] }] },
       { id: "access", label: "Barrierefreiheit", key: "Z1", icon: "alt-text", controls: [{ type: "button", cmd: "picture.altText", key: "AT", size: "large", label: "Alternativtext" }] },
+      // Word at a wide window: Ebene nach vorne, Ebene nach hinten and Auswahlbereich large, the others labelled (D-186).
       { id: "arrange", label: "Anordnen", key: "ZA", icon: "wrap-text", controls: [
         { type: "dropdown", cmd: "picture.position", key: "PP", size: "large", menu: [], popup: deps.positionPanel },
         { type: "dropdown", cmd: "layout.wrapText", key: "J", size: "large", menu: deps.wrapMenu },
-        { type: "stack", items: layers },
+        ...largeOf(layers),
         { type: "stack", items: [
-          { type: "dropdown", cmd: "picture.align", key: "DA", size: "small", menu: [], popup: deps.alignPanel },
-          { type: "dropdown", cmd: "layout.group", key: "GR", size: "small", menu: GROUP_MENU },
-          { type: "dropdown", cmd: "picture.rotate", key: "DR", size: "small", menu: deps.rotateMenu }] }] },
+          { type: "dropdown", cmd: "picture.align", key: "DA", size: "medium", menu: [], popup: deps.alignPanel },
+          { type: "dropdown", cmd: "layout.group", key: "GR", size: "medium", menu: GROUP_MENU },
+          { type: "dropdown", cmd: "picture.rotate", key: "DR", size: "medium", menu: deps.rotateMenu }] }],
+        smaller: [[
+          { type: "dropdown", cmd: "picture.position", key: "PP", size: "large", menu: [], popup: deps.positionPanel },
+          { type: "dropdown", cmd: "layout.wrapText", key: "J", size: "large", menu: deps.wrapMenu },
+          { type: "stack", items: layers },
+          { type: "stack", items: [
+            { type: "dropdown", cmd: "picture.align", key: "DA", size: "small", menu: [], popup: deps.alignPanel },
+            { type: "dropdown", cmd: "layout.group", key: "GR", size: "small", menu: GROUP_MENU },
+            { type: "dropdown", cmd: "picture.rotate", key: "DR", size: "small", menu: deps.rotateMenu }] }]] },
       { id: "size", label: "Größe", key: "ZZ", icon: "shape-height", launcher: { cmd: "wchart.sizeDialog", key: "RG" }, controls: [{ type: "stack", items: [
         size("wchart.height", "Höhe:", "H", "h"), size("wchart.width", "Breite:", "RR", "w")] }] },
     ],

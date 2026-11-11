@@ -121,13 +121,16 @@ function apply(app: PresentApp, row: number, col: number): void {
   ed.edit("Schnellformatvorlage", () => { for (const v of views) { const el = ed.shapeEl(v.id); if (el) applyQuickStyle(el, QUICK_ROWS[row], col); } });
 }
 
-/** Formformat > Formenarten: the styles as a gallery in the ribbon (PowerPoint shows them there). */
-export function quickStyleTiles(app: PresentApp): import("@raabe/shell").Control {
+/**
+ * Formformat > Formenarten: the styles as a gallery in the ribbon (PowerPoint shows them there): seven 56 px tiles at a
+ * wide window, three in the reduced layout (D-186).
+ */
+export function quickStyleTiles(app: PresentApp, visible = 3): import("@raabe/shell").Control {
   const all = QUICK_ROWS.flatMap((row, ri) => COLS.map((c, ci) => ({ row, ri, c, ci })));
   const colorsNow = () => (app.slidePath() ? app.deck.view(app.slidePath()!).theme.colors : {}) as Record<string, string>;
   const hexOf = (colors: Record<string, string>) => (ref: string) => `#${colors[ref === "dk1" ? "tx1" : ref === "lt1" ? "bg1" : ref] ?? colors[ref] ?? "000000"}`;
   return {
-    type: "tiles", cmd: "shape.quickStyles", key: "NC", count: all.length, visible: 3, size: [60, 44], cls: "qs-tiles",
+    type: "tiles", cmd: "shape.quickStyles", key: "NC", count: all.length, visible, size: [48, 44], cls: "qs-tiles",
     render: (i) => { const t = all[i]; const d = h("div", { class: "qs-rtile" }, "Abc"); d.style.cssText = tileCss(t.row, hexOf(colorsNow())(t.c), hexOf(colorsNow())); return d; },
     tip: (i) => quickName(all[i].row, all[i].ci, colorsNow()),
     pick: (i) => apply(app, all[i].ri, all[i].ci),

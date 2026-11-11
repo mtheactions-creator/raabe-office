@@ -97,9 +97,9 @@ export function picStylesPanel(app: PresentApp, close: () => void): HTMLElement 
 }
 
 /** Bildformat > Bildformatvorlagen in the ribbon (PowerPoint shows them there). */
-export function picStyleTiles(app: PresentApp): import("@raabe/shell").Control {
+export function picStyleTiles(app: PresentApp, visible = 3): import("@raabe/shell").Control {
   return {
-    type: "tiles", cmd: "pic.quickStyles", key: "S", count: PIC_STYLES.length, visible: 3, size: [60, 44], cls: "ps-tiles",
+    type: "tiles", cmd: "pic.quickStyles", key: "S", count: PIC_STYLES.length, visible, size: [48, 44], cls: "ps-tiles",
     render: (i) => h("div", { class: "ps-rtile" }, picTileImg(PIC_STYLES[i])),
     tip: (i) => PIC_STYLES[i].name,
     pick: (i) => applyPicStyle(app, PIC_STYLES[i]),

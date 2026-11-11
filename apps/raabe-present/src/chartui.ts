@@ -4,10 +4,10 @@
 // chart instead of the shape pane. The chart part is read into the chart engine's model, changed in place and written
 // back as one undo step (the slide and the chart part, as chartops.ts does).
 
-import { chartButtons, chartElements, elementName, formatPane, type ChartElement } from "@raabe/chart-ui";
+import { applyStyle, chartButtons, chartElements, chartStyles, elementName, formatPane, styleIndex, type ChartElement } from "@raabe/chart-ui";
 import { renderChart, seriesName, type ChartModel } from "@raabe/charts";
 import { chartFromXml, chartToXml } from "@raabe/ooxml";
-import { TaskPane, h, showDialog } from "@raabe/shell";
+import { TaskPane, h, showDialog, type Control } from "@raabe/shell";
 import type { PresentApp } from "./app";
 
 const EMU_CM = 360000;
@@ -153,8 +153,46 @@ export function presentChartUi(app: PresentApp) {
     return true;
   }
 
+  /** A drawing of `m` in a w x hh box (the style tiles). */
+  const tileOf = (m: ChartModel, w: number, hh: number): SVGSVGElement => {
+    const svg = renderChart(m, 480, 288, { accents: accents() }) as SVGSVGElement;
+    const k = Math.min(w / 480, hh / 288);
+    svg.setAttribute("width", String(Math.round(480 * k)));
+    svg.setAttribute("height", String(Math.round(288 * k)));
+    return svg;
+  };
+  const styleLook = (i: number): ChartModel | null => { const m = selected(); if (!m) return null; const look = structuredClone(m); applyStyle(look, i); return look; };
+
+  /**
+   * Diagrammentwurf > Diagrammformatvorlagen: the styles as a gallery in the ribbon, as PowerPoint shows them (D-187):
+   * eight 88 px tiles at a wide window, at least four. No Livevorschau on slides yet.
+   */
+  function styleTiles(): Control {
+    return {
+      type: "tiles", cmd: "chart.styles", key: "S", get count() { const m = selected(); return m ? chartStyles(m).length : 0; }, visible: 4, fill: true, max: 8, size: [79, 48],
+      render: (i) => { const look = styleLook(i); return look ? (tileOf(look, 76, 44) as unknown as HTMLElement) : null; },
+      tip: (i) => `Formatvorlage ${i + 1}`,
+      pick: (i) => { const m = selected(); if (m) edit(m, (x) => applyStyle(x, i), "Diagrammformatvorlage"); },
+      current: () => { const m = selected(); if (!m) return undefined; const i = styleIndex(m); return i >= 0 ? i : undefined; },
+      redraw: () => { const m = selected(); return m ? `${m.kind},${m.series.length},${m.colors ?? 10}` : ""; },
+      panel: (close) => {
+        const grid = h("div", { class: "chart-style-panel", style: "display:grid;grid-template-columns:repeat(4,92px);gap:4px;padding:6px" });
+        const m = selected();
+        for (let i = 0; m && i < chartStyles(m).length; i++) {
+          const t = h("button", { class: "tile", "aria-label": `Formatvorlage ${i + 1}`, "data-tip": `Formatvorlage ${i + 1}`, style: "padding:2px;border:1px solid #d6d6d6;background:#fff" });
+          const look = styleLook(i);
+          if (look) t.append(tileOf(look, 86, 62));
+          t.addEventListener("click", () => { close(); const x = selected(); if (x) edit(x, (y) => applyStyle(y, i), "Diagrammformatvorlage"); });
+          grid.append(t);
+        }
+        return grid;
+      },
+    } as Control;
+  }
+
   return {
     sync,
+    styleTiles,
     /** Objekt formatieren... with a chart selected: the chart's Format pane (Diagrammbereich, or the chosen element). */
     openPane: (name?: string): boolean => {
       const m = selected();

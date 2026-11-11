@@ -269,14 +269,18 @@ body.view-gray .slide { filter: grayscale(1); }
 body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 
 /* Formformat: the styles in the ribbon (D-072). */
-.rgallery.qs-tiles .qs-rtile { width: 56px; height: 38px; display: flex; align-items: center; justify-content: center; font: 12px Calibri, Carlito, sans-serif; border-radius: 2px; box-sizing: border-box; }
-.rgallery.ps-tiles .ps-rtile { width: 56px; height: 40px; display: flex; align-items: center; justify-content: center; }
-.rgallery.ps-tiles .ps-img, .pic-styles .ps-img { width: 44px; height: 32px; background: linear-gradient(135deg, #8fb3d9, #4a7ab0 60%, #e2c27d); box-sizing: border-box; }
-/* Größe in the format tabs: the spin boxes with their icon only, as PowerPoint's (the name stays for screen readers). */
-.rgroup[data-group="size"] .rspinner .lbl { display: none; }
+.rgallery.qs-tiles .qs-rtile { width: 48px; height: 38px; display: flex; align-items: center; justify-content: center; font: 12px Calibri, Carlito, sans-serif; border-radius: 2px; box-sizing: border-box; }
+.rgallery.ps-tiles .ps-rtile { width: 48px; height: 40px; display: flex; align-items: center; justify-content: center; }
+.rgallery.ps-tiles .ps-img { width: 40px; height: 30px; }
+.pic-styles .ps-img { width: 44px; height: 32px; background: linear-gradient(135deg, #8fb3d9, #4a7ab0 60%, #e2c27d); box-sizing: border-box; }
 .rgallery.ts-tiles .ts-rtile { width: 58px; height: 38px; display: block; background: #fff; }
 .rgallery.ts-tiles .ts-row { display: block; height: 7px; box-sizing: border-box; }
-.rgroup[data-group="cellSize"] .rspinner .lbl { display: none; }
+/* Tabellenlayout > Zellengröße: "Höhe:" and "Breite:" as wide as their text, as PowerPoint's (Word's keep a wider column;
+   the shared rule for Größe is in the shell's theme, D-186). */
+.rgroup[data-group="cellSize"] .rstack:has(> .rspinner) { align-items: stretch; }
+.rgroup[data-group="cellSize"] .rspinner .lbl { width: auto; }
+.rgroup[data-group="cellSize"] .rspinner .lbl:empty { display: none; }
+.rgroup[data-group="cellSize"] .rspinner .spinbox { margin-left: auto; }
 
 /* WordArt styles (D-072). */
 .wa-a { font: bold 30px Calibri, Carlito, sans-serif; line-height: 1; }
@@ -307,7 +311,10 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 
 /* Formformat > Formen einfügen: PowerPoint fills the gallery row by row (6 per row, 3 rows); the shell's
    shared rule fills columns, as Word's does (compare_present_ui.py). */
-.rgallery.tiles.shape-tiles-ribbon.pp-rows .items { grid-template-rows: none; grid-template-columns: repeat(6, 22px); grid-auto-flow: row; }
+.rgallery.tiles.shape-tiles-ribbon.pp-rows .items { grid-template-rows: none; grid-template-columns: repeat(6, 24px); grid-auto-flow: row; }
+/* PowerPoint's cells are 24 px (D-186); the chart's Format tab shows three columns. */
+.rgallery.tiles.shape-tiles-ribbon.pp-rows .item.tile-item { width: 24px !important; height: 24px !important; }
+.rgallery.tiles.shape-tiles-ribbon.pp-rows.pp-cols3 .items { grid-template-columns: repeat(3, 24px); }
 
 /* Exportieren: Video erstellen, Animiertes GIF erstellen (D-074). */
 .export-section { margin: 18px 0; max-width: 520px; }

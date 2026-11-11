@@ -85,6 +85,8 @@ export interface Group {
   smaller?: Control[][];
   /** false: Office keeps the small icons of this group's stacks even at a wide window (no derived wide layout, D-159). */
   wide?: false;
+  /** Office's thin line between controls inside the group, after these control indices, in every layout (D-188). */
+  sepAfter?: number[];
 }
 
 export interface Tab {
@@ -99,6 +101,19 @@ export interface Tab {
   shrink: string[];
   /** Shown only in a context (table, header, picture …), after the other tabs. */
   contextual?: boolean;
+}
+
+/**
+ * A group's controls as one row of large buttons (Office's widest Anordnen in the contextual tabs, D-186): the stacks'
+ * items in order, each large; `labels` gives a large button a shorter label than its command's ("Auswahlbereich").
+ * The items stay prototype copies, so lazy menus keep working.
+ */
+export function largeOf(controls: Control[], labels: Record<string, string> = {}): Control[] {
+  return controls.flatMap((c) => (c.type === "stack" ? c.items : [c])).map((x) => {
+    if (x.type !== "button" && x.type !== "dropdown" && x.type !== "split") return x;
+    const label = labels[x.cmd];
+    return Object.assign(Object.create(x) as Control, { size: "large", ...(label ? { label } : {}) });
+  });
 }
 
 type Updater = () => void;
@@ -129,6 +144,8 @@ const LABEL_BREAKS: Record<string, [string, string]> = {
   "draw.quickStyles": ["Schnellformat-", "vorlagen"], "smartart.styles": ["Schnellformat-", "vorlagen"],
   "table.styles": ["Schnellformat-", "vorlagen"], "wchart.styles": ["Schnellformat-", "vorlagen"],
   "shape.styles": ["Schnellformat-", "vorlagen"], "wordart.styles": ["Schnellformat-", "vorlagen"],
+  // PowerPoint's Tabellenentwurf > WordArt-Formate (contextual tabs, D-187).
+  "wordart.quickStyles": ["Schnell-", "formatvorlagen"],
 };
 
 function largeLabel(text: string, withChevron: boolean, cmd?: string): Node[] {
@@ -364,7 +381,8 @@ export class Ribbon {
   }
 
   private renderGroup(g: Group, controls: Control[] = g.controls): HTMLElement {
-    const content = h("div", { class: "content" }, ...controls.map((c) => this.renderControl(c)));
+    const content = h("div", { class: "content" }, ...controls.flatMap((c, i) =>
+      (g.sepAfter?.includes(i) && i < controls.length - 1 ? [this.renderControl(c), h("span", { class: "rsep", "aria-hidden": "true" })] : [this.renderControl(c)])));
     const label = h("div", { class: "label" }, g.label);
     if (g.launcher) {
       const cmd = g.launcher.cmd;
@@ -671,7 +689,7 @@ export class Ribbon {
       case "check": {
         const box = h("span", { class: "box" });
         const el = h("button", {
-          class: "rcheck", "data-tip": this.commands.tooltip(c.cmd), "data-keytip": c.key, "data-keytip-scope": this.scope(),
+          class: "rcheck", "data-tip": this.commands.tooltip(c.cmd), "aria-label": this.commands.get(c.cmd).label, "data-keytip": c.key, "data-keytip-scope": this.scope(),
           onclick: () => void this.commands.run(c.cmd),
         }, box, this.commands.get(c.cmd).label);
         this.bind(el, c.cmd);

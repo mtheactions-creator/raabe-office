@@ -363,12 +363,12 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
   const styleItems = () => presetItems(P.PICTURE_STYLES, STYLE_KEYS, (i) => ({ preset: i }));
   let hoverBase: PictureFormat | null = null;
   const styleTiles: Control = {
-    type: "tiles", cmd: "picture.styles", key: "K", count: P.PICTURE_STYLES.length, visible: 4, fill: true, size: [64, 48],
+    type: "tiles", cmd: "picture.styles", key: "K", count: P.PICTURE_STYLES.length, visible: 4, fill: true, max: 9, size: [48, 48],
     render: (i) => {
       const img = sel()?.obj.image;
       if (!img) return null;
       const items = styleItems();
-      return previewElement(imageUrl(img), 56, 42, withItem(hoverBase ?? ed()?.pictureFormat() ?? {}, items[i]));
+      return previewElement(imageUrl(img), 44, 36, withItem(hoverBase ?? ed()?.pictureFormat() ?? {}, items[i]));
     },
     tip: (i) => P.PICTURE_STYLES[i].label,
     pick: (i) => {
@@ -419,7 +419,7 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
     id: "pictureFormat", label: "Bildformat", key: "JP", contextual: true,
     shrink: ["adjust", "arrange", "size", "adjust", "styles", "arrange", "size", "adjust"],
     groups: [
-      { id: "adjust", label: "Anpassen", key: "ZP", icon: "corrections",
+      { id: "adjust", label: "Anpassen", key: "ZP", icon: "corrections", sepAfter: [0],
         controls: [{ type: "button", cmd: "picture.removeBackground", key: "E", size: "large" }, big("picture.corrections", "R", corrections),
           big("picture.color", "I", color), artistic("large"), big("picture.transparency", "T", transparency), tools("medium")],
         smaller: [

@@ -8,7 +8,7 @@
 // presets are Office's (recorded from Word, shared in text-engine; Excel's 28 picture styles write the
 // same DrawingML, picture-styles-excel.test.ts). Also the task panes Grafik formatieren and Alternativtext.
 
-import { closePopup, colorGrid, dashMenu, h, pictures, showDialog, weightMenu, type Command, type Control, type MenuEntry, type PaneControl, type PaneSection, type PaneSpec, type Tab } from "@raabe/shell";
+import { closePopup, colorGrid, dashMenu, h, largeOf, pictures, showDialog, weightMenu, type Command, type Control, type MenuEntry, type PaneControl, type PaneSection, type PaneSpec, type Tab } from "@raabe/shell";
 import {
   BEVELS, BRIGHT_CONTRAST, EFFECT_PRESETS, GLOWS, PICTURE_STYLES, REFLECTIONS, ROTATIONS_3D, SATURATION, SHADOWS, SHARPEN, SOFT_EDGES, TEMPERATURE, TRANSPARENCY,
   previewElement, recolorGallery, removeBackground, type GalleryItem, type PictureFormat, type PicturePreset,
@@ -224,11 +224,11 @@ export function pictureTab(app: CalcApp) {
   run("pic.styles", () => {});
   let hoverBase = false;
   const styleTiles: Control = {
-    type: "tiles", cmd: "pic.styles", key: "S", count: PICTURE_STYLES.length, visible: 4, fill: true, size: [64, 48],
+    type: "tiles", cmd: "pic.styles", key: "S", count: PICTURE_STYLES.length, visible: 4, fill: true, max: 9, size: [48, 48],
     render: (i) => {
       const p = sel();
       if (!p) return null;
-      return previewElement(pics.lookOf(p, {}).url, 56, 42, { ...f(), ...styleItems()[i].format, rotation: undefined });
+      return previewElement(pics.lookOf(p, {}).url, 44, 36, { ...f(), ...styleItems()[i].format, rotation: undefined });
     },
     tip: (i) => PICTURE_STYLES[i].label,
     pick: (i) => { pics.preview(null); hoverBase = false; apply("Bildformatvorlage", styleItems()[i]); },
@@ -520,11 +520,20 @@ export function pictureTab(app: CalcApp) {
 
   // ----- the tab --------------------------------------------------------------------------------
 
+  const arrange: Control[] = [
+    { type: "stack", items: [
+      { type: "split", cmd: "pic.forward", key: "GE", size: "medium", menu: [{ cmd: "pic.forward" }, { cmd: "pic.toFront" }] },
+      { type: "split", cmd: "pic.backward", key: "GH", size: "medium", menu: [{ cmd: "pic.backward" }, { cmd: "pic.toBack" }] },
+      { type: "button", cmd: "pic.selectionPane", key: "Q2", size: "medium" }] },
+    { type: "stack", items: [
+      { type: "dropdown", cmd: "pic.align", key: "DA", size: "medium", get menu() { return alignMenu(); } },
+      { type: "dropdown", cmd: "pic.group", key: "GR", size: "medium", menu: [{ cmd: "shape.group" }, { cmd: "shape.ungroup" }, { cmd: "shape.regroup" }] },
+      { type: "dropdown", cmd: "pic.rotate", key: "DR", size: "medium", menu: rotateMenu }] }];
   const big = (id: string, key: string, popup: (close: () => void) => HTMLElement): Control => ({ type: "dropdown", cmd: id, key, size: "large", menu: [], popup });
   const tab: Tab = {
     id: "pictureFormat", label: "Bildformat", key: "JP", contextual: true, shrink: [],
     groups: [
-      { id: "adjust", label: "Anpassen", key: "ZT", icon: "corrections", controls: [
+      { id: "adjust", label: "Anpassen", key: "ZT", icon: "corrections", sepAfter: [0, 1], controls: [
         { type: "button", cmd: "pic.inCell", key: "Y", size: "large" },
         { type: "button", cmd: "pic.removeBackground", key: "T1", size: "large" },
         big("pic.corrections", "O", corrections), big("pic.color", "F", color),
@@ -539,15 +548,7 @@ export function pictureTab(app: CalcApp) {
         { type: "stack", items: [border, { type: "dropdown", cmd: "pic.effects", key: "E", size: "medium", menu: effectsMenu },
           { type: "dropdown", cmd: "pic.layout", key: "A1", size: "medium", menu: [] }] }] },
       { id: "access", label: "Barrierefreiheit", key: "Z1", icon: "alt-text", controls: [{ type: "button", cmd: "pic.altText", key: "AT", size: "large" }] },
-      { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: [
-        { type: "stack", items: [
-          { type: "split", cmd: "pic.forward", key: "GE", size: "medium", menu: [{ cmd: "pic.forward" }, { cmd: "pic.toFront" }] },
-          { type: "split", cmd: "pic.backward", key: "GH", size: "medium", menu: [{ cmd: "pic.backward" }, { cmd: "pic.toBack" }] },
-          { type: "button", cmd: "pic.selectionPane", key: "Q2", size: "medium" }] },
-        { type: "stack", items: [
-          { type: "dropdown", cmd: "pic.align", key: "DA", size: "medium", get menu() { return alignMenu(); } },
-          { type: "dropdown", cmd: "pic.group", key: "GR", size: "medium", menu: [{ cmd: "shape.group" }, { cmd: "shape.ungroup" }, { cmd: "shape.regroup" }] },
-          { type: "dropdown", cmd: "pic.rotate", key: "DR", size: "medium", menu: rotateMenu }] }] },
+      { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: largeOf(arrange, { "pic.selectionPane": "Auswahlbereich" }), smaller: [arrange] },
       { id: "size", label: "Größe", key: "ZZ", icon: "image-size", launcher: { cmd: "pic.sizePane", key: "ß" }, controls: [
         { type: "split", cmd: "pic.crop", key: "C", size: "large", menu: cropMenu },
         { type: "stack", items: [spinner("pic.height", "Höhe:", "H", "h"), spinner("pic.width", "Breite:", "RR", "w")] }] },

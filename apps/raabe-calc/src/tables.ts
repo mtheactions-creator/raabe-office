@@ -4,7 +4,7 @@
 // first column, header and total row, their corner cells), from the 60 built-in styles recorded in
 // Excel (table-styles.gen.ts) with theme-relative colours.
 
-import { h, messageBox, showDialog } from "@raabe/shell";
+import { h, messageBox, showDialog, type Control } from "@raabe/shell";
 import {
   escapeColumn, keyCell, mapStructs, nextTableName, parseRange, parseStruct, rangeName, renameColumn, shiftFormula, tableData, validTableName,
   type BorderSide, type Borders, type CellStyle, type Rect, type Sheet, type SheetTable,
@@ -447,25 +447,46 @@ export function tablesFeature(app: CalcApp) {
 
   function setStyle(name: string): void { edit("Tabellenformatvorlage", (x) => { x.style = name; }); }
 
+  /** A table style drawn as a 5 x 5 grid of cells (the panel's and the ribbon gallery's tiles). */
+  function styleGrid(name: string): HTMLElement {
+    const fake: SheetTable = { name: "x", ref: { r0: 0, c0: 0, r1: 4, c1: 4 }, header: true, totals: false, columns: [], style: name,
+      firstColumn: false, lastColumn: false, rowStripes: true, columnStripes: false, filterButton: false };
+    const cells: HTMLElement[] = [];
+    for (let r = 0; r <= 4; r++) for (let c = 0; c <= 4; c++) {
+      const lk = look(fake, r, c);
+      const b = lk?.borders ?? {};
+      const line = (s?: BorderSide) => (s ? `1px solid ${s.color ?? "#000"}` : "0");
+      cells.push(h("i", { style: `background:${lk?.fill ?? "#fff"};border-top:${line(b.top)};border-bottom:${line(b.bottom)};border-left:${line(b.left)};border-right:${line(b.right)}` }));
+    }
+    return h("span", { class: "ts-grid" }, ...cells);
+  }
+
   /** Tabellenformatvorlagen: Hell, Mittel, Dunkel as tiles drawn from the style data. */
   function stylesPanel(close: () => void, pick: (name: string) => void = setStyle): HTMLElement {
     const group = (prefix: string, title: string) => {
-      const tiles = TABLE_STYLE_DEFS.filter((d) => d.name.startsWith(prefix)).map((d) => {
-        const fake: SheetTable = { name: "x", ref: { r0: 0, c0: 0, r1: 4, c1: 4 }, header: true, totals: false, columns: [], style: d.name,
-          firstColumn: false, lastColumn: false, rowStripes: true, columnStripes: false, filterButton: false };
-        const cells: HTMLElement[] = [];
-        for (let r = 0; r <= 4; r++) for (let c = 0; c <= 4; c++) {
-          const lk = look(fake, r, c);
-          const b = lk?.borders ?? {};
-          const line = (s?: BorderSide) => (s ? `1px solid ${s.color ?? "#000"}` : "0");
-          cells.push(h("i", { style: `background:${lk?.fill ?? "#fff"};border-top:${line(b.top)};border-bottom:${line(b.bottom)};border-left:${line(b.left)};border-right:${line(b.right)}` }));
-        }
-        return h("button", { class: "ts-tile", "data-tip": d.local.replace(/^Tabellenformat - /, ""), "aria-label": d.local, onclick: () => { close(); pick(d.name); } }, h("span", { class: "ts-grid" }, ...cells));
-      });
+      const tiles = TABLE_STYLE_DEFS.filter((d) => d.name.startsWith(prefix)).map((d) =>
+        h("button", { class: "ts-tile", "data-tip": d.local.replace(/^Tabellenformat - /, ""), "aria-label": d.local, onclick: () => { close(); pick(d.name); } }, styleGrid(d.name)));
       return [h("div", { class: "palette-title" }, title), h("div", { class: "ts-tiles" }, ...tiles)];
     };
     return h("div", { class: "tile-panel ts-panel" }, ...group("TableStyleLight", "Hell"), ...group("TableStyleMedium", "Mittel"), ...group("TableStyleDark", "Dunkel"));
   }
 
-  return { styleFor, tableAt: (row: number, col: number) => tableAt(app.sheet, row, col), current, create, setOption, setTotals, rename, resizeDialog, convert, setStyle, stylesPanel, look, afterEntry };
+  /**
+   * Tabellenentwurf > Tabellenformatvorlagen in the ribbon, as Excel shows them at a wide window: seven tiles of 67 px
+   * (D-187); the large button with the panel is the reduction.
+   */
+  function styleTiles(): Control {
+    const defs = TABLE_STYLE_DEFS;
+    return {
+      type: "tiles", cmd: "table.styles", key: "S", count: defs.length, visible: 7, size: [59, 48], cls: "calc-ts-ribbon",
+      render: (i) => styleGrid(defs[i].name),
+      tip: (i) => defs[i].local.replace(/^Tabellenformat - /, ""),
+      pick: (i) => setStyle(defs[i].name),
+      current: () => { const t = current(); const i = t ? defs.findIndex((d) => d.name === t.style) : -1; return i >= 0 ? i : undefined; },
+      redraw: () => "ts",
+      panel: (close) => stylesPanel(close),
+    };
+  }
+
+  return { styleFor, tableAt: (row: number, col: number) => tableAt(app.sheet, row, col), current, create, setOption, setTotals, rename, resizeDialog, convert, setStyle, stylesPanel, styleTiles, look, afterEntry };
 }

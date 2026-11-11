@@ -2285,11 +2285,11 @@ export class PresentApp implements EditorHost, PanelHost {
 
   // ----- galleries -------------------------------------------------------------------------------------------
 
-  /** Formformat > Formen einfügen: the shapes as a gallery in the ribbon (three rows, as PowerPoint's). */
-  shapeTiles(): Control {
+  /** Formformat > Formen einfügen: the shapes as a gallery in the ribbon (three rows of `cols`, as PowerPoint's). */
+  shapeTiles(cols: 3 | 6 = 6): Control {
     const items = PRESENT_SHAPES.flatMap((g) => g.items);
     return {
-      type: "tiles", cmd: "insert.shapes", key: "2", count: items.length, visible: 18, size: [22, 22], cls: "shape-tiles-ribbon pp-rows",
+      type: "tiles", cmd: "insert.shapes", key: "2", count: items.length, visible: 3 * cols, size: [22, 22], cls: `shape-tiles-ribbon pp-rows${cols === 3 ? " pp-cols3" : ""}`,
       render: (i) => h("span", { class: "shape-ico" }, shapeIcon(items[i])),
       tip: (i) => items[i].label,
       pick: (i) => { const it = items[i]; if (it.tool.kind === "textbox") this.startTool({ kind: "textbox" }); else this.startTool({ kind: "shape", prst: it.tool.geometry, head: !!it.tool.pic?.line?.head, tail: !!it.tool.pic?.line?.tail, freeform: it.tool.freeform }); },

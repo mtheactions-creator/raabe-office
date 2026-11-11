@@ -35,8 +35,8 @@ export function contextHost(app: PresentApp): ContextTabHost {
     color: (cur, pick, cmd, key, label, extra) => ({ type: "color", cmd, key, palette: "font", current: cur, pick, showLabel: label, extra, theme: () => app.paletteTheme(), more: MORE_COLORS[cmd] }),
     outlineExtra: () => app.outlineExtra(),
     quickStyles: (c) => quickStylesPanel(app, c),
-    quickStyleTiles: () => quickStyleTiles(app),
-    picStyleTiles: () => picStyleTiles(app),
+    quickStyleTiles: (n) => quickStyleTiles(app, n),
+    picStyleTiles: (n) => picStyleTiles(app, n),
     tableStyleTiles: () => tableStyleTiles(app),
     tableBorders: () => tableBorders(app),
     textEffects: () => textEffects(app),
@@ -51,7 +51,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     cellMargins: () => [...([["Normal", 91440, 45720], ["Keine", 0, 0], ["Schmal", 45720, 45720], ["Breit", 137160, 137160]] as [string, number, number][])
       .map(([label, lr, tb]) => ({ label, run: () => cellPr(app, "Zellenbegrenzungen", (pr) => { for (const [a, v] of [["marL", lr], ["marR", lr], ["marT", tb], ["marB", tb]] as [string, number][]) { if (label === "Normal") pr.removeAttribute(a); else pr.setAttribute(a, String(v)); } }) })),
       "-" as const, { cmd: "table.customMargins" }],
-    shapeTiles: () => app.shapeTiles(),
+    shapeTiles: (cols) => app.shapeTiles(cols),
     tableStyles: (c) => tableStylesPanel(app, c),
     picStyles: (c) => picStylesPanel(app, c),
     textOutlineColor: () => app.textOutlineColor(), setTextOutline: (hex) => app.setTextOutline({ color: hex }), textOutlineExtra: () => app.textOutlineExtra(),
@@ -61,8 +61,9 @@ export function contextHost(app: PresentApp): ContextTabHost {
     fillColor: ctx.fillColor, setFill: ctx.setFill, lineColor: ctx.lineColor, setLine: ctx.setLine, fontColor: ctx.fontColor, setFontColor: ctx.setFontColor, fontColorExtra: () => app.fontColorExtra(), textFillExtra: () => app.textFillExtra(),
     effects: () => ctx.menus.effects,
     alignMenu: () => [{ cmd: "arrange.alignLeft" }, { cmd: "arrange.alignCenter" }, { cmd: "arrange.alignRight" }, "-", { cmd: "arrange.alignTop" }, { cmd: "arrange.alignMiddle" }, { cmd: "arrange.alignBottom" }],
-    sizeSpin: (k) => spin(() => sizeText(app, k), (v) => setSize(app, k, cmText(v)), (d) => { const v = app.editor.selectedViews[0]; if (v) setSize(app, k, Math.max(0, (k === "h" ? v.h : v.w) + d * 36000)); },
-      k === "h" ? "Formenhöhe:" : "Formenbreite:", k === "h" ? "shape.heightBox" : "shape.widthBox", k === "h" ? "shape-height" : "shape-width", k === "h" ? "H" : "RR"),
+    // Without a label the box is named by its command (Formenhöhe, Formenbreite), as PowerPoint names it.
+    sizeSpin: (k, labelled) => spin(() => sizeText(app, k), (v) => setSize(app, k, cmText(v)), (d) => { const v = app.editor.selectedViews[0]; if (v) setSize(app, k, Math.max(0, (k === "h" ? v.h : v.w) + d * 36000)); },
+      labelled ? (k === "h" ? "Höhe:" : "Breite:") : "", k === "h" ? "shape.heightBox" : "shape.widthBox", k === "h" ? "shape-height" : "shape-width", k === "h" ? "H" : "RR"),
     pictureColor: () => pictureColor(app),
     pictureArtistic: () => artisticEntries(app),
     // Transparenz, Helligkeit/Kontrast and Neu einfärben show the selected picture with the setting (D-164).
@@ -82,6 +83,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     fillExtra: () => app.fillExtra(),
     cropMenu: () => app.cropMenu(),
     // A chart element picked in Aktuelle Auswahl: the format pane for the chart (its parts are not selected one by one).
+    chartStyleTiles: () => app.chartUi.styleTiles(),
     formatChartElement: (name) => { if (!app.chartUi.openPane(name)) void app.commands.run("draw.format"); },
     penStyles: () => penMenus(app).styles(), penWeights: () => penMenus(app).weights(),
     penColor: () => `#${app.tablePen.color.length === 6 ? app.tablePen.color : "000000"}`,
@@ -91,9 +93,9 @@ export function contextHost(app: PresentApp): ContextTabHost {
     // Farben ändern shows each palette's colours (D-164); Schnelllayout a picture of each layout.
     chartColors: () => [{ heading: "Bunt" }, ...[10, 11, 12, 13].map((k) => ({ label: `Farbige Palette ${k - 9}`, preview: paletteSwatches(k, OFFICE_ACCENTS), run: () => CH.setColors(app, k) })),
       { heading: "Einfarbig" }, ...Array.from({ length: 13 }, (_, i) => ({ label: `Monochrome Palette ${i + 1}`, preview: paletteSwatches(14 + i, OFFICE_ACCENTS), run: () => CH.setColors(app, 14 + i) }))],
-    tableSpin: (k) => {
+    tableSpin: (k, labelled = true) => {
       const labels = { row: "Höhe:", col: "Breite:", h: "Höhe:", w: "Breite:" }, cmds = { row: "table.rowHeight", col: "table.colWidth", h: "table.height", w: "table.width" };
-      return spin(() => tableSizeText(app, k), (v) => setTableSize(app, k, cmText(v)), (d) => setTableSize(app, k, Math.max(36000, tableSize(app, k) + d * 36000)), labels[k], cmds[k], k === "row" || k === "h" ? "shape-height" : "shape-width", { row: "P", col: "B", h: "X", w: "LB" }[k]);
+      return spin(() => tableSizeText(app, k), (v) => setTableSize(app, k, cmText(v)), (d) => setTableSize(app, k, Math.max(36000, tableSize(app, k) + d * 36000)), labelled ? labels[k] : "", cmds[k], k === "row" || k === "h" ? "shape-height" : "shape-width", { row: "P", col: "B", h: "X", w: "LB" }[k]);
     },
   };
 }
@@ -508,6 +510,7 @@ export function implementContext(app: PresentApp): void {
   impl("chart.changeType", () => {}, chart);
   impl("chart.quickLayout", () => {}, chart);
   impl("chart.colors", () => {}, chart);
+  impl("chart.styles", () => {}, chart);
   impl("chart.switchRowCol", () => CH.switchRowCol(app), chart);
   impl("chart.editData", () => CH.editData(app), chart);
   impl("chart.selectData", () => CH.editData(app), chart);

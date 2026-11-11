@@ -9,7 +9,7 @@ import {
 } from "@raabe/sheet-engine";
 import { readXlsx, writeXlsx, newWorkbook } from "@raabe/ooxml";
 import { onFontAlias, setCloudFonts } from "@raabe/text-engine";
-import { colorGrid, entryKind, Backstage, Commands, Keytips, Ribbon, TaskPane, TitleBar, baseName, h, icon, installTooltips, messageBox, showDialog, showFontColors, showMenu, type BackstageEntry, type MenuEntry, type Platform,  } from "@raabe/shell";
+import { colorGrid, entryKind, largeOf, Backstage, Commands, Keytips, Ribbon, TaskPane, TitleBar, baseName, h, icon, installTooltips, messageBox, showDialog, showFontColors, showMenu, type BackstageEntry, type MenuEntry, type Platform,  } from "@raabe/shell";
 import { COMMANDS } from "./command-list";
 import { Grid, type GridHost, type Mode } from "./grid/grid";
 import { DEFAULT_COL_CHARS, charsToPx, defaultColPx, pxToPt, pxToWidth, ptToPx, shownChars } from "./grid/metrics";
@@ -95,6 +95,9 @@ const newId = () => {
   return `{${x.slice(0, 8)}-${x.slice(8, 12)}-${x.slice(12, 16)}-${x.slice(16, 20)}-${x.slice(20)}}`;
 };
 const samePath = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
+/** Anordnen in Formformat and the chart's Format tab: Excel's six large buttons at a wide window, the stacks after (D-186). */
+const arrangeGroup = (stacks: import("@raabe/shell").Control[]): import("@raabe/shell").Group =>
+  ({ id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: largeOf(stacks), smaller: [stacks] });
 
 export class CalcApp {
   readonly commands = new Commands();
@@ -2349,18 +2352,23 @@ export class CalcApp {
       id: "tableDesign", label: "Tabellenentwurf", key: "JT", contextual: true, shrink: [],
       groups: [
         // Keytips as recorded from Excel through UI Automation (probe_excel_slicer_ui.py, D-092).
-        { id: "props", label: "Eigenschaften", key: "ZP", icon: "table", controls: [{ type: "stack", items: [
-          { type: "combo", cmd: "table.name", width: 110, key: "N", label: "Tabellenname:", value: () => this.tables.current()?.name ?? "", commit: (v) => { this.tables.rename(v.trim()); } },
-          b("table.resize", "B")] }] },
+        // Excel: "Tabellenname:" above its box, Tabellengröße ändern under it (D-187).
+        { id: "props", label: "Eigenschaften", key: "ZP", icon: "table", controls: [{ type: "stack", title: "Tabellenname:", items: [
+          { type: "combo", cmd: "table.name", width: 145, key: "N", value: () => this.tables.current()?.name ?? "", commit: (v) => { this.tables.rename(v.trim()); } },
+          b("table.resize", "B")] }],
+          smaller: [[{ type: "stack", items: [
+            { type: "combo", cmd: "table.name", width: 110, key: "N", label: "Tabellenname:", value: () => this.tables.current()?.name ?? "", commit: (v) => { this.tables.rename(v.trim()); } },
+            b("table.resize", "B")] }]] },
         { id: "tools", label: "Tools", key: "ZT", icon: "table", controls: [{ type: "stack", items: [b("table.pivot", "M"), b("table.removeDuplicates", "4"), b("table.convert", "C")] },
           b("table.slicer", "T", "large")] },
-        { id: "external", label: "Externe Tabellendaten", key: "ZX", icon: "table", controls: [b("table.export", "X", "large"), b("table.refresh", "A", "large")] },
+        { id: "external", label: "Externe Tabellendaten", key: "ZX", icon: "table", controls: [b("table.export", "X", "large"), b("table.refresh", "A", "large"),
+          { type: "stack", items: [b("table.extProperties", "I"), b("table.openBrowser", "O"), b("table.unlink", "U")] }] },
         { id: "options", label: "Tabellenformatoptionen", key: "ZL", icon: "table", controls: [
           { type: "stack", items: [ck("table.optHeader", "Ü"), ck("table.optTotals", "G"), ck("table.optRowStripes", "V")] },
           { type: "stack", items: [ck("table.optFirstColumn", "E"), ck("table.optLastColumn", "L"), ck("table.optColumnStripes", "R")] },
           { type: "stack", items: [ck("table.optFilter", "F")] }] },
-        { id: "styles", label: "Tabellenformatvorlagen", key: "ZS", icon: "format-table", controls: [
-          { type: "dropdown", cmd: "table.styles", key: "S", size: "large", menu: [], popup: (close) => this.tables.stylesPanel(close) }] },
+        { id: "styles", label: "Tabellenformatvorlagen", key: "ZS", icon: "format-table", controls: [this.tables.styleTiles()],
+          smaller: [[{ type: "dropdown", cmd: "table.styles", key: "S", size: "large", menu: [], popup: (close) => this.tables.stylesPanel(close) }]] },
       ],
     };
   }
@@ -2466,13 +2474,14 @@ export class CalcApp {
           { type: "color", cmd: "shape.fill", key: "SF", palette: "font", current: () => this.shapes.selected()?.fill?.color ?? "#4472C4", pick: (c) => this.shapes.setFill(c), showLabel: true },
           { type: "color", cmd: "shape.outline", key: "SO", palette: "font", current: () => this.shapes.selected()?.line?.color ?? "#2F528F", pick: (c) => this.shapes.setLine(c), showLabel: true },
         ] }], launcher: { cmd: "shape.format" } },
-        { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: [{ type: "stack", items: [
+        arrangeGroup([{ type: "stack", items: [
           { type: "split", cmd: "shape.forward", key: "AF", size: "small", menu: [{ cmd: "shape.forward" }, { cmd: "shape.bringToFront" }] },
           { type: "split", cmd: "shape.backward", key: "AE", size: "small", menu: [{ cmd: "shape.backward" }, { cmd: "shape.sendToBack" }] },
+          { type: "button", cmd: "shape.selectionPane", key: "AP", size: "small" },
         ] }, { type: "stack", items: [
           { type: "dropdown", cmd: "shape.align", key: "AA", size: "small", get menu() { return shapes.arrange.alignMenu(); } },
           { type: "dropdown", cmd: "shape.groupMenu", key: "AG", size: "small", menu: shapes.grouping.menu },
-          { type: "dropdown", cmd: "shape.rotate", key: "AY", size: "small", menu: this.shapes.rotateMenu }] }] },
+          { type: "dropdown", cmd: "shape.rotate", key: "AY", size: "small", menu: this.shapes.rotateMenu }] }]),
       ],
     };
   }
@@ -2518,8 +2527,9 @@ export class CalcApp {
             return [{ heading: "Bunt" }, ...[10, 11, 12, 13].map((k) => colors(k, `Farbige Palette ${k - 9}`)),
               { heading: "Einfarbig" }, ...Array.from({ length: 13 }, (_, i) => colors(14 + i, `Monochrome Palette ${i + 1}`))];
           } },
-          { type: "tiles", cmd: "chart.styles", key: "S", get count() { return charts.styleCount(); }, visible: 6, fill: true, size: [62, 46],
-            render: (i) => { const t = charts.styleTile(i, 58, 42); return t ? (t as unknown as HTMLElement) : null; },
+          // Excel's gallery: at most eight 88 px tiles (D-187).
+          { type: "tiles", cmd: "chart.styles", key: "S", get count() { return charts.styleCount(); }, visible: 4, fill: true, max: 8, size: [79, 48],
+            render: (i) => { const t = charts.styleTile(i, 76, 44); return t ? (t as unknown as HTMLElement) : null; },
             tip: (i) => `Formatvorlage ${i + 1}`,
             pick: (i) => { charts.previewStyle(null); charts.applyStyle(i); },
             hover: (i) => charts.previewStyle(i),
@@ -2582,7 +2592,7 @@ export class CalcApp {
           { type: "button", cmd: "chart.textEffects", key: "IE", size: "small" },
         ] }] },
         { id: "access", label: "Barrierefreiheit", key: "Z1", icon: "alt-text", controls: [{ type: "button", cmd: "chart.altText", key: "AT", size: "large" }] },
-        { id: "arrange", label: "Anordnen", key: "ZA", icon: "bring-forward", controls: [{ type: "stack", items: [
+        arrangeGroup([{ type: "stack", items: [
           { type: "split", cmd: "chart.forward", key: "GE", size: "small", menu: [{ cmd: "chart.forward" }, { cmd: "chart.bringToFront" }] },
           { type: "split", cmd: "chart.backward", key: "GH", size: "small", menu: [{ cmd: "chart.backward" }, { cmd: "chart.sendToBack" }] },
           { type: "button", cmd: "chart.selectionPane", key: "Q", size: "small" },
@@ -2590,7 +2600,7 @@ export class CalcApp {
           { type: "button", cmd: "chart.align", key: "DA", size: "small" },
           { type: "button", cmd: "chart.group", key: "GR", size: "small" },
           { type: "button", cmd: "chart.rotate", key: "DR", size: "small" },
-        ] }] },
+        ] }]),
         { id: "size", label: "Größe", key: "ZZ", icon: "shape-height", launcher: { cmd: "chart.formatSelection", key: "ß" }, controls: [{ type: "stack", items: [
           size("chart.height", "Höhe:", "H", "h"), size("chart.width", "Breite:", "RR", "w")] }] },
       ],

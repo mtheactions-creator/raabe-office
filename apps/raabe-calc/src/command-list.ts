@@ -193,6 +193,10 @@ export const COMMANDS: Command[] = [
   later("table.slicer", "Datenschnitt einfügen", "filter"),
   later("table.export", "Exportieren", "export"),
   later("table.refresh", "Aktualisieren", "reapply"),
+  // Externe Tabellendaten for a table linked to a source (D-187): RaabeCalc has no linked tables, so they stay greyed.
+  later("table.extProperties", "Eigenschaften", "table-properties"),
+  later("table.openBrowser", "Im Browser öffnen", "globe"),
+  later("table.unlink", "Verknüpfung aufheben", "break-link"),
   cmd("table.optHeader", "Kopfzeile"),
   cmd("table.optTotals", "Ergebniszeile"),
   cmd("table.optRowStripes", "Gebänderte Zeilen"),
