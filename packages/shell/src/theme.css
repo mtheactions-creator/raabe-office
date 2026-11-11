@@ -206,14 +206,18 @@ button {
 .rsplit .arrow { width: 15px; padding: 0; justify-content: center; }
 .rsplit-large { flex-direction: column; }
 .rsplit-large > .rb:first-child { height: 46px; padding-top: 4px; border-radius: 4px 4px 0 0; }
-.rsplit-large > .rb.arrow { width: auto; height: 30px; border-radius: 0 0 4px 4px; flex-direction: column; justify-content: flex-start; padding-top: 0; }
+/* The label part is 4.3 px wider than its text (Office's large split buttons, D-188). */
+.rsplit-large > .rb.arrow { width: auto; height: 30px; border-radius: 0 0 4px 4px; flex-direction: column; justify-content: flex-start; padding: 0 2.15px; }
 
 .rrows { display: flex; flex-direction: column; gap: 2px; }
 .rrows-2 { gap: 8px; margin-top: 9px; }
 .rrow { display: flex; align-items: center; gap: 2px; height: 24px; }
 /* Between clusters in a row Office leaves 4.7 px (the 2 px gaps on both sides of this and 0.7 px). */
 .rrow .gap { width: 0.67px; }
-.rstack { display: flex; flex-direction: column; gap: 2px; }
+/* Items keep their own width, as Office reports and highlights them (D-188); the column is as wide as the widest. */
+.rstack { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+/* Two items stand apart as two rows do (y 10 and 42, Office's Größe, Zellengröße, Ausrichtung; D-188). */
+.rstack:not(.titled):has(> :nth-child(2):last-child) { gap: 8px; margin-top: 9px; }
 .rstack-title { height: 22px; line-height: 22px; padding-left: 2px; color: var(--text); }
 
 .rcombo { height: 24px; display: inline-flex; align-items: center; border: 1px solid #c7c7c7; border-radius: 4px; background: var(--card); }
