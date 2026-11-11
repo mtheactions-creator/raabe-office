@@ -4816,3 +4816,98 @@ Formen, Piktogramme and Textfeld, Kopf- und Fußzeile, WordArt as large buttons.
 layout; now Office's large buttons are the widest and the stacks their reduction (PowerPoint's Text steps down first on
 its tab, as recorded). The rest of those groups' widths are controls we have not built (3D-Modelle, SmartArt and
 Screenshot in RaabeCalc, Signaturzeile, Objekt; Word's Schnellbausteine, WordArt, Initiale).
+
+## D-185 The contextual tabs measured against Office's (2026-11-12)
+
+D-159 compared the main tabs only. `probe_office_ribbon_geometry.py --context` now selects a picture, a shape, a table
+(in Excel a formatted table) and a chart through COM in a document of our own in Excel, Word and PowerPoint (window
+`WIDE`, no input; PowerPoint only while no other POWERPNT.EXE runs) and records the contextual tabs Office shows for
+them through UI Automation: Bildformat, Formformat, Tabellenentwurf, Tabellenlayout (the UI Automation name of the table
+"Layout" tab in Word and PowerPoint), Diagrammentwurf and Format, 17 tabs in all (`"context"` in
+`results/2026-11-11-office-ribbon-geometry.json`). The same run keeps a PrintWindow crop of each ribbon in
+`%TEMP%\raabe-ribbon-ctx` (never committed), from which labels, large buttons and label breaks were read.
+`check_ribbon_geometry.py --context` makes the same selections through the apps' test APIs (`__calc`, `__app`,
+`__present.sweepContext`) and compares group by group (`results/2026-11-11-ribbon-geometry-context.json`); `--dev`
+measures the dev servers in a headless Edge at the same CSS size (2000 x 1366 at 150 %), which gave the same numbers
+as the release exes and made the work quicker. The check's Calc picture is now selected after it is inserted (before,
+the Bildformat tab did not show).
+
+## D-186 Anordnen, Größe and the tables' layouts as Office's widest (2026-11-12)
+
+- **Anordnen**: at a wide window Excel and PowerPoint show six large buttons (Ebene nach vorne, Ebene nach hinten,
+  Auswahlbereich, Ausrichten, Gruppieren, Drehen; 412 px), in every format tab; ours had the two stacks, which are now
+  the first reduction. Word's chart Format shows Position, Textumbruch and the first three large, the others labelled,
+  as RaabeWrite's Formformat already did. The shell's `largeOf` turns a group's stacks into large buttons (the large
+  label drops "..." through an explicit label "Auswahlbereich").
+- **Größe**: Office writes "Höhe:" and "Breite:" beside the boxes as wide as the text, the boxes in one column at the
+  right of the stack; ours had a fixed 58 px label column (RaabeCalc, RaabeWrite) or no label (RaabePresent). Now in the
+  shell's theme for the groups `size` and `tableSize`, and in RaabePresent for `cellSize`; RaabePresent's boxes are
+  labelled in the widest layout and show the icon only in the reduction. Word keeps its wider column in the table's
+  Zellengröße, so RaabeWrite's group is `cellSize` now and keeps it.
+- **RaabePresent Bildformat**: PowerPoint's first group is Bearbeiten (Bild bearbeiten, greyed, and Hintergrund
+  entfernen); Anpassen shows Korrekturen, Farbe, Künstlerische Effekte and Transparenz large. PowerPoint 2026's third
+  button there ("Erase") is not built.
+- **RaabePresent Tabellenlayout**: Zeilen und Spalten as five large buttons; Ausrichtung keeps its six icons at every
+  width (`wide: false`), as PowerPoint; Anordnen as above instead of one collapsed button.
+- **RaabePresent Tabellenentwurf**: WordArt-Formate is one large Schnellformatvorlagen button ("Schnell-" /
+  "formatvorlagen", read off PowerPoint's ribbon) and three icons, even at a wide window.
+
+## D-187 Style galleries in the contextual tabs at Office's tile sizes (2026-11-12)
+
+Office's galleries in the contextual tabs have fixed cells: Formenarten and Bildformatvorlagen 56 px (PowerPoint seven
+and eight, Excel and Word nine picture styles), the chart styles 88 px (eight; ours 86 to 87 px, so the group with our wider Farben ändern matches), Excel's Tabellenformatvorlagen about
+67 px (seven), Word's 72 px (fourteen), the shapes 24 px. Ours now use those widths (a tile's button is its size plus
+8 px), with at most as many tiles as Office shows (`max`):
+- RaabePresent: Formenarten seven styles (three in the reduction), Bildformatvorlagen eight (three), the chart's Format
+  tab Formen einfügen as three columns of shapes with Form ändern large and Formenarten as Formformat's; a new chart
+  styles gallery in Diagrammentwurf (the shared chart-ui styles, applied as one undo step; no Livevorschau on slides
+  yet). The 24 px shape cells are RaabePresent's own CSS.
+- RaabeCalc: Tabellenformatvorlagen as a gallery in the ribbon (the panel's tiles), Bildformatvorlagen at most nine,
+  chart styles at most eight; Eigenschaften shows "Tabellenname:" above a 145 px box (a titled stack), and Externe
+  Tabellendaten Office's three greyed buttons (Eigenschaften, Im Browser öffnen, Verknüpfung aufheben), since RaabeCalc
+  has no linked tables.
+- RaabeWrite: chart styles at most eight, Bildformatvorlagen at most nine, Tabellenformatvorlagen at 72 px cells.
+The gallery rendering in the shell is unchanged (another agent works on it); only the controls' sizes and counts.
+
+## D-188 Lines between controls inside a group (2026-11-12)
+
+Office draws a thin line between some controls of a group: Excel's Anpassen after In Zelle and after Freistellen,
+Word's after Freistellen, the tables' Zeilen und Spalten after Löschen (Word and PowerPoint). Measured from one control
+to the next it takes 12.7 px instead of 2. A group's `sepAfter` lists the control indices after which the shell draws
+it (`.rsep`, 1 px with 3.85 px on each side), in every layout. Ribbon check boxes are named by their command now
+(`aria-label`), so the check finds them as it finds Office's.
+Three rules for all ribbons came out of the control comparison and hold in Office's main tabs too: a stack's items keep
+their own width (Office reports and highlights each button at its own width; ours stretched to the column), a stack of
+two items stands at y 10 and 42 as Office's two-row groups (`.rrows-2` already did that for rows), and a large split
+button's label part is 4.3 px wider than its text. The main tabs were measured again afterwards: no group got worse.
+
+## D-189 What the contextual tabs still differ in (2026-11-12)
+
+**Numbers** (`check_ribbon_geometry.py --context` on the release exes; groups within 10 px of Office's width, controls
+within 2 px; before = main before this work, Calc's Bildformat before taken with the corrected selection):
+
+| App | Groups before | Groups after | Controls before | Controls after |
+|---|---|---|---|---|
+| RaabeCalc (5 tabs) | 9/25 | 19/25 | 12/111 | 27/111 |
+| RaabeWrite (6 tabs) | 19/33 | 22/33 | 34/166 | 42/166 |
+| RaabePresent (6 tabs) | 13/34 | 30/34 | 16/159 | 54/162 |
+
+Per tab after: Calc Bildformat 4/5, Formformat 1/3, Tabellenentwurf 5/5, Diagrammentwurf 5/5, Format 4/7; Write
+Bildformat 4/5, Formformat 3/7, Tabellenentwurf 2/3, Tabellenlayout 6/7, Diagrammentwurf 3/4, Format 4/7; Present
+Bildformat 4/6, Formformat 5/6, Tabellenentwurf 4/4, Tabellenlayout 7/7, Diagrammentwurf 4/4, Format 6/7.
+The main tabs (`check_ribbon_geometry.py`, after merging main's inline galleries): groups Calc 19/41, Write 22/29
+(main 21), Present 28/39 (main 26); controls Calc 85/208 (main 63), Write 74/156 (55), Present 78/160 (57).
+
+**Left as they are:**
+- RaabeCalc's Formformat has three of Excel's six groups (WordArt-Formate, Barrierefreiheit and Größe for shapes are
+  not built) and no inline shapes or style galleries; the chart's Format tab likewise shows Formen einfügen and
+  Formenarten as buttons, WordArt-Formate as a stack.
+- RaabeWrite's Formformat: at 3000 px Word shows a reduced layout (three styles, the WordArt styles inline, Größe as
+  icons) although room is left, while the earlier recording (capture_ribbon_widths.py) showed seven styles; ours keeps
+  that recording. Word's chart Format shows the shapes and style galleries inline (ours: buttons), and its
+  Tabellenentwurf has Schattierung as a large button (our colour button has no large form).
+- PowerPoint 2026's "Erase" in Bearbeiten is not built; Hintergrund entfernen is a menu there (ours: a button).
+- Galleries: their scroll buttons and borders differ by a few px, so groups with a gallery are within 10 px but rarely
+  within 2; the chart's Livevorschau is not shown on slides.
+- Most remaining control differences are the 1 px top offset of every control (within the tolerance), spinner arrows
+  (14 px, Office 17.3) and two-line large labels (D-159).

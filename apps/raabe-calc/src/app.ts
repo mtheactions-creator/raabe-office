@@ -2528,7 +2528,7 @@ export class CalcApp {
               { heading: "Einfarbig" }, ...Array.from({ length: 13 }, (_, i) => colors(14 + i, `Monochrome Palette ${i + 1}`))];
           } },
           // Excel's gallery: at most eight 88 px tiles (D-187).
-          { type: "tiles", cmd: "chart.styles", key: "S", get count() { return charts.styleCount(); }, visible: 4, fill: true, max: 8, size: [79, 48],
+          { type: "tiles", cmd: "chart.styles", key: "S", get count() { return charts.styleCount(); }, visible: 4, fill: true, max: 8, size: [78, 48],
             render: (i) => { const t = charts.styleTile(i, 76, 44); return t ? (t as unknown as HTMLElement) : null; },
             tip: (i) => `Formatvorlage ${i + 1}`,
             pick: (i) => { charts.previewStyle(null); charts.applyStyle(i); },
