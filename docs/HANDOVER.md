@@ -6,14 +6,14 @@ what is not in the other docs. Read in this order:
 2. This file.
 3. `docs/ROADMAP.md`: steps 10, 10b and 11 are the latest.
 4. The last report: `docs/reports/2026-11-11-step11-night.md` (and `2026-11-09-night.md` before it).
-5. `docs/DECISIONS.md`, from D-080 on. The latest decisions are D-156 to D-173 (D-167 to D-169 and D-174 to D-179
-   were reserved and not used); the next free number is **D-180**.
+5. `docs/DECISIONS.md`, from D-080 on. The latest decisions are D-156 to D-189 (D-167 to D-169, D-174 to D-179 and D-184
+   were reserved and not used); the next free number is **D-190**.
 
 ## State
 
 - **Code:** branch `main`, everything pushed. Tonight's agent branches (`worktree-agent-aaa061bda6b0729e4`,
   `worktree-agent-a09a757be7869ec48`) are merged.
-- **Checks:** 1420 unit tests pass; typecheck, `tools/check-chars.py` and the anonymize check are clean.
+- **Checks:** 1423 unit tests pass; typecheck, `tools/check-chars.py` and the anonymize check are clean.
 - **Builds:** the release exes of all three apps were rebuilt from the final state of the night (12.11.), at
   `apps/<app>/src-tauri/target/release/`. The per-user installers in `bundle/nsis/` are still from 09.11.
 - **Shortcuts:** RaabeWrite.lnk, RaabeCalc.lnk and RaabePresent.lnk in the project root start those exes. They are
@@ -29,7 +29,8 @@ lasting checks, all in `tools/feel-lab`, rerun after any change to the shell, th
 - colour buttons: `check_colorbuttons.py` (real input, crops);
 - chart marks: `check_chart_selection.py`;
 - pictures: `check_picture_controls.py` (needs the three dev servers), `paneorder.test.ts`, `panepictures.test.ts`;
-- screen: `check_ribbon_geometry.py` (all main tabs; `-v` for details), `check_contextmenu_geometry.py` (real input),
+- screen: `check_ribbon_geometry.py` (all main tabs; `--context` for the contextual tabs; `-v` for details),
+  `check_ribbon_galleries.py` (inline galleries as the window narrows), `check_contextmenu_geometry.py` (real input),
   `check_pane_geometry.py`, `check_dialog_geometry.py`.
 
 One decision the owner should hear about first: **a left click outside a menu in the document is swallowed** (it closes
