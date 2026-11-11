@@ -102,7 +102,7 @@ function presetOf(g: Gradient): string {
   return GRADIENT_PRESETS.find((p) => { const q = presetGradient(p.value); return !!q && key(q) === key(g); })?.value ?? "";
 }
 
-/** The controls of a gradient (Typ, Richtung, Winkel, Farbverlaufsstopps, Farbe, Position, Transparenz, Helligkeit, Mit Form drehen). */
+/** The controls of a gradient (Typ, Richtung, Winkel, Farbverlaufstopps, Farbe, Position, Transparenz, Helligkeit, Mit Form drehen). */
 function gradientControls(key: string, g: Gradient, set: (g: Gradient) => void): PaneControl[] {
   const sel = Math.min(chosenStop.get(key) ?? 0, g.stops.length - 1);
   const stop = g.stops[sel];
@@ -124,7 +124,7 @@ function gradientControls(key: string, g: Gradient, set: (g: Gradient) => void):
     c.push({ type: "number", label: "Winkel", unit: "°", min: 0, max: 359.9, step: 1, value: () => g.angle ?? 0, set: (v) => set({ ...g, angle: Math.round(v * 10) / 10 }) });
   }
   c.push({
-    type: "gradient", label: "Farbverlaufsstopps", stops: () => g.stops, selected: () => sel,
+    type: "gradient", label: "Farbverlaufstopps", stops: () => g.stops, selected: () => sel,
     select: (i) => { chosenStop.set(key, i); },
     add: () => {
       // A new stop between the chosen one and the next, in the chosen one's colour.
@@ -209,16 +209,20 @@ function pictureControls(f: Fill, set: (f: Fill) => void): PaneControl[] {
 
 /** The Füllung section. `extra` follows the type choice (Invertieren falls negativ, Punkte nach Farbe unterscheiden). */
 /** `withAuto` false: no Automatisch (Textfüllung), Einfarbige Füllung in the automatic colour is the default. */
-export function fillSection(t: FmtTarget, autoColor: string, extra: PaneControl[] = [], open = true, withAuto = true): PaneSection {
+/**
+ * `autoNone`: the element's automatic fill is none (data labels): Keine Füllung is shown chosen until another is
+ * picked, as in Excel (D-160).
+ */
+export function fillSection(t: FmtTarget, autoColor: string, extra: PaneControl[] = [], open = true, withAuto = true, autoNone = false): PaneSection {
   return {
     title: "Füllung", open, controls: () => {
       const f = t.get()?.fill;
       const set = (fill: Fill | undefined) => t.change((x) => { if (fill) x.fill = fill; else delete x.fill; });
-      const type = f?.type ?? (withAuto ? "auto" : "solid");
+      const type = f?.type ?? (autoNone ? "none" : withAuto ? "auto" : "solid");
       const radio = (label: string, v: Fill["type"], make: () => Fill | undefined): PaneControl => ({ type: "radio", label, checked: () => type === v, pick: () => set(make()) });
       const color = f?.color ?? autoColor;
       const c: PaneControl[] = [
-        radio("Keine Füllung", "none", () => ({ type: "none" })),
+        radio("Keine Füllung", "none", () => (autoNone ? undefined : { type: "none" })),
         radio("Einfarbige Füllung", "solid", () => ({ type: "solid", color })),
         radio("Farbverlauf", "gradient", () => ({ type: "gradient", gradient: f?.gradient ?? defaultGradient(color) })),
         // Excel fills with its first texture at once (tiled), so the choice is saved even without a picture (D-155).
@@ -227,9 +231,11 @@ export function fillSection(t: FmtTarget, autoColor: string, extra: PaneControl[
           return { type: "picture", picture: f?.picture?.src ? f.picture : src ? { src, tile: true } : f?.picture };
         }),
         radio("Musterfüllung", "pattern", () => ({ type: "pattern", pattern: f?.pattern ?? { preset: "pct5", fg: color, bg: "#FFFFFF" } })),
-        ...(withAuto ? [radio("Automatisch", "auto", () => undefined)] : []),
+        ...(withAuto ? [radio("Automatisch", "auto", () => (autoNone ? { type: "auto" } : undefined))] : []),
         ...extra,
       ];
+      // Excel shows the colour under Automatisch too; picking one makes the fill Einfarbig.
+      if (type === "auto") c.push({ type: "color", label: "Farbe", value: () => null, auto: autoColor, set: (hex) => set({ type: "solid", color: hex ?? autoColor }) });
       if (type === "solid") {
         const sf: Fill = f?.type === "solid" ? f : { type: "solid", color: autoColor };
         c.push({ type: "color", label: "Farbe", value: () => sf.color ?? null, set: (hex) => set({ ...sf, color: hex ?? autoColor }) });
@@ -254,8 +260,10 @@ export interface LineOptions {
   title: string;
   autoColor: string;
   autoWidth: number;
-  /** Pfeile (Anfangs- / Endpfeiltyp): lines that have ends. */
-  arrows?: boolean;
+  /** Pfeile (Start- / Endpfeiltyp): lines that have ends; "disabled": shown greyed, as Excel shows them on a Rahmen. */
+  arrows?: boolean | "disabled";
+  /** The element's automatic line is none (data labels, scatter series without lines): Keine Linie is shown chosen. */
+  autoNone?: boolean;
   /** Controls after the type choice or at the end (Abgerundete Ecken, Linie glätten). */
   extra?: PaneControl[];
   open?: boolean;
@@ -275,14 +283,19 @@ export function lineSection(t: FmtTarget, o: LineOptions): PaneSection {
         for (const k of Object.keys(next) as (keyof Line)[]) if (next[k] === undefined) delete next[k];
         set(next);
       };
-      const type = l?.type ?? (o.withAuto === false ? "none" : "auto");
+      const type = l?.type ?? (o.withAuto === false || o.autoNone ? "none" : "auto");
       const color = l?.color ?? o.autoColor;
       const c: PaneControl[] = [
-        { type: "radio", label: "Keine Linie", checked: () => type === "none", pick: () => set(o.withAuto === false ? undefined : { type: "none" }) },
+        { type: "radio", label: "Keine Linie", checked: () => type === "none", pick: () => set(o.withAuto === false || o.autoNone ? undefined : { type: "none" }) },
         { type: "radio", label: "Einfarbige Linie", checked: () => type === "solid", pick: () => set({ ...l, type: "solid", color, width: l?.width ?? o.autoWidth }) },
         { type: "radio", label: "Farbverlaufslinie", checked: () => type === "gradient", pick: () => set({ ...l, type: "gradient", gradient: l?.gradient ?? defaultGradient(color), width: l?.width ?? o.autoWidth }) },
-        ...(o.withAuto === false ? [] : [{ type: "radio", label: "Automatisch", checked: () => type === "auto", pick: () => set(undefined) } as PaneControl]),
+        ...(o.withAuto === false ? [] : [{ type: "radio", label: "Automatisch", checked: () => type === "auto", pick: () => set(o.autoNone ? { type: "auto" } : undefined) } as PaneControl]),
       ];
+      // Excel shows Farbe and Transparenz under Automatisch too; changing them makes the line Einfarbig.
+      if (type === "auto") {
+        c.push({ type: "color", label: "Farbe", value: () => null, auto: o.autoColor, set: (hex) => patch({ color: hex ?? o.autoColor }) });
+        c.push({ type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => 0, set: (v) => patch({ transparency: Math.round(v) || undefined }) });
+      }
       if (type === "solid") {
         c.push({ type: "color", label: "Farbe", value: () => l?.color ?? null, set: (hex) => patch({ color: hex ?? o.autoColor }) });
         c.push({ type: "number", label: "Transparenz", unit: " %", min: 0, max: 100, slider: true, value: () => l?.transparency ?? 0, set: (v) => patch({ transparency: Math.round(v) || undefined }) });
@@ -298,15 +311,16 @@ export function lineSection(t: FmtTarget, o: LineOptions): PaneSection {
           const arrow = (which: "head" | "tail", label: string, sizeLabel: string): PaneControl[] => {
             const a = l?.[which];
             return [
-              { type: "select", label, options: ARROWS, value: () => a?.type ?? "none", set: (v) => patch({ [which]: v === "none" ? undefined : { ...a, type: v as Arrow["type"] } }) },
-              { type: "select", label: sizeLabel, options: arrowSizes(which === "head" ? "L" : "R"), value: () => `${a?.w ?? "med"},${a?.len ?? "med"}`, disabled: () => !a,
+              { type: "select", label, options: ARROWS, value: () => a?.type ?? "none", disabled: () => o.arrows === "disabled", set: (v) => patch({ [which]: v === "none" ? undefined : { ...a, type: v as Arrow["type"] } }) },
+              { type: "select", label: sizeLabel, options: arrowSizes(which === "head" ? "L" : "R"), value: () => `${a?.w ?? "med"},${a?.len ?? "med"}`, disabled: () => !a || o.arrows === "disabled",
                 set: (v) => { const [w, len] = v.split(",") as [Arrow["w"], Arrow["len"]]; if (a) patch({ [which]: { ...a, w, len } }); } },
             ];
           };
           c.push(...arrow("head", "Startpfeiltyp", "Startpfeilgröße"), ...arrow("tail", "Endpfeiltyp", "Endpfeilgröße"));
         }
       }
-      c.push(...(o.extra ?? []));
+      // Keine Linie hides the line's own options too (Abgerundete Ecken, Linie glätten), as in Excel.
+      if (type !== "none") c.push(...(o.extra ?? []));
       return c;
     },
   };

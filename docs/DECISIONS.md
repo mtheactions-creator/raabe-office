@@ -4420,3 +4420,30 @@ its top 11 px, one bar of 16 x 4 px in rows 12 to 16, no outline.
   whose `current()` was fixed (the chart Format tab's Fülleffekt/Formkontur/Textfüllung) now follow the last pick too;
   theme references and Automatisch stay with the app.
 - A `#` in an app's colour value no longer makes the bar's CSS invalid.
+
+## D-160 The chart Format pane's order is checked against Excel's recorded pane (2026-11-11)
+
+Step 11 point 3. `packages/chart-ui/test/paneorder.test.ts` builds our pane for every element Excel's probe recorded
+(`results/2026-11-09-excel-chart-pane.json`: 95 panes, seven chart types; the chart is made as the probe made it:
+title, legend, data labels, trendline and error bars on series 1, axis title, gridlines) and compares, by label, the
+option sets, tabs, sections and controls. Excel's controls are read as a student sees them: a colour's label and its
+button are one control, a slider and its box one, the pattern tiles one grid, the stop buttons part of the gradient
+bar. Every radio choice Excel recorded ("choices": Farbverlauf adds Voreingestellte Farbverläufe, Typ, Richtung …) is
+picked in a fresh pane of ours too, and the controls it adds must follow in Excel's order.
+- **Order**: the test fails on any section or control that stands in another order than Excel's. Result: none in
+  the default state and none after any recorded choice. The owner's "different order" was not reproduced on this
+  recording; what did differ was what each state shows, fixed below.
+- **Controls only one side has** are listed in `paneorder-known.json` (325 entries by element, not by chart type); a
+  new one fails the test, and one fixed must be taken off the list. Most are not built yet: the Textfeld options of
+  chart text (Ränder, Umbrechen, Spalten...), Weiche Kanten / 3D-Format / 3D-Drehung of text, the tiling options of
+  textures (X-/Y-Offset, Skalierung, Ausrichtung, Spiegelungstyp), Hinzufügen of the number format, the Beleuchtung's
+  Winkel. Ours-only and kept: the Schrift section under Textoptionen, the title's Titeloptionen tab (Überlagern),
+  Alternativtext, Bereich der Datenbeschriftung.
+- **Fixed** so that each state shows what Excel shows: under Automatisch the Füllung shows Farbe and the Linie / Rahmen
+  Farbe and Transparenz (a pick makes it Einfarbig); arrows are offered on every line and shown greyed on a Rahmen, a
+  marker's Rahmen and the Textkontur; Keine Linie hides the line's own options (Abgerundete Ecken, Linie glätten); data
+  labels and scatter series without lines show Keine Füllung / Keine Linie chosen by default; a data point's pane has
+  Invertieren falls negativ, Segmentfarbunterscheidung and Linie glätten as the series' has, and its own tab is called
+  Datenreihenoptionen; line and scatter series have 3D-Format; the gradient bar is called Farbverlaufstopps.
+- Not compared: Excel's Markierung page is a page switch (Linie / Markierung) in Excel; ours shows its three sections
+  after the Linie section (Markierungsoptionen, Markierungsfüllung, Markierungsrahmen), compared under those names.
