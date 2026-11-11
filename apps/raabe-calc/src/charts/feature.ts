@@ -22,6 +22,7 @@ import { chartButtons } from "@raabe/chart-ui";
 import { choiceLabel, elementEntries } from "@raabe/chart-ui";
 import { selectDataDialog, type SelectDataHost } from "@raabe/chart-ui";
 import { applyStyle, chartStyles, setStyleTheme, styleIndex } from "@raabe/chart-ui";
+import { chartMarks, drawMarks, elementMarks, marksLayer } from "@raabe/chart-ui";
 
 export type ChartKind = Kind;
 
@@ -42,16 +43,14 @@ const CSS = `
 .chart-layer { position: absolute; overflow: hidden; pointer-events: none; z-index: 4; }
 .chart-obj { position: absolute; pointer-events: auto; outline: none; cursor: default; touch-action: none; }
 .chart-obj > svg { display: block; position: absolute; left: 0; top: 0; }
-.chart-obj.sel { box-shadow: 0 0 0 1px #a6a6a6; }
 .chart-obj.dragging { cursor: move; }
-.chart-handle { position: absolute; width: 7px; height: 7px; margin: -5px 0 0 -5px; border: 1px solid #5f5f5f; border-radius: 50%; background: #fff; display: none; z-index: 1; }
+.chart-handle { position: absolute; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; display: none; z-index: 2; }
 .chart-obj.sel .chart-handle { display: block; }
 .chart-handle[data-h="nw"], .chart-handle[data-h="se"] { cursor: nwse-resize; }
 .chart-handle[data-h="ne"], .chart-handle[data-h="sw"] { cursor: nesw-resize; }
 .chart-handle[data-h="n"], .chart-handle[data-h="s"] { cursor: ns-resize; }
 .chart-handle[data-h="e"], .chart-handle[data-h="w"] { cursor: ew-resize; }
-.chart-elsel { position: absolute; pointer-events: none; border: 1px dashed #5f5f5f; display: none; }
-.chart-obj.sel .chart-elsel.on { display: block; }
+.chart-obj:not(.sel) > .chart-marks { display: none; }
 .chart-obj svg [data-fade] { opacity: .25; }
 .chart-ranges { position: absolute; inset: 0; pointer-events: none; }
 .chart-range { position: absolute; box-sizing: border-box; border: 2px solid; pointer-events: none; }
@@ -257,7 +256,7 @@ export function chartsFeature(app: CalcApp) {
     if (key !== v.key) {
       const svg = renderChart(look, box.w, box.h, { accents: accents(), format });
       svg.setAttribute("aria-label", titleText(m));
-      v.el.querySelector("svg")?.remove();
+      v.el.querySelector(":scope > svg:not(.chart-marks)")?.remove();
       v.el.prepend(svg);
       if (fd) fadeParts(look, svg, fd);
       if (!v.el.querySelector(".chart-handle")) {
@@ -269,7 +268,7 @@ export function chartsFeature(app: CalcApp) {
     }
     const zk = `${z},${box.w},${box.h}`;
     if (zk !== v.zoomKey) {
-      const svg = v.el.querySelector("svg")!;
+      const svg = v.el.querySelector<SVGSVGElement>(":scope > svg:not(.chart-marks)")!;
       svg.setAttribute("width", String(box.w * z));
       svg.setAttribute("height", String(box.h * z));
       for (const hd of v.el.querySelectorAll<HTMLElement>(".chart-handle")) {
@@ -316,6 +315,7 @@ export function chartsFeature(app: CalcApp) {
       view.el.style.width = `${box.w * z}px`;
       view.el.style.height = `${box.h * z}px`;
       draw(m, view, box);
+      if (m === selected) showElement(m);
     }
     showRanges(lx, ly);
   }
@@ -741,23 +741,14 @@ export function chartsFeature(app: CalcApp) {
     place();
   }
 
-  /** The dashed frame around the selected element (the chart area has the chart's own frame). */
+  /** The selection marks as Excel draws them: the chart's frame and sizing handles, and the selected element's (D-170). */
   function showElement(m: ChartModel): void {
     const v = views.get(m);
-    if (!v) return;
-    let box = v.el.querySelector<HTMLElement>(".chart-elsel");
-    if (!box) { box = h("div", { class: "chart-elsel" }); v.el.append(box); }
-    const sel = partsOf(m, element);
-    const els = sel ? [...v.el.querySelectorAll<SVGGraphicsElement>(sel)] : [];
-    if (!els.length) { box.classList.remove("on"); return; }
+    const svg = v?.el.querySelector<SVGSVGElement>(":scope > svg:not(.chart-marks)");
+    if (!v || !svg || m !== selected) return;
     const o = v.el.getBoundingClientRect();
-    let l = Infinity, t = Infinity, r = -Infinity, b = -Infinity;
-    for (const el of els) {
-      const rr = el.getBoundingClientRect();
-      l = Math.min(l, rr.left); t = Math.min(t, rr.top); r = Math.max(r, rr.right); b = Math.max(b, rr.bottom);
-    }
-    Object.assign(box.style, { left: `${l - o.left - 2}px`, top: `${t - o.top - 2}px`, width: `${r - l + 4}px`, height: `${b - t + 4}px` });
-    box.classList.add("on");
+    const own = elementMarks(svg, element, partsOf(m, element), o, { pie: isPie(m.kind) });
+    drawMarks(marksLayer(v.el), [chartMarks(o.width, o.height), own]);
   }
 
   let paneChart: ChartModel | null = null;

@@ -1,0 +1,1025 @@
+{
+ "what": "RaabeCalc's chart selection marks against Excel's (selmarks.compare), device pixels at the screen's scale",
+ "parts": {
+  "column-chart": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    8,
+    8
+   ],
+   "size": [
+    "18x18",
+    "17x17"
+   ],
+   "ring": [
+    "#616161",
+    "#616161"
+   ],
+   "fill": [
+    "#FFFFFF",
+    "#FFFFFF"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 0.5,
+   "selected": "Diagrammbereich",
+   "ours": "8 handles {'grey': 8} sizes {'18x18': 8}; lines #616161 t1 ink 158 box [-8, 0, 736, 435]",
+   "excel": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #616161 t1 ink 158 box [-8, -3, 737, 436]"
+  },
+  "column-plot": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    8,
+    7
+   ],
+   "size": [
+    "18x18",
+    "17x17"
+   ],
+   "ring": [
+    "#616161",
+    "#616161"
+   ],
+   "fill": [
+    "#FFFFFF",
+    "#FFFFFF"
+   ],
+   "frame": [
+    "#7B7B7B",
+    "#9B9C9B"
+   ],
+   "ink": [
+    132,
+    131
+   ],
+   "maxCentreOffset": 445.5,
+   "selected": "Zeichnungsfläche",
+   "ours": "8 handles {'grey': 8} sizes {'18x18': 6, '17x18': 2}; lines #7B7B7B t1 ink 132 box [69, 74, 460, 314]",
+   "excel": "7 handles {'grey': 7} sizes {'17x17': 7}; lines #9B9C9B t2 ink 131 box [74, 82, 447, 308]"
+  },
+  "column-title": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    4,
+    4
+   ],
+   "size": [
+    "10x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1985D8",
+    "#1F88D9"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 27.0,
+   "selected": "Diagrammtitel",
+   "ours": "4 handles {'blue': 4} sizes {'10x10': 4}; lines #616161 t1 ink 158 box [268, 8, 184, 51]",
+   "excel": "4 handles {'blue': 4} sizes {'10x10': 4}; lines #616161 t1 ink 158 box [241, 6, 236, 60]"
+  },
+  "column-legend": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    8,
+    8
+   ],
+   "size": [
+    "18x18",
+    "17x17"
+   ],
+   "ring": [
+    "#616161",
+    "#616161"
+   ],
+   "fill": [
+    "#FFFFFF",
+    "#FFFFFF"
+   ],
+   "frame": [
+    "#7B7B7B",
+    "#BDBEBD"
+   ],
+   "ink": [
+    132,
+    131
+   ],
+   "maxCentreOffset": 13.5,
+   "selected": "Legende",
+   "ours": "8 handles {'grey': 8} sizes {'18x18': 4, '17x18': 2}; lines #7B7B7B t1 ink 132 box [555, 186, 152, 134]",
+   "excel": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #BDBEBD t1 ink 131 box [541, 173, 167, 146]"
+  },
+  "column-legendEntry": {
+   "passed": null,
+   "skipped": "a single legend entry is not an element of its own"
+  },
+  "column-axisTitle": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    4,
+    4
+   ],
+   "size": [
+    "11x11",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#1784D7"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 47.5,
+   "selected": "Vertikal (Wert) Achse Titel",
+   "ours": "4 handles {'blue': 4} sizes {'11x11': 2, '11x10': 2}; lines #616161 t1 ink 158 box [-2, 177, 47, 107]",
+   "excel": "4 handles {'blue': 4} sizes {'10x10': 3, '10x11': 1}; lines #616161 t1 ink 158 box [16, 174, 41, 117]"
+  },
+  "column-valAxis": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    4,
+    4
+   ],
+   "size": [
+    "9x8",
+    "8x8"
+   ],
+   "ring": [
+    "#1A80D5",
+    "#1985D7"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#7B7B7B",
+    "#878987"
+   ],
+   "ink": [
+    132,
+    119
+   ],
+   "maxCentreOffset": 42.5,
+   "selected": "Vertikal (Wert) Achse",
+   "ours": "4 handles {'blue': 4} sizes {'9x8': 3, '9x9': 1}; lines #7B7B7B t1 ink 132 box [36, 56, 24, 348]",
+   "excel": "4 handles {'blue': 4} sizes {'7x8': 2, '8x7': 1}; lines #878987 t2 ink 119 box [51, 66, 36, 330]"
+  },
+  "column-catAxis": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    4,
+    4
+   ],
+   "size": [
+    "8x9",
+    "8x8"
+   ],
+   "ring": [
+    "#1A80D5",
+    "#127ED4"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#7B7B7B",
+    "#BDBEBD"
+   ],
+   "ink": [
+    132,
+    131
+   ],
+   "maxCentreOffset": 17.0,
+   "selected": "Horizontal (Kategorie) Achse",
+   "ours": "4 handles {'blue': 4} sizes {'8x9': 4}; lines #7B7B7B t1 ink 132 box [62, 379, 473, 48]",
+   "excel": "4 handles {'blue': 4} sizes {'8x8': 3, '7x8': 1}; lines #BDBEBD t2 ink 131 box [79, 387, 445, 35]"
+  },
+  "column-majorGrid": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    14,
+    14
+   ],
+   "size": [
+    "10x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#2082D5"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    null,
+    null
+   ],
+   "ink": [
+    null,
+    null
+   ],
+   "maxCentreOffset": 14.0,
+   "selected": "Vertikal (Wert) Achse Hauptgitternetz",
+   "ours": "14 handles {'blue': 14} sizes {'10x10': 10, '10x11': 4}",
+   "excel": "14 handles {'blue': 14} sizes {'10x10': 12, '10x11': 2}"
+  },
+  "column-series": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    16,
+    16
+   ],
+   "size": [
+    "10x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#0E7BCF"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#7B7B7B",
+    "#D2D3D2"
+   ],
+   "ink": [
+    132,
+    131
+   ],
+   "maxCentreOffset": 13.0,
+   "selected": "Reihe \"Nord\"",
+   "ours": "16 handles {'blue': 16} sizes {'10x10': 13, '11x10': 2}; lines #7B7B7B t1 ink 132 box [83, 164, 376, 224]",
+   "excel": "16 handles {'blue': 16} sizes {'10x10': 13, '9x10': 2}; lines #D2D3D2 t1 ink 131 box [96, 163, 358, 223]"
+  },
+  "column-point": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    4,
+    4
+   ],
+   "size": [
+    "10x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#0E7BD0"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#7B7B7B",
+    "#59737E"
+   ],
+   "ink": [
+    132,
+    125
+   ],
+   "maxCentreOffset": 8.0,
+   "selected": "Reihe \"Nord\" Punkt \"Feb\"",
+   "ours": "4 handles {'blue': 4} sizes {'10x10': 2, '11x10': 2}; lines #7B7B7B t1 ink 132 box [203, 164, 26, 224]",
+   "excel": "4 handles {'blue': 4} sizes {'10x10': 3, '9x10': 1}; lines #59737E t1 ink 125 box [206, 163, 34, 223]"
+  },
+  "column-labels": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    16,
+    16
+   ],
+   "size": [
+    "10x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#0D7ED5"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 32.0,
+   "selected": "Datenbeschriftungen",
+   "ours": "16 handles {'blue': 16} sizes {'10x10': 12, '11x10': 1}; lines #616161 t1 ink 158 box [87, 134, 372, 168]",
+   "excel": "16 handles {'blue': 16} sizes {'10x10': 10, '10x11': 4}; lines #616161 t1 ink 158 box [97, 127, 360, 168]"
+  },
+  "column-label": {
+   "passed": null,
+   "skipped": "a single data label is not an element of its own"
+  },
+  "column-trend": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    2,
+    2
+   ],
+   "size": [
+    "10x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#1981CD"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    null,
+    null
+   ],
+   "ink": [
+    null,
+    null
+   ],
+   "maxCentreOffset": 12.0,
+   "selected": "Reihe \"Nord\" Trendlinie 1",
+   "ours": "2 handles {'blue': 2} sizes {'10x10': 1, '11x10': 1}",
+   "excel": "2 handles {'blue': 2} sizes {'10x10': 2}"
+  },
+  "line-chart": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    8,
+    8
+   ],
+   "size": [
+    "18x18",
+    "17x17"
+   ],
+   "ring": [
+    "#616161",
+    "#616161"
+   ],
+   "fill": [
+    "#FFFFFF",
+    "#FFFFFF"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 0.5,
+   "selected": "Diagrammbereich",
+   "ours": "8 handles {'grey': 8} sizes {'18x18': 8}; lines #616161 t1 ink 158 box [-8, 0, 736, 435]",
+   "excel": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #616161 t1 ink 158 box [-8, -3, 737, 436]"
+  },
+  "line-plot": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    8,
+    7
+   ],
+   "size": [
+    "18x18",
+    "17x17"
+   ],
+   "ring": [
+    "#616161",
+    "#616161"
+   ],
+   "fill": [
+    "#FFFFFF",
+    "#FFFFFF"
+   ],
+   "frame": [
+    "#7B7B7B",
+    "#9B9C9B"
+   ],
+   "ink": [
+    132,
+    131
+   ],
+   "maxCentreOffset": 445.5,
+   "selected": "Zeichnungsfläche",
+   "ours": "8 handles {'grey': 8} sizes {'18x18': 6, '17x18': 2}; lines #7B7B7B t1 ink 132 box [69, 74, 460, 314]",
+   "excel": "7 handles {'grey': 7} sizes {'17x17': 7}; lines #9B9C9B t2 ink 131 box [74, 82, 447, 308]"
+  },
+  "line-title": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    4,
+    4
+   ],
+   "size": [
+    "10x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1985D8",
+    "#1F88D9"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 27.0,
+   "selected": "Diagrammtitel",
+   "ours": "4 handles {'blue': 4} sizes {'10x10': 4}; lines #616161 t1 ink 158 box [268, 8, 184, 51]",
+   "excel": "4 handles {'blue': 4} sizes {'10x10': 4}; lines #616161 t1 ink 158 box [241, 6, 236, 60]"
+  },
+  "line-legend": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    8,
+    8
+   ],
+   "size": [
+    "18x18",
+    "17x17"
+   ],
+   "ring": [
+    "#616161",
+    "#616161"
+   ],
+   "fill": [
+    "#FFFFFF",
+    "#FFFFFF"
+   ],
+   "frame": [
+    "#7B7B7B",
+    "#BDBEBD"
+   ],
+   "ink": [
+    132,
+    131
+   ],
+   "maxCentreOffset": 13.5,
+   "selected": "Legende",
+   "ours": "8 handles {'grey': 8} sizes {'18x18': 4, '17x18': 2}; lines #7B7B7B t1 ink 132 box [555, 186, 152, 134]",
+   "excel": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #BDBEBD t1 ink 131 box [541, 173, 167, 146]"
+  },
+  "line-legendEntry": {
+   "passed": null,
+   "skipped": "a single legend entry is not an element of its own"
+  },
+  "line-axisTitle": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    4,
+    4
+   ],
+   "size": [
+    "11x11",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#1784D7"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 47.5,
+   "selected": "Vertikal (Wert) Achse Titel",
+   "ours": "4 handles {'blue': 4} sizes {'11x11': 2, '11x10': 2}; lines #616161 t1 ink 158 box [-2, 177, 47, 107]",
+   "excel": "4 handles {'blue': 4} sizes {'10x10': 3, '10x11': 1}; lines #616161 t1 ink 158 box [16, 174, 41, 117]"
+  },
+  "line-valAxis": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    4,
+    4
+   ],
+   "size": [
+    "9x8",
+    "8x8"
+   ],
+   "ring": [
+    "#1A80D5",
+    "#1985D7"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#7B7B7B",
+    "#878987"
+   ],
+   "ink": [
+    132,
+    119
+   ],
+   "maxCentreOffset": 42.5,
+   "selected": "Vertikal (Wert) Achse",
+   "ours": "4 handles {'blue': 4} sizes {'9x8': 3, '9x9': 1}; lines #7B7B7B t1 ink 132 box [36, 56, 24, 348]",
+   "excel": "4 handles {'blue': 4} sizes {'7x8': 2, '8x7': 1}; lines #878987 t2 ink 119 box [51, 66, 36, 330]"
+  },
+  "line-catAxis": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    4,
+    4
+   ],
+   "size": [
+    "8x9",
+    "8x8"
+   ],
+   "ring": [
+    "#1A80D5",
+    "#127ED4"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#7B7B7B",
+    "#BDBEBD"
+   ],
+   "ink": [
+    132,
+    131
+   ],
+   "maxCentreOffset": 17.0,
+   "selected": "Horizontal (Kategorie) Achse",
+   "ours": "4 handles {'blue': 4} sizes {'8x9': 4}; lines #7B7B7B t1 ink 132 box [62, 379, 473, 48]",
+   "excel": "4 handles {'blue': 4} sizes {'8x8': 3, '7x8': 1}; lines #BDBEBD t2 ink 131 box [79, 387, 445, 35]"
+  },
+  "line-majorGrid": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    14,
+    14
+   ],
+   "size": [
+    "10x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#2082D5"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    null,
+    null
+   ],
+   "ink": [
+    null,
+    null
+   ],
+   "maxCentreOffset": 14.0,
+   "selected": "Vertikal (Wert) Achse Hauptgitternetz",
+   "ours": "14 handles {'blue': 14} sizes {'10x10': 10, '10x11': 4}",
+   "excel": "14 handles {'blue': 14} sizes {'10x10': 12, '10x11': 2}"
+  },
+  "line-series": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    15,
+    16
+   ],
+   "size": [
+    "9x8",
+    "8x8"
+   ],
+   "ring": [
+    "#1A80D5",
+    "#047AD4"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "ink": [
+    132,
+    218
+   ],
+   "maxCentreOffset": 17.5,
+   "selected": "Reihe \"Nord\"",
+   "ours": "15 handles {'blue': 15} sizes {'9x8': 8, '9x9': 6}; lines #D0E7F8 t1 ink 132 box [115, 153, 367, 156]",
+   "excel": "16 handles {'blue': 16} sizes {'8x8': 16}; lines #D0E7F8 t2 ink 218 box [125, 155, 354, 154]"
+  },
+  "line-point": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    4,
+    4
+   ],
+   "size": [
+    "9x8",
+    "8x8"
+   ],
+   "ring": [
+    "#1A80D5",
+    "#0970B8"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "ink": [
+    132,
+    201
+   ],
+   "maxCentreOffset": 7.5,
+   "selected": "Reihe \"Nord\" Punkt \"Feb\"",
+   "ours": "4 handles {'blue': 4} sizes {'9x8': 4}; lines #D0E7F8 t1 ink 132 box [230, 153, 23, 22]",
+   "excel": "4 handles {'blue': 4} sizes {'8x8': 4}; lines #D0E7F8 t2 ink 201 box [234, 155, 26, 26]"
+  },
+  "line-labels": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    16,
+    16
+   ],
+   "size": [
+    "10x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#0A7DD5"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 27.0,
+   "selected": "Datenbeschriftungen",
+   "ours": "16 handles {'blue': 16} sizes {'10x10': 8, '10x11': 4}; lines #616161 t1 ink 158 box [127, 147, 372, 169]",
+   "excel": "16 handles {'blue': 16} sizes {'10x10': 10, '10x11': 3}; lines #616161 t1 ink 158 box [148, 148, 360, 168]"
+  },
+  "line-label": {
+   "passed": null,
+   "skipped": "a single data label is not an element of its own"
+  },
+  "line-trend": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    2,
+    2
+   ],
+   "size": [
+    "10x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#1985D8"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    null,
+    null
+   ],
+   "ink": [
+    null,
+    null
+   ],
+   "maxCentreOffset": 12.0,
+   "selected": "Reihe \"Nord\" Trendlinie 1",
+   "ours": "2 handles {'blue': 2} sizes {'10x10': 1, '11x10': 1}",
+   "excel": "2 handles {'blue': 2} sizes {'10x10': 2}"
+  },
+  "pie-chart": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    8,
+    8
+   ],
+   "size": [
+    "18x18",
+    "17x17"
+   ],
+   "ring": [
+    "#616161",
+    "#616161"
+   ],
+   "fill": [
+    "#FFFFFF",
+    "#FFFFFF"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 0.5,
+   "selected": "Diagrammbereich",
+   "ours": "8 handles {'grey': 8} sizes {'18x18': 8}; lines #616161 t1 ink 158 box [-8, 0, 736, 435]",
+   "excel": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #616161 t1 ink 158 box [-8, -3, 737, 436]"
+  },
+  "pie-plot": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    4,
+    4
+   ],
+   "size": [
+    "17x18",
+    "17x17"
+   ],
+   "ring": [
+    "#616161",
+    "#616161"
+   ],
+   "fill": [
+    "#FFFFFF",
+    "#FFFFFF"
+   ],
+   "frame": [
+    "#7B7B7B",
+    "#C5C6C5"
+   ],
+   "ink": [
+    132,
+    131
+   ],
+   "maxCentreOffset": 30.5,
+   "selected": "Zeichnungsfläche",
+   "ours": "4 handles {'grey': 4} sizes {'17x18': 4}; lines #7B7B7B t1 ink 132 box [155, 75, 336, 337]",
+   "excel": "4 handles {'grey': 4} sizes {'17x17': 4}; lines #C5C6C5 t2 ink 131 box [181, 105, 281, 282]"
+  },
+  "pie-title": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    4,
+    4
+   ],
+   "size": [
+    "10x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1985D8",
+    "#1F88D9"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 27.0,
+   "selected": "Diagrammtitel",
+   "ours": "4 handles {'blue': 4} sizes {'10x10': 4}; lines #616161 t1 ink 158 box [268, 8, 184, 51]",
+   "excel": "4 handles {'blue': 4} sizes {'10x10': 4}; lines #616161 t1 ink 158 box [241, 6, 236, 60]"
+  },
+  "pie-legend": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    8,
+    8
+   ],
+   "size": [
+    "18x18",
+    "17x17"
+   ],
+   "ring": [
+    "#616161",
+    "#616161"
+   ],
+   "fill": [
+    "#FFFFFF",
+    "#FFFFFF"
+   ],
+   "frame": [
+    "#7B7B7B",
+    "#BDBEBD"
+   ],
+   "ink": [
+    132,
+    131
+   ],
+   "maxCentreOffset": 12.5,
+   "selected": "Legende",
+   "ours": "8 handles {'grey': 8} sizes {'18x18': 4, '17x18': 2}; lines #7B7B7B t1 ink 132 box [651, 186, 56, 134]",
+   "excel": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #BDBEBD t1 ink 131 box [643, 173, 65, 146]"
+  },
+  "pie-legendEntry": {
+   "passed": null,
+   "skipped": "a single legend entry is not an element of its own"
+  },
+  "pie-series": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    1,
+    1
+   ],
+   "size": [
+    "9x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#027AD4"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#8A8A8A",
+    "#7B7D7B"
+   ],
+   "ink": [
+    234,
+    254
+   ],
+   "maxCentreOffset": 31.0,
+   "selected": "Reihe \"Nord\"",
+   "ours": "1 handles {'blue': 1} sizes {'9x10': 1}; lines #8A8A8A t1 ink 234 box [154, 70, 338, 342]",
+   "excel": "1 handles {'blue': 1} sizes {'10x10': 1}; lines #7B7D7B t1 ink 254 box [180, 101, 282, 286]"
+  },
+  "pie-point": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    3,
+    3
+   ],
+   "size": [
+    "11x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#0F7AC4"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    null,
+    null
+   ],
+   "ink": [
+    null,
+    null
+   ],
+   "maxCentreOffset": 28.0,
+   "selected": "Reihe \"Nord\" Punkt \"Feb\"",
+   "ours": "3 handles {'blue': 3} sizes {'10x10': 1, '11x10': 1}",
+   "excel": "3 handles {'blue': 3} sizes {'10x10': 2, '11x10': 1}"
+  },
+  "pie-labels": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    16,
+    16
+   ],
+   "size": [
+    "10x10",
+    "10x10"
+   ],
+   "ring": [
+    "#1683D7",
+    "#0C78CE"
+   ],
+   "fill": [
+    "#D0E7F8",
+    "#D0E7F8"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 9.5,
+   "selected": "Datenbeschriftungen",
+   "ours": "16 handles {'blue': 16} sizes {'10x10': 12, '9x10': 2}; lines #616161 t1 ink 158 box [216, 134, 194, 219]",
+   "excel": "16 handles {'blue': 16} sizes {'10x10': 6, '10x11': 4}; lines #616161 t1 ink 158 box [211, 130, 196, 232]"
+  },
+  "pie-label": {
+   "passed": null,
+   "skipped": "a single data label is not an element of its own"
+  }
+ },
+ "dpr": 1.5,
+ "errors": [],
+ "passed": 31,
+ "judged": 31
+}
