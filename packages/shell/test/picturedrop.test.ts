@@ -2,6 +2,7 @@
 // and the keyboard works as in Office's pane galleries.
 import { afterEach, describe, expect, it } from "vitest";
 import { closePopup, isPopupOpen } from "../src/popup";
+import { Commands } from "../src/commands";
 import { pictureDropdown, type PictureEntry } from "../src/picturedrop";
 import { arrowPicture, dashPicture, shadowPicture } from "../src/pictures";
 
@@ -82,6 +83,20 @@ describe("the picture dropdown", () => {
     box.click();
     (list()!.querySelector("[data-value=solid]") as HTMLElement).click();
     expect(picks).toEqual([]);
+  });
+
+  it("previews an entry while the mouse is over it and ends the preview on leaving (Livevorschau, D-166)", () => {
+    const seen: (string | null)[] = [];
+    const commands = new Commands();
+    commands.onHover((t) => { if (t === null) seen.push(null); else if (typeof t === "function") t(); });
+    const box = pictureDropdown({ label: "Strichtyp", entries, columns: 1, size: [104, 20], value: () => "solid", set: () => undefined,
+      live: { commands, preview: (v) => seen.push(v) } });
+    document.body.append(box);
+    box.click();
+    const item = list()!.querySelector("[data-value=dash]")!;
+    item.dispatchEvent(new MouseEvent("mouseenter"));
+    item.dispatchEvent(new MouseEvent("mouseleave"));
+    expect(seen).toEqual(["dash", null]);
   });
 
   it("draws our own pictures for arrows and shadows", () => {

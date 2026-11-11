@@ -197,7 +197,7 @@ export function formatPaneFeature(api: AppApi, docArea: HTMLElement, dock: Dock,
     const show = () => {
       if (slot.firstElementChild?.getAttribute("aria-expanded") === "true") return;
       const had = slot.contains(document.activeElement);
-      const box = pictureDropdown({ label, entries: entries(), columns, size, value: get, set: put, disabled });
+      const box = pictureDropdown({ label, entries: entries(), columns, size, value: get, set: put, disabled, live: { commands: api.commands, preview: put } });
       slot.replaceChildren(box);
       if (had) box.focus({ preventScroll: true });
     };

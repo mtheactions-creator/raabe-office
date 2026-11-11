@@ -4659,3 +4659,15 @@ Each drawn by our own code from the same data the entry applies, never from Offi
   gets PowerPoint's XML as before).
 Result of `check_picture_controls.py`: 156 of Office's 174 picture dropdowns are pictures in ours, 0 text, 18 not
 built. KNOWN is empty; an entry written down there that has become a picture fails the check too.
+
+## D-166 Livevorschau on picture entries, through the shell's hoverPreview (2026-11-12)
+
+Office previews a picture entry on the document while the mouse is over it (Striche, Stärke, Pfeile, the Format
+pane's line dropdowns). `pictureDropdown` and `pictureMenu` take `live: { commands, preview }`; each entry calls the
+shell's `hoverPreview`, so the preview ends when the mouse leaves, on the click (the pick is one undo step) and when
+the list closes (popup.ts). `weightMenu`, `dashMenu` and `arrowStyleMenu` take the app's commands for the same.
+Used where the app shows previews without an undo step (`commands.onHover`), which is RaabeWrite: Formkontur and
+Bildrahmen (Stärke, Striche, Pfeile), Textkontur (Stärke, Striche) and the Format pane's picture dropdowns.
+Not in RaabeCalc (its preview only changes cell formats, not shapes, charts or conditional formats) nor in
+RaabePresent (no preview mechanism yet); both are left for the step that gives them one. Unit test in
+`packages/shell/test/picturedrop.test.ts`.

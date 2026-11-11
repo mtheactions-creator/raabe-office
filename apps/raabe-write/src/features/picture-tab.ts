@@ -191,8 +191,8 @@ export function pictureTab(api: AppApi, insertFromPath: (path: string) => Promis
       link("Keine Kontur", () => { close(); setLine(null); api.focus(); }),
       link("Weitere Konturfarben...", () => { close(); void moreColor((hex) => setLine({ color: hex })); }),
       // Stärke as lines with their names, Striche as pictures (Word's Bildrahmen, D-162).
-      h("button", { class: "link has-sub", onclick: (ev: MouseEvent) => sub(ev, [...weightMenu(weights.map((w): [string, number] => [`${w.toLocaleString("de-DE")} Pt.`, w]), (w) => setLine({ width: w })), "-", moreLines]) }, "Stärke"),
-      h("button", { class: "link has-sub", onclick: (ev: MouseEvent) => sub(ev, [dashMenu(lineOf()?.dash ?? "solid", (v) => setLine({ dash: v === "solid" ? undefined : v })), "-", moreLines]) }, "Striche"));
+      h("button", { class: "link has-sub", onclick: (ev: MouseEvent) => sub(ev, [...weightMenu(weights.map((w): [string, number] => [`${w.toLocaleString("de-DE")} Pt.`, w]), (w) => setLine({ width: w }), api.commands), "-", moreLines]) }, "Stärke"),
+      h("button", { class: "link has-sub", onclick: (ev: MouseEvent) => sub(ev, [dashMenu(lineOf()?.dash ?? "solid", (v) => setLine({ dash: v === "solid" ? undefined : v }), api.commands), "-", moreLines]) }, "Striche"));
   };
   const moreLines: MenuEntry = { label: "Weitere Linien...", run: () => FORMAT_PANE.open("line") };
   const moreColor = async (done: (hex: string) => void) => {
