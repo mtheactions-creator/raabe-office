@@ -168,7 +168,10 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         },
         {
           id: "illustrations", label: "Illustrationen", key: "ZI", icon: "picture",
-          controls: [stack(dd("insert.pictures", "P", "small", [{ cmd: "insert.pictureFile" }, { cmd: "insert.pictureStock" }, { cmd: "insert.pictureOnline" }]), panel("insert.shapes", "SH", "small", ctx.panels.shapes), b("insert.icons", "Y1"))],
+          // Excel's widest layout (recorded, D-183): large buttons; then the stack of small ones.
+          wide: false,
+          controls: [dd("insert.pictures", "P", "large", [{ cmd: "insert.pictureFile" }, { cmd: "insert.pictureStock" }, { cmd: "insert.pictureOnline" }]), panel("insert.shapes", "SH", "large", ctx.panels.shapes), b("insert.icons", "Y1", "large")],
+          smaller: [[stack(dd("insert.pictures", "P", "small", [{ cmd: "insert.pictureFile" }, { cmd: "insert.pictureStock" }, { cmd: "insert.pictureOnline" }]), panel("insert.shapes", "SH", "small", ctx.panels.shapes), b("insert.icons", "Y1"))]],
         },
         {
           id: "charts", label: "Diagramme", key: "ZC", icon: "chart-column",
@@ -193,7 +196,10 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         { id: "comments", label: "Kommentare", key: "Z2", icon: "comment", controls: [b("insert.comment", "N2", "large")] },
         {
           id: "text", label: "Text", key: "ZT", icon: "text-box",
-          controls: [stack(b("insert.textBox", "X"), b("insert.headerFooter", "H1"), b("insert.wordArt", "W"))],
+          // Excel's widest layout (recorded, D-183): large buttons; then the stack of small ones.
+          wide: false,
+          controls: [b("insert.textBox", "X", "large"), b("insert.headerFooter", "H1", "large"), b("insert.wordArt", "W", "large")],
+          smaller: [[stack(b("insert.textBox", "X"), b("insert.headerFooter", "H1"), b("insert.wordArt", "W"))]],
         },
         { id: "symbols", label: "Symbole", key: "ZS", icon: "symbol", controls: [b("insert.equation", "E2", "large"), b("insert.symbol", "SY", "large")] },
       ],

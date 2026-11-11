@@ -51,7 +51,7 @@ export function contextHost(app: PresentApp): ContextTabHost {
     cellMargins: () => [...([["Normal", 91440, 45720], ["Keine", 0, 0], ["Schmal", 45720, 45720], ["Breit", 137160, 137160]] as [string, number, number][])
       .map(([label, lr, tb]) => ({ label, run: () => cellPr(app, "Zellenbegrenzungen", (pr) => { for (const [a, v] of [["marL", lr], ["marR", lr], ["marT", tb], ["marB", tb]] as [string, number][]) { if (label === "Normal") pr.removeAttribute(a); else pr.setAttribute(a, String(v)); } }) })),
       "-" as const, { cmd: "table.customMargins" }],
-    shapeTiles: (cols) => app.shapeTiles(cols),
+    shapeTiles: (cols) => app.shapeTiles(undefined, undefined, cols),
     tableStyles: (c) => tableStylesPanel(app, c),
     picStyles: (c) => picStylesPanel(app, c),
     textOutlineColor: () => app.textOutlineColor(), setTextOutline: (hex) => app.setTextOutline({ color: hex }), textOutlineExtra: () => app.textOutlineExtra(),

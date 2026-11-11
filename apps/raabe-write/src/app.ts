@@ -1118,6 +1118,7 @@ export class WriteApp {
         options: () => this.features.citations.style.options(),
         commit: (v: string) => this.features.citations.style.commit(v),
       },
+      get styleSets() { return self.features?.design.styleSetTiles; },
       styleHover: (cmd) => {
         const e = ed();
         if (!e) return;

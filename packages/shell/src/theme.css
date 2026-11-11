@@ -242,17 +242,22 @@ button {
 .rcheck.disabled { color: var(--text-disabled); }
 .rcheck.disabled .box { border-color: #c7c7c7; }
 
-.rgallery { height: 66px; margin-top: 4px; display: flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
-.rgallery .items { display: flex; }
+/* Office's inline gallery (measured in Word's and PowerPoint's ribbons at a wide window, D-180): a box 62.7 px high,
+   6.7 px below the group's top; the entries start 2 px in and 4 px down, side by side; the scroll column (Zeile nach
+   oben, Zeile nach unten, Weitere) is 24 px wide and 60 px high, so the box is 29.3 px wider than its entries. */
+.rgallery { height: 62.7px; margin-top: 5.7px; display: flex; align-items: flex-start; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; padding: 0 1.6px 0 1px; box-sizing: border-box; flex: none; }
+.rgallery .items { display: flex; margin-top: 3px; }
 /* Names longer than the tile start at its left edge and are cut at the right, as in Word
    (centred they would lose both ends); a short fade marks the cut. */
-.rgallery .item { width: 108px; height: 64px; display: flex; align-items: center; justify-content: safe center; overflow: hidden; white-space: nowrap; padding: 0 6px; }
+.rgallery .item { width: 108px; height: 56px; display: flex; align-items: center; justify-content: safe center; overflow: hidden; white-space: nowrap; padding: 0 6px; flex: none; }
 .rgallery .item.long > span { mask-image: linear-gradient(to right, #000 calc(100% - 14px), transparent); -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 14px), transparent); flex: none; max-width: 100%; overflow: hidden; }
 .rgallery .item:hover:not(.disabled) { background: var(--hover); }
 .rgallery .item.checked { box-shadow: inset 0 0 0 1px var(--checked-border); background: var(--checked); }
 .rgallery .item.disabled { color: var(--text-disabled); }
-.rgallery .scroll { width: 22px; border-left: 1px solid var(--border); display: flex; flex-direction: column; }
-.rgallery .scroll button { flex: 1; display: inline-flex; align-items: center; justify-content: center; }
+.rgallery .scroll { width: 24px; height: 60px; margin: 1.6px 0 0 0.7px; display: flex; flex-direction: column; flex: none; }
+.rgallery .scroll button { flex: 1; display: inline-flex; align-items: center; justify-content: center; border-radius: 3px; }
+.rgallery .scroll button:hover:not(:disabled) { background: var(--hover); }
+.rgallery .scroll button:disabled { color: var(--text-disabled); }
 .rgallery .scroll .ico-s { width: 10px; height: 10px; }
 
 /* A group collapsed to one button shows its full content in a popup. */
@@ -761,6 +766,9 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .menu.flyout > .rpanel { position: static; box-shadow: none; }
 .rpanel .link.has-sub::after { content: "›"; float: right; margin-left: 16px; }
 .rgallery.tiles .items { gap: 2px; align-items: center; }
+/* Galleries whose tiles are taller than Office's 56 px keep the older, taller box. */
+.rgallery.tstyle-tiles, .rgallery.ink-tiles { height: 66px; margin-top: 4px; }
+.rgallery.tstyle-tiles .items, .rgallery.ink-tiles .items { margin-top: 0; }
 .rgallery.tiles .item.tile-item { padding: 4px; border: 1px solid transparent; display: flex; align-items: center; justify-content: center; }
 .rgallery.tiles .item.tile-item:hover:not(:disabled) { border-color: #c7c7c7; background: #f5f5f5; }
 .rgallery.tiles .item.tile-item.on { border-color: #c7c7c7; background: #ebebeb; }
@@ -772,8 +780,12 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .rpanel .tiles.shape-tiles { grid-template-columns: repeat(12, 22px); gap: 1px; }
 .rpanel .shape-tile { width: 22px; height: 22px; padding: 0; display: flex; align-items: center; justify-content: center; border: 1px solid transparent; background: transparent; color: #424242; }
 .rpanel .shape-tile:hover { border-color: #c7c7c7; background: #f0f0f0; }
-.rgallery.tiles.shape-tiles-ribbon .items { display: grid; grid-template-rows: repeat(3, 22px); grid-auto-flow: column; gap: 0; color: #424242; }
-.rgallery.tiles.shape-tiles-ribbon .item.tile-item { padding: 0; width: 22px !important; height: 22px !important; }
+/* Office's shapes in the ribbon (PowerPoint's Start > Zeichnen, recorded, D-181): 24 px tiles in three rows, the box
+   75.3 px high from 2 px below the group's top, the tiles 2.7 px below its top edge. */
+.rgallery.tiles.shape-tiles-ribbon { height: 75.3px; margin-top: 1px; }
+.rgallery.tiles.shape-tiles-ribbon .items { display: grid; grid-template-rows: repeat(3, 24px); grid-auto-flow: column; gap: 0; color: #424242; margin-top: 1.7px; }
+.rgallery.tiles.shape-tiles-ribbon .item.tile-item { padding: 0; width: 24px !important; height: 24px !important; }
+.rgallery.tiles.shape-tiles-ribbon .scroll { height: 73.3px; margin-top: 1px; }
 .shape-styles .tiles { gap: 4px; }
 .rpanel .shape-style-tile { position: relative; padding: 0; width: 76px; height: 46px; border: 1px solid transparent; background: transparent; }
 .rpanel .shape-style-tile:hover { border-color: #c7c7c7; background: #f5f5f5; }
@@ -909,6 +921,11 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .dz-set { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 3px; border: 1px solid transparent; background: none; }
 .dz-setpage { width: 104px; height: 92px; border: 1px solid #a6a6a6; background: #fff; padding: 6px 7px; display: flex; flex-direction: column; gap: 3px; overflow: hidden; text-align: left; line-height: 1.15; }
 .dz-setpage .dz-body { font-size: 4.5px !important; color: #444; }
+/* The ribbon's Formatvorlagensatz tiles (D-182): the panel's page at half size in a 62 x 46 px tile. */
+.dz-rset { display: block; width: 62px; height: 46px; overflow: hidden; border: 1px solid #c8c8c8; background: #fff; }
+.dz-rset .dz-setpage { width: 124px; height: 92px; border: none; transform: scale(0.5); transform-origin: 0 0; }
+.rgallery.dz-settiles .items { gap: 0; }
+.rgallery.dz-settiles .item.tile-item { padding: 4px; }
 .dz-crow, .dz-frow { display: flex; align-items: center; gap: 12px; width: 100%; padding: 5px 12px; background: none; text-align: left; border: 1px solid transparent; }
 .dz-crow:hover, .dz-frow:hover { background: var(--hover); }
 .dz-crow.active, .dz-frow.active { background: #dbe8f6; }

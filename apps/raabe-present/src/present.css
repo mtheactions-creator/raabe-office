@@ -260,8 +260,12 @@ body.printing #print-root { display: block; position: fixed; left: 0; top: 0; z-
 /* Übergänge and Animationen: the effects in the ribbon (D-072). */
 .pfx-tile { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 11px; line-height: 1.1; text-align: center; overflow: hidden; }
 .pfx-tile span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60px; }
+/* PowerPoint's inline galleries put their tiles side by side (D-180). */
+.rgallery.fx-tiles .items, .rgallery.design-tiles .items { gap: 0; }
 .rgallery.fx-tiles .item.tile-item { font: 11px "Segoe UI", sans-serif; padding: 2px; }
-.rgallery.fx-tiles .pfx-tile svg { width: 24px; height: 24px; }
+.rgallery.fx-tiles .pfx-tile { gap: 4px; }
+.rgallery.fx-tiles .pfx-tile span { max-width: 74px; }
+.rgallery.fx-tiles .pfx-tile svg { width: 28px; height: 28px; }
 .rgallery.design-tiles .item.tile-item { padding: 2px; }
 
 /* Ansicht > Graustufe / Schwarzweiß: the slides in the editor and the panel. */
@@ -311,9 +315,8 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 
 /* Formformat > Formen einfügen: PowerPoint fills the gallery row by row (6 per row, 3 rows); the shell's
    shared rule fills columns, as Word's does (compare_present_ui.py). */
-.rgallery.tiles.shape-tiles-ribbon.pp-rows .items { grid-template-rows: none; grid-template-columns: repeat(6, 24px); grid-auto-flow: row; }
-/* PowerPoint's cells are 24 px (D-186); the chart's Format tab shows three columns. */
-.rgallery.tiles.shape-tiles-ribbon.pp-rows .item.tile-item { width: 24px !important; height: 24px !important; }
+.rgallery.tiles.shape-tiles-ribbon.pp-rows .items { grid-template-rows: none; grid-template-columns: repeat(6, 24px); grid-auto-rows: 24px; grid-auto-flow: row; }
+/* The chart's Format tab shows three columns (D-187). */
 .rgallery.tiles.shape-tiles-ribbon.pp-rows.pp-cols3 .items { grid-template-columns: repeat(3, 24px); }
 
 /* Exportieren: Video erstellen, Animiertes GIF erstellen (D-074). */

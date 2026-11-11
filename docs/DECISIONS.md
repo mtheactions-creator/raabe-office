@@ -4762,3 +4762,57 @@ the shape icons; Kopfzeile / Fußzeile show their designs on a page; Textfeld sh
 **Numbers** (all three apps): Office has 252 picture dropdowns (Excel 32, PowerPoint 142, Word 78); ours shows 204 as
 pictures (Word 48), 47 are not built, **1** is text and written down: Entwurf > Effekte in RaabeWrite, where only the
 Office set exists (the others are greyed), so its previews come with the sets.
+
+## D-180 Office's inline galleries: recorded as the window narrows, built once in the shell (2026-11-11)
+
+**Recorded** with `probe_office_ribbon_galleries.py`: our own Excel, Word and PowerPoint, each window placed at 13 widths
+(3000 to 1200 screen px, 150 %), the tabs selected and the galleries read through UI Automation; no input (the real-input
+lock is held while the window covers the screen). `results/2026-11-11-office-ribbon-galleries.json`.
+**What Office does**, the same in Word and PowerPoint: an inline gallery is a box 62.7 px high, 6.7 px below the group's
+top; its tiles start 2 px in and 4 px down and stand side by side without gaps; at its right a scroll column 24 x 60 px
+(Zeile nach oben, Zeile nach unten, Weitere), so the box is 29.3 px wider than its tiles. Only one row of tiles shows;
+the column scrolls the rows. The gallery **fills the free width** of the tab: one tile more or less per step of the
+window, down to a least number of tiles (Übergänge 3, Animation 3, Designs 4, Formatvorlagensatz 3, Word's styles 3);
+below that the group shows a button instead (Animationsstil, Designs, Formatvorlagensatz, Formatvorlagen) and then
+collapses. Tile sizes: Übergänge and Animation 82 x 56.7, Designs 93.3 x 56, Formatvorlagensatz 72 x 56, Word's styles
+108 x 56.
+**Built** in `@raabe/shell` (ribbon.ts, theme.css) for all three apps: every gallery and tile gallery has Office's box
+and scroll column; all entries are in the gallery, one row shows, and Zeile nach oben / nach unten move through the
+rows (they were a dead arrow before); `fill` galleries take the free width tile by tile from `visible` (their least)
+up to `max` or all entries, and two on one tab share it, the first one first (each took all of it before, and the gap
+between tiles was not counted). Galleries whose tiles are taller than Office's 56 px (Word's Tabellenformatvorlagen,
+RaabeCalc's ink tools) keep the older, taller box. PowerPoint's Übergänge, Animationen and Designs galleries fill as
+PowerPoint's, with its tile sizes; below their least they become a large button (Übergangseffekte, Animationsstil,
+Designs) before the group collapses, and Animation goes first on its tab, as recorded. A spinner without a label
+(Übergänge > Nach) is only its box (it took 70 px of nothing).
+**Check**: `check_ribbon_galleries.py` places our window at the recorded widths and compares each gallery group's width
+and number of tiles; `check_ribbon_geometry.py` now also counts groups within 10 px of Office's width.
+**Known differences**: RaabePresent has 10 designs of its own and PowerPoint shows 14 of its own at the widest window, so
+Entwurf > Designs stays 4 tiles narrower there (we do not fill the gallery with empty places); PowerPoint's Entwurf has
+an Entwurfsvorschläge group (cloud) that we do not, so our gallery has one tile more room from 2400 px down. On Start,
+Word and PowerPoint give their add-in groups room that our galleries take (Word's styles show one tile more).
+
+## D-181 PowerPoint's Start > Zeichnen: the shapes gallery at a wide window (2026-11-11)
+
+Recorded (D-180): at a wide window PowerPoint's Zeichnen shows the shapes inline, six columns by three rows of 24 px
+tiles (Textfeld first) in a box 173.3 x 75.3 px, beside Anordnen, Schnellformatvorlagen and the labelled stack; narrower,
+the Formen button takes its place (317 px), then the stack loses its labels (256 px), then the group collapses. Built:
+`shapeTiles()` serves Start and Formformat, with these layouts and this shrink order. The shape tiles in the ribbon are
+24 px in both apps (were 22 px; RaabeWrite's Formformat gallery is Office's same control).
+
+## D-182 Word's Entwurf > Formatvorlagensatz as the inline gallery (2026-11-11)
+
+Recorded (D-180): Word shows the style sets inline, the document's own set ("Dokument") first, 72 x 56 px tiles, as
+many as the free width allows (18 at 3000 px, 3 at 1350 px), then a large Formatvorlagensatz button. Built: the tiles are
+our own drawing of each set's page (Titel, Überschrift 1 and body text in the set's styles, the panel's page at half
+size), with Livevorschau while the mouse is over a tile; Weitere opens the full panel. Word's Start > Formatvorlagen
+gallery now has Word's least of three styles (was four).
+
+## D-183 Large buttons where Office's widest layout has them: Einfügen > Text and Illustrationen (2026-11-11)
+
+From the recorded geometry (D-159) and the width series (D-180): PowerPoint shows all six Text buttons large at a wide
+window (Datum und Uhrzeit, Foliennummer and Objekt too) and stacks the last three at 2400 px; Excel shows Bilder,
+Formen, Piktogramme and Textfeld, Kopf- und Fußzeile, WordArt as large buttons. Ours had the stacks as their widest
+layout; now Office's large buttons are the widest and the stacks their reduction (PowerPoint's Text steps down first on
+its tab, as recorded). The rest of those groups' widths are controls we have not built (3D-Modelle, SmartArt and
+Screenshot in RaabeCalc, Signaturzeile, Objekt; Word's Schnellbausteine, WordArt, Initiale).
