@@ -2550,8 +2550,8 @@
    "office": "powerpoint|Übergänge|Sound",
    "kind": "text",
    "n": 24,
-   "ours": null,
-   "status": "fehlt",
+   "ours": "text",
+   "status": "gleich",
    "by_eye": true
   },
   {

@@ -125,7 +125,7 @@
       29
      ],
      "bar_color": [
-      255,
+      238,
       0,
       0
      ],
@@ -137,9 +137,7 @@
       22
      ]
     },
-    "diff": [
-     "bar colour [255, 0, 0] vs Office [238, 0, 0]"
-    ]
+    "diff": []
    },
    "Texthervorhebungsfarbe": {
     "office": {
@@ -188,6 +186,6 @@
    }
   }
  },
- "passed": 3,
+ "passed": 4,
  "total": 4
 }

@@ -42,6 +42,9 @@ def office_menu(pid: int) -> dict | None:
     s = winapi.dpi_scale(menu)
     items = []
     for _, d in items_of(menu):
+        # The search box's accessible name is Office's instruction text: Microsoft's prose, never recorded (D-058).
+        if d["type"] in ("Edit", "ComboBox") or len(d["name"]) > 60:
+            continue
         x, y, w, h = d["rect"]
         items.append({"type": "Separator" if d["type"] == "Separator" else "MenuItem", "name": d["name"],
                       "rect": [round((x - l) / s, 1), round((y - t) / s, 1), round(w / s, 1), round(h / s, 1)]})
@@ -129,7 +132,7 @@ def compare(off: dict, ours: dict) -> list[str]:
         if abs(dy) > TOL or abs(dh) > TOL:
             out.append(f"{n}: dy {dy} dh {dh}")
     for n in oi:
-        if n not in mi:
+        if n not in mi and len(n) <= 60:
             out.append(f"missing: {n}")
     for n in mi:
         if n not in oi:
