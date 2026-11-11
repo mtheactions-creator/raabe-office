@@ -306,7 +306,7 @@
      "h": 10,
      "cx": 339.5,
      "cy": 11.5,
-     "ring": "#3393DC",
+     "ring": "#1985D8",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -318,7 +318,7 @@
      "h": 10,
      "cx": 523.5,
      "cy": 11.5,
-     "ring": "#3393DC",
+     "ring": "#1985D9",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -330,7 +330,7 @@
      "h": 10,
      "cx": 339.5,
      "cy": 51.5,
-     "ring": "#3E9ADF",
+     "ring": "#1D87D9",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -342,7 +342,7 @@
      "h": 10,
      "cx": 523.5,
      "cy": 51.5,
-     "ring": "#3F9ADF",
+     "ring": "#1E88D9",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -377,8 +377,8 @@
      "10x10"
     ],
     "ring": [
-     "#3393DC",
-     "#3F99DF"
+     "#1B86D9",
+     "#1F88D9"
     ],
     "fill": [
      "#D0E7F8",
@@ -482,7 +482,7 @@
      "h": 7,
      "cx": 12.5,
      "cy": 62.0,
-     "ring": "#1F89D8",
+     "ring": "#1281D6",
      "fill": "#D0E7F8",
      "ringWidth": 0,
      "kind": "blue"
@@ -494,7 +494,7 @@
      "h": 7,
      "cx": 39.0,
      "cy": 62.0,
-     "ring": "#1483D7",
+     "ring": "#0C7ED6",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -506,7 +506,7 @@
      "h": 8,
      "cx": 12.5,
      "cy": 421.5,
-     "ring": "#077CD5",
+     "ring": "#067CD5",
      "fill": "#D0E7F8",
      "ringWidth": 0,
      "kind": "blue"
@@ -518,7 +518,7 @@
      "h": 8,
      "cx": 39.0,
      "cy": 421.5,
-     "ring": "#258CDA",
+     "ring": "#1985D9",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -553,7 +553,7 @@
      "8x8"
     ],
     "ring": [
-     "#1F89D8",
+     "#0F7FD6",
      "#1985D7"
     ],
     "fill": [
@@ -581,7 +581,7 @@
      "h": 10,
      "cx": 38.5,
      "cy": 73.5,
-     "ring": "#3795DE",
+     "ring": "#2189D9",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -593,55 +593,55 @@
      "h": 10,
      "cx": 841.5,
      "cy": 73.5,
-     "ring": "#479DDF",
-     "fill": "#D0E7F8",
-     "ringWidth": 1,
-     "kind": "blue"
-    },
-    {
-     "x": 34,
-     "y": 125,
-     "w": 10,
-     "h": 11,
-     "cx": 38.5,
-     "cy": 130.0,
-     "ring": "#2F90DB",
-     "fill": "#D0E7F8",
-     "ringWidth": 1,
-     "kind": "blue"
-    },
-    {
-     "x": 837,
-     "y": 125,
-     "w": 10,
-     "h": 11,
-     "cx": 841.5,
-     "cy": 130.0,
-     "ring": "#3C98DA",
-     "fill": "#D0E7F8",
-     "ringWidth": 1,
-     "kind": "blue"
-    },
-    {
-     "x": 34,
-     "y": 182,
-     "w": 10,
-     "h": 10,
-     "cx": 38.5,
-     "cy": 186.5,
-     "ring": "#3795DD",
+     "ring": "#278CD8",
      "fill": "#D0E7F8",
      "ringWidth": 0,
      "kind": "blue"
     },
     {
+     "x": 34,
+     "y": 125,
+     "w": 10,
+     "h": 11,
+     "cx": 38.5,
+     "cy": 130.0,
+     "ring": "#1885D8",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 837,
+     "y": 125,
+     "w": 10,
+     "h": 11,
+     "cx": 841.5,
+     "cy": 130.0,
+     "ring": "#2088DA",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 34,
+     "y": 182,
+     "w": 10,
+     "h": 10,
+     "cx": 38.5,
+     "cy": 186.5,
+     "ring": "#2087D8",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
      "x": 837,
      "y": 182,
      "w": 10,
      "h": 10,
      "cx": 841.5,
      "cy": 186.5,
-     "ring": "#489CDF",
+     "ring": "#3494DB",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -653,7 +653,7 @@
      "h": 10,
      "cx": 38.5,
      "cy": 242.5,
-     "ring": "#469DE0",
+     "ring": "#1C87D9",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -665,7 +665,7 @@
      "h": 10,
      "cx": 841.5,
      "cy": 242.5,
-     "ring": "#3A97DD",
+     "ring": "#2C8FDB",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -677,9 +677,9 @@
      "h": 10,
      "cx": 841.5,
      "cy": 298.5,
-     "ring": "#3593DC",
+     "ring": "#228BD8",
      "fill": "#D0E7F8",
-     "ringWidth": 1,
+     "ringWidth": 0,
      "kind": "blue"
     },
     {
@@ -689,7 +689,7 @@
      "h": 11,
      "cx": 38.5,
      "cy": 299.0,
-     "ring": "#3493DE",
+     "ring": "#1684D8",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -701,9 +701,9 @@
      "h": 10,
      "cx": 38.5,
      "cy": 355.5,
-     "ring": "#3694DD",
+     "ring": "#1884D8",
      "fill": "#D0E7F8",
-     "ringWidth": 0,
+     "ringWidth": 1,
      "kind": "blue"
     },
     {
@@ -713,7 +713,7 @@
      "h": 10,
      "cx": 841.5,
      "cy": 355.5,
-     "ring": "#469DDF",
+     "ring": "#228AD8",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -734,8 +734,8 @@
      "10x10"
     ],
     "ring": [
-     "#3795DE",
-     "#3995DD"
+     "#2088D8",
+     "#2082D5"
     ],
     "fill": [
      "#D0E7F8",
@@ -762,7 +762,7 @@
      "h": 10,
      "cx": 679.5,
      "cy": 158.5,
-     "ring": "#1E88D7",
+     "ring": "#0C7BD5",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -774,7 +774,7 @@
      "h": 9,
      "cx": 714.5,
      "cy": 158.0,
-     "ring": "#1380D6",
+     "ring": "#0A7BD3",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -786,7 +786,7 @@
      "h": 10,
      "cx": 77.0,
      "cy": 169.5,
-     "ring": "#228ADA",
+     "ring": "#127AD4",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -798,7 +798,7 @@
      "h": 10,
      "cx": 112.0,
      "cy": 169.5,
-     "ring": "#1E88DA",
+     "ring": "#0C78CF",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -810,7 +810,7 @@
      "h": 10,
      "cx": 478.5,
      "cy": 214.5,
-     "ring": "#1B87D8",
+     "ring": "#127ECE",
      "fill": "#D0E7F8",
      "ringWidth": 0,
      "kind": "blue"
@@ -822,9 +822,9 @@
      "h": 10,
      "cx": 513.5,
      "cy": 214.5,
-     "ring": "#1684D7",
+     "ring": "#117ECE",
      "fill": "#D0E7F8",
-     "ringWidth": 1,
+     "ringWidth": 0,
      "kind": "blue"
     },
     {
@@ -834,7 +834,7 @@
      "h": 10,
      "cx": 277.5,
      "cy": 270.5,
-     "ring": "#1481D7",
+     "ring": "#117CCA",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -846,7 +846,7 @@
      "h": 10,
      "cx": 312.5,
      "cy": 270.5,
-     "ring": "#1C86D8",
+     "ring": "#0E7CD2",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -858,7 +858,7 @@
      "h": 10,
      "cx": 77.0,
      "cy": 411.5,
-     "ring": "#1F87D8",
+     "ring": "#1178C7",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -870,7 +870,7 @@
      "h": 10,
      "cx": 112.0,
      "cy": 411.5,
-     "ring": "#1B85D7",
+     "ring": "#0E7BCF",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -882,7 +882,7 @@
      "h": 10,
      "cx": 277.5,
      "cy": 411.5,
-     "ring": "#1E88D9",
+     "ring": "#0B79D3",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -894,7 +894,7 @@
      "h": 10,
      "cx": 312.5,
      "cy": 411.5,
-     "ring": "#1E88D9",
+     "ring": "#117ACA",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -906,7 +906,7 @@
      "h": 10,
      "cx": 478.5,
      "cy": 411.5,
-     "ring": "#1B87D8",
+     "ring": "#0E7CCD",
      "fill": "#D0E7F8",
      "ringWidth": 0,
      "kind": "blue"
@@ -918,9 +918,9 @@
      "h": 10,
      "cx": 513.5,
      "cy": 411.5,
-     "ring": "#1C86D8",
+     "ring": "#127CD1",
      "fill": "#D0E7F8",
-     "ringWidth": 1,
+     "ringWidth": 0,
      "kind": "blue"
     },
     {
@@ -930,7 +930,7 @@
      "h": 10,
      "cx": 679.5,
      "cy": 411.5,
-     "ring": "#218AD9",
+     "ring": "#127BCA",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -942,7 +942,7 @@
      "h": 10,
      "cx": 714.5,
      "cy": 411.5,
-     "ring": "#1E88D9",
+     "ring": "#107BD3",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -977,8 +977,8 @@
      "10x10"
     ],
     "ring": [
-     "#1E88D9",
-     "#1783D6"
+     "#107BCF",
+     "#0E7BCF"
     ],
     "fill": [
      "#D0E7F8",
@@ -990,13 +990,13 @@
     ],
     "ink": [
      136,
-     141
+     131
     ],
     "maxCentreOffset": 480.0
    }
   },
   "point": {
-   "summary": "4 handles {'blue': 4} sizes {'10x10': 4}; lines #65777D t2 ink 154 box [273, 266, 45, 151]",
+   "summary": "4 handles {'blue': 4} sizes {'10x10': 4}; lines #65777D t2 ink 169 box [273, 266, 45, 151]",
    "handles": [
     {
      "x": 273,
@@ -1005,7 +1005,7 @@
      "h": 10,
      "cx": 277.5,
      "cy": 270.5,
-     "ring": "#1481D7",
+     "ring": "#117CCA",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -1017,7 +1017,7 @@
      "h": 10,
      "cx": 312.5,
      "cy": 270.5,
-     "ring": "#1C86D8",
+     "ring": "#0E7CD2",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -1029,7 +1029,7 @@
      "h": 10,
      "cx": 277.5,
      "cy": 411.5,
-     "ring": "#1E88D9",
+     "ring": "#0B79D3",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -1041,7 +1041,7 @@
      "h": 10,
      "cx": 312.5,
      "cy": 411.5,
-     "ring": "#1E88D9",
+     "ring": "#117ACA",
      "fill": "#D0E7F8",
      "ringWidth": 1,
      "kind": "blue"
@@ -1062,7 +1062,7 @@
      "#959795": 127
     },
     "thickness": 2,
-    "ink": 154
+    "ink": 169
    },
    "vsExcel": {
     "passed": true,
@@ -1076,8 +1076,8 @@
      "10x10"
     ],
     "ring": [
-     "#1E88D9",
-     "#1783D6"
+     "#0F7BCE",
+     "#0E7BD0"
     ],
     "fill": [
      "#D0E7F8",
@@ -1088,7 +1088,7 @@
      "#59737E"
     ],
     "ink": [
-     154,
+     169,
      125
     ],
     "maxCentreOffset": 103.0

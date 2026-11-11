@@ -1,0 +1,40 @@
+{
+ "what": "RaabeWrite's marks of a selected chart against word's (selmarks.compare)",
+ "parts": {
+  "column-chart": {
+   "passed": true,
+   "fails": [],
+   "handles": [
+    8,
+    8
+   ],
+   "size": [
+    "17x17",
+    "17x17"
+   ],
+   "ring": [
+    "#616161",
+    "#616161"
+   ],
+   "fill": [
+    "#FFFFFF",
+    "#FFFFFF"
+   ],
+   "frame": [
+    "#616161",
+    "#616161"
+   ],
+   "ink": [
+    158,
+    158
+   ],
+   "maxCentreOffset": 2.0,
+   "ours": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #616161 t1 ink 158 box [0, 0, 880, 512]",
+   "office": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #616161 t1 ink 158 box [-1, 1, 867, 505]"
+  }
+ },
+ "dpr": 1.5,
+ "errors": [],
+ "passed": 1,
+ "judged": 1
+}
