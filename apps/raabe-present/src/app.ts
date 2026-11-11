@@ -281,6 +281,8 @@ export class PresentApp implements EditorHost, PanelHost {
     installTooltips();
     new Keytips((el) => (el.dataset.keytipScope === "root" && el.getAttribute("role") === "tab" ? this.ribbon.activeTab : null), () => this.focusMain());
     this.installSplitter();
+    this.panel.el.addEventListener("focusin", () => { this.lastArea = "panel"; });
+    this.editor.el.addEventListener("focusin", () => { this.lastArea = "editor"; });
     addEventListener("keydown", (e) => this.globalKey(e));
     this.editor.el.addEventListener("wheel", (e) => {
       if (!e.ctrlKey) return;
@@ -556,8 +558,13 @@ export class PresentApp implements EditorHost, PanelHost {
 
   focusSlide(): void { this.editor.focus(); }
 
+  /** Where the focus was last in the normal view: after a ribbon command it goes back there (PowerPoint keeps the
+   *  thumbnails' focus when Fett or a ribbon tab is clicked; D-156). */
+  private lastArea: "editor" | "panel" = "editor";
+
   private focusMain(): void {
     if (this.view === "sorter") this.sorter.focus();
+    else if (this.lastArea === "panel") this.panel.focus();
     else this.editor.focus();
   }
 

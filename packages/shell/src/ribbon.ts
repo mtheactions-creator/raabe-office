@@ -174,6 +174,9 @@ export class Ribbon {
       onclick: () => opts.onFile(),
     }, "Datei");
     this.tabRow = h("div", { class: "tabrow", role: "tablist" }, file);
+    // Office's ribbon tabs never take the focus from the document: the slide thumbnails, the text or the sheet keep it
+    // (PowerPoint, recorded 2026-11-11, D-156). Keyboard focus by Alt keytips stays possible.
+    this.tabRow.addEventListener("mousedown", (e) => { if ((e.target as Element).closest?.("[role=tab]")) e.preventDefault(); });
     for (const t of tabs) {
       const b = h("button", {
         class: "tab", role: "tab", "data-keytip": t.key, "data-keytip-scope": "root",
@@ -186,6 +189,12 @@ export class Ribbon {
     this.contextStart = h("span", { class: "ctx-start" });
     this.tabRow.append(this.contextStart, h("div", { class: "tabrow-right" }, ...(opts.tabRowRight ?? [])));
     this.card = h("div", { class: "ribbon-card" });
+    // Nor do its buttons: a press on Fett leaves the focus in the thumbnails, the text or the sheet (D-156). Inputs
+    // (Schriftart, Schriftgrad) still take it.
+    this.card.addEventListener("mousedown", (e) => {
+      const t = e.target as Element;
+      if (t.closest?.("button") && !t.closest("input, textarea, select, [contenteditable=true]")) e.preventDefault();
+    });
     commands.onRefresh(() => this.refresh());
     new ResizeObserver(() => this.fit()).observe(this.card);
     this.select(tabs[0].id);

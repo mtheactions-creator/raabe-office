@@ -999,7 +999,9 @@ export class SlideEditor {
     this.focus();
     const hit = this.hit(e);
     if (!hit) {
-      if (!this.text) { this.sel = []; this.render(); this.host.selectionChanged(); }
+      // The empty slide: PowerPoint ends text editing too and deselects (recorded 2026-11-11, D-156).
+      this.endText();
+      this.sel = []; this.render(); this.host.selectionChanged();
       this.host.contextMenu(e, "slide");
       return;
     }

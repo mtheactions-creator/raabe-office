@@ -1,0 +1,242 @@
+{
+ "date": "2026-11-11",
+ "reference": "2026-11-11",
+ "cases": {
+  "ctx_text+click_text": {
+   "target": "@1076",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_text+rclick_text": {
+   "target": "@1076",
+   "ours": {
+    "popup_open": true,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 1076,
+     "head": 1076
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_text+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Einfügen",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_text+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": true
+   },
+   "diff": {}
+  },
+  "ctx_text+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "ctx_text+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+click_text": {
+   "target": "@1076",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+rclick_text": {
+   "target": "@1076",
+   "ours": {
+    "popup_open": true,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 1076,
+     "head": 1076
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Einfügen",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": true
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_bullets+click_text": {
+   "target": "@1076",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_bullets+rclick_text": {
+   "target": "@1076",
+   "ours": {
+    "popup_open": true,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 1076,
+     "head": 1076
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_bullets+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Einfügen",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_bullets+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": true
+   },
+   "diff": {}
+  },
+  "gallery_bullets+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  },
+  "gallery_bullets+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "selection": {
+     "anchor": 0,
+     "head": 5
+    },
+    "first_word_bold": false
+   },
+   "diff": {}
+  }
+ },
+ "passed": 18,
+ "total": 18
+}

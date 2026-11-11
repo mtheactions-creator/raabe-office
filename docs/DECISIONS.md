@@ -4420,3 +4420,22 @@ its top 11 px, one bar of 16 x 4 px in rows 12 to 16, no outline.
   whose `current()` was fixed (the chart Format tab's Fülleffekt/Formkontur/Textfüllung) now follow the last pick too;
   theme references and Automatisch stay with the app.
 - A `#` in an app's colour value no longer makes the bar's CSS invalid.
+
+## D-158 The ribbon keeps the focus where it was; RaabeWrite and RaabePresent close menus as Word and PowerPoint (2026-11-11)
+
+D-156's checks for the other two apps (`check_menuclose_write.py` against Word's recording, `check_menuclose_present.py`
+against PowerPoint's) found three differences in RaabePresent, all recorded in PowerPoint:
+- **A ribbon press never takes the focus.** Clicking a ribbon tab or a ribbon button (Fett) while the slide thumbnails
+  had the focus left PowerPoint's selection on the slides; ours moved the focus to the button, so the next key went
+  to the ribbon. The tab row and the ribbon now cancel `mousedown` on their buttons (inputs such as Schriftart still
+  take the focus), in all three apps.
+- **After a ribbon command the focus goes back where it was**: RaabePresent remembers whether the thumbnails or the
+  slide had it last (`focusMain`), instead of always the slide.
+- **A right click on the empty slide** ends text editing and deselects, also while a shape's text is being edited.
+
+PowerPoint's probe had a flaw of its own, now fixed and noted for future probes: a resting mouse over a ribbon button
+shows a ScreenTip, which is a popup window too; the probe took it for a menu that stayed open and pressed Esc, and a
+second Esc in PowerPoint deselects the shape. The probe now parks the mouse over its own other window before reading
+the state, and waits for a closing popup to fade. Shapes are selected by a click, not COM's Select().
+
+**Measured:** RaabeWrite 18/18 as in Word, RaabePresent 38/38 as in PowerPoint, RaabeCalc 58/58 as in Excel.

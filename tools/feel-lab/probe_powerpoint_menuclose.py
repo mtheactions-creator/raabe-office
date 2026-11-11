@@ -73,8 +73,11 @@ class Probe:
         # One real click on the slide gives the window the focus (after the other program had it), then shape 1.
         winapi.click(*self.px(450, 480))
         time.sleep(0.3)
-        s1.Shapes(1).Select()
         uia.select(find_named(self.root, "TabItem", "Start"))
+        time.sleep(0.3)
+        # Shape 1 selected by a click on its edge, as a user does (a COM Select() leaves the focus elsewhere).
+        winapi.click(*self.px(102, 160))
+        time.sleep(0.3)
         time.sleep(0.4)
         self.pts = {
             "shape1": self.px(200, 160), "thumb1": self.thumb(1), "slide": self.px(450, 470),
@@ -124,20 +127,33 @@ class Probe:
         return name
 
     def state(self) -> dict:
+        # The mouse away from the ribbon (over our own other window, which takes no focus by a move): a ScreenTip under
+        # a resting mouse is a popup window too, and an Esc meant for a menu would deselect the shape.
+        if getattr(self, "park", None):
+            winapi.move(*self.park)
         time.sleep(0.7)
         pops = own_popups(self.pid)
+        if pops:
+            time.sleep(0.5)
+            pops = own_popups(self.pid)
         st = {"popup_open": bool(pops), "popups": pops, "foreground_ours": self.ours(),
               "ribbon_tab": selected_ribbon_tab(self.root)}
+        # A closing popup fades out: wait for it before deciding that one is still open. A second Esc in PowerPoint
+        # deselects the shape, so press it only for a popup that really stayed (a right click's new context menu).
         for _ in range(3):
+            end = time.time() + 1.0
+            while own_popups(self.pid) and time.time() < end:
+                time.sleep(0.1)
             if own_popups(self.pid):
                 winapi.activate(self.hwnd)
                 winapi.press("esc")
                 time.sleep(0.3)
         w = self.p.app.ActiveWindow
-        st["slide"] = w.View.Slide.SlideIndex
+        # The selection first: reading View.Slide while the ribbon has the keyboard focus can clear it.
         sel = w.Selection
         st["selection_type"] = sel.Type  # 0 none, 1 slides, 2 shapes, 3 text
         st["shapes"] = [sel.ShapeRange(i).TextFrame.TextRange.Text for i in range(1, sel.ShapeRange.Count + 1)] if sel.Type in (2, 3) else []
+        st["slide"] = w.View.Slide.SlideIndex
         st["shape1_bold"] = bool(self.pres.Slides(1).Shapes(1).TextFrame.TextRange.Font.Bold)
         return st
 
@@ -161,6 +177,7 @@ def main() -> None:
         except Exception:
             pr.close()
             raise
+        pr.park = other.point
         try:
             for opener in OPENERS:
                 for action in ACTIONS:

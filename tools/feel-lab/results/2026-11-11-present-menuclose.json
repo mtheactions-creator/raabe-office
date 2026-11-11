@@ -1,0 +1,702 @@
+{
+ "date": "2026-11-11",
+ "reference": "2026-11-11",
+ "cases": {
+  "ctx_shape+click_empty": {
+   "target": "empty_right_top",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Text",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "ctx_shape+click_shape2": {
+   "target": "shape2",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Text",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "ctx_shape+click_thumb3": {
+   "target": "thumb3",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Text",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "ctx_shape+rclick_empty": {
+   "target": "empty_right_top",
+   "ours": {
+    "popup_open": true,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "None",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "ctx_shape+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Einfügen",
+    "slide": 1,
+    "selection_type": "Text",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "ctx_shape+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Text",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "ctx_shape+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Text",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "ctx_shape+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Text",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "ctx_thumb+click_empty": {
+   "target": "empty_right_top",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Slides",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "Slides",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_thumb+click_shape2": {
+   "target": "shape2",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Slides",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "Slides",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_thumb+rclick_empty": {
+   "target": "empty_right_top",
+   "ours": {
+    "popup_open": true,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "None",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "Slides",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_thumb+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Einfügen",
+    "slide": 1,
+    "selection_type": "Slides",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "Slides",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_thumb+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Slides",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "Slides",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_thumb+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Slides",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "Slides",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_thumb+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Slides",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "Slides",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_slide+click_empty": {
+   "target": "empty_right_top",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "None",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "None",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_slide+click_shape2": {
+   "target": "shape2",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "None",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "None",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_slide+click_thumb3": {
+   "target": "thumb3",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "None",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "None",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_slide+rclick_empty": {
+   "target": "empty_right_top",
+   "ours": {
+    "popup_open": true,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "None",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "None",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_slide+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Einfügen",
+    "slide": 1,
+    "selection_type": "None",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "None",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_slide+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "None",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "None",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_slide+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "None",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "None",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "ctx_slide+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "None",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "None",
+    "shapes": []
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+click_empty": {
+   "target": "empty_right_top",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+click_shape2": {
+   "target": "shape2",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+click_thumb3": {
+   "target": "thumb3",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+rclick_empty": {
+   "target": "empty_right_top",
+   "ours": {
+    "popup_open": true,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "None",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Einfügen",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+click_bold": {
+   "target": "Fett",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "dd_fontcolor+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "gallery_layout+click_empty": {
+   "target": "empty_right_top",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "gallery_layout+click_shape2": {
+   "target": "shape2",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "gallery_layout+click_thumb3": {
+   "target": "thumb3",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "gallery_layout+rclick_empty": {
+   "target": "empty_right_top",
+   "ours": {
+    "popup_open": true,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "None",
+    "shapes": []
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "gallery_layout+click_ribbontab": {
+   "target": "Einfügen",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Einfügen",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "gallery_layout+esc": {
+   "target": "esc",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  },
+  "gallery_layout+click_other_app": {
+   "target": "other",
+   "ours": {
+    "popup_open": false,
+    "ribbon_tab": "Start",
+    "slide": 1,
+    "selection_type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "before": {
+    "slide": 1,
+    "type": "Shapes",
+    "shapes": [
+     "A"
+    ]
+   },
+   "diff": {}
+  }
+ },
+ "passed": 38,
+ "total": 38
+}

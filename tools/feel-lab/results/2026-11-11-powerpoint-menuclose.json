@@ -7,11 +7,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 3,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "empty_right_top"
   },
@@ -20,11 +20,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 3,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "shape2"
   },
@@ -33,11 +33,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 3,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "thumb3"
   },
@@ -57,9 +57,9 @@
    ],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 0,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "empty_right_top"
   },
@@ -68,11 +68,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Einfügen",
-   "slide": 1,
    "selection_type": 3,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "Einfügen"
   },
@@ -81,11 +81,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
-   "selection_type": 2,
+   "selection_type": 3,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "Fett"
   },
@@ -94,11 +94,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 3,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "esc"
   },
@@ -107,11 +107,11 @@
    "popups": [],
    "foreground_ours": false,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 3,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "other"
   },
@@ -120,9 +120,9 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 1,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "empty_right_top"
   },
@@ -131,9 +131,9 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 1,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "shape2"
   },
@@ -156,9 +156,9 @@
    ],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 0,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "empty_right_top"
   },
@@ -167,9 +167,9 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Einfügen",
-   "slide": 1,
    "selection_type": 1,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "Einfügen"
   },
@@ -178,9 +178,9 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 1,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "Fett"
   },
@@ -189,9 +189,9 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 1,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "esc"
   },
@@ -200,9 +200,9 @@
    "popups": [],
    "foreground_ours": false,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 1,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "other"
   },
@@ -211,9 +211,9 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 0,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "empty_right_top"
   },
@@ -222,9 +222,9 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 0,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "shape2"
   },
@@ -233,9 +233,9 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 0,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "thumb3"
   },
@@ -255,9 +255,9 @@
    ],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 0,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "empty_right_top"
   },
@@ -266,9 +266,9 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Einfügen",
-   "slide": 1,
    "selection_type": 0,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "Einfügen"
   },
@@ -277,9 +277,9 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 0,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "Fett"
   },
@@ -288,9 +288,9 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 0,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "esc"
   },
@@ -299,9 +299,9 @@
    "popups": [],
    "foreground_ours": false,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 0,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "other"
   },
@@ -310,11 +310,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 2,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "empty_right_top"
   },
@@ -323,11 +323,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 2,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "shape2"
   },
@@ -336,11 +336,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 2,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "thumb3"
   },
@@ -360,9 +360,9 @@
    ],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 0,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "empty_right_top"
   },
@@ -371,11 +371,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Einfügen",
-   "slide": 1,
    "selection_type": 2,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "Einfügen"
   },
@@ -384,9 +384,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
+   "selection_type": 2,
+   "shapes": [
+    "A"
+   ],
    "slide": 1,
-   "selection_type": 0,
-   "shapes": [],
    "shape1_bold": true,
    "target": "Fett"
   },
@@ -395,9 +397,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
+   "selection_type": 2,
+   "shapes": [
+    "A"
+   ],
    "slide": 1,
-   "selection_type": 0,
-   "shapes": [],
    "shape1_bold": false,
    "target": "esc"
   },
@@ -406,11 +410,11 @@
    "popups": [],
    "foreground_ours": false,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 2,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "other"
   },
@@ -419,11 +423,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 2,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "empty_right_top"
   },
@@ -432,11 +436,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 2,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "shape2"
   },
@@ -445,11 +449,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 2,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "thumb3"
   },
@@ -469,9 +473,9 @@
    ],
    "foreground_ours": true,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 0,
    "shapes": [],
+   "slide": 1,
    "shape1_bold": false,
    "target": "empty_right_top"
   },
@@ -480,11 +484,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Einfügen",
-   "slide": 1,
    "selection_type": 2,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "Einfügen"
   },
@@ -496,9 +500,11 @@
    "popups": [],
    "foreground_ours": true,
    "ribbon_tab": "Start",
+   "selection_type": 2,
+   "shapes": [
+    "A"
+   ],
    "slide": 1,
-   "selection_type": 0,
-   "shapes": [],
    "shape1_bold": false,
    "target": "esc"
   },
@@ -507,11 +513,11 @@
    "popups": [],
    "foreground_ours": false,
    "ribbon_tab": "Start",
-   "slide": 1,
    "selection_type": 2,
    "shapes": [
     "A"
    ],
+   "slide": 1,
    "shape1_bold": false,
    "target": "other"
   }
