@@ -83,7 +83,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       // First from PowerPoint's widest layouts to its usual ones (D-159), from the right; then its sequence.
       shrink: ["editing", "drawing", "paragraph", "slides", "editing", "drawing", "paragraph", "font", "slides", "clipboard"],
       groups: [
-        { id: "clipboard", label: "Zwischenablage", key: "ZZ", icon: "paste", controls: [split("edit.paste", "V1", "large", m.paste), stack(b("edit.cut", "X"), split("edit.copy", "C", "small", [{ cmd: "edit.copy" }, { cmd: "edit.duplicate" }]), b("edit.formatPainter", "FO"))] },
+        { id: "clipboard", label: "Zwischenablage", key: "ZZ", icon: "paste", wide: false, controls: [split("edit.paste", "V1", "large", m.paste), stack(b("edit.cut", "X"), split("edit.copy", "C", "small", [{ cmd: "edit.copy" }, { cmd: "edit.duplicate" }]), b("edit.formatPainter", "FO"))] },
         // The widest layouts are PowerPoint's at a wide window (labels beside the small icons, D-158); the ones before
         // are its first reductions.
         { id: "slides", label: "Folien", key: "ZF", icon: "slide-add",
@@ -203,7 +203,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       id: "review", label: "Überprüfen", key: "P2",
       shrink: ["ink", "compare", "comments", "language", "accessibility", "proofing"],
       groups: [
-        { id: "proofing", label: "Rechtschreibung", key: "ZD", icon: "spelling", controls: [b("review.spelling", "BE", "large"), b("review.thesaurus", "T", "large")] },
+        { id: "proofing", label: "Rechtschreibung", key: "ZD", icon: "spelling", controls: [b("review.spelling", "BE", "large", "Rechtschreibung"), b("review.thesaurus", "T", "large")] },
         { id: "accessibility", label: "Barrierefreiheit", key: "ZB", icon: "check", controls: [split("review.accessibility", "B1", "large", [{ cmd: "review.accessibility" }, { label: "Alternativtext", run: () => ctx.run("shape.altTextPane") }, { label: "Lesereihenfolgebereich", run: () => ctx.run("arrange.selectionPane") }, "-", { label: "Optionen: Barrierefreiheit", disabled: true, run: () => {} }])] },
         { id: "language", label: "Sprache", key: "ZS", icon: "globe", controls: [dd("review.language", "SP", "large", [{ cmd: "review.setLanguage" }, { cmd: "review.languageOptions" }])] },
         { id: "comments", label: "Kommentare", key: "ZK", icon: "comment", controls: [b("review.newComment", "N", "large"), b("review.deleteComment", "L", "large"), b("review.prevComment", "G", "large"), b("review.nextComment", "W", "large"), split("review.showComments", "O", "large", [{ label: "Kommentarbereich", run: () => ctx.run("review.showComments") }, { label: "Markup anzeigen", checked: ctx.markup(), run: () => ctx.toggleMarkup() }])] },

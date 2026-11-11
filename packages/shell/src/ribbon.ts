@@ -83,6 +83,8 @@ export interface Group {
   controls: Control[];
   /** Word's smaller layouts of the group, in the order it switches to them as the window narrows. */
   smaller?: Control[][];
+  /** false: Office keeps the small icons of this group's stacks even at a wide window (no derived wide layout, D-159). */
+  wide?: false;
 }
 
 export interface Tab {
@@ -116,7 +118,22 @@ function chev(): HTMLElement {
  * a long hyphenated word breaks after the hyphen ("3D-" / "Modelle"). The chevron of a menu
  * button follows the second line, or stands on its own line under a one-line label.
  */
-function largeLabel(text: string, withChevron: boolean): Node[] {
+/**
+ * Where Office breaks a one-word large label (read off the ribbons of Excel, Word and PowerPoint, 2026-11-11, D-159).
+ * Keyed by command: Word breaks "Seitenränder" for the margins (Layout) but not for the page borders (Entwurf).
+ */
+const LABEL_BREAKS: Record<string, [string, string]> = {
+  "layout.margins": ["Seiten-", "ränder"], "layout.printArea": ["Druck-", "bereich"], "layout.breaks": ["Um-", "brüche"],
+  "layout.printTitles": ["Druck-", "titel"], "formulas.calcOptions": ["Berechnungs-", "optionen"],
+  "formulas.watch": ["Überwachungs-", "fenster"], "review.spelling": ["Recht-", "schreibung"], "ref.toc": ["Inhalts-", "verzeichnis"],
+  "draw.quickStyles": ["Schnellformat-", "vorlagen"], "smartart.styles": ["Schnellformat-", "vorlagen"],
+  "table.styles": ["Schnellformat-", "vorlagen"], "wchart.styles": ["Schnellformat-", "vorlagen"],
+  "shape.styles": ["Schnellformat-", "vorlagen"], "wordart.styles": ["Schnellformat-", "vorlagen"],
+};
+
+function largeLabel(text: string, withChevron: boolean, cmd?: string): Node[] {
+  const brk = cmd ? LABEL_BREAKS[cmd] : undefined;
+  if (brk && text === brk[0].slice(0, -1) + brk[1]) text = brk.join("\n");
   let lines = text.includes("\n") ? text.split("\n") : [text];
   if (lines.length === 1) {
     const words = text.split(" ");
@@ -129,7 +146,12 @@ function largeLabel(text: string, withChevron: boolean): Node[] {
       }
       lines = [words.slice(0, best).join(" "), words.slice(best).join(" ")];
     } else if (text.length > 8 && text.indexOf("-") > 0 && text.indexOf("-") < text.length - 1) {
-      const i = text.indexOf("-") + 1;
+      // After the hyphen that makes the two lines most even (Excel: "Was-wäre-wenn-" / "Analyse").
+      let i = text.indexOf("-") + 1, score = Infinity;
+      for (let j = text.indexOf("-"); j > 0 && j < text.length - 1; j = text.indexOf("-", j + 1)) {
+        const m = Math.max(j + 1, text.length - j - 1);
+        if (m < score) { score = m; i = j + 1; }
+      }
       lines = [text.slice(0, i), text.slice(i)];
     }
   }
@@ -308,7 +330,37 @@ export class Ribbon {
   }
 
   private layoutsOf(g: Group): Control[][] {
-    return [g.controls, ...(g.smaller ?? [])];
+    const wide = this.wideOf(g);
+    return wide ? [wide, g.controls, ...(g.smaller ?? [])] : [g.controls, ...(g.smaller ?? [])];
+  }
+
+  private wide = new WeakMap<Group, Control[] | null>();
+
+  /**
+   * Office's widest layout of a group (D-159, measured at a wide window in Excel, Word and PowerPoint): a stack of
+   * small buttons shows their labels. Derived from the group's own widest layout when that has such a stack; the
+   * group's own layouts follow as its reductions, and the fit steps the wide ones back first, from the right.
+   */
+  private wideOf(g: Group): Control[] | null {
+    if (this.wide.has(g)) return this.wide.get(g)!;
+    if (g.wide === false) { this.wide.set(g, null); return null; }
+    let changed = false;
+    const widen = (x: Control): Control => {
+      if ((x.type === "button" || x.type === "dropdown" || x.type === "split") && (x.size ?? "small") === "small") {
+        changed = true;
+        // A prototype copy keeps lazy getters (a dropdown's `menu`) working.
+        return Object.assign(Object.create(x) as Control, { size: "medium" });
+      }
+      if (x.type === "color" && !x.showLabel) {
+        changed = true;
+        return Object.assign(Object.create(x) as Control, { showLabel: true });
+      }
+      return x;
+    };
+    const wide = g.controls.map((c) => (c.type === "stack" ? { ...c, items: c.items.map(widen) } : c));
+    const out = changed ? wide : null;
+    this.wide.set(g, out);
+    return out;
   }
 
   private renderGroup(g: Group, controls: Control[] = g.controls): HTMLElement {
@@ -388,7 +440,7 @@ export class Ribbon {
     const c = this.commands.get(cmd);
     const text = label ?? c.label;
     const parts: Node[] = [icon(c.icon, size === "large" ? "l" : "s")];
-    if (size === "large") parts.push(...largeLabel(text, chevron));
+    if (size === "large") parts.push(...largeLabel(text, chevron, cmd));
     else {
       if (size !== "small") parts.push(h("span", { class: "txt" }, text));
       if (chevron) parts.push(chev());
@@ -429,7 +481,7 @@ export class Ribbon {
         const main = this.button(c.cmd, size, undefined, c.label);
         main.onclick = () => void this.commands.run(c.cmd);
         if (size === "large") main.querySelector(".txt")?.remove();
-        const arrowParts: Node[] = size === "large" ? largeLabel(c.label ?? this.commands.get(c.cmd).label, true) : [chev()];
+        const arrowParts: Node[] = size === "large" ? largeLabel(c.label ?? this.commands.get(c.cmd).label, true, c.cmd) : [chev()];
         const arrow = h("button", {
           class: `rb rb-${size === "large" ? "large" : "small"} arrow`, "aria-label": "Weitere Optionen",
           "data-keytip": c.key, "data-keytip-scope": this.scope(),
@@ -666,7 +718,10 @@ export class Ribbon {
     if (available <= 0) return;
     const levels = new Map(tab.groups.map((g) => [g.id, 0]));
     // Word's sequence, then everything still open from the right (a fallback for narrow windows).
-    const steps = [...tab.shrink, ...tab.groups.map((g) => g.id).reverse(), ...tab.groups.map((g) => g.id).reverse()];
+    // First the derived wide layouts back to the group's own (D-159), from the right; then Word's sequence, then
+    // everything still open from the right (a fallback for narrow windows).
+    const wideIds = tab.groups.filter((g) => this.wideOf(g)).map((g) => g.id).reverse();
+    const steps = [...wideIds, ...tab.shrink, ...tab.groups.map((g) => g.id).reverse(), ...tab.groups.map((g) => g.id).reverse()];
     let widths = this.measure(tab, levels);
     if (!widths.length) return;
     let total = widths.reduce((a, b) => a + b, 0);

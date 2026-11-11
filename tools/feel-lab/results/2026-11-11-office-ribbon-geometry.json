@@ -587,7 +587,2917 @@
      }
     ]
    }
-  ]
+  ],
+  "tabs": {
+   "Start": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Zwischenablage",
+      "rect": [
+       0.0,
+       0.0,
+       202.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Einfügen",
+        "rect": [
+         8.0,
+         2.0,
+         51.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Ausschneiden",
+        "rect": [
+         61.3,
+         2.0,
+         106.0,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Kopieren",
+        "rect": [
+         61.3,
+         28.0,
+         103.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Format übertragen",
+        "rect": [
+         61.3,
+         54.0,
+         132.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Office-Zwischenablage...",
+        "rect": [
+         186.0,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Schriftart",
+      "rect": [
+       202.0,
+       0.0,
+       234.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "ComboBox",
+        "name": "Schriftart",
+        "rect": [
+         210.0,
+         10.0,
+         120.7,
+         24.0
+        ]
+       },
+       {
+        "type": "ComboBox",
+        "name": "Schriftgrad",
+        "rect": [
+         332.7,
+         10.0,
+         43.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Schriftgrad vergrößern",
+        "rect": [
+         378.0,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Schriftgrad verkleinern",
+        "rect": [
+         404.0,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Fett",
+        "rect": [
+         210.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Kursiv",
+        "rect": [
+         236.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Unterstreichen",
+        "rect": [
+         262.0,
+         42.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Rahmen",
+        "rect": [
+         305.3,
+         42.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Füllfarbe",
+        "rect": [
+         348.7,
+         42.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Schriftfarbe",
+        "rect": [
+         389.3,
+         42.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zellenschriftart formatieren",
+        "rect": [
+         420.0,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Ausrichtung",
+      "rect": [
+       436.0,
+       0.0,
+       348.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Oben ausrichten",
+        "rect": [
+         444.0,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zentriert ausrichten",
+        "rect": [
+         470.0,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Unten ausrichten",
+        "rect": [
+         496.0,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Ausrichtung",
+        "rect": [
+         524.7,
+         10.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Linksbündig",
+        "rect": [
+         444.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zentriert",
+        "rect": [
+         470.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Rechtsbündig",
+        "rect": [
+         496.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Einzug verkleinern",
+        "rect": [
+         524.7,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Einzug vergrößern",
+        "rect": [
+         550.7,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Textumbruch",
+        "rect": [
+         587.3,
+         10.0,
+         100.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Verbinden und zentrieren",
+        "rect": [
+         587.3,
+         42.0,
+         188.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zellenausrichtung formatieren",
+        "rect": [
+         768.0,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Zahl",
+      "rect": [
+       784.0,
+       0.0,
+       161.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "ComboBox",
+        "name": "Zahlenformat",
+        "rect": [
+         792.0,
+         10.0,
+         145.3,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Buchhaltungszahlenformat",
+        "rect": [
+         792.0,
+         42.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Prozentformat",
+        "rect": [
+         832.7,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "1.000er-Trennzeichen",
+        "rect": [
+         858.7,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Dezimalstelle hinzufügen",
+        "rect": [
+         887.3,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Dezimalstelle entfernen",
+        "rect": [
+         913.3,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zellennummer formatieren",
+        "rect": [
+         929.3,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Formatvorlagen",
+      "rect": [
+       945.3,
+       0.0,
+       304.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Bedingte Formatierung",
+        "rect": [
+         953.3,
+         2.0,
+         88.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Als Tabelle formatieren",
+        "rect": [
+         1043.3,
+         2.0,
+         78.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Zellenformatvorlagen",
+        "rect": [
+         1123.3,
+         2.0,
+         118.0,
+         68.7
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Zellen",
+      "rect": [
+       1249.3,
+       0.0,
+       162.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Einfügen",
+        "rect": [
+         1257.3,
+         2.0,
+         51.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Löschen",
+        "rect": [
+         1310.7,
+         2.0,
+         48.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Format",
+        "rect": [
+         1360.7,
+         2.0,
+         43.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Bearbeiten",
+      "rect": [
+       1412.0,
+       0.0,
+       293.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "AutoSumme",
+        "rect": [
+         1420.0,
+         2.0,
+         123.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Ausfüllen",
+        "rect": [
+         1420.0,
+         28.0,
+         93.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Löschen",
+        "rect": [
+         1420.0,
+         54.0,
+         87.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Sortieren und Filtern",
+        "rect": [
+         1545.3,
+         2.0,
+         76.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Suchen und Auswählen",
+        "rect": [
+         1624.0,
+         2.0,
+         73.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Add-Ins",
+      "rect": [
+       1705.3,
+       0.0,
+       57.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Add-Ins",
+        "rect": [
+         1713.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Adobe Acrobat",
+      "rect": [
+       1762.7,
+       0.0,
+       74.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "PDF erstellen",
+        "rect": [
+         1775.3,
+         2.0,
+         48.7,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Einfügen": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Tabellen",
+      "rect": [
+       0.0,
+       0.0,
+       249.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "PivotTable",
+        "rect": [
+         8.0,
+         2.0,
+         58.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Empfohlene PivotTables",
+        "rect": [
+         68.7,
+         2.0,
+         68.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Tabelle",
+        "rect": [
+         139.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Formulare",
+        "rect": [
+         182.7,
+         2.0,
+         58.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Illustrationen",
+      "rect": [
+       249.3,
+       0.0,
+       305.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Bilder",
+        "rect": [
+         257.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Formen",
+        "rect": [
+         300.7,
+         2.0,
+         46.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Piktogramme",
+        "rect": [
+         348.7,
+         2.0,
+         76.7,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "3D-Modelle",
+        "rect": [
+         427.3,
+         2.0,
+         119.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "SmartArt...",
+        "rect": [
+         427.3,
+         28.0,
+         80.7,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Screenshot",
+        "rect": [
+         427.3,
+         54.0,
+         102.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Steuerelemente",
+      "rect": [
+       554.7,
+       0.0,
+       108.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Kontrollkästchen",
+        "rect": [
+         562.7,
+         2.0,
+         92.7,
+         76.7
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Diagramme",
+      "rect": [
+       663.3,
+       0.0,
+       316.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Empfohlene Diagramme",
+        "rect": [
+         671.3,
+         2.0,
+         68.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Säulen- oder Balkendiagramm einfügen",
+        "rect": [
+         742.0,
+         2.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Linien- oder Flächendiagramm einfügen",
+        "rect": [
+         742.0,
+         28.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Kreis- oder Ringdiagramm einfügen",
+        "rect": [
+         742.0,
+         54.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Hierarchiediagramm einfügen",
+        "rect": [
+         784.0,
+         2.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Statistikdiagramm einfügen",
+        "rect": [
+         784.0,
+         28.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Punkt (XY)- oder Blasendiagramm einfügen",
+        "rect": [
+         784.0,
+         54.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen",
+        "rect": [
+         826.0,
+         2.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Verbunddiagramm einfügen",
+        "rect": [
+         826.0,
+         28.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Karten",
+        "rect": [
+         868.0,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "PivotChart",
+        "rect": [
+         911.3,
+         2.0,
+         60.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Empfohlene Diagramme",
+        "rect": [
+         963.3,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Sparklines",
+      "rect": [
+       979.3,
+       0.0,
+       151.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Linie",
+        "rect": [
+         987.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Säule",
+        "rect": [
+         1030.7,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Gewinn/Verlust",
+        "rect": [
+         1074.0,
+         2.0,
+         48.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Filter",
+      "rect": [
+       1130.7,
+       0.0,
+       143.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Datenschnitt",
+        "rect": [
+         1138.7,
+         2.0,
+         71.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zeitachse",
+        "rect": [
+         1212.0,
+         2.0,
+         54.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Links",
+      "rect": [
+       1274.0,
+       0.0,
+       57.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Link",
+        "rect": [
+         1282.0,
+         2.0,
+         41.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Kommentare",
+      "rect": [
+       1331.3,
+       0.0,
+       83.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Kommentar",
+        "rect": [
+         1339.3,
+         2.0,
+         67.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Text",
+      "rect": [
+       1414.7,
+       0.0,
+       292.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Textfeld",
+        "rect": [
+         1422.7,
+         2.0,
+         45.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Kopf- und Fußzeile...",
+        "rect": [
+         1470.0,
+         2.0,
+         59.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "WordArt",
+        "rect": [
+         1531.3,
+         2.0,
+         50.7,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Signaturzeile",
+        "rect": [
+         1584.0,
+         2.0,
+         72.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Objekt...",
+        "rect": [
+         1658.0,
+         2.0,
+         41.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Symbole",
+      "rect": [
+       1707.3,
+       0.0,
+       105.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Formel",
+        "rect": [
+         1715.3,
+         2.0,
+         42.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Symbol...",
+        "rect": [
+         1759.3,
+         2.0,
+         45.3,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Seitenlayout": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Designs",
+      "rect": [
+       0.0,
+       0.0,
+       170.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Designs",
+        "rect": [
+         8.0,
+         2.0,
+         47.3,
+         76.7
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Farben",
+        "rect": [
+         57.3,
+         2.0,
+         80.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Schriftarten",
+        "rect": [
+         57.3,
+         28.0,
+         104.7,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Effekte",
+        "rect": [
+         57.3,
+         54.0,
+         80.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Seite einrichten",
+      "rect": [
+       170.0,
+       0.0,
+       408.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Seitenränder",
+        "rect": [
+         178.0,
+         2.0,
+         50.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Ausrichtung",
+        "rect": [
+         230.7,
+         2.0,
+         68.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Format",
+        "rect": [
+         301.3,
+         2.0,
+         43.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Druckbereich",
+        "rect": [
+         346.7,
+         2.0,
+         54.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Umbrüche",
+        "rect": [
+         403.3,
+         2.0,
+         52.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Hintergrund...",
+        "rect": [
+         458.0,
+         2.0,
+         69.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Drucktitel",
+        "rect": [
+         529.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Seite einrichten",
+        "rect": [
+         562.7,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "An Format anpassen",
+      "rect": [
+       578.7,
+       0.0,
+       161.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "ComboBox",
+        "name": "Breite",
+        "rect": [
+         654.7,
+         2.0,
+         77.3,
+         24.0
+        ]
+       },
+       {
+        "type": "ComboBox",
+        "name": "Höhe",
+        "rect": [
+         654.7,
+         28.0,
+         77.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Mehr",
+        "rect": [
+         714.0,
+         54.7,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weniger",
+        "rect": [
+         714.0,
+         66.0,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Seite einrichten",
+        "rect": [
+         724.0,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Blattoptionen",
+      "rect": [
+       740.0,
+       0.0,
+       184.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Group",
+        "name": "Gitternetzlinien",
+        "rect": [
+         748.0,
+         4.0,
+         80.0,
+         72.0
+        ]
+       },
+       {
+        "type": "Group",
+        "name": "Überschriften",
+        "rect": [
+         840.7,
+         4.0,
+         76.0,
+         72.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Blattoptionen",
+        "rect": [
+         908.7,
+         80.0,
+         16.0,
+         16.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Anzeigen",
+        "rect": [
+         840.7,
+         28.0,
+         76.0,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Drucken",
+        "rect": [
+         840.7,
+         52.0,
+         70.7,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Anzeigen",
+        "rect": [
+         748.0,
+         28.0,
+         76.0,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Drucken",
+        "rect": [
+         748.0,
+         52.0,
+         70.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Anordnen",
+      "rect": [
+       924.7,
+       0.0,
+       412.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Ebene nach vorne",
+        "rect": [
+         932.7,
+         2.0,
+         65.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Ebene nach hinten",
+        "rect": [
+         1000.0,
+         2.0,
+         65.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Auswahlbereich...",
+        "rect": [
+         1067.3,
+         2.0,
+         87.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Ausrichten",
+        "rect": [
+         1156.7,
+         2.0,
+         60.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Gruppieren",
+        "rect": [
+         1219.3,
+         2.0,
+         64.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Drehen",
+        "rect": [
+         1285.3,
+         2.0,
+         43.3,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Formeln": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Funktionsbibliothek",
+      "rect": [
+       0.0,
+       0.0,
+       741.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Funktion einfügen...",
+        "rect": [
+         8.0,
+         2.0,
+         51.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "AutoSumme",
+        "rect": [
+         72.0,
+         2.0,
+         72.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Zuletzt verwendet",
+        "rect": [
+         146.0,
+         2.0,
+         71.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Finanzmathematik",
+        "rect": [
+         219.3,
+         2.0,
+         101.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Logisch",
+        "rect": [
+         322.7,
+         2.0,
+         45.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Text",
+        "rect": [
+         370.0,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Datum u. Uhrzeit",
+        "rect": [
+         413.3,
+         2.0,
+         54.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Nachschlagen und Verweisen",
+        "rect": [
+         469.3,
+         2.0,
+         92.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Mathematik und Trigonometrie",
+        "rect": [
+         564.0,
+         2.0,
+         92.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Mehr Funktionen",
+        "rect": [
+         658.0,
+         2.0,
+         75.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Python (Vorschau)",
+      "rect": [
+       741.3,
+       0.0,
+       194.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Python einfügen",
+        "rect": [
+         749.3,
+         2.0,
+         51.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Zurücksetzen",
+        "rect": [
+         802.7,
+         2.0,
+         125.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Editor",
+        "rect": [
+         802.7,
+         28.0,
+         64.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Initialisierung",
+        "rect": [
+         802.7,
+         54.0,
+         102.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Definierte Namen",
+      "rect": [
+       936.0,
+       0.0,
+       226.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Namens-Manager",
+        "rect": [
+         944.0,
+         2.0,
+         53.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Namen definieren",
+        "rect": [
+         999.3,
+         2.0,
+         150.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "In Formel verwenden",
+        "rect": [
+         999.3,
+         28.0,
+         155.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Aus Auswahl erstellen...",
+        "rect": [
+         999.3,
+         54.0,
+         147.3,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Formelüberwachung",
+      "rect": [
+       1162.7,
+       0.0,
+       418.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Spur zum Vorgänger",
+        "rect": [
+         1170.7,
+         2.0,
+         142.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Spur zum Nachfolger",
+        "rect": [
+         1170.7,
+         28.0,
+         145.3,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Pfeile entfernen",
+        "rect": [
+         1170.7,
+         54.0,
+         138.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Formeln anzeigen",
+        "rect": [
+         1318.0,
+         2.0,
+         126.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Fehlerüberprüfung...",
+        "rect": [
+         1318.0,
+         28.0,
+         154.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Formelauswertung",
+        "rect": [
+         1318.0,
+         54.0,
+         131.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Überwachungsfenster",
+        "rect": [
+         1485.3,
+         2.0,
+         88.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Berechnung",
+      "rect": [
+       1581.3,
+       0.0,
+       210.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Berechnungsoptionen",
+        "rect": [
+         1589.3,
+         2.0,
+         77.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Neu berechnen",
+        "rect": [
+         1668.7,
+         10.0,
+         112.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Blatt berechnen",
+        "rect": [
+         1668.7,
+         42.0,
+         114.7,
+         24.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Daten": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Daten abrufen und transformieren",
+      "rect": [
+       0.0,
+       0.0,
+       387.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Daten abrufen",
+        "rect": [
+         8.0,
+         2.0,
+         57.3,
+         68.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Aus Text/CSV",
+        "rect": [
+         67.3,
+         2.0,
+         102.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Aus dem Web",
+        "rect": [
+         67.3,
+         28.0,
+         108.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Aus Tabelle/Bereich",
+        "rect": [
+         67.3,
+         54.0,
+         134.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Von Bild",
+        "rect": [
+         203.3,
+         2.0,
+         88.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zuletzt verwendete Quellen",
+        "rect": [
+         203.3,
+         28.0,
+         176.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Vorhandene Verbindungen",
+        "rect": [
+         203.3,
+         54.0,
+         174.0,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Abfragen & Verbindungen",
+      "rect": [
+       387.3,
+       0.0,
+       283.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Alle aktualisieren",
+        "rect": [
+         395.3,
+         2.0,
+         81.3,
+         76.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Abfragen und Verbindungen",
+        "rect": [
+         478.7,
+         2.0,
+         184.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Eigenschaften",
+        "rect": [
+         478.7,
+         28.0,
+         106.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Workbook Links",
+        "rect": [
+         478.7,
+         54.0,
+         118.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Datentypen",
+      "rect": [
+       670.7,
+       0.0,
+       201.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Group",
+        "name": "Datentypen",
+        "rect": [
+         678.7,
+         6.7,
+         185.3,
+         62.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Datentypen",
+        "rect": [
+         837.3,
+         9.3,
+         24.0,
+         60.0
+        ]
+       },
+       {
+        "type": "DataGrid",
+        "name": "Datentypen",
+        "rect": [
+         680.7,
+         10.7,
+         156.0,
+         113.3
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Sortieren und Filtern",
+      "rect": [
+       872.0,
+       0.0,
+       274.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Von A bis Z sortieren",
+        "rect": [
+         880.0,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Von Z bis A sortieren",
+        "rect": [
+         880.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Sortieren...",
+        "rect": [
+         906.0,
+         2.0,
+         52.7,
+         76.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Filtern",
+        "rect": [
+         971.3,
+         2.0,
+         41.3,
+         76.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Löschen",
+        "rect": [
+         1014.7,
+         2.0,
+         76.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Erneut anwenden",
+        "rect": [
+         1014.7,
+         28.0,
+         124.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Erweitert...",
+        "rect": [
+         1014.7,
+         54.0,
+         78.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Datentools",
+      "rect": [
+       1146.7,
+       0.0,
+       332.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Text in Spalten...",
+        "rect": [
+         1154.7,
+         2.0,
+         44.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Blitzvorschau",
+        "rect": [
+         1201.3,
+         2.0,
+         102.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Duplikate entfernen",
+        "rect": [
+         1201.3,
+         28.0,
+         136.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Datenüberprüfung...",
+        "rect": [
+         1201.3,
+         54.0,
+         154.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Konsolidieren...",
+        "rect": [
+         1358.0,
+         2.0,
+         104.7,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Datenmodell",
+        "rect": [
+         1358.0,
+         28.0,
+         112.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Datenanalyse",
+        "rect": [
+         1358.0,
+         54.0,
+         103.3,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Prognose",
+      "rect": [
+       1478.7,
+       0.0,
+       192.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Was-wäre-wenn-Analyse",
+        "rect": [
+         1486.7,
+         2.0,
+         94.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Prognoseblatt",
+        "rect": [
+         1582.7,
+         2.0,
+         80.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Gliederung",
+      "rect": [
+       1670.7,
+       0.0,
+       248.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Gruppieren...",
+        "rect": [
+         1678.7,
+         2.0,
+         64.0,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Gruppierung aufheben...",
+        "rect": [
+         1744.7,
+         2.0,
+         72.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Teilergebnis",
+        "rect": [
+         1818.7,
+         2.0,
+         66.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Detail anzeigen",
+        "rect": [
+         1887.3,
+         2.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Detail ausblenden",
+        "rect": [
+         1887.3,
+         28.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Gruppierungs- und Gliederungseinstellungen",
+        "rect": [
+         1903.3,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Überprüfen": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Rechtschreibung",
+      "rect": [
+       0.0,
+       0.0,
+       280.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Rechtschreibung...",
+        "rect": [
+         8.0,
+         2.0,
+         63.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Thesaurus...",
+        "rect": [
+         73.3,
+         2.0,
+         58.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Arbeitsmappenstatistiken",
+        "rect": [
+         133.3,
+         2.0,
+         139.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Leistung",
+      "rect": [
+       280.7,
+       0.0,
+       65.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Leistung prüfen",
+        "rect": [
+         288.7,
+         2.0,
+         49.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Barrierefreiheit",
+      "rect": [
+       346.0,
+       0.0,
+       96.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Barrierefreiheit überprüfen",
+        "rect": [
+         354.0,
+         2.0,
+         80.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Sprache",
+      "rect": [
+       442.7,
+       0.0,
+       80.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Übersetzen",
+        "rect": [
+         450.7,
+         2.0,
+         64.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Änderungen",
+      "rect": [
+       522.7,
+       0.0,
+       86.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Änderungen anzeigen",
+        "rect": [
+         530.7,
+         2.0,
+         70.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Kommentare",
+      "rect": [
+       609.3,
+       0.0,
+       347.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Neuer Kommentar",
+        "rect": [
+         617.3,
+         2.0,
+         67.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Löschen",
+        "rect": [
+         686.7,
+         2.0,
+         48.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Vorheriger Kommentar",
+        "rect": [
+         736.7,
+         2.0,
+         67.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Nächster Kommentar",
+        "rect": [
+         806.0,
+         2.0,
+         67.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Kommentare anzeigen",
+        "rect": [
+         875.3,
+         2.0,
+         73.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Notizen",
+      "rect": [
+       956.7,
+       0.0,
+       62.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Notizen",
+        "rect": [
+         964.7,
+         2.0,
+         46.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Schützen",
+      "rect": [
+       1018.7,
+       0.0,
+       348.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Blatt schützen...",
+        "rect": [
+         1026.7,
+         2.0,
+         51.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Arbeitsmappe schützen...",
+        "rect": [
+         1080.0,
+         2.0,
+         80.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Bearbeiten von Bereichen zulassen",
+        "rect": [
+         1162.0,
+         2.0,
+         102.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Arbeitsmappe nicht mehr teilen",
+        "rect": [
+         1266.7,
+         2.0,
+         92.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Freihand",
+      "rect": [
+       1367.3,
+       0.0,
+       93.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Freihand ausblenden",
+        "rect": [
+         1375.3,
+         2.0,
+         77.3,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Ansicht": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Tabellenansicht",
+      "rect": [
+       0.0,
+       0.0,
+       316.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "ComboBox",
+        "name": "Tabellenansicht wechseln",
+        "rect": [
+         8.0,
+         10.0,
+         300.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Behalten",
+        "rect": [
+         8.0,
+         42.0,
+         78.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Beenden",
+        "rect": [
+         88.0,
+         42.0,
+         78.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Neu",
+        "rect": [
+         168.7,
+         42.0,
+         54.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Optionen",
+        "rect": [
+         225.3,
+         42.0,
+         83.3,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Arbeitsmappenansichten",
+      "rect": [
+       316.7,
+       0.0,
+       308.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Normal",
+        "rect": [
+         324.7,
+         2.0,
+         44.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Umbruchvorschau",
+        "rect": [
+         371.3,
+         2.0,
+         101.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Seitenlayout",
+        "rect": [
+         474.7,
+         2.0,
+         70.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Benutzerdef. Ansichten...",
+        "rect": [
+         546.7,
+         2.0,
+         70.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Anzeigen",
+      "rect": [
+       625.3,
+       0.0,
+       326.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Navigation",
+        "rect": [
+         633.3,
+         2.0,
+         62.7,
+         68.7
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Lineal",
+        "rect": [
+         698.0,
+         2.0,
+         56.7,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Gitternetzlinien",
+        "rect": [
+         698.0,
+         28.0,
+         105.3,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Bearbeitungsleiste",
+        "rect": [
+         698.0,
+         54.0,
+         122.7,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Überschriften",
+        "rect": [
+         822.7,
+         2.0,
+         97.3,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Datentypsymbole",
+        "rect": [
+         822.7,
+         28.0,
+         121.3,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Fokuszelle",
+        "rect": [
+         822.7,
+         54.0,
+         110.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Zoom",
+      "rect": [
+       952.0,
+       0.0,
+       166.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Zoom...",
+        "rect": [
+         960.0,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "100%",
+        "rect": [
+         1003.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Auswahl vergrößern",
+        "rect": [
+         1046.7,
+         2.0,
+         63.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Fenster",
+      "rect": [
+       1118.0,
+       0.0,
+       546.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Neues Fenster",
+        "rect": [
+         1126.0,
+         2.0,
+         43.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Alle anordnen",
+        "rect": [
+         1171.3,
+         2.0,
+         56.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Fenster fixieren",
+        "rect": [
+         1229.3,
+         2.0,
+         54.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Teilen",
+        "rect": [
+         1285.3,
+         2.0,
+         62.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Ausblenden",
+        "rect": [
+         1285.3,
+         28.0,
+         96.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Einblenden...",
+        "rect": [
+         1285.3,
+         54.0,
+         91.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Nebeneinander anzeigen",
+        "rect": [
+         1394.0,
+         2.0,
+         163.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Synchrones Scrollen",
+        "rect": [
+         1394.0,
+         28.0,
+         138.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Fensterposition zurücksetzen",
+        "rect": [
+         1394.0,
+         54.0,
+         185.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Fenster wechseln",
+        "rect": [
+         1592.0,
+         2.0,
+         64.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Makros",
+      "rect": [
+       1664.0,
+       0.0,
+       60.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Makros",
+        "rect": [
+         1672.0,
+         2.0,
+         44.7,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  }
  },
  "word": {
   "scale": 1.5,
@@ -1167,7 +4077,2780 @@
      }
     ]
    }
-  ]
+  ],
+  "tabs": {
+   "Start": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Zwischenablage",
+      "rect": [
+       0.0,
+       0.0,
+       202.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Einfügen",
+        "rect": [
+         8.0,
+         2.0,
+         51.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Ausschneiden",
+        "rect": [
+         61.3,
+         2.0,
+         106.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Kopieren",
+        "rect": [
+         61.3,
+         28.0,
+         80.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Format übertragen",
+        "rect": [
+         61.3,
+         54.0,
+         132.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Office-Zwischenablage...",
+        "rect": [
+         186.0,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Schriftart",
+      "rect": [
+       202.0,
+       0.0,
+       310.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "ComboBox",
+        "name": "Schriftart",
+        "rect": [
+         210.0,
+         10.0,
+         104.0,
+         24.0
+        ]
+       },
+       {
+        "type": "ComboBox",
+        "name": "Schriftgrad",
+        "rect": [
+         316.0,
+         10.0,
+         63.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Schriftart vergrößern",
+        "rect": [
+         381.3,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Schriftart verkleinern",
+        "rect": [
+         407.3,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Groß-/Kleinschreibung",
+        "rect": [
+         436.0,
+         10.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Formatierung löschen",
+        "rect": [
+         480.7,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Fett",
+        "rect": [
+         210.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Kursiv",
+        "rect": [
+         236.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Unterstreichen",
+        "rect": [
+         262.0,
+         42.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Durchstreichen",
+        "rect": [
+         302.7,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Tiefgestellt",
+        "rect": [
+         328.7,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Hochgestellt",
+        "rect": [
+         354.7,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Texteffekte und Typografie",
+        "rect": [
+         383.3,
+         42.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Texthervorhebungsfarbe",
+        "rect": [
+         425.3,
+         42.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Schriftfarbe",
+        "rect": [
+         466.0,
+         42.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Schriftart...",
+        "rect": [
+         496.7,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Absatz",
+      "rect": [
+       512.7,
+       0.0,
+       249.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Aufzählungszeichen",
+        "rect": [
+         520.7,
+         10.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Nummerierung",
+        "rect": [
+         561.3,
+         10.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Liste mit mehreren Ebenen",
+        "rect": [
+         602.0,
+         10.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Einzug verkleinern",
+        "rect": [
+         646.7,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Einzug vergrößern",
+        "rect": [
+         672.7,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Sortieren...",
+        "rect": [
+         701.3,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Alle anzeigen",
+        "rect": [
+         730.0,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Linksbündig",
+        "rect": [
+         520.7,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zentriert",
+        "rect": [
+         546.7,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Rechtsbündig",
+        "rect": [
+         572.7,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Blocksatz",
+        "rect": [
+         598.7,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Zeilen- und Absatzabstand",
+        "rect": [
+         627.3,
+         42.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Schattierung",
+        "rect": [
+         672.0,
+         42.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Rahmen",
+        "rect": [
+         712.7,
+         42.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Absatz...",
+        "rect": [
+         746.0,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Formatvorlagen",
+      "rect": [
+       762.0,
+       0.0,
+       801.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Group",
+        "name": "Formatvorlagen",
+        "rect": [
+         770.0,
+         6.7,
+         785.3,
+         62.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Formatvorlagen...",
+        "rect": [
+         1547.3,
+         80.0,
+         16.0,
+         16.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Formatvorlagen",
+        "rect": [
+         1528.7,
+         9.3,
+         24.0,
+         60.0
+        ]
+       },
+       {
+        "type": "DataGrid",
+        "name": "Formatvorlagen",
+        "rect": [
+         772.0,
+         11.3,
+         756.0,
+         168.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Bearbeiten",
+      "rect": [
+       1563.3,
+       0.0,
+       112.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Suchen",
+        "rect": [
+         1571.3,
+         2.0,
+         94.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Ersetzen...",
+        "rect": [
+         1571.3,
+         28.0,
+         76.7,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Markieren",
+        "rect": [
+         1571.3,
+         54.0,
+         96.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Adobe Acrobat",
+      "rect": [
+       1676.0,
+       0.0,
+       74.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "PDF erstellen",
+        "rect": [
+         1688.7,
+         2.0,
+         48.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Sprache",
+      "rect": [
+       1750.7,
+       0.0,
+       68.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Diktieren",
+        "rect": [
+         1758.7,
+         2.0,
+         52.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Editor",
+      "rect": [
+       1818.7,
+       0.0,
+       57.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Editor",
+        "rect": [
+         1826.7,
+         2.0,
+         41.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Add-Ins",
+      "rect": [
+       1876.0,
+       0.0,
+       57.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Add-Ins",
+        "rect": [
+         1884.0,
+         2.0,
+         41.3,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Einfügen": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Seiten",
+      "rect": [
+       0.0,
+       0.0,
+       201.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Deckblatt",
+        "rect": [
+         8.0,
+         2.0,
+         55.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Leere Seite",
+        "rect": [
+         65.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Seitenumbruch",
+        "rect": [
+         108.7,
+         2.0,
+         84.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Tabellen",
+      "rect": [
+       201.3,
+       0.0,
+       57.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Tabelle",
+        "rect": [
+         209.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Illustrationen",
+      "rect": [
+       258.7,
+       0.0,
+       428.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Bilder",
+        "rect": [
+         266.7,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Formen",
+        "rect": [
+         310.0,
+         2.0,
+         46.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Piktogramme",
+        "rect": [
+         358.0,
+         2.0,
+         76.7,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "3D-Modelle",
+        "rect": [
+         436.7,
+         2.0,
+         59.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "SmartArt...",
+        "rect": [
+         498.0,
+         2.0,
+         52.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Diagramm...",
+        "rect": [
+         552.7,
+         2.0,
+         61.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Screenshot",
+        "rect": [
+         616.0,
+         2.0,
+         63.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Medien",
+      "rect": [
+       687.3,
+       0.0,
+       90.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Onlinevideos...",
+        "rect": [
+         695.3,
+         2.0,
+         74.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Links",
+      "rect": [
+       777.3,
+       0.0,
+       189.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Link",
+        "rect": [
+         785.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Textmarke...",
+        "rect": [
+         828.7,
+         2.0,
+         58.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Querverweis...",
+        "rect": [
+         888.7,
+         2.0,
+         70.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Kommentare",
+      "rect": [
+       966.7,
+       0.0,
+       83.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Kommentar",
+        "rect": [
+         974.7,
+         2.0,
+         67.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Kopf- und Fußzeile",
+      "rect": [
+       1050.0,
+       0.0,
+       178.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Kopfzeile",
+        "rect": [
+         1058.0,
+         2.0,
+         53.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Fußzeile",
+        "rect": [
+         1113.3,
+         2.0,
+         47.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Seitenzahl",
+        "rect": [
+         1162.7,
+         2.0,
+         58.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Text",
+      "rect": [
+       1228.7,
+       0.0,
+       387.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Textfeld",
+        "rect": [
+         1236.7,
+         2.0,
+         45.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Schnellbausteine",
+        "rect": [
+         1284.0,
+         2.0,
+         92.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "WordArt",
+        "rect": [
+         1378.7,
+         2.0,
+         50.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Initiale",
+        "rect": [
+         1431.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Signaturzeile",
+        "rect": [
+         1474.7,
+         2.0,
+         123.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Datum und Uhrzeit...",
+        "rect": [
+         1474.7,
+         28.0,
+         133.3,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Objekt...",
+        "rect": [
+         1474.7,
+         54.0,
+         92.0,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Symbole",
+      "rect": [
+       1616.0,
+       0.0,
+       105.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Formel",
+        "rect": [
+         1624.0,
+         2.0,
+         42.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Symbol",
+        "rect": [
+         1668.0,
+         2.0,
+         45.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "eSignature",
+      "rect": [
+       1721.3,
+       0.0,
+       95.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Signaturfelder",
+        "rect": [
+         1729.3,
+         2.0,
+         79.3,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Entwurf": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Dokumentformatierung",
+      "rect": [
+       0.0,
+       0.0,
+       1654.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Designs",
+        "rect": [
+         8.0,
+         2.0,
+         47.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Group",
+        "name": "Formatvorlagensatz",
+        "rect": [
+         57.3,
+         6.7,
+         1325.3,
+         62.7
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Farben",
+        "rect": [
+         1384.7,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Schriftarten",
+        "rect": [
+         1428.0,
+         2.0,
+         65.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Absatzabstand",
+        "rect": [
+         1495.3,
+         2.0,
+         123.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Effekte",
+        "rect": [
+         1495.3,
+         28.0,
+         80.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Als Standard festlegen",
+        "rect": [
+         1495.3,
+         54.0,
+         151.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Formatvorlagensatz",
+        "rect": [
+         1356.0,
+         9.3,
+         24.0,
+         60.0
+        ]
+       },
+       {
+        "type": "DataGrid",
+        "name": "Formatvorlagensatz",
+        "rect": [
+         59.3,
+         11.3,
+         1296.0,
+         112.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Seitenhintergrund",
+      "rect": [
+       1654.7,
+       0.0,
+       237.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Wasserzeichen",
+        "rect": [
+         1662.7,
+         2.0,
+         81.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Seitenfarbe",
+        "rect": [
+         1746.0,
+         2.0,
+         64.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Seitenränder...",
+        "rect": [
+         1812.7,
+         2.0,
+         71.3,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Layout": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Seite einrichten",
+      "rect": [
+       0.0,
+       0.0,
+       358.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Seitenränder",
+        "rect": [
+         8.0,
+         2.0,
+         50.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Ausrichtung",
+        "rect": [
+         60.7,
+         2.0,
+         68.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Format",
+        "rect": [
+         131.3,
+         2.0,
+         43.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Spalten",
+        "rect": [
+         176.7,
+         2.0,
+         44.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Umbrüche",
+        "rect": [
+         223.3,
+         2.0,
+         99.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Zeilennummern",
+        "rect": [
+         223.3,
+         28.0,
+         126.7,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Silbentrennung",
+        "rect": [
+         223.3,
+         54.0,
+         124.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Seite einrichten...",
+        "rect": [
+         342.0,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Absatz",
+      "rect": [
+       358.0,
+       0.0,
+       286.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Mehr",
+        "rect": [
+         486.0,
+         28.7,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weniger",
+        "rect": [
+         486.0,
+         40.0,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Mehr",
+        "rect": [
+         486.0,
+         54.7,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weniger",
+        "rect": [
+         486.0,
+         66.0,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Mehr",
+        "rect": [
+         618.7,
+         28.7,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weniger",
+        "rect": [
+         618.7,
+         40.0,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Mehr",
+        "rect": [
+         618.7,
+         54.7,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weniger",
+        "rect": [
+         618.7,
+         66.0,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Absatz...",
+        "rect": [
+         628.7,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Anordnen",
+      "rect": [
+       644.7,
+       0.0,
+       467.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Position",
+        "rect": [
+         652.7,
+         2.0,
+         47.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Textumbruch",
+        "rect": [
+         702.0,
+         2.0,
+         72.7,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Ebene nach vorne",
+        "rect": [
+         776.7,
+         2.0,
+         65.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Ebene nach hinten",
+        "rect": [
+         844.0,
+         2.0,
+         65.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Auswahlbereich...",
+        "rect": [
+         911.3,
+         2.0,
+         87.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Ausrichten",
+        "rect": [
+         1000.7,
+         2.0,
+         100.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Gruppieren",
+        "rect": [
+         1000.7,
+         28.0,
+         103.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Drehen",
+        "rect": [
+         1000.7,
+         54.0,
+         82.7,
+         24.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Referenzen": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Inhaltsverzeichnis",
+      "rect": [
+       0.0,
+       0.0,
+       284.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Inhaltsverzeichnis",
+        "rect": [
+         8.0,
+         2.0,
+         73.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Text hinzufügen",
+        "rect": [
+         83.3,
+         2.0,
+         126.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Inhaltsverzeichnis aktualisieren...",
+        "rect": [
+         83.3,
+         28.0,
+         192.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Fußnoten",
+      "rect": [
+       284.0,
+       0.0,
+       214.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Fußnote einfügen",
+        "rect": [
+         292.0,
+         2.0,
+         51.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Endnote einfügen",
+        "rect": [
+         345.3,
+         2.0,
+         126.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Nächste Fußnote",
+        "rect": [
+         345.3,
+         28.0,
+         145.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Notizen anzeigen",
+        "rect": [
+         345.3,
+         54.0,
+         124.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Dialogfeld 'Fuß- und Endnote'...",
+        "rect": [
+         482.7,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Zitate und Literaturverzeichnis",
+      "rect": [
+       498.7,
+       0.0,
+       301.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Zitat einfügen",
+        "rect": [
+         506.7,
+         2.0,
+         62.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Quellen verwalten...",
+        "rect": [
+         571.3,
+         2.0,
+         126.7,
+         24.0
+        ]
+       },
+       {
+        "type": "ComboBox",
+        "name": "Formatvorlage",
+        "rect": [
+         677.3,
+         28.0,
+         59.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Literaturverzeichnis",
+        "rect": [
+         571.3,
+         54.0,
+         144.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Anbieter ändern",
+        "rect": [
+         738.7,
+         2.0,
+         53.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Beschriftungen",
+      "rect": [
+       800.0,
+       0.0,
+       308.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Beschriftung einfügen...",
+        "rect": [
+         808.0,
+         2.0,
+         70.7,
+         76.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Abbildungsverzeichnis einfügen...",
+        "rect": [
+         880.7,
+         2.0,
+         200.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Abbildungsverzeichnis aktualisieren",
+        "rect": [
+         880.7,
+         28.0,
+         219.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Querverweis...",
+        "rect": [
+         880.7,
+         54.0,
+         98.0,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Index",
+      "rect": [
+       1108.0,
+       0.0,
+       205.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Eintrag markieren...",
+        "rect": [
+         1116.0,
+         2.0,
+         57.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Index einfügen...",
+        "rect": [
+         1175.3,
+         2.0,
+         111.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Index aktualisieren",
+        "rect": [
+         1175.3,
+         28.0,
+         130.0,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Rechtsgrundlagenverzeichnis",
+      "rect": [
+       1313.3,
+       0.0,
+       328.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Zitat markieren...",
+        "rect": [
+         1321.3,
+         2.0,
+         57.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Rechtsgrundlagenverzeichnis einfügen...",
+        "rect": [
+         1380.7,
+         2.0,
+         234.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Rechtsgrundlagenverzeichnis aktualisieren",
+        "rect": [
+         1380.7,
+         28.0,
+         252.7,
+         24.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Sendungen": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Erstellen",
+      "rect": [
+       0.0,
+       0.0,
+       132.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Umschläge...",
+        "rect": [
+         8.0,
+         2.0,
+         63.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Etiketten...",
+        "rect": [
+         73.3,
+         2.0,
+         50.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Seriendruck starten",
+      "rect": [
+       132.0,
+       0.0,
+       242.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Seriendruck starten",
+        "rect": [
+         140.0,
+         2.0,
+         66.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Empfänger auswählen",
+        "rect": [
+         208.7,
+         2.0,
+         71.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Empfängerliste bearbeiten...",
+        "rect": [
+         282.0,
+         2.0,
+         84.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Schreib- und Einfügefelder",
+      "rect": [
+       374.0,
+       0.0,
+       550.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Seriendruckfelder hervorheben",
+        "rect": [
+         382.0,
+         2.0,
+         96.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Adressblock...",
+        "rect": [
+         480.7,
+         2.0,
+         70.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Grußzeile...",
+        "rect": [
+         552.7,
+         2.0,
+         53.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Seriendruckfeld einfügen",
+        "rect": [
+         608.0,
+         2.0,
+         86.7,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Regeln",
+        "rect": [
+         696.7,
+         2.0,
+         80.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Übereinstimmende Felder festlegen...",
+        "rect": [
+         696.7,
+         28.0,
+         220.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Etiketten aktualisieren",
+        "rect": [
+         696.7,
+         54.0,
+         146.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Vorschau Ergebnisse",
+      "rect": [
+       924.7,
+       0.0,
+       239.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Vorschau Ergebnisse",
+        "rect": [
+         932.7,
+         2.0,
+         62.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Erster",
+        "rect": [
+         1005.3,
+         2.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Vorheriger",
+        "rect": [
+         1031.3,
+         2.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Edit",
+        "name": "Datensatz",
+        "rect": [
+         1058.0,
+         3.3,
+         43.3,
+         20.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Nächster",
+        "rect": [
+         1104.0,
+         2.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Letzter",
+        "rect": [
+         1130.0,
+         2.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Empfänger suchen...",
+        "rect": [
+         1007.3,
+         28.0,
+         131.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Auf Fehler überprüfen...",
+        "rect": [
+         1007.3,
+         54.0,
+         148.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Fertig stellen",
+      "rect": [
+       1164.0,
+       0.0,
+       124.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Fertig stellen und zusammenführen",
+        "rect": [
+         1172.0,
+         2.0,
+         108.0,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Überprüfen": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Rechtschreibung",
+      "rect": [
+       0.0,
+       0.0,
+       261.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Editor",
+        "rect": [
+         8.0,
+         2.0,
+         41.3,
+         76.7
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Rechtschreibung und Grammatik",
+        "rect": [
+         51.3,
+         2.0,
+         98.7,
+         76.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Thesaurus...",
+        "rect": [
+         152.0,
+         2.0,
+         58.0,
+         76.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Wörter zählen",
+        "rect": [
+         212.0,
+         2.0,
+         41.3,
+         76.7
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Sprache",
+      "rect": [
+       261.3,
+       0.0,
+       65.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Laut vorlesen",
+        "rect": [
+         269.3,
+         2.0,
+         49.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Barrierefreiheit",
+      "rect": [
+       326.7,
+       0.0,
+       96.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Barrierefreiheit überprüfen",
+        "rect": [
+         334.7,
+         2.0,
+         80.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Sprache",
+      "rect": [
+       423.3,
+       0.0,
+       129.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Übersetzen",
+        "rect": [
+         431.3,
+         2.0,
+         64.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Sprache",
+        "rect": [
+         497.3,
+         2.0,
+         47.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Kommentare",
+      "rect": [
+       552.7,
+       0.0,
+       295.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Neuer Kommentar",
+        "rect": [
+         560.7,
+         2.0,
+         67.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Löschen",
+        "rect": [
+         630.0,
+         2.0,
+         48.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zurück",
+        "rect": [
+         680.0,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weiter",
+        "rect": [
+         723.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Kommentare anzeigen",
+        "rect": [
+         766.7,
+         2.0,
+         73.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Markup",
+      "rect": [
+       848.0,
+       0.0,
+       284.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Sämtliches Markup filtern",
+        "rect": [
+         856.0,
+         2.0,
+         90.7,
+         76.0
+        ]
+       },
+       {
+        "type": "ComboBox",
+        "name": "Anzeige zur Überarbeitung",
+        "rect": [
+         970.0,
+         2.0,
+         154.7,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Markup anzeigen",
+        "rect": [
+         948.7,
+         28.0,
+         135.3,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Überarbeitungsbereich",
+        "rect": [
+         948.7,
+         54.0,
+         176.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Optionen zum Nachverfolgen von Änderungen...",
+        "rect": [
+         1116.7,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Nachverfolgung",
+      "rect": [
+       1132.7,
+       0.0,
+       300.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Änderungen nachverfolgen",
+        "rect": [
+         1140.7,
+         2.0,
+         91.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Annehmen",
+        "rect": [
+         1234.0,
+         2.0,
+         62.7,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Ablehnen",
+        "rect": [
+         1298.7,
+         2.0,
+         55.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zurück",
+        "rect": [
+         1356.0,
+         2.0,
+         68.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weiter",
+        "rect": [
+         1356.0,
+         28.0,
+         66.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Vergleichen",
+      "rect": [
+       1432.7,
+       0.0,
+       81.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Vergleichen",
+        "rect": [
+         1440.7,
+         2.0,
+         65.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Schützen",
+      "rect": [
+       1514.0,
+       0.0,
+       157.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Autoren blockieren",
+        "rect": [
+         1522.0,
+         2.0,
+         70.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Bearbeitung einschr.",
+        "rect": [
+         1594.7,
+         2.0,
+         68.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Freihand",
+      "rect": [
+       1671.3,
+       0.0,
+       93.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Freihand ausblenden",
+        "rect": [
+         1679.3,
+         2.0,
+         77.3,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Ansicht": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Ansichten",
+      "rect": [
+       0.0,
+       0.0,
+       308.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Lesemodus",
+        "rect": [
+         8.0,
+         2.0,
+         65.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Drucklayout",
+        "rect": [
+         75.3,
+         2.0,
+         68.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weblayout",
+        "rect": [
+         146.0,
+         2.0,
+         62.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Gliederung",
+        "rect": [
+         210.0,
+         2.0,
+         90.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Entwurf",
+        "rect": [
+         210.0,
+         28.0,
+         73.3,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Plastisch",
+      "rect": [
+       308.7,
+       0.0,
+       119.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Fokus",
+        "rect": [
+         316.7,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Plastischer Reader",
+        "rect": [
+         360.0,
+         2.0,
+         60.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Seitenbewegung",
+      "rect": [
+       428.0,
+       0.0,
+       127.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Vertikal",
+        "rect": [
+         436.0,
+         2.0,
+         43.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Seitenweise",
+        "rect": [
+         481.3,
+         2.0,
+         66.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Anzeigen",
+      "rect": [
+       555.3,
+       0.0,
+       144.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "CheckBox",
+        "name": "Lineal",
+        "rect": [
+         563.3,
+         2.0,
+         56.7,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Gitternetzlinien",
+        "rect": [
+         563.3,
+         28.0,
+         105.3,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Navigationsbereich",
+        "rect": [
+         563.3,
+         54.0,
+         128.0,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Zoom",
+      "rect": [
+       699.3,
+       0.0,
+       214.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Zoom...",
+        "rect": [
+         707.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "100%",
+        "rect": [
+         750.7,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Eine Seite",
+        "rect": [
+         794.0,
+         2.0,
+         83.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Mehrere Seiten",
+        "rect": [
+         794.0,
+         28.0,
+         112.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Seitenbreite",
+        "rect": [
+         794.0,
+         54.0,
+         95.3,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Fenster",
+      "rect": [
+       914.0,
+       0.0,
+       435.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Neues Fenster",
+        "rect": [
+         922.0,
+         2.0,
+         43.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Alle anordnen",
+        "rect": [
+         967.3,
+         2.0,
+         56.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Teilen",
+        "rect": [
+         1025.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Nebeneinander anzeigen",
+        "rect": [
+         1079.3,
+         2.0,
+         163.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Synchrones Scrollen",
+        "rect": [
+         1079.3,
+         28.0,
+         138.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Fensterposition zurücksetzen",
+        "rect": [
+         1079.3,
+         54.0,
+         185.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Fenster wechseln",
+        "rect": [
+         1277.3,
+         2.0,
+         64.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Makros",
+      "rect": [
+       1349.3,
+       0.0,
+       60.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Makros",
+        "rect": [
+         1357.3,
+         2.0,
+         44.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "SharePoint",
+      "rect": [
+       1410.0,
+       0.0,
+       94.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Eigenschaften",
+        "rect": [
+         1418.0,
+         2.0,
+         78.0,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  }
  },
  "powerpoint": {
   "scale": 1.5,
@@ -1828,6 +7511,2344 @@
      }
     ]
    }
-  ]
+  ],
+  "tabs": {
+   "Start": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Zwischenablage",
+      "rect": [
+       0.0,
+       0.0,
+       116.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Einfügen",
+        "rect": [
+         8.0,
+         2.0,
+         51.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Ausschneiden",
+        "rect": [
+         61.3,
+         2.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Kopieren",
+        "rect": [
+         61.3,
+         28.0,
+         47.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Format übertragen",
+        "rect": [
+         61.3,
+         54.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Office-Zwischenablage...",
+        "rect": [
+         100.7,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Folien",
+      "rect": [
+       116.7,
+       0.0,
+       161.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Neue Folie",
+        "rect": [
+         124.7,
+         2.0,
+         41.3,
+         76.7
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Layout",
+        "rect": [
+         168.0,
+         2.0,
+         80.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zurücksetzen",
+        "rect": [
+         168.0,
+         28.0,
+         102.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Abschnitt",
+        "rect": [
+         168.0,
+         54.0,
+         94.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Schriftart",
+      "rect": [
+       278.0,
+       0.0,
+       312.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "ComboBox",
+        "name": "Schriftart",
+        "rect": [
+         286.0,
+         10.0,
+         167.3,
+         24.0
+        ]
+       },
+       {
+        "type": "ComboBox",
+        "name": "Schriftgrad",
+        "rect": [
+         455.3,
+         10.0,
+         46.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Schriftgrad vergrößern",
+        "rect": [
+         503.3,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Schriftgrad verkleinern",
+        "rect": [
+         529.3,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Formatierung löschen",
+        "rect": [
+         558.0,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Fett",
+        "rect": [
+         286.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Kursiv",
+        "rect": [
+         312.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Unterstreichen",
+        "rect": [
+         338.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Schatten",
+        "rect": [
+         364.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Durchstreichen",
+        "rect": [
+         390.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Zeichenabstand",
+        "rect": [
+         416.0,
+         42.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Groß-/Kleinschreibung",
+        "rect": [
+         458.0,
+         42.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Texthervorhebungsfarbe",
+        "rect": [
+         502.7,
+         42.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Schriftfarbe",
+        "rect": [
+         543.3,
+         42.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Schriftart...",
+        "rect": [
+         574.0,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Absatz",
+      "rect": [
+       590.0,
+       0.0,
+       370.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Aufzählungszeichen",
+        "rect": [
+         598.0,
+         10.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Nummerierung",
+        "rect": [
+         638.7,
+         10.0,
+         38.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Einzug verkleinern",
+        "rect": [
+         682.0,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Einzug vergrößern",
+        "rect": [
+         708.0,
+         10.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Zeilenabstand",
+        "rect": [
+         736.7,
+         10.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Linksbündig",
+        "rect": [
+         598.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zentriert",
+        "rect": [
+         624.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Rechtsbündig",
+        "rect": [
+         650.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Blocksatz",
+        "rect": [
+         676.0,
+         42.0,
+         24.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Spalten",
+        "rect": [
+         704.7,
+         42.0,
+         40.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Textrichtung",
+        "rect": [
+         778.7,
+         2.0,
+         108.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Text ausrichten",
+        "rect": [
+         778.7,
+         28.0,
+         121.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "In SmartArt konvertieren",
+        "rect": [
+         778.7,
+         54.0,
+         174.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Absatz...",
+        "rect": [
+         944.7,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Zeichnen",
+      "rect": [
+       960.7,
+       0.0,
+       444.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Group",
+        "name": "Formen",
+        "rect": [
+         968.7,
+         2.0,
+         173.3,
+         75.3
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Anordnen",
+        "rect": [
+         1144.0,
+         2.0,
+         58.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Schnellformatvorlagen",
+        "rect": [
+         1204.0,
+         2.0,
+         82.7,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Fülleffekt",
+        "rect": [
+         1288.7,
+         2.0,
+         88.7,
+         24.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Formkontur",
+        "rect": [
+         1288.7,
+         28.0,
+         103.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Formeffekte",
+        "rect": [
+         1288.7,
+         54.0,
+         108.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Objekt formatieren...",
+        "rect": [
+         1389.3,
+         80.0,
+         16.0,
+         16.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Formen",
+        "rect": [
+         1115.3,
+         4.0,
+         24.0,
+         73.3
+        ]
+       },
+       {
+        "type": "DataGrid",
+        "name": "Formen",
+        "rect": [
+         970.7,
+         4.7,
+         144.0,
+         768.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Bearbeiten",
+      "rect": [
+       1405.3,
+       0.0,
+       158.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Suchen und Ersetzen",
+        "rect": [
+         1413.3,
+         2.0,
+         142.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Schriftarten ersetzen...",
+        "rect": [
+         1413.3,
+         28.0,
+         140.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Markieren",
+        "rect": [
+         1413.3,
+         54.0,
+         96.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Adobe Acrobat",
+      "rect": [
+       1563.3,
+       0.0,
+       74.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "PDF erstellen",
+        "rect": [
+         1576.0,
+         2.0,
+         48.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Sprache",
+      "rect": [
+       1638.0,
+       0.0,
+       68.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Diktieren",
+        "rect": [
+         1646.0,
+         2.0,
+         52.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Add-Ins",
+      "rect": [
+       1706.0,
+       0.0,
+       57.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Add-Ins",
+        "rect": [
+         1714.0,
+         2.0,
+         41.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Copilot",
+      "rect": [
+       1763.3,
+       0.0,
+       123.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Entwurfsvorschläge",
+        "rect": [
+         1771.3,
+         2.0,
+         107.3,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Einfügen": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Folien",
+      "rect": [
+       0.0,
+       0.0,
+       57.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Neue Folie",
+        "rect": [
+         8.0,
+         2.0,
+         41.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Tabellen",
+      "rect": [
+       57.3,
+       0.0,
+       57.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Tabelle",
+        "rect": [
+         65.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Bilder",
+      "rect": [
+       114.7,
+       0.0,
+       188.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Bilder",
+        "rect": [
+         122.7,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Screenshot",
+        "rect": [
+         166.0,
+         2.0,
+         63.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Fotoalbum...",
+        "rect": [
+         231.3,
+         2.0,
+         63.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Kamera",
+      "rect": [
+       302.7,
+       0.0,
+       58.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Cameo",
+        "rect": [
+         310.7,
+         2.0,
+         42.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Illustrationen",
+      "rect": [
+       361.3,
+       0.0,
+       320.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Formen",
+        "rect": [
+         369.3,
+         2.0,
+         46.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Piktogramme",
+        "rect": [
+         417.3,
+         2.0,
+         76.7,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "3D-Modelle",
+        "rect": [
+         496.0,
+         2.0,
+         59.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "SmartArt...",
+        "rect": [
+         557.3,
+         2.0,
+         52.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Diagramm...",
+        "rect": [
+         612.0,
+         2.0,
+         61.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Links",
+      "rect": [
+       681.3,
+       0.0,
+       144.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Zoom",
+        "rect": [
+         689.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Link",
+        "rect": [
+         732.7,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Aktion",
+        "rect": [
+         776.0,
+         2.0,
+         41.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Kommentare",
+      "rect": [
+       825.3,
+       0.0,
+       83.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Kommentar",
+        "rect": [
+         833.3,
+         2.0,
+         67.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Text",
+      "rect": [
+       908.7,
+       0.0,
+       369.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Textfeld",
+        "rect": [
+         916.7,
+         2.0,
+         45.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Kopf- und Fußzeile...",
+        "rect": [
+         964.0,
+         2.0,
+         59.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "WordArt",
+        "rect": [
+         1025.3,
+         2.0,
+         50.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Datum und Uhrzeit...",
+        "rect": [
+         1078.0,
+         2.0,
+         65.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Foliennummer",
+        "rect": [
+         1145.3,
+         2.0,
+         81.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Objekt...",
+        "rect": [
+         1228.7,
+         2.0,
+         41.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Symbole",
+      "rect": [
+       1278.0,
+       0.0,
+       105.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Formel",
+        "rect": [
+         1286.0,
+         2.0,
+         42.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Symbol...",
+        "rect": [
+         1330.0,
+         2.0,
+         45.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Medien",
+      "rect": [
+       1383.3,
+       0.0,
+       232.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Video",
+        "rect": [
+         1391.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Audio",
+        "rect": [
+         1434.7,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Bildschirmaufzeichnung...",
+        "rect": [
+         1478.0,
+         2.0,
+         129.3,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Entwurf": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Designs",
+      "rect": [
+       0.0,
+       0.0,
+       1352.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Group",
+        "name": "Designs",
+        "rect": [
+         8.0,
+         6.7,
+         1336.0,
+         62.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Designs",
+        "rect": [
+         1317.3,
+         9.3,
+         24.0,
+         60.0
+        ]
+       },
+       {
+        "type": "DataGrid",
+        "name": "Designs",
+        "rect": [
+         10.0,
+         11.3,
+         1306.7,
+         168.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Anpassen",
+      "rect": [
+       1352.0,
+       0.0,
+       337.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Varianten",
+        "rect": [
+         1360.0,
+         2.0,
+         54.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Farben",
+        "rect": [
+         1416.0,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Schriftarten",
+        "rect": [
+         1459.3,
+         2.0,
+         65.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Effekte",
+        "rect": [
+         1526.7,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Hintergrundformate",
+        "rect": [
+         1570.0,
+         2.0,
+         111.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Folien",
+      "rect": [
+       1689.3,
+       0.0,
+       127.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Layout",
+        "rect": [
+         1697.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Foliengröße",
+        "rect": [
+         1740.7,
+         2.0,
+         68.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Bearbeiten",
+      "rect": [
+       1816.7,
+       0.0,
+       123.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Entwurfsvorschläge",
+        "rect": [
+         1824.7,
+         2.0,
+         107.3,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Übergänge": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Vorschau",
+      "rect": [
+       0.0,
+       0.0,
+       69.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Vorschau",
+        "rect": [
+         8.0,
+         2.0,
+         53.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Übergang zu dieser Folie",
+      "rect": [
+       69.3,
+       0.0,
+       1524.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Group",
+        "name": "Übergangseffekte",
+        "rect": [
+         77.3,
+         6.7,
+         1423.3,
+         62.7
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Effektoptionen",
+        "rect": [
+         1502.7,
+         2.0,
+         83.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Übergangseffekte",
+        "rect": [
+         1474.0,
+         9.3,
+         24.0,
+         60.0
+        ]
+       },
+       {
+        "type": "DataGrid",
+        "name": "Übergangseffekte",
+        "rect": [
+         79.3,
+         10.7,
+         1394.0,
+         170.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Anzeigedauer",
+      "rect": [
+       1594.0,
+       0.0,
+       311.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "ComboBox",
+        "name": "Sound",
+        "rect": [
+         1665.3,
+         2.0,
+         93.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Mehr",
+        "rect": [
+         1730.0,
+         28.7,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weniger",
+        "rect": [
+         1730.0,
+         40.0,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Auf alle anwenden",
+        "rect": [
+         1602.0,
+         54.0,
+         130.0,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Bei Mausklick",
+        "rect": [
+         1771.3,
+         28.0,
+         97.3,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Nach",
+        "rect": [
+         1771.3,
+         54.0,
+         56.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Mehr",
+        "rect": [
+         1879.3,
+         54.7,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weniger",
+        "rect": [
+         1879.3,
+         66.0,
+         17.3,
+         11.3
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Animationen": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Vorschau",
+      "rect": [
+       0.0,
+       0.0,
+       69.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Vorschau",
+        "rect": [
+         8.0,
+         2.0,
+         53.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Animation",
+      "rect": [
+       69.3,
+       0.0,
+       1278.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Group",
+        "name": "Animationsstil",
+        "rect": [
+         77.3,
+         6.7,
+         1177.3,
+         62.7
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Effektoptionen",
+        "rect": [
+         1256.7,
+         2.0,
+         83.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Animationsstil",
+        "rect": [
+         1228.0,
+         9.3,
+         24.0,
+         60.0
+        ]
+       },
+       {
+        "type": "DataGrid",
+        "name": "Animationsstil",
+        "rect": [
+         79.3,
+         10.7,
+         1148.0,
+         226.7
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Erweiterte Animation",
+      "rect": [
+       1348.0,
+       0.0,
+       242.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "MenuItem",
+        "name": "Animation hinzufügen",
+        "rect": [
+         1356.0,
+         2.0,
+         75.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Animationsbereich",
+        "rect": [
+         1433.3,
+         2.0,
+         131.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Trigger",
+        "rect": [
+         1433.3,
+         28.0,
+         80.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Animation übertragen",
+        "rect": [
+         1433.3,
+         54.0,
+         149.3,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Anzeigedauer",
+      "rect": [
+       1590.7,
+       0.0,
+       325.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "ComboBox",
+        "name": "Start",
+        "rect": [
+         1668.7,
+         2.0,
+         93.3,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Mehr",
+        "rect": [
+         1730.0,
+         28.7,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weniger",
+        "rect": [
+         1730.0,
+         40.0,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Mehr",
+        "rect": [
+         1744.0,
+         54.7,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weniger",
+        "rect": [
+         1744.0,
+         66.0,
+         17.3,
+         11.3
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Früher",
+        "rect": [
+         1774.7,
+         28.0,
+         66.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Später",
+        "rect": [
+         1774.7,
+         54.0,
+         67.3,
+         24.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Bildschirmpräsentation": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Bildschirmpräsentation starten",
+      "rect": [
+       0.0,
+       0.0,
+       292.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Von Beginn an",
+        "rect": [
+         8.0,
+         2.0,
+         57.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Ab aktueller Folie",
+        "rect": [
+         67.3,
+         2.0,
+         68.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Benutzerdefinierte Bildschirmpräsentation",
+        "rect": [
+         148.0,
+         2.0,
+         136.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Einrichten",
+      "rect": [
+       292.7,
+       0.0,
+       744.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Bildschirmpräsentation einrichten...",
+        "rect": [
+         300.7,
+         2.0,
+         125.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Folie ausblenden",
+        "rect": [
+         428.0,
+         2.0,
+         66.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Anzeigedauern testen",
+        "rect": [
+         506.7,
+         2.0,
+         84.0,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Aufzeichnen",
+        "rect": [
+         592.7,
+         2.0,
+         69.3,
+         76.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Folien aktualisiert halten",
+        "rect": [
+         664.0,
+         10.0,
+         153.3,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Kommentare wiedergeben",
+        "rect": [
+         664.0,
+         42.0,
+         166.7,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Anzeigedauern verwenden",
+        "rect": [
+         832.7,
+         10.0,
+         166.7,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Mediensteuerelemente anzeigen",
+        "rect": [
+         832.7,
+         42.0,
+         196.7,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Bildschirme",
+      "rect": [
+       1037.3,
+       0.0,
+       240.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "ComboBox",
+        "name": "Bildschirm",
+        "rect": [
+         1128.0,
+         10.0,
+         141.3,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Referentenansicht",
+        "rect": [
+         1045.3,
+         42.0,
+         120.0,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Untertitel und Untertitel für Hörgeschädigte",
+      "rect": [
+       1277.3,
+       0.0,
+       207.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "CheckBox",
+        "name": "Immer Untertitel verwenden",
+        "rect": [
+         1294.0,
+         10.0,
+         174.0,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Untertiteleinstellungen",
+        "rect": [
+         1294.0,
+         42.0,
+         162.0,
+         24.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Überprüfen": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Rechtschreibung",
+      "rect": [
+       0.0,
+       0.0,
+       139.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Rechtschreibung...",
+        "rect": [
+         8.0,
+         2.0,
+         63.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Thesaurus...",
+        "rect": [
+         73.3,
+         2.0,
+         58.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Barrierefreiheit",
+      "rect": [
+       139.3,
+       0.0,
+       96.7,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Barrierefreiheit überprüfen",
+        "rect": [
+         147.3,
+         2.0,
+         80.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Sprache",
+      "rect": [
+       236.0,
+       0.0,
+       129.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Übersetzen",
+        "rect": [
+         244.0,
+         2.0,
+         64.0,
+         76.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Sprache",
+        "rect": [
+         310.0,
+         2.0,
+         47.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Aktivität",
+      "rect": [
+       365.3,
+       0.0,
+       179.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Alles als gelesen markieren",
+        "rect": [
+         373.3,
+         2.0,
+         90.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Änderungen anzeigen",
+        "rect": [
+         466.0,
+         2.0,
+         70.7,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Kommentare",
+      "rect": [
+       544.7,
+       0.0,
+       306.0,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Neuer Kommentar",
+        "rect": [
+         552.7,
+         2.0,
+         67.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Löschen",
+        "rect": [
+         622.0,
+         2.0,
+         48.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Zurück",
+        "rect": [
+         672.0,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Weiter",
+        "rect": [
+         715.3,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "SplitButton",
+        "name": "Kommentare anzeigen",
+        "rect": [
+         769.3,
+         2.0,
+         73.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Freihand",
+      "rect": [
+       850.7,
+       0.0,
+       93.3,
+       95.3
+      ],
+      "controls": [
+       {
+        "type": "SplitButton",
+        "name": "Freihand ausblenden",
+        "rect": [
+         858.7,
+         2.0,
+         77.3,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "Ansicht": {
+    "scale": 1.5,
+    "window": [
+     0,
+     0,
+     3000,
+     2050
+    ],
+    "groups": [
+     {
+      "name": "Präsentationsansichten",
+      "rect": [
+       0.0,
+       0.0,
+       398.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Normal",
+        "rect": [
+         8.0,
+         2.0,
+         44.7,
+         76.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Gliederungsansicht",
+        "rect": [
+         54.7,
+         2.0,
+         104.7,
+         76.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Foliensortierung",
+        "rect": [
+         161.3,
+         2.0,
+         90.7,
+         76.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Notizenseite",
+        "rect": [
+         254.0,
+         2.0,
+         70.0,
+         76.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Leseansicht",
+        "rect": [
+         326.0,
+         2.0,
+         64.7,
+         76.7
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Masteransichten",
+      "rect": [
+       398.7,
+       0.0,
+       272.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Folienmaster",
+        "rect": [
+         406.7,
+         2.0,
+         72.7,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Handzettelmaster",
+        "rect": [
+         481.3,
+         2.0,
+         98.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Notizenmaster",
+        "rect": [
+         581.3,
+         2.0,
+         82.0,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Anzeigen",
+      "rect": [
+       671.3,
+       0.0,
+       169.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "CheckBox",
+        "name": "Lineal",
+        "rect": [
+         679.3,
+         2.0,
+         56.7,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Gitternetzlinien",
+        "rect": [
+         679.3,
+         28.0,
+         105.3,
+         24.0
+        ]
+       },
+       {
+        "type": "CheckBox",
+        "name": "Führungslinien",
+        "rect": [
+         679.3,
+         54.0,
+         104.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Notizen",
+        "rect": [
+         786.7,
+         2.0,
+         46.0,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Rastereinstellungen...",
+        "rect": [
+         824.7,
+         80.0,
+         16.0,
+         16.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Zoom",
+      "rect": [
+       840.7,
+       0.0,
+       120.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Zoom...",
+        "rect": [
+         848.7,
+         2.0,
+         41.3,
+         76.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "An Fenster anpassen",
+        "rect": [
+         892.0,
+         2.0,
+         61.3,
+         76.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Farbe/Graustufe",
+      "rect": [
+       961.3,
+       0.0,
+       116.0,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Farbe",
+        "rect": [
+         969.3,
+         2.0,
+         62.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Graustufe",
+        "rect": [
+         969.3,
+         28.0,
+         84.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Schwarzweiß",
+        "rect": [
+         969.3,
+         54.0,
+         100.0,
+         24.0
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Fenster",
+      "rect": [
+       1077.3,
+       0.0,
+       273.3,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Neues Fenster",
+        "rect": [
+         1085.3,
+         2.0,
+         43.3,
+         76.7
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Alle anordnen",
+        "rect": [
+         1130.7,
+         2.0,
+         106.7,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Überlappend",
+        "rect": [
+         1130.7,
+         28.0,
+         102.0,
+         24.0
+        ]
+       },
+       {
+        "type": "Button",
+        "name": "Teilung verschieben",
+        "rect": [
+         1130.7,
+         54.0,
+         135.3,
+         24.0
+        ]
+       },
+       {
+        "type": "MenuItem",
+        "name": "Fenster wechseln",
+        "rect": [
+         1278.7,
+         2.0,
+         64.0,
+         76.7
+        ]
+       }
+      ]
+     },
+     {
+      "name": "Makros",
+      "rect": [
+       1350.7,
+       0.0,
+       60.7,
+       96.0
+      ],
+      "controls": [
+       {
+        "type": "Button",
+        "name": "Makros",
+        "rect": [
+         1358.7,
+         2.0,
+         44.7,
+         76.0
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  }
  }
 }

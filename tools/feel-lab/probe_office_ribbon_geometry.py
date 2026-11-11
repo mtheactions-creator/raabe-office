@@ -20,9 +20,19 @@ HERE = Path(__file__).parent
 KINDS = ("Button", "SplitButton", "MenuItem", "ComboBox", "CheckBox", "Edit", "Group", "List", "DataGrid")
 
 
-def ribbon_of(root):
-    """The lower ribbon panel: the "Start" tab's content (a Pane/Group holding the groups)."""
-    tab = uia.find(root, lambda d: d["type"] == "TabItem" and d["name"] == "Start" and d["class"] == "NetUIRibbonTab", max_depth=12)
+# The main tabs each app shares with ours (contextual tabs need a selection; Datei is the backstage).
+TABS = {
+    "excel": ["Start", "Einfügen", "Seitenlayout", "Formeln", "Daten", "Überprüfen", "Ansicht"],
+    "word": ["Start", "Einfügen", "Entwurf", "Layout", "Referenzen", "Sendungen", "Überprüfen", "Ansicht"],
+    "powerpoint": ["Start", "Einfügen", "Entwurf", "Übergänge", "Animationen", "Bildschirmpräsentation", "Überprüfen", "Ansicht"],
+}
+
+
+def ribbon_of(root, name: str = "Start"):
+    """The groups of one ribbon tab (selected through UI Automation, no input)."""
+    tab = uia.find(root, lambda d: d["type"] == "TabItem" and d["name"] == name and d["class"] == "NetUIRibbonTab", max_depth=12)
+    if not tab:
+        return []
     uia.select(tab)
     time.sleep(0.8)
     # The groups: Group elements of class NetUIChunk; the panel is their common box.
@@ -65,11 +75,19 @@ def controls(group) -> list[dict]:
 WIDE = (0, 0, 3000, 2050)
 
 
-def record(root, hwnd: int) -> dict:
+def record(root, hwnd: int, app: str = "") -> dict:
+    """Start at the top level (as before) and every tab of TABS under "tabs"."""
     winapi.place(hwnd, *WIDE)
     time.sleep(1.0)
+    out = record_tab(root, hwnd, "Start")
+    out["tabs"] = {t: record_tab(root, hwnd, t) for t in TABS.get(app, ["Start"])}
+    ribbon_of(root, "Start")
+    return out
+
+
+def record_tab(root, hwnd: int, name: str) -> dict:
     scale = winapi.dpi_scale(hwnd)
-    groups = ribbon_of(root)
+    groups = ribbon_of(root, name)
     if not groups:
         return {"error": "no ribbon groups"}
     left = min(g[1]["rect"][0] for g in groups)
@@ -91,7 +109,7 @@ def main() -> None:
         x = ExcelTarget(visible=True)
         try:
             time.sleep(1.5)
-            out["excel"] = record(uia.element_for(x.hwnd), x.hwnd)
+            out["excel"] = record(uia.element_for(x.hwnd), x.hwnd, "excel")
         finally:
             x.close()
     if "word" in which:
@@ -100,7 +118,7 @@ def main() -> None:
         try:
             top = winapi.user32.GetAncestor(int(w.app.ActiveWindow.Hwnd), 2)
             time.sleep(1.5)
-            out["word"] = record(uia.element_for(top), top)
+            out["word"] = record(uia.element_for(top), top, "word")
         finally:
             w.close()
     if "powerpoint" in which:
@@ -113,7 +131,7 @@ def main() -> None:
             try:
                 p.new_presentation(with_window=True)
                 time.sleep(1.5)
-                out["powerpoint"] = record(uia.element_for(p.hwnd), p.hwnd)
+                out["powerpoint"] = record(uia.element_for(p.hwnd), p.hwnd, "powerpoint")
             finally:
                 for pr in p.own:
                     pr.Close()

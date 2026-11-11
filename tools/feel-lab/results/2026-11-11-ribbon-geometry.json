@@ -4,492 +4,2889 @@
  "tolerance_px": 2.0,
  "apps": {
   "calc": {
-   "groups": {
-    "Zwischenablage": {
-     "office": [
-      0.0,
-      0.0,
-      202.0,
-      96.0
-     ],
-     "ours": [
-      0,
-      0,
-      196.1,
-      96
-     ],
-     "diffs": [
-      "width 196.1 vs 202.0",
-      "Einfügen: dx 0.0 dy -1.0 dw -4.9 dh 0.0",
-      "Ausschneiden: dx -4.9 dy -1.0 dw 25.6 dh 0.0",
-      "Kopieren: dx -4.9 dy -1.0 dw 28.3 dh 0.0",
-      "Format übertragen: dx -4.9 dy -1.0 dw -1.1 dh 0.0",
-      "control missing: Office-Zwischenablage..."
-     ],
-     "controls_ok": 0,
-     "controls_matched": 4,
-     "controls_office": 5
+   "Start": {
+    "groups": {
+     "Zwischenablage": {
+      "office": [
+       0.0,
+       0.0,
+       202.0,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       196.1,
+       96
+      ],
+      "diffs": [
+       "width 196.1 vs 202.0",
+       "Einfügen: dx 0.0 dy -1.0 dw -4.9 dh 0.0",
+       "Ausschneiden: dx -4.9 dy -1.0 dw 25.6 dh 0.0",
+       "Kopieren: dx -4.9 dy -1.0 dw 28.3 dh 0.0",
+       "Format übertragen: dx -4.9 dy -1.0 dw -1.1 dh 0.0",
+       "control missing: Office-Zwischenablage..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 5
+     },
+     "Schriftart": {
+      "office": [
+       202.0,
+       0.0,
+       234.0,
+       96.0
+      ],
+      "ours": [
+       196.1,
+       0,
+       235.3,
+       96
+      ],
+      "diffs": [
+       "left 196.1 vs 202.0",
+       "Zellenschriftart formatieren: dx -6.7 dy -3.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 10,
+      "controls_matched": 11,
+      "controls_office": 11
+     },
+     "Ausrichtung": {
+      "office": [
+       436.0,
+       0.0,
+       348.0,
+       96.0
+      ],
+      "ours": [
+       431.4,
+       0,
+       330.1,
+       96
+      ],
+      "diffs": [
+       "width 330.1 vs 348.0",
+       "left 431.4 vs 436.0",
+       "Textumbruch: dx -10.6 dy 0.0 dw -0.3 dh 0.0",
+       "Verbinden und zentrieren: dx -10.6 dy 0.0 dw -7.3 dh 0.0",
+       "Zellenausrichtung formatieren: dx -25.9 dy -3.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 9,
+      "controls_matched": 12,
+      "controls_office": 12
+     },
+     "Zahl": {
+      "office": [
+       784.0,
+       0.0,
+       161.3,
+       96.0
+      ],
+      "ours": [
+       761.5,
+       0,
+       161.7,
+       96
+      ],
+      "diffs": [
+       "left 761.5 vs 784.0",
+       "Zellennummer formatieren: dx -7.6 dy -3.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 6,
+      "controls_matched": 7,
+      "controls_office": 7
+     },
+     "Formatvorlagen": {
+      "office": [
+       945.3,
+       0.0,
+       304.0,
+       96.0
+      ],
+      "ours": [
+       923.2,
+       0,
+       330,
+       96
+      ],
+      "diffs": [
+       "width 330 vs 304.0",
+       "left 923.2 vs 945.3",
+       "Bedingte Formatierung: dx 0.0 dy -1.0 dw 8.6 dh 0.0",
+       "Als Tabelle formatieren: dx 8.5 dy -1.0 dw 8.9 dh 0.0",
+       "Zellenformatvorlagen: dx 17.4 dy -1.0 dw 8.6 dh 7.3"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Zellen": {
+      "office": [
+       1249.3,
+       0.0,
+       162.7,
+       96.0
+      ],
+      "ours": [
+       1253.2,
+       0,
+       162,
+       96
+      ],
+      "diffs": [
+       "left 1253.2 vs 1249.3",
+       "Einfügen: dx 0.0 dy -1.0 dw -4.9 dh 0.0",
+       "Löschen: dx -5.0 dy -1.0 dw -3.0 dh 0.0",
+       "Format: dx -8.0 dy -1.0 dw 7.3 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Bearbeiten": {
+      "office": [
+       1412.0,
+       0.0,
+       293.3,
+       96.0
+      ],
+      "ours": [
+       1415.2,
+       0,
+       296.8,
+       96
+      ],
+      "diffs": [
+       "width 296.8 vs 293.3",
+       "left 1415.2 vs 1412.0",
+       "AutoSumme: dx 0.0 dy -1.0 dw -10.5 dh 0.0",
+       "Ausfüllen: dx 0.0 dy -1.0 dw 19.5 dh 0.0",
+       "Löschen: dx 0.0 dy -1.0 dw 25.5 dh 0.0",
+       "Sortieren und Filtern: dx -10.5 dy -1.0 dw 5.2 dh 0.0",
+       "Suchen und Auswählen: dx -5.3 dy -1.0 dw 8.9 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     }
     },
-    "Schriftart": {
-     "office": [
-      202.0,
-      0.0,
-      234.0,
-      96.0
-     ],
-     "ours": [
-      196.1,
-      0,
-      246,
-      96
-     ],
-     "diffs": [
-      "width 246 vs 234.0",
-      "left 196.1 vs 202.0",
-      "Schriftart: dx 0.7 dy 1.0 dw -17.0 dh -2.0",
-      "Schriftgrad: dx 1.0 dy 1.0 dw -17.6 dh -2.0",
-      "Rahmen: dx 5.7 dy 0.0 dw 0.3 dh 0.0",
-      "Füllfarbe: dx 11.3 dy 0.0 dw 0.3 dh 0.0",
-      "Schriftfarbe: dx 11.7 dy 0.0 dw 0.3 dh 0.0",
-      "Zellenschriftart formatieren: dx 4.0 dy -3.0 dw 0.0 dh 0.0"
-     ],
-     "controls_ok": 5,
-     "controls_matched": 11,
-     "controls_office": 11
-    },
-    "Ausrichtung": {
-     "office": [
-      436.0,
-      0.0,
-      348.0,
-      96.0
-     ],
-     "ours": [
-      442.1,
-      0,
-      335.4,
-      96
-     ],
-     "diffs": [
-      "width 335.4 vs 348.0",
-      "left 442.1 vs 436.0",
-      "Ausrichtung: dx 5.3 dy 0.0 dw 0.0 dh 0.0",
-      "Einzug verkleinern: dx 5.3 dy 0.0 dw 0.0 dh 0.0",
-      "Einzug vergrößern: dx 5.3 dy 0.0 dw 0.0 dh 0.0",
-      "Textumbruch: dx -5.3 dy 0.0 dw -0.3 dh 0.0",
-      "Verbinden und zentrieren: dx -5.3 dy 0.0 dw -7.3 dh 0.0",
-      "Zellenausrichtung formatieren: dx -20.6 dy -3.0 dw 0.0 dh 0.0"
-     ],
-     "controls_ok": 6,
-     "controls_matched": 12,
-     "controls_office": 12
-    },
-    "Zahl": {
-     "office": [
-      784.0,
-      0.0,
-      161.3,
-      96.0
-     ],
-     "ours": [
-      777.5,
-      0,
-      167,
-      96
-     ],
-     "diffs": [
-      "width 167 vs 161.3",
-      "left 777.5 vs 784.0",
-      "Zahlenformat: dx 0.7 dy 1.0 dw -17.6 dh -2.0",
-      "Dezimalstelle hinzufügen: dx 5.7 dy 0.0 dw 0.0 dh 0.0",
-      "Dezimalstelle entfernen: dx 5.7 dy 0.0 dw 0.0 dh 0.0",
-      "Zellennummer formatieren: dx -2.3 dy -3.0 dw 0.0 dh 0.0"
-     ],
-     "controls_ok": 3,
-     "controls_matched": 7,
-     "controls_office": 7
-    },
-    "Formatvorlagen": {
-     "office": [
-      945.3,
-      0.0,
-      304.0,
-      96.0
-     ],
-     "ours": [
-      944.5,
-      0,
-      330,
-      96
-     ],
-     "diffs": [
-      "width 330 vs 304.0",
-      "Bedingte Formatierung: dx 0.0 dy -1.0 dw 8.6 dh 0.0",
-      "Als Tabelle formatieren: dx 8.6 dy -1.0 dw 8.9 dh 0.0",
-      "Zellenformatvorlagen: dx 17.5 dy -1.0 dw 8.6 dh 7.3"
-     ],
-     "controls_ok": 0,
-     "controls_matched": 3,
-     "controls_office": 3
-    },
-    "Zellen": {
-     "office": [
-      1249.3,
-      0.0,
-      162.7,
-      96.0
-     ],
-     "ours": [
-      1274.5,
-      0,
-      162,
-      96
-     ],
-     "diffs": [
-      "left 1274.5 vs 1249.3",
-      "Einfügen: dx 0.0 dy -1.0 dw -4.9 dh 0.0",
-      "Löschen: dx -4.9 dy -1.0 dw -3.0 dh 0.0",
-      "Format: dx -7.9 dy -1.0 dw 7.3 dh 0.0"
-     ],
-     "controls_ok": 0,
-     "controls_matched": 3,
-     "controls_office": 3
-    },
-    "Bearbeiten": {
-     "office": [
-      1412.0,
-      0.0,
-      293.3,
-      96.0
-     ],
-     "ours": [
-      1436.5,
-      0,
-      296.8,
-      96
-     ],
-     "diffs": [
-      "width 296.8 vs 293.3",
-      "left 1436.5 vs 1412.0",
-      "AutoSumme: dx 0.0 dy -1.0 dw -10.5 dh 0.0",
-      "Ausfüllen: dx 0.0 dy -1.0 dw 19.5 dh 0.0",
-      "Löschen: dx 0.0 dy -1.0 dw 25.5 dh 0.0",
-      "Sortieren und Filtern: dx -10.5 dy -1.0 dw 5.2 dh 0.0",
-      "Suchen und Auswählen: dx -5.3 dy -1.0 dw 8.9 dh 0.0"
-     ],
-     "controls_ok": 0,
-     "controls_matched": 5,
-     "controls_office": 5
-    }
+    "missing_groups": [],
+    "extra_groups": []
    },
-   "missing_groups": [],
-   "extra_groups": []
+   "Einfügen": {
+    "groups": {
+     "Tabellen": {
+      "office": [
+       0.0,
+       0.0,
+       249.3,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       212.5,
+       96
+      ],
+      "diffs": [
+       "width 212.5 vs 249.3",
+       "PivotTable: dx 0.0 dy -1.0 dw 8.1 dh 0.0",
+       "Empfohlene PivotTables: dx 8.1 dy -1.0 dw 7.6 dh 0.0",
+       "Tabelle: dx 15.8 dy -1.0 dw 8.2 dh 0.0",
+       "control missing: Formulare"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 4
+     },
+     "Illustrationen": {
+      "office": [
+       249.3,
+       0.0,
+       305.3,
+       96.0
+      ],
+      "ours": [
+       212.5,
+       0,
+       119,
+       96
+      ],
+      "diffs": [
+       "width 119 vs 305.3",
+       "left 212.5 vs 249.3",
+       "Bilder: dx 0.0 dy -1.0 dw 61.7 dh -52.0",
+       "Formen: dx -43.4 dy 25.0 dw 57.0 dh -52.0",
+       "Piktogramme: dx -91.4 dy 51.0 dw 26.3 dh -52.0",
+       "control missing: 3D-Modelle",
+       "control missing: SmartArt...",
+       "control missing: Screenshot"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 6
+     },
+     "Diagramme": {
+      "office": [
+       663.3,
+       0.0,
+       316.0,
+       96.0
+      ],
+      "ours": [
+       331.5,
+       0,
+       288.3,
+       96
+      ],
+      "diffs": [
+       "width 288.3 vs 316.0",
+       "left 331.5 vs 663.3",
+       "Empfohlene Diagramme: dx 0.0 dy -1.0 dw 7.6 dh 0.0",
+       "Säulen- oder Balkendiagramm einfügen: dx 7.6 dy -1.0 dw 0.0 dh 0.0",
+       "Linien- oder Flächendiagramm einfügen: dx 7.6 dy -1.0 dw 0.0 dh 0.0",
+       "Kreis- oder Ringdiagramm einfügen: dx 49.6 dy -27.0 dw 0.0 dh 0.0",
+       "Hierarchiediagramm einfügen: dx 7.6 dy -1.0 dw 0.0 dh 0.0",
+       "Statistikdiagramm einfügen: dx 49.6 dy -27.0 dw 0.0 dh 0.0",
+       "Punkt (XY)- oder Blasendiagramm einfügen: dx 49.6 dy -27.0 dw 0.0 dh 0.0",
+       "Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen: dx -76.4 dy 51.0 dw 0.0 dh 0.0",
+       "Verbunddiagramm einfügen: dx -34.4 dy 25.0 dw 0.0 dh 0.0",
+       "Karten: dx -34.4 dy 51.0 dw -17.3 dh -52.0",
+       "PivotChart: dx -35.7 dy -1.0 dw 8.0 dh 0.0",
+       "Empfohlene Diagramme: dx -292.0 dy -79.0 dw 60.3 dh 60.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 12,
+      "controls_office": 12
+     },
+     "Sparklines": {
+      "office": [
+       979.3,
+       0.0,
+       151.3,
+       96.0
+      ],
+      "ours": [
+       619.8,
+       0,
+       128.3,
+       96
+      ],
+      "diffs": [
+       "width 128.3 vs 151.3",
+       "left 619.8 vs 979.3",
+       "Linie: dx 0.0 dy -1.0 dw 71.0 dh -52.0",
+       "Säule: dx -43.4 dy 25.0 dw 71.0 dh -52.0",
+       "Gewinn/Verlust: dx -86.7 dy 51.0 dw 63.6 dh -52.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Filter": {
+      "office": [
+       1130.7,
+       0.0,
+       143.3,
+       96.0
+      ],
+      "ours": [
+       748.2,
+       0,
+       114.9,
+       96
+      ],
+      "diffs": [
+       "width 114.9 vs 143.3",
+       "left 748.2 vs 1130.7",
+       "Datenschnitt: dx 0.0 dy -1.0 dw 27.6 dh -52.0",
+       "Zeitachse: dx -73.3 dy 25.0 dw 44.9 dh -52.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 2
+     },
+     "Links": {
+      "office": [
+       1274.0,
+       0.0,
+       57.3,
+       96.0
+      ],
+      "ours": [
+       863.1,
+       0,
+       61,
+       96
+      ],
+      "diffs": [
+       "width 61 vs 57.3",
+       "left 863.1 vs 1274.0",
+       "Link: dx 0.0 dy -1.0 dw 3.7 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Kommentare": {
+      "office": [
+       1331.3,
+       0.0,
+       83.3,
+       96.0
+      ],
+      "ours": [
+       924.1,
+       0,
+       90.8,
+       96
+      ],
+      "diffs": [
+       "width 90.8 vs 83.3",
+       "left 924.1 vs 1331.3",
+       "Kommentar: dx 0.0 dy -1.0 dw 7.5 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Text": {
+      "office": [
+       1414.7,
+       0.0,
+       292.7,
+       96.0
+      ],
+      "ours": [
+       1014.9,
+       0,
+       147.5,
+       96
+      ],
+      "diffs": [
+       "width 147.5 vs 292.7",
+       "left 1014.9 vs 1414.7",
+       "Textfeld: dx 0.0 dy -1.0 dw 86.2 dh -52.0",
+       "control missing: Kopf- und Fußzeile...",
+       "WordArt: dx -108.6 dy 51.0 dw 80.8 dh -52.0",
+       "control missing: Signaturzeile",
+       "control missing: Objekt..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 5
+     },
+     "Symbole": {
+      "office": [
+       1707.3,
+       0.0,
+       105.3,
+       96.0
+      ],
+      "ours": [
+       1162.4,
+       0,
+       119.8,
+       96
+      ],
+      "diffs": [
+       "width 119.8 vs 105.3",
+       "left 1162.4 vs 1707.3",
+       "Formel: dx 0.0 dy -1.0 dw 7.6 dh 0.0",
+       "control missing: Symbol..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 2
+     }
+    },
+    "missing_groups": [
+     "Steuerelemente"
+    ],
+    "extra_groups": []
+   },
+   "Seitenlayout": {
+    "groups": {
+     "Designs": {
+      "office": [
+       0.0,
+       0.0,
+       170.0,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       179.7,
+       96
+      ],
+      "diffs": [
+       "width 179.7 vs 170.0",
+       "Designs: dx 0.0 dy -1.0 dw 7.3 dh -0.7",
+       "Farben: dx 7.3 dy -1.0 dw 27.0 dh 0.0",
+       "Schriftarten: dx 7.3 dy -1.0 dw 2.3 dh 0.0",
+       "Effekte: dx 7.3 dy -1.0 dw 26.3 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 4
+     },
+     "Seite einrichten": {
+      "office": [
+       170.0,
+       0.0,
+       408.7,
+       96.0
+      ],
+      "ours": [
+       179.7,
+       0,
+       474.7,
+       96
+      ],
+      "diffs": [
+       "width 474.7 vs 408.7",
+       "left 179.7 vs 170.0",
+       "Seitenränder: dx 0.0 dy -1.0 dw 8.9 dh 0.0",
+       "Ausrichtung: dx 8.9 dy -1.0 dw 8.1 dh 0.0",
+       "Format: dx 17.0 dy -1.0 dw 7.3 dh 0.0",
+       "Druckbereich: dx 24.2 dy -1.0 dw 9.3 dh 0.0",
+       "Umbrüche: dx 33.6 dy -1.0 dw 8.9 dh 0.0",
+       "Hintergrund...: dx 42.5 dy -1.0 dw 16.1 dh 0.0",
+       "Drucktitel: dx 58.7 dy -1.0 dw 7.4 dh 0.0",
+       "Seite einrichten: dx 57.9 dy -2.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 8,
+      "controls_office": 8
+     },
+     "An Format anpassen": {
+      "office": [
+       578.7,
+       0.0,
+       161.3,
+       96.0
+      ],
+      "ours": [
+       654.3,
+       0,
+       175.3,
+       96
+      ],
+      "diffs": [
+       "width 175.3 vs 161.3",
+       "left 654.3 vs 578.7",
+       "Breite: dx -68.0 dy -1.0 dw 82.0 dh 0.0",
+       "Höhe: dx -68.0 dy -1.0 dw 82.0 dh 0.0",
+       "Mehr: dx 17.4 dy 0.0 dw -3.3 dh -1.0",
+       "Weniger: dx 17.4 dy -1.0 dw -3.3 dh -1.0",
+       "Seite einrichten: dx 6.1 dy -2.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     },
+     "Blattoptionen": {
+      "office": [
+       740.0,
+       0.0,
+       184.7,
+       96.0
+      ],
+      "ours": [
+       829.7,
+       0,
+       178.1,
+       96
+      ],
+      "diffs": [
+       "width 178.1 vs 184.7",
+       "left 829.7 vs 740.0",
+       "control missing: Gitternetzlinien",
+       "control missing: Überschriften",
+       "control missing: Blattoptionen",
+       "control missing: Anzeigen",
+       "control missing: Drucken",
+       "control missing: Anzeigen",
+       "control missing: Drucken"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 0,
+      "controls_office": 7
+     },
+     "Anordnen": {
+      "office": [
+       924.7,
+       0.0,
+       412.0,
+       96.0
+      ],
+      "ours": [
+       1007.8,
+       0,
+       353.6,
+       96
+      ],
+      "diffs": [
+       "width 353.6 vs 412.0",
+       "left 1007.8 vs 924.7",
+       "Ebene nach vorne: dx 0.0 dy -1.0 dw -4.3 dh 0.0",
+       "Ebene nach hinten: dx -4.3 dy -1.0 dw -4.3 dh 0.0",
+       "Auswahlbereich...: dx -8.6 dy -1.0 dw 16.6 dh 0.0",
+       "Ausrichten: dx 7.9 dy -1.0 dw 45.0 dh -52.0",
+       "Gruppieren: dx -54.7 dy 25.0 dw 41.7 dh -52.0",
+       "Drehen: dx -120.7 dy 51.0 dw 62.4 dh -52.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 6,
+      "controls_office": 6
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Formeln": {
+    "groups": {
+     "Funktionsbibliothek": {
+      "office": [
+       0.0,
+       0.0,
+       741.3,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       805.1,
+       96
+      ],
+      "diffs": [
+       "width 805.1 vs 741.3",
+       "Funktion einfügen...: dx 0.0 dy -1.0 dw 16.2 dh 0.0",
+       "control missing: AutoSumme",
+       "Zuletzt verwendet: dx -0.8 dy -1.0 dw 9.0 dh 0.0",
+       "Finanzmathematik: dx 8.3 dy -1.0 dw 8.5 dh 0.0",
+       "Logisch: dx 16.7 dy -1.0 dw 7.8 dh 0.0",
+       "Text: dx 24.5 dy -1.0 dw 3.7 dh 0.0",
+       "Datum u. Uhrzeit: dx 28.2 dy -1.0 dw 8.9 dh 0.0",
+       "Nachschlagen und Verweisen: dx 37.1 dy -1.0 dw 9.4 dh 0.0",
+       "Mathematik und Trigonometrie: dx 46.4 dy -1.0 dw 8.3 dh 0.0",
+       "Mehr Funktionen: dx 54.8 dy -1.0 dw 9.0 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 9,
+      "controls_office": 10
+     },
+     "Definierte Namen": {
+      "office": [
+       936.0,
+       0.0,
+       226.7,
+       95.3
+      ],
+      "ours": [
+       805.1,
+       0,
+       226.4,
+       96
+      ],
+      "diffs": [
+       "left 805.1 vs 936.0",
+       "Namens-Manager: dx 0.0 dy -1.0 dw 8.1 dh 0.0",
+       "Namen definieren: dx 8.0 dy -1.0 dw -2.9 dh 0.0",
+       "control missing: In Formel verwenden",
+       "control missing: Aus Auswahl erstellen..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 4
+     },
+     "Formelüberwachung": {
+      "office": [
+       1162.7,
+       0.0,
+       418.7,
+       95.3
+      ],
+      "ours": [
+       1031.5,
+       0,
+       293.1,
+       96
+      ],
+      "diffs": [
+       "width 293.1 vs 418.7",
+       "left 1031.5 vs 1162.7",
+       "Pfeile entfernen: dx 0.0 dy -1.0 dw 6.1 dh 0.0",
+       "Formeln anzeigen: dx -1.2 dy -1.0 dw 4.3 dh 0.0",
+       "control missing: Fehlerüberprüfung...",
+       "control missing: Überwachungsfenster"
+      ],
+      "controls_ok": 3,
+      "controls_matched": 5,
+      "controls_office": 7
+     },
+     "Berechnung": {
+      "office": [
+       1581.3,
+       0.0,
+       210.0,
+       95.3
+      ],
+      "ours": [
+       1324.6,
+       0,
+       219.6,
+       96
+      ],
+      "diffs": [
+       "width 219.6 vs 210.0",
+       "left 1324.6 vs 1581.3",
+       "Berechnungsoptionen: dx 0.0 dy -1.0 dw 9.0 dh 0.0",
+       "Neu berechnen: dx 8.9 dy -9.0 dw 2.6 dh 0.0",
+       "Blatt berechnen: dx 8.9 dy -15.0 dw 0.6 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 3
+     }
+    },
+    "missing_groups": [
+     "Python (Vorschau)"
+    ],
+    "extra_groups": []
+   },
+   "Daten": {
+    "groups": {
+     "Daten abrufen und transformieren": {
+      "office": [
+       0.0,
+       0.0,
+       387.3,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       398.4,
+       96
+      ],
+      "diffs": [
+       "width 398.4 vs 387.3",
+       "Daten abrufen: dx 0.0 dy -1.0 dw 8.6 dh 7.3",
+       "Aus Text/CSV: dx 8.6 dy -1.0 dw 32.2 dh 0.0",
+       "Aus dem Web: dx 8.6 dy -1.0 dw 26.9 dh 0.0",
+       "Aus Tabelle/Bereich: dx 8.6 dy -1.0 dw 0.9 dh 0.0",
+       "control missing: Von Bild",
+       "Zuletzt verwendete Quellen: dx 9.5 dy -27.0 dw 1.6 dh 0.0",
+       "Vorhandene Verbindungen: dx 9.5 dy -27.0 dw 3.6 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 6,
+      "controls_office": 7
+     },
+     "Abfragen & Verbindungen": {
+      "office": [
+       387.3,
+       0.0,
+       283.3,
+       96.0
+      ],
+      "ours": [
+       398.4,
+       0,
+       148.3,
+       96
+      ],
+      "diffs": [
+       "width 148.3 vs 283.3",
+       "left 398.4 vs 387.3",
+       "control missing: Abfragen und Verbindungen",
+       "control missing: Eigenschaften",
+       "control missing: Workbook Links"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 4
+     },
+     "Sortieren und Filtern": {
+      "office": [
+       872.0,
+       0.0,
+       274.7,
+       96.0
+      ],
+      "ours": [
+       546.7,
+       0,
+       403.2,
+       96
+      ],
+      "diffs": [
+       "width 403.2 vs 274.7",
+       "left 546.7 vs 872.0",
+       "Von A bis Z sortieren: dx 0.0 dy -9.0 dw 118.1 dh 0.0",
+       "Von Z bis A sortieren: dx 0.0 dy -15.0 dw 118.1 dh 0.0",
+       "Sortieren...: dx 118.1 dy -1.0 dw 16.2 dh -0.7",
+       "Filtern: dx 123.6 dy -1.0 dw 4.7 dh -0.7",
+       "Löschen: dx 128.2 dy -1.0 dw 48.2 dh 0.0",
+       "Erneut anwenden: dx 128.2 dy -1.0 dw 0.2 dh 0.0",
+       "Erweitert...: dx 128.2 dy -1.0 dw 45.5 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 7,
+      "controls_office": 7
+     },
+     "Datentools": {
+      "office": [
+       1146.7,
+       0.0,
+       332.0,
+       96.0
+      ],
+      "ours": [
+       949.9,
+       0,
+       326.3,
+       96
+      ],
+      "diffs": [
+       "width 326.3 vs 332.0",
+       "left 949.9 vs 1146.7",
+       "Text in Spalten...: dx 0.0 dy -1.0 dw 15.7 dh 0.0",
+       "Blitzvorschau: dx 15.7 dy -1.0 dw 51.2 dh 0.0",
+       "Duplikate entfernen: dx 15.7 dy -1.0 dw 16.5 dh 0.0",
+       "Datenüberprüfung...: dx 15.7 dy -1.0 dw -1.5 dh 0.0",
+       "Konsolidieren...: dx 14.2 dy -1.0 dw -12.0 dh 52.0",
+       "control missing: Datenmodell",
+       "control missing: Datenanalyse"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 7
+     },
+     "Prognose": {
+      "office": [
+       1478.7,
+       0.0,
+       192.0,
+       96.0
+      ],
+      "ours": [
+       1276.1,
+       0,
+       234.5,
+       96
+      ],
+      "diffs": [
+       "width 234.5 vs 192.0",
+       "left 1276.1 vs 1478.7",
+       "Was-wäre-wenn-Analyse: dx 0.0 dy -1.0 dw 35.1 dh 0.0",
+       "Prognoseblatt: dx 35.1 dy -1.0 dw 7.4 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 2
+     },
+     "Gliederung": {
+      "office": [
+       1670.7,
+       0.0,
+       248.7,
+       96.0
+      ],
+      "ours": [
+       1510.6,
+       0,
+       248.9,
+       96
+      ],
+      "diffs": [
+       "left 1510.6 vs 1670.7",
+       "control missing: Gruppieren...",
+       "control missing: Gruppierung aufheben...",
+       "Teilergebnis: dx 17.0 dy -1.0 dw 9.1 dh 0.0",
+       "control missing: Detail anzeigen",
+       "control missing: Detail ausblenden",
+       "control missing: Gruppierungs- und Gliederungseinstellungen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 6
+     }
+    },
+    "missing_groups": [
+     "Datentypen"
+    ],
+    "extra_groups": []
+   },
+   "Überprüfen": {
+    "groups": {
+     "Rechtschreibung": {
+      "office": [
+       0.0,
+       0.0,
+       280.7,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       255.8,
+       96
+      ],
+      "diffs": [
+       "width 255.8 vs 280.7",
+       "Rechtschreibung...: dx 0.0 dy -1.0 dw 8.2 dh 0.0",
+       "Thesaurus...: dx 8.2 dy -1.0 dw 108.3 dh -52.0",
+       "Arbeitsmappenstatistiken: dx -51.8 dy 25.0 dw 27.0 dh -52.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Barrierefreiheit": {
+      "office": [
+       346.0,
+       0.0,
+       96.7,
+       95.3
+      ],
+      "ours": [
+       255.8,
+       0,
+       107.1,
+       96
+      ],
+      "diffs": [
+       "width 107.1 vs 96.7",
+       "left 255.8 vs 346.0",
+       "Barrierefreiheit überprüfen: dx 0.0 dy -1.0 dw 10.4 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Kommentare": {
+      "office": [
+       609.3,
+       0.0,
+       347.3,
+       95.3
+      ],
+      "ours": [
+       451.5,
+       0,
+       328.5,
+       96
+      ],
+      "diffs": [
+       "width 328.5 vs 347.3",
+       "left 451.5 vs 609.3",
+       "Neuer Kommentar: dx 0.0 dy -1.0 dw 7.5 dh 0.0",
+       "Löschen: dx 7.4 dy -1.0 dw 104.6 dh -52.0",
+       "Vorheriger Kommentar: dx -42.6 dy 25.0 dw 85.3 dh -52.0",
+       "Nächster Kommentar: dx -111.9 dy 51.0 dw 85.3 dh -52.0",
+       "Kommentare anzeigen: dx -26.6 dy -1.0 dw 7.8 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     },
+     "Notizen": {
+      "office": [
+       956.7,
+       0.0,
+       62.0,
+       95.3
+      ],
+      "ours": [
+       780,
+       0,
+       70.5,
+       96
+      ],
+      "diffs": [
+       "width 70.5 vs 62.0",
+       "left 780 vs 956.7",
+       "Notizen: dx 0.0 dy -1.0 dw 8.5 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Schützen": {
+      "office": [
+       1018.7,
+       0.0,
+       348.7,
+       95.3
+      ],
+      "ours": [
+       850.5,
+       0,
+       172.7,
+       96
+      ],
+      "diffs": [
+       "width 172.7 vs 348.7",
+       "left 850.5 vs 1018.7",
+       "Blatt schützen...: dx 0.0 dy -1.0 dw 16.3 dh 0.0",
+       "Arbeitsmappe schützen...: dx 16.3 dy -1.0 dw 7.1 dh 0.0",
+       "control missing: Bearbeiten von Bereichen zulassen",
+       "control missing: Arbeitsmappe nicht mehr teilen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 4
+     }
+    },
+    "missing_groups": [
+     "Leistung",
+     "Änderungen",
+     "Freihand"
+    ],
+    "extra_groups": []
+   },
+   "Ansicht": {
+    "groups": {
+     "Arbeitsmappenansichten": {
+      "office": [
+       316.7,
+       0.0,
+       308.7,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       343.2,
+       96
+      ],
+      "diffs": [
+       "width 343.2 vs 308.7",
+       "left 0 vs 316.7",
+       "Normal: dx 0.0 dy -1.0 dw 7.8 dh 0.0",
+       "Umbruchvorschau: dx 7.9 dy -1.0 dw 7.9 dh 0.0",
+       "Seitenlayout: dx 15.7 dy -1.0 dw 91.5 dh -52.0",
+       "Benutzerdef. Ansichten...: dx -56.3 dy 25.0 dw 90.8 dh -52.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 4
+     },
+     "Anzeigen": {
+      "office": [
+       625.3,
+       0.0,
+       326.7,
+       95.3
+      ],
+      "ours": [
+       343.2,
+       0,
+       242.1,
+       96
+      ],
+      "diffs": [
+       "width 242.1 vs 326.7",
+       "left 343.2 vs 625.3",
+       "control missing: Navigation",
+       "control missing: Lineal",
+       "control missing: Gitternetzlinien",
+       "control missing: Bearbeitungsleiste",
+       "control missing: Überschriften",
+       "control missing: Datentypsymbole",
+       "control missing: Fokuszelle"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 0,
+      "controls_office": 7
+     },
+     "Zoom": {
+      "office": [
+       952.0,
+       0.0,
+       166.0,
+       95.3
+      ],
+      "ours": [
+       585.4,
+       0,
+       181.2,
+       96
+      ],
+      "diffs": [
+       "width 181.2 vs 166.0",
+       "left 585.4 vs 952.0",
+       "Zoom...: dx 0.0 dy -1.0 dw 3.7 dh 0.0",
+       "100%: dx 3.7 dy -1.0 dw 3.7 dh 0.0",
+       "Auswahl vergrößern: dx 7.3 dy -1.0 dw 7.9 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Fenster": {
+      "office": [
+       1118.0,
+       0.0,
+       546.0,
+       95.3
+      ],
+      "ours": [
+       766.6,
+       0,
+       505.8,
+       96
+      ],
+      "diffs": [
+       "width 505.8 vs 546.0",
+       "left 766.6 vs 1118.0",
+       "Neues Fenster: dx 0.0 dy -1.0 dw 83.1 dh -52.0",
+       "Alle anordnen: dx -45.3 dy 25.0 dw 70.4 dh -52.0",
+       "Fenster fixieren: dx -103.3 dy 51.0 dw 72.4 dh -52.0",
+       "Teilen: dx -30.9 dy -1.0 dw 36.7 dh 0.0",
+       "Ausblenden: dx -30.9 dy -1.0 dw 2.7 dh 0.0",
+       "Einblenden...: dx -30.9 dy -1.0 dw 7.4 dh 0.0",
+       "Nebeneinander anzeigen: dx -38.8 dy -1.0 dw 22.0 dh 0.0",
+       "Synchrones Scrollen: dx -38.8 dy -1.0 dw 47.3 dh 0.0",
+       "Fensterposition zurücksetzen: dx -38.8 dy -1.0 dw 0.0 dh 0.0",
+       "Fenster wechseln: dx -49.5 dy -1.0 dw 9.4 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 10,
+      "controls_office": 10
+     },
+     "Makros": {
+      "office": [
+       1664.0,
+       0.0,
+       60.7,
+       95.3
+      ],
+      "ours": [
+       1272.4,
+       0,
+       61,
+       96
+      ],
+      "diffs": [
+       "left 1272.4 vs 1664.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 1
+     }
+    },
+    "missing_groups": [
+     "Tabellenansicht"
+    ],
+    "extra_groups": []
+   }
   },
   "write": {
-   "groups": {
-    "Zwischenablage": {
-     "office": [
-      0.0,
-      0.0,
-      202.0,
-      96.0
-     ],
-     "ours": [
-      0,
-      0,
-      196.1,
-      96
-     ],
-     "diffs": [
-      "width 196.1 vs 202.0",
-      "Einfügen: dx 0.0 dy -1.0 dw -4.9 dh 0.0",
-      "Ausschneiden: dx -4.9 dy -1.0 dw 25.6 dh 0.0",
-      "Kopieren: dx -4.9 dy -1.0 dw 51.6 dh 0.0",
-      "Format übertragen: dx -4.9 dy -1.0 dw -1.1 dh 0.0",
-      "control missing: Office-Zwischenablage..."
-     ],
-     "controls_ok": 0,
-     "controls_matched": 4,
-     "controls_office": 5
+   "Start": {
+    "groups": {
+     "Zwischenablage": {
+      "office": [
+       0.0,
+       0.0,
+       202.0,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       196.1,
+       96
+      ],
+      "diffs": [
+       "width 196.1 vs 202.0",
+       "Einfügen: dx 0.0 dy -1.0 dw -4.9 dh 0.0",
+       "Ausschneiden: dx -4.9 dy -1.0 dw 25.6 dh 0.0",
+       "Kopieren: dx -4.9 dy -1.0 dw 51.6 dh 0.0",
+       "Format übertragen: dx -4.9 dy -1.0 dw -1.1 dh 0.0",
+       "control missing: Office-Zwischenablage..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 5
+     },
+     "Schriftart": {
+      "office": [
+       202.0,
+       0.0,
+       310.7,
+       96.0
+      ],
+      "ours": [
+       196.1,
+       0,
+       313,
+       96
+      ],
+      "diffs": [
+       "width 313 vs 310.7",
+       "left 196.1 vs 202.0",
+       "Schriftart vergrößern: dx 2.4 dy 0.0 dw 0.0 dh 0.0",
+       "Schriftart verkleinern: dx 2.4 dy 0.0 dw 0.0 dh 0.0",
+       "Groß-/Kleinschreibung: dx 2.3 dy 0.0 dw 0.0 dh 0.0",
+       "control missing: Formatierung löschen",
+       "Schriftart...: dx -5.7 dy -3.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 11,
+      "controls_matched": 15,
+      "controls_office": 16
+     },
+     "Absatz": {
+      "office": [
+       512.7,
+       0.0,
+       249.3,
+       96.0
+      ],
+      "ours": [
+       509.1,
+       0,
+       250,
+       96
+      ],
+      "diffs": [
+       "left 509.1 vs 512.7",
+       "control missing: Sortieren...",
+       "Absatz...: dx -7.3 dy -3.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 13,
+      "controls_matched": 14,
+      "controls_office": 15
+     },
+     "Formatvorlagen": {
+      "office": [
+       762.0,
+       0.0,
+       801.3,
+       96.0
+      ],
+      "ours": [
+       759.1,
+       0,
+       903.3,
+       96
+      ],
+      "diffs": [
+       "width 903.3 vs 801.3",
+       "left 759.1 vs 762.0",
+       "Formatvorlagen: dx 871.3 dy 70.3 dw -769.3 dh -46.7",
+       "control missing: Formatvorlagen...",
+       "Formatvorlagen: dx 112.6 dy 67.7 dw -8.0 dh -44.0",
+       "Formatvorlagen: dx 869.3 dy 65.7 dw -740.0 dh -152.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 4
+     },
+     "Bearbeiten": {
+      "office": [
+       1563.3,
+       0.0,
+       112.7,
+       96.0
+      ],
+      "ours": [
+       1662.4,
+       0,
+       115.4,
+       96
+      ],
+      "diffs": [
+       "width 115.4 vs 112.7",
+       "left 1662.4 vs 1563.3",
+       "Suchen: dx 0.0 dy -1.0 dw 4.7 dh 0.0",
+       "control missing: Ersetzen...",
+       "Markieren: dx 0.0 dy -1.0 dw 2.7 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 3
+     }
     },
-    "Schriftart": {
-     "office": [
-      202.0,
-      0.0,
-      310.7,
-      96.0
-     ],
-     "ours": [
-      196.1,
-      0,
-      329,
-      96
-     ],
-     "diffs": [
-      "width 329 vs 310.7",
-      "left 196.1 vs 202.0",
-      "Schriftart: dx 0.7 dy 1.0 dw -17.3 dh -2.0",
-      "Schriftgrad: dx 0.7 dy 1.0 dw -17.6 dh -2.0",
-      "Schriftart vergrößern: dx 7.7 dy 0.0 dw 0.0 dh 0.0",
-      "Schriftart verkleinern: dx 7.7 dy 0.0 dw 0.0 dh 0.0",
-      "Groß-/Kleinschreibung: dx 13.0 dy 0.0 dw 0.0 dh 0.0",
-      "control missing: Formatierung löschen",
-      "Texteffekte und Typografie: dx 5.7 dy 0.0 dw 0.0 dh 0.0",
-      "Texthervorhebungsfarbe: dx 5.7 dy 0.0 dw 0.3 dh 0.0",
-      "Schriftfarbe: dx 6.0 dy 0.0 dw 0.3 dh 0.0",
-      "Schriftart...: dx 10.3 dy -3.0 dw 0.0 dh 0.0"
-     ],
-     "controls_ok": 6,
-     "controls_matched": 15,
-     "controls_office": 16
-    },
-    "Absatz": {
-     "office": [
-      512.7,
-      0.0,
-      249.3,
-      96.0
-     ],
-     "ours": [
-      525.1,
-      0,
-      266,
-      96
-     ],
-     "diffs": [
-      "width 266 vs 249.3",
-      "left 525.1 vs 512.7",
-      "Einzug verkleinern: dx 6.0 dy 0.0 dw 0.0 dh 0.0",
-      "Einzug vergrößern: dx 6.0 dy 0.0 dw 0.0 dh 0.0",
-      "control missing: Sortieren...",
-      "Alle anzeigen: dx 16.7 dy 0.0 dw 0.0 dh 0.0",
-      "Zeilen- und Absatzabstand: dx 5.4 dy 0.0 dw 0.0 dh 0.0",
-      "Schattierung: dx 10.7 dy 0.0 dw 0.3 dh 0.0",
-      "Rahmen: dx 11.0 dy 0.0 dw 0.3 dh 0.0",
-      "Absatz...: dx 8.7 dy -3.0 dw 0.0 dh 0.0"
-     ],
-     "controls_ok": 7,
-     "controls_matched": 14,
-     "controls_office": 15
-    },
-    "Formatvorlagen": {
-     "office": [
-      762.0,
-      0.0,
-      801.3,
-      96.0
-     ],
-     "ours": [
-      791.1,
-      0,
-      903.3,
-      96
-     ],
-     "diffs": [
-      "width 903.3 vs 801.3",
-      "left 791.1 vs 762.0",
-      "Formatvorlagen: dx 871.3 dy 70.3 dw -769.3 dh -46.7",
-      "control missing: Formatvorlagen...",
-      "Formatvorlagen: dx 112.6 dy 67.7 dw -8.0 dh -44.0",
-      "Formatvorlagen: dx 869.3 dy 65.7 dw -740.0 dh -152.0"
-     ],
-     "controls_ok": 0,
-     "controls_matched": 3,
-     "controls_office": 4
-    },
-    "Bearbeiten": {
-     "office": [
-      1563.3,
-      0.0,
-      112.7,
-      96.0
-     ],
-     "ours": [
-      1694.4,
-      0,
-      115.4,
-      96
-     ],
-     "diffs": [
-      "width 115.4 vs 112.7",
-      "left 1694.4 vs 1563.3",
-      "Suchen: dx 0.0 dy -1.0 dw 4.7 dh 0.0",
-      "control missing: Ersetzen...",
-      "Markieren: dx 0.0 dy -1.0 dw 2.7 dh 0.0"
-     ],
-     "controls_ok": 0,
-     "controls_matched": 2,
-     "controls_office": 3
-    }
+    "missing_groups": [],
+    "extra_groups": []
    },
-   "missing_groups": [],
-   "extra_groups": []
+   "Einfügen": {
+    "groups": {
+     "Seiten": {
+      "office": [
+       0.0,
+       0.0,
+       201.3,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       221.6,
+       96
+      ],
+      "diffs": [
+       "width 221.6 vs 201.3",
+       "Deckblatt: dx 0.0 dy -1.0 dw 8.1 dh 0.0",
+       "Leere Seite: dx 8.1 dy -1.0 dw 3.7 dh 0.0",
+       "Seitenumbruch: dx 11.7 dy -1.0 dw 8.5 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Tabellen": {
+      "office": [
+       201.3,
+       0.0,
+       57.3,
+       95.3
+      ],
+      "ours": [
+       221.6,
+       0,
+       65.5,
+       96
+      ],
+      "diffs": [
+       "width 65.5 vs 57.3",
+       "left 221.6 vs 201.3",
+       "Tabelle: dx 0.0 dy -1.0 dw 8.2 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Illustrationen": {
+      "office": [
+       258.7,
+       0.0,
+       428.7,
+       95.3
+      ],
+      "ours": [
+       287.1,
+       0,
+       186.9,
+       96
+      ],
+      "diffs": [
+       "width 186.9 vs 428.7",
+       "left 287.1 vs 258.7",
+       "Bilder: dx 0.0 dy -1.0 dw 3.7 dh 0.0",
+       "Formen: dx 3.7 dy -1.0 dw 7.5 dh 0.0",
+       "control missing: Piktogramme",
+       "control missing: 3D-Modelle",
+       "control missing: SmartArt...",
+       "control missing: Diagramm...",
+       "control missing: Screenshot"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 7
+     },
+     "Links": {
+      "office": [
+       777.3,
+       0.0,
+       189.3,
+       95.3
+      ],
+      "ours": [
+       474,
+       0,
+       210.3,
+       96
+      ],
+      "diffs": [
+       "width 210.3 vs 189.3",
+       "left 474 vs 777.3",
+       "Link: dx 0.0 dy -1.0 dw 3.7 dh 0.0",
+       "control missing: Textmarke...",
+       "control missing: Querverweis..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 3
+     },
+     "Kommentare": {
+      "office": [
+       966.7,
+       0.0,
+       83.3,
+       95.3
+      ],
+      "ours": [
+       684.2,
+       0,
+       90.8,
+       96
+      ],
+      "diffs": [
+       "width 90.8 vs 83.3",
+       "left 684.2 vs 966.7",
+       "Kommentar: dx 0.0 dy -1.0 dw 7.5 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Kopf- und Fußzeile": {
+      "office": [
+       1050.0,
+       0.0,
+       178.7,
+       95.3
+      ],
+      "ours": [
+       775,
+       0,
+       204.2,
+       96
+      ],
+      "diffs": [
+       "width 204.2 vs 178.7",
+       "left 775 vs 1050.0",
+       "Kopfzeile: dx 0.0 dy -1.0 dw 8.0 dh 0.0",
+       "Fußzeile: dx 8.0 dy -1.0 dw 8.7 dh 0.0",
+       "Seitenzahl: dx 16.6 dy -1.0 dw 8.9 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Text": {
+      "office": [
+       1228.7,
+       0.0,
+       387.3,
+       95.3
+      ],
+      "ours": [
+       979.2,
+       0,
+       204.8,
+       96
+      ],
+      "diffs": [
+       "width 204.8 vs 387.3",
+       "left 979.2 vs 1228.7",
+       "Textfeld: dx 0.0 dy -1.0 dw 8.7 dh 0.0",
+       "control missing: Schnellbausteine",
+       "control missing: WordArt",
+       "control missing: Initiale",
+       "control missing: Signaturzeile",
+       "control missing: Datum und Uhrzeit...",
+       "control missing: Objekt..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 7
+     },
+     "Symbole": {
+      "office": [
+       1616.0,
+       0.0,
+       105.3,
+       95.3
+      ],
+      "ours": [
+       1184,
+       0,
+       115.2,
+       96
+      ],
+      "diffs": [
+       "width 115.2 vs 105.3",
+       "left 1184 vs 1616.0",
+       "Formel: dx 0.0 dy -1.0 dw 3.0 dh 0.0",
+       "Symbol: dx 3.0 dy -1.0 dw 6.9 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 2
+     }
+    },
+    "missing_groups": [
+     "Medien",
+     "eSignature"
+    ],
+    "extra_groups": []
+   },
+   "Entwurf": {
+    "groups": {
+     "Dokumentformatierung": {
+      "office": [
+       0.0,
+       0.0,
+       1654.7,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       469.1,
+       96
+      ],
+      "diffs": [
+       "width 469.1 vs 1654.7",
+       "Designs: dx 0.0 dy -1.0 dw 7.3 dh 0.0",
+       "Formatvorlagensatz: dx 7.3 dy -5.7 dw -1207.9 dh 13.3",
+       "Farben: dx -1200.7 dy -1.0 dw 7.6 dh 0.0",
+       "Schriftarten: dx -1193.1 dy -1.0 dw 8.7 dh 0.0",
+       "Absatzabstand: dx -1184.4 dy -1.0 dw 26.9 dh 0.0",
+       "Effekte: dx -1184.4 dy -1.0 dw 69.5 dh 0.0",
+       "Als Standard festlegen: dx -1184.4 dy -1.0 dw -1.1 dh 0.0",
+       "Formatvorlagensatz: dx -1291.4 dy -8.3 dw 93.4 dh 16.0",
+       "Formatvorlagensatz: dx 5.3 dy -10.3 dw -1178.6 dh -36.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 9,
+      "controls_office": 9
+     },
+     "Seitenhintergrund": {
+      "office": [
+       1654.7,
+       0.0,
+       237.3,
+       95.3
+      ],
+      "ours": [
+       469.1,
+       0,
+       263.8,
+       96
+      ],
+      "diffs": [
+       "width 263.8 vs 237.3",
+       "left 469.1 vs 1654.7",
+       "Wasserzeichen: dx 0.0 dy -1.0 dw 9.2 dh 0.0",
+       "Seitenfarbe: dx 9.2 dy -1.0 dw 8.4 dh 0.0",
+       "control missing: Seitenränder..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 3
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Layout": {
+    "groups": {
+     "Seite einrichten": {
+      "office": [
+       0.0,
+       0.0,
+       358.0,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       393,
+       96
+      ],
+      "diffs": [
+       "width 393 vs 358.0",
+       "Seitenränder: dx 0.0 dy -1.0 dw 8.9 dh 0.0",
+       "Ausrichtung: dx 8.9 dy -1.0 dw 8.1 dh 0.0",
+       "Format: dx 17.0 dy -1.0 dw 7.3 dh 0.0",
+       "Spalten: dx 24.2 dy -1.0 dw 7.9 dh 0.0",
+       "Umbrüche: dx 32.2 dy -1.0 dw 30.2 dh 0.0",
+       "Zeilennummern: dx 32.2 dy -1.0 dw 2.8 dh 0.0",
+       "Silbentrennung: dx 32.2 dy -1.0 dw 4.8 dh 0.0",
+       "control missing: Seite einrichten..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 7,
+      "controls_office": 8
+     },
+     "Absatz": {
+      "office": [
+       358.0,
+       0.0,
+       286.7,
+       96.0
+      ],
+      "ours": [
+       393,
+       0,
+       336.7,
+       96
+      ],
+      "diffs": [
+       "width 336.7 vs 286.7",
+       "left 393 vs 358.0",
+       "Mehr: dx 24.7 dy -2.0 dw -3.3 dh -1.0",
+       "Weniger: dx 24.7 dy -3.0 dw -3.3 dh -1.0",
+       "Mehr: dx 24.7 dy -28.0 dw -3.3 dh -1.0",
+       "Weniger: dx 24.7 dy -29.0 dw -3.3 dh -1.0",
+       "Mehr: dx -108.0 dy -2.0 dw -3.3 dh -1.0",
+       "Weniger: dx -108.0 dy -3.0 dw -3.3 dh -1.0",
+       "Mehr: dx -108.0 dy -28.0 dw -3.3 dh -1.0",
+       "Weniger: dx -108.0 dy -29.0 dw -3.3 dh -1.0",
+       "Absatz...: dx 42.0 dy -3.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 9,
+      "controls_office": 9
+     },
+     "Anordnen": {
+      "office": [
+       644.7,
+       0.0,
+       467.3,
+       96.0
+      ],
+      "ours": [
+       729.7,
+       0,
+       486.4,
+       96
+      ],
+      "diffs": [
+       "width 486.4 vs 467.3",
+       "left 729.7 vs 644.7",
+       "Position: dx 0.0 dy -1.0 dw 7.8 dh 0.0",
+       "Textumbruch: dx 7.8 dy -1.0 dw 8.7 dh 0.0",
+       "Ebene nach vorne: dx 16.5 dy -1.0 dw -4.3 dh 0.0",
+       "Ebene nach hinten: dx 12.2 dy -1.0 dw -4.3 dh 0.0",
+       "control missing: Auswahlbereich...",
+       "Ausrichten: dx 16.6 dy -1.0 dw 5.7 dh 0.0",
+       "Gruppieren: dx 16.6 dy -1.0 dw 2.4 dh 0.0",
+       "Drehen: dx 16.6 dy -1.0 dw 23.0 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 7,
+      "controls_office": 8
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Referenzen": {
+    "groups": {
+     "Inhaltsverzeichnis": {
+      "office": [
+       0.0,
+       0.0,
+       284.0,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       295.4,
+       96
+      ],
+      "diffs": [
+       "width 295.4 vs 284.0",
+       "Inhaltsverzeichnis: dx 0.0 dy -1.0 dw 9.6 dh 0.0",
+       "Text hinzufügen: dx 9.6 dy -1.0 dw 67.8 dh 0.0",
+       "control missing: Inhaltsverzeichnis aktualisieren..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 3
+     },
+     "Fußnoten": {
+      "office": [
+       284.0,
+       0.0,
+       214.7,
+       96.0
+      ],
+      "ours": [
+       295.4,
+       0,
+       214.1,
+       96
+      ],
+      "diffs": [
+       "left 295.4 vs 284.0",
+       "Fußnote einfügen: dx 0.0 dy -1.0 dw 8.4 dh 0.0",
+       "Endnote einfügen: dx 8.4 dy -1.0 dw 9.8 dh 0.0",
+       "Nächste Fußnote: dx 8.4 dy -1.0 dw -8.8 dh 0.0",
+       "Notizen anzeigen: dx 8.4 dy -1.0 dw 12.5 dh 0.0",
+       "control missing: Dialogfeld 'Fuß- und Endnote'..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 5
+     },
+     "Zitate und Literaturverzeichnis": {
+      "office": [
+       498.7,
+       0.0,
+       301.3,
+       96.0
+      ],
+      "ours": [
+       509.6,
+       0,
+       277.1,
+       96
+      ],
+      "diffs": [
+       "width 277.1 vs 301.3",
+       "left 509.6 vs 498.7",
+       "Zitat einfügen: dx 0.0 dy -1.0 dw 9.0 dh 0.0",
+       "control missing: Quellen verwalten...",
+       "Formatvorlage: dx 8.5 dy -1.0 dw 20.7 dh 0.0",
+       "Literaturverzeichnis: dx 9.0 dy -1.0 dw 43.5 dh 0.0",
+       "control missing: Anbieter ändern"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 5
+     },
+     "Beschriftungen": {
+      "office": [
+       800.0,
+       0.0,
+       308.0,
+       96.0
+      ],
+      "ours": [
+       786.7,
+       0,
+       317.2,
+       96
+      ],
+      "diffs": [
+       "width 317.2 vs 308.0",
+       "left 786.7 vs 800.0",
+       "control missing: Beschriftung einfügen...",
+       "control missing: Abbildungsverzeichnis einfügen...",
+       "Abbildungsverzeichnis aktualisieren: dx 8.5 dy -1.0 dw 0.7 dh 0.0",
+       "control missing: Querverweis..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 4
+     }
+    },
+    "missing_groups": [
+     "Index",
+     "Rechtsgrundlagenverzeichnis"
+    ],
+    "extra_groups": []
+   },
+   "Sendungen": {
+    "error": "tab not in our app"
+   },
+   "Überprüfen": {
+    "groups": {
+     "Rechtschreibung": {
+      "office": [
+       0.0,
+       0.0,
+       261.3,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       230,
+       96
+      ],
+      "diffs": [
+       "width 230 vs 261.3",
+       "control missing: Editor",
+       "Rechtschreibung und Grammatik: dx -43.3 dy -1.0 dw -4.5 dh -0.7",
+       "control missing: Thesaurus...",
+       "Wörter zählen: dx -39.4 dy -1.0 dw 8.2 dh -0.7"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 4
+     },
+     "Kommentare": {
+      "office": [
+       552.7,
+       0.0,
+       295.3,
+       96.0
+      ],
+      "ours": [
+       449.3,
+       0,
+       308.4,
+       96
+      ],
+      "diffs": [
+       "width 308.4 vs 295.3",
+       "left 449.3 vs 552.7",
+       "Neuer Kommentar: dx 0.0 dy -1.0 dw 7.5 dh 0.0",
+       "Löschen: dx 7.5 dy -1.0 dw -3.0 dh 0.0",
+       "Zurück: dx 4.5 dy -1.0 dw 7.8 dh 0.0",
+       "Weiter: dx 12.3 dy -1.0 dw 6.1 dh 0.0",
+       "Kommentare anzeigen: dx 18.4 dy -1.0 dw -5.2 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     },
+     "Markup": {
+      "office": [
+       848.0,
+       0.0,
+       284.7,
+       96.0
+      ],
+      "ours": [
+       757.7,
+       0,
+       286.1,
+       96
+      ],
+      "diffs": [
+       "left 757.7 vs 848.0",
+       "Sämtliches Markup filtern: dx 0.0 dy -1.0 dw 9.3 dh 0.0",
+       "control missing: Anzeige zur Überarbeitung",
+       "Markup anzeigen: dx 9.4 dy -1.0 dw 32.8 dh 0.0",
+       "Überarbeitungsbereich: dx 9.4 dy -1.0 dw -7.9 dh 0.0",
+       "control missing: Optionen zum Nachverfolgen von Änderungen..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 5
+     },
+     "Nachverfolgung": {
+      "office": [
+       1132.7,
+       0.0,
+       300.0,
+       96.0
+      ],
+      "ours": [
+       1043.8,
+       0,
+       285.8,
+       96
+      ],
+      "diffs": [
+       "width 285.8 vs 300.0",
+       "left 1043.8 vs 1132.7",
+       "Änderungen nachverfolgen: dx 0.0 dy -1.0 dw -4.0 dh 0.0",
+       "Annehmen: dx -4.0 dy -1.0 dw -4.9 dh 0.0",
+       "Ablehnen: dx -8.9 dy -1.0 dw -4.7 dh 0.0",
+       "Zurück: dx -13.6 dy -1.0 dw -0.6 dh 0.0",
+       "Weiter: dx -13.6 dy -1.0 dw 1.4 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     }
+    },
+    "missing_groups": [
+     "Barrierefreiheit",
+     "Vergleichen",
+     "Schützen",
+     "Freihand"
+    ],
+    "extra_groups": []
+   },
+   "Ansicht": {
+    "groups": {
+     "Ansichten": {
+      "office": [
+       0.0,
+       0.0,
+       308.7,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       239,
+       96
+      ],
+      "diffs": [
+       "width 239 vs 308.7",
+       "Lesemodus: dx 0.0 dy -1.0 dw 7.3 dh 0.0",
+       "Drucklayout: dx 7.3 dy -1.0 dw 7.9 dh 0.0",
+       "Weblayout: dx 15.2 dy -1.0 dw 7.8 dh 0.0",
+       "control missing: Gliederung",
+       "control missing: Entwurf"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 5
+     },
+     "Anzeigen": {
+      "office": [
+       555.3,
+       0.0,
+       144.0,
+       95.3
+      ],
+      "ours": [
+       239,
+       0,
+       145.8,
+       96
+      ],
+      "diffs": [
+       "left 239 vs 555.3",
+       "control missing: Lineal",
+       "control missing: Gitternetzlinien",
+       "control missing: Navigationsbereich"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 0,
+      "controls_office": 3
+     },
+     "Zoom": {
+      "office": [
+       699.3,
+       0.0,
+       214.7,
+       95.3
+      ],
+      "ours": [
+       384.8,
+       0,
+       222.7,
+       96
+      ],
+      "diffs": [
+       "width 222.7 vs 214.7",
+       "left 384.8 vs 699.3",
+       "control missing: Zoom...",
+       "100%: dx 3.6 dy -1.0 dw 3.7 dh 0.0",
+       "Eine Seite: dx 7.3 dy -1.0 dw 29.4 dh 0.0",
+       "Mehrere Seiten: dx 7.3 dy -1.0 dw 0.7 dh 0.0",
+       "Seitenbreite: dx 7.3 dy -1.0 dw 17.4 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 5
+     }
+    },
+    "missing_groups": [
+     "Plastisch",
+     "Seitenbewegung",
+     "Fenster",
+     "Makros",
+     "SharePoint"
+    ],
+    "extra_groups": []
+   }
   },
   "present": {
-   "groups": {
-    "Zwischenablage": {
-     "office": [
-      0.0,
-      0.0,
-      116.7,
-      96.0
-     ],
-     "ours": [
-      0,
-      0,
-      127.1,
-      96
-     ],
-     "diffs": [
-      "width 127.1 vs 116.7",
-      "Einfügen: dx 0.0 dy -1.0 dw -4.9 dh 0.0",
-      "Ausschneiden: dx -4.9 dy -1.0 dw 0.0 dh 0.0",
-      "Kopieren: dx -4.9 dy -1.0 dw -8.3 dh 0.0",
-      "Format übertragen: dx -4.9 dy -1.0 dw 0.0 dh 0.0",
-      "control missing: Office-Zwischenablage..."
-     ],
-     "controls_ok": 0,
-     "controls_matched": 4,
-     "controls_office": 5
+   "Start": {
+    "groups": {
+     "Zwischenablage": {
+      "office": [
+       0.0,
+       0.0,
+       116.7,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       196.1,
+       96
+      ],
+      "diffs": [
+       "width 196.1 vs 116.7",
+       "Einfügen: dx 0.0 dy -1.0 dw -4.9 dh 0.0",
+       "Ausschneiden: dx -4.9 dy -1.0 dw 107.6 dh 0.0",
+       "Kopieren: dx -4.9 dy -1.0 dw 84.3 dh 0.0",
+       "Format übertragen: dx -4.9 dy -1.0 dw 107.6 dh 0.0",
+       "control missing: Office-Zwischenablage..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 5
+     },
+     "Folien": {
+      "office": [
+       116.7,
+       0.0,
+       161.3,
+       96.0
+      ],
+      "ours": [
+       196.1,
+       0,
+       165,
+       96
+      ],
+      "diffs": [
+       "width 165 vs 161.3",
+       "left 196.1 vs 116.7",
+       "Neue Folie: dx 0.0 dy -1.0 dw 3.7 dh -0.7",
+       "Layout: dx 3.7 dy -1.0 dw 22.0 dh 0.0",
+       "Zurücksetzen: dx 3.7 dy -1.0 dw 0.0 dh 0.0",
+       "Abschnitt: dx 3.7 dy -1.0 dw 7.3 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 4
+     },
+     "Schriftart": {
+      "office": [
+       278.0,
+       0.0,
+       312.0,
+       96.0
+      ],
+      "ours": [
+       361.1,
+       0,
+       312.7,
+       96
+      ],
+      "diffs": [
+       "left 361.1 vs 278.0",
+       "Schriftart: dx 0.0 dy 0.0 dw -37.3 dh 0.0",
+       "Schriftgrad: dx -37.3 dy 0.0 dw -2.0 dh 0.0",
+       "Schriftgrad vergrößern: dx -39.3 dy 0.0 dw 0.0 dh 0.0",
+       "Schriftgrad verkleinern: dx -39.3 dy 0.0 dw 0.0 dh 0.0",
+       "Formatierung löschen: dx -39.3 dy 0.0 dw 0.0 dh 0.0",
+       "Schriftart...: dx -7.3 dy -3.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 9,
+      "controls_matched": 15,
+      "controls_office": 15
+     },
+     "Absatz": {
+      "office": [
+       590.0,
+       0.0,
+       370.7,
+       96.0
+      ],
+      "ours": [
+       673.8,
+       0,
+       368.1,
+       96
+      ],
+      "diffs": [
+       "width 368.1 vs 370.7",
+       "left 673.8 vs 590.0",
+       "Zeilenabstand: dx -4.7 dy 0.0 dw 0.0 dh 0.0",
+       "Spalten: dx -2.7 dy 0.0 dw 0.0 dh 0.0",
+       "Textrichtung: dx -4.7 dy -1.0 dw 68.1 dh 0.0",
+       "Text ausrichten: dx -4.7 dy -1.0 dw 54.8 dh 0.0",
+       "In SmartArt konvertieren: dx -4.7 dy -1.0 dw 2.1 dh 0.0",
+       "Absatz...: dx -10.7 dy -2.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 8,
+      "controls_matched": 14,
+      "controls_office": 14
+     },
+     "Zeichnen": {
+      "office": [
+       960.7,
+       0.0,
+       444.7,
+       96.0
+      ],
+      "ours": [
+       1041.8,
+       0,
+       341.8,
+       96
+      ],
+      "diffs": [
+       "width 341.8 vs 444.7",
+       "left 1041.8 vs 960.7",
+       "Formen: dx 0.0 dy -1.0 dw -119.8 dh 0.7",
+       "Anordnen: dx -119.8 dy -1.0 dw 7.7 dh 0.0",
+       "Schnellformatvorlagen: dx -112.1 dy -1.0 dw 8.2 dh 0.0",
+       "Fülleffekt: dx -104.0 dy -1.0 dw 21.1 dh 0.0",
+       "Formkontur: dx -104.0 dy -1.0 dw 6.5 dh 0.0",
+       "Formeffekte: dx -104.0 dy -1.0 dw 1.1 dh 0.0",
+       "Objekt formatieren...: dx -110.8 dy -2.0 dw 0.0 dh 0.0",
+       "Formen: dx -146.6 dy -3.0 dw 29.5 dh 2.7",
+       "Formen: dx -2.0 dy -3.7 dw -90.5 dh -692.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 9,
+      "controls_office": 9
+     },
+     "Bearbeiten": {
+      "office": [
+       1405.3,
+       0.0,
+       158.0,
+       96.0
+      ],
+      "ours": [
+       1383.6,
+       0,
+       115.4,
+       96
+      ],
+      "diffs": [
+       "width 115.4 vs 158.0",
+       "left 1383.6 vs 1405.3",
+       "control missing: Suchen und Ersetzen",
+       "control missing: Schriftarten ersetzen...",
+       "Markieren: dx 0.0 dy -1.0 dw 2.7 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 3
+     }
     },
-    "Folien": {
-     "office": [
-      116.7,
-      0.0,
-      161.3,
-      96.0
-     ],
-     "ours": [
-      127.1,
-      0,
-      165,
-      96
-     ],
-     "diffs": [
-      "width 165 vs 161.3",
-      "left 127.1 vs 116.7",
-      "Neue Folie: dx 0.0 dy -1.0 dw 3.7 dh -0.7",
-      "Layout: dx 3.7 dy -1.0 dw 22.0 dh 0.0",
-      "Zurücksetzen: dx 3.7 dy -1.0 dw 0.0 dh 0.0",
-      "Abschnitt: dx 3.7 dy -1.0 dw 7.3 dh 0.0"
-     ],
-     "controls_ok": 0,
-     "controls_matched": 4,
-     "controls_office": 4
-    },
-    "Schriftart": {
-     "office": [
-      278.0,
-      0.0,
-      312.0,
-      96.0
-     ],
-     "ours": [
-      292.1,
-      0,
-      318,
-      96
-     ],
-     "diffs": [
-      "width 318 vs 312.0",
-      "left 292.1 vs 278.0",
-      "Schriftart: dx 0.7 dy 1.0 dw -54.6 dh -2.0",
-      "Schriftgrad: dx -36.6 dy 1.0 dw -19.3 dh -2.0",
-      "Schriftgrad vergrößern: dx -39.3 dy 0.0 dw 0.0 dh 0.0",
-      "Schriftgrad verkleinern: dx -39.3 dy 0.0 dw 0.0 dh 0.0",
-      "Formatierung löschen: dx -34.0 dy 0.0 dw 0.0 dh 0.0",
-      "Texthervorhebungsfarbe: dx 5.3 dy 0.0 dw 0.3 dh 0.0",
-      "Schriftfarbe: dx 5.7 dy 0.0 dw 0.3 dh 0.0",
-      "Schriftart...: dx -2.0 dy -3.0 dw 0.0 dh 0.0"
-     ],
-     "controls_ok": 7,
-     "controls_matched": 15,
-     "controls_office": 15
-    },
-    "Absatz": {
-     "office": [
-      590.0,
-      0.0,
-      370.7,
-      96.0
-     ],
-     "ours": [
-      610.1,
-      0,
-      368.1,
-      96
-     ],
-     "diffs": [
-      "width 368.1 vs 370.7",
-      "left 610.1 vs 590.0",
-      "Zeilenabstand: dx -4.7 dy 0.0 dw 0.0 dh 0.0",
-      "Spalten: dx -2.7 dy 0.0 dw 0.0 dh 0.0",
-      "Textrichtung: dx -4.7 dy -1.0 dw 68.1 dh 0.0",
-      "Text ausrichten: dx -4.7 dy -1.0 dw 54.8 dh 0.0",
-      "In SmartArt konvertieren: dx -4.7 dy -1.0 dw 2.1 dh 0.0",
-      "Absatz...: dx -10.7 dy -2.0 dw 0.0 dh 0.0"
-     ],
-     "controls_ok": 8,
-     "controls_matched": 14,
-     "controls_office": 14
-    },
-    "Zeichnen": {
-     "office": [
-      960.7,
-      0.0,
-      444.7,
-      96.0
-     ],
-     "ours": [
-      978.1,
-      0,
-      383.1,
-      96
-     ],
-     "diffs": [
-      "width 383.1 vs 444.7",
-      "left 978.1 vs 960.7",
-      "Formen: dx 0.0 dy -1.0 dw -119.8 dh 0.7",
-      "Anordnen: dx -119.8 dy -1.0 dw 7.7 dh 0.0",
-      "Schnellformatvorlagen: dx -112.1 dy -1.0 dw 49.5 dh 0.0",
-      "Fülleffekt: dx -62.7 dy -1.0 dw 21.1 dh 0.0",
-      "Formkontur: dx -62.7 dy -1.0 dw 6.5 dh 0.0",
-      "Formeffekte: dx -62.7 dy -1.0 dw 1.1 dh 0.0",
-      "Objekt formatieren...: dx -69.5 dy -2.0 dw 0.0 dh 0.0",
-      "Formen: dx -146.6 dy -3.0 dw 29.5 dh 2.7",
-      "Formen: dx -2.0 dy -3.7 dw -90.5 dh -692.0"
-     ],
-     "controls_ok": 0,
-     "controls_matched": 9,
-     "controls_office": 9
-    },
-    "Bearbeiten": {
-     "office": [
-      1405.3,
-      0.0,
-      158.0,
-      96.0
-     ],
-     "ours": [
-      1361.2,
-      0,
-      115.4,
-      96
-     ],
-     "diffs": [
-      "width 115.4 vs 158.0",
-      "left 1361.2 vs 1405.3",
-      "control missing: Suchen und Ersetzen",
-      "control missing: Schriftarten ersetzen...",
-      "Markieren: dx 0.0 dy -1.0 dw 2.7 dh 0.0"
-     ],
-     "controls_ok": 0,
-     "controls_matched": 1,
-     "controls_office": 3
-    }
+    "missing_groups": [],
+    "extra_groups": []
    },
-   "missing_groups": [],
-   "extra_groups": []
+   "Einfügen": {
+    "groups": {
+     "Folien": {
+      "office": [
+       0.0,
+       0.0,
+       57.3,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       61,
+       96
+      ],
+      "diffs": [
+       "width 61 vs 57.3",
+       "Neue Folie: dx 0.0 dy -1.0 dw 3.7 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Tabellen": {
+      "office": [
+       57.3,
+       0.0,
+       57.3,
+       95.3
+      ],
+      "ours": [
+       61,
+       0,
+       65.5,
+       96
+      ],
+      "diffs": [
+       "width 65.5 vs 57.3",
+       "left 61 vs 57.3",
+       "Tabelle: dx 0.0 dy -1.0 dw 8.2 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Bilder": {
+      "office": [
+       114.7,
+       0.0,
+       188.0,
+       95.3
+      ],
+      "ours": [
+       126.5,
+       0,
+       193.6,
+       96
+      ],
+      "diffs": [
+       "width 193.6 vs 188.0",
+       "left 126.5 vs 114.7",
+       "Bilder: dx 0.0 dy -1.0 dw 3.7 dh 0.0",
+       "Screenshot: dx 3.7 dy -1.0 dw 8.1 dh 0.0",
+       "Fotoalbum...: dx 11.8 dy -1.0 dw -6.1 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Illustrationen": {
+      "office": [
+       361.3,
+       0.0,
+       320.0,
+       95.3
+      ],
+      "ours": [
+       320.1,
+       0,
+       202,
+       96
+      ],
+      "diffs": [
+       "width 202 vs 320.0",
+       "left 320.1 vs 361.3",
+       "Formen: dx 0.0 dy -1.0 dw 7.5 dh 0.0",
+       "control missing: Piktogramme",
+       "control missing: 3D-Modelle",
+       "SmartArt...: dx -132.6 dy -1.0 dw 7.3 dh 0.0",
+       "Diagramm...: dx -125.2 dy -1.0 dw 7.1 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 5
+     },
+     "Links": {
+      "office": [
+       681.3,
+       0.0,
+       144.0,
+       95.3
+      ],
+      "ours": [
+       522,
+       0,
+       157.5,
+       96
+      ],
+      "diffs": [
+       "width 157.5 vs 144.0",
+       "left 522 vs 681.3",
+       "Zoom: dx 0.0 dy -1.0 dw 3.7 dh 0.0",
+       "Link: dx 3.6 dy -1.0 dw 3.7 dh 0.0",
+       "Aktion: dx 7.3 dy -1.0 dw 6.2 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Kommentare": {
+      "office": [
+       825.3,
+       0.0,
+       83.3,
+       95.3
+      ],
+      "ours": [
+       679.5,
+       0,
+       90.8,
+       96
+      ],
+      "diffs": [
+       "width 90.8 vs 83.3",
+       "left 679.5 vs 825.3",
+       "Kommentar: dx 0.0 dy -1.0 dw 7.5 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Text": {
+      "office": [
+       908.7,
+       0.0,
+       369.3,
+       95.3
+      ],
+      "ours": [
+       770.3,
+       0,
+       324.1,
+       96
+      ],
+      "diffs": [
+       "width 324.1 vs 369.3",
+       "left 770.3 vs 908.7",
+       "Kopf- und Fußzeile...: dx -0.3 dy -1.0 dw 7.0 dh 0.0",
+       "WordArt: dx 6.7 dy -1.0 dw 7.3 dh 0.0",
+       "Datum und Uhrzeit...: dx 14.0 dy -1.0 dw 67.5 dh -52.0",
+       "Foliennummer: dx -53.3 dy 25.0 dw 51.5 dh -52.0",
+       "Objekt...: dx -136.7 dy 51.0 dw 91.5 dh -52.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 6,
+      "controls_office": 6
+     },
+     "Symbole": {
+      "office": [
+       1278.0,
+       0.0,
+       105.3,
+       95.3
+      ],
+      "ours": [
+       1094.4,
+       0,
+       74.4,
+       96
+      ],
+      "diffs": [
+       "width 74.4 vs 105.3",
+       "left 1094.4 vs 1278.0",
+       "control missing: Formel",
+       "control missing: Symbol..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 0,
+      "controls_office": 2
+     },
+     "Medien": {
+      "office": [
+       1383.3,
+       0.0,
+       232.0,
+       95.3
+      ],
+      "ours": [
+       1168.8,
+       0,
+       69.1,
+       96
+      ],
+      "diffs": [
+       "width 69.1 vs 232.0",
+       "left 1168.8 vs 1383.3",
+       "control missing: Video",
+       "control missing: Audio",
+       "control missing: Bildschirmaufzeichnung..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 0,
+      "controls_office": 3
+     }
+    },
+    "missing_groups": [
+     "Kamera"
+    ],
+    "extra_groups": []
+   },
+   "Entwurf": {
+    "groups": {
+     "Designs": {
+      "office": [
+       0.0,
+       0.0,
+       1352.0,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       977.3,
+       96
+      ],
+      "diffs": [
+       "width 977.3 vs 1352.0",
+       "control missing: Designs",
+       "control missing: Designs",
+       "control missing: Designs"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 0,
+      "controls_office": 3
+     },
+     "Anpassen": {
+      "office": [
+       1352.0,
+       0.0,
+       337.3,
+       95.3
+      ],
+      "ours": [
+       977.3,
+       0,
+       378.2,
+       96
+      ],
+      "diffs": [
+       "width 378.2 vs 337.3",
+       "left 977.3 vs 1352.0",
+       "Varianten: dx 0.0 dy -1.0 dw 8.8 dh 0.0",
+       "Farben: dx 8.8 dy -1.0 dw 7.6 dh 0.0",
+       "Schriftarten: dx 16.4 dy -1.0 dw 8.7 dh 0.0",
+       "Effekte: dx 25.0 dy -1.0 dw 7.9 dh 0.0",
+       "Hintergrundformate: dx 32.9 dy -1.0 dw 8.1 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     },
+     "Folien": {
+      "office": [
+       1689.3,
+       0.0,
+       127.3,
+       95.3
+      ],
+      "ours": [
+       1355.5,
+       0,
+       142.3,
+       96
+      ],
+      "diffs": [
+       "width 142.3 vs 127.3",
+       "left 1355.5 vs 1689.3",
+       "Layout: dx 0.0 dy -1.0 dw 7.2 dh 0.0",
+       "Foliengröße: dx 7.1 dy -1.0 dw 7.8 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 2
+     }
+    },
+    "missing_groups": [
+     "Bearbeiten"
+    ],
+    "extra_groups": []
+   },
+   "Übergänge": {
+    "groups": {
+     "Vorschau": {
+      "office": [
+       0.0,
+       0.0,
+       69.3,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       77.2,
+       96
+      ],
+      "diffs": [
+       "width 77.2 vs 69.3",
+       "Vorschau: dx 0.0 dy -1.0 dw 7.9 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Übergang zu dieser Folie": {
+      "office": [
+       69.3,
+       0.0,
+       1524.7,
+       95.3
+      ],
+      "ours": [
+       77.2,
+       0,
+       562.2,
+       96
+      ],
+      "diffs": [
+       "width 562.2 vs 1524.7",
+       "left 77.2 vs 69.3",
+       "control missing: Übergangseffekte",
+       "Effektoptionen: dx -970.0 dy -1.0 dw 7.5 dh 0.0",
+       "control missing: Übergangseffekte",
+       "control missing: Übergangseffekte"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 4
+     },
+     "Anzeigedauer": {
+      "office": [
+       1594.0,
+       0.0,
+       311.3,
+       95.3
+      ],
+      "ours": [
+       639.4,
+       0,
+       394.1,
+       96
+      ],
+      "diffs": [
+       "width 394.1 vs 311.3",
+       "left 639.4 vs 1594.0",
+       "Sound: dx -63.3 dy -1.0 dw 66.0 dh 0.0",
+       "Mehr: dx 16.7 dy 0.0 dw -3.3 dh -1.0",
+       "Weniger: dx 16.7 dy -1.0 dw -3.3 dh -1.0",
+       "Auf alle anwenden: dx 0.0 dy -1.0 dw 29.3 dh 0.0",
+       "control missing: Bei Mausklick",
+       "control missing: Nach",
+       "Mehr: dx -132.6 dy -26.0 dw -3.3 dh -1.0",
+       "Weniger: dx -132.6 dy -27.0 dw -3.3 dh -1.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 6,
+      "controls_office": 8
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Animationen": {
+    "groups": {
+     "Vorschau": {
+      "office": [
+       0.0,
+       0.0,
+       69.3,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       77.2,
+       96
+      ],
+      "diffs": [
+       "width 77.2 vs 69.3",
+       "Vorschau: dx 0.0 dy -1.0 dw 7.9 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Animation": {
+      "office": [
+       69.3,
+       0.0,
+       1278.7,
+       95.3
+      ],
+      "ours": [
+       77.2,
+       0,
+       562.2,
+       96
+      ],
+      "diffs": [
+       "width 562.2 vs 1278.7",
+       "left 77.2 vs 69.3",
+       "control missing: Animationsstil",
+       "Effektoptionen: dx -724.0 dy -1.0 dw 7.5 dh 0.0",
+       "control missing: Animationsstil",
+       "control missing: Animationsstil"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 4
+     },
+     "Erweiterte Animation": {
+      "office": [
+       1348.0,
+       0.0,
+       242.7,
+       95.3
+      ],
+      "ours": [
+       639.4,
+       0,
+       251.1,
+       96
+      ],
+      "diffs": [
+       "width 251.1 vs 242.7",
+       "left 639.4 vs 1348.0",
+       "Animation hinzufügen: dx 0.0 dy -1.0 dw 9.1 dh 0.0",
+       "Animationsbereich: dx 9.1 dy -1.0 dw 17.4 dh 0.0",
+       "Trigger: dx 9.1 dy -1.0 dw 68.0 dh 0.0",
+       "Animation übertragen: dx 9.1 dy -1.0 dw -0.6 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 4
+     },
+     "Anzeigedauer": {
+      "office": [
+       1590.7,
+       0.0,
+       325.3,
+       95.3
+      ],
+      "ours": [
+       890.5,
+       0,
+       311.5,
+       96
+      ],
+      "diffs": [
+       "width 311.5 vs 325.3",
+       "left 890.5 vs 1590.7",
+       "Start: dx -70.0 dy -1.0 dw 66.0 dh 0.0",
+       "Mehr: dx 13.4 dy 0.0 dw -3.3 dh -1.0",
+       "Weniger: dx 13.4 dy -1.0 dw -3.3 dh -1.0",
+       "Mehr: dx -0.6 dy -26.0 dw -3.3 dh -1.0",
+       "Weniger: dx -0.6 dy -27.0 dw -3.3 dh -1.0",
+       "Früher: dx -14.6 dy -3.0 dw 67.4 dh 0.0",
+       "Später: dx -14.6 dy -3.0 dw 66.8 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 7,
+      "controls_office": 7
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Bildschirmpräsentation": {
+    "groups": {
+     "Bildschirmpräsentation starten": {
+      "office": [
+       0.0,
+       0.0,
+       292.7,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       295.4,
+       96
+      ],
+      "diffs": [
+       "width 295.4 vs 292.7",
+       "Von Beginn an: dx 0.0 dy -1.0 dw 8.6 dh 0.0",
+       "Ab aktueller Folie: dx 8.6 dy -1.0 dw 8.6 dh 0.0",
+       "Benutzerdefinierte Bildschirmpräsentation: dx 6.4 dy -1.0 dw -3.7 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Einrichten": {
+      "office": [
+       292.7,
+       0.0,
+       744.7,
+       95.3
+      ],
+      "ours": [
+       295.4,
+       0,
+       671.6,
+       96
+      ],
+      "diffs": [
+       "width 671.6 vs 744.7",
+       "left 295.4 vs 292.7",
+       "Bildschirmpräsentation einrichten...: dx 0.0 dy -1.0 dw 7.7 dh 0.0",
+       "Folie ausblenden: dx 7.7 dy -1.0 dw 81.5 dh -52.0",
+       "Anzeigedauern testen: dx -71.0 dy 25.0 dw 63.5 dh -52.0",
+       "Aufzeichnen: dx -157.0 dy 51.0 dw 78.2 dh -52.0",
+       "control missing: Folien aktualisiert halten",
+       "control missing: Kommentare wiedergeben",
+       "control missing: Anzeigedauern verwenden",
+       "control missing: Mediensteuerelemente anzeigen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 8
+     },
+     "Bildschirme": {
+      "office": [
+       1037.3,
+       0.0,
+       240.0,
+       95.3
+      ],
+      "ours": [
+       967.1,
+       0,
+       89.9,
+       96
+      ],
+      "diffs": [
+       "width 89.9 vs 240.0",
+       "left 967.1 vs 1037.3",
+       "control missing: Bildschirm",
+       "control missing: Referentenansicht"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 0,
+      "controls_office": 2
+     }
+    },
+    "missing_groups": [
+     "Untertitel und Untertitel für Hörgeschädigte"
+    ],
+    "extra_groups": []
+   },
+   "Überprüfen": {
+    "groups": {
+     "Rechtschreibung": {
+      "office": [
+       0.0,
+       0.0,
+       139.3,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       155.9,
+       96
+      ],
+      "diffs": [
+       "width 155.9 vs 139.3",
+       "Rechtschreibung...: dx 0.0 dy -1.0 dw 8.2 dh 0.0",
+       "Thesaurus...: dx 8.2 dy -1.0 dw 8.4 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 2
+     },
+     "Barrierefreiheit": {
+      "office": [
+       139.3,
+       0.0,
+       96.7,
+       95.3
+      ],
+      "ours": [
+       155.9,
+       0,
+       94.1,
+       96
+      ],
+      "diffs": [
+       "width 94.1 vs 96.7",
+       "left 155.9 vs 139.3",
+       "Barrierefreiheit überprüfen: dx 0.0 dy -1.0 dw -2.6 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Kommentare": {
+      "office": [
+       544.7,
+       0.0,
+       306.0,
+       95.3
+      ],
+      "ours": [
+       321.3,
+       0,
+       319.6,
+       96
+      ],
+      "diffs": [
+       "width 319.6 vs 306.0",
+       "left 321.3 vs 544.7",
+       "Neuer Kommentar: dx 0.0 dy -1.0 dw 7.5 dh 0.0",
+       "Löschen: dx 7.5 dy -1.0 dw 8.2 dh 0.0",
+       "Zurück: dx 15.7 dy -1.0 dw 7.8 dh 0.0",
+       "Weiter: dx 23.5 dy -1.0 dw 6.1 dh 0.0",
+       "Kommentare anzeigen: dx 18.9 dy -1.0 dw -5.2 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     },
+     "Freihand": {
+      "office": [
+       850.7,
+       0.0,
+       93.3,
+       95.3
+      ],
+      "ours": [
+       640.9,
+       0,
+       90.2,
+       96
+      ],
+      "diffs": [
+       "width 90.2 vs 93.3",
+       "left 640.9 vs 850.7",
+       "Freihand ausblenden: dx 0.0 dy -1.0 dw -3.1 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     }
+    },
+    "missing_groups": [
+     "Aktivität"
+    ],
+    "extra_groups": []
+   },
+   "Ansicht": {
+    "groups": {
+     "Präsentationsansichten": {
+      "office": [
+       0.0,
+       0.0,
+       398.7,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       442.2,
+       96
+      ],
+      "diffs": [
+       "width 442.2 vs 398.7",
+       "Normal: dx 0.0 dy -1.0 dw 7.8 dh -0.7",
+       "Gliederungsansicht: dx 7.8 dy -1.0 dw 9.2 dh -0.7",
+       "Foliensortierung: dx 17.1 dy -1.0 dw 8.4 dh -0.7",
+       "Notizenseite: dx 25.5 dy -1.0 dw 9.1 dh -0.7",
+       "Leseansicht: dx 34.6 dy -1.0 dw 8.9 dh -0.7"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     },
+     "Masteransichten": {
+      "office": [
+       398.7,
+       0.0,
+       272.7,
+       96.0
+      ],
+      "ours": [
+       442.2,
+       0,
+       141.6,
+       96
+      ],
+      "diffs": [
+       "width 141.6 vs 272.7",
+       "left 442.2 vs 398.7",
+       "Folienmaster: dx 0.0 dy -1.0 dw 52.9 dh -52.0",
+       "Handzettelmaster: dx -74.6 dy 25.0 dw 27.6 dh -52.0",
+       "Notizenmaster: dx -174.6 dy 51.0 dw 43.6 dh -52.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Anzeigen": {
+      "office": [
+       671.3,
+       0.0,
+       169.3,
+       96.0
+      ],
+      "ours": [
+       583.8,
+       0,
+       181.3,
+       96
+      ],
+      "diffs": [
+       "width 181.3 vs 169.3",
+       "left 583.8 vs 671.3",
+       "control missing: Lineal",
+       "control missing: Gitternetzlinien",
+       "control missing: Führungslinien",
+       "Notizen: dx 3.4 dy -1.0 dw 8.5 dh 0.0",
+       "Rastereinstellungen...: dx 3.9 dy -2.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 5
+     },
+     "Zoom": {
+      "office": [
+       840.7,
+       0.0,
+       120.7,
+       96.0
+      ],
+      "ours": [
+       765.1,
+       0,
+       132.4,
+       96
+      ],
+      "diffs": [
+       "width 132.4 vs 120.7",
+       "left 765.1 vs 840.7",
+       "Zoom...: dx 0.0 dy -1.0 dw 3.7 dh 0.0",
+       "An Fenster anpassen: dx 3.7 dy -1.0 dw 8.1 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 2
+     },
+     "Farbe/Graustufe": {
+      "office": [
+       961.3,
+       0.0,
+       116.0,
+       96.0
+      ],
+      "ours": [
+       897.5,
+       0,
+       115.5,
+       96
+      ],
+      "diffs": [
+       "left 897.5 vs 961.3",
+       "Farbe: dx 0.0 dy -1.0 dw 37.5 dh 0.0",
+       "Graustufe: dx 0.0 dy -1.0 dw 15.5 dh 0.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Fenster": {
+      "office": [
+       1077.3,
+       0.0,
+       273.3,
+       96.0
+      ],
+      "ours": [
+       1012.9,
+       0,
+       280.9,
+       96
+      ],
+      "diffs": [
+       "width 280.9 vs 273.3",
+       "left 1012.9 vs 1077.3",
+       "Neues Fenster: dx 0.0 dy -1.0 dw 8.2 dh -0.7",
+       "Alle anordnen: dx 8.2 dy -1.0 dw 29.4 dh 0.0",
+       "Überlappend: dx 8.2 dy -1.0 dw 34.1 dh 0.0",
+       "Teilung verschieben: dx 8.2 dy -1.0 dw 0.8 dh 0.0",
+       "Fenster wechseln: dx -1.8 dy -1.0 dw 9.4 dh -0.7"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     },
+     "Makros": {
+      "office": [
+       1350.7,
+       0.0,
+       60.7,
+       96.0
+      ],
+      "ours": [
+       1293.9,
+       0,
+       68.1,
+       96
+      ],
+      "diffs": [
+       "width 68.1 vs 60.7",
+       "left 1293.9 vs 1350.7",
+       "Makros: dx 0.0 dy -1.0 dw 7.4 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 1
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   }
   }
  }
 }

@@ -4639,3 +4639,18 @@ The owner: "RaabeOffice uses text where MS Office uses symbols … we need to ch
 - **Not covered**: Word's ribbon (no recorded Word inventory exists; RaabeWrite's panes and line menus use the shared
   controls of D-161/D-162), dialogs, context menus, and PowerPoint probes tonight (the owner's POWERPNT.EXE was
   running, so no PowerPoint instance of ours was started; the PowerPoint side is the 2026-11-06 recording).
+
+**D-159, continued: every main tab.** `probe_office_ribbon_geometry.py` now records every main tab of the three apps
+(Excel 7, Word 8, PowerPoint 8) and `check_ribbon_geometry.py` compares them all. Found and built:
+- Office's widest layout labels the small buttons of a stack. The ribbon now derives that layout for every group whose
+  widest layout has a stack of small buttons (`wideOf`), and steps it back first when room runs out; a group where
+  Office keeps the icons opts out with `wide: false` (Excel's Sortieren und Filtern, PowerPoint's Zwischenablage).
+- Office breaks some one-word large labels at fixed points, read off its ribbons: Seiten-ränder (margins, not Word's
+  page borders), Druck-bereich, Um-brüche, Druck-titel, Berechnungs-optionen, Überwachungs-fenster, Recht-schreibung,
+  Inhalts-verzeichnis, Schnellformat-vorlagen (`LABEL_BREAKS`, keyed by command). A hyphenated label breaks where the
+  lines are most even (Was-wäre-wenn- / Analyse). The large Rechtschreibung button shows no "...".
+- Large buttons: 3 px at the sides (6.5 made them about 8 px wider than Office's across all tabs); a group's label
+  keeps room for the launcher only when it has one.
+- Left as known differences: the galleries Office shows inline at a wide window (Übergänge, Animationen, Designs,
+  Formenarten, Dokumentformatierung, Illustrationen' 3D-Modelle …) are buttons or narrower galleries in ours; combo and
+  spinner widths in Übergänge > Anzeigedauer and Layout > Absatz; groups and controls we have not built.

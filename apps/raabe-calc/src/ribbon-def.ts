@@ -278,7 +278,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         },
         { id: "queries", label: "Abfragen & Verbindungen", key: "ZC", icon: "reapply", controls: [b("data.refreshAll", "K1", "large")] },
         {
-          id: "sortFilter", label: "Sortieren und Filtern", key: "ZS", icon: "sort-az",
+          id: "sortFilter", label: "Sortieren und Filtern", key: "ZS", icon: "sort-az", wide: false,
           controls: [stack(b("data.sortAsc", "U"), b("data.sortDesc", "F1")), b("data.sort", "S", "large"), b("data.filter", "1", "large"),
             stack(b("data.filterClear", "L"), b("data.filterReapply", "E"), b("data.advancedFilter", "W"))],
         },
@@ -294,7 +294,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       id: "review", label: "Überprüfen", key: "P",
       shrink: ["notes", "protect", "comments", "proofing"],
       groups: [
-        { id: "proofing", label: "Rechtschreibung", key: "ZP", icon: "spelling", controls: [b("review.spelling", "BE", "large"), stack(b("review.thesaurus", "T"), b("review.statistics", "S1"))] },
+        { id: "proofing", label: "Rechtschreibung", key: "ZP", icon: "spelling", controls: [b("review.spelling", "BE", "large", "Rechtschreibung"), stack(b("review.thesaurus", "T"), b("review.statistics", "S1"))] },
         { id: "accessibility", label: "Barrierefreiheit", key: "Z2", icon: "check", controls: [b("review.accessibility", "B1", "large")] },
         { id: "language", label: "Sprache", key: "ZL", icon: "translate", controls: [b("review.translate", "Ü", "large")] },
         { id: "comments", label: "Kommentare", key: "ZC", icon: "comment", controls: [b("review.newComment", "N1", "large"), stack(b("review.deleteComment", "DC"), b("review.prevComment", "V"), b("review.nextComment", "N2")), b("review.showComments", "H1", "large")] },

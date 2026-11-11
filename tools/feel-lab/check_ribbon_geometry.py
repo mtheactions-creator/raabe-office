@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import datetime
 import json
+import time
 import sys
 from pathlib import Path
 
@@ -39,7 +40,7 @@ JS_OURS = """(() => {
 })()"""
 
 
-def ours(app: str) -> list[dict]:
+def ours(app: str, tabs: list[str] | None = None) -> dict[str, list[dict]]:
     from feellab.calc_catalogue import CalcSide
     from feellab.present_catalogue import PresentSide
     from feellab.targets import raabe_write
@@ -50,10 +51,12 @@ def ours(app: str) -> list[dict]:
         winapi.place(side.hwnd, *WIDE)
         import time
         time.sleep(1.0)
-        side.js("""(() => { const t = [...document.querySelectorAll('.tabrow [role=tab]')].find((b) => b.textContent.trim() === 'Start'); t && t.click(); })()""")
-        import time
-        time.sleep(0.5)
-        return side.js(JS_OURS)
+        res = {}
+        for tab in tabs or ["Start"]:
+            found = side.js(f"""(() => {{ const t = [...document.querySelectorAll('.tabrow [role=tab]')].find((b) => b.textContent.trim() === {json.dumps(tab)}); t && t.click(); return !!t; }})()""")
+            time.sleep(0.6)
+            res[tab] = side.js(JS_OURS) if found else None
+        return res
     finally:
         side.close()
 
@@ -107,15 +110,27 @@ def main() -> None:
         if not off or "groups" not in off:
             print(app, "no Office recording")
             continue
-        r = compare(off, ours(app))
-        out["apps"][app] = r
-        n_ok = sum(g["controls_ok"] for g in r["groups"].values())
-        n = sum(g["controls_office"] for g in r["groups"].values())
-        print(f"{app}: {n_ok}/{n} controls within {TOL} px; groups without a difference: "
-              f"{sum(1 for g in r['groups'].values() if not g['diffs'])}/{len(r['groups'])}; missing {r['missing_groups']}; extra {r['extra_groups']}")
-        for name, g in r["groups"].items():
-            for x in g["diffs"][:8]:
-                print("   ", name, "-", x)
+        office_tabs = off.get("tabs") or {"Start": off}
+        mine = ours(app, list(office_tabs))
+        out["apps"][app] = {}
+        for tab, ot in office_tabs.items():
+            if "groups" not in ot:
+                continue
+            if not mine.get(tab):
+                out["apps"][app][tab] = {"error": "tab not in our app"}
+                print(app, tab, "not in our app")
+                continue
+            r = compare(ot, mine[tab])
+            out["apps"][app][tab] = r
+            n_ok = sum(g["controls_ok"] for g in r["groups"].values())
+            n = sum(g["controls_office"] for g in r["groups"].values())
+            gw = sum(1 for g in r["groups"].values() if not any(d.startswith("width") for d in g["diffs"]))
+            print(f"{app} {tab}: {n_ok}/{n} controls within {TOL} px; group widths within {TOL} px {gw}/{len(r['groups'])}; "
+                  f"missing {r['missing_groups']}; extra {r['extra_groups']}")
+            if "-v" in sys.argv:
+                for name, g in r["groups"].items():
+                    for x in g["diffs"][:8]:
+                        print("   ", name, "-", x)
     path = HERE / "results" / f"{out['date']}-ribbon-geometry.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     print("wrote", path.name)
