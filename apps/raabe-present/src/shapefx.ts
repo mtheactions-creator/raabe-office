@@ -3,7 +3,7 @@
 // recorded from Word, the same Office galleries). A shape's effects go into its spPr (effectLst, scene3d, sp3d in
 // that order); a text's 3-D and its Transformieren into the text body's bodyPr, as PowerPoint writes them.
 
-import { closePopup, h, type MenuEntry } from "@raabe/shell";
+import { closePopup, h, pictureMenu, type MenuEntry } from "@raabe/shell";
 import { presetTile } from "./presettiles";
 import { PptxDom } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
@@ -166,8 +166,24 @@ export function transformMenu(app: PresentApp): MenuEntry[] {
     kid(bp, "prstTxWarp")?.remove();
     if (prst) bp.insertBefore(fragment(bp.ownerDocument, `<a:prstTxWarp xmlns:a="${PptxDom.NS_A}" prst="${prst}"><a:avLst/></a:prstTxWarp>`)[0], bp.firstChild);
   });
-  return [{ heading: "Keine Transformation" }, { label: "Keine", run: () => set(null, "Transformieren") },
-    ...WARPS.flatMap(([head, list]) => [{ heading: head } as MenuEntry, ...list.map(([label, prst]) => ({ label, run: () => set(prst, label) }))])];
+  // PowerPoint shows each warp as "abc" drawn in its shape, the name as tooltip (D-164); our drawing follows the warp's
+  // kind (arc, circle, wave, slant, bulge) on a path of our own.
+  const gallery = (list: [string, string | null][]) => ({ block: () => pictureMenu(list.map(([label, prst], i) => ({ value: String(i), label, svg: warpPicture(prst) })), 4, [56, 40], undefined,
+    (v) => { const [label, prst] = list[Number(v)]; set(prst, label); }) });
+  return [{ heading: "Keine Transformation" }, gallery([["Keine", null]]),
+    ...WARPS.flatMap(([head, list]) => [{ heading: head } as MenuEntry, gallery(list)])];
+}
+
+/** A picture of a text warp (prstTxWarp): "abc" on a path that has the warp's kind. */
+function warpPicture(prst: string | null): string {
+  const p = prst ?? "";
+  const path = /ArchUp|Circle|Button/.test(p) ? "M6 32 Q28 2 50 32" : /ArchDown/.test(p) ? "M6 10 Q28 40 50 10"
+    : /Wave|DoubleWave/.test(p) ? "M4 22 C14 8, 22 36, 32 22 S 46 8, 52 22" : /SlantUp|Cascade.*Up|ChevronInverted/.test(p) ? "M4 32 L52 10"
+      : /SlantDown|Cascade.*Down|Chevron/.test(p) ? "M4 10 L52 32" : /Inflate|CanUp|Ring/.test(p) ? "M4 26 Q28 14 52 26" : /Deflate|CanDown|Fade/.test(p) ? "M4 18 Q28 30 52 18" : "M4 24 L52 24";
+  const id = `wp${p || "none"}`;
+  const fill = prst ? "#2F5597" : "#7f7f7f";
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="40" aria-hidden="true"><defs><path id="${id}" d="${path}"/></defs>`
+    + `<text font-family="Calibri, Segoe UI, sans-serif" font-size="15" font-weight="700" fill="${fill}"><textPath href="#${id}" startOffset="50%" text-anchor="middle">abcde</textPath></text></svg>`;
 }
 
 /** Texteffekte > Schatten, Spiegelung, Leuchten: the same Office presets on the text's runs (a:rPr effectLst). */

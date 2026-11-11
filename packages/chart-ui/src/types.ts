@@ -2,7 +2,7 @@
 // with "Alle Diagramme" (D-086). Groups, names and order as Excel 365 shows them
 // (results/2026-11-05-excel-inventory.json); the map (Karte) is a cloud feature and stays disabled.
 
-import { KINDS, newChart, renderChart, type ChartKind, type ChartModel } from "@raabe/charts";
+import { KINDS, newChart, paletteColor, renderChart, schemeColor, type ChartKind, type ChartModel } from "@raabe/charts";
 import { h, pictureMenu, showDialog, type MenuEntry } from "@raabe/shell";
 
 /** A Verbund variant of the Kombi menu: the series' types after the first group's. */
@@ -112,7 +112,7 @@ export function applyCombo(m: ChartModel, combo: Combo): void {
  * A chart type's picture for the Diagramme dropdowns (D-163): the type drawn by our own renderer with sample data,
  * without title, legend, axis labels and gridlines, as Excel's gallery shows a small picture per type.
  */
-export function kindPicture(kind: ChartKind, w = 40, hgt = 40): SVGSVGElement {
+export function kindPicture(kind: ChartKind, w = 40, hgt = 40, change?: (m: ChartModel) => void): SVGSVGElement {
   const s = (n: string, v: number[]) => ({ name: { text: n }, cat: { cache: ["a", "b", "c", "d"] }, val: { cache: v } });
   const at = { col: 0, row: 0, x: 0, y: 0 };
   let m: ChartModel;
@@ -123,6 +123,7 @@ export function kindPicture(kind: ChartKind, w = 40, hgt = 40): SVGSVGElement {
     m.gridlines = false;
     m.dataLabels = false;
     m.format = { ...m.format, valAxis: { ...m.format?.valAxis, labelPos: "none", majorTick: "none" }, catAxis: { ...m.format?.catAxis, labelPos: "none", majorTick: "none" } };
+    change?.(m);
   } catch {
     return document.createElementNS("http://www.w3.org/2000/svg", "svg");
   }
@@ -145,7 +146,8 @@ export function chartMenus(host: ChartTypeHost): Record<string, MenuEntry[]> {
   return {
     chartColumn: menu("column"), chartLine: menu("line"), chartPie: menu("pie"), chartHierarchy: menu("hierarchy"),
     chartStat: menu("stat"), chartScatter: menu("scatter"), chartOther: menu("other"),
-    chartCombo: [{ heading: "Kombi" }, ...COMBOS.slice(0, 3).map(([c, label]) => ({ label, run: () => host.insert(c === "areaColumn" ? "areaStacked" : "column", (m) => applyCombo(m, c)) })),
+    chartCombo: [{ heading: "Kombi" }, { block: () => pictureMenu(COMBOS.slice(0, 3).map(([c, label]) => ({ value: c, label, svg: "", node: () => kindPicture(c === "areaColumn" ? "areaStacked" : "column", 40, 40, (m) => applyCombo(m, c)) })), 4, [40, 40], undefined,
+      (c) => host.insert(c === "areaColumn" ? "areaStacked" : "column", (m) => applyCombo(m, c as Combo))) },
       "-", { label: "Benutzerdefiniertes Kombinationsdiagramm erstellen...", run: () => void chartTypeDialog(host, "insert", "Kombi") }],
   };
 }
@@ -248,4 +250,16 @@ export async function chartTypeDialog(host: ChartTypeHost, mode: "insert" | "cha
       m.series.forEach((s, i) => { const c = chosen.series[i]; if (c?.kind) s.kind = c.kind; else delete s.kind; if (c?.secondary) s.secondary = true; else delete s.secondary; });
     });
   }
+}
+
+/**
+ * Farben ändern's picture of a palette (D-164): six squares in its colours, as Excel's and PowerPoint's menus show them
+ * (id 10: the theme's accents, 11-26 the colourful and monochrome schemes).
+ */
+export function paletteSwatches(id: number, accents: string[]): HTMLElement {
+  const theme: Record<string, string> = { dk1: "#000000", lt1: "#FFFFFF" };
+  accents.forEach((a, k) => { theme[`accent${k + 1}`] = a; });
+  const probe = { colors: 10 } as unknown as ChartModel;
+  return h("span", { class: "palette-swatches", style: "display:inline-flex;gap:2px" }, ...Array.from({ length: 6 }, (_, i) =>
+    h("span", { style: `display:inline-block;width:14px;height:14px;background:${id === 10 ? paletteColor(probe, i, 6, accents) : schemeColor(id, i, 6, theme)}` })));
 }

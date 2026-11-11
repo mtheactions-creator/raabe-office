@@ -31,6 +31,9 @@ import { PRESENT_TEMPLATES, templateDeck } from "./templates";
 import { TRANSITION_GROUPS } from "./transitions";
 import { ANIMATION_GROUPS } from "./animations";
 import { THEME_EFFECTS } from "./themeeffects.gen";
+import { presetTile } from "./presettiles";
+import { thumb as smartArtThumb } from "./smartart-create";
+import { SMARTART_LAYOUTS } from "./smartart-catalog.gen";
 import { COLOR_SETS, FONT_SETS } from "./themesets.gen";
 import { SlideShow, type ShowScreens } from "./show";
 import { closeShowWindows, mainPosition, monitorMenu, openShowWindow, presenterViewOn, restoreMain, setMainFullscreen, setPresenterView, showTarget, swapWindows } from "./screens";
@@ -1111,8 +1114,12 @@ export class PresentApp implements EditorHost, PanelHost {
     const ratios: [string, [number, number][]][] = [["Quadrat", [[1, 1]]], ["Hochformat", [[2, 3], [3, 4], [3, 5], [4, 5]]], ["Querformat", [[3, 2], [4, 3], [5, 3], [5, 4], [16, 9], [16, 10]]]];
     return [
       { label: "Zuschneiden", run: () => this.editor.toggleCrop() },
-      { label: "Auf Form zuschneiden", submenu: () => PRESENT_SHAPES.filter((g) => !["Linien", "Interaktive Schaltflächen"].includes(g.title)).flatMap((g) => [{ heading: g.title } as MenuEntry,
-        ...g.items.filter((it) => it.tool.kind === "shape" && !it.tool.freeform).map((it) => ({ label: it.label, run: () => this.changeShape(it.tool.geometry, true) }))]) },
+      // The shapes as their icons, names as tooltips (PowerPoint's gallery, D-164).
+      { label: "Auf Form zuschneiden", submenu: () => PRESENT_SHAPES.filter((g) => !["Linien", "Interaktive Schaltflächen"].includes(g.title)).flatMap((g): MenuEntry[] => {
+        const items = g.items.filter((it) => it.tool.kind === "shape" && !it.tool.freeform);
+        return [{ heading: g.title } as MenuEntry, { block: () => pictureMenu(items.map((it, i) => ({ value: String(i), label: it.label, svg: "", node: () => h("span", { class: "shape-ico" }, shapeIcon(it)) })), 10, [22, 22], undefined,
+          (v) => { const it = items[Number(v)]; if (it.tool.kind === "shape") this.changeShape(it.tool.geometry, true); }) }];
+      }) },
       { label: "Seitenverhältnis", submenu: () => ratios.flatMap(([head, list]) => [{ heading: head } as MenuEntry, ...list.map(([a, b]) => ({ label: `${a}:${b}`, run: () => void this.cropToRatio(a / b) }))]) },
       "-",
       { label: "Ausfüllen", run: () => void this.cropFill(true) },
@@ -2256,7 +2263,9 @@ export class PresentApp implements EditorHost, PanelHost {
     const names = ["Vertikale Aufzählung", "Vertikale Blockliste", "Vertikale Bildakzentliste", "Zielliste", "Horizontale Aufzählung", "Organigramm", "Hierarchieliste", "Fortlaufende Bildliste", "Radialliste", "Einfacher Kreis",
       "Vertikale Chevronliste", "Chevronliste", "Fortlaufender Blockprozess", "Einfache Zeitachse", "Einfacher Prozess", "Umgebrochene Bildakzentliste", "Pyramidenliste", "Einfache Matrix", "Einfaches Venn", "Einfaches Ziel"];
     const conv = (id: string) => void import("./smartart-create").then((m) => m.convertToSmartArt(this, id));
-    return [...names.map((n) => ({ label: n, run: () => void import("./smartart-catalog.gen").then((c) => { const e = c.SMARTART_LAYOUTS.find((x) => x.name === n) ?? c.SMARTART_LAYOUTS[0]; conv(e.id); }) })), "-" as const,
+    // PowerPoint's menu shows each layout as a picture, its name as tooltip (D-164): drawn by our SmartArt engine.
+    const entries = names.map((n) => SMARTART_LAYOUTS.find((x) => x.name === n) ?? SMARTART_LAYOUTS[0]);
+    return [{ block: () => pictureMenu(entries.map((e, i) => ({ value: String(i), label: names[i], svg: "", node: () => smartArtThumb(e, 56, 42) })), 5, [56, 42], undefined, (v) => conv(entries[Number(v)].id)) }, "-" as const,
       { label: "Weitere SmartArt-Grafiken...", run: () => void import("./smartart-create").then((m) => m.chooseLayout().then((e) => { if (e) conv(e.id); })) }];
   }
 
@@ -3427,7 +3436,8 @@ export class PresentApp implements EditorHost, PanelHost {
         colors: () => [...COLOR_SETS.map((c) => ({ label: c.name, preview: colorSetPreview(c.colors), run: () => this.applyColorSet(c.name, c.colors) })), "-", { label: "Farben anpassen...", run: () => void this.customColorsDialog() },
           { label: "Farben des Foliendesigns zurücksetzen", disabled: !this.ownDesign(), run: () => { const d = this.ownDesign(); if (d) this.applyColorSet(d.colorName ?? d.name, d.colors as Record<string, string>); } }],
         fonts: () => [...FONT_SETS.map((f) => ({ label: f.label, run: () => this.applyFontSet(f.name, f.major, f.minor) })), "-", { label: "Schriftarten anpassen...", run: () => void this.customFontsDialog() }],
-        themeEffects: () => THEME_EFFECTS.map((e) => ({ label: e.name, checked: this.themeEffectName() === e.name, run: () => this.applyThemeEffects(e.name, e.xml) })),
+        // Each effect set shows its strongest style on a shape beside its name, as PowerPoint's Effekte menu (D-164).
+        themeEffects: () => THEME_EFFECTS.map((e) => ({ label: e.name, preview: themeEffectTile(e.xml), run: () => this.applyThemeEffects(e.name, e.xml) })),
         underline: [], outlineWeight: [], outlineDash: [], effects: this.effectsMenu(), quickStyles: () => [], zoomFit: [],
         // While an equation is edited, a built-in one goes in at its caret (as from the Formel tab, D-137).
         equations: () => BUILT_IN.map((e) => ({ label: e.name, run: () => { const s = activeMath(); if (s) s.insert(e.seq); else void insertEquation(this, e.seq); } })),
@@ -4207,4 +4217,20 @@ function colorSetPreview(colors: Record<string, string>): HTMLElement {
   const keys = ["dk2", "lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6"];
   return h("span", { class: "color-set-preview", style: "display:inline-flex;gap:1px" },
     ...keys.map((k) => h("span", { style: `display:inline-block;width:12px;height:12px;background:#${colors[k] ?? "FFFFFF"};outline:1px solid rgba(0,0,0,.15)` })));
+}
+
+/**
+ * A theme effect set's picture (D-164): its third (strongest) fill, line and effect style applied to a small shape and
+ * drawn by our renderer; the accent colour stands for the placeholder colour (phClr).
+ */
+function themeEffectTile(xml: string): HTMLElement {
+  const part = (list: string, item: string) => {
+    const body = new RegExp(`<a:${list}>([\\s\\S]*?)</a:${list}>`).exec(xml)?.[1] ?? "";
+    const items = body.match(new RegExp(`<a:${item}\\b[\\s\\S]*?</a:${item}>|<a:${item}\\b[^>]*/>`, "g")) ?? [];
+    return items[items.length - 1] ?? "";
+  };
+  const effect = part("effectStyleLst", "effectStyle").replace(/^<a:effectStyle>|<\/a:effectStyle>$/g, "");
+  const line = part("lnStyleLst", "ln");
+  const spPr = `${line}${effect}`.replace(/<a:schemeClr val="phClr"/g, '<a:srgbClr val="4472C4"').replace(/<\/a:schemeClr>/g, "</a:srgbClr>");
+  return presetTile({ label: "", xml: spPr }, 40, 32);
 }

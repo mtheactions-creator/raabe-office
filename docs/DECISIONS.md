@@ -4639,3 +4639,23 @@ The owner: "RaabeOffice uses text where MS Office uses symbols … we need to ch
 - **Not covered**: Word's ribbon (no recorded Word inventory exists; RaabeWrite's panes and line menus use the shared
   controls of D-161/D-162), dialogs, context menus, and PowerPoint probes tonight (the owner's POWERPNT.EXE was
   running, so no PowerPoint instance of ours was started; the PowerPoint side is the 2026-11-06 recording).
+  Correction (D-164): that POWERPNT.EXE was another probe of ours, not the owner's.
+
+## D-164 The 27 dropdowns D-163 left as text are pictures now (2026-11-12)
+
+Each drawn by our own code from the same data the entry applies, never from Office's thumbnails:
+- **Formel galleries** (RaabePresent, 12): each structure as MathML from the tree that is inserted (as RaabeWrite's
+  galleries); Formel (built-in equations) shows the equation beside its name.
+- **Design > Effekte** (4 tabs): the set's strongest line and effect style on a small shape (our shape renderer).
+- **Farben ändern** of charts (RaabeCalc, RaabePresent): six squares per palette (`paletteSwatches` in chart-ui);
+  **Schnelllayout** (RaabePresent): sample data in the chart's type with the layout's title, legend, labels and
+  gridlines; **Verbunddiagramm**: the three combos drawn by the chart renderer.
+- **Auf Form zuschneiden**: the shape icons of the Formen gallery; **Transformieren**: "abcde" on a path of the warp's
+  kind (arc, circle, wave, slant, bulge) - a schematic, not PowerPoint's exact warp.
+- **SmartArt**: In SmartArt konvertieren shows each layout drawn by our SmartArt engine; Farben ändern shows the first
+  four nodes' fill and outline per colour set.
+- **Bildformat** Korrekturen (Helligkeit/Kontrast), Transparenz and Farbe > Neu einfärben show the selected picture
+  with the setting painted on its pixels (an approximation of PowerPoint's filters, for the preview only; the file
+  gets PowerPoint's XML as before).
+Result of `check_picture_controls.py`: 156 of Office's 174 picture dropdowns are pictures in ours, 0 text, 18 not
+built. KNOWN is empty; an entry written down there that has become a picture fails the check too.

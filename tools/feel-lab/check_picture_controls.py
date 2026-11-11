@@ -53,24 +53,9 @@ TEXT_GALLERIES = {
     "powerpoint|Handzettelmaster|Handzettelausrichtung", "powerpoint|Notizenmaster|Notizenseitenausrichtung",
 }
 
-# Differences written down (D-163): "<app>|<tab>|<path>" -> reason.
-_EQ = "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
-_FX = "theme effect previews (effectStyleLst on a sample shape) not built yet"
-_PIC = "the previews need the selected picture; without one the inventory lists the names (to check by hand)"
-KNOWN: dict[str, str] = {
-    "excel|Diagrammentwurf|Farben ändern": "colour rows of the chart palettes not built yet",
-    "powerpoint|Diagrammentwurf|Farben ändern": "colour rows of the chart palettes not built yet",
-    "powerpoint|Diagrammentwurf|Schnelllayout": "layout pictures exist in RaabeCalc's ribbon gallery, not yet in RaabePresent's menu",
-    "excel|Einfügen|Verbunddiagramm einfügen": "combo charts are applied after insertion; their pictures not built yet",
-    "powerpoint|Bildformat|Farbe": _PIC, "powerpoint|Bildformat|Korrekturen": _PIC, "powerpoint|Bildformat|Transparenz": _PIC,
-    "powerpoint|Bildformat|Zuschneiden > Auf Form zuschneiden": "shape icons exist (Formen gallery); this menu still lists names",
-    **{f"powerpoint|{t}|Effekte": _FX for t in ("Entwurf", "Folienmaster", "Handzettelmaster", "Notizenmaster")},
-    **{f"powerpoint|Formel|{x}": _EQ for x in ("Akzent", "Bruch", "Eckige Klammer", "Formel", "Funktion", "Grenzwert und Logarithmus", "Großer Operator",
-                                             "Hoch/Tief", "Integral", "Matrix", "Operator", "Wurzel")},
-    "powerpoint|Formformat|Texteffekte > Transformieren": "warped-text previews not built yet",
-    "powerpoint|SmartArt-Design|Farben ändern": "SmartArt colour previews not built yet",
-    "powerpoint|Start|In SmartArt konvertieren": "SmartArt layout previews not built yet",
-}
+# Differences written down (D-163, D-164): "<app>|<tab>|<path>" -> reason. Emptied by D-164; an entry that has
+# become a picture fails the check too, so the list stays true.
+KNOWN: dict[str, str] = {}
 
 
 def norm(s: str) -> str:
@@ -208,6 +193,8 @@ def main() -> None:
                      **({"by_eye": True} if o.get("by_eye") else {}), **({"known": KNOWN[p]} if p in KNOWN else {})})
     pics = [r for r in rows if r["kind"] == "picture"]
     wrong = [r for r in pics if r["ours"] == "text" and "known" not in r]
+    # A difference written down that is fixed now: take it off KNOWN.
+    wrong += [r for r in pics if "known" in r and r["ours"] != "text"]
     summary = {
         "office picture dropdowns": len(pics), "ours picture": sum(1 for r in pics if r["ours"] == "picture"),
         "ours text": sum(1 for r in pics if r["ours"] == "text"), "not built": sum(1 for r in pics if r["ours"] is None),

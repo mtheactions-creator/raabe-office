@@ -572,6 +572,39 @@ function tileGrid(app: PresentApp, tiles: Tile[], cols: number): HTMLElement {
   return grid;
 }
 
+/** A tile of the Bildformat galleries whose look is painted by `paint` and whose pick runs `run` (D-164). */
+export interface PaintTile { label: string; run: () => void; paint?: (px: ImageData) => void }
+
+/** The selected picture with each entry's setting, as tiles (Helligkeit/Kontrast, Transparenz, Neu einfärben). */
+export function paintTiles(app: PresentApp, tiles: PaintTile[], cols: number): HTMLElement {
+  const W = 72, H = 54;
+  const grid = h("div", { class: "pfx-grid", style: `grid-template-columns:repeat(${cols}, ${W + 8}px)` });
+  const canvases = tiles.map((t) => {
+    const c = h("canvas", { width: String(W), height: String(H) }) as HTMLCanvasElement;
+    grid.append(h("button", { class: "pfx-tile", role: "menuitem", "aria-label": t.label, "data-tip": t.label, onclick: () => { closePopup(); t.run(); } }, c));
+    return c;
+  });
+  void thumbSource(app, W, H).then((src) => {
+    if (!src) return;
+    tiles.forEach((t, i) => {
+      const px = new ImageData(new Uint8ClampedArray(src.data), W, H);
+      t.paint?.(px);
+      canvases[i].getContext("2d")?.putImageData(px, 0, 0);
+    });
+  });
+  return grid;
+}
+
+/** Pixel painters for those tiles: brightness and contrast (-1 … 1), opacity, and a map of each pixel's lightness. */
+export const paint = {
+  lum: (br: number, c: number) => (px: ImageData) => { const d = px.data; for (let i = 0; i < d.length; i += 4) for (let k = 0; k < 3; k++) d[i + k] = (d[i + k] - 128) * (1 + c) + 128 + br * 255; },
+  alpha: (a: number) => (px: ImageData) => { const d = px.data; for (let i = 3; i < d.length; i += 4) d[i] = d[i] * a; },
+  tone: (map: (l: number) => [number, number, number]) => (px: ImageData) => {
+    const d = px.data;
+    for (let i = 0; i < d.length; i += 4) { const l = (0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]) / 255; const [r, g, b] = map(l); d[i] = r; d[i + 1] = g; d[i + 2] = b; }
+  },
+};
+
 /** Schärfen/Weichzeichnen entries of Korrekturen (PowerPoint's labels). */
 export function sharpenEntries(app: PresentApp): MenuEntry[] {
   const t = (amount: number, label: string): Tile => ({ label, group: "sharpenSoften", fx: amount ? { name: "sharpenSoften", attrs: { amount: String(amount) } } : null });

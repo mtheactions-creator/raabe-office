@@ -210,16 +210,38 @@ function smartArtLayoutMenu(app: PresentApp) {
 /** Farben ändern: PowerPoint's 38 colour sets by name under its headings (recorded, D-101). */
 function smartArtColorMenu(app: PresentApp) {
   const id = selectedDiagram(app);
-  const cur = id !== null ? sc.diagramOf(app, id)?.scheme : undefined;
-  const out: ({ label: string; run: () => void; checked?: boolean } | { heading: string })[] = [];
+  // the current set is shown by the diagram itself; the menu shows each set's colours
+  const out: ({ label: string; run: () => void; preview?: HTMLElement } | { heading: string })[] = [];
   let last = "";
   for (const c of SMARTART_COLORS) {
     const head = c.cat === "mainScheme" ? "Primärdesignfarben" : c.cat === "colorful" ? "Bunt" : `Akzent ${c.cat.replace("accent", "")}`;
     if (head !== last) { out.push({ heading: head }); last = head; }
     const key = c.id.split("/").pop()!;
-    out.push({ label: c.name, checked: key === cur, run: () => { if (id !== null) sc.setColors(app, id, key); } });
+    out.push({ label: c.name, preview: colorSetSwatches(c), run: () => { if (id !== null) sc.setColors(app, id, key); } });
   }
   return out;
+}
+
+/** A SmartArt colour set's picture (D-164): its first four nodes' fill (and outline) in the Office colours. */
+function colorSetSwatches(c: (typeof SMARTART_COLORS)[number]): HTMLElement {
+  const base: Record<string, string> = { lt1: "#FFFFFF", dk1: "#000000", tx1: "#000000", bg1: "#FFFFFF", dk2: "#44546A", lt2: "#E7E6E6",
+    accent1: "#4472C4", accent2: "#ED7D31", accent3: "#A5A5A5", accent4: "#FFC000", accent5: "#5B9BD5", accent6: "#70AD47" };
+  const node = (c.labels as Record<string, { fill?: { clr?: string[] }; line?: { clr?: string[] } }>).node1 ?? {};
+  const pick = (list: string[] | undefined, i: number) => {
+    const raw = list?.length ? list[i % list.length] : "accent1";
+    const [name, ...mods] = raw.split(" ");
+    let hex = base[name] ?? "#4472C4";
+    for (const m of mods) {
+      const [k, v] = m.split("=");
+      const f = Number(v) / 100000;
+      if (k === "alpha" && f === 0) return "transparent";
+      const ch = (x: number) => (k === "tint" ? Math.round(x + (255 - x) * (1 - f)) : k === "shade" ? Math.round(x * f) : x);
+      if (k === "tint" || k === "shade") hex = "#" + [1, 3, 5].map((j) => ch(parseInt(hex.slice(j, j + 2), 16)).toString(16).padStart(2, "0")).join("");
+    }
+    return hex;
+  };
+  return h("span", { style: "display:inline-flex;gap:2px" }, ...[0, 1, 2, 3].map((i) =>
+    h("span", { style: `display:inline-block;width:13px;height:13px;background:${pick(node.fill?.clr, i)};outline:1px solid ${pick(node.line?.clr, i)}` })));
 }
 
 /** SmartArt-Formatvorlagen: PowerPoint's 14 quick styles by name (recorded, D-101). */

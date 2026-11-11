@@ -7,21 +7,21 @@
  },
  "summary": {
   "office picture dropdowns": 174,
-  "ours picture": 129,
-  "ours text": 27,
+  "ours picture": 156,
+  "ours text": 0,
   "not built": 18,
   "office text dropdowns": 181,
   "known": 27,
   "per app": {
    "excel": {
     "office pictures": 32,
-    "ours picture": 24,
-    "ours text": 2
+    "ours picture": 26,
+    "ours text": 0
    },
    "powerpoint": {
     "office pictures": 142,
-    "ours picture": 105,
-    "ours text": 25
+    "ours picture": 130,
+    "ours text": 0
    }
   }
  },
@@ -179,8 +179,8 @@
    "office": "excel|Diagrammentwurf|Farben ändern",
    "kind": "picture",
    "n": 21,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "colour rows of the chart palettes not built yet"
   },
   {
@@ -307,8 +307,8 @@
    "office": "excel|Einfügen|Verbunddiagramm einfügen",
    "kind": "picture",
    "n": 4,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "combo charts are applied after insertion; their pictures not built yet"
   },
   {
@@ -1111,8 +1111,8 @@
    "office": "powerpoint|Bildformat|Farbe",
    "kind": "picture",
    "n": 38,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the previews need the selected picture; without one the inventory lists the names (to check by hand)"
   },
   {
@@ -1133,8 +1133,8 @@
    "office": "powerpoint|Bildformat|Korrekturen",
    "kind": "picture",
    "n": 31,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the previews need the selected picture; without one the inventory lists the names (to check by hand)"
   },
   {
@@ -1148,8 +1148,8 @@
    "office": "powerpoint|Bildformat|Transparenz",
    "kind": "picture",
    "n": 8,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the previews need the selected picture; without one the inventory lists the names (to check by hand)"
   },
   {
@@ -1163,8 +1163,8 @@
    "office": "powerpoint|Bildformat|Zuschneiden > Auf Form zuschneiden",
    "kind": "picture",
    "n": 159,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "shape icons exist (Formen gallery); this menu still lists names"
   },
   {
@@ -1263,16 +1263,16 @@
    "office": "powerpoint|Diagrammentwurf|Farben ändern",
    "kind": "picture",
    "n": 21,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "colour rows of the chart palettes not built yet"
   },
   {
    "office": "powerpoint|Diagrammentwurf|Schnelllayout",
    "kind": "picture",
    "n": 11,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "layout pictures exist in RaabeCalc's ribbon gallery, not yet in RaabePresent's menu"
   },
   {
@@ -1356,8 +1356,8 @@
    "office": "powerpoint|Entwurf|Effekte",
    "kind": "picture",
    "n": 15,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "theme effect previews (effectStyleLst on a sample shape) not built yet"
   },
   {
@@ -1415,8 +1415,8 @@
    "office": "powerpoint|Folienmaster|Effekte",
    "kind": "picture",
    "n": 15,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "theme effect previews (effectStyleLst on a sample shape) not built yet"
   },
   {
@@ -1607,96 +1607,96 @@
    "office": "powerpoint|Formel|Akzent",
    "kind": "picture",
    "n": 27,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
   },
   {
    "office": "powerpoint|Formel|Bruch",
    "kind": "picture",
    "n": 9,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
   },
   {
    "office": "powerpoint|Formel|Eckige Klammer",
    "kind": "picture",
    "n": 45,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
   },
   {
    "office": "powerpoint|Formel|Formel",
    "kind": "picture",
    "n": 9,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
   },
   {
    "office": "powerpoint|Formel|Funktion",
    "kind": "picture",
    "n": 31,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
   },
   {
    "office": "powerpoint|Formel|Grenzwert und Logarithmus",
    "kind": "picture",
    "n": 8,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
   },
   {
    "office": "powerpoint|Formel|Großer Operator",
    "kind": "picture",
    "n": 44,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
   },
   {
    "office": "powerpoint|Formel|Hoch/Tief",
    "kind": "picture",
    "n": 8,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
   },
   {
    "office": "powerpoint|Formel|Integral",
    "kind": "picture",
    "n": 21,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
   },
   {
    "office": "powerpoint|Formel|Matrix",
    "kind": "picture",
    "n": 22,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
   },
   {
    "office": "powerpoint|Formel|Operator",
    "kind": "picture",
    "n": 21,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
   },
   {
    "office": "powerpoint|Formel|Wurzel",
    "kind": "picture",
    "n": 6,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
   },
   {
@@ -1879,8 +1879,8 @@
    "office": "powerpoint|Formformat|Texteffekte > Transformieren",
    "kind": "picture",
    "n": 41,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "warped-text previews not built yet"
   },
   {
@@ -1936,8 +1936,8 @@
    "office": "powerpoint|Handzettelmaster|Effekte",
    "kind": "picture",
    "n": 15,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "theme effect previews (effectStyleLst on a sample shape) not built yet"
   },
   {
@@ -1996,8 +1996,8 @@
    "office": "powerpoint|Notizenmaster|Effekte",
    "kind": "picture",
    "n": 15,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "theme effect previews (effectStyleLst on a sample shape) not built yet"
   },
   {
@@ -2042,8 +2042,8 @@
    "office": "powerpoint|SmartArt-Design|Farben ändern",
    "kind": "picture",
    "n": 43,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "SmartArt colour previews not built yet"
   },
   {
@@ -2234,8 +2234,8 @@
    "office": "powerpoint|Start|In SmartArt konvertieren",
    "kind": "picture",
    "n": 21,
-   "ours": "text",
-   "status": "Office picture, wir text",
+   "ours": "picture",
+   "status": "gleich",
    "known": "SmartArt layout previews not built yet"
   },
   {
@@ -2572,8 +2572,8 @@
    "office": "powerpoint|Übergänge|Sound",
    "kind": "text",
    "n": 24,
-   "ours": null,
-   "status": "fehlt",
+   "ours": "text",
+   "status": "gleich",
    "by_eye": true
   },
   {

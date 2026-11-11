@@ -7,6 +7,8 @@ import { tableEffectsMenu } from "./tablefx";
 import { MORE_COLORS } from "./colors";
 import { colorXml } from "./colors";
 import { weightPicture, pictures, pictureMenu, closePopup, h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
+import { paletteSwatches } from "@raabe/chart-ui";
+const OFFICE_ACCENTS = ["#4472C4", "#ED7D31", "#A5A5A5", "#FFC000", "#5B9BD5", "#70AD47"];
 import { PptxDom, type ShapeView } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
 import { LINE_WEIGHTS } from "./lines";
@@ -19,7 +21,7 @@ import * as T from "./textops";
 import * as S from "./shapeops";
 import * as CH from "./chartops";
 import * as TC from "./tablecells";
-import { artisticEntries, colorEntries, sharpenEntries } from "./picfx";
+import { artisticEntries, colorEntries, paint, paintTiles, sharpenEntries, type PaintTile } from "./picfx";
 import { textEffectEntries, textThreeD, transformMenu } from "./shapefx";
 
 const { kid, kids, make, num, fragment } = PptxDom;
@@ -63,12 +65,16 @@ export function contextHost(app: PresentApp): ContextTabHost {
       k === "h" ? "Formenhöhe:" : "Formenbreite:", k === "h" ? "shape.heightBox" : "shape.widthBox", k === "h" ? "shape-height" : "shape-width", k === "h" ? "H" : "RR"),
     pictureColor: () => pictureColor(app),
     pictureArtistic: () => artisticEntries(app),
-    pictureTransparency: () => [0, 15, 30, 50, 65, 80, 95].map((p) => ({ label: `Transparenz: ${p}%`, run: () => blipEffect(app, "Transparenz", (blip) => { remove(blip, "alphaModFix"); if (p) blip.prepend(make(blip.ownerDocument, "a:alphaModFix", { amt: (100 - p) * 1000 })); }) })),
+    // Transparenz, Helligkeit/Kontrast and Neu einfärben show the selected picture with the setting (D-164).
+    pictureTransparency: () => [{ block: () => paintTiles(app, [0, 15, 30, 50, 65, 80, 95].map((p) => ({ label: `Transparenz: ${p}%`, paint: paint.alpha(1 - p / 100),
+      run: () => blipEffect(app, "Transparenz", (blip) => { remove(blip, "alphaModFix"); if (p) blip.prepend(make(blip.ownerDocument, "a:alphaModFix", { amt: (100 - p) * 1000 })); }) })), 7) }],
     pictureCorrections: () => {
       const out: MenuEntry[] = [...sharpenEntries(app), { heading: "Helligkeit/Kontrast" }];
       // PowerPoint's names: "Helligkeit: 0 % (Normal) Kontrast: +20 %".
       const pct = (v: number) => `${v > 0 ? "+" : ""}${v} %${v === 0 ? " (Normal)" : ""}`;
-      for (const c of [-40, -20, 0, 20, 40]) for (const br of [-40, -20, 0, 20, 40]) out.push({ label: `Helligkeit: ${pct(br)} Kontrast: ${pct(c)}`, run: () => blipEffect(app, "Korrekturen", (blip) => { remove(blip, "lum"); if (br || c) blip.append(make(blip.ownerDocument, "a:lum", { bright: br * 1000, contrast: c * 1000 })); }) });
+      const tiles: PaintTile[] = [];
+      for (const c of [-40, -20, 0, 20, 40]) for (const br of [-40, -20, 0, 20, 40]) tiles.push({ label: `Helligkeit: ${pct(br)} Kontrast: ${pct(c)}`, paint: paint.lum(br / 100, c / 100), run: () => blipEffect(app, "Korrekturen", (blip) => { remove(blip, "lum"); if (br || c) blip.append(make(blip.ownerDocument, "a:lum", { bright: br * 1000, contrast: c * 1000 })); }) });
+      out.push({ block: () => paintTiles(app, tiles, 5) });
       out.push("-", { label: "Bildkorrekturoptionen...", run: () => void app.commands.run("draw.format") });
       return out;
     },
@@ -81,9 +87,10 @@ export function contextHost(app: PresentApp): ContextTabHost {
     penColor: () => `#${app.tablePen.color.length === 6 ? app.tablePen.color : "000000"}`,
     setPenColor: (c) => { app.tablePen.color = c.replace("#", "").toUpperCase(); app.editor.endText(); app.editor.tool = { kind: "tableDraw" }; app.editor.render(); app.updateChrome(); },
     chartKinds: () => CH.CHART_KINDS.map(([label, k]) => ({ label, run: () => CH.changeType(app, k) })),
-    quickLayouts: () => Array.from({ length: 11 }, (_, i) => ({ label: `Layout ${i + 1}`, run: () => CH.quickLayout(app, i + 1) })),
-    chartColors: () => [{ heading: "Bunt" }, ...[10, 11, 12, 13].map((k) => ({ label: `Farbige Palette ${k - 9}`, run: () => CH.setColors(app, k) })),
-      { heading: "Einfarbig" }, ...Array.from({ length: 13 }, (_, i) => ({ label: `Monochrome Palette ${i + 1}`, run: () => CH.setColors(app, 14 + i) }))],
+    quickLayouts: () => { const k = CH.selectedKind(app); return [{ block: () => pictureMenu(Array.from({ length: 11 }, (_, i) => ({ value: String(i + 1), label: `Layout ${i + 1}`, svg: "", node: () => CH.layoutPicture(k, i + 1) })), 4, [56, 44], undefined, (v) => CH.quickLayout(app, Number(v))) }]; },
+    // Farben ändern shows each palette's colours (D-164); Schnelllayout a picture of each layout.
+    chartColors: () => [{ heading: "Bunt" }, ...[10, 11, 12, 13].map((k) => ({ label: `Farbige Palette ${k - 9}`, preview: paletteSwatches(k, OFFICE_ACCENTS), run: () => CH.setColors(app, k) })),
+      { heading: "Einfarbig" }, ...Array.from({ length: 13 }, (_, i) => ({ label: `Monochrome Palette ${i + 1}`, preview: paletteSwatches(14 + i, OFFICE_ACCENTS), run: () => CH.setColors(app, 14 + i) }))],
     tableSpin: (k) => {
       const labels = { row: "Höhe:", col: "Breite:", h: "Höhe:", w: "Breite:" }, cmds = { row: "table.rowHeight", col: "table.colWidth", h: "table.height", w: "table.width" };
       return spin(() => tableSizeText(app, k), (v) => setTableSize(app, k, cmText(v)), (d) => setTableSize(app, k, Math.max(36000, tableSize(app, k) + d * 36000)), labels[k], cmds[k], k === "row" || k === "h" ? "shape-height" : "shape-width", { row: "P", col: "B", h: "X", w: "LB" }[k]);
@@ -134,16 +141,22 @@ function pictureColor(app: PresentApp): MenuEntry[] {
   const dark = (ref: string) => `<a:duotone><a:schemeClr val="${ref}"><a:shade val="45000"/><a:satMod val="135000"/></a:schemeClr><a:prstClr val="white"/></a:duotone>`;
   const light = (ref: string) => `<a:duotone><a:prstClr val="black"/><a:schemeClr val="${ref}"><a:tint val="45000"/><a:satMod val="400000"/></a:schemeClr></a:duotone>`;
   const accents = [1, 2, 3, 4, 5, 6];
-  return [...colorEntries(app), { heading: "Neu einfärben" },
+  const rgb = (ref: string) => { const x = (colors[ref] ?? "808080").replace("#", ""); return [0, 2, 4].map((i) => parseInt(x.slice(i, i + 2), 16)) as [number, number, number]; };
+  const mixTo = (a: [number, number, number], b: [number, number, number], t: number) => a.map((v, i) => v + (b[i] - v) * t) as [number, number, number];
+  const darkTone = (ref: string) => paint.tone((l) => mixTo(mixTo([0, 0, 0], rgb(ref), 0.55), [255, 255, 255], l));
+  const lightTone = (ref: string) => paint.tone((l) => mixTo([0, 0, 0], mixTo(rgb(ref), [255, 255, 255], 0.55), l));
+  const tiles: PaintTile[] = [
     { label: "Keine Neueinfärbung", run: () => blipEffect(app, "Farbe", clear) },
-    { label: "Graustufe", run: () => set("<a:grayscl/>") },
-    { label: "Sepia", run: () => set('<a:duotone><a:prstClr val="black"/><a:srgbClr val="D9C3A5"><a:tint val="50000"/><a:satMod val="180000"/></a:srgbClr></a:duotone>') },
-    { label: "Ausgeblichen", run: () => set('<a:lum bright="70000" contrast="-70000"/>') },
-    ...[25, 50, 75].map((t) => ({ label: `Schwarzweiß: ${t} %`, run: () => set(`<a:biLevel thresh="${t * 1000}"/>`) })),
-    { label: `${word("tx2")}, Textfarbe 2 dunkel`, run: () => set(dark("tx2")) },
-    ...accents.map((n) => ({ label: `${word(`accent${n}`)}, Akzentfarbe ${n} dunkel`, run: () => set(dark(`accent${n}`)) })),
-    { label: `${word("bg2")}, Hintergrundfarbe 2 hell`, run: () => set(light("bg2")) },
-    ...accents.map((n) => ({ label: `${word(`accent${n}`)}, Akzentfarbe ${n} hell`, run: () => set(light(`accent${n}`)) })),
+    { label: "Graustufe", paint: paint.tone((l) => [l * 255, l * 255, l * 255]), run: () => set("<a:grayscl/>") },
+    { label: "Sepia", paint: paint.tone((l) => mixTo([0, 0, 0], [236, 214, 180], l)), run: () => set('<a:duotone><a:prstClr val="black"/><a:srgbClr val="D9C3A5"><a:tint val="50000"/><a:satMod val="180000"/></a:srgbClr></a:duotone>') },
+    { label: "Ausgeblichen", paint: paint.lum(0.7, -0.7), run: () => set('<a:lum bright="70000" contrast="-70000"/>') },
+    ...[25, 50, 75].map((t) => ({ label: `Schwarzweiß: ${t} %`, paint: paint.tone((l) => (l * 100 > t ? [255, 255, 255] : [0, 0, 0]) as [number, number, number]), run: () => set(`<a:biLevel thresh="${t * 1000}"/>`) })),
+    { label: `${word("tx2")}, Textfarbe 2 dunkel`, paint: darkTone("tx2"), run: () => set(dark("tx2")) },
+    ...accents.map((n) => ({ label: `${word(`accent${n}`)}, Akzentfarbe ${n} dunkel`, paint: darkTone(`accent${n}`), run: () => set(dark(`accent${n}`)) })),
+    { label: `${word("bg2")}, Hintergrundfarbe 2 hell`, paint: lightTone("bg2"), run: () => set(light("bg2")) },
+    ...accents.map((n) => ({ label: `${word(`accent${n}`)}, Akzentfarbe ${n} hell`, paint: lightTone(`accent${n}`), run: () => set(light(`accent${n}`)) })),
+  ];
+  return [...colorEntries(app), { heading: "Neu einfärben" }, { block: () => paintTiles(app, tiles, 7) },
     "-", { label: "Bildfarboptionen...", run: () => void app.commands.run("draw.format") }];
 }
 

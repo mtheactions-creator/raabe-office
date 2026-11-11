@@ -26,7 +26,7 @@ import { parseClipboard, rangeHtml, rangeText, type Copied } from "./clipboard";
 import { addRecent, loadRecent, loadSettings, removeRecent, saveSettings, setPinned, type Settings } from "./store";
 import { dialogs } from "./dialogs";
 import { chartsFeature } from "./charts/feature";
-import { chartMenus, chartTypeDialog, type ChartTypeHost } from "@raabe/chart-ui";
+import { chartMenus, chartTypeDialog, paletteSwatches, type ChartTypeHost } from "@raabe/chart-ui";
 import { printFeature } from "./print";
 import { notesFeature } from "./notes";
 import { traceFeature } from "./trace";
@@ -2502,7 +2502,9 @@ export class CalcApp {
   private chartTab(): import("@raabe/shell").Tab {
     const b = (cmd: string, key: string): import("@raabe/shell").Control => ({ type: "button", cmd, key, size: "large" });
     const charts = this.charts;
-    const colors = (k: number, label: string): MenuEntry => ({ label, checked: charts.colors() === k, hover: () => charts.previewColors(k), run: () => { charts.previewColors(null); charts.setColors(k); } });
+    // Each palette shows its colours (Excel's menu, D-164).
+    const OFFICE = ["#4472C4", "#ED7D31", "#A5A5A5", "#FFC000", "#5B9BD5", "#70AD47"];
+    const colors = (k: number, label: string): MenuEntry => ({ label, preview: paletteSwatches(k, OFFICE), hover: () => charts.previewColors(k), run: () => { charts.previewColors(null); charts.setColors(k); } });
     return this.chartTabDef ??= {
       id: "chartDesign", label: "Diagrammentwurf", key: "JC", contextual: true, shrink: [],
       groups: [
