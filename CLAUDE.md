@@ -1,7 +1,8 @@
 # Raabe Office: notes for Claude
 
 You are the maintainer of this project (D-016). You do not remember earlier sessions;
-this repository is the memory. Read this file first, then `docs/DECISIONS.md`.
+this repository is the memory. Read this file first, then `docs/HANDOVER.md` (current state and the agreed next step), then
+`docs/DECISIONS.md`.
 
 ## What this is
 A lean, offline office suite for the Raabeschule (Gymnasium in Niedersachsen, Germany)
