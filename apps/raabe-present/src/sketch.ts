@@ -4,7 +4,7 @@
 // We draw the shape with a displacement of our own, stronger from Gekrümmt to Skizze (PowerPoint's own
 // drawing of the sketch is not documented).
 
-import type { MenuEntry } from "@raabe/shell";
+import { pictureMenu, type MenuEntry } from "@raabe/shell";
 import { PptxDom } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
 
@@ -46,13 +46,25 @@ export function setSketch(spPr: Element, type: string | null): void {
 }
 
 /** Formkontur > Skizziert's entries. */
+/** The pictures of the Skizziert gallery (D-163): a line drawn straight, curved, by hand or scribbled (our own). */
+const SKETCH_PATHS: Record<string, string> = {
+  none: "M4 12 H100",
+  lineSketchCurved: "M4 12 C 30 8, 50 16, 76 11 S 96 12, 100 12",
+  lineSketchFreehand: "M4 12 C 14 9, 20 15, 32 11 S 48 15, 58 10 S 78 15, 88 11 L 100 12",
+  lineSketchScribble: "M4 11 C 20 8, 36 15, 52 10 S 84 14, 100 11 M6 13 C 24 15, 40 9, 60 13 S 86 10, 99 13",
+};
+
 export function sketchMenu(app: PresentApp): MenuEntry[] {
-  return SKETCH_TYPES.map(([label, type]) => ({ label, run: () => {
+  const apply = (label: string, type: string | null) => {
     const views = app.editor.selectedViews.filter((v) => v.kind === "sp" || v.kind === "cxnSp" || v.kind === "pic");
     app.editor.edit(type ? `Skizziert: ${label}` : "Skizziert", () => {
       for (const v of views) { const sp = kid(app.editor.shapeEl(v.id), "spPr"); if (sp) setSketch(sp, type); }
     });
-  } }));
+  };
+  // PowerPoint shows the four kinds as pictures, their names as tooltips.
+  const entries = SKETCH_TYPES.map(([label, type]) => ({ value: type ?? "none", label,
+    svg: `<svg xmlns="http://www.w3.org/2000/svg" width="104" height="24" aria-hidden="true"><path d="${SKETCH_PATHS[type ?? "none"]}" fill="none" stroke="#404040" stroke-width="1.6" stroke-linecap="round"/></svg>` }));
+  return [{ block: () => pictureMenu(entries, 1, [104, 24], undefined, (v) => { const t = SKETCH_TYPES.find(([, x]) => (x ?? "none") === v); if (t) apply(t[0], t[1]); }) }];
 }
 
 let filterCount = 0;

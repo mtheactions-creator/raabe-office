@@ -1,0 +1,2601 @@
+{
+ "meta": {
+  "recorded": "2026-11-11",
+  "office": "results/2026-11-05-excel-inventory.json, results/2026-11-06-powerpoint-inventory.json (UI Automation types)",
+  "ours": "__calc.inventory(), __present.inventory() in a headless Edge on the dev servers",
+  "rule": "Office's side comes from the recorded inventories (our own Office instances, UI Automation; labels and control types\nonly, D-058): results/2026-11-05-excel-inventory.json and results/2026-11-06-powerpoint-inventory.json. UI Automation\nnames a gallery's entries ListItem and a menu's entries MenuItem; a dropdown whose entries are mostly ListItems is a\ngallery. Galleries whose entries Office draws as text (Zeilenabstand \"1,0\", the function lists of Mehr Funktionen) are\nlisted in TEXT_GALLERIES, looked at by eye in Office; everything else in a gallery is a picture (often with its name).\nThe Format panes are checked by unit tests against their own recordings (packages/chart-ui/test/panepictures.test.ts)."
+ },
+ "summary": {
+  "office picture dropdowns": 174,
+  "ours picture": 129,
+  "ours text": 27,
+  "not built": 18,
+  "office text dropdowns": 181,
+  "known": 27,
+  "per app": {
+   "excel": {
+    "office pictures": 32,
+    "ours picture": 24,
+    "ours text": 2
+   },
+   "powerpoint": {
+    "office pictures": 142,
+    "ours picture": 105,
+    "ours text": 25
+   }
+  }
+ },
+ "rows": [
+  {
+   "office": "excel|Ansicht|Fenster fixieren",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Ansicht|Fenster wechseln",
+   "kind": "text",
+   "n": 1,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Ansicht|Fokuszelle",
+   "kind": "text",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Automatisieren|Neues Skript",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Automatisieren|Skripte anzeigen",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Daten|Alle aktualisieren",
+   "kind": "text",
+   "n": 6,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Daten|Datenmodell",
+   "kind": "text",
+   "n": 5,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Daten|Datenüberprüfung...",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Daten|Gliederung",
+   "kind": "text",
+   "n": 8,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Daten|Von Bild",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Daten|Was-wäre-wenn-Analyse",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Diagrammentwurf|Diagrammelement hinzufügen",
+   "kind": "text",
+   "n": 11,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Diagrammentwurf|Diagrammelement hinzufügen > Achsen",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Diagrammentwurf|Diagrammelement hinzufügen > Achsentitel",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Diagrammentwurf|Diagrammelement hinzufügen > Datenbeschriftungen",
+   "kind": "text",
+   "n": 7,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Diagrammentwurf|Diagrammelement hinzufügen > Datentabelle",
+   "kind": "text",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Diagrammentwurf|Diagrammelement hinzufügen > Diagrammtitel",
+   "kind": "text",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Diagrammentwurf|Diagrammelement hinzufügen > Fehlerindikatoren",
+   "kind": "text",
+   "n": 5,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Diagrammentwurf|Diagrammelement hinzufügen > Gitternetzlinien",
+   "kind": "text",
+   "n": 5,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Diagrammentwurf|Diagrammelement hinzufügen > Legende",
+   "kind": "text",
+   "n": 6,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Diagrammentwurf|Farben ändern",
+   "kind": "picture",
+   "n": 21,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "colour rows of the chart palettes not built yet"
+  },
+  {
+   "office": "excel|Diagrammentwurf|Schnelllayout",
+   "kind": "picture",
+   "n": 11,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Einfügen|Hierarchiediagramm einfügen",
+   "kind": "picture",
+   "n": 3,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Einfügen|Illustrationen",
+   "kind": "text",
+   "n": 7,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Einfügen|Illustrationen > Bilder",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Einfügen|Illustrationen > Formen",
+   "kind": "picture",
+   "n": 178,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Einfügen|Illustrationen > Screenshot",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Einfügen|Karten",
+   "kind": "picture",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Einfügen|Kreis- oder Ringdiagramm einfügen",
+   "kind": "picture",
+   "n": 6,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Einfügen|Linien- oder Flächendiagramm einfügen",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Einfügen|Link",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Einfügen|PivotChart",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Einfügen|PivotTable",
+   "kind": "text",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Einfügen|Punkt (XY)- oder Blasendiagramm einfügen",
+   "kind": "picture",
+   "n": 8,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Einfügen|Statistikdiagramm einfügen",
+   "kind": "picture",
+   "n": 4,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Einfügen|Säulen- oder Balkendiagramm einfügen",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Einfügen|Text",
+   "kind": "text",
+   "n": 6,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Einfügen|Text > WordArt",
+   "kind": "picture",
+   "n": 14,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Einfügen|Verbunddiagramm einfügen",
+   "kind": "picture",
+   "n": 4,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "combo charts are applied after insertion; their pictures not built yet"
+  },
+  {
+   "office": "excel|Einfügen|Wasserfall-, Trichter-, Kurs-, Oberflächen- oder Netzdiagramm einfügen",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Entwurf|Berichtslayout",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Entwurf|Gesamtergebnisse",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Entwurf|Leere Zeilen",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Entwurf|Teilergebnisse",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Formeln|AutoSumme",
+   "kind": "text",
+   "n": 7,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Formeln|Berechnungsoptionen",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Formeln|Berechnungsoptionen > Kompatibilität & Version",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Formeln|Datum u. Uhrzeit",
+   "kind": "text",
+   "n": 25,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Formeln|Definierte Namen",
+   "kind": "text",
+   "n": 5,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Formeln|Finanzmathematik",
+   "kind": "text",
+   "n": 60,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Formeln|Formelüberwachung",
+   "kind": "text",
+   "n": 9,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Formeln|Logisch",
+   "kind": "text",
+   "n": 20,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Formeln|Mathematik und Trigonometrie",
+   "kind": "text",
+   "n": 82,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Formeln|Mehr Funktionen",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Formeln|Mehr Funktionen > Cube",
+   "kind": "text",
+   "n": 8,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Formeln|Mehr Funktionen > Informationen",
+   "kind": "text",
+   "n": 22,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Formeln|Mehr Funktionen > Kompatibilität",
+   "kind": "text",
+   "n": 47,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Formeln|Mehr Funktionen > Statistik",
+   "kind": "text",
+   "n": 115,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Formeln|Mehr Funktionen > Technik",
+   "kind": "text",
+   "n": 59,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Formeln|Mehr Funktionen > Web",
+   "kind": "text",
+   "n": 6,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Formeln|Nachschlagen und Verweisen",
+   "kind": "text",
+   "n": 46,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Formeln|Text",
+   "kind": "text",
+   "n": 43,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Formeln|Zuletzt verwendet",
+   "kind": "text",
+   "n": 11,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|PivotTable-Analyse|Aktionen",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|PivotTable-Analyse|Aktionen > Auswählen",
+   "kind": "text",
+   "n": 5,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|PivotTable-Analyse|Aktionen > Löschen",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|PivotTable-Analyse|Aktualisieren",
+   "kind": "text",
+   "n": 6,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|PivotTable-Analyse|Datenquelle ändern...",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|PivotTable-Analyse|Einblenden",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|PivotTable-Analyse|Felder, Elemente und Gruppen",
+   "kind": "text",
+   "n": 7,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|PivotTable-Analyse|PivotTable",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Seitenlayout|Ausrichtung",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Seitenlayout|Breite",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Seitenlayout|Designs",
+   "kind": "picture",
+   "n": 38,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Seitenlayout|Druckbereich",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Seitenlayout|Ebene nach hinten",
+   "kind": "text",
+   "n": 1,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Seitenlayout|Ebene nach vorne",
+   "kind": "text",
+   "n": 1,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Seitenlayout|Effekte",
+   "kind": "picture",
+   "n": 15,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Seitenlayout|Farben",
+   "kind": "picture",
+   "n": 29,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Seitenlayout|Format",
+   "kind": "text",
+   "n": 26,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Seitenlayout|Höhe",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Seitenlayout|Schriftarten",
+   "kind": "text",
+   "n": 29,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Seitenlayout|Seitenränder",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "excel|Sparkline|Achse",
+   "kind": "text",
+   "n": 10,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Sparkline|Daten bearbeiten",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Sparkline|Datenpunktfarbe",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Sparkline|Datenpunktfarbe > Datenpunkte",
+   "kind": "picture",
+   "n": 72,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Sparkline|Datenpunktfarbe > Erster Punkt",
+   "kind": "picture",
+   "n": 72,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Sparkline|Datenpunktfarbe > Höchstpunkt",
+   "kind": "picture",
+   "n": 72,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Sparkline|Datenpunktfarbe > Letzter Punkt",
+   "kind": "picture",
+   "n": 72,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Sparkline|Datenpunktfarbe > Negative Punkte",
+   "kind": "picture",
+   "n": 72,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Sparkline|Datenpunktfarbe > Tiefpunkt",
+   "kind": "picture",
+   "n": 72,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Sparkline|Löschen",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Sparkline|Sparklinefarbe",
+   "kind": "picture",
+   "n": 74,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Als Tabelle formatieren",
+   "kind": "picture",
+   "n": 62,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Ausfüllen",
+   "kind": "text",
+   "n": 8,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Ausrichtung",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|AutoSumme",
+   "kind": "text",
+   "n": 7,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Bedingte Formatierung",
+   "kind": "text",
+   "n": 8,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Bedingte Formatierung > Datenbalken",
+   "kind": "picture",
+   "n": 13,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Bedingte Formatierung > Farbskalen",
+   "kind": "picture",
+   "n": 13,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Bedingte Formatierung > Regeln für oberste/unterste Werte",
+   "kind": "text",
+   "n": 7,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Bedingte Formatierung > Regeln löschen",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Bedingte Formatierung > Regeln zum Hervorheben von Zellen",
+   "kind": "text",
+   "n": 8,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Bedingte Formatierung > Symbolsätze",
+   "kind": "picture",
+   "n": 21,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Buchhaltungszahlenformat",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Einfügen",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Format",
+   "kind": "text",
+   "n": 12,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Format > Ausblenden und Einblenden",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Format > Registerfarbe",
+   "kind": "picture",
+   "n": 73,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Start|Füllfarbe",
+   "kind": "picture",
+   "n": 74,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Kopieren",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Löschen",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Rahmen",
+   "kind": "text",
+   "n": 20,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Schriftart",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Start|Schriftfarbe",
+   "kind": "picture",
+   "n": 74,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Schriftgrad",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Start|Sortieren und Filtern",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Suchen und Auswählen",
+   "kind": "text",
+   "n": 11,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Unterstreichen",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Verbinden und zentrieren",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Start|Zahlenformat",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Start|Zellenformatvorlagen",
+   "kind": "picture",
+   "n": 49,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Tabellenentwurf|Aktualisieren",
+   "kind": "text",
+   "n": 6,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Tabellenentwurf|Exportieren",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Tabellenentwurf|Schnellformatvorlagen",
+   "kind": "picture",
+   "n": 63,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Zeichnen|Hinzufügen",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "excel|Zeichnen|Textmarker: Gelb, 6 mm, an Text ausrichten: Aus",
+   "kind": "text",
+   "n": 1,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Überprüfen|Barrierefreiheit überprüfen",
+   "kind": "text",
+   "n": 7,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Überprüfen|Freihand ausblenden",
+   "kind": "text",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "excel|Überprüfen|Notizen",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Animationen|Animation hinzufügen",
+   "kind": "text",
+   "n": 56,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Bildformat|Ausrichten",
+   "kind": "text",
+   "n": 10,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bild zurücksetzen",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bild ändern",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildeffekte",
+   "kind": "text",
+   "n": 7,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildeffekte > 3D-Drehung",
+   "kind": "picture",
+   "n": 27,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildeffekte > Abschrägung",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildeffekte > Leuchteffekt",
+   "kind": "picture",
+   "n": 27,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildeffekte > Schatten",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildeffekte > Spiegelung",
+   "kind": "picture",
+   "n": 11,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildeffekte > Voreinstellung",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildeffekte > Weiche Kanten",
+   "kind": "picture",
+   "n": 8,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildlayout",
+   "kind": "picture",
+   "n": 36,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildqualität",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildrahmen",
+   "kind": "picture",
+   "n": 78,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildrahmen > Skizziert",
+   "kind": "picture",
+   "n": 5,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildrahmen > Striche",
+   "kind": "picture",
+   "n": 9,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Bildrahmen > Stärke",
+   "kind": "picture",
+   "n": 10,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Drehen",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Bildformat|Farbe",
+   "kind": "picture",
+   "n": 38,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the previews need the selected picture; without one the inventory lists the names (to check by hand)"
+  },
+  {
+   "office": "powerpoint|Bildformat|Farbe > Weitere Varianten",
+   "kind": "picture",
+   "n": 73,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Bildformat|Hintergrund entfernen",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Bildformat|Korrekturen",
+   "kind": "picture",
+   "n": 31,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the previews need the selected picture; without one the inventory lists the names (to check by hand)"
+  },
+  {
+   "office": "powerpoint|Bildformat|Künstlerische Effekte",
+   "kind": "picture",
+   "n": 24,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Transparenz",
+   "kind": "picture",
+   "n": 8,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the previews need the selected picture; without one the inventory lists the names (to check by hand)"
+  },
+  {
+   "office": "powerpoint|Bildformat|Zuschneiden",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildformat|Zuschneiden > Auf Form zuschneiden",
+   "kind": "picture",
+   "n": 159,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "shape icons exist (Formen gallery); this menu still lists names"
+  },
+  {
+   "office": "powerpoint|Bildformat|Zuschneiden > Seitenverhältnis",
+   "kind": "text",
+   "n": 11,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildschirmpräsentation|Benutzerdefinierte Bildschirmpräsentation",
+   "kind": "text",
+   "n": 1,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Bildschirmpräsentation|Bildschirme",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Diagrammentwurf|Diagrammelement hinzufügen",
+   "kind": "text",
+   "n": 11,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Diagrammentwurf|Diagrammelement hinzufügen > Achsen",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Diagrammentwurf|Diagrammelement hinzufügen > Achsentitel",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Diagrammentwurf|Diagrammelement hinzufügen > Datenbeschriftungen",
+   "kind": "text",
+   "n": 7,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Diagrammentwurf|Diagrammelement hinzufügen > Datentabelle",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Diagrammentwurf|Diagrammelement hinzufügen > Diagrammtitel",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Diagrammentwurf|Diagrammelement hinzufügen > Fehlerindikatoren",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Diagrammentwurf|Diagrammelement hinzufügen > Gitternetzlinien",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Diagrammentwurf|Diagrammelement hinzufügen > Legende",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Diagrammentwurf|Farben ändern",
+   "kind": "picture",
+   "n": 21,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "colour rows of the chart palettes not built yet"
+  },
+  {
+   "office": "powerpoint|Diagrammentwurf|Schnelllayout",
+   "kind": "picture",
+   "n": 11,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "layout pictures exist in RaabeCalc's ribbon gallery, not yet in RaabePresent's menu"
+  },
+  {
+   "office": "powerpoint|Einfügen|Bilder",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Einfügen|Formen",
+   "kind": "picture",
+   "n": 190,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Einfügen|Fotoalbum...",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Einfügen|Medien",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Einfügen|Medien > Audio",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Einfügen|Medien > Video",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Einfügen|Neue Folie",
+   "kind": "picture",
+   "n": 13,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Einfügen|Symbole",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Einfügen|Tabelle",
+   "kind": "picture",
+   "n": 45,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Einfügen|WordArt",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Einfügen|Zoom",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Entwurf|Effekte",
+   "kind": "picture",
+   "n": 15,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "theme effect previews (effectStyleLst on a sample shape) not built yet"
+  },
+  {
+   "office": "powerpoint|Entwurf|Farben",
+   "kind": "picture",
+   "n": 31,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Entwurf|Foliengröße",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Entwurf|Hintergrundformate",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Entwurf|Layout",
+   "kind": "picture",
+   "n": 9,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Entwurf|Schriftarten",
+   "kind": "text",
+   "n": 30,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Entwurf|Varianten",
+   "kind": "picture",
+   "n": 4,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Folienmaster|Designs",
+   "kind": "picture",
+   "n": 42,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Folienmaster|Effekte",
+   "kind": "picture",
+   "n": 15,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "theme effect previews (effectStyleLst on a sample shape) not built yet"
+  },
+  {
+   "office": "powerpoint|Folienmaster|Farben",
+   "kind": "picture",
+   "n": 31,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Folienmaster|Foliengröße",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Folienmaster|Hintergrundformate",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Folienmaster|Schriftarten",
+   "kind": "text",
+   "n": 30,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Format|Ausrichten",
+   "kind": "text",
+   "n": 10,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Diagrammelemente",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Formeffekte",
+   "kind": "text",
+   "n": 7,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Formeffekte > Schatten",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Formeffekte > Voreinstellung",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Formkontur",
+   "kind": "picture",
+   "n": 78,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Formkontur > Striche",
+   "kind": "picture",
+   "n": 9,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Formkontur > Stärke",
+   "kind": "picture",
+   "n": 10,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Fülleffekt",
+   "kind": "picture",
+   "n": 78,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Fülleffekt > Farbverlauf",
+   "kind": "picture",
+   "n": 28,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Format|Fülleffekt > Struktur",
+   "kind": "picture",
+   "n": 25,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Format|Schnellformatvorlagen",
+   "kind": "picture",
+   "n": 15,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Texteffekte",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Texteffekte > Leuchten",
+   "kind": "picture",
+   "n": 27,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Texteffekte > Schatten",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Texteffekte > Spiegelung",
+   "kind": "picture",
+   "n": 11,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Textfüllung",
+   "kind": "picture",
+   "n": 78,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Textfüllung > Farbverlauf",
+   "kind": "picture",
+   "n": 15,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Textfüllung > Textur",
+   "kind": "picture",
+   "n": 25,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Format|Textkontur",
+   "kind": "picture",
+   "n": 77,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Textkontur > Striche",
+   "kind": "picture",
+   "n": 9,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Format|Textkontur > Stärke",
+   "kind": "picture",
+   "n": 10,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formel|Akzent",
+   "kind": "picture",
+   "n": 27,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+  },
+  {
+   "office": "powerpoint|Formel|Bruch",
+   "kind": "picture",
+   "n": 9,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+  },
+  {
+   "office": "powerpoint|Formel|Eckige Klammer",
+   "kind": "picture",
+   "n": 45,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+  },
+  {
+   "office": "powerpoint|Formel|Formel",
+   "kind": "picture",
+   "n": 9,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+  },
+  {
+   "office": "powerpoint|Formel|Funktion",
+   "kind": "picture",
+   "n": 31,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+  },
+  {
+   "office": "powerpoint|Formel|Grenzwert und Logarithmus",
+   "kind": "picture",
+   "n": 8,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+  },
+  {
+   "office": "powerpoint|Formel|Großer Operator",
+   "kind": "picture",
+   "n": 44,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+  },
+  {
+   "office": "powerpoint|Formel|Hoch/Tief",
+   "kind": "picture",
+   "n": 8,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+  },
+  {
+   "office": "powerpoint|Formel|Integral",
+   "kind": "picture",
+   "n": 21,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+  },
+  {
+   "office": "powerpoint|Formel|Matrix",
+   "kind": "picture",
+   "n": 22,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+  },
+  {
+   "office": "powerpoint|Formel|Operator",
+   "kind": "picture",
+   "n": 21,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+  },
+  {
+   "office": "powerpoint|Formel|Wurzel",
+   "kind": "picture",
+   "n": 6,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
+  },
+  {
+   "office": "powerpoint|Formformat|Ausrichten",
+   "kind": "text",
+   "n": 10,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Drehen",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Formformat|Form bearbeiten",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Form bearbeiten > Form ändern",
+   "kind": "picture",
+   "n": 159,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Formformat|Formeffekte",
+   "kind": "text",
+   "n": 7,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Formeffekte > 3D-Drehung",
+   "kind": "picture",
+   "n": 27,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Formeffekte > Abschrägung",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Formeffekte > Leuchteffekt",
+   "kind": "picture",
+   "n": 27,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Formeffekte > Schatten",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Formeffekte > Spiegelung",
+   "kind": "picture",
+   "n": 11,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Formeffekte > Voreinstellung",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Formeffekte > Weiche Kanten",
+   "kind": "picture",
+   "n": 8,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Formkontur",
+   "kind": "picture",
+   "n": 79,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Formkontur > Skizziert",
+   "kind": "picture",
+   "n": 5,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Formkontur > Striche",
+   "kind": "picture",
+   "n": 9,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Formkontur > Stärke",
+   "kind": "picture",
+   "n": 10,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Fülleffekt",
+   "kind": "picture",
+   "n": 78,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Fülleffekt > Farbverlauf",
+   "kind": "picture",
+   "n": 28,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Fülleffekt > Struktur",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Texteffekte",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Texteffekte > 3D-Drehung",
+   "kind": "picture",
+   "n": 27,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Texteffekte > Abschrägung",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Texteffekte > Leuchten",
+   "kind": "picture",
+   "n": 27,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Texteffekte > Schatten",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Texteffekte > Spiegelung",
+   "kind": "picture",
+   "n": 11,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Texteffekte > Transformieren",
+   "kind": "picture",
+   "n": 41,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "warped-text previews not built yet"
+  },
+  {
+   "office": "powerpoint|Formformat|Textfüllung",
+   "kind": "picture",
+   "n": 78,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Textfüllung > Farbverlauf",
+   "kind": "picture",
+   "n": 15,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Textfüllung > Textur",
+   "kind": "picture",
+   "n": 25,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Formformat|Textkontur",
+   "kind": "picture",
+   "n": 77,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Textkontur > Striche",
+   "kind": "picture",
+   "n": 9,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Formformat|Textkontur > Stärke",
+   "kind": "picture",
+   "n": 10,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Handzettelmaster|Designs",
+   "kind": "picture",
+   "n": 42,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Handzettelmaster|Effekte",
+   "kind": "picture",
+   "n": 15,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "theme effect previews (effectStyleLst on a sample shape) not built yet"
+  },
+  {
+   "office": "powerpoint|Handzettelmaster|Farben",
+   "kind": "picture",
+   "n": 31,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Handzettelmaster|Folien pro Seite",
+   "kind": "text",
+   "n": 7,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Handzettelmaster|Foliengröße",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Handzettelmaster|Handzettelausrichtung",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Handzettelmaster|Hintergrundformate",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Handzettelmaster|Schriftarten",
+   "kind": "text",
+   "n": 30,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Notizenmaster|Designs",
+   "kind": "picture",
+   "n": 42,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Notizenmaster|Effekte",
+   "kind": "picture",
+   "n": 15,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "theme effect previews (effectStyleLst on a sample shape) not built yet"
+  },
+  {
+   "office": "powerpoint|Notizenmaster|Farben",
+   "kind": "picture",
+   "n": 31,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Notizenmaster|Foliengröße",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Notizenmaster|Hintergrundformate",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Notizenmaster|Notizenseitenausrichtung",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Notizenmaster|Schriftarten",
+   "kind": "text",
+   "n": 30,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|SmartArt-Design|Farben ändern",
+   "kind": "picture",
+   "n": 43,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "SmartArt colour previews not built yet"
+  },
+  {
+   "office": "powerpoint|SmartArt-Design|Form hinzufügen",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|SmartArt-Design|Konvertieren",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Abschnitt",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Anordnen",
+   "kind": "text",
+   "n": 10,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Anordnen > Ausrichten",
+   "kind": "text",
+   "n": 10,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Anordnen > Drehen",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Start|Aufzählungszeichen",
+   "kind": "picture",
+   "n": 10,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Bearbeiten",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Start|Bearbeiten > Markieren",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Start|Formeffekte",
+   "kind": "text",
+   "n": 7,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Formeffekte > 3D-Drehung",
+   "kind": "picture",
+   "n": 27,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Formeffekte > Abschrägung",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Formeffekte > Leuchteffekt",
+   "kind": "picture",
+   "n": 27,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Formeffekte > Schatten",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Formeffekte > Spiegelung",
+   "kind": "picture",
+   "n": 11,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Formeffekte > Voreinstellung",
+   "kind": "picture",
+   "n": 14,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Formeffekte > Weiche Kanten",
+   "kind": "picture",
+   "n": 8,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Formen",
+   "kind": "picture",
+   "n": 190,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Formkontur",
+   "kind": "picture",
+   "n": 79,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Formkontur > Skizziert",
+   "kind": "picture",
+   "n": 5,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Formkontur > Striche",
+   "kind": "picture",
+   "n": 9,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Formkontur > Stärke",
+   "kind": "picture",
+   "n": 10,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Fülleffekt",
+   "kind": "picture",
+   "n": 78,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Fülleffekt > Farbverlauf",
+   "kind": "picture",
+   "n": 28,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Fülleffekt > Struktur",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Groß-/Kleinschreibung",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Start|In SmartArt konvertieren",
+   "kind": "picture",
+   "n": 21,
+   "ours": "text",
+   "status": "Office picture, wir text",
+   "known": "SmartArt layout previews not built yet"
+  },
+  {
+   "office": "powerpoint|Start|Kopieren",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Layout",
+   "kind": "picture",
+   "n": 9,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Neue Folie",
+   "kind": "picture",
+   "n": 13,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Nummerierung",
+   "kind": "picture",
+   "n": 10,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Schnellformatvorlagen",
+   "kind": "picture",
+   "n": 79,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Schnellformatvorlagen > Alle",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Start|Schriftart",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Start|Schriftfarbe",
+   "kind": "picture",
+   "n": 74,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Schriftgrad",
+   "kind": "text",
+   "n": 2,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Start|Spalten",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Start|Text ausrichten",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Start|Texthervorhebungsfarbe",
+   "kind": "picture",
+   "n": 19,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Start|Textrichtung",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Start|Zeichenabstand",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Start|Zeilenabstand",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Effekte",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Effekte > Schatten",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Effekte > Spiegelung",
+   "kind": "picture",
+   "n": 11,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Effekte > Zellenabschrägung",
+   "kind": "picture",
+   "n": 13,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Rahmen",
+   "kind": "text",
+   "n": 13,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Schattierung",
+   "kind": "picture",
+   "n": 79,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Schattierung > Farbverlauf",
+   "kind": "picture",
+   "n": 28,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Schattierung > Struktur",
+   "kind": "picture",
+   "n": 25,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Schattierung > Tabellenhintergrund",
+   "kind": "picture",
+   "n": 75,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Schnellformatvorlagen",
+   "kind": "picture",
+   "n": 15,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Stiftart",
+   "kind": "picture",
+   "n": 12,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Stiftfarbe",
+   "kind": "picture",
+   "n": 73,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Stiftstärke",
+   "kind": "picture",
+   "n": 10,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Texteffekte",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Texteffekte > Leuchten",
+   "kind": "picture",
+   "n": 27,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Texteffekte > Schatten",
+   "kind": "picture",
+   "n": 25,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Texteffekte > Spiegelung",
+   "kind": "picture",
+   "n": 11,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Textfüllung",
+   "kind": "picture",
+   "n": 78,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Textfüllung > Farbverlauf",
+   "kind": "picture",
+   "n": 15,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Textfüllung > Textur",
+   "kind": "picture",
+   "n": 25,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Textkontur",
+   "kind": "picture",
+   "n": 77,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Textkontur > Striche",
+   "kind": "picture",
+   "n": 9,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenentwurf|Textkontur > Stärke",
+   "kind": "picture",
+   "n": 10,
+   "ours": "picture",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenlayout|Anordnen",
+   "kind": "text",
+   "n": 8,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenlayout|Anordnen > Ausrichten",
+   "kind": "text",
+   "n": 10,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenlayout|Auswählen",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenlayout|Löschen",
+   "kind": "text",
+   "n": 3,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Tabellenlayout|Textrichtung",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Tabellenlayout|Zellenbegrenzungen",
+   "kind": "text",
+   "n": 5,
+   "ours": "text",
+   "status": "gleich",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Zeichnen|Freihand in Gleichung",
+   "kind": "text",
+   "n": 3,
+   "ours": null,
+   "status": "fehlt"
+  },
+  {
+   "office": "powerpoint|Zeichnen|Hinzufügen",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Übergänge|Sound",
+   "kind": "text",
+   "n": 24,
+   "ours": null,
+   "status": "fehlt",
+   "by_eye": true
+  },
+  {
+   "office": "powerpoint|Überprüfen|Barrierefreiheit überprüfen",
+   "kind": "text",
+   "n": 6,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Überprüfen|Kommentare anzeigen",
+   "kind": "text",
+   "n": 4,
+   "ours": "text",
+   "status": "gleich"
+  },
+  {
+   "office": "powerpoint|Überprüfen|Sprache",
+   "kind": "text",
+   "n": 2,
+   "ours": "text",
+   "status": "gleich"
+  }
+ ]
+}

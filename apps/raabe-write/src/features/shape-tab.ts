@@ -4,7 +4,7 @@
 // Anordnen and Größe. Layouts and reduction order from capture_ribbon_widths.py Formformat;
 // the styles were recorded from Word (shape-presets.ts).
 
-import { closePopup, colorGrid, h, showDialog, showMenu, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
+import { arrowStyleMenu, closePopup, colorGrid, dashMenu, h, showDialog, showMenu, weightMenu, type Command, type Control, type MenuEntry, type Tab } from "@raabe/shell";
 import { shapeElement, type PictureFormat, type ShapeInfo } from "@raabe/text-engine";
 import { DEFAULT_THEME_COLORS, pictureFromSpPr, shapePreset } from "@raabe/ooxml";
 import { CM, fmtCm, parseNum, type AppApi } from "./api";
@@ -197,14 +197,6 @@ export function shapeTab(api: AppApi, galleryPanel: (close: () => void) => HTMLE
     setFormat({ line: { ...base, color: base.color || "000000", width: base.width >= 0 ? base.width : 0.75, ...patch } });
   };
   const weights = [0.25, 0.5, 0.75, 1, 1.5, 2.25, 3, 4.5, 6];
-  const dashes: [string, string][] = [["solid", "Durchgezogen"], ["sysDot", "Rundpunkt"], ["sysDash", "Quadratpunkt"], ["dash", "Strich"], ["dashDot", "Strich-Punkt"], ["lgDash", "Langer Strich"], ["lgDashDot", "Lang-Strich-Punkt"], ["lgDashDotDot", "Lang-Strich-Punkt-Punkt"]];
-  const arrows: [string, Partial<NonNullable<PictureFormat["line"]>>][] = [
-    ["Pfeilart 1", { head: undefined, tail: undefined }], ["Pfeilart 2", { head: undefined, tail: { type: "arrow" } }], ["Pfeilart 3", { head: { type: "arrow" }, tail: undefined }],
-    ["Pfeilart 4", { head: { type: "arrow" }, tail: { type: "arrow" } }], ["Pfeilart 5", { head: undefined, tail: { type: "triangle" } }], ["Pfeilart 6", { head: { type: "triangle" }, tail: undefined }],
-    ["Pfeilart 7", { head: { type: "triangle" }, tail: { type: "triangle" } }], ["Pfeilart 8", { head: { type: "oval" }, tail: { type: "triangle" } }],
-    ["Pfeilart 9", { head: { type: "oval" }, tail: { type: "oval" } }], ["Pfeilart 10", { head: { type: "diamond" }, tail: { type: "diamond" } }],
-    ["Pfeilart 11", { head: { type: "oval" }, tail: { type: "stealth" } }],
-  ];
   const moreLines: MenuEntry = { label: "Weitere Linien...", run: () => FORMAT_PANE.open("line") };
   const outlinePanel = (close: () => void) => {
     const colors = colorGrid((hex) => { close(); setLine({ color: hex }); api.focus(); }, undefined, { commands: api.commands, apply: (hex) => setLine({ color: hex }) });
@@ -218,9 +210,10 @@ export function shapeTab(api: AppApi, galleryPanel: (close: () => void) => HTMLE
     return h("div", { class: "rpanel palette" }, ...colors, h("hr"),
       link("Keine Kontur", () => { close(); setLine(null); api.focus(); }),
       link("Weitere Konturfarben...", () => { close(); void moreColor("Farben", (hex) => setLine({ color: hex })); }),
-      link("Stärke", (ev) => sub(ev, [...weights.map((w): MenuEntry => ({ label: `${w.toLocaleString("de-DE")} Pt.`, checked: lineOf()?.width === w, run: () => setLine({ width: w }) })), "-", moreLines]), true),
-      link("Striche", (ev) => sub(ev, [...dashes.map(([v, l]): MenuEntry => ({ label: l, checked: (lineOf()?.dash ?? "solid") === v, run: () => setLine({ dash: v === "solid" ? undefined : v }) })), "-", moreLines]), true),
-      ...(isLine() ? [link("Pfeile", (ev) => sub(ev, [...arrows.map(([l, patch]): MenuEntry => ({ label: l, run: () => setLine(patch) })), "-", { label: "Weitere Pfeile...", run: () => FORMAT_PANE.open("line") }]), true)] : []));
+      // Stärke as lines with their names, Striche and Pfeile as pictures (Word's menus, D-162).
+      link("Stärke", (ev) => sub(ev, [...weightMenu(weights.map((w): [string, number] => [`${w.toLocaleString("de-DE")} Pt.`, w]), (w) => setLine({ width: w })), "-", moreLines]), true),
+      link("Striche", (ev) => sub(ev, [dashMenu(lineOf()?.dash ?? "solid", (v) => setLine({ dash: v === "solid" ? undefined : v })), "-", moreLines]), true),
+      ...(isLine() ? [link("Pfeile", (ev) => sub(ev, [arrowStyleMenu((hd, tl) => setLine({ head: hd ? { type: hd } : undefined, tail: tl ? { type: tl } : undefined } as Partial<NonNullable<PictureFormat["line"]>>)), "-", { label: "Weitere Pfeile...", run: () => FORMAT_PANE.open("line") }]), true)] : []));
   };
   run("shape.outline", onShape(() => setLine({})));
 

@@ -6,7 +6,7 @@
 import { tableEffectsMenu } from "./tablefx";
 import { MORE_COLORS } from "./colors";
 import { colorXml } from "./colors";
-import { closePopup, h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
+import { weightPicture, pictures, pictureMenu, closePopup, h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
 import { PptxDom, type ShapeView } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
 import { LINE_WEIGHTS } from "./lines";
@@ -218,8 +218,10 @@ export const PEN_WEIGHTS: [string, number][] = [["¼ pt", 3175], ["½ pt", 6350]
 export function penMenus(app: PresentApp): { styles: () => MenuEntry[]; weights: () => MenuEntry[] } {
   const take = () => { app.editor.endText(); app.editor.tool = { kind: "tableDraw" }; app.editor.render(); app.updateChrome(); };
   return {
-    styles: () => PEN_STYLES.map(([label, dash]) => ({ label, checked: app.tablePen.dash === dash, run: () => { app.tablePen.dash = dash; take(); } })),
-    weights: () => PEN_WEIGHTS.map(([label, w]) => ({ label, checked: app.tablePen.w === w, run: () => { app.tablePen.w = w; take(); } })),
+    // PowerPoint shows the pen's styles as lines and its weights as lines with their names (D-163).
+    styles: () => [{ block: () => pictureMenu(PEN_STYLES.map(([label, dash]) => ({ value: dash ?? "", label, svg: dash ? pictures.dashPicture(dash, 104, 16) : `<svg xmlns="http://www.w3.org/2000/svg" width="104" height="16" aria-hidden="true"/>` })),
+      1, [104, 16], app.tablePen.dash ?? "", (v) => { app.tablePen.dash = v || null; take(); }) }],
+    weights: () => PEN_WEIGHTS.map(([label, w]) => ({ label, preview: weightPicture(w / 12700), run: () => { app.tablePen.w = w; take(); } })),
   };
 }
 

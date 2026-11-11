@@ -7,7 +7,8 @@ import {
   MAX_COLS, MAX_ROWS, cellName, colName, FUNCTIONS_DE, FORMAT_CATEGORIES, localFormat, fileFormat, parseRange, rangeName, shiftFormula,
   type Cell, type CondRule, type Rect, type Sheet,
 } from "@raabe/sheet-engine";
-import { colorGrid, h, messageBox, pressOutside, showDialog, showMenu, type MenuEntry } from "@raabe/shell";
+import { pictureMenu, colorGrid, h, messageBox, pressOutside, showDialog, showMenu, type MenuEntry } from "@raabe/shell";
+import { drawIcon } from "./grid/render";
 import type { CalcApp } from "./app";
 import * as A from "./actions";
 import { shown, editText } from "./engine";
@@ -1300,8 +1301,10 @@ export function dialogs(app: CalcApp) {
     // Excel's names (recorded in the inventory, D-143): Farbverlauf, then Einfarbige Füllung with the same six
     // colours (recorded with real clicks, probe_excel_followup_ui.py, D-146).
     const bars: [string, string][] = [["Blauer Datenbalken", "#638EC6"], ["Grüner Datenbalken", "#63C384"], ["Roter Datenbalken", "#FF555A"], ["Orangefarbener Datenbalken", "#FFB628"], ["Hellblauer Datenbalken", "#008AEF"], ["Lilafarbener Datenbalken", "#D6007B"]];
-    return [{ heading: "Farbverlauf" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c] }) })),
-      { heading: "Einfarbige Füllung" }, ...bars.map(([l, c]): MenuEntry => ({ label: l, run: () => void addRule({ type: "dataBar", colors: [c], solid: true }) })),
+    // Excel's galleries show pictures, their names are tooltips (D-163): bars of four cells, faded or solid.
+    const pics = (solid: boolean) => bars.map(([label], i) => ({ value: String(i), label, svg: dataBarPicture(bars[i][1], solid) }));
+    return [{ heading: "Farbverlauf" }, { block: () => pictureMenu(pics(false), 3, [44, 44], undefined, (v) => void addRule({ type: "dataBar", colors: [bars[Number(v)][1]] })) },
+      { heading: "Einfarbige Füllung" }, { block: () => pictureMenu(pics(true), 3, [44, 44], undefined, (v) => void addRule({ type: "dataBar", colors: [bars[Number(v)][1]], solid: true })) },
       "-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) }];
   }
 
@@ -1314,7 +1317,8 @@ export function dialogs(app: CalcApp) {
       ["Blau-Weiß-Rot", [R, W, B]], ["Rot-Weiß-Blau", [B, W, R]], ["Weiß-Rot", [R, W]], ["Rot-Weiß", [W, R]],
       ["Grün-Weiß", [W, G]], ["Weiß-Grün", [G, W]], ["Grün-Gelb", [Y2, G]], ["Gelb-Grün", [G, Y2]],
     ];
-    return [...scales.map(([l, c]): MenuEntry => ({ label: `${l}-Farbskala`, run: () => void addRule({ type: "colorScale", colors: c }) })), "-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) }];
+    const pics = scales.map(([l, c], i) => ({ value: String(i), label: `${l}-Farbskala`, svg: colorScalePicture(c) }));
+    return [{ block: () => pictureMenu(pics, 4, [44, 44], undefined, (v) => void addRule({ type: "colorScale", colors: scales[Number(v)][1] })) }, "-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) }];
   }
 
   /** Symbolsätze, in the gallery's groups (Richtungen, Formen, Indikatoren, Bewertungen). */
@@ -1322,7 +1326,9 @@ export function dialogs(app: CalcApp) {
     const out: MenuEntry[] = [];
     for (const [group, sets] of ICON_SETS) {
       out.push({ heading: group });
-      for (const [label, set] of sets) out.push({ label, run: () => void addRule(iconRule(set)) });
+      // The icons of each set side by side, drawn as the cells draw them; the name is the tooltip (Excel's gallery).
+      const pics = sets.map(([label, set]) => ({ value: set, label, svg: "", node: () => iconSetPicture(set) }));
+      out.push({ block: () => pictureMenu(pics, 2, [96, 22], undefined, (set) => void addRule(iconRule(set))) });
     }
     out.push("-", { label: "Weitere Regeln...", run: () => void cr.newRule(0) });
     return out;
@@ -1591,6 +1597,39 @@ export const ICON_SETS: [string, [string, string][]][] = [
 ];
 
 /** A Symbolsatz rule with Excel's default limits (equal shares of the range in percent). */
+/** A Datenbalken gallery picture: four cells with bars of the colour, faded to white or solid (D-163). */
+function dataBarPicture(color: string, solid: boolean): string {
+  const id = `db${color.slice(1)}${solid ? "s" : "g"}`;
+  const rows = [0.85, 0.55, 0.3, 0.7];
+  const fill = solid ? color : `url(#${id})`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" aria-hidden="true"><defs><linearGradient id="${id}"><stop offset="0" stop-color="${color}"/><stop offset="1" stop-color="${color}" stop-opacity=".15"/></linearGradient></defs>`
+    + `<rect x="4.5" y="4.5" width="35" height="35" fill="#fff" stroke="#bfbfbf"/>`
+    + rows.map((w, i) => `<rect x="6" y="${7 + i * 8.25}" width="${32 * w}" height="6" fill="${fill}" stroke="${color}" stroke-width=".6"/>`).join("") + "</svg>";
+}
+
+/** A Farbskalen gallery picture: a 3 x 3 block of cells, the highest value's colour on top (D-163). */
+function colorScalePicture(colors: string[]): string {
+  const top = [...colors].reverse();
+  const at = (k: number) => top[Math.min(top.length - 1, Math.round((k * (top.length - 1)) / 2))];
+  const cells = [0, 1, 2].flatMap((r) => [0, 1, 2].map((c) => `<rect x="${5 + c * 11.5}" y="${5 + r * 11.5}" width="11" height="11" fill="${at(r)}" stroke="#fff" stroke-width=".5"/>`));
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" aria-hidden="true"><rect x="4.5" y="4.5" width="35" height="35" fill="#fff" stroke="#bfbfbf"/>${cells.join("")}</svg>`;
+}
+
+/** A Symbolsätze gallery picture: the set's icons from the highest value's down, drawn by the cells' own renderer. */
+function iconSetPicture(set: string): HTMLCanvasElement {
+  const n = Number(set[0]) || 3;
+  const c = document.createElement("canvas");
+  const dpr = window.devicePixelRatio || 1;
+  c.width = 96 * dpr; c.height = 22 * dpr;
+  c.style.cssText = "width:96px;height:22px";
+  const ctx = c.getContext("2d");
+  if (ctx) {
+    ctx.scale(dpr, dpr);
+    for (let k = 0; k < n; k++) drawIcon(ctx, { set, index: n - 1 - k }, 2 + k * 18, 19, 1);
+  }
+  return c;
+}
+
 export function iconRule(set: string): Omit<CondRule, "priority"> {
   const n = Number(set[0]) || 3;
   const cfvo = Array.from({ length: n }, (_, i) => ({ type: "percent", val: String(Math.round((100 * i) / n)) }));

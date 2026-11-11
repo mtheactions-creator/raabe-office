@@ -4527,3 +4527,115 @@ Follow-up of D-170 for the other two apps.
   come with that, from `@raabe/chart-ui`'s `elementMarks`, as in RaabeCalc.
 - **Compared** with `check_chart_selection.py --app write|present` (the selected chart's crop against the unselected
   one, measured like Office's): 8 rings of 17 px, #616161 frame of the same ink, as Word's and PowerPoint's.
+## D-160 The chart Format pane's order is checked against Excel's recorded pane (2026-11-11)
+
+Step 11 point 3. `packages/chart-ui/test/paneorder.test.ts` builds our pane for every element Excel's probe recorded
+(`results/2026-11-09-excel-chart-pane.json`: 95 panes, seven chart types; the chart is made as the probe made it:
+title, legend, data labels, trendline and error bars on series 1, axis title, gridlines) and compares, by label, the
+option sets, tabs, sections and controls. Excel's controls are read as a student sees them: a colour's label and its
+button are one control, a slider and its box one, the pattern tiles one grid, the stop buttons part of the gradient
+bar. Every radio choice Excel recorded ("choices": Farbverlauf adds Voreingestellte Farbverläufe, Typ, Richtung …) is
+picked in a fresh pane of ours too, and the controls it adds must follow in Excel's order.
+- **Order**: the test fails on any section or control that stands in another order than Excel's. Result: none in
+  the default state and none after any recorded choice. The owner's "different order" was not reproduced on this
+  recording; what did differ was what each state shows, fixed below.
+- **Controls only one side has** are listed in `paneorder-known.json` (325 entries by element, not by chart type); a
+  new one fails the test, and one fixed must be taken off the list. Most are not built yet: the Textfeld options of
+  chart text (Ränder, Umbrechen, Spalten...), Weiche Kanten / 3D-Format / 3D-Drehung of text, the tiling options of
+  textures (X-/Y-Offset, Skalierung, Ausrichtung, Spiegelungstyp), Hinzufügen of the number format, the Beleuchtung's
+  Winkel. Ours-only and kept: the Schrift section under Textoptionen, the title's Titeloptionen tab (Überlagern),
+  Alternativtext, Bereich der Datenbeschriftung.
+- **Fixed** so that each state shows what Excel shows: under Automatisch the Füllung shows Farbe and the Linie / Rahmen
+  Farbe and Transparenz (a pick makes it Einfarbig); arrows are offered on every line and shown greyed on a Rahmen, a
+  marker's Rahmen and the Textkontur; Keine Linie hides the line's own options (Abgerundete Ecken, Linie glätten); data
+  labels and scatter series without lines show Keine Füllung / Keine Linie chosen by default; a data point's pane has
+  Invertieren falls negativ, Segmentfarbunterscheidung and Linie glätten as the series' has, and its own tab is called
+  Datenreihenoptionen; line and scatter series have 3D-Format; the gradient bar is called Farbverlaufstopps.
+- Not compared: Excel's Markierung page is a page switch (Linie / Markierung) in Excel; ours shows its three sections
+  after the Linie section (Markierungsoptionen, Markierungsfüllung, Markierungsrahmen), compared under those names.
+
+## D-161 One picture dropdown for every pane: Office's pictures instead of our text lists (2026-11-11)
+
+The owner: "RaabeOffice uses text where MS Office uses symbols, e.g. the end-arrow types in the chart's Format pane".
+**Recorded first** (`probe_excel_picturedrops.py`: our own invisible Excel, the Format panes of a line series, the chart
+area and a shape; every dropdown opened through ExpandCollapse, its open list read through UI Automation, a picture of
+our own Excel's popup window by PrintWindow into `captures/`, not committed; `results/2026-11-11-excel-picturedrops.json`).
+Excel's pane has two kinds of dropdown: **picture lists** (entries are pictures only, the name is the tooltip; the closed
+box shows the current picture) and **text lists** (Abschlusstyp, Anschlusstyp, Typ, Ausrichtung, Spiegelungstyp).
+Layout at 150 % (px / 1.5 = CSS px): Verbundtyp a list of 5 (72 x 24), Strichtyp a list of 8 (104 x 20), the arrow
+types a grid of 3 x 2 and the arrow sizes 3 x 3 (33 x 33), Markierungstyp a list of symbols (28 x 28), Schatten 3
+columns in groups Kein Schatten / Außen / Innen / Perspektive (56), Leuchten Kein Leuchteffekt + 6 columns of
+Leuchteffektvarianten (56), Weiche Kanten 3 columns (44), Spiegelung 3 columns (66), Abschrägung 4 columns (56),
+Material 4 columns in Standard / Spezialeffekt / Durchsichtig, Beleuchtung 4 columns in Neutral / Warm / Kalt /
+Spezialeffekt (56), Voreingestellte Farbverläufe 6 columns (62), Richtung 5 columns (62), Textur 5 columns (88).
+
+**Built once** in the shell: `pictureDropdown` (`packages/shell/src/picturedrop.ts`) and the task pane's control
+`type: "picture"`. The box shows the current value's picture (its name is the tooltip and the accessible name); the
+list opens with `showPopup`, so it closes by D-156's rule. Keyboard as Office's pane galleries: Enter, Leertaste,
+Alt+Nach-unten or F4 open; the arrow keys move (in a grid by place, so groups of other widths work), Pos1 / Ende jump;
+Enter or Leertaste picks; Esc closes; the focus goes back to the box (the pane keeps it across its redraw). Picking
+the value it already has makes no undo step. The pictures are ours (`packages/shell/src/pictures.ts`, SVG): they show
+the same thing as Office's (a dashed line, an arrowhead, a shadow to the lower right) in our own drawing; Material and
+Beleuchtung are drawn as lit balls, not Office's slabs. Our own pictures, not Office's bitmaps, also for textures (D-155).
+
+**Used** in the chart Format pane (all three apps): Verbundtyp, Strichtyp, Start-/Endpfeiltyp and -größe, Markierungstyp,
+the Voreinstellungen of Schatten, Spiegelung, Leuchten and Weiche Kanten, Abschrägung oben/unten, Material,
+Beleuchtung, Voreingestellte Farbverläufe, Richtung (in the gradient's own colours) and Textur. Musterfüllung was
+already a grid; it now has Excel's 48 patterns in Excel's order under Excel's names (the six OOXML presets Excel does
+not offer are still read from files). Richtung's entries carry Excel's names ("Linear unten"). The sweep
+`check_calc_chartpane.py` drives a picture dropdown as a student would (click, arrow key, Enter).
+Not built: Livevorschau while the mouse is over an entry (Excel previews in the chart); "Weitere Pfeile..." and the
+picture entry of Markierungstyp.
+
+## D-162 Picture dropdowns and picture menus in the apps' own panes and line menus (2026-11-11)
+
+D-161's control, used outside the chart pane in all three apps, with Office's entries and names in place of our own
+(we had "Durchgehend", "Rundpunkt", "Quadratpunkt"; Office says Uni, Runder Punkt, Viereckiger Punkt):
+- **Form formatieren / Grafik formatieren** (RaabeCalc `shapes.ts`, `picture-tab.ts`; RaabePresent `formatpane.ts`;
+  RaabeWrite `format-pane.ts`): Strichtyp, Verbundtyp, Start-/Endpfeiltyp and -größe as picture dropdowns. RaabeCalc's
+  shape pane had five arrow types under wrong names ("Offener Pfeil" for stealth); it now offers Office's six.
+  Abschlusstyp and Anschlusstyp stay text lists, as in Office, with Office's names (Rechteckig, Abschrägung).
+- **RaabePresent's Effekte**: the Voreinstellungen of Schatten, Spiegelung, Leuchten, Weiche Kanten and 3D-Drehung,
+  Abschrägung oben/unten, Material and Beleuchtung are picture dropdowns. Each preset is drawn by applying its XML to
+  a small blue rectangle with our own shape renderer (`presettiles.ts`), so the picture is the effect itself, not a
+  copy of PowerPoint's thumbnail. Material, Beleuchtung and Abschrägung carry Office's names now (we had our own:
+  "Warme Mattierung", "Kreis", "Drei Punkte").
+- **RaabeWrite's Texteffekte formatieren**: Strichtyp and the Voreinstellungen of Schatten, Spiegelung and Leuchten
+  (an "A" with the effect, as Word's galleries) are picture dropdowns.
+- **The line submenus** (Formkontur, Bildrahmen, Textkontur in all three apps): Striche and Pfeile show pictures only
+  (their names are tooltips), Stärke each line with its name, as Office's menus (`packages/shell/src/linemenus.ts`).
+- **RaabePresent's Formeffekte / Texteffekte menus** (Voreinstellung, Schatten, Spiegelung, Leuchteffekt, Weiche Kanten,
+  Abschrägung, 3D-Drehung): galleries of pictures with Office's group headings instead of lists of names. Texteffekte
+  draw the effect on a shape, not on an "A" (a deliberate simplification; the effect is the same).
+- Zellen formatieren > Rahmen (RaabeCalc) already shows Excel's line styles as pictures (D-147); unchanged.
+
+## D-163 The sweep "pictures where Office shows pictures": two lasting checks and what they found (2026-11-11)
+
+The owner: "RaabeOffice uses text where MS Office uses symbols … we need to check that everywhere".
+- **Format panes**: `packages/chart-ui/test/panepictures.test.ts` takes every dropdown of Excel's recorded chart pane
+  that opens a list of pictures (a menu with entries, not a colour picker: 2026-11-09-excel-chart-pane.json; the marker
+  Typ from 2026-11-11-excel-picturedrops.json) and requires a picture dropdown in ours in every state of the section
+  (each radio choice tried in a fresh pane); Excel's text lists must stay text. Result: 2253 picture lists over all
+  recorded panes and states, 1983 are pictures in ours, 0 text, 270 belong to controls not built (the text effects
+  Weiche Kanten, 3D-Format, 3D-Drehung of chart text; the same as D-160's list).
+- **Ribbon menus and galleries**: `tools/feel-lab/check_picture_controls.py`. Office's side from the recorded
+  inventories (our own Excel 2026-11-05 and PowerPoint 2026-11-06, UI Automation): a dropdown whose entries are mostly
+  ListItems is a gallery; galleries Office draws as text or as a small icon beside a meaningful name (function lists,
+  Zeilenabstand, Hochformat, Textrichtung …) are listed by eye in TEXT_GALLERIES. Ours from `__calc.inventory()` and
+  `__present.inventory()` in a headless Edge of our own on the dev servers; each entry now says how it shows itself
+  (`entryKind` in the shell: picture, text or both; galleries, palettes and picture menus are drawn to be judged).
+  Result `results/2026-11-11-picture-controls.json`: Office has **174** picture dropdowns (Excel 32, PowerPoint 142);
+  before tonight's fixes ours showed 93 of them as pictures, now **129**; 18 are not built in ours; **27** remain text,
+  each written down in the script's KNOWN with its reason (the Formel galleries need previews from the math renderer;
+  theme effect previews; chart Farben ändern; SmartArt; Transformieren; Bildformat Korrekturen/Farbe/Transparenz to be
+  checked by hand with a picture selected; Auf Form zuschneiden; Schnelllayout in RaabePresent; Verbunddiagramm). A new
+  difference fails the check.
+- **Fixed tonight** (besides D-161/D-162): RaabeCalc's Bedingte Formatierung > Datenbalken, Farbskalen, Symbolsätze
+  (the icons drawn by the cells' own renderer) and the Diagramme dropdowns of all three apps (each type drawn by our
+  chart renderer, `kindPicture`); RaabePresent's Aufzählungszeichen and Nummerierung, Fülleffekt/Textfüllung >
+  Farbverlauf (light and dark variants in the shape's colour) and Struktur (our textures), Formkontur > Skizziert,
+  Tabellenentwurf > Effekte, Stiftart (lines) and Stiftstärke (lines with names), Entwurf > Farben (each set's colours
+  beside its name).
+- **Not covered**: Word's ribbon (no recorded Word inventory exists; RaabeWrite's panes and line menus use the shared
+  controls of D-161/D-162), dialogs, context menus, and PowerPoint probes tonight (the owner's POWERPNT.EXE was
+  running, so no PowerPoint instance of ours was started; the PowerPoint side is the 2026-11-06 recording).

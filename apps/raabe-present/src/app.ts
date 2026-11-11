@@ -7,15 +7,12 @@ import { onFontAlias, setCloudFonts } from "@raabe/text-engine";
 import { colorXml, specHex } from "./colors";
 import { colorWord } from "./quickstyles";
 import { Pptx, newPptx, PptxDom, phOf, type ShapeView, type DesignSpec } from "@raabe/ooxml";
-import {
-  Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, HIGHLIGHTS, highlightHex, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup,
-  type BackstageEntry, type Control, type Group, type MenuEntry, type Platform, type Tab,
-} from "@raabe/shell";
+import { pictures, pictureMenu, entryKind, weightMenu, dashMenu, arrowStyleMenu, Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, HIGHLIGHTS, highlightHex, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup, type BackstageEntry, type Control, type Group, type MenuEntry, type Platform, type Tab,  } from "@raabe/shell";
 import { SHAPE_GALLERY, shapeIcon, type GalleryEntry } from "@raabe/text-engine";
 import { COMMANDS } from "./command-list";
 import { ribbonTabs, type RibbonContext } from "./ribbon-def";
 import { Deck, defaultMasterPlaceholder } from "./deck";
-import { LINE_DASHES, LINE_WEIGHTS } from "./lines";
+import { LINE_WEIGHTS } from "./lines";
 import { quickStylesPanel } from "./quickstyles";
 import { wordArtInsertPanel } from "./wordart";
 import { setShowFlag, showFlag } from "./showsetup";
@@ -973,8 +970,8 @@ export class PresentApp implements EditorHost, PanelHost {
       this.pipette((hex) => { this.lastFontColor = hex; this.formatRuns("Textfüllung", (r) => T.setRunColor(r, hex)); }),
       { label: "Farbverlauf", submenu: () => [
         { label: "Kein Farbverlauf", run: () => this.formatRuns("Textfüllung", (r) => T.setRunColor(r, base())) },
-        { heading: "Helle Varianten" }, ...GRAD_DIRS.map(([label, dir]) => ({ label, run: () => setFill("Textfüllung", grad(true, dir)) })),
-        { heading: "Dunkle Varianten" }, ...GRAD_DIRS.map(([label, dir]) => ({ label, run: () => setFill("Textfüllung", grad(false, dir)) }))] },
+        { heading: "Helle Varianten" }, gradientMenu(`#${base()}`, true, (dir) => setFill("Textfüllung", grad(true, dir))),
+        { heading: "Dunkle Varianten" }, gradientMenu(`#${base()}`, false, (dir) => setFill("Textfüllung", grad(false, dir)))] },
     ];
   }
 
@@ -1009,12 +1006,22 @@ export class PresentApp implements EditorHost, PanelHost {
       { label: "Bild...", run: () => void this.pictureFill() },
       { label: "Farbverlauf", submenu: () => [
         { label: "Kein Farbverlauf", run: () => this.setFill(this.lastFill) },
-        { heading: "Helle Varianten" }, ...GRAD_DIRS.map(([label, dir]) => ({ label, run: () => setXml("Farbverlauf", grad(true, dir)) })),
-        { heading: "Dunkle Varianten" }, ...GRAD_DIRS.map(([label, dir]) => ({ label, run: () => setXml("Farbverlauf", grad(false, dir)) })),
+        { heading: "Helle Varianten" }, gradientMenu(this.baseHex(base()), true, (dir) => setXml("Farbverlauf", grad(true, dir))),
+        { heading: "Dunkle Varianten" }, gradientMenu(this.baseHex(base()), false, (dir) => setXml("Farbverlauf", grad(false, dir))),
         "-", { label: "Weitere Farbverläufe...", run: () => void this.commands.run("draw.format") }] },
-      { label: "Struktur", submenu: () => [...TEXTURES.map(([key, label]) => ({ label, run: () => void this.textureFill(key, label) })), "-" as const,
+      // PowerPoint's Struktur gallery shows the textures (D-163): our own tiles (D-078) as pictures, names as tooltips.
+      { label: "Struktur", submenu: () => [{ block: () => pictureMenu(TEXTURES.map(([key, label]) => ({ value: key, label, svg: pictures.imagePicture(`textures/${key}.png`, 56, 56) })), 4, [56, 56], undefined,
+        (key) => void this.textureFill(key, TEXTURES.find((t) => t[0] === key)?.[1] ?? key)) }, "-" as const,
         { label: "Weitere Texturen...", run: () => void this.commands.run("draw.format") }] },
     ];
+  }
+
+  /** A design colour or a colour of its own as #RRGGBB, for the pictures of the Farbverlauf gallery. */
+  private baseHex(c: { tag: string; val: string }): string {
+    if (c.tag === "srgbClr") return `#${c.val}`;
+    const t = this.paletteTheme()?.colors as Record<string, string> | undefined;
+    const v = t?.[c.val];
+    return v ? (v.startsWith("#") ? v : `#${v}`) : "#4472C4";
   }
 
   /** Fülleffekt > Struktur (D-078): our texture, embedded once per presentation, tiled as PowerPoint writes textures. */
@@ -1086,15 +1093,16 @@ export class PresentApp implements EditorHost, PanelHost {
         }
       });
     };
-    return [...ARROWS.map(([hd, tl], i) => ({ label: `Pfeilart ${i + 1}`, run: () => set(hd, tl) })), "-", { label: "Weitere Pfeile...", run: () => void this.commands.run("draw.format") }];
+    void ARROWS;
+    return [arrowStyleMenu((hd, tl) => set(hd, tl)), "-", { label: "Weitere Pfeile...", run: () => void this.commands.run("draw.format") }];
   }
 
   outlineExtra(): MenuEntry[] {
     return [{ label: "Keine Kontur", run: () => this.setLine(null) },
       this.pipette((hex) => this.setLine(hex)),
-      { label: "Stärke", submenu: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => this.setLine(undefined, w) })) },
+      { label: "Stärke", submenu: () => weightMenu(LINE_WEIGHTS, (w) => this.setLine(undefined, w)) },
       { label: "Skizziert", submenu: () => sketchMenu(this) },
-      { label: "Striche", submenu: () => LINE_DASHES.map(([label, d]) => ({ label, run: () => this.setLine(undefined, undefined, d) })) },
+      { label: "Striche", submenu: () => [dashMenu(undefined, (d) => this.setLine(undefined, undefined, d))] },
       { label: "Pfeile", submenu: () => this.arrowEntries() }];
   }
 
@@ -1174,8 +1182,8 @@ export class PresentApp implements EditorHost, PanelHost {
   textOutlineExtra(): MenuEntry[] {
     return [{ label: "Keine Kontur", run: () => this.setTextOutline({ color: null }) },
       this.pipette((hex) => this.setTextOutline({ color: hex })),
-      { label: "Stärke", submenu: () => LINE_WEIGHTS.map(([label, w]) => ({ label, run: () => this.setTextOutline({ width: Math.round(w * 12700) }) })) },
-      { label: "Striche", submenu: () => LINE_DASHES.map(([label, d]) => ({ label, run: () => this.setTextOutline({ dash: d }) })) }];
+      { label: "Stärke", submenu: () => weightMenu(LINE_WEIGHTS, (w) => this.setTextOutline({ width: Math.round(w * 12700) })) },
+      { label: "Striche", submenu: () => [dashMenu(undefined, (d) => this.setTextOutline({ dash: d }))] }];
   }
 
   private setLine(hex: string | null | undefined, width?: number, dash?: string): void {
@@ -2560,12 +2568,18 @@ export class PresentApp implements EditorHost, PanelHost {
   private bulletMenu(): MenuEntry[] {
     const chars: [string, string][] = [["Keine", ""], ["Ausgefüllte runde Aufzählungszeichen", "•"], ["Hohle runde Aufzählungszeichen", "o"], ["Ausgefüllte quadratische Aufzählungszeichen", "§"],
       ["Silbentrennung-Aufzählungszeichen", String.fromCharCode(0x2013)], ["Sternförmige Aufzählungszeichen", "v"], ["Pfeilförmige Aufzählungszeichen", "Ø"], ["Häkchenaufzählungszeichen", "ü"]];
-    return [...chars.map(([label, c]): MenuEntry => ({ label, run: () => c ? this.toggleBullets("char", c) : this.formatParas("Aufzählungszeichen", (pPr) => { for (const k of kids(pPr)) if (["buChar", "buAutoNum", "buFont"].includes(k.localName)) k.remove(); if (!kid(pPr, "buNone")) pPr.insertBefore(make(pPr.ownerDocument, "a:buNone"), kids(pPr).find((x) => ["tabLst", "defRPr", "extLst"].includes(x.localName)) ?? null); }) })), "-", { label: "Nummerierung und Aufzählungszeichen...", run: () => void this.commands.run("para.dialog") }];
+    // PowerPoint's gallery shows each bullet before three lines; the name is the tooltip (D-163).
+    const pick = (i: number) => { const c = chars[i][1]; if (c) this.toggleBullets("char", c); else this.formatParas("Aufzählungszeichen", (pPr) => { for (const k of kids(pPr)) if (["buChar", "buAutoNum", "buFont"].includes(k.localName)) k.remove(); if (!kid(pPr, "buNone")) pPr.insertBefore(make(pPr.ownerDocument, "a:buNone"), kids(pPr).find((x) => ["tabLst", "defRPr", "extLst"].includes(x.localName)) ?? null); }); };
+    const pics = chars.map(([label, c], i) => ({ value: String(i), label, svg: listPicture(c ? [BULLET_GLYPH[c] ?? c, BULLET_GLYPH[c] ?? c, BULLET_GLYPH[c] ?? c] : null) }));
+    return [{ block: () => pictureMenu(pics, 3, [64, 64], undefined, (v) => pick(Number(v))) }, "-", { label: "Nummerierung und Aufzählungszeichen...", run: () => void this.commands.run("para.dialog") }];
   }
 
   private numberMenu(): MenuEntry[] {
     const types: [string, string][] = [["1. 2. 3.", "arabicPeriod"], ["1) 2) 3)", "arabicParenR"], ["I. II. III.", "romanUcPeriod"], ["Nummern in Klammern", "arabicParenBoth"], ["a) b) c)", "alphaLcParenR"], ["a. b. c.", "alphaLcPeriod"], ["i. ii. iii.", "romanLcPeriod"]];
-    return [{ label: "Keine", run: () => this.toggleBullets("auto", "none") }, ...types.map(([label, t]) => ({ label, run: () => this.toggleBullets("auto", t) })), "-", { label: "Aufzählungszeichen und Nummerierung...", run: () => void this.commands.run("para.dialog") }];
+    const marks: Record<string, string[]> = { arabicPeriod: ["1.", "2.", "3."], arabicParenR: ["1)", "2)", "3)"], romanUcPeriod: ["I.", "II.", "III."], arabicParenBoth: ["(1)", "(2)", "(3)"],
+      alphaLcParenR: ["a)", "b)", "c)"], alphaLcPeriod: ["a.", "b.", "c."], romanLcPeriod: ["i.", "ii.", "iii."] };
+    const pics = [{ value: "none", label: "Keine", svg: listPicture(null) }, ...types.map(([label, t]) => ({ value: t, label, svg: listPicture(marks[t]) }))];
+    return [{ block: () => pictureMenu(pics, 4, [64, 64], undefined, (v) => this.toggleBullets("auto", v)) }, "-", { label: "Aufzählungszeichen und Nummerierung...", run: () => void this.commands.run("para.dialog") }];
   }
 
   // ----- commands ------------------------------------------------------------------------------------------
@@ -3409,7 +3423,8 @@ export class PresentApp implements EditorHost, PanelHost {
         recordClear: [{ label: "Aufzeichnung auf aktueller Folie löschen", run: () => void import("./record").then((m) => m.clearRecording(this, false)) },
           { label: "Aufzeichnung auf allen Folien löschen", run: () => void import("./record").then((m) => m.clearRecording(this, true)) }],
         transOptions: () => this.transMod?.transitionOptions(this) ?? [], animOptions: () => this.animMod?.animationOptions(this) ?? [], animStart: [{ label: "Beim Klicken", run: () => this.animPane.setStart("clickEffect") }, { label: "Mit Vorherigen", run: () => this.animPane.setStart("withEffect") }, { label: "Nach Vorherigen", run: () => this.animPane.setStart("afterEffect") }],
-        colors: () => [...COLOR_SETS.map((c) => ({ label: c.name, run: () => this.applyColorSet(c.name, c.colors) })), "-", { label: "Farben anpassen...", run: () => void this.customColorsDialog() },
+        // Each set shows its colours beside its name, as PowerPoint's Farben menu (D-163).
+        colors: () => [...COLOR_SETS.map((c) => ({ label: c.name, preview: colorSetPreview(c.colors), run: () => this.applyColorSet(c.name, c.colors) })), "-", { label: "Farben anpassen...", run: () => void this.customColorsDialog() },
           { label: "Farben des Foliendesigns zurücksetzen", disabled: !this.ownDesign(), run: () => { const d = this.ownDesign(); if (d) this.applyColorSet(d.colorName ?? d.name, d.colors as Record<string, string>); } }],
         fonts: () => [...FONT_SETS.map((f) => ({ label: f.label, run: () => this.applyFontSet(f.name, f.major, f.minor) })), "-", { label: "Schriftarten anpassen...", run: () => void this.customFontsDialog() }],
         themeEffects: () => THEME_EFFECTS.map((e) => ({ label: e.name, checked: this.themeEffectName() === e.name, run: () => this.applyThemeEffects(e.name, e.xml) })),
@@ -4065,7 +4080,7 @@ export class PresentApp implements EditorHost, PanelHost {
       },
       /** RaabePresent's ribbon as data for the inventory against PowerPoint (D-070), as RaabeCalc's (D-066). */
       inventory: () => {
-        type Item = { name: string; type?: string; deferred?: boolean; enabled?: boolean; items?: Item[]; submenu?: Item[]; panel?: boolean };
+        type Item = { name: string; type?: string; deferred?: boolean; enabled?: boolean; items?: Item[]; submenu?: Item[]; panel?: boolean; kind?: string };
         const cmdItem = (id: string, label?: string): Item => {
           const c = app.commands.get(id);
           // The accessible name keeps the "..." the visible label drops (as PowerPoint's).
@@ -4075,16 +4090,16 @@ export class PresentApp implements EditorHost, PanelHost {
         const entries = (menu: MenuEntry[]): Item[] => menu.flatMap((m): Item[] => {
           if (m === "-" || "heading" in m) return [];
           // Own content in a menu (the picture effect galleries): its tiles by their names.
-          if ("block" in m) { try { return Array.from(m.block().querySelectorAll("[aria-label]")).map((b) => ({ name: b.getAttribute("aria-label")!.trim() })).filter((x) => x.name); } catch { return []; } }
+          if ("block" in m) { try { return Array.from(m.block().querySelectorAll("[aria-label]")).map((b) => ({ name: b.getAttribute("aria-label")!.trim(), kind: entryKind(b) })).filter((x) => x.name); } catch { return []; } }
           if ("cmd" in m) return [cmdItem(m.cmd, m.label)];
           if ("icons" in m) return [{ name: m.label, items: m.icons.map((i) => ({ name: i.tip.replace(/ \(.\)$/, "") })) }];
           const sub = "submenu" in m ? (typeof m.submenu === "function" ? m.submenu() : m.submenu) : undefined;
-          return [{ name: m.label, enabled: !("disabled" in m && m.disabled), ...(sub ? { submenu: entries(sub) } : {}) }];
+          return [{ name: m.label, enabled: !("disabled" in m && m.disabled), ...(sub ? { submenu: entries(sub) } : {}), ...("preview" in m && m.preview ? { kind: "both" } : {}) }];
         });
         const ctl = (c: import("@raabe/shell").Control): Item[] => {
           if (c.type === "stack") return c.items.flatMap(ctl);
           if (c.type === "rows") return c.rows.flat().flatMap((x) => (x === "gap" ? [] : ctl(x)));
-          if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery" }));
+          if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery", kind: "picture" }));
           // A spin box: its label as PowerPoint names it (no colon) and its two arrow buttons.
           // A spinner's accessible name is its command's full name (PowerPoint: "Animationsdauer" beside "Dauer:").
           if (c.type === "spinner") return [{ ...cmdItem(c.cmd), type: "spinner" }, { name: "Mehr" }, { name: "Weniger" }];
@@ -4094,9 +4109,9 @@ export class PresentApp implements EditorHost, PanelHost {
           let panelItems: Item[] = [];
           try {
             const el = "popup" in c && c.popup ? c.popup(() => {}) : c.type === "color" && c.palette === "highlight"
-              ? h("div", null, ...HIGHLIGHTS.map(([n, , label]) => h("button", { "aria-label": PP_HIGHLIGHT_NAMES[n] ?? label })), h("button", { "aria-label": "Keine Farbe" }))
+              ? h("div", null, ...HIGHLIGHTS.map(([n, , label]) => h("button", { class: "swatch", "aria-label": PP_HIGHLIGHT_NAMES[n] ?? label })), h("button", { "aria-label": "Keine Farbe" }))
               : c.type === "color" ? h("div", null, ...colorGrid(() => {}, app.paletteTheme()?.colors)) : c.type === "tiles" ? c.panel(() => {}) : null;
-            if (el) panelItems = Array.from(el.querySelectorAll("button, [role=menuitem], [role=button], [data-tip]")).map((b) => ({ name: (b.getAttribute("aria-label") || (b as HTMLElement).dataset.tip || b.textContent || "").trim() })).filter((x) => x.name);
+            if (el) panelItems = Array.from(el.querySelectorAll("button, [role=menuitem], [role=button], [data-tip]")).map((b) => ({ name: (b.getAttribute("aria-label") || (b as HTMLElement).dataset.tip || b.textContent || "").trim(), kind: entryKind(b) })).filter((x) => x.name);
           } catch { /* a panel that needs a selection */ }
           if (c.type === "color" && c.extra) panelItems.push(...entries(c.extra()));
           if (c.type === "color" && c.palette === "font") panelItems.push({ name: c.more ?? "Weitere Farben..." });
@@ -4154,3 +4169,42 @@ function mimeOf(path: string): string {
 }
 
 export { closePopup, showPopup };
+
+/** The Wingdings bullets PowerPoint's gallery offers, as the characters they look like (for our pictures). */
+const BULLET_GLYPH: Record<string, string> = { "\u00a7": "\u25aa", v: "\u2756", "\u00d8": "\u27a2", "\u00fc": "\u2714", o: "\u25cb" };
+
+/** A list gallery picture (D-163): three lines, each after its bullet or number; null: plain lines ("Keine"). */
+function listPicture(marks: string[] | null): string {
+  const rows = [16, 32, 48].map((y, i) => {
+    const m = marks?.[i];
+    const x = m ? 10 + Math.max(8, m.length * 5) : 8;
+    return (m ? `<text x="8" y="${y + 4}" font-family="Segoe UI Symbol, Segoe UI, sans-serif" font-size="11" fill="#262626">${m}</text>` : "")
+      + `<rect x="${x}" y="${y - 1}" width="${56 - x}" height="2" fill="#7f7f7f"/>`;
+  });
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" aria-hidden="true"><rect x=".5" y=".5" width="63" height="63" fill="#fff" stroke="#d0d0d0"/>${rows.join("")}</svg>`;
+}
+
+/**
+ * Farbverlauf: helle / dunkle Varianten as PowerPoint's gallery (3 x 4 pictures, names as tooltips, D-163). Each
+ * picture runs from the light (or full) colour to the darker one in its direction, drawn by our own pictures.
+ */
+function gradientMenu(base: string, light: boolean, pick: (dir: string) => void): MenuEntry {
+  const mix = (hex: string, k: number, to: number) => "#" + [1, 3, 5].map((i) => Math.round(parseInt(hex.slice(i, i + 2), 16) * (1 - k) + to * k).toString(16).padStart(2, "0")).join("");
+  const stops = light ? [{ pos: 0, color: mix(base, 0.8, 255) }, { pos: 100, color: mix(base, 0.4, 255) }] : [{ pos: 0, color: base }, { pos: 100, color: mix(base, 0.5, 0) }];
+  const entries = GRAD_DIRS.map(([label, dir], i) => {
+    const ang = /ang="(\d+)"/.exec(dir);
+    const rect = /fillToRect([^/]*)\/>/.exec(dir)?.[1] ?? "";
+    const v = (k: string) => Number(new RegExp(`${k}="(\\d+)"`).exec(rect)?.[1] ?? 0) / 100000;
+    const focus = { x: (v("l") + 1 - v("r")) / 2, y: (v("t") + 1 - v("b")) / 2 };
+    const svg = ang ? pictures.gradientPicture("linear", stops, Number(ang[1]) / 60000, undefined, 56, 56) : pictures.gradientPicture(dir.includes("circle") ? "radial" : "rect", stops, 0, focus, 56, 56);
+    return { value: String(i), label, svg };
+  });
+  return { block: () => pictureMenu(entries, 3, [56, 56], undefined, (v) => pick(GRAD_DIRS[Number(v)][1])) };
+}
+
+/** A colour set as eight squares (Text/Hintergrund dunkel 2 and hell 2, Akzent 1-6), as PowerPoint's Farben menu shows it. */
+function colorSetPreview(colors: Record<string, string>): HTMLElement {
+  const keys = ["dk2", "lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6"];
+  return h("span", { class: "color-set-preview", style: "display:inline-flex;gap:1px" },
+    ...keys.map((k) => h("span", { style: `display:inline-block;width:12px;height:12px;background:#${colors[k] ?? "FFFFFF"};outline:1px solid rgba(0,0,0,.15)` })));
+}

@@ -3,7 +3,8 @@
 // recorded from Word, the same Office galleries). A shape's effects go into its spPr (effectLst, scene3d, sp3d in
 // that order); a text's 3-D and its Transformieren into the text body's bodyPr, as PowerPoint writes them.
 
-import type { MenuEntry } from "@raabe/shell";
+import { closePopup, h, type MenuEntry } from "@raabe/shell";
+import { presetTile } from "./presettiles";
 import { PptxDom } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
 import { BEVELS, EFFECT_PRESETS, GLOWS, REFLECTIONS, ROTATIONS_3D, SHADOWS, SOFT_EDGES, type PicturePreset } from "./effect-presets";
@@ -81,14 +82,31 @@ let optionsHook: ((section: string) => void) | null = null;
 /** Set by the app: opens the pane's Effekte at a section. */
 export function setEffectOptionsHook(fn: (section: string) => void): void { optionsHook = fn; }
 
+/** Columns of each gallery, as PowerPoint's (Excel's pane galleries recorded alike: results/2026-11-11-excel-picturedrops.json). */
+const COLUMNS: Record<string, number> = { "Leuchteffektvarianten": 6, Voreinstellungen: 4, Parallel: 4, Perspektive: 4, "Schräg": 4, "": 4 };
+
+/**
+ * A Formeffekte / Texteffekte gallery (D-162): PowerPoint shows pictures, not names. Each preset is drawn on a small
+ * shape by our renderer (presettiles.ts); the name is the tooltip.
+ */
 function grouped(list: readonly (PicturePreset & { id: string })[], groups: [string, number][], run: (p: PicturePreset | null, label: string) => void, none: string, options: string): MenuEntry[] {
-  const out: MenuEntry[] = [{ heading: none }, { label: list[0].label, run: () => run(null, list[0].label) }];
-  let i = 1;
-  for (const [head, n] of groups) {
-    if (head) out.push({ heading: head });
-    for (const p of list.slice(i, i + n)) out.push({ label: p.label, run: () => run(p, p.label) });
-    i += n;
-  }
+  const tile = (p: PicturePreset | null, label: string) => {
+    const b = h("button", { type: "button", class: "tile fx-tile", "data-tip": label, "aria-label": label, onclick: () => { closePopup(); run(p, label); } });
+    b.append(presetTile(p, 56, 56));
+    return b;
+  };
+  const block = () => {
+    const box = h("div", { class: "fx-gallery" }, h("div", { class: "menu-heading" }, none),
+      h("div", { class: "fx-grid", style: "grid-template-columns:repeat(1, auto)" }, tile(null, list[0].label)));
+    let i = 1;
+    for (const [head, n] of groups) {
+      if (head) box.append(h("div", { class: "menu-heading" }, head));
+      box.append(h("div", { class: "fx-grid", style: `grid-template-columns:repeat(${COLUMNS[head] ?? 3}, auto)` }, ...list.slice(i, i + n).map((p) => tile(p, p.label))));
+      i += n;
+    }
+    return box;
+  };
+  const out: MenuEntry[] = [{ block }];
   // The "…optionen..." entry opens Form formatieren at Effekte with its section (D-076).
   out.push("-", { label: options, run: () => optionsHook?.(OPTION_SECTIONS[options] ?? "3D-Format") });
   return out;

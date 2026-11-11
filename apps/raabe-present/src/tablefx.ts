@@ -4,7 +4,8 @@
 // Office's (effect-presets.ts, the same galleries as Formeffekte); the gallery names are PowerPoint's.
 // The table's shadow and reflection are drawn (render/table.ts); the cell bevels are written, not drawn.
 
-import type { MenuEntry } from "@raabe/shell";
+import { pictureMenu, type MenuEntry } from "@raabe/shell";
+import { presetTile } from "./presettiles";
 import { PptxDom } from "@raabe/ooxml";
 import type { PresentApp } from "./app";
 import { BEVELS, REFLECTIONS, SHADOWS, type PicturePreset } from "./effect-presets";
@@ -60,8 +61,10 @@ function cellBevel(app: PresentApp, p: PicturePreset | null, label: string, cell
 
 /** The Effekte menu of Tabellenentwurf (PowerPoint's three entries). */
 export function tableEffectsMenu(app: PresentApp, cells: () => Element[]): MenuEntry[] {
+  // PowerPoint's Effekte galleries show the presets as pictures (D-163), drawn by our renderer on a small shape.
   const list = (presets: readonly (PicturePreset & { id: string })[], run: (p: PicturePreset | null, label: string) => void): MenuEntry[] =>
-    presets.map((p, i) => ({ label: p.label, run: () => run(i === 0 ? null : p, p.label) }));
+    [{ block: () => pictureMenu(presets.map((p, i) => ({ value: String(i), label: p.label, svg: "", node: () => presetTile(i === 0 ? null : p, 56, 56) })), 4, [56, 56], undefined,
+      (v) => { const i = Number(v); run(i === 0 ? null : presets[i], presets[i].label); }) }];
   return [
     { label: "Zellenabschrägung", submenu: () => list(BEVELS, (p, l) => cellBevel(app, p, `Zellenabschrägung: ${l}`, cells)) },
     { label: "Schatten", submenu: () => list(SHADOWS, (p, l) => tableFx(app, ["outerShdw", "innerShdw", "prstShdw"], p, `Schatten: ${l}`)) },

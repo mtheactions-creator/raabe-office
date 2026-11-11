@@ -70,7 +70,7 @@ export function textSections(t: FmtTarget, _kind: string): PaneTab[] {
   const text = () => textOf(t);
   const fillTab: PaneSection[] = [
     { ...fillSection(asShape, "#595959", [], true, false), title: "Textfüllung" },
-    { ...lineSection(asShape, { title: "Textkontur", autoColor: "#595959", autoWidth: 0.75, withAuto: false }) },
+    { ...lineSection(asShape, { title: "Textkontur", autoColor: "#595959", autoWidth: 0.75, withAuto: false, arrows: "disabled" }) },
     { title: "Schrift", controls: () => [
       { type: "number", label: "Schriftgrad", unit: " Pt.", min: 1, max: 409, step: 1, value: () => text()?.size ?? null, set: (v) => editText(t, (x) => { x.size = v; }) },
       { type: "check", label: "Fett", value: () => !!text()?.bold, set: (on) => editText(t, (x) => { x.bold = on || undefined; }) },

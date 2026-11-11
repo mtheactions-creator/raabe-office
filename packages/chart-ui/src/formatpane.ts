@@ -5,7 +5,7 @@
 // element's own options in paneoptions.ts, text and size in panetext.ts.
 
 import { isBar, isPie, isScatter, kindInfo, seriesColor, seriesName, type ChartModel, type DataPoint, type Effects, type ElementFormat, type Fill, type Line } from "@raabe/charts";
-import type { PaneSection, PaneSpec, PaneTab } from "@raabe/shell";
+import { pictures, type PaneControl, type PaneSection, type PaneSpec, type PaneTab } from "@raabe/shell";
 import { effectSections, fillSection, lineSection, type FmtTarget } from "./panefill";
 import type { SelectDataHost } from "./selectdata";
 import { axisSections, errorSections, labelSections, pointSections, seriesSections, trendSections } from "./paneoptions";
@@ -254,7 +254,7 @@ export function formatPane(m: ChartModel, e: ChartElement, outer: PaneHost): Pan
   const tabs: PaneTab[] = [{ id: "fill", label: "Füllung und Linie", icon: "pane-fill-line", sections: () => fillAndLine(m, e, host, target, isLine, lineKind, auto) }];
   // Effekte: Schatten, Leuchten and Weiche Kanten everywhere; 3D-Format on areas and axes (Excel's axis pane has it,
   // D-155), not on the legend, gridlines, trendlines or error bars.
-  const format3d = (!isLine || ["valAxis", "catAxis", "valAxis2"].includes(e.kind)) && e.kind !== "legend";
+  const format3d = (!isLine || ["valAxis", "catAxis", "valAxis2", "series", "point"].includes(e.kind)) && e.kind !== "legend";
   tabs.push({ id: "effects", label: "Effekte", icon: "pane-effects", sections: () => effectSections(target, { autoColor: auto, format3d }) });
   if (e.kind === "chart") tabs.push({ id: "size", label: "Größe und Eigenschaften", icon: "size-position", sections: () => sizeSections(m, host) });
   // Titles, axes and labels: Größe und Eigenschaften holds the text's Ausrichtung.
@@ -280,32 +280,36 @@ function fillAndLine(m: ChartModel, e: ChartElement, host: PaneHost, t: FmtTarge
   const fam = kindInfo(s?.kind ?? m.kind).family;
   if (!isLine || e.kind === "valAxis" || e.kind === "catAxis" || e.kind === "valAxis2") {
     const extra = [];
-    if (e.kind === "series" && fam === "bar") {
+    // The series' own choices stand in a point's pane too (Excel).
+    if ((e.kind === "series" || e.kind === "point") && fam === "bar") {
       extra.push({ type: "check" as const, label: "Invertieren, falls negativ", value: () => !!m.series[e.index]?.invertIfNegative, set: (on: boolean) => host.edit((cm) => { cm.series[e.index].invertIfNegative = on || undefined; }) });
     }
     if (e.kind === "series" && !isPie(m.kind) && m.series.length === 1 && (fam === "bar" || fam === "area")) {
       extra.push({ type: "check" as const, label: "Punkte nach Farbe unterscheiden", value: () => !!m.varyColors, set: (on: boolean) => host.edit((cm) => { cm.varyColors = on || undefined; }) });
     }
-    if (e.kind === "series" && isPie(m.kind)) {
+    if ((e.kind === "series" || e.kind === "point") && isPie(m.kind)) {
       extra.push({ type: "check" as const, label: "Segmentfarbunterscheidung", value: () => !s?.fill || s.fill.type === "auto", set: (on: boolean) => host.edit((cm) => { if (on) delete cm.series[e.index].fill; else cm.series[e.index].fill = { type: "solid", color: auto }; }) });
     }
-    out.push(fillSection(t, auto, extra));
+    out.push(fillSection(t, auto, extra, true, true, e.kind === "labels"));
   }
-  const lineExtra = [];
+  // A scatter series without lines and data labels have no line of their own: Excel shows Keine Linie chosen.
+  const autoNone = e.kind === "labels" || ((e.kind === "series" || e.kind === "point") && (s?.kind ?? m.kind) === "scatter");
+  const lineExtra: PaneControl[] = [];
   if (e.kind === "chart") lineExtra.push({ type: "check" as const, label: "Abgerundete Ecken", value: () => !!m.format?.chart?.roundedCorners, set: (on: boolean) => host.edit((c) => { const ca = ((c.format ??= {}).chart ??= {}); if (on) ca.roundedCorners = true; else delete ca.roundedCorners; }) });
-  if (e.kind === "series" && lineKind && fam !== "stock") lineExtra.push({ type: "check" as const, label: "Linie glätten", value: () => !!m.series[e.index]?.smooth, set: (on: boolean) => host.edit((cm) => { cm.series[e.index].smooth = on || undefined; }) });
+  if ((e.kind === "series" || e.kind === "point") && lineKind && fam !== "stock") lineExtra.push({ type: "check" as const, label: "Linie glätten", value: () => !!m.series[e.index]?.smooth, set: (on: boolean) => host.edit((cm) => { cm.series[e.index].smooth = on || undefined; }) });
   const autoWidth = e.kind === "series" || e.kind === "point" ? (fam === "line" || fam === "radar" ? 2.25 : lineKind ? 1.5 : 0.75) : e.kind === "trend" ? 1.5 : 0.75;
   const lineColor = isLine && (e.kind === "series" || e.kind === "point" || e.kind === "trend") ? auto : isLine ? "#BFBFBF" : "#595959";
   out.push(lineSection(t, {
     title: isLine ? "Linie" : "Rahmen", autoColor: lineColor, autoWidth, open: isLine,
-    arrows: isLine && !["majorGrid", "minorGrid", "catGrid"].includes(e.kind), extra: lineExtra,
+    // Excel offers the arrows on every line and shows them greyed on a Rahmen (recorded 2026-11-09).
+    arrows: isLine ? true : "disabled", autoNone, extra: lineExtra,
   }));
-  if ((e.kind === "series" || e.kind === "point") && lineKind) out.push(...markerSections(m, e, host));
+  if ((e.kind === "series" || e.kind === "point") && lineKind) out.push(...markerSections(m, e, host, lineExtra));
   return out;
 }
 
 /** Markierung of line and scatter series (and of one point): Markierungsoptionen, its Füllung and Rahmen. */
-function markerSections(m: ChartModel, e: Extract<ChartElement, { kind: "series" } | { kind: "point" }>, host: PaneHost): PaneSection[] {
+function markerSections(m: ChartModel, e: Extract<ChartElement, { kind: "series" } | { kind: "point" }>, host: PaneHost, lineExtra: PaneControl[]): PaneSection[] {
   const i = e.index;
   const get = () => (e.kind === "point" ? m.series[i]?.points?.find((p) => p.idx === e.point)?.marker ?? m.series[i]?.marker : m.series[i]?.marker);
   const edit = (fn: (mk: NonNullable<DataPoint["marker"]>) => void, clear = false) => host.edit((c) => {
@@ -336,12 +340,15 @@ function markerSections(m: ChartModel, e: Extract<ChartElement, { kind: "series"
         { type: "radio", label: "Automatisch", checked: () => !mk?.symbol || mk.symbol === "auto", pick: () => edit(() => undefined, true) },
         { type: "radio", label: "Keine", checked: () => mk?.symbol === "none", pick: () => edit((x) => { x.symbol = "none"; }) },
         { type: "radio", label: "Integriert", checked: () => integrated, pick: () => edit((x) => { x.symbol = "circle"; x.size = x.size ?? 5; }) },
-        { type: "select", label: "Typ", options: symbols, value: () => (integrated ? mk!.symbol! : "circle"), set: (v) => edit((x) => { x.symbol = v as typeof x.symbol; }), disabled: () => !integrated },
+        // Excel's Typ is a list of the symbols' pictures (recorded 2026-11-11), D-161.
+        { type: "picture", label: "Typ", options: symbols.map((o) => ({ ...o, svg: pictures.markerPicture(o.value, 28, 28, auto) })), columns: 1, size: [28, 28],
+          value: () => (integrated ? mk!.symbol! : "circle"), set: (v) => edit((x) => { x.symbol = v as typeof x.symbol; }), disabled: () => !integrated },
         { type: "number", label: "Größe", min: 2, max: 72, value: () => mk?.size ?? 5, set: (v) => edit((x) => { x.size = Math.round(v); }), disabled: () => !integrated },
       ];
     } },
     { ...fillSection(mt, auto, [], false), title: "Markierungsfüllung" },
-    { ...lineSection(mt, { title: "Markierungsrahmen", autoColor: auto, autoWidth: 0.75 }) },
+    // Excel's Markierung page repeats the line's arrows (greyed) and Linie glätten in its Rahmen.
+    { ...lineSection(mt, { title: "Markierungsrahmen", autoColor: auto, autoWidth: 0.75, arrows: "disabled", extra: lineExtra }) },
   ];
 }
 
@@ -359,7 +366,7 @@ function ownTab(m: ChartModel, e: ChartElement, host: PaneHost): PaneTab | null 
     ] }] };
     case "valAxis": case "catAxis": case "valAxis2": return { id: "own", label: "Achsenoptionen", icon: "chart-line", sections: () => axisSections(m, e.kind, host) };
     case "series": return { id: "own", label: "Datenreihenoptionen", icon: "chart-column", sections: () => seriesSections(m, e.index, host) };
-    case "point": return { id: "own", label: "Datenpunktoptionen", icon: "chart-column", sections: () => pointSections(m, e.index, e.point, host) };
+    case "point": return { id: "own", label: "Datenreihenoptionen", icon: "chart-column", sections: () => pointSections(m, e.index, e.point, host) };
     case "labels": return { id: "own", label: "Beschriftungsoptionen", icon: "number-format", sections: () => labelSections(m, host) };
     case "trend": return { id: "own", label: "Trendlinienoptionen", icon: "chart-line", sections: () => trendSections(m, e.index, host) };
     case "errorBars": return { id: "own", label: "Fehlerindikatoroptionen", icon: "chart-line", sections: () => errorSections(m, e.index, host) };

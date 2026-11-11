@@ -7,6 +7,7 @@
 import { h, icon } from "./dom";
 import { colorGrid } from "./palette";
 import { showPopup, closePopup } from "./popup";
+import { pictureDropdown, type PictureEntry } from "./picturedrop";
 
 export type PaneControl =
   | { type: "radio"; label: string; checked: () => boolean; pick: () => void; disabled?: () => boolean }
@@ -22,6 +23,14 @@ export type PaneControl =
       reset?: { label: string; isAuto: () => boolean; run: () => void };
     }
   | { type: "select"; label: string; options: { label: string; value: string }[]; value: () => string; set: (v: string) => void; disabled?: () => boolean }
+  /**
+   * A picture dropdown (D-161): the box shows a picture of the current value, the open list pictures (Strichtyp,
+   * Pfeiltyp, Voreinstellungen …). `columns` 1 is a list, more a grid; `size` the picture's [width, height].
+   */
+  | {
+      type: "picture"; label: string; options: PictureEntry[]; value: () => string; set: (v: string) => void; disabled?: () => boolean;
+      columns: number; size: [number, number]; text?: boolean; more?: { label: string; run: () => void }[];
+    }
   | { type: "text"; label: string; value: () => string; set: (v: string) => void; disabled?: () => boolean }
   | { type: "button"; label: string; run: () => void; disabled?: () => boolean }
   | { type: "heading"; label: string }
@@ -107,6 +116,10 @@ export class TaskPane {
     const set = spec.sets[Math.min(this.set, spec.sets.length - 1)];
     const tab = set.tabs[Math.min(this.tab, set.tabs.length - 1)];
     const scroll = this.el.querySelector(".tp-body")?.scrollTop ?? 0;
+    // The control that has the focus keeps it across the redraw (a pick from a picture dropdown, D-161).
+    const active = document.activeElement as HTMLElement | null;
+    const focusLabel = active && this.el.contains(active) ? active.getAttribute("aria-label") : null;
+    const focusClass = typeof active?.className === "string" ? active.className.split(" ")[0] : undefined;
     const sets = h("div", { class: "tp-sets" }, ...spec.sets.map((s, i) => {
       const b = h("button", { type: "button", class: `tp-set${i === this.set ? " on" : ""}` }, s.label);
       if (i === 0 && spec.choices?.length) {
@@ -128,6 +141,10 @@ export class TaskPane {
         h("button", { type: "button", class: "tp-close", "aria-label": "Schließen", "data-tip": "Schließen", onclick: () => this.close() }, "✕")),
       sets, tabs, body);
     body.scrollTop = scroll;
+    if (focusLabel && focusClass) {
+      const again = [...this.el.querySelectorAll<HTMLElement>(`.${focusClass}`)].find((x) => x.getAttribute("aria-label") === focusLabel);
+      again?.focus({ preventScroll: true });
+    }
   }
 
   private section(tab: string, s: PaneSection): HTMLElement {
@@ -201,6 +218,10 @@ export class TaskPane {
         const sel = h("select", { class: "tp-select", disabled: dis }, ...c.options.map((o) => h("option", { value: o.value, selected: o.value === c.value() }, o.label))) as HTMLSelectElement;
         sel.addEventListener("change", () => { c.set(sel.value); changed(); });
         return h("div", { class: "tp-line" }, h("span", { class: "tp-label" }, c.label), sel);
+      }
+      case "picture": {
+        const box = pictureDropdown({ label: c.label, entries: c.options, value: c.value, set: (v) => { c.set(v); changed(); }, disabled: dis, columns: c.columns, size: c.size, text: c.text, more: c.more });
+        return h("div", { class: "tp-line" }, h("span", { class: "tp-label" }, c.label), box);
       }
       case "text": {
         const input = h("input", { type: "text", class: "tp-text", value: c.value(), disabled: dis }) as HTMLInputElement;

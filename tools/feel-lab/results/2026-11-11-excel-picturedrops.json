@@ -1,0 +1,2151 @@
+{
+ "meta": {
+  "recorded": "2026-11-11, Excel 365 (German), own instance (DispatchEx) off-screen, no real input",
+  "how": "Format pane opened through CommandBars.ExecuteMso; each dropdown opened through ExpandCollapse; entries read through UI Automation; pictures of the open lists by PrintWindow into captures/ (not committed)",
+  "fields": "control: UIA type of the closed box; closed: its [w, h]; count/columns/rows: the open list; entry: median entry [w, h] (px, 150 % scaling); types/classes/parts: UIA types and classes of the entries and of their children (a Text part means the entry draws a label); names: entry labels"
+ },
+ "panes": {
+  "Diagramm: Datenreihe (Linie)": {
+   "Linie": {
+    "Verbundtyp": {
+     "count": 5,
+     "columns": 1,
+     "rows": 5,
+     "entry": [
+      108,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Einfach",
+      "Doppelt",
+      "Dick Dünn",
+      "Dünn Dick",
+      "Dreifach"
+     ],
+     "popup": [
+      110,
+      194
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Strichtyp": {
+     "count": 8,
+     "columns": 1,
+     "rows": 8,
+     "entry": [
+      156,
+      30
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Uni",
+      "Runder Punkt",
+      "Viereckiger Punkt",
+      "Strich",
+      "Strichpunkt",
+      "Langer Strich",
+      "Langer Strichpunkt",
+      "Langer Strichpunkt-Punkt"
+     ],
+     "popup": [
+      158,
+      242
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Abschlusstyp": {
+     "count": 3,
+     "columns": 1,
+     "rows": 3,
+     "entry": [
+      122,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Rechteckig",
+      "Rund",
+      "Flach"
+     ],
+     "popup": [
+      124,
+      110
+     ],
+     "control": "ComboBox",
+     "closed": [
+      124,
+      33
+     ]
+    },
+    "Anschlusstyp": {
+     "count": 3,
+     "columns": 1,
+     "rows": 3,
+     "entry": [
+      144,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Rund",
+      "Abschrägung",
+      "Winkel"
+     ],
+     "popup": [
+      146,
+      110
+     ],
+     "control": "ComboBox",
+     "closed": [
+      146,
+      33
+     ]
+    },
+    "Startpfeiltyp": {
+     "count": 6,
+     "columns": 3,
+     "rows": 2,
+     "entry": [
+      50,
+      49
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Kein Pfeil",
+      "Pfeil",
+      "Offener Pfeil",
+      "Rahmenpfeil",
+      "Pfeil mit Raute",
+      "Ovaler Pfeil"
+     ],
+     "popup": [
+      152,
+      112
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Startpfeilgröße": {
+     "count": 9,
+     "columns": 3,
+     "rows": 3,
+     "entry": [
+      50,
+      49
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Pfeil L Größe 1",
+      "Pfeil L Größe 2",
+      "Pfeil L Größe 3",
+      "Pfeil L Größe 4",
+      "Pfeil L Größe 5",
+      "Pfeil L Größe 6",
+      "Pfeil L Größe 7",
+      "Pfeil L Größe 8",
+      "Pfeil L Größe 9"
+     ],
+     "popup": [
+      152,
+      161
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Endpfeiltyp": {
+     "count": 6,
+     "columns": 3,
+     "rows": 2,
+     "entry": [
+      50,
+      49
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Kein Pfeil",
+      "Pfeil",
+      "Offener Pfeil",
+      "Rahmenpfeil",
+      "Pfeil mit Raute",
+      "Ovaler Pfeil"
+     ],
+     "popup": [
+      152,
+      112
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Endpfeilgröße": {
+     "count": 9,
+     "columns": 3,
+     "rows": 3,
+     "entry": [
+      50,
+      49
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Pfeil R Größe 1",
+      "Pfeil R Größe 2",
+      "Pfeil R Größe 3",
+      "Pfeil R Größe 4",
+      "Pfeil R Größe 5",
+      "Pfeil R Größe 6",
+      "Pfeil R Größe 7",
+      "Pfeil R Größe 8",
+      "Pfeil R Größe 9"
+     ],
+     "popup": [
+      152,
+      161
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "Schatten": {
+    "Voreinstellungen": {
+     "count": 24,
+     "columns": 3,
+     "rows": 9,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Ohne",
+      "Offset: unten rechts",
+      "Offset: unten",
+      "Offset: unten links",
+      "Offset: rechts",
+      "Offset: Mitte",
+      "Offset: links",
+      "Offset: oben rechts",
+      "Offset: oben",
+      "Offset: oben links",
+      "Innen: oben links",
+      "Innen: oben",
+      "Innen: oben rechts",
+      "Innen: links",
+      "Innen: Mitte",
+      "Innen: rechts",
+      "Innen: unten links",
+      "Innen: unten",
+      "Innen: unten rechts",
+      "Perspektive: oben links",
+      "Perspektive: oben rechts",
+      "Perspektive: unterhalb",
+      "Perspektive: unten links",
+      "Perspektive: unten rechts"
+     ],
+     "popup": [
+      254,
+      987
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "Leuchten": {
+    "Voreinstellungen": {
+     "count": 25,
+     "columns": 6,
+     "rows": 5,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Ohne",
+      "Leuchteffekt: 5 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+      "Leuchteffekt: 5 Pt.; Orange, Akzentfarbe 2",
+      "Leuchteffekt: 5 Pt.; Dunkelgrün, Akzentfarbe 3",
+      "Leuchteffekt: 5 Pt.; Türkis, Akzentfarbe 4",
+      "Leuchteffekt: 5 Pt.; Pflaume, Akzentfarbe 5",
+      "Leuchteffekt: 5 Pt.; Grün, Akzentfarbe 6",
+      "Leuchteffekt: 8 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+      "Leuchteffekt: 8 Pt.; Orange, Akzentfarbe 2",
+      "Leuchteffekt: 8 Pt.; Dunkelgrün, Akzentfarbe 3",
+      "Leuchteffekt: 8 Pt.; Türkis, Akzentfarbe 4",
+      "Leuchteffekt: 8 Pt.; Pflaume, Akzentfarbe 5",
+      "Leuchteffekt: 8 Pt.; Grün, Akzentfarbe 6",
+      "Leuchteffekt: 11 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+      "Leuchteffekt: 11 Pt.; Orange, Akzentfarbe 2",
+      "Leuchteffekt: 11 Pt.; Dunkelgrün, Akzentfarbe 3",
+      "Leuchteffekt: 11 Pt.; Türkis, Akzentfarbe 4",
+      "Leuchteffekt: 11 Pt.; Pflaume, Akzentfarbe 5",
+      "Leuchteffekt: 11 Pt.; Grün, Akzentfarbe 6",
+      "Leuchteffekt: 18 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+      "Leuchteffekt: 18 Pt.; Orange, Akzentfarbe 2",
+      "Leuchteffekt: 18 Pt.; Dunkelgrün, Akzentfarbe 3",
+      "Leuchteffekt: 18 Pt.; Türkis, Akzentfarbe 4",
+      "Leuchteffekt: 18 Pt.; Pflaume, Akzentfarbe 5",
+      "Leuchteffekt: 18 Pt.; Grün, Akzentfarbe 6"
+     ],
+     "popup": [
+      506,
+      535
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "Weiche Kanten": {
+    "Voreinstellungen": {
+     "count": 10,
+     "columns": 5,
+     "rows": 4,
+     "entry": [
+      66,
+      66
+     ],
+     "types": [
+      "Button",
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton",
+      "NetUIRepeatButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "1 Punkt",
+      "2,5 Punkt",
+      "5 Punkt",
+      "10 Punkt",
+      "25 Punkt",
+      "50 Punkt",
+      "Spalte nach links",
+      "Seite nach rechts",
+      "Spalte nach rechts"
+     ],
+     "popup": [
+      239,
+      339
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "3D-Format": {
+    "Abschrägung oben": {
+     "count": 13,
+     "columns": 4,
+     "rows": 4,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "Rund",
+      "Leichte Absenkung",
+      "Säule",
+      "Schräge",
+      "Starke Abschrägung",
+      "Weiche Abrundung",
+      "Konvex",
+      "Silhouette",
+      "Ringförmige Absenkung",
+      "Säule auf abgerundetem Sockel",
+      "Gewölbter Rand",
+      "Rund konvex"
+     ],
+     "popup": [
+      338,
+      451
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    },
+    "Abschrägung unten": {
+     "count": 13,
+     "columns": 4,
+     "rows": 4,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "Rund",
+      "Leichte Absenkung",
+      "Säule",
+      "Schräge",
+      "Starke Abschrägung",
+      "Weiche Abrundung",
+      "Konvex",
+      "Silhouette",
+      "Ringförmige Absenkung",
+      "Säule auf abgerundetem Sockel",
+      "Gewölbter Rand",
+      "Rund konvex"
+     ],
+     "popup": [
+      338,
+      451
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    },
+    "Material": {
+     "count": 11,
+     "columns": 4,
+     "rows": 3,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Matt",
+      "Warm matt",
+      "Plastik",
+      "Metall",
+      "Dunkle Kante",
+      "Helle Kante",
+      "Flach",
+      "Drahtmodell",
+      "Pulver",
+      "Durchsichtiges Pulver",
+      "Transparent"
+     ],
+     "popup": [
+      338,
+      425
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    },
+    "Beleuchtung": {
+     "count": 15,
+     "columns": 4,
+     "rows": 5,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Drei Lichtpunkte",
+      "Gleichmäßig",
+      "Weich",
+      "Hart",
+      "Flutlicht",
+      "Kontrast",
+      "Früher Morgen",
+      "Sonnenaufgang",
+      "Sonnenuntergang",
+      "Kühl",
+      "Kalt",
+      "Flach",
+      "Zwei Lichtpunkte",
+      "Leuchteffekt",
+      "Heller Raum"
+     ],
+     "popup": [
+      338,
+      651
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    }
+   },
+   "Markierung": {
+    "Typ": {
+     "error": "no ExpandCollapse",
+     "control": "ComboBox",
+     "closed": [
+      60,
+      33
+     ]
+    }
+   }
+  },
+  "Diagramm: Diagrammbereich": {
+   "Rahmen": {
+    "Verbundtyp Einfach": {
+     "count": 5,
+     "columns": 1,
+     "rows": 5,
+     "entry": [
+      108,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Einfach",
+      "Doppelt",
+      "Dick Dünn",
+      "Dünn Dick",
+      "Dreifach"
+     ],
+     "popup": [
+      110,
+      194
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Strichtyp Uni": {
+     "count": 8,
+     "columns": 1,
+     "rows": 8,
+     "entry": [
+      156,
+      30
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Uni",
+      "Runder Punkt",
+      "Viereckiger Punkt",
+      "Strich",
+      "Strichpunkt",
+      "Langer Strich",
+      "Langer Strichpunkt",
+      "Langer Strichpunkt-Punkt"
+     ],
+     "popup": [
+      158,
+      242
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Abschlusstyp": {
+     "count": 3,
+     "columns": 1,
+     "rows": 3,
+     "entry": [
+      122,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Rechteckig",
+      "Rund",
+      "Flach"
+     ],
+     "popup": [
+      124,
+      110
+     ],
+     "control": "ComboBox",
+     "closed": [
+      124,
+      33
+     ]
+    },
+    "Anschlusstyp": {
+     "count": 3,
+     "columns": 1,
+     "rows": 3,
+     "entry": [
+      144,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Rund",
+      "Abschrägung",
+      "Winkel"
+     ],
+     "popup": [
+      146,
+      110
+     ],
+     "control": "ComboBox",
+     "closed": [
+      146,
+      33
+     ]
+    },
+    "Startpfeiltyp Kein Pfeil": {
+     "disabled": true,
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Startpfeilgröße Pfeil L Größe 5": {
+     "disabled": true,
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Endpfeiltyp Kein Pfeil": {
+     "disabled": true,
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Endpfeilgröße Pfeil R Größe 5": {
+     "disabled": true,
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "Füllung: Farbverlauf": {
+    "Voreingestellte Farbverläufe": {
+     "count": 30,
+     "columns": 6,
+     "rows": 5,
+     "entry": [
+      93,
+      93
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Heller Farbverlauf - Akzent 1",
+      "Heller Farbverlauf - Akzent 2",
+      "Heller Farbverlauf - Akzent 3",
+      "Heller Farbverlauf - Akzent 4",
+      "Heller Farbverlauf - Akzent 5",
+      "Heller Farbverlauf - Akzent 6",
+      "Lichtakzent oben - Akzent 1",
+      "Lichtakzent oben - Akzent 2",
+      "Lichtakzent oben - Akzent 3",
+      "Lichtakzent oben - Akzent 4",
+      "Lichtakzent oben - Akzent 5",
+      "Lichtakzent oben - Akzent 6",
+      "Mittlerer Farbverlauf - Akzent 1",
+      "Mittlerer Farbverlauf - Akzent 2",
+      "Mittlerer Farbverlauf - Akzent 3",
+      "Mittlerer Farbverlauf - Akzent 4",
+      "Mittlerer Farbverlauf - Akzent 5",
+      "Mittlerer Farbverlauf - Akzent 6",
+      "Lichtakzent unten - Akzent 1",
+      "Lichtakzent unten - Akzent 2",
+      "Lichtakzent unten - Akzent 3",
+      "Lichtakzent unten - Akzent 4",
+      "Lichtakzent unten - Akzent 5",
+      "Lichtakzent unten - Akzent 6",
+      "Radialer Farbverlauf - Akzent 1",
+      "Radialer Farbverlauf - Akzent 2",
+      "Radialer Farbverlauf - Akzent 3",
+      "Radialer Farbverlauf - Akzent 4",
+      "Radialer Farbverlauf - Akzent 5",
+      "Radialer Farbverlauf - Akzent 6"
+     ],
+     "popup": [
+      560,
+      479
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Typ": {
+     "count": 4,
+     "columns": 1,
+     "rows": 4,
+     "entry": [
+      122,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Linear",
+      "Radial",
+      "Rechteckig",
+      "Pfad"
+     ],
+     "popup": [
+      124,
+      146
+     ],
+     "control": "ComboBox",
+     "closed": [
+      124,
+      33
+     ]
+    },
+    "Richtung": {
+     "count": 8,
+     "columns": 5,
+     "rows": 2,
+     "entry": [
+      93,
+      93
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Linear diagonal - oben links nach unten rechts",
+      "Linear unten",
+      "Linear diagonal - oben rechts nach unten links",
+      "Linear rechts",
+      "Linear links",
+      "Linear diagonal - unten links nach oben rechts",
+      "Linear oben",
+      "Linear diagonal - unten rechts nach oben links"
+     ],
+     "popup": [
+      467,
+      200
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "Füllung: Bild- oder Texturfüllung": {
+    "Textur": {
+     "count": 24,
+     "columns": 5,
+     "rows": 5,
+     "entry": [
+      132,
+      132
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Papyrus",
+      "Leinen",
+      "Blaue Baumwolle",
+      "Gewebe",
+      "Wassertropfen",
+      "Papiertüte",
+      "Fischfossil",
+      "Sand",
+      "Grüner Marmor",
+      "Weißer Marmor",
+      "Brauner Marmor",
+      "Granit",
+      "Zeitungspapier",
+      "Recyclingpapier",
+      "Pergament",
+      "Briefpapier",
+      "Blaues Seidenpapier",
+      "Rosa Seidenpapier",
+      "Lila Netz",
+      "Blumenstrauß",
+      "Kork",
+      "Walnuss",
+      "Eiche",
+      "Nussbaum"
+     ],
+     "popup": [
+      662,
+      674
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Ausrichtung": {
+     "count": 9,
+     "columns": 1,
+     "rows": 9,
+     "entry": [
+      137,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Oben links",
+      "Oben",
+      "Oben rechts",
+      "Links",
+      "Zentriert",
+      "Rechts",
+      "Unten links",
+      "Unten",
+      "Unten rechts"
+     ],
+     "popup": [
+      139,
+      326
+     ],
+     "control": "ComboBox",
+     "closed": [
+      139,
+      33
+     ]
+    },
+    "Spiegelungstyp": {
+     "count": 4,
+     "columns": 1,
+     "rows": 4,
+     "entry": [
+      120,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "Horizontal",
+      "Vertikal",
+      "Beide"
+     ],
+     "popup": [
+      122,
+      146
+     ],
+     "control": "ComboBox",
+     "closed": [
+      122,
+      33
+     ]
+    }
+   },
+   "Schatten": {
+    "Voreinstellungen Ohne": {
+     "count": 24,
+     "columns": 3,
+     "rows": 9,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Ohne",
+      "Offset: unten rechts",
+      "Offset: unten",
+      "Offset: unten links",
+      "Offset: rechts",
+      "Offset: Mitte",
+      "Offset: links",
+      "Offset: oben rechts",
+      "Offset: oben",
+      "Offset: oben links",
+      "Innen: oben links",
+      "Innen: oben",
+      "Innen: oben rechts",
+      "Innen: links",
+      "Innen: Mitte",
+      "Innen: rechts",
+      "Innen: unten links",
+      "Innen: unten",
+      "Innen: unten rechts",
+      "Perspektive: oben links",
+      "Perspektive: oben rechts",
+      "Perspektive: unterhalb",
+      "Perspektive: unten links",
+      "Perspektive: unten rechts"
+     ],
+     "popup": [
+      254,
+      987
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "Leuchten": {
+    "Voreinstellungen Ohne": {
+     "count": 25,
+     "columns": 6,
+     "rows": 5,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Ohne",
+      "Leuchteffekt: 5 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+      "Leuchteffekt: 5 Pt.; Orange, Akzentfarbe 2",
+      "Leuchteffekt: 5 Pt.; Dunkelgrün, Akzentfarbe 3",
+      "Leuchteffekt: 5 Pt.; Türkis, Akzentfarbe 4",
+      "Leuchteffekt: 5 Pt.; Pflaume, Akzentfarbe 5",
+      "Leuchteffekt: 5 Pt.; Grün, Akzentfarbe 6",
+      "Leuchteffekt: 8 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+      "Leuchteffekt: 8 Pt.; Orange, Akzentfarbe 2",
+      "Leuchteffekt: 8 Pt.; Dunkelgrün, Akzentfarbe 3",
+      "Leuchteffekt: 8 Pt.; Türkis, Akzentfarbe 4",
+      "Leuchteffekt: 8 Pt.; Pflaume, Akzentfarbe 5",
+      "Leuchteffekt: 8 Pt.; Grün, Akzentfarbe 6",
+      "Leuchteffekt: 11 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+      "Leuchteffekt: 11 Pt.; Orange, Akzentfarbe 2",
+      "Leuchteffekt: 11 Pt.; Dunkelgrün, Akzentfarbe 3",
+      "Leuchteffekt: 11 Pt.; Türkis, Akzentfarbe 4",
+      "Leuchteffekt: 11 Pt.; Pflaume, Akzentfarbe 5",
+      "Leuchteffekt: 11 Pt.; Grün, Akzentfarbe 6",
+      "Leuchteffekt: 18 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+      "Leuchteffekt: 18 Pt.; Orange, Akzentfarbe 2",
+      "Leuchteffekt: 18 Pt.; Dunkelgrün, Akzentfarbe 3",
+      "Leuchteffekt: 18 Pt.; Türkis, Akzentfarbe 4",
+      "Leuchteffekt: 18 Pt.; Pflaume, Akzentfarbe 5",
+      "Leuchteffekt: 18 Pt.; Grün, Akzentfarbe 6"
+     ],
+     "popup": [
+      506,
+      535
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "Weiche Kanten": {
+    "Voreinstellungen Keine": {
+     "count": 10,
+     "columns": 5,
+     "rows": 4,
+     "entry": [
+      66,
+      66
+     ],
+     "types": [
+      "Button",
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton",
+      "NetUIRepeatButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "1 Punkt",
+      "2,5 Punkt",
+      "5 Punkt",
+      "10 Punkt",
+      "25 Punkt",
+      "50 Punkt",
+      "Spalte nach links",
+      "Seite nach rechts",
+      "Spalte nach rechts"
+     ],
+     "popup": [
+      239,
+      339
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "3D-Format": {
+    "Abschrägung oben Keine": {
+     "count": 13,
+     "columns": 4,
+     "rows": 4,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "Rund",
+      "Leichte Absenkung",
+      "Säule",
+      "Schräge",
+      "Starke Abschrägung",
+      "Weiche Abrundung",
+      "Konvex",
+      "Silhouette",
+      "Ringförmige Absenkung",
+      "Säule auf abgerundetem Sockel",
+      "Gewölbter Rand",
+      "Rund konvex"
+     ],
+     "popup": [
+      338,
+      451
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    },
+    "Abschrägung unten Keine": {
+     "count": 13,
+     "columns": 4,
+     "rows": 4,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "Rund",
+      "Leichte Absenkung",
+      "Säule",
+      "Schräge",
+      "Starke Abschrägung",
+      "Weiche Abrundung",
+      "Konvex",
+      "Silhouette",
+      "Ringförmige Absenkung",
+      "Säule auf abgerundetem Sockel",
+      "Gewölbter Rand",
+      "Rund konvex"
+     ],
+     "popup": [
+      338,
+      451
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    },
+    "Material": {
+     "count": 11,
+     "columns": 4,
+     "rows": 3,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Matt",
+      "Warm matt",
+      "Plastik",
+      "Metall",
+      "Dunkle Kante",
+      "Helle Kante",
+      "Flach",
+      "Drahtmodell",
+      "Pulver",
+      "Durchsichtiges Pulver",
+      "Transparent"
+     ],
+     "popup": [
+      338,
+      425
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    },
+    "Beleuchtung": {
+     "count": 15,
+     "columns": 4,
+     "rows": 5,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Drei Lichtpunkte",
+      "Gleichmäßig",
+      "Weich",
+      "Hart",
+      "Flutlicht",
+      "Kontrast",
+      "Früher Morgen",
+      "Sonnenaufgang",
+      "Sonnenuntergang",
+      "Kühl",
+      "Kalt",
+      "Flach",
+      "Zwei Lichtpunkte",
+      "Leuchteffekt",
+      "Heller Raum"
+     ],
+     "popup": [
+      338,
+      651
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    }
+   }
+  },
+  "Form formatieren": {
+   "Linie": {
+    "Skizzenstil": {
+     "count": 4,
+     "columns": 1,
+     "rows": 4,
+     "entry": [
+      166,
+      38
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "Gekrümmt",
+      "Freihand",
+      "Skizze"
+     ],
+     "popup": [
+      168,
+      154
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Verbundtyp": {
+     "count": 5,
+     "columns": 1,
+     "rows": 5,
+     "entry": [
+      108,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Einfach",
+      "Doppelt",
+      "Dick Dünn",
+      "Dünn Dick",
+      "Dreifach"
+     ],
+     "popup": [
+      110,
+      194
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Strichtyp": {
+     "count": 8,
+     "columns": 1,
+     "rows": 8,
+     "entry": [
+      156,
+      30
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Uni",
+      "Runder Punkt",
+      "Viereckiger Punkt",
+      "Strich",
+      "Strichpunkt",
+      "Langer Strich",
+      "Langer Strichpunkt",
+      "Langer Strichpunkt-Punkt"
+     ],
+     "popup": [
+      158,
+      242
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Abschlusstyp": {
+     "count": 3,
+     "columns": 1,
+     "rows": 3,
+     "entry": [
+      122,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Rechteckig",
+      "Rund",
+      "Flach"
+     ],
+     "popup": [
+      124,
+      110
+     ],
+     "control": "ComboBox",
+     "closed": [
+      124,
+      33
+     ]
+    },
+    "Anschlusstyp": {
+     "count": 3,
+     "columns": 1,
+     "rows": 3,
+     "entry": [
+      144,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Rund",
+      "Abschrägung",
+      "Winkel"
+     ],
+     "popup": [
+      146,
+      110
+     ],
+     "control": "ComboBox",
+     "closed": [
+      146,
+      33
+     ]
+    },
+    "Startpfeiltyp": {
+     "disabled": true,
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Startpfeilgröße": {
+     "disabled": true,
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Endpfeiltyp": {
+     "disabled": true,
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Endpfeilgröße": {
+     "disabled": true,
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "Füllung: Farbverlauf": {
+    "Voreingestellte Farbverläufe": {
+     "count": 30,
+     "columns": 6,
+     "rows": 5,
+     "entry": [
+      93,
+      93
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Heller Farbverlauf - Akzent 1",
+      "Heller Farbverlauf - Akzent 2",
+      "Heller Farbverlauf - Akzent 3",
+      "Heller Farbverlauf - Akzent 4",
+      "Heller Farbverlauf - Akzent 5",
+      "Heller Farbverlauf - Akzent 6",
+      "Lichtakzent oben - Akzent 1",
+      "Lichtakzent oben - Akzent 2",
+      "Lichtakzent oben - Akzent 3",
+      "Lichtakzent oben - Akzent 4",
+      "Lichtakzent oben - Akzent 5",
+      "Lichtakzent oben - Akzent 6",
+      "Mittlerer Farbverlauf - Akzent 1",
+      "Mittlerer Farbverlauf - Akzent 2",
+      "Mittlerer Farbverlauf - Akzent 3",
+      "Mittlerer Farbverlauf - Akzent 4",
+      "Mittlerer Farbverlauf - Akzent 5",
+      "Mittlerer Farbverlauf - Akzent 6",
+      "Lichtakzent unten - Akzent 1",
+      "Lichtakzent unten - Akzent 2",
+      "Lichtakzent unten - Akzent 3",
+      "Lichtakzent unten - Akzent 4",
+      "Lichtakzent unten - Akzent 5",
+      "Lichtakzent unten - Akzent 6",
+      "Radialer Farbverlauf - Akzent 1",
+      "Radialer Farbverlauf - Akzent 2",
+      "Radialer Farbverlauf - Akzent 3",
+      "Radialer Farbverlauf - Akzent 4",
+      "Radialer Farbverlauf - Akzent 5",
+      "Radialer Farbverlauf - Akzent 6"
+     ],
+     "popup": [
+      560,
+      479
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Typ": {
+     "count": 4,
+     "columns": 1,
+     "rows": 4,
+     "entry": [
+      122,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Linear",
+      "Radial",
+      "Rechteckig",
+      "Pfad"
+     ],
+     "popup": [
+      124,
+      146
+     ],
+     "control": "ComboBox",
+     "closed": [
+      124,
+      33
+     ]
+    },
+    "Richtung": {
+     "count": 8,
+     "columns": 5,
+     "rows": 2,
+     "entry": [
+      93,
+      93
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Linear diagonal - oben links nach unten rechts",
+      "Linear unten",
+      "Linear diagonal - oben rechts nach unten links",
+      "Linear rechts",
+      "Linear links",
+      "Linear diagonal - unten links nach oben rechts",
+      "Linear oben",
+      "Linear diagonal - unten rechts nach oben links"
+     ],
+     "popup": [
+      467,
+      200
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "Füllung: Bild- oder Texturfüllung": {
+    "Textur": {
+     "count": 24,
+     "columns": 5,
+     "rows": 5,
+     "entry": [
+      132,
+      132
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Papyrus",
+      "Leinen",
+      "Blaue Baumwolle",
+      "Gewebe",
+      "Wassertropfen",
+      "Papiertüte",
+      "Fischfossil",
+      "Sand",
+      "Grüner Marmor",
+      "Weißer Marmor",
+      "Brauner Marmor",
+      "Granit",
+      "Zeitungspapier",
+      "Recyclingpapier",
+      "Pergament",
+      "Briefpapier",
+      "Blaues Seidenpapier",
+      "Rosa Seidenpapier",
+      "Lila Netz",
+      "Blumenstrauß",
+      "Kork",
+      "Walnuss",
+      "Eiche",
+      "Nussbaum"
+     ],
+     "popup": [
+      662,
+      674
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    },
+    "Ausrichtung": {
+     "count": 9,
+     "columns": 1,
+     "rows": 9,
+     "entry": [
+      137,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Oben links",
+      "Oben",
+      "Oben rechts",
+      "Links",
+      "Zentriert",
+      "Rechts",
+      "Unten links",
+      "Unten",
+      "Unten rechts"
+     ],
+     "popup": [
+      139,
+      326
+     ],
+     "control": "ComboBox",
+     "closed": [
+      139,
+      33
+     ]
+    },
+    "Spiegelungstyp": {
+     "count": 4,
+     "columns": 1,
+     "rows": 4,
+     "entry": [
+      120,
+      36
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "Horizontal",
+      "Vertikal",
+      "Beide"
+     ],
+     "popup": [
+      122,
+      146
+     ],
+     "control": "ComboBox",
+     "closed": [
+      122,
+      33
+     ]
+    }
+   },
+   "Schatten": {
+    "Voreinstellungen": {
+     "count": 24,
+     "columns": 3,
+     "rows": 9,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Ohne",
+      "Offset: unten rechts",
+      "Offset: unten",
+      "Offset: unten links",
+      "Offset: rechts",
+      "Offset: Mitte",
+      "Offset: links",
+      "Offset: oben rechts",
+      "Offset: oben",
+      "Offset: oben links",
+      "Innen: oben links",
+      "Innen: oben",
+      "Innen: oben rechts",
+      "Innen: links",
+      "Innen: Mitte",
+      "Innen: rechts",
+      "Innen: unten links",
+      "Innen: unten",
+      "Innen: unten rechts",
+      "Perspektive: oben links",
+      "Perspektive: oben rechts",
+      "Perspektive: unterhalb",
+      "Perspektive: unten links",
+      "Perspektive: unten rechts"
+     ],
+     "popup": [
+      254,
+      987
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "Spiegelung": {
+    "Voreinstellungen": {
+     "count": 10,
+     "columns": 3,
+     "rows": 4,
+     "entry": [
+      99,
+      99
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Ohne",
+      "Enge Spiegelung: mit Berührung",
+      "Halbe Spiegelung: mit Berührung",
+      "Volle Spiegelung: mit Berührung",
+      "Enge Spiegelung: 4 Pt. Offset",
+      "Halbe Spiegelung: 4 Pt. Offset",
+      "Volle Spiegelung: 4 Pt. Offset",
+      "Enge Spiegelung: 8 Pt. Offset",
+      "Halbe Spiegelung: 8 Pt. Offset",
+      "Volle Spiegelung: 8 Pt. Offset"
+     ],
+     "popup": [
+      299,
+      511
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "Leuchten": {
+    "Voreinstellungen": {
+     "count": 25,
+     "columns": 6,
+     "rows": 5,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Ohne",
+      "Leuchteffekt: 5 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+      "Leuchteffekt: 5 Pt.; Orange, Akzentfarbe 2",
+      "Leuchteffekt: 5 Pt.; Dunkelgrün, Akzentfarbe 3",
+      "Leuchteffekt: 5 Pt.; Türkis, Akzentfarbe 4",
+      "Leuchteffekt: 5 Pt.; Pflaume, Akzentfarbe 5",
+      "Leuchteffekt: 5 Pt.; Grün, Akzentfarbe 6",
+      "Leuchteffekt: 8 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+      "Leuchteffekt: 8 Pt.; Orange, Akzentfarbe 2",
+      "Leuchteffekt: 8 Pt.; Dunkelgrün, Akzentfarbe 3",
+      "Leuchteffekt: 8 Pt.; Türkis, Akzentfarbe 4",
+      "Leuchteffekt: 8 Pt.; Pflaume, Akzentfarbe 5",
+      "Leuchteffekt: 8 Pt.; Grün, Akzentfarbe 6",
+      "Leuchteffekt: 11 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+      "Leuchteffekt: 11 Pt.; Orange, Akzentfarbe 2",
+      "Leuchteffekt: 11 Pt.; Dunkelgrün, Akzentfarbe 3",
+      "Leuchteffekt: 11 Pt.; Türkis, Akzentfarbe 4",
+      "Leuchteffekt: 11 Pt.; Pflaume, Akzentfarbe 5",
+      "Leuchteffekt: 11 Pt.; Grün, Akzentfarbe 6",
+      "Leuchteffekt: 18 Pt.; Dunkelblaugrün, Akzentfarbe 1",
+      "Leuchteffekt: 18 Pt.; Orange, Akzentfarbe 2",
+      "Leuchteffekt: 18 Pt.; Dunkelgrün, Akzentfarbe 3",
+      "Leuchteffekt: 18 Pt.; Türkis, Akzentfarbe 4",
+      "Leuchteffekt: 18 Pt.; Pflaume, Akzentfarbe 5",
+      "Leuchteffekt: 18 Pt.; Grün, Akzentfarbe 6"
+     ],
+     "popup": [
+      506,
+      535
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "Weiche Kanten": {
+    "Voreinstellungen": {
+     "count": 10,
+     "columns": 5,
+     "rows": 4,
+     "entry": [
+      66,
+      66
+     ],
+     "types": [
+      "Button",
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton",
+      "NetUIRepeatButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "1 Punkt",
+      "2,5 Punkt",
+      "5 Punkt",
+      "10 Punkt",
+      "25 Punkt",
+      "50 Punkt",
+      "Spalte nach links",
+      "Seite nach rechts",
+      "Spalte nach rechts"
+     ],
+     "popup": [
+      239,
+      339
+     ],
+     "control": "MenuItem",
+     "closed": [
+      66,
+      41
+     ]
+    }
+   },
+   "3D-Format": {
+    "Abschrägung oben": {
+     "count": 13,
+     "columns": 4,
+     "rows": 4,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "Rund",
+      "Leichte Absenkung",
+      "Säule",
+      "Schräge",
+      "Starke Abschrägung",
+      "Weiche Abrundung",
+      "Konvex",
+      "Silhouette",
+      "Ringförmige Absenkung",
+      "Säule auf abgerundetem Sockel",
+      "Gewölbter Rand",
+      "Rund konvex"
+     ],
+     "popup": [
+      338,
+      451
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    },
+    "Abschrägung unten": {
+     "count": 13,
+     "columns": 4,
+     "rows": 4,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "Rund",
+      "Leichte Absenkung",
+      "Säule",
+      "Schräge",
+      "Starke Abschrägung",
+      "Weiche Abrundung",
+      "Konvex",
+      "Silhouette",
+      "Ringförmige Absenkung",
+      "Säule auf abgerundetem Sockel",
+      "Gewölbter Rand",
+      "Rund konvex"
+     ],
+     "popup": [
+      338,
+      451
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    },
+    "Material": {
+     "count": 11,
+     "columns": 4,
+     "rows": 3,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Matt",
+      "Warm matt",
+      "Plastik",
+      "Metall",
+      "Dunkle Kante",
+      "Helle Kante",
+      "Flach",
+      "Drahtmodell",
+      "Pulver",
+      "Durchsichtiges Pulver",
+      "Transparent"
+     ],
+     "popup": [
+      338,
+      425
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    },
+    "Beleuchtung": {
+     "count": 15,
+     "columns": 4,
+     "rows": 5,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Drei Lichtpunkte",
+      "Gleichmäßig",
+      "Weich",
+      "Hart",
+      "Flutlicht",
+      "Kontrast",
+      "Früher Morgen",
+      "Sonnenaufgang",
+      "Sonnenuntergang",
+      "Kühl",
+      "Kalt",
+      "Flach",
+      "Zwei Lichtpunkte",
+      "Leuchteffekt",
+      "Heller Raum"
+     ],
+     "popup": [
+      338,
+      651
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    }
+   },
+   "3D-Drehung": {
+    "Voreinstellungen": {
+     "count": 26,
+     "columns": 4,
+     "rows": 8,
+     "entry": [
+      84,
+      84
+     ],
+     "types": [
+      "ListItem"
+     ],
+     "classes": [
+      "NetUIGalleryButton"
+     ],
+     "parts": [],
+     "names": [
+      "Keine",
+      "Isometrisch: links abwärts",
+      "Isometrisch: rechts aufwärts",
+      "Isometrisch: oben aufwärts",
+      "Isometrisch: unten abwärts",
+      "Von Achse 1: nach links",
+      "Von Achse 1: nach rechts",
+      "Von Achse 1: nach oben",
+      "Von Achse 2: nach links",
+      "Von Achse 2: nach rechts",
+      "Von Achse 2: nach oben",
+      "Perspektive: von vorne",
+      "Perspektive: von links",
+      "Perspektive: von rechts",
+      "Perspektive: unterhalb",
+      "Perspektive: oberhalb",
+      "Perspektive: gemäßigt oberhalb",
+      "Perspektive: oberhalb",
+      "Perspektive: links kontrastierend",
+      "Perspektive: rechts kontrastierend",
+      "Perspektive: nach links gedreht, nach oben gekippt",
+      "Perspektive: nach rechts gedreht, nach oben gekippt",
+      "Schräg: oben links",
+      "Schräg: oben rechts",
+      "Schräg: unten links",
+      "Schräg: unten rechts"
+     ],
+     "popup": [
+      338,
+      903
+     ],
+     "control": "MenuItem",
+     "closed": [
+      90,
+      65
+     ]
+    }
+   }
+  }
+ }
+}

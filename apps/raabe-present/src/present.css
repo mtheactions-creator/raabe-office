@@ -369,3 +369,9 @@ body.view-bw .slide { filter: grayscale(1) contrast(4) brightness(1.2); }
 .zoom-track:focus-visible .zoom-thumb { outline: 1px solid #000; outline-offset: 1px; }
 /* The zoom percentage keeps one width (up to "400 %"), so the slider beside it does not move while it is dragged (D-110). */
 .statusbar .cell.pct, .cell.pct { min-width: 5.2em; text-align: right; justify-content: flex-end; }
+
+/* Formeffekte and Texteffekte galleries: pictures of the presets (D-162). */
+.menu button.fx-tile { width: 62px; height: 62px; padding: 2px; justify-content: center; border: 1px solid transparent; border-radius: 2px; }
+.menu button.fx-tile:hover { border-color: #8a8a8a; }
+.menu button.fx-tile span { font: inherit; }
+.menu .fx-gallery .fx-grid { justify-content: start; }

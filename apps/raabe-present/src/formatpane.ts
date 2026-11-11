@@ -4,7 +4,7 @@
 // at once, each one undo step, to every selected shape.
 
 import { PptxDom, type ShapeView } from "@raabe/ooxml";
-import { TaskPane, type PaneControl, type PaneSection, type PaneSpec } from "@raabe/shell";
+import { TaskPane, pictures, type PaneControl, type PaneSection, type PaneSpec } from "@raabe/shell";
 import type { SlideEditor } from "./editor";
 import * as S from "./shapeops";
 import * as T from "./textops";
@@ -96,7 +96,8 @@ export class FormatPane {
       if (l) {
         c.push({ type: "color", label: "Farbe", value: () => `#${l.color}`, set: (hex) => this.line((ln, doc) => { for (const x of kids(ln)) if (["noFill", "solidFill", "gradFill", "pattFill"].includes(x.localName)) x.remove(); ln.insertBefore(fragment(doc, `<a:solidFill><a:srgbClr val="${(hex ?? "#000000").replace("#", "").toUpperCase()}"/></a:solidFill>`)[0], ln.firstChild); }) });
         c.push({ type: "number", label: "Breite", unit: " Pt.", min: 0, max: 1584, step: 0.25, decimals: 2, value: () => l.width, set: (w) => this.line((ln) => ln.setAttribute("w", String(Math.round(w * 12700)))) });
-        c.push({ type: "select", label: "Strichtyp", options: [["solid", "Durchgehend"], ["sysDot", "Rundpunkt"], ["sysDash", "Quadratpunkt"], ["dash", "Strich"], ["dashDot", "Strich-Punkt"], ["lgDash", "Langer Strich"], ["lgDashDot", "Langer Strich-Punkt"], ["lgDashDotDot", "Langer Strich-Punkt-Punkt"]].map(([value, label]) => ({ value, label })),
+        // A picture dropdown with PowerPoint's entries and names (D-161).
+        c.push({ type: "picture", label: "Strichtyp", options: pictures.dashEntries(), columns: 1, size: pictures.PIC_SIZE.dash,
           value: () => l.dash ?? "solid", set: (d) => this.line((ln, doc) => { kid(ln, "prstDash")?.remove(); const after = kids(ln).find((x) => ["noFill", "solidFill", "gradFill", "pattFill"].includes(x.localName)); ln.insertBefore(make(doc, "a:prstDash", { val: d }), after ? after.nextSibling : ln.firstChild); }) });
       }
       return c;

@@ -5,7 +5,7 @@
 // nudge it. Typing while it is selected writes its text; a double-click edits the text. Strg+1 opens
 // "Form formatieren". Its look until it is formatted is the theme's shape style, as in Excel.
 
-import { h, icon, type MenuEntry, type PaneControl, type PaneSection, type PaneSpec } from "@raabe/shell";
+import { h, icon, pictures, type MenuEntry, type PaneControl, type PaneSection, type PaneSpec } from "@raabe/shell";
 import type { SheetShape } from "@raabe/sheet-engine";
 import { presetAdjust, presetGeometry, shadeLinear, SHAPE_GALLERY, SHAPE_NAMES, shapeElement, shapeIcon, shapeTextRect,
   type GalleryEntry, type PictureFormat, type ShapeInfo } from "@raabe/text-engine";
@@ -975,12 +975,12 @@ export function shapesFeature(app: CalcApp) {
       if (l?.type !== "none") {
         c.push({ type: "color", label: "Farbe", value: () => l?.color ?? null, set: (hex) => set({ type: "solid", color: hex ?? undefined }) });
         c.push({ type: "number", label: "Breite", unit: " Pt.", min: 0, max: 1584, step: 0.25, decimals: 2, value: () => l?.width ?? (s().textBox ? 0.75 : app.wb.themeLines[(s().style?.ln ?? (line ? 1 : 2)) - 1] ?? 1), set: (v) => set({ width: v }) });
-        c.push({ type: "select", label: "Strichtyp", options: [["solid", "Durchgehend"], ["sysDot", "Rundpunkt"], ["sysDash", "Quadratpunkt"], ["dash", "Strich"], ["dashDot", "Strich-Punkt"], ["lgDash", "Langer Strich"]].map(([value, label]) => ({ value, label })),
+        // Picture dropdowns with Excel's entries and names (D-161).
+        c.push({ type: "picture", label: "Strichtyp", options: pictures.dashEntries(), columns: 1, size: pictures.PIC_SIZE.dash,
           value: () => l?.dash ?? "solid", set: (v) => set({ dash: v === "solid" ? undefined : v }) });
         if (line) {
-          const ends = [["none", "Keine"], ["triangle", "Pfeil"], ["stealth", "Offener Pfeil"], ["oval", "Oval"], ["diamond", "Raute"]].map(([value, label]) => ({ value, label }));
-          c.push({ type: "select", label: "Anfangspfeiltyp", options: ends, value: () => l?.head ?? "none", set: (v) => set({ head: v === "none" ? undefined : v }) });
-          c.push({ type: "select", label: "Endpfeiltyp", options: ends, value: () => l?.tail ?? "none", set: (v) => set({ tail: v === "none" ? undefined : v }) });
+          c.push({ type: "picture", label: "Startpfeiltyp", options: pictures.arrowEntries("start"), columns: 3, size: pictures.PIC_SIZE.arrow, value: () => l?.head ?? "none", set: (v) => set({ head: v === "none" ? undefined : v }) });
+          c.push({ type: "picture", label: "Endpfeiltyp", options: pictures.arrowEntries("end"), columns: 3, size: pictures.PIC_SIZE.arrow, value: () => l?.tail ?? "none", set: (v) => set({ tail: v === "none" ? undefined : v }) });
         }
       }
       return c;
