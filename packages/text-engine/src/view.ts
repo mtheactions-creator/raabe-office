@@ -901,14 +901,25 @@ export class View {
       // The frame turns with the object (Word): handles and rotation handle sit on it.
       const box = this.turnedBox(img);
       const frame = document.createElement("div");
-      frame.style.cssText = `position:absolute;inset:0;box-sizing:border-box;border:1px ${img.editing ? "dashed" : "solid"} #6f8db9`;
+      // A chart: Word draws the chart engine's marks, as Excel does (D-170): a one device pixel #616161 frame whose
+      // right and bottom lines lie just outside the chart, and 17 px grey rings at 150 % (11.3 CSS px).
+      const dpr = globalThis.devicePixelRatio || 1;
+      frame.style.cssText = img.chart
+        ? `position:absolute;left:0;top:0;width:calc(100% + ${1 / dpr}px);height:calc(100% + ${1 / dpr}px);box-sizing:border-box;border:${1 / dpr}px solid #616161`
+        : `position:absolute;inset:0;box-sizing:border-box;border:1px ${img.editing ? "dashed" : "solid"} #6f8db9`;
       box.append(frame);
       handles.push(box);
       // Word 365: eight round handles; pictures also get the rotation handle and the layout button.
       for (const hd of HANDLES) {
         const { x, y } = this.handlePos({ x: 0, y: 0, w: img.w, h: img.h }, hd);
         const el = document.createElement("div");
-        el.style.cssText = `position:absolute;left:${x - 4.5}px;top:${y - 4.5}px;width:9px;height:9px;box-sizing:border-box;border:1px solid #5f5f5f;background:#fff;border-radius:50%`;
+        if (img.chart) {
+          const r = 17 / 3, ring = 2.6 / 1.5;
+          el.style.cssText = `position:absolute;left:${x - r}px;top:${y - r}px;width:${2 * r}px;height:${2 * r}px;overflow:visible`;
+          el.innerHTML = `<svg width="${2 * r}" height="${2 * r}" style="display:block;overflow:visible" aria-hidden="true"><circle cx="${r}" cy="${r}" r="${r - ring / 2}" fill="#fff" stroke="#616161" stroke-width="${ring}"/></svg>`;
+        } else {
+          el.style.cssText = `position:absolute;left:${x - 4.5}px;top:${y - 4.5}px;width:9px;height:9px;box-sizing:border-box;border:1px solid #5f5f5f;background:#fff;border-radius:50%`;
+        }
         box.append(el);
       }
       if (img.picture) {

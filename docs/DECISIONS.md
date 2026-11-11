@@ -4413,3 +4413,23 @@ small 9 px circles around the chart, a dashed rectangle around the selected elem
   because RaabeCalc's Datenbeschriftungen element covers all series where Excel selects one series' labels. Not
   compared: a single legend entry and a single data label (no element of their own in our charts yet).
   `results/2026-11-11-calc-chart-selection.json`.
+
+## D-171 The selected chart in RaabeWrite and RaabePresent: the chart engine's frame, not the shape's (2026-11-11)
+
+Follow-up of D-170 for the other two apps.
+- **PowerPoint recorded** (`probe_powerpoint_chart_selection.py`, once POWERPNT.EXE was no longer running: our own
+  PowerPoint and presentation in TEMP, real input under the lock; the Excel that AddChart2 starts for the data sheet is
+  ended with it, found by its parent process): a chart selected as a shape shows the chart engine's marks, exactly
+  as the chart area selected inside it: a one pixel #616161 frame and eight 17 px grey rings at 150 %, no rotation
+  handle (`results/2026-11-11-powerpoint-chart-selection.json`; plot area, title, axis, gridlines and series match
+  Excel's marks too). Through COM `Points(2).Select()` selects the whole series in PowerPoint (recorded as such).
+  Word (D-170) shows the same for its chart.
+- **RaabeWrite** (`packages/text-engine/src/view.ts`): a selected chart now gets that frame (one device pixel, right and
+  bottom just outside the chart) and those rings (SVG circles, 11.3 CSS px with a 1.73 px ring) instead of the
+  picture's blue frame and 9 px handles; pictures and shapes keep their look.
+- **RaabePresent** (`apps/raabe-present/src/editor.ts`, `present.css`): a selected chart's frame and handles the same
+  way, and no rotation handle (PowerPoint has none on charts; ours showed one).
+- Inner parts are not selectable in these two apps yet (their Format pane's dropdown chooses the element): their marks
+  come with that, from `@raabe/chart-ui`'s `elementMarks`, as in RaabeCalc.
+- **Compared** with `check_chart_selection.py --app write|present` (the selected chart's crop against the unselected
+  one, measured like Office's): 8 rings of 17 px, #616161 frame of the same ink, as Word's and PowerPoint's.

@@ -260,7 +260,16 @@ export class SlideEditor {
 
   private frameEl(v: ShapeView, editing: boolean, primary: boolean): HTMLElement {
     const s = this.scale;
-    const f = h("div", `frame${editing ? " editing" : ""}${v.kind === "cxnSp" ? " line" : ""}`);
+    // A chart: PowerPoint draws the chart engine's marks, as Excel and Word do (D-171): a one device pixel #616161
+    // frame whose right and bottom lines lie just outside the chart, 17 px grey rings at 150 %, no rotation handle.
+    const chart = v.kind === "graphicFrame" && v.frame === "chart" && !editing;
+    const f = h("div", `frame${editing ? " editing" : ""}${v.kind === "cxnSp" ? " line" : ""}${chart ? " chart" : ""}`);
+    if (chart) {
+      const px = 1 / (globalThis.devicePixelRatio || 1);
+      const line = h("div", "chart-line");
+      line.style.cssText = `position:absolute;left:0;top:0;width:calc(100% + ${px}px);height:calc(100% + ${px}px);box-sizing:border-box;border:${px}px solid #616161;pointer-events:none`;
+      f.append(line);
+    }
     f.style.cssText = `left:${(v.x / EMU_PX) * s}px;top:${(v.y / EMU_PX) * s}px;width:${(v.w / EMU_PX) * s}px;height:${(v.h / EMU_PX) * s}px;transform:rotate(${v.rot}deg)`;
     f.dataset.id = String(v.id);
     // The outline itself can be grabbed to move the shape (PowerPoint's four-headed arrow).
@@ -290,9 +299,14 @@ export class SlideEditor {
         // Side handles only on sides long enough (measured: none on a 29 pt high text box at 66 %).
         if ((v.w / EMU_PX) * s < 30 && (k === "n" || k === "s")) continue;
         if ((v.h / EMU_PX) * s < 30 && (k === "e" || k === "w")) continue;
-        f.append(this.handle(k, v));
+        const hd = this.handle(k, v);
+        if (chart) {
+          hd.classList.add("h-chart");
+          hd.innerHTML = '<svg width="11.333" height="11.333" aria-hidden="true"><circle cx="5.667" cy="5.667" r="4.8" fill="#fff" stroke="#616161" stroke-width="1.733"/></svg>';
+        }
+        f.append(hd);
       }
-      if (v.kind !== "graphicFrame" || v.frame !== "table") f.append(this.handle("rot", v));
+      if (v.kind !== "graphicFrame" || (v.frame !== "table" && v.frame !== "chart")) f.append(this.handle("rot", v));
       // The yellow handles that change a preset's adjust values (Rechteck: abgerundete Ecken, arrows ...).
       if (v.kind === "sp" && !v.ph && v.geometry !== "custom" && primary) {
         const w = v.w / EMU_PX, hh = v.h / EMU_PX;
