@@ -74,18 +74,23 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
   const fill: Control = { type: "color", cmd: "font.fill", key: "H1", palette: "font", current: ctx.fillColor, pick: ctx.setFillColor, preview: ctx.preview.fill, theme: ctx.paletteTheme, noColor: "Keine Füllung" };
   const paste = split("edit.paste", "V", "large", m.paste);
   const autosum = split("edit.autosumButton", "KA", "small", m.autosum, "AutoSumme");
+  // The widest layouts are Excel's at a wide window (labels beside the small icons, large buttons; D-159), the ones
+  // before them its first reductions.
+  const numberFormatWide: Control = { ...numberFormat, width: 145 } as Control;
 
   // The shrink orders follow Excel's own at window widths from 2000 to 800 px (capture_excel_ui.py).
   return [
     {
       id: "start", label: "Start", key: "R",
       // Recorded at window widths from 2000 to 800 px: Formatvorlagen never collapses.
-      shrink: ["editing", "cells", "number", "alignment", "font", "clipboard"],
+      // First from Excel's widest layouts to its usual ones (D-159), from the right; then Excel's sequence.
+      shrink: ["editing", "cells", "styles", "number", "alignment", "clipboard", "editing", "cells", "number", "alignment", "font", "clipboard"],
       groups: [
         {
           id: "clipboard", label: "Zwischenablage", key: "ZL", icon: "paste",
           launcher: { cmd: "edit.clipboardPane", key: "WF" },
-          controls: [paste, stack(b("edit.cut", "X"), split("edit.copy", "C", "small", [{ cmd: "edit.copy" }, { cmd: "edit.copyPicture" }]), b("edit.formatPainter", "FO"))],
+          controls: [paste, stack(b("edit.cut", "X", "medium"), split("edit.copy", "C", "medium", [{ cmd: "edit.copy" }, { cmd: "edit.copyPicture" }]), b("edit.formatPainter", "FO", "medium"))],
+          smaller: [[paste, stack(b("edit.cut", "X"), split("edit.copy", "C", "small", [{ cmd: "edit.copy" }, { cmd: "edit.copyPicture" }]), b("edit.formatPainter", "FO"))]],
         },
         {
           id: "font", label: "Schriftart", key: "ZF", icon: "fonts",
@@ -102,38 +107,54 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
           launcher: { cmd: "align.dialog", key: "LZ" },
           controls: [{
             type: "rows", rows: [
+              [b("align.top", "KB"), b("align.middle", "D"), b("align.bottom", "TN"), "gap", dd("align.orientation", "UA", "small", m.orientation)],
+              [b("align.left", "II"), b("align.center", "RZ"), b("align.right", "RE"), "gap", b("align.indentLess", "5"), b("align.indentMore", "6")],
+            ],
+          }, { type: "rows", rows: [[b("align.wrap", "NE", "medium", "Textumbruch")], [split("align.mergeCenter", "ß", "medium", m.merge, "Verbinden und zentrieren")]] }],
+          smaller: [[{
+            type: "rows", rows: [
               [b("align.top", "KB"), b("align.middle", "D"), b("align.bottom", "TN"), "gap", dd("align.orientation", "UA", "small", m.orientation), "gap", b("align.wrap", "NE", "small", "Textumbruch")],
               [b("align.left", "II"), b("align.center", "RZ"), b("align.right", "RE"), "gap", b("align.indentLess", "5"), b("align.indentMore", "6"), "gap", split("align.mergeCenter", "ß", "small", m.merge, "Verbinden und zentrieren")],
             ],
-          }],
+          }]],
         },
         {
           id: "number", label: "Zahl", key: "ZN", icon: "number-format",
           launcher: { cmd: "number.dialog", key: "NZ" },
           controls: [{
             type: "rows", rows: [
-              [numberFormat],
+              [numberFormatWide],
               [split("number.accounting", "N1", "small", m.accounting), b("number.percent", "P"), b("number.thousands", "Ö"), "gap", b("number.decimalMore", "0"), b("number.decimalLess", "9")],
             ],
           }],
+          smaller: [[{
+            type: "rows", rows: [
+              [numberFormat],
+              [split("number.accounting", "N1", "small", m.accounting), b("number.percent", "P"), b("number.thousands", "Ö"), "gap", b("number.decimalMore", "0"), b("number.decimalLess", "9")],
+            ],
+          }]],
         },
         {
           id: "styles", label: "Formatvorlagen", key: "ZS", icon: "cell-styles",
-          controls: [stack(dd("styles.conditional", "8", "medium", m.conditional), panel("styles.table", "G", "medium", ctx.panels.tableStyles), panel("styles.cell", "M", "medium", ctx.panels.cellStyles))],
+          controls: [dd("styles.conditional", "8", "large", m.conditional), panel("styles.table", "G", "large", ctx.panels.tableStyles), panel("styles.cell", "M", "large", ctx.panels.cellStyles)],
+          smaller: [[stack(dd("styles.conditional", "8", "medium", m.conditional), panel("styles.table", "G", "medium", ctx.panels.tableStyles), panel("styles.cell", "M", "medium", ctx.panels.cellStyles))]],
         },
         {
           id: "cells", label: "Zellen", key: "ZC", icon: "cells-insert",
-          controls: [stack(split("cells.insertButton", "IE", "medium", m.insertCells, "Einfügen"), split("cells.deleteButton", "EL", "medium", m.deleteCells, "Löschen"), dd("cells.format", "FF", "medium", m.format))],
+          controls: [split("cells.insertButton", "IE", "large", m.insertCells, "Einfügen"), split("cells.deleteButton", "EL", "large", m.deleteCells, "Löschen"), dd("cells.format", "FF", "large", m.format)],
+          smaller: [[stack(split("cells.insertButton", "IE", "medium", m.insertCells, "Einfügen"), split("cells.deleteButton", "EL", "medium", m.deleteCells, "Löschen"), dd("cells.format", "FF", "medium", m.format))]],
         },
         {
           id: "editing", label: "Bearbeiten", key: "ZE", icon: "autosum",
-          controls: [{
+          controls: [stack(split("edit.autosumButton", "KA", "medium", m.autosum, "AutoSumme"), dd("edit.fillMenu", "Ü", "medium", m.fill, "Ausfüllen"), dd("edit.clearMenu", "LÖ", "medium", m.clear, "Löschen")),
+            dd("data.sortMenu", "OS", "large", m.sortFilter, "Sortieren und Filtern"), dd("edit.findMenu", "UU", "large", m.find, "Suchen und Auswählen")],
+          smaller: [[{
             type: "rows", rows: [
               [autosum],
               [dd("edit.fillMenu", "Ü", "small", m.fill, "Ausfüllen")],
               [dd("edit.clearMenu", "LÖ", "small", m.clear, "Löschen")],
             ],
-          }, stack(dd("data.sortMenu", "OS", "large", m.sortFilter, "Sortieren und Filtern")), stack(dd("edit.findMenu", "UU", "large", m.find, "Suchen und Auswählen"))],
+          }, stack(dd("data.sortMenu", "OS", "large", m.sortFilter, "Sortieren und Filtern")), stack(dd("edit.findMenu", "UU", "large", m.find, "Suchen und Auswählen"))]],
         },
       ],
     },

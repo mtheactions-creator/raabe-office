@@ -120,7 +120,8 @@ export class WriteApp {
   private readonly fonts: Fonts;
   private fontList: string[] = [];
   private recentFonts: string[] = [];
-  private lastFontColor = "FF0000";
+  // Word's Schriftfarbe button starts with "Rot", which it applies as #EE0000 (measured 2026-11-11, D-157).
+  private lastFontColor = "EE0000";
   private lastHighlight = "yellow";
   /** Strg+Alt+C (Format kopieren), shared by all documents as in Word. */
   private copiedFormat: CopiedFormat | null = null;

@@ -4439,3 +4439,27 @@ second Esc in PowerPoint deselects the shape. The probe now parks the mouse over
 the state, and waits for a closing popup to fade. Shapes are selected by a click, not COM's Select().
 
 **Measured:** RaabeWrite 18/18 as in Word, RaabePresent 38/38 as in PowerPoint, RaabeCalc 58/58 as in Excel.
+
+## D-159 The ribbon measured against Office's: widest layouts, button metrics (2026-11-11)
+
+Step 11 part 5's first check (`probe_office_ribbon_geometry.py` records the Start tab of our own Excel, Word and
+PowerPoint through UI Automation, no input; `check_ribbon_geometry.py` compares our Start tab group by group and
+control by control, in CSS px relative to the ribbon). Both sides at a 3000 px wide window: there every group shows
+its widest layout; at narrower windows Office shrinks its groups to make room for add-in groups (Adobe Acrobat,
+Add-Ins, Copilot, Diktieren, Editor) that we do not have, so a comparison there measures the add-ins.
+- **Widest layouts:** RaabeCalc's and RaabePresent's widest layouts were Office's first reductions. Now the widest is
+  Office's: Excel's Zwischenablage, Textumbruch and Verbinden und zentrieren with labels, Bedingte Formatierung, Als
+  Tabelle formatieren, Zellenformatvorlagen, Einfügen, Löschen and Format as large buttons, AutoSumme, Ausfüllen and
+  Löschen labelled, the Zahlenformat box 145 px; PowerPoint's Layout, Zurücksetzen, Abschnitt, Textrichtung, Text
+  ausrichten, In SmartArt konvertieren, Formeffekte and the Bearbeiten entries labelled. The old widest layouts are
+  the first reductions, and each tab's `shrink` list steps from the new to the old before Office's sequence goes on.
+  RaabeWrite already had Word's.
+- **Metrics** (all three apps): a labelled button has 8 px after its label (was 4); a small dropdown is 40 px (was
+  34); a group has 8 px before its first and after its last control (was 6) and 2 px between controls (was 3); the
+  space between clusters in a row is 4.7 px (was 10); a large button has 6.5 px at its sides, so one-line labels match
+  (Einfügen 51 px).
+- **Known differences left:** PowerPoint's Zeichnen shows the shapes gallery inline at a wide window (ours: the
+  Formen button); PowerPoint 2026 names its Bearbeiten entries "Suchen und Ersetzen" and "Schriftarten ersetzen..."
+  (ours: Suchen, Ersetzen); large buttons with a two-line label are about 8 px wider than Office's; Word's style
+  gallery fills the room the add-ins take in Word. Stacked buttons are as wide as their column (Office reports each
+  button's own width), which the check reports as a width difference.

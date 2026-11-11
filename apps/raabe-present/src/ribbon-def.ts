@@ -80,10 +80,15 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
   return [
     {
       id: "start", label: "Start", key: "R",
-      shrink: ["editing", "drawing", "paragraph", "font", "slides", "clipboard"],
+      // First from PowerPoint's widest layouts to its usual ones (D-159), from the right; then its sequence.
+      shrink: ["editing", "drawing", "paragraph", "slides", "editing", "drawing", "paragraph", "font", "slides", "clipboard"],
       groups: [
         { id: "clipboard", label: "Zwischenablage", key: "ZZ", icon: "paste", controls: [split("edit.paste", "V1", "large", m.paste), stack(b("edit.cut", "X"), split("edit.copy", "C", "small", [{ cmd: "edit.copy" }, { cmd: "edit.duplicate" }]), b("edit.formatPainter", "FO"))] },
-        { id: "slides", label: "Folien", key: "ZF", icon: "slide-add", controls: [splitPanel("slide.new", "ÄN", "large", p.newSlide), stack(panel("slide.layout", "OA", "small", p.layout), b("slide.reset", "FF"), dd("slide.section", "TA", "small", m.section))] },
+        // The widest layouts are PowerPoint's at a wide window (labels beside the small icons, D-158); the ones before
+        // are its first reductions.
+        { id: "slides", label: "Folien", key: "ZF", icon: "slide-add",
+          controls: [splitPanel("slide.new", "ÄN", "large", p.newSlide), stack(panel("slide.layout", "OA", "medium", p.layout), b("slide.reset", "FF", "medium"), dd("slide.section", "TA", "medium", m.section))],
+          smaller: [[splitPanel("slide.new", "ÄN", "large", p.newSlide), stack(panel("slide.layout", "OA", "small", p.layout), b("slide.reset", "FF"), dd("slide.section", "TA", "small", m.section))]] },
         {
           id: "font", label: "Schriftart", key: "ZS", icon: "fonts", launcher: { cmd: "font.dialog", key: "TC" },
           controls: [rows(
@@ -94,15 +99,23 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
         {
           id: "paragraph", label: "Absatz", key: "ZA", icon: "paragraph-spacing", launcher: { cmd: "para.dialog", key: "BA" },
           controls: [rows(
+            [split("para.bullets", "ÖU", "small", m.bullets), split("para.numbering", "AN", "small", m.numbering), b("para.levelDown", "DI"), b("para.levelUp", "ÄI"), dd("para.lineSpacing", "IZ", "small", m.lineSpacing)],
+            [b("para.left", "II"), b("para.center", "RZ"), b("para.right", "RE"), b("para.justify", "OL"), dd("para.columns", "HS", "small", m.columns)]),
+          stack(dd("para.direction", "MT", "medium", m.direction), dd("para.alignText", "PE", "medium", m.alignText), lazy("para.smartArt", "NI", "medium", m.smartArtConvert))],
+          smaller: [[rows(
             [split("para.bullets", "ÖU", "small", m.bullets), split("para.numbering", "AN", "small", m.numbering), b("para.levelDown", "DI"), b("para.levelUp", "ÄI"), dd("para.lineSpacing", "IZ", "small", m.lineSpacing), "gap", dd("para.direction", "MT", "small", m.direction)],
-            [b("para.left", "II"), b("para.center", "RZ"), b("para.right", "RE"), b("para.justify", "OL"), dd("para.columns", "HS", "small", m.columns), "gap", dd("para.alignText", "PE", "small", m.alignText), lazy("para.smartArt", "NI", "small", m.smartArtConvert)])],
+            [b("para.left", "II"), b("para.center", "RZ"), b("para.right", "RE"), b("para.justify", "OL"), dd("para.columns", "HS", "small", m.columns), "gap", dd("para.alignText", "PE", "small", m.alignText), lazy("para.smartArt", "NI", "small", m.smartArtConvert)])]],
         },
         {
           id: "drawing", label: "Zeichnen", key: "ZD", icon: "shapes", launcher: { cmd: "draw.format", key: "BB" },
           controls: [panel("draw.shapes", "23", "large", p.shapes), lazy("draw.arrange", "G", "large", m.arrange), panel("draw.quickStyles", "NC", "large", p.quickStyles),
-            stack({ ...color("draw.fill", "Ü", ctx.fillColor, ctx.setFill, "font", true), extra: () => ctx.fillExtra() } as Control, { ...color("draw.outline", "V2", ctx.lineColor, ctx.setLine, "font", true), extra: () => ctx.outlineExtra() } as Control, dd("draw.effects", "MO", "small", m.effects))],
+            stack({ ...color("draw.fill", "Ü", ctx.fillColor, ctx.setFill, "font", true), extra: () => ctx.fillExtra() } as Control, { ...color("draw.outline", "V2", ctx.lineColor, ctx.setLine, "font", true), extra: () => ctx.outlineExtra() } as Control, dd("draw.effects", "MO", "medium", m.effects))],
+          smaller: [[panel("draw.shapes", "23", "large", p.shapes), lazy("draw.arrange", "G", "large", m.arrange), panel("draw.quickStyles", "NC", "large", p.quickStyles),
+            stack({ ...color("draw.fill", "Ü", ctx.fillColor, ctx.setFill, "font", true), extra: () => ctx.fillExtra() } as Control, { ...color("draw.outline", "V2", ctx.lineColor, ctx.setLine, "font", true), extra: () => ctx.outlineExtra() } as Control, dd("draw.effects", "MO", "small", m.effects))]],
         },
-        { id: "editing", label: "Bearbeiten", key: "ZB", icon: "find", controls: [stack(split("edit.find", "FD", "small", m.find), split("edit.replace", "R", "small", [{ cmd: "edit.replace" }, { cmd: "edit.replaceFonts" }]), dd("edit.select", "SL", "small", m.select))] },
+        { id: "editing", label: "Bearbeiten", key: "ZB", icon: "find",
+          controls: [stack(split("edit.find", "FD", "medium", m.find), split("edit.replace", "R", "medium", [{ cmd: "edit.replace" }, { cmd: "edit.replaceFonts" }]), dd("edit.select", "SL", "medium", m.select))],
+          smaller: [[stack(split("edit.find", "FD", "small", m.find), split("edit.replace", "R", "small", [{ cmd: "edit.replace" }, { cmd: "edit.replaceFonts" }]), dd("edit.select", "SL", "small", m.select))]] },
       ],
     },
     {

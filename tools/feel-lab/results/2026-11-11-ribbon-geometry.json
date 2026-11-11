@@ -1,0 +1,495 @@
+{
+ "date": "2026-11-11",
+ "reference": "2026-11-11-office-ribbon-geometry.json",
+ "tolerance_px": 2.0,
+ "apps": {
+  "calc": {
+   "groups": {
+    "Zwischenablage": {
+     "office": [
+      0.0,
+      0.0,
+      202.0,
+      96.0
+     ],
+     "ours": [
+      0,
+      0,
+      196.1,
+      96
+     ],
+     "diffs": [
+      "width 196.1 vs 202.0",
+      "Einfügen: dx 0.0 dy -1.0 dw -4.9 dh 0.0",
+      "Ausschneiden: dx -4.9 dy -1.0 dw 25.6 dh 0.0",
+      "Kopieren: dx -4.9 dy -1.0 dw 28.3 dh 0.0",
+      "Format übertragen: dx -4.9 dy -1.0 dw -1.1 dh 0.0",
+      "control missing: Office-Zwischenablage..."
+     ],
+     "controls_ok": 0,
+     "controls_matched": 4,
+     "controls_office": 5
+    },
+    "Schriftart": {
+     "office": [
+      202.0,
+      0.0,
+      234.0,
+      96.0
+     ],
+     "ours": [
+      196.1,
+      0,
+      246,
+      96
+     ],
+     "diffs": [
+      "width 246 vs 234.0",
+      "left 196.1 vs 202.0",
+      "Schriftart: dx 0.7 dy 1.0 dw -17.0 dh -2.0",
+      "Schriftgrad: dx 1.0 dy 1.0 dw -17.6 dh -2.0",
+      "Rahmen: dx 5.7 dy 0.0 dw 0.3 dh 0.0",
+      "Füllfarbe: dx 11.3 dy 0.0 dw 0.3 dh 0.0",
+      "Schriftfarbe: dx 11.7 dy 0.0 dw 0.3 dh 0.0",
+      "Zellenschriftart formatieren: dx 4.0 dy -3.0 dw 0.0 dh 0.0"
+     ],
+     "controls_ok": 5,
+     "controls_matched": 11,
+     "controls_office": 11
+    },
+    "Ausrichtung": {
+     "office": [
+      436.0,
+      0.0,
+      348.0,
+      96.0
+     ],
+     "ours": [
+      442.1,
+      0,
+      335.4,
+      96
+     ],
+     "diffs": [
+      "width 335.4 vs 348.0",
+      "left 442.1 vs 436.0",
+      "Ausrichtung: dx 5.3 dy 0.0 dw 0.0 dh 0.0",
+      "Einzug verkleinern: dx 5.3 dy 0.0 dw 0.0 dh 0.0",
+      "Einzug vergrößern: dx 5.3 dy 0.0 dw 0.0 dh 0.0",
+      "Textumbruch: dx -5.3 dy 0.0 dw -0.3 dh 0.0",
+      "Verbinden und zentrieren: dx -5.3 dy 0.0 dw -7.3 dh 0.0",
+      "Zellenausrichtung formatieren: dx -20.6 dy -3.0 dw 0.0 dh 0.0"
+     ],
+     "controls_ok": 6,
+     "controls_matched": 12,
+     "controls_office": 12
+    },
+    "Zahl": {
+     "office": [
+      784.0,
+      0.0,
+      161.3,
+      96.0
+     ],
+     "ours": [
+      777.5,
+      0,
+      167,
+      96
+     ],
+     "diffs": [
+      "width 167 vs 161.3",
+      "left 777.5 vs 784.0",
+      "Zahlenformat: dx 0.7 dy 1.0 dw -17.6 dh -2.0",
+      "Dezimalstelle hinzufügen: dx 5.7 dy 0.0 dw 0.0 dh 0.0",
+      "Dezimalstelle entfernen: dx 5.7 dy 0.0 dw 0.0 dh 0.0",
+      "Zellennummer formatieren: dx -2.3 dy -3.0 dw 0.0 dh 0.0"
+     ],
+     "controls_ok": 3,
+     "controls_matched": 7,
+     "controls_office": 7
+    },
+    "Formatvorlagen": {
+     "office": [
+      945.3,
+      0.0,
+      304.0,
+      96.0
+     ],
+     "ours": [
+      944.5,
+      0,
+      330,
+      96
+     ],
+     "diffs": [
+      "width 330 vs 304.0",
+      "Bedingte Formatierung: dx 0.0 dy -1.0 dw 8.6 dh 0.0",
+      "Als Tabelle formatieren: dx 8.6 dy -1.0 dw 8.9 dh 0.0",
+      "Zellenformatvorlagen: dx 17.5 dy -1.0 dw 8.6 dh 7.3"
+     ],
+     "controls_ok": 0,
+     "controls_matched": 3,
+     "controls_office": 3
+    },
+    "Zellen": {
+     "office": [
+      1249.3,
+      0.0,
+      162.7,
+      96.0
+     ],
+     "ours": [
+      1274.5,
+      0,
+      162,
+      96
+     ],
+     "diffs": [
+      "left 1274.5 vs 1249.3",
+      "Einfügen: dx 0.0 dy -1.0 dw -4.9 dh 0.0",
+      "Löschen: dx -4.9 dy -1.0 dw -3.0 dh 0.0",
+      "Format: dx -7.9 dy -1.0 dw 7.3 dh 0.0"
+     ],
+     "controls_ok": 0,
+     "controls_matched": 3,
+     "controls_office": 3
+    },
+    "Bearbeiten": {
+     "office": [
+      1412.0,
+      0.0,
+      293.3,
+      96.0
+     ],
+     "ours": [
+      1436.5,
+      0,
+      296.8,
+      96
+     ],
+     "diffs": [
+      "width 296.8 vs 293.3",
+      "left 1436.5 vs 1412.0",
+      "AutoSumme: dx 0.0 dy -1.0 dw -10.5 dh 0.0",
+      "Ausfüllen: dx 0.0 dy -1.0 dw 19.5 dh 0.0",
+      "Löschen: dx 0.0 dy -1.0 dw 25.5 dh 0.0",
+      "Sortieren und Filtern: dx -10.5 dy -1.0 dw 5.2 dh 0.0",
+      "Suchen und Auswählen: dx -5.3 dy -1.0 dw 8.9 dh 0.0"
+     ],
+     "controls_ok": 0,
+     "controls_matched": 5,
+     "controls_office": 5
+    }
+   },
+   "missing_groups": [],
+   "extra_groups": []
+  },
+  "write": {
+   "groups": {
+    "Zwischenablage": {
+     "office": [
+      0.0,
+      0.0,
+      202.0,
+      96.0
+     ],
+     "ours": [
+      0,
+      0,
+      196.1,
+      96
+     ],
+     "diffs": [
+      "width 196.1 vs 202.0",
+      "Einfügen: dx 0.0 dy -1.0 dw -4.9 dh 0.0",
+      "Ausschneiden: dx -4.9 dy -1.0 dw 25.6 dh 0.0",
+      "Kopieren: dx -4.9 dy -1.0 dw 51.6 dh 0.0",
+      "Format übertragen: dx -4.9 dy -1.0 dw -1.1 dh 0.0",
+      "control missing: Office-Zwischenablage..."
+     ],
+     "controls_ok": 0,
+     "controls_matched": 4,
+     "controls_office": 5
+    },
+    "Schriftart": {
+     "office": [
+      202.0,
+      0.0,
+      310.7,
+      96.0
+     ],
+     "ours": [
+      196.1,
+      0,
+      329,
+      96
+     ],
+     "diffs": [
+      "width 329 vs 310.7",
+      "left 196.1 vs 202.0",
+      "Schriftart: dx 0.7 dy 1.0 dw -17.3 dh -2.0",
+      "Schriftgrad: dx 0.7 dy 1.0 dw -17.6 dh -2.0",
+      "Schriftart vergrößern: dx 7.7 dy 0.0 dw 0.0 dh 0.0",
+      "Schriftart verkleinern: dx 7.7 dy 0.0 dw 0.0 dh 0.0",
+      "Groß-/Kleinschreibung: dx 13.0 dy 0.0 dw 0.0 dh 0.0",
+      "control missing: Formatierung löschen",
+      "Texteffekte und Typografie: dx 5.7 dy 0.0 dw 0.0 dh 0.0",
+      "Texthervorhebungsfarbe: dx 5.7 dy 0.0 dw 0.3 dh 0.0",
+      "Schriftfarbe: dx 6.0 dy 0.0 dw 0.3 dh 0.0",
+      "Schriftart...: dx 10.3 dy -3.0 dw 0.0 dh 0.0"
+     ],
+     "controls_ok": 6,
+     "controls_matched": 15,
+     "controls_office": 16
+    },
+    "Absatz": {
+     "office": [
+      512.7,
+      0.0,
+      249.3,
+      96.0
+     ],
+     "ours": [
+      525.1,
+      0,
+      266,
+      96
+     ],
+     "diffs": [
+      "width 266 vs 249.3",
+      "left 525.1 vs 512.7",
+      "Einzug verkleinern: dx 6.0 dy 0.0 dw 0.0 dh 0.0",
+      "Einzug vergrößern: dx 6.0 dy 0.0 dw 0.0 dh 0.0",
+      "control missing: Sortieren...",
+      "Alle anzeigen: dx 16.7 dy 0.0 dw 0.0 dh 0.0",
+      "Zeilen- und Absatzabstand: dx 5.4 dy 0.0 dw 0.0 dh 0.0",
+      "Schattierung: dx 10.7 dy 0.0 dw 0.3 dh 0.0",
+      "Rahmen: dx 11.0 dy 0.0 dw 0.3 dh 0.0",
+      "Absatz...: dx 8.7 dy -3.0 dw 0.0 dh 0.0"
+     ],
+     "controls_ok": 7,
+     "controls_matched": 14,
+     "controls_office": 15
+    },
+    "Formatvorlagen": {
+     "office": [
+      762.0,
+      0.0,
+      801.3,
+      96.0
+     ],
+     "ours": [
+      791.1,
+      0,
+      903.3,
+      96
+     ],
+     "diffs": [
+      "width 903.3 vs 801.3",
+      "left 791.1 vs 762.0",
+      "Formatvorlagen: dx 871.3 dy 70.3 dw -769.3 dh -46.7",
+      "control missing: Formatvorlagen...",
+      "Formatvorlagen: dx 112.6 dy 67.7 dw -8.0 dh -44.0",
+      "Formatvorlagen: dx 869.3 dy 65.7 dw -740.0 dh -152.0"
+     ],
+     "controls_ok": 0,
+     "controls_matched": 3,
+     "controls_office": 4
+    },
+    "Bearbeiten": {
+     "office": [
+      1563.3,
+      0.0,
+      112.7,
+      96.0
+     ],
+     "ours": [
+      1694.4,
+      0,
+      115.4,
+      96
+     ],
+     "diffs": [
+      "width 115.4 vs 112.7",
+      "left 1694.4 vs 1563.3",
+      "Suchen: dx 0.0 dy -1.0 dw 4.7 dh 0.0",
+      "control missing: Ersetzen...",
+      "Markieren: dx 0.0 dy -1.0 dw 2.7 dh 0.0"
+     ],
+     "controls_ok": 0,
+     "controls_matched": 2,
+     "controls_office": 3
+    }
+   },
+   "missing_groups": [],
+   "extra_groups": []
+  },
+  "present": {
+   "groups": {
+    "Zwischenablage": {
+     "office": [
+      0.0,
+      0.0,
+      116.7,
+      96.0
+     ],
+     "ours": [
+      0,
+      0,
+      127.1,
+      96
+     ],
+     "diffs": [
+      "width 127.1 vs 116.7",
+      "Einfügen: dx 0.0 dy -1.0 dw -4.9 dh 0.0",
+      "Ausschneiden: dx -4.9 dy -1.0 dw 0.0 dh 0.0",
+      "Kopieren: dx -4.9 dy -1.0 dw -8.3 dh 0.0",
+      "Format übertragen: dx -4.9 dy -1.0 dw 0.0 dh 0.0",
+      "control missing: Office-Zwischenablage..."
+     ],
+     "controls_ok": 0,
+     "controls_matched": 4,
+     "controls_office": 5
+    },
+    "Folien": {
+     "office": [
+      116.7,
+      0.0,
+      161.3,
+      96.0
+     ],
+     "ours": [
+      127.1,
+      0,
+      165,
+      96
+     ],
+     "diffs": [
+      "width 165 vs 161.3",
+      "left 127.1 vs 116.7",
+      "Neue Folie: dx 0.0 dy -1.0 dw 3.7 dh -0.7",
+      "Layout: dx 3.7 dy -1.0 dw 22.0 dh 0.0",
+      "Zurücksetzen: dx 3.7 dy -1.0 dw 0.0 dh 0.0",
+      "Abschnitt: dx 3.7 dy -1.0 dw 7.3 dh 0.0"
+     ],
+     "controls_ok": 0,
+     "controls_matched": 4,
+     "controls_office": 4
+    },
+    "Schriftart": {
+     "office": [
+      278.0,
+      0.0,
+      312.0,
+      96.0
+     ],
+     "ours": [
+      292.1,
+      0,
+      318,
+      96
+     ],
+     "diffs": [
+      "width 318 vs 312.0",
+      "left 292.1 vs 278.0",
+      "Schriftart: dx 0.7 dy 1.0 dw -54.6 dh -2.0",
+      "Schriftgrad: dx -36.6 dy 1.0 dw -19.3 dh -2.0",
+      "Schriftgrad vergrößern: dx -39.3 dy 0.0 dw 0.0 dh 0.0",
+      "Schriftgrad verkleinern: dx -39.3 dy 0.0 dw 0.0 dh 0.0",
+      "Formatierung löschen: dx -34.0 dy 0.0 dw 0.0 dh 0.0",
+      "Texthervorhebungsfarbe: dx 5.3 dy 0.0 dw 0.3 dh 0.0",
+      "Schriftfarbe: dx 5.7 dy 0.0 dw 0.3 dh 0.0",
+      "Schriftart...: dx -2.0 dy -3.0 dw 0.0 dh 0.0"
+     ],
+     "controls_ok": 7,
+     "controls_matched": 15,
+     "controls_office": 15
+    },
+    "Absatz": {
+     "office": [
+      590.0,
+      0.0,
+      370.7,
+      96.0
+     ],
+     "ours": [
+      610.1,
+      0,
+      368.1,
+      96
+     ],
+     "diffs": [
+      "width 368.1 vs 370.7",
+      "left 610.1 vs 590.0",
+      "Zeilenabstand: dx -4.7 dy 0.0 dw 0.0 dh 0.0",
+      "Spalten: dx -2.7 dy 0.0 dw 0.0 dh 0.0",
+      "Textrichtung: dx -4.7 dy -1.0 dw 68.1 dh 0.0",
+      "Text ausrichten: dx -4.7 dy -1.0 dw 54.8 dh 0.0",
+      "In SmartArt konvertieren: dx -4.7 dy -1.0 dw 2.1 dh 0.0",
+      "Absatz...: dx -10.7 dy -2.0 dw 0.0 dh 0.0"
+     ],
+     "controls_ok": 8,
+     "controls_matched": 14,
+     "controls_office": 14
+    },
+    "Zeichnen": {
+     "office": [
+      960.7,
+      0.0,
+      444.7,
+      96.0
+     ],
+     "ours": [
+      978.1,
+      0,
+      383.1,
+      96
+     ],
+     "diffs": [
+      "width 383.1 vs 444.7",
+      "left 978.1 vs 960.7",
+      "Formen: dx 0.0 dy -1.0 dw -119.8 dh 0.7",
+      "Anordnen: dx -119.8 dy -1.0 dw 7.7 dh 0.0",
+      "Schnellformatvorlagen: dx -112.1 dy -1.0 dw 49.5 dh 0.0",
+      "Fülleffekt: dx -62.7 dy -1.0 dw 21.1 dh 0.0",
+      "Formkontur: dx -62.7 dy -1.0 dw 6.5 dh 0.0",
+      "Formeffekte: dx -62.7 dy -1.0 dw 1.1 dh 0.0",
+      "Objekt formatieren...: dx -69.5 dy -2.0 dw 0.0 dh 0.0",
+      "Formen: dx -146.6 dy -3.0 dw 29.5 dh 2.7",
+      "Formen: dx -2.0 dy -3.7 dw -90.5 dh -692.0"
+     ],
+     "controls_ok": 0,
+     "controls_matched": 9,
+     "controls_office": 9
+    },
+    "Bearbeiten": {
+     "office": [
+      1405.3,
+      0.0,
+      158.0,
+      96.0
+     ],
+     "ours": [
+      1361.2,
+      0,
+      115.4,
+      96
+     ],
+     "diffs": [
+      "width 115.4 vs 158.0",
+      "left 1361.2 vs 1405.3",
+      "control missing: Suchen und Ersetzen",
+      "control missing: Schriftarten ersetzen...",
+      "Markieren: dx 0.0 dy -1.0 dw 2.7 dh 0.0"
+     ],
+     "controls_ok": 0,
+     "controls_matched": 1,
+     "controls_office": 3
+    }
+   },
+   "missing_groups": [],
+   "extra_groups": []
+  }
+ }
+}

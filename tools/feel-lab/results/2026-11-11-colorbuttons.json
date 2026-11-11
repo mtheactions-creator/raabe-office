@@ -1,0 +1,193 @@
+{
+ "date": "2026-11-11",
+ "apps": {
+  "calc": {
+   "Schriftfarbe": {
+    "office": {
+     "bands": 1,
+     "bar": [
+      6,
+      24,
+      29,
+      29
+     ],
+     "bar_color": [
+      255,
+      0,
+      0
+     ],
+     "dark_lines": [],
+     "glyph": [
+      12,
+      6,
+      24,
+      21
+     ]
+    },
+    "ours": {
+     "bands": 1,
+     "bar": [
+      6,
+      24,
+      29,
+      29
+     ],
+     "bar_color": [
+      255,
+      0,
+      0
+     ],
+     "dark_lines": [],
+     "glyph": [
+      12,
+      6,
+      23,
+      22
+     ]
+    },
+    "diff": []
+   },
+   "Füllfarbe": {
+    "office": {
+     "bands": 1,
+     "bar": [
+      6,
+      24,
+      29,
+      29
+     ],
+     "bar_color": [
+      255,
+      255,
+      0
+     ],
+     "dark_lines": [],
+     "glyph": [
+      10,
+      6,
+      24,
+      22
+     ]
+    },
+    "ours": {
+     "bands": 1,
+     "bar": [
+      6,
+      24,
+      29,
+      29
+     ],
+     "bar_color": [
+      255,
+      255,
+      0
+     ],
+     "dark_lines": [],
+     "glyph": [
+      10,
+      7,
+      24,
+      21
+     ]
+    },
+    "diff": []
+   }
+  },
+  "write": {
+   "Schriftfarbe": {
+    "office": {
+     "bands": 1,
+     "bar": [
+      6,
+      24,
+      29,
+      29
+     ],
+     "bar_color": [
+      238,
+      0,
+      0
+     ],
+     "dark_lines": [],
+     "glyph": [
+      12,
+      6,
+      24,
+      21
+     ]
+    },
+    "ours": {
+     "bands": 1,
+     "bar": [
+      6,
+      24,
+      29,
+      29
+     ],
+     "bar_color": [
+      255,
+      0,
+      0
+     ],
+     "dark_lines": [],
+     "glyph": [
+      12,
+      6,
+      23,
+      22
+     ]
+    },
+    "diff": [
+     "bar colour [255, 0, 0] vs Office [238, 0, 0]"
+    ]
+   },
+   "Texthervorhebungsfarbe": {
+    "office": {
+     "bands": 1,
+     "bar": [
+      6,
+      24,
+      29,
+      29
+     ],
+     "bar_color": [
+      255,
+      255,
+      0
+     ],
+     "dark_lines": [],
+     "glyph": [
+      14,
+      6,
+      27,
+      19
+     ]
+    },
+    "ours": {
+     "bands": 1,
+     "bar": [
+      6,
+      24,
+      29,
+      29
+     ],
+     "bar_color": [
+      255,
+      255,
+      0
+     ],
+     "dark_lines": [],
+     "glyph": [
+      11,
+      7,
+      24,
+      21
+     ]
+    },
+    "diff": []
+   }
+  }
+ },
+ "passed": 3,
+ "total": 4
+}

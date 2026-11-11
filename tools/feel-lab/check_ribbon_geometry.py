@@ -30,7 +30,8 @@ JS_OURS = """(() => {
     rect: box(g),
     controls: [...g.querySelectorAll('[aria-label], .rsplit, .rcombo')].filter((e) => e.offsetWidth > 0 && !e.classList.contains('arrow') && e.getAttribute('aria-label') !== 'Weitere Optionen' && e.getAttribute('aria-label') !== 'Öffnen')
       .map((e) => {
-        const target = e.classList.contains('rsplit') ? e : e.closest('.rsplit') || e;
+        // A combo's label sits on its input: its box is the whole combo (input and arrow), as Office's ComboBox.
+        const target = e.classList.contains('rsplit') ? e : e.closest('.rsplit') || e.closest('.rcombo') || e;
         const name = e.classList.contains('rsplit') ? (e.querySelector('[aria-label]')?.getAttribute('aria-label') || '') : e.getAttribute('aria-label');
         return { name, rect: box(target) };
       }).filter((c, i, a) => c.name && a.findIndex((d) => d.name === c.name) === i),
