@@ -1,0 +1,1098 @@
+{
+ "what": "Word 365's marks of a selected chart part (selmarks.py), and how they compare with Excel's",
+ "scale": 1.5,
+ "parts": {
+  "chart": {
+   "summary": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #616161 t1 ink 158 box [-1, 1, 867, 505]",
+   "handles": [
+    {
+     "x": -7,
+     "y": -7,
+     "w": 17,
+     "h": 17,
+     "cx": 1.0,
+     "cy": 1.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 425,
+     "y": -7,
+     "w": 17,
+     "h": 17,
+     "cx": 433.0,
+     "cy": 1.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 857,
+     "y": -7,
+     "w": 17,
+     "h": 17,
+     "cx": 865.0,
+     "cy": 1.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": -7,
+     "y": 245,
+     "w": 17,
+     "h": 17,
+     "cx": 1.0,
+     "cy": 253.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 857,
+     "y": 245,
+     "w": 17,
+     "h": 17,
+     "cx": 865.0,
+     "cy": 253.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": -7,
+     "y": 497,
+     "w": 17,
+     "h": 17,
+     "cx": 1.0,
+     "cy": 505.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 425,
+     "y": 497,
+     "w": 17,
+     "h": 17,
+     "cx": 433.0,
+     "cy": 505.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 857,
+     "y": 497,
+     "w": 17,
+     "h": 17,
+     "cx": 865.0,
+     "cy": 505.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    }
+   ],
+   "lines": {
+    "box": [
+     -1,
+     1,
+     867,
+     505
+    ],
+    "pixels": 2721,
+    "colour": "#616161",
+    "colours": {
+     "#616161": 2646,
+     "#FFFFFF": 31,
+     "#D9D9D9": 14
+    },
+    "thickness": 1,
+    "ink": 158
+   },
+   "vsExcel": {
+    "passed": true,
+    "fails": [],
+    "handles": [
+     8,
+     8
+    ],
+    "size": [
+     "17x17",
+     "17x17"
+    ],
+    "ring": [
+     "#616161",
+     "#616161"
+    ],
+    "fill": [
+     "#FFFFFF",
+     "#FFFFFF"
+    ],
+    "frame": [
+     "#616161",
+     "#616161"
+    ],
+    "ink": [
+     158,
+     158
+    ],
+    "maxCentreOffset": 145.0
+   }
+  },
+  "plot": {
+   "summary": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #BABBBA t2 ink 169 box [38, 73, 805, 340]",
+   "handles": [
+    {
+     "x": 30,
+     "y": 65,
+     "w": 17,
+     "h": 17,
+     "cx": 38.0,
+     "cy": 73.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 432,
+     "y": 65,
+     "w": 17,
+     "h": 17,
+     "cx": 440.0,
+     "cy": 73.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 834,
+     "y": 65,
+     "w": 17,
+     "h": 17,
+     "cx": 842.0,
+     "cy": 73.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 30,
+     "y": 235,
+     "w": 17,
+     "h": 17,
+     "cx": 38.0,
+     "cy": 243.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 834,
+     "y": 235,
+     "w": 17,
+     "h": 17,
+     "cx": 842.0,
+     "cy": 243.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 30,
+     "y": 404,
+     "w": 17,
+     "h": 17,
+     "cx": 38.0,
+     "cy": 412.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 432,
+     "y": 404,
+     "w": 17,
+     "h": 17,
+     "cx": 440.0,
+     "cy": 412.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 834,
+     "y": 404,
+     "w": 17,
+     "h": 17,
+     "cx": 842.0,
+     "cy": 412.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    }
+   ],
+   "lines": {
+    "box": [
+     38,
+     73,
+     805,
+     340
+    ],
+    "pixels": 4453,
+    "colour": "#BABBBA",
+    "colours": {
+     "#BABBBA": 770,
+     "#9A9B9A": 770,
+     "#ABACAB": 770
+    },
+    "thickness": 2,
+    "ink": 169
+   },
+   "vsExcel": {
+    "passed": true,
+    "fails": [],
+    "handles": [
+     8,
+     7
+    ],
+    "size": [
+     "17x17",
+     "17x17"
+    ],
+    "ring": [
+     "#616161",
+     "#616161"
+    ],
+    "fill": [
+     "#FFFFFF",
+     "#FFFFFF"
+    ],
+    "frame": [
+     "#BABBBA",
+     "#9B9C9B"
+    ],
+    "ink": [
+     169,
+     131
+    ],
+    "maxCentreOffset": 760.0
+   }
+  },
+  "title": {
+   "summary": "4 handles {'blue': 4} sizes {'10x10': 4}; lines #616161 t1 ink 158 box [335, 7, 194, 50]",
+   "handles": [
+    {
+     "x": 335,
+     "y": 7,
+     "w": 10,
+     "h": 10,
+     "cx": 339.5,
+     "cy": 11.5,
+     "ring": "#1985D8",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 519,
+     "y": 7,
+     "w": 10,
+     "h": 10,
+     "cx": 523.5,
+     "cy": 11.5,
+     "ring": "#1985D9",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 335,
+     "y": 47,
+     "w": 10,
+     "h": 10,
+     "cx": 339.5,
+     "cy": 51.5,
+     "ring": "#1D87D9",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 519,
+     "y": 47,
+     "w": 10,
+     "h": 10,
+     "cx": 523.5,
+     "cy": 51.5,
+     "ring": "#1E88D9",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    }
+   ],
+   "lines": {
+    "box": [
+     335,
+     7,
+     194,
+     50
+    ],
+    "pixels": 484,
+    "colour": "#616161",
+    "colours": {
+     "#616161": 408,
+     "#D0E7F8": 44,
+     "#89C1EC": 4
+    },
+    "thickness": 1,
+    "ink": 158
+   },
+   "vsExcel": {
+    "passed": true,
+    "fails": [],
+    "handles": [
+     4,
+     4
+    ],
+    "size": [
+     "10x10",
+     "10x10"
+    ],
+    "ring": [
+     "#1B86D9",
+     "#1F88D9"
+    ],
+    "fill": [
+     "#D0E7F8",
+     "#D0E7F8"
+    ],
+    "frame": [
+     "#616161",
+     "#616161"
+    ],
+    "ink": [
+     158,
+     158
+    ],
+    "maxCentreOffset": 94.0
+   }
+  },
+  "legend": {
+   "summary": "2 handles {'grey': 2} sizes {'17x17': 1, '17x16': 1}; lines #BDBEBD t2 ink 131 box [222, 457, 420, 36]",
+   "handles": [
+    {
+     "x": 423,
+     "y": 449,
+     "w": 17,
+     "h": 17,
+     "cx": 431.0,
+     "cy": 457.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 423,
+     "y": 484,
+     "w": 17,
+     "h": 16,
+     "cx": 431.0,
+     "cy": 491.5,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    }
+   ],
+   "lines": {
+    "box": [
+     222,
+     457,
+     420,
+     36
+    ],
+    "pixels": 1636,
+    "colour": "#BDBEBD",
+    "colours": {
+     "#BDBEBD": 794,
+     "#DEDEDE": 397,
+     "#9C9E9C": 397
+    },
+    "thickness": 2,
+    "ink": 131
+   },
+   "vsExcel": {
+    "passed": false,
+    "fails": [
+     "handles 2 vs 8"
+    ],
+    "handles": [
+     2,
+     8
+    ],
+    "size": [
+     "17x17",
+     "17x17"
+    ],
+    "ring": [
+     "#616161",
+     "#616161"
+    ],
+    "fill": [
+     "#FFFFFF",
+     "#FFFFFF"
+    ],
+    "frame": [
+     "#BDBEBD",
+     "#BDBEBD"
+    ],
+    "ink": [
+     131,
+     131
+    ],
+    "maxCentreOffset": 318.5
+   }
+  },
+  "valAxis": {
+   "summary": "4 handles {'blue': 4} sizes {'8x7': 1, '7x7': 1}; lines #BDBEBD t2 ink 131 box [9, 58, 34, 368]",
+   "handles": [
+    {
+     "x": 9,
+     "y": 59,
+     "w": 8,
+     "h": 7,
+     "cx": 12.5,
+     "cy": 62.0,
+     "ring": "#1281D6",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 36,
+     "y": 59,
+     "w": 7,
+     "h": 7,
+     "cx": 39.0,
+     "cy": 62.0,
+     "ring": "#0C7ED6",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 9,
+     "y": 418,
+     "w": 8,
+     "h": 8,
+     "cx": 12.5,
+     "cy": 421.5,
+     "ring": "#067CD5",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 36,
+     "y": 418,
+     "w": 7,
+     "h": 8,
+     "cx": 39.0,
+     "cy": 421.5,
+     "ring": "#1985D9",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    }
+   ],
+   "lines": {
+    "box": [
+     9,
+     58,
+     34,
+     368
+    ],
+    "pixels": 1591,
+    "colour": "#BDBEBD",
+    "colours": {
+     "#BDBEBD": 712,
+     "#DCDDDC": 352,
+     "#9E9F9E": 338
+    },
+    "thickness": 2,
+    "ink": 131
+   },
+   "vsExcel": {
+    "passed": true,
+    "fails": [],
+    "handles": [
+     4,
+     4
+    ],
+    "size": [
+     "8x7",
+     "8x8"
+    ],
+    "ring": [
+     "#0F7FD6",
+     "#1985D7"
+    ],
+    "fill": [
+     "#D0E7F8",
+     "#D0E7F8"
+    ],
+    "frame": [
+     "#BDBEBD",
+     "#878987"
+    ],
+    "ink": [
+     131,
+     119
+    ],
+    "maxCentreOffset": 70.0
+   }
+  },
+  "majorGrid": {
+   "summary": "12 handles {'blue': 12} sizes {'10x10': 9, '10x11': 3}",
+   "handles": [
+    {
+     "x": 34,
+     "y": 69,
+     "w": 10,
+     "h": 10,
+     "cx": 38.5,
+     "cy": 73.5,
+     "ring": "#2189D9",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 837,
+     "y": 69,
+     "w": 10,
+     "h": 10,
+     "cx": 841.5,
+     "cy": 73.5,
+     "ring": "#278CD8",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 34,
+     "y": 125,
+     "w": 10,
+     "h": 11,
+     "cx": 38.5,
+     "cy": 130.0,
+     "ring": "#1885D8",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 837,
+     "y": 125,
+     "w": 10,
+     "h": 11,
+     "cx": 841.5,
+     "cy": 130.0,
+     "ring": "#2088DA",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 34,
+     "y": 182,
+     "w": 10,
+     "h": 10,
+     "cx": 38.5,
+     "cy": 186.5,
+     "ring": "#2087D8",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 837,
+     "y": 182,
+     "w": 10,
+     "h": 10,
+     "cx": 841.5,
+     "cy": 186.5,
+     "ring": "#3494DB",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 34,
+     "y": 238,
+     "w": 10,
+     "h": 10,
+     "cx": 38.5,
+     "cy": 242.5,
+     "ring": "#1C87D9",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 837,
+     "y": 238,
+     "w": 10,
+     "h": 10,
+     "cx": 841.5,
+     "cy": 242.5,
+     "ring": "#2C8FDB",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 837,
+     "y": 294,
+     "w": 10,
+     "h": 10,
+     "cx": 841.5,
+     "cy": 298.5,
+     "ring": "#228BD8",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 34,
+     "y": 294,
+     "w": 10,
+     "h": 11,
+     "cx": 38.5,
+     "cy": 299.0,
+     "ring": "#1684D8",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 34,
+     "y": 351,
+     "w": 10,
+     "h": 10,
+     "cx": 38.5,
+     "cy": 355.5,
+     "ring": "#1884D8",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 837,
+     "y": 351,
+     "w": 10,
+     "h": 10,
+     "cx": 841.5,
+     "cy": 355.5,
+     "ring": "#228AD8",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    }
+   ],
+   "lines": null,
+   "vsExcel": {
+    "passed": false,
+    "fails": [
+     "handles 12 vs 14"
+    ],
+    "handles": [
+     12,
+     14
+    ],
+    "size": [
+     "10x10",
+     "10x10"
+    ],
+    "ring": [
+     "#2088D8",
+     "#2082D5"
+    ],
+    "fill": [
+     "#D0E7F8",
+     "#D0E7F8"
+    ],
+    "frame": [
+     null,
+     null
+    ],
+    "ink": [
+     null,
+     null
+    ],
+    "maxCentreOffset": 759.0
+   }
+  },
+  "series": {
+   "summary": "16 handles {'blue': 16} sizes {'10x10': 11, '9x10': 4}; lines #D0E7F8 t2 ink 136 box [72, 154, 648, 263]",
+   "handles": [
+    {
+     "x": 675,
+     "y": 154,
+     "w": 10,
+     "h": 10,
+     "cx": 679.5,
+     "cy": 158.5,
+     "ring": "#0C7BD5",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 710,
+     "y": 154,
+     "w": 10,
+     "h": 9,
+     "cx": 714.5,
+     "cy": 158.0,
+     "ring": "#0A7BD3",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 73,
+     "y": 165,
+     "w": 9,
+     "h": 10,
+     "cx": 77.0,
+     "cy": 169.5,
+     "ring": "#127AD4",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 108,
+     "y": 165,
+     "w": 9,
+     "h": 10,
+     "cx": 112.0,
+     "cy": 169.5,
+     "ring": "#0C78CF",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 474,
+     "y": 210,
+     "w": 10,
+     "h": 10,
+     "cx": 478.5,
+     "cy": 214.5,
+     "ring": "#127ECE",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 509,
+     "y": 210,
+     "w": 10,
+     "h": 10,
+     "cx": 513.5,
+     "cy": 214.5,
+     "ring": "#117ECE",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 273,
+     "y": 266,
+     "w": 10,
+     "h": 10,
+     "cx": 277.5,
+     "cy": 270.5,
+     "ring": "#117CCA",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 308,
+     "y": 266,
+     "w": 10,
+     "h": 10,
+     "cx": 312.5,
+     "cy": 270.5,
+     "ring": "#0E7CD2",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 73,
+     "y": 407,
+     "w": 9,
+     "h": 10,
+     "cx": 77.0,
+     "cy": 411.5,
+     "ring": "#1178C7",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 108,
+     "y": 407,
+     "w": 9,
+     "h": 10,
+     "cx": 112.0,
+     "cy": 411.5,
+     "ring": "#0E7BCF",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 273,
+     "y": 407,
+     "w": 10,
+     "h": 10,
+     "cx": 277.5,
+     "cy": 411.5,
+     "ring": "#0B79D3",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 308,
+     "y": 407,
+     "w": 10,
+     "h": 10,
+     "cx": 312.5,
+     "cy": 411.5,
+     "ring": "#117ACA",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 474,
+     "y": 407,
+     "w": 10,
+     "h": 10,
+     "cx": 478.5,
+     "cy": 411.5,
+     "ring": "#0E7CCD",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 509,
+     "y": 407,
+     "w": 10,
+     "h": 10,
+     "cx": 513.5,
+     "cy": 411.5,
+     "ring": "#127CD1",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 675,
+     "y": 407,
+     "w": 10,
+     "h": 10,
+     "cx": 679.5,
+     "cy": 411.5,
+     "ring": "#127BCA",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 710,
+     "y": 407,
+     "w": 10,
+     "h": 10,
+     "cx": 714.5,
+     "cy": 411.5,
+     "ring": "#107BD3",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    }
+   ],
+   "lines": {
+    "box": [
+     72,
+     154,
+     648,
+     263
+    ],
+    "pixels": 3193,
+    "colour": "#D0E7F8",
+    "colours": {
+     "#D0E7F8": 290,
+     "#68787C": 243,
+     "#909290": 235
+    },
+    "thickness": 2,
+    "ink": 136
+   },
+   "vsExcel": {
+    "passed": true,
+    "fails": [],
+    "handles": [
+     16,
+     16
+    ],
+    "size": [
+     "10x10",
+     "10x10"
+    ],
+    "ring": [
+     "#107BCF",
+     "#0E7BCF"
+    ],
+    "fill": [
+     "#D0E7F8",
+     "#D0E7F8"
+    ],
+    "frame": [
+     "#D0E7F8",
+     "#D2D3D2"
+    ],
+    "ink": [
+     136,
+     131
+    ],
+    "maxCentreOffset": 480.0
+   }
+  },
+  "point": {
+   "summary": "4 handles {'blue': 4} sizes {'10x10': 4}; lines #65777D t2 ink 169 box [273, 266, 45, 151]",
+   "handles": [
+    {
+     "x": 273,
+     "y": 266,
+     "w": 10,
+     "h": 10,
+     "cx": 277.5,
+     "cy": 270.5,
+     "ring": "#117CCA",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 308,
+     "y": 266,
+     "w": 10,
+     "h": 10,
+     "cx": 312.5,
+     "cy": 270.5,
+     "ring": "#0E7CD2",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 273,
+     "y": 407,
+     "w": 10,
+     "h": 10,
+     "cx": 277.5,
+     "cy": 411.5,
+     "ring": "#0B79D3",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 308,
+     "y": 407,
+     "w": 10,
+     "h": 10,
+     "cx": 312.5,
+     "cy": 411.5,
+     "ring": "#117ACA",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    }
+   ],
+   "lines": {
+    "box": [
+     273,
+     266,
+     45,
+     151
+    ],
+    "pixels": 617,
+    "colour": "#65777D",
+    "colours": {
+     "#65777D": 131,
+     "#E2E2E2": 127,
+     "#959795": 127
+    },
+    "thickness": 2,
+    "ink": 169
+   },
+   "vsExcel": {
+    "passed": true,
+    "fails": [],
+    "handles": [
+     4,
+     4
+    ],
+    "size": [
+     "10x10",
+     "10x10"
+    ],
+    "ring": [
+     "#0F7BCE",
+     "#0E7BD0"
+    ],
+    "fill": [
+     "#D0E7F8",
+     "#D0E7F8"
+    ],
+    "frame": [
+     "#65777D",
+     "#59737E"
+    ],
+    "ink": [
+     169,
+     125
+    ],
+    "maxCentreOffset": 103.0
+   }
+  }
+ }
+}

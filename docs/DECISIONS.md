@@ -4463,3 +4463,67 @@ Add-Ins, Copilot, Diktieren, Editor) that we do not have, so a comparison there 
   (ours: Suchen, Ersetzen); large buttons with a two-line label are about 8 px wider than Office's; Word's style
   gallery fills the room the add-ins take in Word. Stacked buttons are as wide as their column (Office reports each
   button's own width), which the check reports as a width difference.
+## D-170 Chart selection marks as Office draws them, once for all three apps (2026-11-11)
+
+Step 11 point 2. The owner found that a selected chart part looked different from Excel's (ours: a grey frame with
+small 9 px circles around the chart, a dashed rectangle around the selected element).
+- **Recorded** (`probe_excel_chart_selection.py`, our own Excel, real input under the lock, window checked in front,
+  only the chart's region captured, crops in TEMP): a column, a line (with markers) and a pie chart; every part
+  selected through COM: chart area, plot area, title, axis title, legend, legend entry, value and category axis, major
+  gridlines, a series, a point, the series' data labels, one data label, the trendline. Measured from the crops with
+  `feellab/selmarks.py` (the pixels the selection adds, split into frame lines and handles; handle box, ring and fill
+  colour; the frame's thickness and "ink", its darkness across its width). `results/2026-11-11-excel-chart-selection.json`.
+  Word (`probe_word_chart_selection.py`, an inline chart of its own) draws the same marks: same handle sizes, ring and
+  fill colours and frames (`results/2026-11-11-word-chart-selection.json`; its legend and gridline counts differ only
+  because Word's sample chart differs). PowerPoint was not recorded: POWERPNT.EXE was running (another session's
+  probe), so the PowerPoint rules forbade it; its charts use the same engine.
+- **What Office draws** (device pixels at the screen's 150 %): two kinds of handles. Parts that can be sized (chart
+  area, plot area, legend, one data label) get grey rings: 17 px across, ring about 2.6 px #616161, white fill; eight
+  of them on the corners and side middles (a pie's plot area: the four corners only). The others get blue dots: 9.5 px,
+  ring about 1.3 px (core about #1683D7), fill #D0E7F8; axes and markers smaller ones (8 px, a thicker ring). Frames
+  are one pixel: #616161 around the chart area (its left and top line on the chart's first pixel, right and bottom one
+  pixel beyond its last; the handles centred on the lines) and around text boxes (title, axis title, each data label);
+  about #7B7B7B around the plot area, the legend, an axis, each column of a selected series or point and a square
+  around each marker. Where the dots go: a title's, axis title's and each data label's box corners; an axis's box
+  corners; both ends of each gridline except the one under the category axis; the four corners of every column; the
+  corners of the square around every marker; both ends of a trendline; a pie's centre and the slices' edges (a slice:
+  its two edges); a selected pie series also gets its slices outlined. The chart area's frame and handles stay while
+  an inner part is selected. No rotation handle on any chart part.
+- **Built once** in `packages/chart-ui/src/selection.ts`: `chartMarks` (the chart area), `elementMarks` (an element's
+  marks from the chart's SVG parts, through partsSelector), `drawMarks` (an overlay SVG: frames snapped to whole device
+  pixels and one device pixel wide whatever the zoom; rings and dots as SVG circles, so their smoothing matches
+  Office's); sizes kept in CSS px (the 150 % measurements divided by 1.5), so they follow the screen's scale as
+  Office's do. RaabeCalc draws them (`charts/feature.ts` showElement, redrawn on every placement); the old box shadow,
+  the 9 px handle look and the dashed element frame are gone; the handle divs stay as invisible 12 px hit areas.
+- **100 %:** not measured. The PC's only screen runs at 150 % and Windows' display settings must not be changed. The
+  marks are kept in CSS px, so at 100 % they are the 150 % sizes divided by 1.5 (rings 11.3 px, dots 6.3 px).
+- **Compared** (`check_chart_selection.py`, the release exe off screen through DevTools, no real input; the same three
+  charts, every part chosen as in Format > Aktuelle Auswahl, the point by a second click): number of handles (within
+  one: a handle over busy content can hide from the measurement, in both apps), handle size within 2 px, handle kind,
+  median ring and fill colour within 40 per channel, the frame's presence, thickness and ink (for a series' columns
+  and a point only its presence: there the line lies on the column's edge). Two settings follow Excel's probe chart
+  for a fair crop: the column chart gets the classic gap of 150 and no overlap (ChartObjects.Add with ChartType keeps
+  those; Insert > Diagramm uses 219 and -27), and only the first series' labels are shown for the data labels case,
+  because RaabeCalc's Datenbeschriftungen element covers all series where Excel selects one series' labels. Not
+  compared: a single legend entry and a single data label (no element of their own in our charts yet).
+  `results/2026-11-11-calc-chart-selection.json`.
+
+## D-171 The selected chart in RaabeWrite and RaabePresent: the chart engine's frame, not the shape's (2026-11-11)
+
+Follow-up of D-170 for the other two apps.
+- **PowerPoint recorded** (`probe_powerpoint_chart_selection.py`, once POWERPNT.EXE was no longer running: our own
+  PowerPoint and presentation in TEMP, real input under the lock; the Excel that AddChart2 starts for the data sheet is
+  ended with it, found by its parent process): a chart selected as a shape shows the chart engine's marks, exactly
+  as the chart area selected inside it: a one pixel #616161 frame and eight 17 px grey rings at 150 %, no rotation
+  handle (`results/2026-11-11-powerpoint-chart-selection.json`; plot area, title, axis, gridlines and series match
+  Excel's marks too). Through COM `Points(2).Select()` selects the whole series in PowerPoint (recorded as such).
+  Word (D-170) shows the same for its chart.
+- **RaabeWrite** (`packages/text-engine/src/view.ts`): a selected chart now gets that frame (one device pixel, right and
+  bottom just outside the chart) and those rings (SVG circles, 11.3 CSS px with a 1.73 px ring) instead of the
+  picture's blue frame and 9 px handles; pictures and shapes keep their look.
+- **RaabePresent** (`apps/raabe-present/src/editor.ts`, `present.css`): a selected chart's frame and handles the same
+  way, and no rotation handle (PowerPoint has none on charts; ours showed one).
+- Inner parts are not selectable in these two apps yet (their Format pane's dropdown chooses the element): their marks
+  come with that, from `@raabe/chart-ui`'s `elementMarks`, as in RaabeCalc.
+- **Compared** with `check_chart_selection.py --app write|present` (the selected chart's crop against the unselected
+  one, measured like Office's): 8 rings of 17 px, #616161 frame of the same ink, as Word's and PowerPoint's.

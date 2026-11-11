@@ -1,0 +1,1391 @@
+{
+ "what": "PowerPoint 365's marks of a selected chart and chart part (selmarks.py), and how they compare with Excel's",
+ "scale": 1.5,
+ "parts": {
+  "shape": {
+   "summary": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #616161 t1 ink 158 box [1, 1, 961, 577]",
+   "handles": [
+    {
+     "x": -7,
+     "y": -7,
+     "w": 17,
+     "h": 17,
+     "cx": 1.0,
+     "cy": 1.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 473,
+     "y": -7,
+     "w": 17,
+     "h": 17,
+     "cx": 481.0,
+     "cy": 1.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 953,
+     "y": -7,
+     "w": 17,
+     "h": 17,
+     "cx": 961.0,
+     "cy": 1.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": -7,
+     "y": 281,
+     "w": 17,
+     "h": 17,
+     "cx": 1.0,
+     "cy": 289.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 953,
+     "y": 281,
+     "w": 17,
+     "h": 17,
+     "cx": 961.0,
+     "cy": 289.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": -7,
+     "y": 569,
+     "w": 17,
+     "h": 17,
+     "cx": 1.0,
+     "cy": 577.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 473,
+     "y": 569,
+     "w": 17,
+     "h": 17,
+     "cx": 481.0,
+     "cy": 577.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 953,
+     "y": 569,
+     "w": 17,
+     "h": 17,
+     "cx": 961.0,
+     "cy": 577.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    }
+   ],
+   "lines": {
+    "box": [
+     1,
+     1,
+     961,
+     577
+    ],
+    "pixels": 2984,
+    "colour": "#616161",
+    "colours": {
+     "#616161": 2968,
+     "#636363": 12,
+     "#707070": 4
+    },
+    "thickness": 1,
+    "ink": 158
+   },
+   "vsExcel": {
+    "passed": true,
+    "fails": [],
+    "handles": [
+     8,
+     8
+    ],
+    "size": [
+     "17x17",
+     "17x17"
+    ],
+    "ring": [
+     "#616161",
+     "#616161"
+    ],
+    "fill": [
+     "#FFFFFF",
+     "#FFFFFF"
+    ],
+    "frame": [
+     "#616161",
+     "#616161"
+    ],
+    "ink": [
+     158,
+     158
+    ],
+    "maxCentreOffset": 241.0
+   }
+  },
+  "chart": {
+   "summary": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #616161 t1 ink 158 box [1, 1, 961, 577]",
+   "handles": [
+    {
+     "x": -7,
+     "y": -7,
+     "w": 17,
+     "h": 17,
+     "cx": 1.0,
+     "cy": 1.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 473,
+     "y": -7,
+     "w": 17,
+     "h": 17,
+     "cx": 481.0,
+     "cy": 1.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 953,
+     "y": -7,
+     "w": 17,
+     "h": 17,
+     "cx": 961.0,
+     "cy": 1.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": -7,
+     "y": 281,
+     "w": 17,
+     "h": 17,
+     "cx": 1.0,
+     "cy": 289.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 953,
+     "y": 281,
+     "w": 17,
+     "h": 17,
+     "cx": 961.0,
+     "cy": 289.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": -7,
+     "y": 569,
+     "w": 17,
+     "h": 17,
+     "cx": 1.0,
+     "cy": 577.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 473,
+     "y": 569,
+     "w": 17,
+     "h": 17,
+     "cx": 481.0,
+     "cy": 577.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 953,
+     "y": 569,
+     "w": 17,
+     "h": 17,
+     "cx": 961.0,
+     "cy": 577.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    }
+   ],
+   "lines": {
+    "box": [
+     1,
+     1,
+     961,
+     577
+    ],
+    "pixels": 2984,
+    "colour": "#616161",
+    "colours": {
+     "#616161": 2968,
+     "#636363": 12,
+     "#707070": 4
+    },
+    "thickness": 1,
+    "ink": 158
+   },
+   "vsExcel": {
+    "passed": true,
+    "fails": [],
+    "handles": [
+     8,
+     8
+    ],
+    "size": [
+     "17x17",
+     "17x17"
+    ],
+    "ring": [
+     "#616161",
+     "#616161"
+    ],
+    "fill": [
+     "#FFFFFF",
+     "#FFFFFF"
+    ],
+    "frame": [
+     "#616161",
+     "#616161"
+    ],
+    "ink": [
+     158,
+     158
+    ],
+    "maxCentreOffset": 241.0
+   }
+  },
+  "plot": {
+   "summary": "8 handles {'grey': 8} sizes {'17x17': 8}; lines #B0B1B0 t2 ink 169 box [47, 87, 892, 380]",
+   "handles": [
+    {
+     "x": 39,
+     "y": 79,
+     "w": 17,
+     "h": 17,
+     "cx": 47.0,
+     "cy": 87.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 484,
+     "y": 79,
+     "w": 17,
+     "h": 17,
+     "cx": 492.0,
+     "cy": 87.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 930,
+     "y": 79,
+     "w": 17,
+     "h": 17,
+     "cx": 938.0,
+     "cy": 87.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 39,
+     "y": 268,
+     "w": 17,
+     "h": 17,
+     "cx": 47.0,
+     "cy": 276.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 930,
+     "y": 268,
+     "w": 17,
+     "h": 17,
+     "cx": 938.0,
+     "cy": 276.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 39,
+     "y": 458,
+     "w": 17,
+     "h": 17,
+     "cx": 47.0,
+     "cy": 466.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 484,
+     "y": 458,
+     "w": 17,
+     "h": 17,
+     "cx": 492.0,
+     "cy": 466.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 930,
+     "y": 458,
+     "w": 17,
+     "h": 17,
+     "cx": 938.0,
+     "cy": 466.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    }
+   ],
+   "lines": {
+    "box": [
+     47,
+     87,
+     892,
+     380
+    ],
+    "pixels": 4961,
+    "colour": "#B0B1B0",
+    "colours": {
+     "#B0B1B0": 857,
+     "#A4A5A4": 857,
+     "#9D9F9D": 857
+    },
+    "thickness": 2,
+    "ink": 169
+   },
+   "vsExcel": {
+    "passed": true,
+    "fails": [],
+    "handles": [
+     8,
+     7
+    ],
+    "size": [
+     "17x17",
+     "17x17"
+    ],
+    "ring": [
+     "#616161",
+     "#616161"
+    ],
+    "fill": [
+     "#FFFFFF",
+     "#FFFFFF"
+    ],
+    "frame": [
+     "#B0B1B0",
+     "#9B9C9B"
+    ],
+    "ink": [
+     169,
+     131
+    ],
+    "maxCentreOffset": 856.0
+   }
+  },
+  "title": {
+   "summary": "4 handles {'blue': 4} sizes {'11x10': 2, '9x11': 2}; lines #616161 t1 ink 158 box [354, 7, 252, 61]",
+   "handles": [
+    {
+     "x": 354,
+     "y": 7,
+     "w": 11,
+     "h": 10,
+     "cx": 359.0,
+     "cy": 11.5,
+     "ring": "#1F88D9",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 595,
+     "y": 7,
+     "w": 11,
+     "h": 10,
+     "cx": 600.0,
+     "cy": 11.5,
+     "ring": "#1F88D9",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 355,
+     "y": 58,
+     "w": 9,
+     "h": 11,
+     "cx": 359.0,
+     "cy": 63.0,
+     "ring": "#087CD5",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 596,
+     "y": 58,
+     "w": 9,
+     "h": 11,
+     "cx": 600.0,
+     "cy": 63.0,
+     "ring": "#087CD5",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    }
+   ],
+   "lines": {
+    "box": [
+     354,
+     7,
+     252,
+     61
+    ],
+    "pixels": 622,
+    "colour": "#616161",
+    "colours": {
+     "#616161": 542,
+     "#D0E7F8": 48,
+     "#71B4E7": 3
+    },
+    "thickness": 1,
+    "ink": 158
+   },
+   "vsExcel": {
+    "passed": true,
+    "fails": [],
+    "handles": [
+     4,
+     4
+    ],
+    "size": [
+     "11x10",
+     "10x10"
+    ],
+    "ring": [
+     "#1382D7",
+     "#1F88D9"
+    ],
+    "fill": [
+     "#D0E7F8",
+     "#D0E7F8"
+    ],
+    "frame": [
+     "#616161",
+     "#616161"
+    ],
+    "ink": [
+     158,
+     158
+    ],
+    "maxCentreOffset": 128.5
+   }
+  },
+  "legend": {
+   "summary": "2 handles {'grey': 2} sizes {'17x17': 1, '17x16': 1}; lines #BDBEBD t2 ink 131 box [199, 522, 562, 43]",
+   "handles": [
+    {
+     "x": 471,
+     "y": 514,
+     "w": 17,
+     "h": 17,
+     "cx": 479.0,
+     "cy": 522.0,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    },
+    {
+     "x": 471,
+     "y": 556,
+     "w": 17,
+     "h": 16,
+     "cx": 479.0,
+     "cy": 563.5,
+     "ring": "#616161",
+     "fill": "#FFFFFF",
+     "ringWidth": 3,
+     "kind": "grey"
+    }
+   ],
+   "lines": {
+    "box": [
+     199,
+     522,
+     562,
+     43
+    ],
+    "pixels": 2204,
+    "colour": "#BDBEBD",
+    "colours": {
+     "#BDBEBD": 1078,
+     "#C6C7C6": 539,
+     "#B4B5B4": 539
+    },
+    "thickness": 2,
+    "ink": 131
+   },
+   "vsExcel": {
+    "passed": false,
+    "fails": [
+     "handles 2 vs 8"
+    ],
+    "handles": [
+     2,
+     8
+    ],
+    "size": [
+     "17x17",
+     "17x17"
+    ],
+    "ring": [
+     "#616161",
+     "#616161"
+    ],
+    "fill": [
+     "#FFFFFF",
+     "#FFFFFF"
+    ],
+    "frame": [
+     "#BDBEBD",
+     "#BDBEBD"
+    ],
+    "ink": [
+     131,
+     131
+    ],
+    "maxCentreOffset": 390.5
+   }
+  },
+  "valAxis": {
+   "summary": "4 handles {'blue': 4} sizes {'8x7': 4}; lines #BDBEBD t2 ink 131 box [9, 68, 43, 415]",
+   "handles": [
+    {
+     "x": 9,
+     "y": 69,
+     "w": 8,
+     "h": 7,
+     "cx": 12.5,
+     "cy": 72.0,
+     "ring": "#0A7DD6",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 44,
+     "y": 69,
+     "w": 8,
+     "h": 7,
+     "cx": 47.5,
+     "cy": 72.0,
+     "ring": "#067BD5",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 9,
+     "y": 476,
+     "w": 8,
+     "h": 7,
+     "cx": 12.5,
+     "cy": 479.0,
+     "ring": "#0D80D7",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 44,
+     "y": 476,
+     "w": 8,
+     "h": 7,
+     "cx": 47.5,
+     "cy": 479.0,
+     "ring": "#097DD5",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    }
+   ],
+   "lines": {
+    "box": [
+     9,
+     68,
+     43,
+     415
+    ],
+    "pixels": 1816,
+    "colour": "#BDBEBD",
+    "colours": {
+     "#BDBEBD": 796,
+     "#AFB0AF": 399,
+     "#CACBCA": 385
+    },
+    "thickness": 2,
+    "ink": 131
+   },
+   "vsExcel": {
+    "passed": true,
+    "fails": [],
+    "handles": [
+     4,
+     4
+    ],
+    "size": [
+     "8x7",
+     "8x8"
+    ],
+    "ring": [
+     "#097DD5",
+     "#1985D7"
+    ],
+    "fill": [
+     "#D0E7F8",
+     "#D0E7F8"
+    ],
+    "frame": [
+     "#BDBEBD",
+     "#878987"
+    ],
+    "ink": [
+     131,
+     119
+    ],
+    "maxCentreOffset": 88.0
+   }
+  },
+  "majorGrid": {
+   "summary": "12 handles {'blue': 12} sizes {'10x10': 12}",
+   "handles": [
+    {
+     "x": 43,
+     "y": 83,
+     "w": 10,
+     "h": 10,
+     "cx": 47.5,
+     "cy": 87.5,
+     "ring": "#298DDB",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 933,
+     "y": 83,
+     "w": 10,
+     "h": 10,
+     "cx": 937.5,
+     "cy": 87.5,
+     "ring": "#238BDA",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 43,
+     "y": 146,
+     "w": 10,
+     "h": 10,
+     "cx": 47.5,
+     "cy": 150.5,
+     "ring": "#248BDA",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 933,
+     "y": 146,
+     "w": 10,
+     "h": 10,
+     "cx": 937.5,
+     "cy": 150.5,
+     "ring": "#238BDA",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 43,
+     "y": 209,
+     "w": 10,
+     "h": 10,
+     "cx": 47.5,
+     "cy": 213.5,
+     "ring": "#2C90DB",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 933,
+     "y": 209,
+     "w": 10,
+     "h": 10,
+     "cx": 937.5,
+     "cy": 213.5,
+     "ring": "#1E88DA",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 43,
+     "y": 272,
+     "w": 10,
+     "h": 10,
+     "cx": 47.5,
+     "cy": 276.5,
+     "ring": "#258BDA",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 933,
+     "y": 272,
+     "w": 10,
+     "h": 10,
+     "cx": 937.5,
+     "cy": 276.5,
+     "ring": "#228AD9",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 43,
+     "y": 335,
+     "w": 10,
+     "h": 10,
+     "cx": 47.5,
+     "cy": 339.5,
+     "ring": "#2A8FDC",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 933,
+     "y": 335,
+     "w": 10,
+     "h": 10,
+     "cx": 937.5,
+     "cy": 339.5,
+     "ring": "#248BDA",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 43,
+     "y": 398,
+     "w": 10,
+     "h": 10,
+     "cx": 47.5,
+     "cy": 402.5,
+     "ring": "#3494DC",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 933,
+     "y": 398,
+     "w": 10,
+     "h": 10,
+     "cx": 937.5,
+     "cy": 402.5,
+     "ring": "#2B8EDB",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    }
+   ],
+   "lines": null,
+   "vsExcel": {
+    "passed": false,
+    "fails": [
+     "handles 12 vs 14"
+    ],
+    "handles": [
+     12,
+     14
+    ],
+    "size": [
+     "10x10",
+     "10x10"
+    ],
+    "ring": [
+     "#248BDA",
+     "#2082D5"
+    ],
+    "fill": [
+     "#D0E7F8",
+     "#D0E7F8"
+    ],
+    "frame": [
+     null,
+     null
+    ],
+    "ink": [
+     null,
+     null
+    ],
+    "maxCentreOffset": 418.0
+   }
+  },
+  "series": {
+   "summary": "16 handles {'blue': 16} sizes {'10x10': 8, '10x9': 5}; lines #D0E7F8 t2 ink 131 box [85, 177, 717, 294]",
+   "handles": [
+    {
+     "x": 753,
+     "y": 178,
+     "w": 10,
+     "h": 9,
+     "cx": 757.5,
+     "cy": 182.0,
+     "ring": "#1079C7",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 792,
+     "y": 178,
+     "w": 10,
+     "h": 9,
+     "cx": 796.5,
+     "cy": 182.0,
+     "ring": "#0A78CD",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 86,
+     "y": 190,
+     "w": 9,
+     "h": 10,
+     "cx": 90.0,
+     "cy": 194.5,
+     "ring": "#0E78C8",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 124,
+     "y": 190,
+     "w": 10,
+     "h": 10,
+     "cx": 128.5,
+     "cy": 194.5,
+     "ring": "#0C7BD5",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 569,
+     "y": 240,
+     "w": 10,
+     "h": 10,
+     "cx": 573.5,
+     "cy": 244.5,
+     "ring": "#0D7CD4",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 530,
+     "y": 241,
+     "w": 10,
+     "h": 9,
+     "cx": 534.5,
+     "cy": 245.0,
+     "ring": "#0479D4",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 308,
+     "y": 304,
+     "w": 10,
+     "h": 9,
+     "cx": 312.5,
+     "cy": 308.0,
+     "ring": "#0D79D1",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 347,
+     "y": 304,
+     "w": 10,
+     "h": 9,
+     "cx": 351.5,
+     "cy": 308.0,
+     "ring": "#0C7ACE",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 86,
+     "y": 461,
+     "w": 9,
+     "h": 10,
+     "cx": 90.0,
+     "cy": 465.5,
+     "ring": "#0C78CA",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 124,
+     "y": 461,
+     "w": 10,
+     "h": 10,
+     "cx": 128.5,
+     "cy": 465.5,
+     "ring": "#117AD4",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 308,
+     "y": 461,
+     "w": 10,
+     "h": 10,
+     "cx": 312.5,
+     "cy": 465.5,
+     "ring": "#0978D1",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 347,
+     "y": 461,
+     "w": 10,
+     "h": 10,
+     "cx": 351.5,
+     "cy": 465.5,
+     "ring": "#0F78C2",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 531,
+     "y": 461,
+     "w": 9,
+     "h": 10,
+     "cx": 535.0,
+     "cy": 465.5,
+     "ring": "#0B79CB",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 569,
+     "y": 461,
+     "w": 10,
+     "h": 10,
+     "cx": 573.5,
+     "cy": 465.5,
+     "ring": "#107DCF",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 753,
+     "y": 461,
+     "w": 10,
+     "h": 10,
+     "cx": 757.5,
+     "cy": 465.5,
+     "ring": "#0C79D3",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 792,
+     "y": 461,
+     "w": 10,
+     "h": 10,
+     "cx": 796.5,
+     "cy": 465.5,
+     "ring": "#107CD3",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    }
+   ],
+   "lines": {
+    "box": [
+     85,
+     177,
+     717,
+     294
+    ],
+    "pixels": 3748,
+    "colour": "#D0E7F8",
+    "colours": {
+     "#D0E7F8": 289,
+     "#486E7E": 273,
+     "#59737D": 273
+    },
+    "thickness": 2,
+    "ink": 131
+   },
+   "vsExcel": {
+    "passed": true,
+    "fails": [],
+    "handles": [
+     16,
+     16
+    ],
+    "size": [
+     "10x10",
+     "10x10"
+    ],
+    "ring": [
+     "#0C79D0",
+     "#0E7BCF"
+    ],
+    "fill": [
+     "#D0E7F8",
+     "#D0E7F8"
+    ],
+    "frame": [
+     "#D0E7F8",
+     "#D2D3D2"
+    ],
+    "ink": [
+     131,
+     131
+    ],
+    "maxCentreOffset": 562.0
+   }
+  },
+  "point": {
+   "summary": "16 handles {'blue': 16} sizes {'10x10': 8, '10x9': 5}; lines #D0E7F8 t2 ink 131 box [85, 177, 717, 294]",
+   "handles": [
+    {
+     "x": 753,
+     "y": 178,
+     "w": 10,
+     "h": 9,
+     "cx": 757.5,
+     "cy": 182.0,
+     "ring": "#1079C7",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 792,
+     "y": 178,
+     "w": 10,
+     "h": 9,
+     "cx": 796.5,
+     "cy": 182.0,
+     "ring": "#0A78CD",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 86,
+     "y": 190,
+     "w": 9,
+     "h": 10,
+     "cx": 90.0,
+     "cy": 194.5,
+     "ring": "#0E78C8",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 124,
+     "y": 190,
+     "w": 10,
+     "h": 10,
+     "cx": 128.5,
+     "cy": 194.5,
+     "ring": "#0C7BD5",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 569,
+     "y": 240,
+     "w": 10,
+     "h": 10,
+     "cx": 573.5,
+     "cy": 244.5,
+     "ring": "#0D7CD4",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 530,
+     "y": 241,
+     "w": 10,
+     "h": 9,
+     "cx": 534.5,
+     "cy": 245.0,
+     "ring": "#0479D4",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 308,
+     "y": 304,
+     "w": 10,
+     "h": 9,
+     "cx": 312.5,
+     "cy": 308.0,
+     "ring": "#0D79D1",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 347,
+     "y": 304,
+     "w": 10,
+     "h": 9,
+     "cx": 351.5,
+     "cy": 308.0,
+     "ring": "#0C7ACE",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 86,
+     "y": 461,
+     "w": 9,
+     "h": 10,
+     "cx": 90.0,
+     "cy": 465.5,
+     "ring": "#0C78CA",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 124,
+     "y": 461,
+     "w": 10,
+     "h": 10,
+     "cx": 128.5,
+     "cy": 465.5,
+     "ring": "#117AD4",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 308,
+     "y": 461,
+     "w": 10,
+     "h": 10,
+     "cx": 312.5,
+     "cy": 465.5,
+     "ring": "#0978D1",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 347,
+     "y": 461,
+     "w": 10,
+     "h": 10,
+     "cx": 351.5,
+     "cy": 465.5,
+     "ring": "#0F78C2",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 531,
+     "y": 461,
+     "w": 9,
+     "h": 10,
+     "cx": 535.0,
+     "cy": 465.5,
+     "ring": "#0B79CB",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 569,
+     "y": 461,
+     "w": 10,
+     "h": 10,
+     "cx": 573.5,
+     "cy": 465.5,
+     "ring": "#107DCF",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    },
+    {
+     "x": 753,
+     "y": 461,
+     "w": 10,
+     "h": 10,
+     "cx": 757.5,
+     "cy": 465.5,
+     "ring": "#0C79D3",
+     "fill": "#D0E7F8",
+     "ringWidth": 0,
+     "kind": "blue"
+    },
+    {
+     "x": 792,
+     "y": 461,
+     "w": 10,
+     "h": 10,
+     "cx": 796.5,
+     "cy": 465.5,
+     "ring": "#107CD3",
+     "fill": "#D0E7F8",
+     "ringWidth": 1,
+     "kind": "blue"
+    }
+   ],
+   "lines": {
+    "box": [
+     85,
+     177,
+     717,
+     294
+    ],
+    "pixels": 3748,
+    "colour": "#D0E7F8",
+    "colours": {
+     "#D0E7F8": 289,
+     "#486E7E": 273,
+     "#59737D": 273
+    },
+    "thickness": 2,
+    "ink": 131
+   },
+   "vsExcel": {
+    "passed": false,
+    "fails": [
+     "handles 16 vs 4"
+    ],
+    "handles": [
+     16,
+     4
+    ],
+    "size": [
+     "10x10",
+     "10x10"
+    ],
+    "ring": [
+     "#0C79D0",
+     "#0E7BD0"
+    ],
+    "fill": [
+     "#D0E7F8",
+     "#D0E7F8"
+    ],
+    "frame": [
+     "#D0E7F8",
+     "#59737E"
+    ],
+    "ink": [
+     131,
+     125
+    ],
+    "maxCentreOffset": 562.0
+   }
+  }
+ }
+}

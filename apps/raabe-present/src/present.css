@@ -44,6 +44,10 @@
 .overlay .frame { position: absolute; box-sizing: border-box; outline: 1px solid #7a7a7a; pointer-events: none; }
 .overlay .frame.editing { outline: 1px dashed #7a7a7a; }
 .overlay .frame.line { outline: none; }
+/* A chart (D-171): the chart engine's frame (.chart-line) and grey rings drawn as SVG, sizes from the 150 % recording. */
+.overlay .frame.chart { outline: none; }
+.overlay .h-chart { width: 11.333px; height: 11.333px; margin: -5.667px 0 0 -5.667px; border: 0; background: transparent; border-radius: 0; }
+.overlay .h-chart svg { display: block; overflow: visible; }
 .overlay .edge { position: absolute; pointer-events: auto; cursor: move; }
 .overlay .edge-t { left: 0; right: 0; top: -4px; height: 7px; }
 .overlay .edge-b { left: 0; right: 0; bottom: -4px; height: 7px; }
