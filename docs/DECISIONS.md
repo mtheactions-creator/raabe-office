@@ -4654,3 +4654,59 @@ The owner: "RaabeOffice uses text where MS Office uses symbols … we need to ch
 - Left as known differences: the galleries Office shows inline at a wide window (Übergänge, Animationen, Designs,
   Formenarten, Dokumentformatierung, Illustrationen' 3D-Modelle …) are buttons or narrower galleries in ours; combo and
   spinner widths in Übergänge > Anzeigedauer and Layout > Absatz; groups and controls we have not built.
+## D-172 The task pane measured against Office's Format pane (2026-11-11)
+
+Step 11 part 5, task panes. Recorded first (`probe_office_pane_geometry.py`: our own Excel, Word and PowerPoint, windows
+off screen and never activated, no input; a column chart's Diagrammbereich selected through COM, the pane opened
+with ExecuteMso("ChartFormatSelection"), Füllung opened through UI Automation's Toggle pattern; every element's box in
+CSS px; one picture of Excel's pane through PrintWindow kept in TEMP for the look). Excel's and PowerPoint's panes are
+the same, element for element; Word's is the same but 179 px wide (its pane keeps the width a user dragged it to), so
+Excel's 274.7 px is the reference for all three apps (`results/2026-11-11-office-pane-geometry.json`).
+- **Office's pane** (CSS px from the pane's content edge): title row 28 px with the title in semibold 16 px, cut
+  with an ellipsis, Optionen für den Aufgabenbereich and Bereich schließen as 24 px buttons 4 px from the top and
+  right; option sets 7.3 px below in a 38 px row: a 16 px chevron (Diagrammelemente, opens the list of elements),
+  then the sets as 30 px tabs with 10 px padding, the chosen one semibold and underlined in the app's colour; icon
+  tabs 30.7 px square, 6.7 px apart, 8 px below, the chosen one #E5E5E5 with a #7A7A7A line; a #D1D1D1 line 14 px
+  below them; sections 22 px high and 6 px apart, their 18 px header 240 px wide from x 8.7 with a chevron and the
+  semibold title from x 22.7; rows from x 27.4, radio rows 20.7 px high and 24 px apart, starting 10 px below the
+  header; the options of the chosen radio (Farbe) below a #D1D1D1 line, their labels indented by 10 px, the colour
+  button 44 x 27.3 px with a #8A8A8A line, right-aligned at x 248.7; 8 px below a section's last row. Background
+  #FAFAFA.
+- **Built** in the shared `TaskPane` (`packages/shell/src/taskpane.ts`, `theme.css`), so RaabeCalc's, RaabeWrite's and
+  RaabePresent's panes (chart Format pane and every other pane on TaskPane) follow: those sizes, the chevron before the
+  option sets (RaabeCalc's ˅ after Diagrammoptionen is gone; a click on the chosen first set still opens the list), SVG
+  chevrons instead of ◢ and ▷, the pane 275 px wide (RaabeWrite's dock too), #FAFAFA.
+- **Compared** (`check_pane_geometry.py`, the release exes off screen through DevTools): pane width, Schließen, the
+  chevron, each option set, each icon tab, each section header, each radio row, Farbe's label and colour button, by
+  name, within 2 px. Option sets are judged on their row and height only: Office's semibold label comes out about 6 %
+  narrower than the browser's Segoe UI (100.7 against 106.6 px for Diagrammoptionen), which also moves Textoptionen.
+  Radio rows and labels are judged without their width (Office's box is the text, ours the row).
+- **Not built:** the Optionen für den Aufgabenbereich button (its menu moves and sizes the pane; ours is fixed); the
+  small notch under the chosen icon tab; Office's paint bucket picture in the colour button (ours shows the colour).
+  The radio buttons keep the app's own accent colour.
+
+## D-173 Dialogs as Windows dialogs: Office's frame, buttons, tabs and sizes (2026-11-11)
+
+Step 11 part 5, dialogs. Recorded first (`probe_office_dialog_geometry.py`: Excel's Zellen formatieren
+(xlDialogFormatNumber), Word's Absatz and Schriftart, each opened through Application.Dialogs(...).Show() on a worker
+thread of our own instance, moved off screen, read through UI Automation, pictured with PrintWindow into TEMP and closed
+with Abbrechen; the run held the real-input lock, as a modal dialog can take the keyboard focus;
+`results/2026-11-11-office-dialog-geometry.json`). Office's dialogs are Windows dialogs, not the rounded cards ours
+were.
+- **What Office shows** (CSS px): a white title bar 30 px high (title in 12 px, the 47.3 x 29.3 px Direkthilfe and
+  Schließen buttons at the right), the client area #F0F0F0 with 12 px text; OK and Abbrechen 84 x 25.3 px, #E1E1E1 with
+  a #ADADAD line (the default button a #0078D7 line), 9.3 px apart, 6.7 px from the right and 7.4 px from the bottom;
+  a tab strip 7.3 px from the top whose tabs are 20.7 px high (others 2 px lower), the chosen one white and joined to
+  the white page below; fields 21.3 px high with a #7A7A7A line; check boxes 20.7 px apart; group titles plain.
+  Sizes: Zellen formatieren client 586.7 x 482.7, Absatz 459.3 x 547.3, Schriftart 430 x 507.3.
+- **Built** in the shared dialog (`packages/shell/src/dialog.ts` styles in `theme.css`): that frame, the buttons (in
+  the button row and inside dialogs), the tab strip (`.dialog .tabs`, RaabeCalc's `.fc-tabs`), fields, check boxes,
+  plain group titles, a 44 px preview box. Zellen formatieren, Absatz and Schriftart get Office's client sizes; Absatz's
+  tabs are now tabs (role tab); Schriftart gets Word's tab strip with Erweitert greyed (Zeichenabstand and OpenType are
+  not built); its lists show five 14 px rows as Word's do.
+- **Compared** (`check_dialog_geometry.py`, the release exes off screen through DevTools): title bar height, Schließen,
+  OK and Abbrechen (size and distance from the client's right and bottom edge), the first tab (place, height), the
+  client's size, within 2 px.
+- **Not built:** the Direkthilfe (?) button (no help in the apps); the white tab page with its line around the content
+  under a tab strip (our pages lie on the grey client area); Word's Tabstopps..., Als Standard festlegen and
+  Texteffekte... buttons. The other dialogs take the new frame and controls but keep their own sizes (not measured).

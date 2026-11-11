@@ -271,6 +271,7 @@ export function formatPane(m: ChartModel, e: ChartElement, outer: PaneHost): Pan
     title: PANE_TITLE[e.kind],
     sets,
     choices: chartElements(m).map((x) => ({ label: elementName(m, x), pick: () => host.select(x) })),
+    choicesLabel: "Diagrammelemente",
   };
 }
 

@@ -1302,7 +1302,7 @@ export class WriteApp {
     // Word's lists under Schriftart and Schriftgrad: a click puts the entry into the field (D-135).
     const listBox = (items: string[], field: HTMLInputElement, rows: number, fontStyle = false) => {
       const el = h("div", { class: "lbox", role: "listbox", "aria-label": field.getAttribute("aria-label") ?? "",
-        style: `height:${rows * 20 + 2}px;overflow-y:auto;border:1px solid #c7c7c7;border-top:none;background:#fff` });
+        style: `height:${rows * 14 + 2}px;overflow-y:auto;border:1px solid #7a7a7a;border-top:none;background:#fff` });
       const sync = () => {
         for (const o of Array.from(el.children) as HTMLElement[]) {
           const on = o.textContent === field.value;
@@ -1311,7 +1311,7 @@ export class WriteApp {
         }
       };
       for (const it of items) {
-        el.append(h("div", { role: "option", style: `height:20px;line-height:20px;padding:0 4px;white-space:nowrap;overflow:hidden;cursor:default${fontStyle ? `;font-family:"${it}"` : ""}`,
+        el.append(h("div", { role: "option", style: `height:14px;line-height:14px;padding:0 3px;font-size:12px;white-space:nowrap;overflow:hidden;cursor:default${fontStyle ? `;font-family:"${it}"` : ""}`,
           onmousedown: (ev: MouseEvent) => { ev.preventDefault(); field.value = it; sync(); update(); } }, it));
       }
       field.addEventListener("input", sync);
@@ -1320,8 +1320,9 @@ export class WriteApp {
     };
     fontInput.setAttribute("aria-label", "Schriftart:");
     sizeInput.setAttribute("aria-label", "Schriftgrad:");
-    const fontList = listBox(fonts, fontInput, 6, true);
-    const sizeList = listBox(["8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72"], sizeInput, 6);
+    // Word shows five entries of 14 px (D-173).
+    const fontList = listBox(fonts, fontInput, 5, true);
+    const sizeList = listBox(["8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72"], sizeInput, 5);
     sizeInput.style.width = "100%";
     for (const el of [fontInput, sizeInput, styleSel, underlineSel, ...Object.values(fx).map((x) => x.cb)]) el.addEventListener("input", update);
     update();
@@ -1337,6 +1338,11 @@ export class WriteApp {
       h("fieldset", null, h("legend", null, "Effekte"),
         h("div", { style: "display:grid;grid-template-columns:1fr 1fr;gap:0 24px" }, ...Object.values(fx).map((x) => x.el))),
       h("fieldset", null, h("legend", null, "Vorschau"), preview));
+    // Word's tab strip and size (D-173): Erweitert (Zeichenabstand, OpenType) is not built yet and stays greyed.
+    body.prepend(h("div", { class: "tabs", role: "tablist" }, h("button", { type: "button", role: "tab", class: "active", "aria-selected": "true" }, "Schriftart"),
+      h("button", { type: "button", role: "tab", disabled: true, "aria-selected": "false" }, "Erweitert")));
+    body.style.width = "416.6px";
+    body.style.minHeight = "459.3px";
     const ok = await showDialog({ title: "Schriftart", body, buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
     if (!ok) return;
     const changed = <T>(a: T | undefined, b: T) => a !== b;
@@ -1408,11 +1414,12 @@ export class WriteApp {
       h("fieldset", null, h("legend", null, "Formatierungsausnahmen"), noNumbers.el, noHyphens.el));
     const tabs = h("div", { class: "tabs" });
     const tab = (label: string, pg: HTMLElement) => h("button", {
-      class: pg === page1 ? "active" : "",
+      type: "button", role: "tab", class: pg === page1 ? "active" : "",
       onclick: (ev: MouseEvent) => { page1.hidden = pg !== page1; page2.hidden = pg !== page2; tabs.querySelectorAll("button").forEach((b) => b.classList.toggle("active", b === ev.currentTarget)); },
     }, label);
     tabs.append(tab("Einzüge und Abstände", page1), tab("Zeilen- und Seitenumbruch", page2));
-    const ok = await showDialog({ title: "Absatz", body: h("div", { style: "width:520px" }, tabs, page1, page2), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
+    // Word's size (D-173): client 459.3 x 547.3 px.
+    const ok = await showDialog({ title: "Absatz", body: h("div", { style: "width:445.9px;min-height:499.3px" }, tabs, page1, page2), buttons: [{ label: "OK", value: true, primary: true }, { label: "Abbrechen", value: false }], cancel: false });
     if (!ok) return;
     const firstAbs = num(by.value) * 28.3465 || 0;
     const kind = lineSel.value;

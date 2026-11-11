@@ -96,10 +96,11 @@ body.painting .grid-canvas { cursor: copy; }
 .statusbar .flags { display: flex; align-items: center; height: 100%; }
 
 /* Dialogs. */
-.fc { min-width: 560px; }
-.fc-tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
-.fc-tabs button { padding: 6px 12px; border: 0; background: none; border-bottom: 2px solid transparent; }
-.fc-tabs button.on { border-bottom-color: var(--accent-text); color: var(--accent-text); }
+/* Zellen formatieren has Excel's fixed size (D-173): client 586.7 x 482.7 px, the tab page 442 px high. */
+.fc { width: 573.3px; min-height: 434.7px; }
+.fc-tabs { display: flex; align-items: flex-end; height: 21.3px; padding-left: 2px; border-bottom: 1px solid #d9d9d9; margin-bottom: 12px; }
+.fc-tabs button { min-height: 0; height: 18.7px; padding: 0 12px; margin-right: -1px; border: 1px solid #d9d9d9; border-bottom: 0; border-radius: 0; background: #f0f0f0; }
+.fc-tabs button.on { position: relative; height: 20.7px; margin: 0 -1px -1px -2px; padding: 0 13px 1px; background: #fff; z-index: 1; }
 .fc-num { display: flex; gap: 16px; }
 .fc-cats { width: 160px; font: 12px var(--font); }
 .fc-right { flex: 1; display: flex; flex-direction: column; gap: 4px; }

@@ -420,20 +420,25 @@ body.readmode .titlebar .qat, body.readmode .titlebar .search, body.readmode .ti
 /* ----- dialogs -------------------------------------------------------------------------- */
 
 .dialog-layer { position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.08); }
-.dialog { min-width: 360px; max-width: 640px; background: var(--card); border-radius: 8px; box-shadow: 0 16px 32px rgba(0,0,0,.24), 0 0 2px rgba(0,0,0,.2); display: flex; flex-direction: column; }
-.dialog .dlg-title { height: 36px; display: flex; align-items: center; padding: 0 8px 0 16px; font-size: 13px; }
-.dialog .dlg-title .t { flex: 1; }
-.dialog .dlg-title button { width: 32px; height: 28px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; }
-.dialog .dlg-title button:hover { background: #c42b1c; color: #fff; }
-.dialog .dlg-body { padding: 8px 24px 16px; font-size: 13px; line-height: 1.5; }
-.dialog .dlg-buttons { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 24px 20px; }
-.dialog .dlg-buttons button { min-width: 88px; height: 30px; padding: 0 12px; border: 1px solid #c7c7c7; border-radius: 4px; background: var(--card); }
-.dialog .dlg-buttons button:hover { background: var(--hover); }
-.dialog .dlg-buttons button.primary { background: var(--accent-text); border-color: var(--accent-text); color: #fff; }
-.dialog .dlg-buttons button.primary:hover { background: #9a1117; }
-.dialog label.field { display: flex; flex-direction: column; gap: 4px; margin: 10px 0; }
-.dialog label.check { display: flex; align-items: center; gap: 8px; margin: 10px 0; }
-.dialog input[type=text], .dialog input[type=number], .dialog select { height: 28px; border: 1px solid #c7c7c7; border-radius: 4px; padding: 0 6px; font: 13px var(--font); }
+/* Office's dialogs are Windows dialogs (D-173, results/2026-11-11-office-dialog-geometry.json; Excel's Zellen
+   formatieren, Word's Absatz and Schriftart): a white title bar 30 px high with the title in 12 px and a 47 x 29 px
+   Schließen button, a #F0F0F0 client area, text in 12 px, buttons 84 x 25.3 px (#E1E1E1, a #ADADAD line; the default
+   button a #0078D7 one) at the bottom right, 9.3 px apart, 6.7 px from the right and 7.4 px from the bottom edge. */
+.dialog { min-width: 360px; max-width: 640px; background: #f0f0f0; border: 1px solid #707070; border-radius: 0; box-shadow: 0 8px 24px rgba(0,0,0,.26); display: flex; flex-direction: column; }
+.dialog .dlg-title { height: 29px; flex: none; display: flex; align-items: flex-start; padding: 0 0 0 10px; font-size: 12px; background: #fff; }
+.dialog .dlg-title .t { flex: 1; line-height: 29px; }
+.dialog .dlg-title button { width: 47.3px; height: 29.3px; border-radius: 0; display: inline-flex; align-items: center; justify-content: center; }
+.dialog .dlg-title button:hover { background: #e81123; color: #fff; }
+.dialog .dlg-body { padding: 7.3px 6.7px 0; font-size: 12px; line-height: 1.4; }
+.dialog .dlg-buttons { display: flex; justify-content: flex-end; gap: 9.3px; padding: 8px 6.7px 7.4px; }
+.dialog .dlg-buttons button { min-width: 84px; height: 25.3px; padding: 0 10px; border: 1px solid #adadad; border-radius: 0; background: #e1e1e1; font-size: 12px; }
+.dialog .dlg-buttons button:hover { background: #e5f1fb; border-color: #0078d7; }
+.dialog .dlg-buttons button.primary { border: 2px solid #0078d7; }
+.dialog .dlg-buttons button.primary:hover { background: #e5f1fb; }
+.dialog label.field { display: flex; flex-direction: column; gap: 3px; margin: 6px 0; }
+/* Windows controls (D-173): check boxes 20.7 px apart, fields 21.3 px high with a #7A7A7A line, text 12 px. */
+.dialog label.check { display: flex; align-items: center; gap: 6px; margin: 2px 0; min-height: 18.7px; }
+.dialog input[type=text], .dialog input[type=number], .dialog select { height: 21.3px; border: 1px solid #7a7a7a; border-radius: 0; padding: 0 4px; font: 12px var(--font); background: #fff; }
 .dialog .options { display: flex; gap: 24px; min-height: 300px; }
 .dialog .options nav { width: 150px; display: flex; flex-direction: column; border-right: 1px solid var(--border); }
 .dialog .options nav button { text-align: left; padding: 6px 10px; border-radius: 4px; }
@@ -487,13 +492,14 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .rspinner .spin button { flex: 1; display: inline-flex; align-items: center; justify-content: center; }
 .rspinner .spin .ico-s { width: 8px; height: 8px; }
 .rspinner .spin button:hover:not(:disabled) { background: var(--hover); }
-.dialog .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); margin-bottom: 12px; }
-.dialog .tabs button { padding: 6px 12px; border-bottom: 2px solid transparent; }
-.dialog .tabs button.active { border-bottom-color: var(--accent); font-weight: 600; }
+/* Windows' tab strip (D-173): tabs 18.7 px high, the chosen one 20.7 px, white and joined to the page below. */
+.dialog .tabs { display: flex; align-items: flex-end; height: 21.3px; padding-left: 2px; border-bottom: 1px solid #d9d9d9; margin-bottom: 12px; }
+.dialog .tabs button { min-height: 0; height: 18.7px; padding: 0 12px; margin-right: -1px; border: 1px solid #d9d9d9; border-bottom: 0; border-radius: 0; background: #f0f0f0; }
+.dialog .tabs button.active { position: relative; height: 20.7px; margin: 0 -1px -1px -2px; padding: 0 13px 1px; background: #fff; z-index: 1; }
 .dialog fieldset { border: 0; border-top: 1px solid var(--border); padding: 8px 0 4px; margin: 6px 0; }
-.dialog legend { font-weight: 600; padding-right: 8px; }
+.dialog legend { font-weight: 400; padding-right: 8px; }
 .dialog .grid2 { display: grid; grid-template-columns: auto 1fr auto 1fr; gap: 6px 10px; align-items: center; }
-.dialog .preview { border: 1px solid var(--border); background: #fff; height: 64px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 8px; }
+.dialog .preview { border: 1px solid #7a7a7a; background: #fff; height: 44px; display: flex; align-items: center; justify-content: center; overflow: hidden; margin-top: 8px; }
 
 /* ----- Navigationsbereich and floating dialogs ------------------------------------------ */
 
@@ -805,7 +811,9 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .dialog label.field.row { flex-direction: row; align-items: center; gap: 8px; }
 .dialog .disabled { color: #a0a0a0; }
 .dialog .iconbtn { width: 30px; height: 28px; border: 1px solid #c7c7c7; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; }
-.dialog .dlg-body button:not(.lbi) { min-height: 28px; padding: 0 12px; border: 1px solid #c7c7c7; border-radius: 4px; background: var(--card); }
+/* Buttons inside a dialog are Windows buttons too (D-173); tabs are not buttons to look at. */
+.dialog .dlg-body button:not(.lbi):not([role=tab]) { min-height: 25.3px; padding: 0 10px; border: 1px solid #adadad; border-radius: 0; background: #e1e1e1; }
+.dialog .dlg-body button:not(.lbi):not([role=tab]):hover:not(:disabled) { background: #e5f1fb; border-color: #0078d7; }
 .dialog .dlg-body button:disabled { color: #a0a0a0; }
 /* Link einfügen. */
 .linkdlg .lkdialog { display: grid; grid-template-columns: 110px 1fr 120px; gap: 12px; min-height: 360px; }
@@ -1116,33 +1124,49 @@ body.touch .qat button { height: 36px; min-width: 36px; }
 .hyopts .grid2 { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: center; margin-top: 6px; }
 
 /* ----- Task pane (Excel's Format panes): docked at the right, below the ribbon ----- */
-.taskpane { position: fixed; right: 0; top: var(--pane-top, 150px); bottom: var(--statusbar-h, 22px); width: 300px; z-index: 15;
-  display: flex; flex-direction: column; background: #fff; border-left: 1px solid #e1dfdd; font: 12px var(--font); color: #252423; }
+/* Measured against Office's chart Format pane (D-172, results/2026-11-11-office-pane-geometry.json), CSS px from the
+   pane's content edge. Office: 274.7 wide, title row 28 high below 4.7, option sets 38 high, icon tabs 30.7 square and
+   6.7 apart, sections 22 high and 6 apart, rows 20.7 high and 24 apart from x 27.4. */
+.taskpane { position: fixed; right: 0; top: var(--pane-top, 150px); bottom: var(--statusbar-h, 22px); width: 275px; z-index: 15;
+  display: flex; flex-direction: column; background: #fafafa; border-left: 1px solid #e1dfdd; font: 12px var(--font); color: #242424; }
 .taskpane[hidden] { display: none; }
-body.taskpane-open .calc-main { margin-right: 300px; }
-.tp-head { display: flex; align-items: center; padding: 12px 10px 6px 16px; }
-.tp-title { flex: 1; font-size: 18px; font-weight: 300; }
-.tp-close { border: 0; background: none; width: 26px; height: 26px; border-radius: 3px; color: #605e5c; cursor: pointer; }
+body.taskpane-open .calc-main { margin-right: 275px; }
+.tp-head { display: flex; align-items: flex-start; flex: none; height: 28px; padding: 0 4px 0 7.3px; }
+.tp-title { flex: 1; min-width: 0; font: 600 16px/28px var(--font); color: #242424; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tp-close { border: 0; background: none; width: 24px; height: 24px; margin-top: 4px; border-radius: 4px; color: #424242; cursor: pointer; flex: none; }
 .tp-close:hover { background: var(--hover); }
-.tp-sets { display: flex; gap: 16px; padding: 4px 16px 0; }
-.tp-set { border: 0; background: none; padding: 4px 0; font: 12px var(--font); color: #605e5c; cursor: pointer; border-bottom: 2px solid transparent; }
-.tp-set.on { color: #252423; font-weight: 600; border-bottom-color: var(--accent); }
+.tp-sets { display: flex; align-items: flex-start; flex: none; height: 38px; margin-top: 7.3px; padding-left: 8px; }
+.tp-anchor { width: 16px; height: 38px; border: 0; background: none; padding: 0; margin-right: 2.7px; color: #0f6cbd; display: inline-flex; align-items: center; justify-content: center; }
+.tp-anchor:disabled { visibility: hidden; }
+.tp-set { height: 30px; margin-top: 4px; border: 0; background: none; padding: 0 10px; font: 12px var(--font); color: #424242; cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; }
+.tp-set.on { color: #242424; font-weight: 600; border-bottom-color: var(--accent); }
 .tp-chev { margin-left: 4px; font-size: 10px; }
-.tp-tabs { display: flex; gap: 2px; padding: 8px 16px 4px; border-bottom: 1px solid #edebe9; }
-.tp-tab { border: 0; background: none; width: 36px; height: 30px; border-radius: 3px; cursor: pointer; border-bottom: 2px solid transparent; }
-.tp-tab.on { border-bottom-color: var(--accent); background: #f3f2f1; }
-.tp-tab:hover { background: var(--hover); }
-.tp-body { flex: 1; overflow-y: auto; padding: 4px 0 16px; }
-.tp-sec-head { display: flex; align-items: center; gap: 6px; width: 100%; border: 0; background: none; padding: 7px 16px; font: 600 12px var(--font); text-align: left; cursor: pointer; }
+.tp-tabs { display: flex; flex: none; gap: 6.6px; padding: 8px 0 14px 8px; position: relative; }
+.tp-tabs::after { content: ""; position: absolute; left: 12px; right: 6.7px; bottom: 0; border-bottom: 1px solid #d1d1d1; }
+.tp-tab { border: 1px solid transparent; background: none; width: 30.7px; height: 30.7px; padding: 0; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.tp-tab .ico-l { width: 24px; height: 24px; }
+.tp-tab.on { background: #e5e5e5; border-color: #7a7a7a; }
+.tp-tab:hover:not(.on) { background: var(--hover); }
+.tp-body { flex: 1; overflow-y: auto; padding: 5.3px 0 16px; }
+.tp-sec { display: flow-root; margin-bottom: 6px; }
+.tp-sec-head { display: flex; align-items: center; width: 240px; height: 18px; margin: 2px 0 2px 8.7px; border: 0; background: none; padding: 0 0 0 14px; position: relative;
+  font: 600 12px var(--font); text-align: left; cursor: pointer; }
 .tp-sec-head:hover { background: var(--hover); }
-.tp-tri { width: 10px; font-size: 9px; color: #605e5c; }
-.tp-sec-body { padding: 2px 16px 8px 32px; display: flex; flex-direction: column; gap: 6px; }
-.tp-line { display: flex; align-items: center; gap: 8px; min-height: 24px; }
+.tp-tri { position: absolute; left: 2px; top: 4px; width: 10px; height: 10px; color: #242424; }
+.tp-tri svg { display: block; }
+.tp-sec-body { padding: 10px 25.3px 8px 27.4px; display: flex; flex-direction: column; gap: 3.3px; }
+.tp-line { display: flex; align-items: center; gap: 8px; min-height: 20.7px; }
+/* The options of the chosen radio (Farbe under Automatisch …): below a line, their labels indented (Office). */
+.tp-choice + .tp-line:not(.tp-choice) { margin-top: 9.3px; position: relative; }
+.tp-choice + .tp-line:not(.tp-choice)::before { content: ""; position: absolute; left: 0; right: 0; top: -6.3px; border-top: 1px solid #d1d1d1; }
+.tp-choice ~ .tp-line:not(.tp-choice) > .tp-label { margin-left: 10px; }
+.tp-line:has(> .tp-color) { min-height: 27.3px; }
+.tp-line:has(> .tp-color) > .tp-label { align-self: stretch; display: flex; align-items: center; }
 .tp-label { flex: 1; }
 .tp-choice { gap: 6px; }
 .tp-heading { font-weight: 600; margin-top: 6px; }
 .tp-row { display: flex; flex-direction: column; gap: 6px; }
-.tp-color { display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 4px; border: 1px solid #c8c6c4; background: #fff; border-radius: 2px; }
+.tp-color { display: inline-flex; align-items: center; justify-content: center; gap: 4px; width: 44px; height: 27.3px; padding: 0 4px; border: 1px solid #8a8a8a; background: #fff; border-radius: 4px; }
 .tp-swatch { width: 16px; height: 14px; border: 1px solid #c8c6c4; }
 .tp-numbox { display: inline-flex; align-items: stretch; border: 1px solid #c8c6c4; border-radius: 2px; height: 24px; }
 .tp-num { width: 64px; border: 0; padding: 0 4px; font: 12px var(--font); text-align: right; outline: none; }
