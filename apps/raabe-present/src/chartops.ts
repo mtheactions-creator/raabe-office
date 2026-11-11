@@ -3,7 +3,7 @@
 // layouts, the same in PowerPoint), Farben ändern, Zeile/Spalte tauschen, Daten bearbeiten (a small
 // sheet of the values the chart keeps, as PowerPoint's chart data window shows them).
 
-import { QUICK_LAYOUTS, type ChartKind, type ChartModel } from "@raabe/charts";
+import { QUICK_LAYOUTS, newChart, renderChart, type ChartKind, type ChartModel } from "@raabe/charts";
 import { chartFromXml, chartToXml } from "@raabe/ooxml";
 import { h, showDialog, type MenuEntry } from "@raabe/shell";
 import type { PresentApp } from "./app";
@@ -38,6 +38,34 @@ export const CHART_KINDS: [string, ChartKind][] = [["Gruppierte Säulen", "colum
 
 export function changeType(app: PresentApp, kind: ChartKind): void {
   edit(app, "Diagrammtyp ändern", (m) => { m.kind = kind; });
+}
+
+/** The selected chart's kind (for the pictures of Schnelllayout). */
+export function selectedKind(app: PresentApp): ChartKind {
+  const path = chartPath(app);
+  const xml = path ? app.deck.pptx.text(path) : null;
+  try { return xml ? chartFromXml(xml).kind : "column"; } catch { return "column"; }
+}
+
+/** A Schnelllayout picture (D-164): sample data in the chart's type with the layout's title, legend, labels, gridlines. */
+export function layoutPicture(kind: ChartKind, n: number, w = 56, hh = 44): SVGSVGElement {
+  const fam: Record<string, string> = { column: "column", columnStacked: "column", bar: "bar", barStacked: "bar", line: "line", lineMarkers: "lineMarkers", area: "area", pie: "pie", doughnut: "pie", scatter: "scatter" };
+  const l = (QUICK_LAYOUTS[fam[kind] ?? "column"] ?? QUICK_LAYOUTS.column ?? [])[n - 1];
+  const s = (name: string, v: number[]) => ({ name: { text: name }, cat: { cache: ["a", "b", "c"] }, val: { cache: v } });
+  const at = { col: 0, row: 0, x: 0, y: 0 };
+  const m = newChart(kind, [s("1", [3, 5, 4]), s("2", [2, 4, 5])], at, at);
+  if (l) {
+    m.title = { show: l.title, text: "Titel" };
+    m.legend = l.legend;
+    m.dataLabels = l.labels;
+    m.axisTitles = { ...(l.catTitle ? { cat: "Achse" } : {}), ...(l.valTitle ? { val: "Achse" } : {}) };
+    m.gridlines = !!l.majorGrid;
+  }
+  const svg = renderChart(m, w * 3, hh * 3);
+  svg.setAttribute("viewBox", `0 0 ${w * 3} ${hh * 3}`);
+  svg.setAttribute("width", String(w));
+  svg.setAttribute("height", String(hh));
+  return svg;
 }
 
 export function quickLayout(app: PresentApp, n: number): void {

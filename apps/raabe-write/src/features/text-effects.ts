@@ -98,10 +98,12 @@ export function textEffectsFeature(api: AppApi, docArea: HTMLElement, dock: Dock
     { label: "Stärke", icon: "line-weight", submenu: () => WIDTHS.map((w): MenuEntry => ({
       label: `${w.toLocaleString("de-DE")} Pt.`, preview: weightPicture(w),
       run: () => { const p = outlineParts(); change("textOutline", outlineXml(p.colorXml ?? fxColorXml("000000"), w, p.dash)); },
+      hover: () => { const p = outlineParts(); change("textOutline", outlineXml(p.colorXml ?? fxColorXml("000000"), w, p.dash)); },
     })) },
-    { label: "Striche", icon: "dash-style", submenu: () => [{ block: () => pictureMenu(pictures.dashEntries(), 1, pictures.PIC_SIZE.dash, outlineParts().dash, (v) => {
-      const p = outlineParts(); change("textOutline", outlineXml(p.colorXml ?? fxColorXml("000000"), p.w || 0.75, v));
-    }) }] },
+    { label: "Striche", icon: "dash-style", submenu: () => {
+      const apply = (v: string) => { const p = outlineParts(); change("textOutline", outlineXml(p.colorXml ?? fxColorXml("000000"), p.w || 0.75, v)); };
+      return [{ block: () => pictureMenu(pictures.dashEntries(), 1, pictures.PIC_SIZE.dash, outlineParts().dash, apply, { commands: api.commands, preview: apply }) }];
+    } },
   ];
 
   // Weitere Farben...: Office's Farben dialog (D-134).

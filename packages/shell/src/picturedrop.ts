@@ -6,7 +6,15 @@
 // (in a grid by place), Pos1 / Ende jump, Enter or Leertaste picks, Esc closes and gives the focus back to the box.
 
 import { h } from "./dom";
-import { closePopup, showPopup } from "./popup";
+import { closePopup, hoverPreview, showPopup } from "./popup";
+import type { Commands } from "./commands";
+
+/**
+ * Livevorschau for picture entries (D-166): while the mouse is over an entry the app shows what it would do, through
+ * the shell's hoverPreview, so it ends when the mouse leaves, on a click (the pick is one undo step) and when the menu
+ * closes. `preview` applies the entry; the app's hover handler runs it without an undo step.
+ */
+export interface PictureLive { commands: Commands; preview: (v: string) => void }
 
 export interface PictureEntry {
   value: string;
@@ -38,6 +46,8 @@ export interface PictureDropSpec {
   boxText?: boolean;
   /** Commands under the entries ("Weitere Pfeile..."). */
   more?: { label: string; run: () => void }[];
+  /** Livevorschau while the mouse is over an entry (D-166). */
+  live?: PictureLive;
 }
 
 let openFor: HTMLElement | null = null;
@@ -46,14 +56,16 @@ let openFor: HTMLElement | null = null;
  * The same pictures inside a menu (a ribbon submenu such as Formkontur > Striche, which Office shows as pictures):
  * a block of picture buttons for a `{ block }` menu entry; a pick closes the menu.
  */
-export function pictureMenu(entries: PictureEntry[], columns: number, size: [number, number], value: string | undefined, pick: (v: string) => void): HTMLElement {
+export function pictureMenu(entries: PictureEntry[], columns: number, size: [number, number], value: string | undefined, pick: (v: string) => void, live?: PictureLive): HTMLElement {
   const grid = h("div", { class: "pd-grid pd-menu", role: "listbox", style: `grid-template-columns:repeat(${columns}, auto)` });
   for (const e of entries) {
     const pic = h("span", { class: "pd-pic", style: `width:${size[0]}px;height:${size[1]}px` });
     if (e.node) pic.append(e.node()); else pic.innerHTML = e.svg;
     const on = e.value === value;
-    grid.append(h("button", { type: "button", role: "option", class: `pd-item${on ? " on" : ""}`, "aria-selected": String(on), "aria-label": e.label, "data-tip": e.label,
-      "data-value": e.value, onclick: () => { closePopup(); pick(e.value); } }, pic));
+    const b = h("button", { type: "button", role: "option", class: `pd-item${on ? " on" : ""}`, "aria-selected": String(on), "aria-label": e.label, "data-tip": e.label,
+      "data-value": e.value, onclick: () => { closePopup(); pick(e.value); } }, pic);
+    if (live) hoverPreview(live.commands, b, () => live.preview(e.value));
+    grid.append(b);
   }
   return grid;
 }
@@ -64,7 +76,7 @@ export function pictureMenu(entries: PictureEntry[], columns: number, size: [num
  */
 export function entryKind(el: Element): "picture" | "text" | "both" {
   const text = (el.textContent ?? "").replace(/\s+/g, " ").trim();
-  const graphic = [...el.querySelectorAll("svg, img, canvas, .pd-pic, .swatch, [style*='background']")].some((g) => {
+  const graphic = [...el.querySelectorAll("svg, img, canvas, .pd-pic, .swatch, [style*='background'], [style*='border'], math")].some((g) => {
     // A menu's 16 px icon is not a picture of the entry (Office's text menus have icons too).
     const w = Number(g.getAttribute("width")) || (g as HTMLElement).offsetWidth || 0;
     return !g.closest(".ico") && !(g.tagName.toLowerCase() === "svg" && w > 0 && w <= 20 && text);
@@ -72,6 +84,9 @@ export function entryKind(el: Element): "picture" | "text" | "both" {
   // An entry without a name of its own on it (a cell of the table grid) or with a one- or two-letter glyph (the WordArt
   // and Texteffekte previews, an "A" in the style) is a picture too.
   if (!text || text.length <= 2) return "picture";
+  // A gallery tile (its class says so) shows a drawing of the entry: a page, a watermark, a style; text inside it is part
+  // of that drawing (D-165).
+  if (typeof el.className === "string" && /(tile|thumb|mbuilt|dz-set)/.test(el.className)) return "both";
   if (graphic && text) return "both";
   return graphic ? "picture" : "text";
 }
@@ -128,6 +143,7 @@ function openList(box: HTMLButtonElement, spec: PictureDropSpec): void {
       "data-tip": spec.text ? undefined : e.label, "data-value": e.value, tabindex: "-1",
       onclick: () => { closePopup(); if (e.value !== spec.value()) spec.set(e.value); },
     }, pic, ...(spec.text ? [h("span", { class: "pd-text" }, e.label)] : [])) as HTMLButtonElement;
+    if (spec.live) { const live = spec.live; hoverPreview(live.commands, b, () => live.preview(e.value)); }
     items.push(b);
     grid.append(b);
   }

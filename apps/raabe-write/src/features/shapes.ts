@@ -72,7 +72,8 @@ export function shapesFeature(api: AppApi) {
   };
   const textBoxMenu: MenuEntry[] = [
     { heading: "Integriert" },
-    ...TEXT_BOX_DESIGNS.map((d) => ({ label: d.label, icon: "text-box", run: () => insertDesign(d) })),
+    // Word shows each design on a small page (D-165): drawn from the design's own size, place, fill and line.
+    ...TEXT_BOX_DESIGNS.map((d) => ({ label: d.label, preview: textBoxPicture(d), run: () => insertDesign(d) })),
     "-",
     { cmd: "insert.textBoxDraw" },
   ];
@@ -119,3 +120,17 @@ const TEXT_BOX_DESIGNS: TextBoxDesign[] = [
   { label: "Merkkasten", w: 300, h: 90, x: "center", pic: { fill: { kind: "solid", color: "FFF2CC" }, fillXml: '<a:solidFill><a:schemeClr val="accent4"><a:lumMod val="20000"/><a:lumOff val="80000"/></a:schemeClr></a:solidFill>', line: { color: "FFC000", width: 1.5 } } },
   { label: "Zitat", w: 300, h: 70, x: "center", pic: { line: null, fill: { kind: "none" }, fillXml: "<a:noFill/>" } },
 ];
+
+/** A text box design's picture: a page with the box at its place in its size, fill and outline. */
+function textBoxPicture(d: TextBoxDesign): HTMLElement {
+  const W = 44, H = 56, k = W / 595;
+  const w = Math.max(6, d.w * k), hh = Math.max(4, Math.min(H - 8, d.h * k));
+  const x = d.x === "right" ? W - w - 3 : d.x === "left" ? 3 : (W - w) / 2;
+  const fill = d.pic?.fill?.kind === "solid" ? `#${d.pic.fill.color}` : "#fff";
+  const line = d.pic?.line === null ? "none" : d.pic?.line ? `#${d.pic.line.color}` : "#404040";
+  const el = document.createElement("span");
+  el.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" aria-hidden="true"><rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" fill="#fff" stroke="#c8c6c4"/>`
+    + `<rect x="${x}" y="${d.h > 300 ? 3 : 14}" width="${w}" height="${hh}" fill="${fill}" stroke="${line}"/>`
+    + `<rect x="${x + 2}" y="${(d.h > 300 ? 3 : 14) + 3}" width="${Math.max(2, w - 4)}" height="1.5" fill="#7f7f7f"/></svg>`;
+  return el;
+}

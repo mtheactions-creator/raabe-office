@@ -4710,3 +4710,55 @@ were.
 - **Not built:** the Direkthilfe (?) button (no help in the apps); the white tab page with its line around the content
   under a tab strip (our pages lie on the grey client area); Word's Tabstopps..., Als Standard festlegen and
   Texteffekte... buttons. The other dialogs take the new frame and controls but keep their own sizes (not measured).
+  Correction (D-164): that POWERPNT.EXE was another probe of ours, not the owner's.
+
+## D-164 The 27 dropdowns D-163 left as text are pictures now (2026-11-12)
+
+Each drawn by our own code from the same data the entry applies, never from Office's thumbnails:
+- **Formel galleries** (RaabePresent, 12): each structure as MathML from the tree that is inserted (as RaabeWrite's
+  galleries); Formel (built-in equations) shows the equation beside its name.
+- **Design > Effekte** (4 tabs): the set's strongest line and effect style on a small shape (our shape renderer).
+- **Farben ändern** of charts (RaabeCalc, RaabePresent): six squares per palette (`paletteSwatches` in chart-ui);
+  **Schnelllayout** (RaabePresent): sample data in the chart's type with the layout's title, legend, labels and
+  gridlines; **Verbunddiagramm**: the three combos drawn by the chart renderer.
+- **Auf Form zuschneiden**: the shape icons of the Formen gallery; **Transformieren**: "abcde" on a path of the warp's
+  kind (arc, circle, wave, slant, bulge) - a schematic, not PowerPoint's exact warp.
+- **SmartArt**: In SmartArt konvertieren shows each layout drawn by our SmartArt engine; Farben ändern shows the first
+  four nodes' fill and outline per colour set.
+- **Bildformat** Korrekturen (Helligkeit/Kontrast), Transparenz and Farbe > Neu einfärben show the selected picture
+  with the setting painted on its pixels (an approximation of PowerPoint's filters, for the preview only; the file
+  gets PowerPoint's XML as before).
+Result of `check_picture_controls.py`: 156 of Office's 174 picture dropdowns are pictures in ours, 0 text, 18 not
+built. KNOWN is empty; an entry written down there that has become a picture fails the check too.
+
+## D-166 Livevorschau on picture entries, through the shell's hoverPreview (2026-11-12)
+
+Office previews a picture entry on the document while the mouse is over it (Striche, Stärke, Pfeile, the Format
+pane's line dropdowns). `pictureDropdown` and `pictureMenu` take `live: { commands, preview }`; each entry calls the
+shell's `hoverPreview`, so the preview ends when the mouse leaves, on the click (the pick is one undo step) and when
+the list closes (popup.ts). `weightMenu`, `dashMenu` and `arrowStyleMenu` take the app's commands for the same.
+Used where the app shows previews without an undo step (`commands.onHover`), which is RaabeWrite: Formkontur and
+Bildrahmen (Stärke, Striche, Pfeile), Textkontur (Stärke, Striche) and the Format pane's picture dropdowns.
+Not in RaabeCalc (its preview only changes cell formats, not shapes, charts or conditional formats) nor in
+RaabePresent (no preview mechanism yet); both are left for the step that gives them one. Unit test in
+`packages/shell/test/picturedrop.test.ts`.
+
+## D-165 Word's ribbon recorded; the picture sweep covers RaabeWrite (2026-11-12)
+
+**Recorded** with `probe_word_inventory.py`: a Word of our own, window off-screen, every ribbon tab (and the
+contextual Formformat, Bildformat, Tabellenentwurf, Layout from a shape, picture and table of its own document) read
+through UI Automation, each dropdown opened through ExpandCollapse only, submenus one level deep;
+`results/2026-11-12-word-inventory.json`, labels and control types only, entries naming the owner left out
+(`sanitize.clean`). Word's open dropdowns take the foreground even off-screen: the first run held it and blocked other
+sessions, so the probe now reads each tab under the real-input lock (released between tabs), collapses each dropdown
+until no popup of ours is left, and saves after every tab (a stopped run goes on from there).
+**Check**: `check_picture_controls.py` reads RaabeWrite's `__app.inventory()` too; its blocks, panels, flyouts and drawn
+combo entries (Stiftart, Stiftstärke) now say how they show. `entryKind` counts line samples drawn with borders and
+MathML as pictures and gallery tiles with a drawing inside (cover pages, style sets, built-in equations and
+bibliographies) as "both". Word gallery entries Office draws as an icon beside a name (Drehen, Textumbruch, Spalten,
+Umbrüche, Seitenränder …) are in TEXT_GALLERIES.
+**Fixed** in RaabeWrite: the Tabelle grid's cells are entries of their own ("3x2 Tabelle"); Auf Form zuschneiden shows
+the shape icons; Kopfzeile / Fußzeile show their designs on a page; Textfeld shows each design on a page.
+**Numbers** (all three apps): Office has 252 picture dropdowns (Excel 32, PowerPoint 142, Word 78); ours shows 204 as
+pictures (Word 48), 47 are not built, **1** is text and written down: Entwurf > Effekte in RaabeWrite, where only the
+Office set exists (the others are greyed), so its previews come with the sets.

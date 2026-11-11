@@ -211,9 +211,9 @@ export function shapeTab(api: AppApi, galleryPanel: (close: () => void) => HTMLE
       link("Keine Kontur", () => { close(); setLine(null); api.focus(); }),
       link("Weitere Konturfarben...", () => { close(); void moreColor("Farben", (hex) => setLine({ color: hex })); }),
       // Stärke as lines with their names, Striche and Pfeile as pictures (Word's menus, D-162).
-      link("Stärke", (ev) => sub(ev, [...weightMenu(weights.map((w): [string, number] => [`${w.toLocaleString("de-DE")} Pt.`, w]), (w) => setLine({ width: w })), "-", moreLines]), true),
-      link("Striche", (ev) => sub(ev, [dashMenu(lineOf()?.dash ?? "solid", (v) => setLine({ dash: v === "solid" ? undefined : v })), "-", moreLines]), true),
-      ...(isLine() ? [link("Pfeile", (ev) => sub(ev, [arrowStyleMenu((hd, tl) => setLine({ head: hd ? { type: hd } : undefined, tail: tl ? { type: tl } : undefined } as Partial<NonNullable<PictureFormat["line"]>>)), "-", { label: "Weitere Pfeile...", run: () => FORMAT_PANE.open("line") }]), true)] : []));
+      link("Stärke", (ev) => sub(ev, [...weightMenu(weights.map((w): [string, number] => [`${w.toLocaleString("de-DE")} Pt.`, w]), (w) => setLine({ width: w }), api.commands), "-", moreLines]), true),
+      link("Striche", (ev) => sub(ev, [dashMenu(lineOf()?.dash ?? "solid", (v) => setLine({ dash: v === "solid" ? undefined : v }), api.commands), "-", moreLines]), true),
+      ...(isLine() ? [link("Pfeile", (ev) => sub(ev, [arrowStyleMenu((hd, tl) => setLine({ head: hd ? { type: hd } : undefined, tail: tl ? { type: tl } : undefined } as Partial<NonNullable<PictureFormat["line"]>>), api.commands), "-", { label: "Weitere Pfeile...", run: () => FORMAT_PANE.open("line") }]), true)] : []));
   };
   run("shape.outline", onShape(() => setLine({})));
 

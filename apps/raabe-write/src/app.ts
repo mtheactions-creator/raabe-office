@@ -4,10 +4,7 @@
 
 import { Doc as TextDoc, Editor, Fonts, PT, setCloudFonts, seqToLatex, seqToLinear, type CharProps, type CopiedFormat, type DocState, type LineRule, type Para, type ParaProps } from "@raabe/text-engine";
 import { ommlToSeq, ommlToWordHtml, readDocx, seqToOmml, wordHtmlMath, writeDocx, type DocxPackage } from "@raabe/ooxml";
-import {
-  Backstage, Commands, Keytips, Ribbon, StatusBar, TitleBar, baseName, dirName, h, icon, installDialogDrag, installTooltips, messageBox,
-  showDialog, showFontColors, type BackstageEntry, type MenuEntry, type Platform,
-} from "@raabe/shell";
+import { colorGrid, entryKind, Backstage, Commands, Keytips, Ribbon, StatusBar, TitleBar, baseName, dirName, h, icon, installDialogDrag, installTooltips, messageBox, showDialog, showFontColors, type BackstageEntry, type MenuEntry, type Platform,  } from "@raabe/shell";
 import { COMMANDS } from "./command-list";
 import type { AppApi, FontTarget, ParaTarget } from "./features/api";
 import { headerFooterFeature, HEADER_COMMANDS } from "./features/headerfooter";
@@ -1623,28 +1620,43 @@ export class WriteApp {
        * (sweep_write.py, D-133), as RaabeCalc's inventory (D-066).
        */
       inventory: () => {
-        type Item = { name: string; cmd?: string; key?: string; type?: string; deferred?: boolean; enabled?: boolean; implemented?: boolean; items?: Item[]; submenu?: Item[]; panel?: boolean };
+        type Item = { name: string; cmd?: string; key?: string; type?: string; deferred?: boolean; enabled?: boolean; implemented?: boolean; items?: Item[]; submenu?: Item[]; panel?: boolean; kind?: string };
+        // Own content (galleries, palettes, picture menus) drawn, so its entries say how they show (D-165).
+        const drawn = (el: Element | null): Item[] => (el ? Array.from(el.querySelectorAll("button, [role=menuitem], [role=option], [data-tip]"))
+          .map((b) => ({ name: (b.getAttribute("aria-label") || (b as HTMLElement).dataset.tip || b.textContent || "").trim(), kind: entryKind(b) })).filter((x) => x.name) : []);
         const has = (id: string) => this.commands.has(id);
         const cmdItem = (id: string, label?: string): Item => has(id)
           ? { name: label ?? this.commands.get(id).label, cmd: id, deferred: !!this.commands.get(id).deferred, enabled: this.commands.isEnabled(id), implemented: this.commands.isImplemented(id) }
           : { name: label ?? id, cmd: id, implemented: false };
         const entries = (menu: MenuEntry[]): Item[] => menu.flatMap((m): Item[] => {
-          if (m === "-" || "heading" in m || "block" in m) return [];
+          if (m === "-" || "heading" in m) return [];
+          if ("block" in m) { try { return drawn(m.block()); } catch { return []; } }
           if ("cmd" in m) return [cmdItem(m.cmd, m.label)];
           if ("icons" in m) return [{ name: m.label, items: m.icons.map((i) => ({ name: i.tip })) }];
           let sub: MenuEntry[] | undefined;
           try { sub = "submenu" in m ? (typeof m.submenu === "function" ? m.submenu() : m.submenu) : undefined; } catch { sub = undefined; }
-          return [{ name: m.label, enabled: !("disabled" in m && m.disabled), ...(sub ? { submenu: entries(sub) } : {}), ...("flyout" in m ? { type: "flyout" } : {}) }];
+          let fly: Item[] = [];
+          if ("flyout" in m) { try { fly = drawn(m.flyout()); } catch { /* needs a selection */ } }
+          return [{ name: m.label, enabled: !("disabled" in m && m.disabled), ...(sub ? { submenu: entries(sub) } : {}), ...("flyout" in m ? { type: "flyout", ...(fly.length ? { submenu: fly } : {}) } : {}),
+            ...("preview" in m && m.preview ? { kind: "both" } : {}) }];
         });
         const ctl = (c: import("@raabe/shell").Control | "gap"): Item[] => {
           if (c === "gap") return [];
           if (c.type === "stack") return c.items.flatMap(ctl);
           if (c.type === "rows") return c.rows.flat().flatMap(ctl);
-          if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery", key: c.key }));
+          if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery", key: c.key, kind: "picture" }));
+          // A combo box whose entries are drawn (Stiftart, Stiftstärke): each entry as drawn (D-165).
+          if (c.type === "combo" && c.options && c.renderOption) {
+            let opts: Item[] = [];
+            try { opts = c.options().flatMap((g) => g.items).map((o) => { const el = h("button", null, c.renderOption!(o)); return { name: o, kind: entryKind(el) }; }); } catch { /* needs a document */ }
+            return [{ ...cmdItem(c.cmd), type: "combo", key: c.key, items: opts }];
+          }
           const base: Item = "cmd" in c ? cmdItem(c.cmd, "label" in c && typeof c.label === "string" ? c.label : undefined) : { name: "?" };
           let menu: { items?: Item[] } = {};
           try { menu = "menu" in c && c.menu.length ? { items: entries(c.menu) } : {}; } catch { /* getters needing a document */ }
-          const own = ("popup" in c && c.popup) || c.type === "color" ? { panel: true } : {};
+          let panelItems: Item[] = [];
+          try { panelItems = "popup" in c && c.popup ? drawn(c.popup(() => {})) : c.type === "color" ? drawn(h("div", null, ...colorGrid(() => {}))) : c.type === "tiles" ? drawn(c.panel(() => {})) : []; } catch { /* a panel that needs a selection */ }
+          const own = ("popup" in c && c.popup) || c.type === "color" || c.type === "tiles" ? { panel: true, ...(panelItems.length ? { items: [...(menu.items ?? []), ...panelItems] } : {}) } : {};
           return [{ ...base, type: c.type, key: "key" in c ? c.key : undefined, ...menu, ...own }];
         };
         const f = this.features;

@@ -4,7 +4,7 @@ Office shows, whether its entries are pictures or text in Office and in ours, an
 and we show text (unless the difference is written down in KNOWN with its reason).
 
 Office's side comes from the recorded inventories (our own Office instances, UI Automation; labels and control types
-only, D-058): results/2026-11-05-excel-inventory.json and results/2026-11-06-powerpoint-inventory.json. UI Automation
+only, D-058): results/2026-11-05-excel-inventory.json, results/2026-11-06-powerpoint-inventory.json and 2026-11-12-word-inventory.json. UI Automation
 names a gallery's entries ListItem and a menu's entries MenuItem; a dropdown whose entries are mostly ListItems is a
 gallery. Galleries whose entries Office draws as text (Zeilenabstand "1,0", the function lists of Mehr Funktionen) are
 listed in TEXT_GALLERIES, looked at by eye in Office; everything else in a gallery is a picture (often with its name).
@@ -16,7 +16,7 @@ both).
 
     .venv/Scripts/python.exe check_picture_controls.py [--calc URL] [--present URL]
 
-Defaults: http://localhost:5175/ (npm run dev:calc) and http://localhost:5176/ (npm run dev:present).
+Defaults: http://localhost:5175/ (npm run dev:calc), http://localhost:5176/ (npm run dev:present), http://localhost:5174/ (npm run dev:write).
 Result: results/2026-11-11-picture-controls.json; exit code 1 when a new difference is found.
 """
 from __future__ import annotations
@@ -51,25 +51,17 @@ TEXT_GALLERIES = {
     "powerpoint|Übergänge|Sound", "powerpoint|Animationen|Animation hinzufügen",
     *(f"powerpoint|{t}|{x}" for t in ("Entwurf", "Folienmaster", "Handzettelmaster", "Notizenmaster") for x in ("Schriftarten", "Foliengröße")),
     "powerpoint|Handzettelmaster|Handzettelausrichtung", "powerpoint|Notizenmaster|Notizenseitenausrichtung",
+    # Word (recorded 2026-11-12): icon beside a meaningful name, or names only.
+    *(f"word|{t}|Drehen" for t in ("Bildformat", "Formformat")), *(f"word|{t}|Textumbruch" for t in ("Bildformat", "Formformat")),
+    "word|Formformat|Text ausrichten", "word|Layout|Ausrichtung", "word|Layout|Format", "word|Layout|Spalten", "word|Layout|Umbrüche",
+    "word|Layout|Seitenränder", "word|Start|Zeilen- und Absatzabstand", "word|Entwurf|Schriftarten", "word|Entwurf|Absatzabstand",
+    "word|Referenzen|Text hinzufügen", "word|Tabellenentwurf|Rahmen",
 }
 
-# Differences written down (D-163): "<app>|<tab>|<path>" -> reason.
-_EQ = "the Formel galleries need previews drawn by the math renderer; not built yet (Step 11 follow-up)"
-_FX = "theme effect previews (effectStyleLst on a sample shape) not built yet"
-_PIC = "the previews need the selected picture; without one the inventory lists the names (to check by hand)"
+# Differences written down (D-163, D-164): "<app>|<tab>|<path>" -> reason. Emptied by D-164; an entry that has
+# become a picture fails the check too, so the list stays true.
 KNOWN: dict[str, str] = {
-    "excel|Diagrammentwurf|Farben ändern": "colour rows of the chart palettes not built yet",
-    "powerpoint|Diagrammentwurf|Farben ändern": "colour rows of the chart palettes not built yet",
-    "powerpoint|Diagrammentwurf|Schnelllayout": "layout pictures exist in RaabeCalc's ribbon gallery, not yet in RaabePresent's menu",
-    "excel|Einfügen|Verbunddiagramm einfügen": "combo charts are applied after insertion; their pictures not built yet",
-    "powerpoint|Bildformat|Farbe": _PIC, "powerpoint|Bildformat|Korrekturen": _PIC, "powerpoint|Bildformat|Transparenz": _PIC,
-    "powerpoint|Bildformat|Zuschneiden > Auf Form zuschneiden": "shape icons exist (Formen gallery); this menu still lists names",
-    **{f"powerpoint|{t}|Effekte": _FX for t in ("Entwurf", "Folienmaster", "Handzettelmaster", "Notizenmaster")},
-    **{f"powerpoint|Formel|{x}": _EQ for x in ("Akzent", "Bruch", "Eckige Klammer", "Formel", "Funktion", "Grenzwert und Logarithmus", "Großer Operator",
-                                             "Hoch/Tief", "Integral", "Matrix", "Operator", "Wurzel")},
-    "powerpoint|Formformat|Texteffekte > Transformieren": "warped-text previews not built yet",
-    "powerpoint|SmartArt-Design|Farben ändern": "SmartArt colour previews not built yet",
-    "powerpoint|Start|In SmartArt konvertieren": "SmartArt layout previews not built yet",
+    "word|Entwurf|Effekte": "only the Office effect set is built (the others are greyed); its previews come with the sets (D-165)",
 }
 
 
@@ -96,14 +88,16 @@ def office_side(path: Path, app: str) -> dict[str, dict]:
         for c in t.get("controls", []):
             items = c.get("items") or []
             k, n = office_kind(items)
+            # A gallery's "Weitere" button has no name of its own: it stands for its group (Formatvorlagensatz).
+            name = c["name"] or c.get("group", "")
             if k:
-                p = f"{app}|{tab}|{c['name']}"
+                p = f"{app}|{tab}|{name}"
                 if p not in out or k == "picture":
                     out[p] = {"kind": k, "n": n, "group": c.get("group", ""), "context": key.split("/")[0]}
             for i in items:
                 k2, n2 = office_kind(i.get("submenu") or [])
                 if k2:
-                    p = f"{app}|{tab}|{c['name']} > {i['name']}"
+                    p = f"{app}|{tab}|{name} > {i['name']}"
                     if p not in out or k2 == "picture":
                         out[p] = {"kind": k2, "n": n2, "group": c.get("group", ""), "context": key.split("/")[0]}
     for p, v in out.items():
@@ -189,12 +183,15 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--calc", default="http://localhost:5175/")
     ap.add_argument("--present", default="http://localhost:5176/")
+    ap.add_argument("--write", default="http://localhost:5174/")
     a = ap.parse_args()
     office = {**office_side(HERE / "results" / "2026-11-05-excel-inventory.json", "excel"),
-              **office_side(HERE / "results" / "2026-11-06-powerpoint-inventory.json", "powerpoint")}
+              **office_side(HERE / "results" / "2026-11-06-powerpoint-inventory.json", "powerpoint"),
+              **office_side(HERE / "results" / "2026-11-12-word-inventory.json", "word")}
     calc = inventory(a.calc, "typeof window.__calc === 'object'", "__calc.inventory()", 9477)
     pres = inventory(a.present, "typeof window.__present === 'object'", "__present.inventory()", 9478)
-    ours = {**ours_side(calc, "excel"), **ours_side(pres, "powerpoint")}
+    write = inventory(a.write, "typeof window.__app === 'object'", "__app.inventory().tabs", 9479)
+    ours = {**ours_side(calc, "excel"), **ours_side(pres, "powerpoint"), **ours_side(write, "word")}
     rows = []
     for p, o in sorted(office.items()):
         app, tab, path = p.split("|", 2)
@@ -208,15 +205,18 @@ def main() -> None:
                      **({"by_eye": True} if o.get("by_eye") else {}), **({"known": KNOWN[p]} if p in KNOWN else {})})
     pics = [r for r in rows if r["kind"] == "picture"]
     wrong = [r for r in pics if r["ours"] == "text" and "known" not in r]
+    # A difference written down that is fixed now: take it off KNOWN.
+    wrong += [r for r in pics if "known" in r and r["ours"] != "text"]
     summary = {
         "office picture dropdowns": len(pics), "ours picture": sum(1 for r in pics if r["ours"] == "picture"),
         "ours text": sum(1 for r in pics if r["ours"] == "text"), "not built": sum(1 for r in pics if r["ours"] is None),
         "office text dropdowns": sum(1 for r in rows if r["kind"] == "text"), "known": sum(1 for r in pics if "known" in r),
         "per app": {app: {"office pictures": sum(1 for r in pics if r["office"].startswith(app)), "ours picture": sum(1 for r in pics if r["office"].startswith(app) and r["ours"] == "picture"),
-                          "ours text": sum(1 for r in pics if r["office"].startswith(app) and r["ours"] == "text")} for app in ("excel", "powerpoint")},
+                          "ours text": sum(1 for r in pics if r["office"].startswith(app) and r["ours"] == "text")} for app in ("excel", "powerpoint", "word")},
     }
-    data = {"meta": {"recorded": "2026-11-11", "office": "results/2026-11-05-excel-inventory.json, results/2026-11-06-powerpoint-inventory.json (UI Automation types)",
-                     "ours": "__calc.inventory(), __present.inventory() in a headless Edge on the dev servers", "rule": __doc__.split("\n\n")[1]},
+    data = {"meta": {"recorded": "2026-11-11/12", "office": "results/2026-11-05-excel-inventory.json, results/2026-11-06-powerpoint-inventory.json, "
+                     "results/2026-11-12-word-inventory.json (UI Automation types)",
+                     "ours": "__calc.inventory(), __present.inventory(), __app.inventory() in a headless Edge on the dev servers", "rule": __doc__.split("\n\n")[1]},
             "summary": summary, "rows": rows}
     OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(summary, ensure_ascii=False, indent=1))

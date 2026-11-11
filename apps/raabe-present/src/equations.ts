@@ -4,7 +4,7 @@
 // RaabeWrite). Editing happens in PowerPoint's linear format (UnicodeMath, "Aktuell – Linear"): the
 // equation's linear text in a box with the professional form shown live; OK writes it back as OMML.
 
-import { h, showDialog, type Control, type MenuEntry, type Tab } from "@raabe/shell";
+import { h, pictureMenu, showDialog, type Control, type MenuEntry, type Tab } from "@raabe/shell";
 import { ommlToSeq, seqToOmml, PptxDom, type ShapeView } from "@raabe/ooxml";
 import { buildLinear, parseLatex, seqToLatex, seqToLinear, seqToMathml, type Seq } from "@raabe/text-engine";
 import { BUILT_IN } from "./equations-builtin";
@@ -202,15 +202,22 @@ const STRUCTS: [string, string, string][] = [["eq.fraction", "math.fraction", "B
 export function equationTab(app: PresentApp): Tab {
   const b = (cmd: string, key: string, size: "large" | "small" = "small"): Control => ({ type: "button", cmd, key, size });
   const dd = (cmd: string, key: string, menu: () => MenuEntry[]): Control => ({ type: "dropdown", cmd, key, size: "large", get menu() { return menu(); } } as Control);
-  const structMenu = (gal: string) => (): MenuEntry[] => (MATH_GALLERIES[gal] ?? []).flatMap((g): MenuEntry[] => [
-    ...(g.heading ? [{ heading: g.heading } as MenuEntry] : []),
-    ...g.items.map((it) => ({ label: `Formelstruktur ${it.label}`, run: () => appendTo(app, it.seq) })),
-  ]);
+  // PowerPoint's Strukturen galleries show each structure drawn, its name as the tooltip (D-164): drawn here as
+  // MathML from the same tree that is inserted, as RaabeWrite's galleries are.
+  const structMenu = (gal: string) => (): MenuEntry[] => (MATH_GALLERIES[gal] ?? []).flatMap((g): MenuEntry[] => {
+    const size: [number, number] = [Math.round(g.tile[0] * 0.66), Math.round(g.tile[1] * 0.5)];
+    const cols = Math.max(1, Math.floor(340 / (size[0] + 8)));
+    return [
+      ...(g.heading ? [{ heading: g.heading } as MenuEntry] : []),
+      { block: () => pictureMenu(g.items.map((it, i) => ({ value: String(i), label: `Formelstruktur ${it.label}`, svg: "", node: () => mathTile(it.seq, size) })), cols, size, undefined,
+        (v) => appendTo(app, g.items[Number(v)].seq)) },
+    ];
+  });
   const symbols = (): MenuEntry[] => (SYMBOL_CATEGORIES[0]?.groups ?? []).flatMap((g) => g.items.map(([ch, name]) => ({ label: `Formelsymbol ${name}`, run: () => appendTo(app, [{ k: "t", s: ch }]) })));
   return {
     id: "equation", label: "Formel", key: "JE", contextual: true, shrink: [],
     groups: [
-      { id: "tools", label: "Tools", key: "ZT", icon: "equation", controls: [dd("eq.builtin", "A", () => BUILT_IN.map((e) => ({ label: `Formelstruktur ${e.name}`, run: () => { const s = activeMath(); if (s) s.insert(e.seq); else void insertEquation(app, e.seq); } }))), b("eq.ink", "H1", "large")] },
+      { id: "tools", label: "Tools", key: "ZT", icon: "equation", controls: [dd("eq.builtin", "A", () => BUILT_IN.map((e) => ({ label: `Formelstruktur ${e.name}`, preview: mathTile(e.seq, [220, 44]), run: () => { const s = activeMath(); if (s) s.insert(e.seq); else void insertEquation(app, e.seq); } }))), b("eq.ink", "H1", "large")] },
       { id: "conv", label: "Konvertierungen", key: "ZK", icon: "math-convert", controls: [
         { type: "stack", items: [b("eq.latexToMath", "J"), b("eq.mathToLatex", "H2")] },
         { type: "stack", items: [b("eq.professional", "P"), b("eq.linear", "L"), b("eq.text", "N")] }, b("eq.options", "F")] },
@@ -218,6 +225,13 @@ export function equationTab(app: PresentApp): Tab {
       { id: "struct", label: "Strukturen", key: "ZU", icon: "math-fraction", controls: STRUCTS.map(([cmd, gal, key]) => dd(cmd, key, structMenu(gal))) },
     ],
   };
+}
+
+/** A gallery picture of an equation: its MathML in display style (D-164). */
+function mathTile(seq: Seq, size: [number, number]): HTMLElement {
+  const s = h("span", { class: "math-tile", style: `display:flex;align-items:center;justify-content:center;width:${size[0]}px;height:${size[1]}px;overflow:hidden;font:14px "Cambria Math", serif` });
+  try { s.innerHTML = seqToMathml(seq, true, true); } catch { /* an entry the converter cannot draw stays empty */ }
+  return s;
 }
 
 /** The tab's commands. */
