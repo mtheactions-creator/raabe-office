@@ -4502,3 +4502,34 @@ D-161's control, used outside the chart pane in all three apps, with Office's en
   Abschrägung, 3D-Drehung): galleries of pictures with Office's group headings instead of lists of names. Texteffekte
   draw the effect on a shape, not on an "A" (a deliberate simplification; the effect is the same).
 - Zellen formatieren > Rahmen (RaabeCalc) already shows Excel's line styles as pictures (D-147); unchanged.
+
+## D-163 The sweep "pictures where Office shows pictures": two lasting checks and what they found (2026-11-11)
+
+The owner: "RaabeOffice uses text where MS Office uses symbols … we need to check that everywhere".
+- **Format panes**: `packages/chart-ui/test/panepictures.test.ts` takes every dropdown of Excel's recorded chart pane
+  that opens a list of pictures (a menu with entries, not a colour picker: 2026-11-09-excel-chart-pane.json; the marker
+  Typ from 2026-11-11-excel-picturedrops.json) and requires a picture dropdown in ours in every state of the section
+  (each radio choice tried in a fresh pane); Excel's text lists must stay text. Result: 2253 picture lists over all
+  recorded panes and states, 1983 are pictures in ours, 0 text, 270 belong to controls not built (the text effects
+  Weiche Kanten, 3D-Format, 3D-Drehung of chart text; the same as D-160's list).
+- **Ribbon menus and galleries**: `tools/feel-lab/check_picture_controls.py`. Office's side from the recorded
+  inventories (our own Excel 2026-11-05 and PowerPoint 2026-11-06, UI Automation): a dropdown whose entries are mostly
+  ListItems is a gallery; galleries Office draws as text or as a small icon beside a meaningful name (function lists,
+  Zeilenabstand, Hochformat, Textrichtung …) are listed by eye in TEXT_GALLERIES. Ours from `__calc.inventory()` and
+  `__present.inventory()` in a headless Edge of our own on the dev servers; each entry now says how it shows itself
+  (`entryKind` in the shell: picture, text or both; galleries, palettes and picture menus are drawn to be judged).
+  Result `results/2026-11-11-picture-controls.json`: Office has **174** picture dropdowns (Excel 32, PowerPoint 142);
+  before tonight's fixes ours showed 93 of them as pictures, now **129**; 18 are not built in ours; **27** remain text,
+  each written down in the script's KNOWN with its reason (the Formel galleries need previews from the math renderer;
+  theme effect previews; chart Farben ändern; SmartArt; Transformieren; Bildformat Korrekturen/Farbe/Transparenz to be
+  checked by hand with a picture selected; Auf Form zuschneiden; Schnelllayout in RaabePresent; Verbunddiagramm). A new
+  difference fails the check.
+- **Fixed tonight** (besides D-161/D-162): RaabeCalc's Bedingte Formatierung > Datenbalken, Farbskalen, Symbolsätze
+  (the icons drawn by the cells' own renderer) and the Diagramme dropdowns of all three apps (each type drawn by our
+  chart renderer, `kindPicture`); RaabePresent's Aufzählungszeichen and Nummerierung, Fülleffekt/Textfüllung >
+  Farbverlauf (light and dark variants in the shape's colour) and Struktur (our textures), Formkontur > Skizziert,
+  Tabellenentwurf > Effekte, Stiftart (lines) and Stiftstärke (lines with names), Entwurf > Farben (each set's colours
+  beside its name).
+- **Not covered**: Word's ribbon (no recorded Word inventory exists; RaabeWrite's panes and line menus use the shared
+  controls of D-161/D-162), dialogs, context menus, and PowerPoint probes tonight (the owner's POWERPNT.EXE was
+  running, so no PowerPoint instance of ours was started; the PowerPoint side is the 2026-11-06 recording).

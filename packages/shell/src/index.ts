@@ -14,7 +14,7 @@ export { showDialog, messageBox, type DialogButton } from "./dialog";
 export { colorDialog, installDialogDrag } from "./color-dialog";
 export { showMenu, showPopup, closePopup, hoverPreview, installTooltips, pressOutside, swallowPress, FRAME_SELECTOR, type MenuEntry } from "./popup";
 export { TaskPane, type PaneSpec, type PaneSet, type PaneTab, type PaneSection, type PaneControl } from "./taskpane";
-export { pictureDropdown, pictureMenu, weightPicture, type PictureEntry, type PictureDropSpec } from "./picturedrop";
+export { entryKind, pictureDropdown, pictureMenu, weightPicture, type PictureEntry, type PictureDropSpec } from "./picturedrop";
 export * as pictures from "./pictures";
 export { ARROW_STYLES, arrowPairPicture, arrowStyleMenu, dashMenu, weightMenu } from "./linemenus";
 export { colorGrid, showFontColors, showHighlights, highlightHex, HIGHLIGHTS, type PaletteHover, type PaletteTheme } from "./palette";

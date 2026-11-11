@@ -9,10 +9,7 @@ import {
 } from "@raabe/sheet-engine";
 import { readXlsx, writeXlsx, newWorkbook } from "@raabe/ooxml";
 import { onFontAlias, setCloudFonts } from "@raabe/text-engine";
-import {
-  Backstage, Commands, Keytips, Ribbon, TaskPane, TitleBar, baseName, h, icon, installTooltips, messageBox, showDialog, showFontColors, showMenu,
-  type BackstageEntry, type MenuEntry, type Platform,
-} from "@raabe/shell";
+import { colorGrid, entryKind, Backstage, Commands, Keytips, Ribbon, TaskPane, TitleBar, baseName, h, icon, installTooltips, messageBox, showDialog, showFontColors, showMenu, type BackstageEntry, type MenuEntry, type Platform,  } from "@raabe/shell";
 import { COMMANDS } from "./command-list";
 import { Grid, type GridHost, type Mode } from "./grid/grid";
 import { DEFAULT_COL_CHARS, charsToPx, defaultColPx, pxToPt, pxToWidth, ptToPx, shownChars } from "./grid/metrics";
@@ -3129,26 +3126,35 @@ export class CalcApp {
       },
       /** RaabeCalc's ribbon as data for the inventory against Excel (D-066): tabs, groups, controls, menu entries. */
       inventory: () => {
-        type Item = { name: string; type?: string; deferred?: boolean; enabled?: boolean; items?: Item[]; submenu?: Item[] };
+        type Item = { name: string; type?: string; deferred?: boolean; enabled?: boolean; items?: Item[]; submenu?: Item[]; panel?: boolean; kind?: string };
+        // Own content (galleries, palettes, picture menus): its entries as drawn, by name and by how they show (D-163).
+        const drawn = (el: Element | null): Item[] => (el ? Array.from(el.querySelectorAll("button, [role=menuitem], [role=option], [data-tip]"))
+          .map((b) => ({ name: (b.getAttribute("aria-label") || (b as HTMLElement).dataset.tip || b.textContent || "").trim(), kind: entryKind(b) })).filter((x) => x.name) : []);
         const cmdItem = (id: string, label?: string): Item => {
           const c = this.commands.get(id);
           return { name: label ?? c.label, deferred: !!c.deferred, enabled: this.commands.isEnabled(id) };
         };
         const entries = (menu: import("@raabe/shell").MenuEntry[]): Item[] => menu.flatMap((m): Item[] => {
-          if (m === "-" || "heading" in m || "block" in m) return [];
+          if (m === "-" || "heading" in m) return [];
+          if ("block" in m) { try { return drawn(m.block()); } catch { return []; } }
           if ("cmd" in m) return [cmdItem(m.cmd, m.label)];
           if ("icons" in m) return [{ name: m.label, items: m.icons.map((i) => ({ name: i.tip.replace(/ \(.\)$/, "") })) }];
           const sub = "submenu" in m ? (typeof m.submenu === "function" ? m.submenu() : m.submenu) : undefined;
-          return [{ name: m.label, enabled: !("disabled" in m && m.disabled), ...(sub ? { submenu: entries(sub) } : {}), ...("flyout" in m ? { type: "flyout" } : {}) }];
+          let fly: Item[] = [];
+          if ("flyout" in m) { try { fly = drawn(m.flyout()); } catch { /* needs a selection */ } }
+          return [{ name: m.label, enabled: !("disabled" in m && m.disabled), ...(sub ? { submenu: entries(sub) } : {}), ...("flyout" in m ? { type: "flyout", ...(fly.length ? { submenu: fly } : {}) } : {}),
+            ...("preview" in m && m.preview ? { kind: "both" } : {}) }];
         });
         const ctl = (c: import("@raabe/shell").Control): Item[] => {
           if (c.type === "stack") return c.items.flatMap(ctl);
           if (c.type === "rows") return c.rows.flat().flatMap((x) => (x === "gap" ? [] : ctl(x)));
-          if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery" }));
+          if (c.type === "gallery") return c.items.map((i) => ({ ...cmdItem(i.cmd), type: "gallery", kind: "picture" }));
           const base: Item = "cmd" in c ? cmdItem(c.cmd, "label" in c ? c.label : undefined) : { name: "?" };
           const menu = "menu" in c && c.menu.length ? { items: entries(c.menu) } : {};
           // Own panels (colour palettes, galleries) hold their entries outside the menu.
-          const own = "popup" in c && c.popup ? { panel: true } : c.type === "color" ? { panel: true } : {};
+          let panelItems: Item[] = [];
+          try { panelItems = "popup" in c && c.popup ? drawn(c.popup(() => {})) : c.type === "color" ? drawn(h("div", null, ...colorGrid(() => {}))) : []; } catch { /* a panel that needs a selection */ }
+          const own = ("popup" in c && c.popup) || c.type === "color" ? { panel: true, ...(panelItems.length ? { items: [...(("items" in menu && menu.items) || []), ...panelItems] } : {}) } : {};
           return [{ ...base, type: (c as { type: string }).type, ...menu, ...own }];
         };
         const tabs = [...ribbonTabs(this.ribbonContext()), this.chartTab(), this.chartFormatTab(), this.shapeTab(), this.pictureUi.tab, this.pivotAnalyzeTab(), this.pivotDesignTab(), this.sparklines.tab(), this.slicers.tab(), this.timelines.tab()];

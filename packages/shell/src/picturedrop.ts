@@ -58,6 +58,24 @@ export function pictureMenu(entries: PictureEntry[], columns: number, size: [num
   return grid;
 }
 
+/**
+ * How an entry of a menu, gallery or list shows itself (the sweep of D-163): "picture" (a drawing, its name only a
+ * tooltip), "text" (a name, maybe with a small icon) or "both" (a drawing with its name, as Office's Stärke menu).
+ */
+export function entryKind(el: Element): "picture" | "text" | "both" {
+  const text = (el.textContent ?? "").replace(/\s+/g, " ").trim();
+  const graphic = [...el.querySelectorAll("svg, img, canvas, .pd-pic, .swatch, [style*='background']")].some((g) => {
+    // A menu's 16 px icon is not a picture of the entry (Office's text menus have icons too).
+    const w = Number(g.getAttribute("width")) || (g as HTMLElement).offsetWidth || 0;
+    return !g.closest(".ico") && !(g.tagName.toLowerCase() === "svg" && w > 0 && w <= 20 && text);
+  }) || (!text && el.children.length > 0) || el.classList.contains("swatch") || /background/.test(el.getAttribute("style") ?? "");
+  // An entry without a name of its own on it (a cell of the table grid) or with a one- or two-letter glyph (the WordArt
+  // and Texteffekte previews, an "A" in the style) is a picture too.
+  if (!text || text.length <= 2) return "picture";
+  if (graphic && text) return "both";
+  return graphic ? "picture" : "text";
+}
+
 /** A line of a weight (Stärke menus: Office shows the line and its name). */
 export function weightPicture(pt: number, w = 64, hgt = 14): HTMLElement {
   const s = h("span", { class: "pd-pic", style: `width:${w}px;height:${hgt}px` });

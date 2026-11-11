@@ -3,7 +3,7 @@
 // (results/2026-11-05-excel-inventory.json); the map (Karte) is a cloud feature and stays disabled.
 
 import { KINDS, newChart, renderChart, type ChartKind, type ChartModel } from "@raabe/charts";
-import { h, showDialog, type MenuEntry } from "@raabe/shell";
+import { h, pictureMenu, showDialog, type MenuEntry } from "@raabe/shell";
 
 /** A Verbund variant of the Kombi menu: the series' types after the first group's. */
 export type Combo = "columnLine" | "columnLineSecondary" | "areaColumn" | "custom";
@@ -108,11 +108,37 @@ export function applyCombo(m: ChartModel, combo: Combo): void {
 }
 
 /** The ribbon's chart menus: each type inserts its chart; "Weitere …" opens the dialog at its category. */
+/**
+ * A chart type's picture for the Diagramme dropdowns (D-163): the type drawn by our own renderer with sample data,
+ * without title, legend, axis labels and gridlines, as Excel's gallery shows a small picture per type.
+ */
+export function kindPicture(kind: ChartKind, w = 40, hgt = 40): SVGSVGElement {
+  const s = (n: string, v: number[]) => ({ name: { text: n }, cat: { cache: ["a", "b", "c", "d"] }, val: { cache: v } });
+  const at = { col: 0, row: 0, x: 0, y: 0 };
+  let m: ChartModel;
+  try {
+    m = newChart(kind, [s("1", [3, 5, 4, 6]), s("2", [2, 3, 5, 4]), s("3", [4, 2, 3, 5])], at, at);
+    m.title.show = false;
+    m.legend = "none";
+    m.gridlines = false;
+    m.dataLabels = false;
+    m.format = { ...m.format, valAxis: { ...m.format?.valAxis, labelPos: "none", majorTick: "none" }, catAxis: { ...m.format?.catAxis, labelPos: "none", majorTick: "none" } };
+  } catch {
+    return document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  }
+  const big = renderChart(m, w * 2.2, hgt * 2.2);
+  big.setAttribute("viewBox", `0 0 ${w * 2.2} ${hgt * 2.2}`);
+  big.setAttribute("width", String(w));
+  big.setAttribute("height", String(hgt));
+  return big;
+}
+
 export function chartMenus(host: ChartTypeHost): Record<string, MenuEntry[]> {
   const menu = (key: keyof typeof MENUS): MenuEntry[] => {
     const d = MENUS[key];
+    // Excel's Diagramme dropdowns are galleries of pictures, the names are tooltips (D-163).
     return [
-      ...d.groups.flatMap((g): MenuEntry[] => [{ heading: g.heading }, ...g.kinds.map((k) => ({ label: KINDS[k].label, run: () => host.insert(k) }))]),
+      ...d.groups.flatMap((g): MenuEntry[] => [{ heading: g.heading }, { block: () => pictureMenu(g.kinds.map((k) => ({ value: k, label: KINDS[k].label, svg: "", node: () => kindPicture(k) })), 4, [40, 40], undefined, (k) => host.insert(k as ChartKind)) }]),
       "-", { label: d.more, run: () => void chartTypeDialog(host, "insert", d.category) },
     ];
   };
