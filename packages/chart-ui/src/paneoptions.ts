@@ -2,7 +2,22 @@
 // date and secondary axes), Datenreihen- and Datenpunktoptionen per chart type, Beschriftungsoptionen,
 // Trendlinien- and Fehlerindikatoroptionen. Labels as in Excel 365 (results/2026-11-09-excel-chart-pane.json).
 
-import { isPie, isScatter, kindInfo, barDefaults, type AxisOptions, type ChartModel, type DataLabelOptions, type ErrorBars, type Trendline } from "@raabe/charts";
+import { chartScene, isPie, isScatter, kindInfo, barDefaults, type AxisOptions, type AxisScale, type ChartModel, type DataLabelOptions, type ErrorBars, type Trendline } from "@raabe/charts";
+
+/**
+ * The scale an axis has at the chart's size (Step 12, D-200): Office's Format pane shows the automatic Minimum, Maximum,
+ * Hauptstriche and Teilstriche, never empty boxes. The values are the ones our scaling gives, which match Excel's
+ * (packages/charts/test/axis-auto.test.ts against results/2026-11-12-excel-axis-auto.json).
+ */
+export function axisScaleOf(m: ChartModel, which: "valAxis" | "catAxis" | "valAxis2", sizeCm: { w: number; h: number }): AxisScale | undefined {
+  try {
+    const pt = (cm: number) => (cm / 2.54) * 72;
+    const sc = chartScene(m, pt(sizeCm.w), pt(sizeCm.h));
+    return which === "valAxis" ? sc.valueScale : which === "valAxis2" ? sc.valueScale2 : sc.xScale;
+  } catch {
+    return undefined;
+  }
+}
 import type { PaneControl, PaneSection } from "@raabe/shell";
 import type { PaneHost } from "./formatpane";
 import { customErrorDialog } from "./selectdata";
@@ -67,8 +82,17 @@ export function axisSections(m: ChartModel, which: "valAxis" | "catAxis" | "valA
   const isValue = which !== "catAxis" || scatter;
   const dateAxis = which === "catAxis" && !scatter && o()?.axisType === "date";
   const out: PaneSection[] = [];
+  const auto = (key: "min" | "max" | "majorUnit" | "minorUnit"): number | null => {
+    const s = axisScaleOf(m, which, host.size());
+    if (!s) return null;
+    if (key === "min") return s.min;
+    if (key === "max") return s.max;
+    if (key === "majorUnit") return s.major;
+    // Teilstriche: Excel's automatic minor unit is a fifth of the major unit (logarithmic: the Basis).
+    return s.log ? s.log : Number((s.major / 5).toPrecision(12));
+  };
   const bound = (label: string, key: "min" | "max" | "majorUnit" | "minorUnit") => ({
-    type: "number", label, value: () => o()?.[key] ?? null, set: (v: number) => set({ [key]: v }),
+    type: "number", label, exact: 1, value: () => o()?.[key] ?? auto(key), set: (v: number) => set({ [key]: v }),
     reset: { label: o()?.[key] === undefined ? "Automatisch" : "Zurücksetzen", isAuto: () => o()?.[key] === undefined, run: () => set({ [key]: undefined }) },
   } as PaneControl);
   // "… Achse schneidet": the other axis' crossing is this axis' `crosses` (D-111).

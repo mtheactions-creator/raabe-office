@@ -765,16 +765,24 @@ export class Ribbon {
     // First the derived wide layouts back to the group's own (D-159), from the right; then Word's sequence, then
     // everything still open from the right (a fallback for narrow windows).
     const wideIds = tab.groups.filter((g) => this.wideOf(g)).map((g) => g.id).reverse();
-    const steps = [...wideIds, ...tab.shrink, ...tab.groups.map((g) => g.id).reverse(), ...tab.groups.map((g) => g.id).reverse()];
+    // Before the fallback collapses a group, every group with smaller layouts steps down to its smallest one, from the
+    // right ("~id": a step that never collapses). A tab without a sequence of its own (most contextual tabs) so keeps
+    // all its groups open as long as reductions can make room (Step 12: a wide Anordnen collapsed Größe first).
+    const maxLevels = Math.max(0, ...tab.groups.map((g) => this.layoutsOf(g).length - 1));
+    const reduce = Array.from({ length: maxLevels }, () => tab.groups.map((g) => `~${g.id}`).reverse()).flat();
+    const steps = [...wideIds, ...tab.shrink, ...reduce, ...tab.groups.map((g) => g.id).reverse(), ...tab.groups.map((g) => g.id).reverse()];
     let widths = this.measure(tab, levels);
     if (!widths.length) return;
     let total = widths.reduce((a, b) => a + b, 0);
     while (total > available && steps.length) {
-      const id = steps.shift()!;
+      const step = steps.shift()!;
+      const soft = step.startsWith("~");
+      const id = soft ? step.slice(1) : step;
       const g = tab.groups.find((x) => x.id === id);
       if (!g) continue;
       const lv = levels.get(id)!;
       if (lv >= this.layoutsOf(g).length) continue;
+      if (soft && lv + 1 >= this.layoutsOf(g).length) continue;
       levels.set(id, lv + 1);
       widths = this.measure(tab, levels);
       if (!widths.length) return;

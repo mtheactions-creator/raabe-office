@@ -405,7 +405,7 @@ export function chartToolsFeature(api: AppApi, docArea: HTMLElement, dock: Dock,
       if (e.kind === "chart") { delete x.format; for (const s of x.series) { delete s.fill; delete s.line; delete s.marker; } return; }
       const f = x.format;
       if (!f) return;
-      const key = ({ plot: "plot", title: "title", legend: "legend", valAxis: "valAxis", catAxis: "catAxis", majorGrid: "majorGrid", minorGrid: "minorGrid", catGrid: "catGrid", labels: "dataLabels" } as const)[e.kind as "plot"];
+      const key = ({ plot: "plot", title: "title", legend: "legend", valAxis: "valAxis", catAxis: "catAxis", majorGrid: "majorGrid", minorGrid: "minorGrid", catGrid: "catGrid", catMinorGrid: "catMinorGrid", labels: "dataLabels" } as const)[e.kind as "plot"];
       if (key) {
         const keep = (f as Record<string, { show?: boolean; overlay?: boolean; visible?: boolean } | undefined>)[key];
         const kept = keep ? { ...(keep.show !== undefined ? { show: keep.show } : {}), ...(keep.overlay ? { overlay: true } : {}), ...(keep.visible === false ? { visible: false } : {}) } : {};

@@ -68,7 +68,9 @@ describe("chart formats in the file", () => {
   it("leaves a default chart without format", () => {
     for (const k of ["column", "line", "pie", "scatter", "area", "bar"] as ChartKind[]) {
       const back = roundTrip(newChart(k, series(), anchor, to));
-      expect(back.format).toBeUndefined();
+      // An XY chart's vertical major gridlines are a setting of their own, on in a new chart (Excel; Step 12).
+      if (k === "scatter") expect(back.format).toEqual({ catGrid: { show: true } });
+      else expect(back.format).toBeUndefined();
       expect(back.series.every((s) => !s.fill && !s.line && !s.marker)).toBe(true);
     }
   });

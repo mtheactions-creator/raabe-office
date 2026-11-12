@@ -4911,3 +4911,50 @@ The main tabs (`check_ribbon_geometry.py`, after merging main's inline galleries
   within 2; the chart's Livevorschau is not shown on slides.
 - Most remaining control differences are the 1 px top offset of every control (within the tolerance), spinner arrows
   (14 px, Office 17.3) and two-line large labels (D-159).
+
+## D-200 The axis options show the automatic Grenzen and Einheiten, and they are Excel's (2026-11-12)
+
+The owner: "when working on the axis options, the borders and main and secondary distances are pre-filled in Word when
+looking at them, never empty." Ours left Minimum, Maximum, Hauptstriche and Teilstriche empty while automatic, in all
+three apps (the shared `@raabe/chart-ui` pane).
+- **Recorded first:** `probe_excel_axis_auto.py` (our own invisible Excel, COM, no input) reads the values Excel uses for
+  10 data sets x 9 chart types x 3 chart sizes, with each chart's title, legend and plot area
+  (`results/2026-11-12-excel-axis-auto.json`). Word's charts use the same engine.
+- **Our scaling checked against it** (`packages/charts/test/axis-auto.test.ts`): 220 of 270 cases matched at first.
+  Fixed to Excel's rules: where both ends are fixed (100 % charts, or both set by hand) the unit is chosen for exactly
+  that span (0 to 1 in tenths where ten intervals fit); a 100 % chart with only negative values ends at 0 %; stacked
+  charts only count the sums a category has (an all-positive stack no longer pulls the axis to 0); an XY chart's axis
+  that does not start at 0 gets 5 % of the data range at both ends (values 101 to 104: 100.5 to 104.5, where a column
+  chart gives 99.5). Now 270 of 270.
+- **The pane** computes the chart's scene at its real size and shows the scale it uses (`axisScaleOf`), with the
+  automatic marker beside each box; Teilstriche is a fifth of the major unit, as Excel's. The number box shows the value
+  unrounded with at least one decimal ("140,0"); typing the shown automatic value fixes it, as in Excel. The secondary
+  axis' scale is in the scene too (`valueScale2`).
+
+## D-201 Horizontal and vertical gridlines each on their own, in every chart and every app (2026-11-12)
+
+The owner: "In Graphs, there should be separate options for horizontal and vertical grid lines." Found:
+- In an XY (scatter) chart the vertical gridlines were drawn from the horizontal setting, so both went on and off
+  together, and a file's X axis gridlines were not read. Now the X axis' major and minor gridlines are `catGrid` and
+  `catMinorGrid`, drawn, read and written on their own with their own line (Excel: c:majorGridlines / c:minorGridlines
+  in the c:valAx at the bottom). A new XY chart shows the vertical major gridlines, as Excel's does (recorded).
+- The category axis' minor gridlines (Primäres Hilfsgitter vertikal) could be switched on but were never drawn. Excel
+  draws them through the middle of each category, halfway between the major ones (Excel's chart export); ours now too,
+  written with their own line by the chart writer (`chartfilter.ts` only fills them in for XML that lacks them).
+- The Format pane, the click on a gridline, the context menu and Löschen know the fourth gridline element
+  (`catMinorGrid`, "Horizontal (Kategorie) Achse Hilfsgitternetz"; an XY chart's X gridlines are "Horizontal (Wert)
+  Achse ..." as in Excel). RaabeCalc's "Hilfsgitternetz formatieren..." on the category axis opened the major
+  gridlines; fixed.
+- RaabePresent's Diagrammentwurf > Diagrammelement hinzufügen was its own older menu with three of the four gridlines
+  (and Achsen, Datentabelle, Linien, Datenlegende) greyed out. It now builds from the shared element list, as RaabeCalc
+  and RaabeWrite do.
+Tests: `packages/charts/test/gridlines.test.ts`, `packages/chart-ui/test/axis-auto-pane.test.ts`.
+
+## D-202 The ribbon shrinks groups before it collapses any (2026-11-12)
+
+Found by `check_write_chartui.py` after D-185 to D-189: RaabeWrite's chart Format tab collapsed Größe into one button at
+a width where Word shows it whole. The tab has no shrink sequence of its own (most contextual tabs have none), and the
+fallback collapsed groups from the right, so the wider Anordnen of D-186 cost Größe first. Now the fallback first steps
+every group down to its smallest layout, from the right, and only then collapses groups; tabs with a recorded sequence
+(Word's, Excel's) keep it. Measured afterwards: RaabeWrite's chart checks 79/79, RaabeCalc's 126/126, RaabePresent's
+11/11; the ribbon comparison unchanged (main and contextual tabs).

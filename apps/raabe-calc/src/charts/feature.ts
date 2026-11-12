@@ -689,6 +689,7 @@ export function chartsFeature(app: CalcApp) {
         case "majorGrid": c.gridlines = false; break;
         case "minorGrid": delete f.minorGrid; break;
         case "catGrid": delete f.catGrid; break;
+        case "catMinorGrid": delete f.catMinorGrid; break;
         case "axisTitle": delete c.axisTitles[e.axis]; break;
         case "labels": c.dataLabels = false; break;
         case "trend": delete c.series[e.index].trendline; break;
@@ -890,14 +891,14 @@ export function chartsFeature(app: CalcApp) {
         entries = [del, reset, "-", font, "-", ...common, "-",
           hasMajor ? { label: "Hauptgitternetz formatieren...", run: () => paneFor(m, e.kind === "valAxis" ? { kind: "majorGrid" } : { kind: "catGrid" }) }
             : { label: "Hauptgitternetz hinzufügen", run: () => edit(m, (c) => { if (e.kind === "valAxis") c.gridlines = true; else { c.format ??= {}; c.format.catGrid = { ...(c.format.catGrid ?? {}), show: true }; } }) },
-          hasMinor ? { label: "Hilfsgitternetz formatieren...", run: () => paneFor(m, e.kind === "valAxis" ? { kind: "minorGrid" } : { kind: "catGrid" }) }
+          hasMinor ? { label: "Hilfsgitternetz formatieren...", run: () => paneFor(m, e.kind === "valAxis" ? { kind: "minorGrid" } : { kind: "catMinorGrid" }) }
             : { label: "Hilfsgitternetz hinzufügen", run: () => edit(m, (c) => { c.format ??= {}; c.format[minorKey] = { ...(c.format[minorKey] ?? {}), show: true }; }) },
           fmt("Achse formatieren...")];
         break;
       }
-      case "majorGrid": case "minorGrid": case "catGrid":
+      case "majorGrid": case "minorGrid": case "catGrid": case "catMinorGrid":
         entries = [del, reset, "-", ...common, "-", fmt("Gitternetzlinien formatieren..."),
-          { label: "Achse formatieren...", run: () => paneFor(m, e.kind === "catGrid" ? { kind: "catAxis" } : { kind: "valAxis" }) }];
+          { label: "Achse formatieren...", run: () => paneFor(m, e.kind === "catGrid" || e.kind === "catMinorGrid" ? { kind: "catAxis" } : { kind: "valAxis" }) }];
         break;
       case "series": {
         const s = m.series[e.index];
@@ -1139,7 +1140,7 @@ export function chartsFeature(app: CalcApp) {
         return;
       }
       if (!f) return;
-      const key = ({ plot: "plot", title: "title", legend: "legend", valAxis: "valAxis", catAxis: "catAxis", majorGrid: "majorGrid", minorGrid: "minorGrid", catGrid: "catGrid", labels: "dataLabels" } as const)[k as "plot"];
+      const key = ({ plot: "plot", title: "title", legend: "legend", valAxis: "valAxis", catAxis: "catAxis", majorGrid: "majorGrid", minorGrid: "minorGrid", catGrid: "catGrid", catMinorGrid: "catMinorGrid", labels: "dataLabels" } as const)[k as "plot"];
       if (key) {
         const keep = (f as Record<string, { show?: boolean; overlay?: boolean; visible?: boolean } | undefined>)[key];
         const kept = keep ? { ...(keep.show !== undefined ? { show: keep.show } : {}), ...(keep.overlay ? { overlay: true } : {}), ...(keep.visible === false ? { visible: false } : {}) } : {};

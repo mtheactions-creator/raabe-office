@@ -62,6 +62,8 @@ export interface Scene {
   valueScale?: AxisScale;
   /** The X axis' scale of scatter charts. */
   xScale?: AxisScale;
+  /** The secondary value axis' scale (Verbund charts). */
+  valueScale2?: AxisScale;
   /** Hit boxes of the chart's elements (title, legend, plot) for the UI. */
   parts: { name: string; box: Box }[];
   /** SVG definitions (gradients, patterns, arrowheads, effect filters) the prims refer to. */
@@ -210,7 +212,7 @@ function buildScene(full: ChartModel, W: number, H: number, opts: RenderOptions)
     layoutLegend(c, area);
     if (m.format?.legend?.overlay) Object.assign(area, keep);
   }
-  let scene: Pick<Scene, "plot" | "valueScale" | "xScale">;
+  let scene: Pick<Scene, "plot" | "valueScale" | "xScale" | "valueScale2">;
   const info = kindInfo(m.kind);
   if (m.kind === "pie3D") scene = draw3DPie(c, area);
   else if (info.family === "ofPie") scene = drawOfPie(c, area);
@@ -591,19 +593,21 @@ function groupRange(m: ChartModel, groups: ChartGroup[]): [number, number] {
     const list = g.idx.map((i) => m.series[i]).filter(Boolean);
     if (grouping === "percentStacked") {
       const neg = list.some((s) => s.val.cache.some((v) => v !== null && v < 0));
+      const pos = list.some((s) => s.val.cache.some((v) => v !== null && v > 0)) || !neg;
       lo = Math.min(lo, neg ? -1 : 0);
-      hi = Math.max(hi, 1);
+      hi = Math.max(hi, pos ? 1 : 0);
     } else if (grouping === "stacked") {
       const n = Math.max(0, ...list.map((s) => s.val.cache.length));
       for (let i = 0; i < n; i++) {
-        let pos = 0, neg = 0;
+        let pos = 0, neg = 0, anyPos = false, anyNeg = false;
         for (const s of list) {
           const v = s.val.cache[i];
           if (v === null || v === undefined) continue;
-          if (v >= 0) pos += v; else neg += v;
+          if (v >= 0) { pos += v; anyPos = true; } else { neg += v; anyNeg = true; }
         }
-        lo = Math.min(lo, neg, pos);
-        hi = Math.max(hi, pos, neg);
+        // Only the sums a category has: all-positive stacks do not pull the axis down to 0 (Excel).
+        if (anyPos) { lo = Math.min(lo, pos); hi = Math.max(hi, pos); }
+        if (anyNeg) { lo = Math.min(lo, neg); hi = Math.max(hi, neg); }
       }
     } else {
       for (const s of list) for (const v of numbers(s)) if (v !== null && isFinite(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); }
@@ -614,9 +618,10 @@ function groupRange(m: ChartModel, groups: ChartGroup[]): [number, number] {
 }
 
 /** A value axis' scale: 100 % stacked axes run from 0 to 100 % unless the pane fixes them. */
-function axisScale(lo: number, hi: number, o: AxisOptions | undefined, limit: number, percent: boolean): AxisScale {
-  if (!percent) return fixedScale(lo, hi, o, limit);
-  return fixedScale(lo, hi, { ...(o ?? {}), min: o?.min ?? (lo < 0 ? -1 : 0), max: o?.max ?? 1 }, limit);
+function axisScale(lo: number, hi: number, o: AxisOptions | undefined, limit: number, percent: boolean, xy = false): AxisScale {
+  if (!percent) return fixedScale(lo, hi, o, limit, xy);
+  // 100 %: from -100 % where there are negative values, to 0 % where there are only negative ones (Excel).
+  return fixedScale(lo, hi, { ...(o ?? {}), min: o?.min ?? (lo < 0 ? -1 : 0), max: o?.max ?? (hi <= 0 && lo < 0 ? 0 : 1) }, limit);
 }
 
 const Z_ORDER: Record<string, number> = { area: 0, bar: 1, stock: 2, line: 3 };
@@ -675,7 +680,7 @@ export function displayUnitText(o: AxisOptions | undefined): string {
   return typeof u === "number" ? `x ${formatGeneral(u)}` : names[u] ?? "";
 }
 
-function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bottom: number }): Pick<Scene, "plot" | "valueScale" | "xScale"> {
+function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bottom: number }): Pick<Scene, "plot" | "valueScale" | "xScale" | "valueScale2"> {
   const { m } = c;
   const bar = isBar(m.kind), scatter = isScatter(m.kind);
   // XY charts: one group per axis (a series on the Sekundärachse is drawn against the right value axis, D-111).
@@ -747,7 +752,7 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
   const vDiv = unitDivisor(va), xDiv = unitDivisor(xa);
   for (let pass = 0; pass < 3; pass++) {
     const vLen = bar ? plot.w : plot.h;
-    vScale = axisScale(lo, hi, va, maxIntervals(vLen, bar), percent);
+    vScale = axisScale(lo, hi, va, maxIntervals(vLen, bar), percent, scatter);
     vLabels = hideVal ? ticks(vScale).map(() => "") : ticks(vScale).map((v) => c.fmt(v / vDiv, va?.numFmt ?? valFormat));
     if (sec.length) {
       vScale2 = axisScale(lo2, hi2, va2, maxIntervals(vLen, bar), percent2);
@@ -755,7 +760,7 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
       vLabels2 = ticks(vScale2).map((v) => (hide2 ? "" : c.fmt(v / unitDivisor(va2), va2?.numFmt ?? valFormat2)));
     }
     if (scatter) {
-      xScale = fixedScale(xlo, xhi, xa, maxIntervals(plot.w, true));
+      xScale = fixedScale(xlo, xhi, xa, maxIntervals(plot.w, true), true);
       xLabels = hideCat ? ticks(xScale).map(() => "") : ticks(xScale).map((v) => c.fmt(v / xDiv, xa?.numFmt ?? m.series[0]?.cat?.format));
     }
     const hTexts = bar ? vLabels : scatter ? xLabels : catLabels;
@@ -928,8 +933,15 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
   if (scatter && xs && xPos) {
     const xp = xPos;
     const xt = ticks(xs);
+    // Vertikale Hilfsgitternetzlinien (the X axis' minor unit, else a fifth of its major unit), under the major ones.
+    if (m.format?.catMinorGrid?.show) {
+      const mg = linePaint(m.format.catMinorGrid.line, { color: "#F2F2F2", width: 0.75 });
+      const majors = new Set(xt.map((v) => Number(v.toPrecision(12))));
+      if (mg) for (const v of minorTicks(xs, xa?.minorUnit)) if (!majors.has(Number(v.toPrecision(12)))) c.prims.push({ t: "path", d: `M${f(xp(v))} ${f(plot.y)}V${f(plot.y + plot.h)}`, ...strokeOf(mg), part: "catMinorGrid" });
+    }
+    const vGrid = m.format?.catGrid?.show ? linePaint(m.format.catGrid.line, { color: LOOK.gridline, width: 0.75 }) : null;
     xt.forEach((v, i) => {
-      if (m.gridlines) c.prims.push({ t: "path", d: `M${f(xp(v))} ${f(plot.y)}V${f(plot.y + plot.h)}`, ...strokeOf(linePaint(m.format?.majorGrid?.line, { color: LOOK.gridline, width: 0.75 })), part: "grid" });
+      if (vGrid) c.prims.push({ t: "path", d: `M${f(xp(v))} ${f(plot.y)}V${f(plot.y + plot.h)}`, ...strokeOf(vGrid), part: "catGrid" });
       if (xLabels[i]) c.prims.push({ t: "text", x: xp(v), y: catOutward > 0 ? catLabelAt - 5 : catLabelAt + 14 + (ct.size - LOOK.labelSize), text: xLabels[i], ...textAttrs(ct), anchor: "middle", part: "axis:cat" });
     });
     if (xa?.visible !== false) {
@@ -945,6 +957,17 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
     return { plot, valueScale: vScale, xScale: xs };
   }
 
+  // Hilfsgitternetzlinien of the category axis: halfway between the places of the major ones.
+  if (m.format?.catMinorGrid?.show) {
+    const mg = linePaint(m.format.catMinorGrid.line, { color: "#F2F2F2", width: 0.75 });
+    const majorAt = (k: number) => (between ? catEdge(k) : catAt(k));
+    const last = between ? n : n - 1;
+    if (mg) for (let k = 0; k < last; k++) {
+      const p = (majorAt(k) + majorAt(k + 1)) / 2;
+      c.prims.push(bar ? { t: "path", d: `M${f(plot.x)} ${f(p)}H${f(plot.x + plot.w)}`, ...strokeOf(mg), part: "catMinorGrid" }
+        : { t: "path", d: `M${f(p)} ${f(plot.y)}V${f(plot.y + plot.h)}`, ...strokeOf(mg), part: "catMinorGrid" });
+    }
+  }
   // Vertikale Hauptgitternetzlinien of the category axis.
   if (m.format?.catGrid?.show) {
     const cg = linePaint(m.format.catGrid.line, { color: LOOK.gridline, width: 0.75 });
@@ -1011,7 +1034,7 @@ function drawAxes(c: Ctx, area: { left: number; right: number; top: number; bott
     if (s.trendline) drawTrendline(c, s, si, plot, (x) => (bar ? 0 : catCenter(x - 1)), vPos, (i) => i + 1, bar);
   });
   clipEnd(c);
-  return { plot, valueScale: vScale };
+  return { plot, valueScale: vScale, ...(vScale2 ? { valueScale2: vScale2 } : {}) };
 }
 
 /** An axis title's own Füllung, Rahmen and Effekte. */

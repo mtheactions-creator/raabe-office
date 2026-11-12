@@ -3,7 +3,7 @@
 // pictures, arrowheads, compound lines and effects need SVG definitions; while a scene is built
 // they are collected in `defs` (beginDefs / endDefs) and referenced as url(#id).
 
-import { autoScale, type AxisScale } from "./scale";
+import { autoScale, majorFor, type AxisScale } from "./scale";
 import { lum, type Arrow, type AxisOptions, type Dash, type Effects, type Fill, type Gradient, type GradientStop, type Line, type TextFormat } from "./model";
 
 /** A stop's colour with its Helligkeit (D-155): above 0 towards white, below 0 towards black, as DrawingML's lumMod/lumOff. */
@@ -315,11 +315,14 @@ export function unitDivisor(o: AxisOptions | undefined): number {
  * rest is worked out around it as Excel does (the unit from the range, the bounds on the unit).
  * Logarithmische Skalierung: powers of the Basis around the values (the unit is the Basis).
  */
-export function fixedScale(lo: number, hi: number, o: AxisOptions | undefined, limit: number): AxisScale {
+export function fixedScale(lo: number, hi: number, o: AxisOptions | undefined, limit: number, xy = false): AxisScale {
   if (o?.logBase && o.logBase > 1) return logScale(lo, hi, o);
-  const auto = autoScale(o?.min ?? lo, o?.max ?? hi, limit);
+  const auto = autoScale(o?.min ?? lo, o?.max ?? hi, limit, xy);
   if (!o || (o.min === undefined && o.max === undefined && o.majorUnit === undefined)) return auto;
-  const major = o.majorUnit ?? (o.min !== undefined || o.max !== undefined ? autoScale(o.min ?? Math.min(lo, 0), o.max ?? hi, limit).major : auto.major);
+  // Both ends fixed (a 100 % chart, or both set in the pane): Excel takes the unit for exactly that span, with no
+  // margin (0 to 1 in tenths where ten intervals fit; results/2026-11-12-excel-axis-auto.json).
+  const major = o.majorUnit ?? (o.min !== undefined && o.max !== undefined ? majorFor(o.max - o.min, limit)
+    : o.min !== undefined || o.max !== undefined ? autoScale(o.min ?? Math.min(lo, 0), o.max ?? hi, limit, xy).major : auto.major);
   const round = (v: number) => Number(v.toFixed(10));
   const min = o.min ?? round(Math.floor(Math.min(lo, o.max ?? lo) / major + 1e-9) * major);
   let max = o.max ?? round(Math.ceil(Math.max(hi, min) / major - 1e-9) * major);

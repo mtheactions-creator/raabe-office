@@ -252,7 +252,8 @@ export function elementEntries(m: ChartModel, ribbon = false): ElementEntry[] {
         if (!on) for (const k of ["minorGrid", "catGrid", "catMinorGrid"] as const) setGrid(c, k, false);
       },
       choices: bar ? [catMajor, valMajor, catMinor, valMinor] : [valMajor, catMajor, valMinor, catMinor],
-      pane: (c) => (c.gridlines ? { kind: "majorGrid" } : c.format?.catGrid?.show ? { kind: "catGrid" } : { kind: "majorGrid" }),
+      pane: (c) => (c.gridlines ? { kind: "majorGrid" } : c.format?.catGrid?.show ? { kind: "catGrid" } : c.format?.minorGrid?.show ? { kind: "minorGrid" }
+        : c.format?.catMinorGrid?.show ? { kind: "catMinorGrid" } : { kind: "majorGrid" }),
     });
   }
   if (kindInfo(m.kind).family !== "histogram" || ribbon) {

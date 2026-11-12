@@ -499,5 +499,7 @@ export function newChart(kind: ChartKind, series: ChartSeries[], from: CellAncho
     legend: defaultLegend(kind, series.length),
     dataLabels: false,
     gridlines: true,
+    // An XY chart shows its vertical major gridlines too (Excel: a new scatter chart, results/2026-11-12-excel-axis-auto.json).
+    ...(isScatter(kind) ? { format: { catGrid: { show: true } } } : {}),
   };
 }

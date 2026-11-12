@@ -148,6 +148,14 @@ export async function editData(app: PresentApp): Promise<void> {
  * cover (axes on and off, data table, label positions, minor gridlines) is greyed, "Weitere ..." opens the pane.
  */
 export function chartElementsMenu(app: PresentApp): MenuEntry[] {
+  // The shared element list (Step 12): every entry works, the four gridlines each on its own.
+  const shared = app.chartUi.elementsMenu();
+  if (shared.length) return shared;
+  return legacyElementsMenu(app);
+}
+
+/** The recorded menu as it was before Step 12 (kept for a chart the shared model cannot read). */
+function legacyElementsMenu(app: PresentApp): MenuEntry[] {
   const set = (label: string, fn: (m: ChartModel) => void) => () => edit(app, label, fn);
   const more = (label: string): MenuEntry => ({ label, run: () => void app.commands.run("draw.format") });
   const off = (label: string): MenuEntry => ({ label, run: () => {}, disabled: true });

@@ -7,7 +7,10 @@
 //   signs both ends get 5 % of the data range;
 // - the major unit is the smallest of 1, 2, 5 x 10^n that divides that span into at most L
 //   intervals, where L depends on the axis length (10 for a default chart);
-// - the ends are rounded outwards to whole major units.
+// - the ends are rounded outwards to whole major units;
+// - XY (scatter) charts: where the axis does not start at 0, both ends get 5 % of the data range instead
+//   (results/2026-11-12-excel-axis-auto.json: values 101 to 104 give 100.5 to 104.5 in a scatter chart, 99.5 to 104.5
+//   in a column chart).
 
 export interface AxisScale {
   min: number;
@@ -52,8 +55,19 @@ export function maxIntervals(length: number, horizontal: boolean): number {
   return 10;
 }
 
-/** Excel's automatic scale for values between `lo` and `hi` with at most `limit` intervals. */
-export function autoScale(lo: number, hi: number, limit = 10): AxisScale {
+/** The smallest of Excel's units (1, 2, 5 x 10^n) that divides `span` into at most `limit` intervals. */
+export function majorFor(span: number, limit: number): number {
+  if (!(span > 0)) return 1;
+  let major = 1;
+  for (const u of units(span)) {
+    major = u;
+    if (span / u <= limit + 1e-9) break;
+  }
+  return major;
+}
+
+/** Excel's automatic scale for values between `lo` and `hi` with at most `limit` intervals (`xy`: a scatter chart's axis). */
+export function autoScale(lo: number, hi: number, limit = 10, xy = false): AxisScale {
   if (!isFinite(lo) || !isFinite(hi)) { lo = 0; hi = 1; }
   if (lo > hi) [lo, hi] = [hi, lo];
   let a: number, b: number;
@@ -63,21 +77,19 @@ export function autoScale(lo: number, hi: number, limit = 10): AxisScale {
     else if (lo > 0) { a = 0; b = lo * 1.05; }
     else { b = 0; a = lo * 1.05; }
   } else if (lo >= 0) {
-    a = lo < (hi * 5) / 6 ? 0 : lo - (hi - lo) / 2;
+    a = lo < (hi * 5) / 6 ? 0 : xy ? lo - 0.05 * (hi - lo) : lo - (hi - lo) / 2;
     b = hi + 0.05 * (hi - a);
+    if (xy && a !== 0) b = hi + 0.05 * (hi - lo);
   } else if (hi <= 0) {
-    b = hi > (lo * 5) / 6 ? 0 : hi + (hi - lo) / 2;
+    b = hi > (lo * 5) / 6 ? 0 : xy ? hi + 0.05 * (hi - lo) : hi + (hi - lo) / 2;
     a = lo - 0.05 * (b - lo);
+    if (xy && b !== 0) a = lo - 0.05 * (hi - lo);
   } else {
     a = lo - 0.05 * (hi - lo);
     b = hi + 0.05 * (hi - lo);
   }
   const span = b - a;
-  let major = 1;
-  for (const u of units(span)) {
-    major = u;
-    if (span / u <= limit + 1e-9) break;
-  }
+  const major = majorFor(span, limit);
   const min = round(Math.floor(a / major + 1e-9) * major, major);
   const max = round(Math.ceil(b / major - 1e-9) * major, major);
   return { min, max: max === min ? round(min + major, major) : max, major };

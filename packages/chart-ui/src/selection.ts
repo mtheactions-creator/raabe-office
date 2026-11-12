@@ -149,7 +149,7 @@ export function elementMarks(svg: SVGSVGElement, e: ChartElement, selector: stri
       }
       return out;
     }
-    case "majorGrid": case "minorGrid": case "catGrid": {
+    case "majorGrid": case "minorGrid": case "catGrid": case "catMinorGrid": {
       // The gridline under the category axis has no dots (Excel: seven lines' dots for a 0 to 7 axis).
       const axis: Pt[][] = [];
       for (const a of svg.querySelectorAll<SVGGraphicsElement>('path[data-part="axis:cat"],path[data-part="axis:val"]')) {

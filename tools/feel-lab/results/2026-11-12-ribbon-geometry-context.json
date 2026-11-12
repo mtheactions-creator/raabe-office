@@ -1,0 +1,2315 @@
+{
+ "date": "2026-11-12",
+ "reference": "2026-11-11-office-ribbon-geometry.json",
+ "tolerance_px": 2.0,
+ "apps": {
+  "calc": {
+   "Bildformat": {
+    "groups": {
+     "Anpassen": {
+      "office": [
+       0.0,
+       0.0,
+       543.3,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       552.4,
+       96
+      ],
+      "diffs": [
+       "width 552.4 vs 543.3",
+       "Freistellen: dx 0.0 dy -1.0 dw 2.2 dh -0.7",
+       "Korrekturen: dx 2.2 dy -1.0 dw 1.7 dh -0.7",
+       "Farbe: dx 3.9 dy -1.0 dw 0.0 dh -0.7",
+       "Künstlerische Effekte: dx 3.9 dy -1.0 dw 2.4 dh -0.7",
+       "Transparenz: dx 6.3 dy -1.0 dw 1.9 dh -0.7",
+       "Bilder komprimieren...: dx 8.1 dy -1.0 dw 7.5 dh 0.0",
+       "Bild ändern: dx 8.1 dy -1.0 dw 2.3 dh 0.0",
+       "Bild zurücksetzen: dx 8.1 dy -1.0 dw -8.0 dh 0.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 9,
+      "controls_office": 9
+     },
+     "Bildformatvorlagen": {
+      "office": [
+       543.3,
+       0.0,
+       651.3,
+       96.0
+      ],
+      "ours": [
+       552.4,
+       0,
+       617.9,
+       96
+      ],
+      "diffs": [
+       "width 617.9 vs 651.3",
+       "left 552.4 vs 543.3",
+       "control missing: Schnellformatvorlagen",
+       "Bildrahmen: dx -36.8 dy -1.0 dw 3.2 dh 0.0",
+       "Bildeffekte: dx -36.8 dy -1.0 dw 2.1 dh 0.0",
+       "Bildlayout: dx -36.8 dy -1.0 dw 1.8 dh 0.0",
+       "Bild...: dx -41.6 dy -2.0 dw 0.0 dh 0.0",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 7
+     },
+     "Barrierefreiheit": {
+      "office": [
+       1194.7,
+       0.0,
+       90.7,
+       96.0
+      ],
+      "ours": [
+       1170.2,
+       0,
+       93.4,
+       96
+      ],
+      "diffs": [
+       "width 93.4 vs 90.7",
+       "left 1170.2 vs 1194.7"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Anordnen": {
+      "office": [
+       1285.3,
+       0.0,
+       412.0,
+       96.0
+      ],
+      "ours": [
+       1263.6,
+       0,
+       418.3,
+       96
+      ],
+      "diffs": [
+       "width 418.3 vs 412.0",
+       "left 1263.6 vs 1285.3",
+       "Gruppieren: dx 3.2 dy -1.0 dw 1.7 dh 0.0",
+       "Drehen: dx 4.9 dy -1.0 dw 1.4 dh 0.0"
+      ],
+      "controls_ok": 4,
+      "controls_matched": 6,
+      "controls_office": 6
+     },
+     "Größe": {
+      "office": [
+       1697.3,
+       0.0,
+       222.7,
+       96.0
+      ],
+      "ours": [
+       1681.9,
+       0,
+       224,
+       96
+      ],
+      "diffs": [
+       "left 1681.9 vs 1697.3",
+       "Mehr: dx 4.7 dy 1.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.7 dy 0.0 dw -3.3 dh -1.0",
+       "Mehr: dx 4.7 dy -31.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.7 dy -32.0 dw -3.3 dh -1.0",
+       "Größe und Eigenschaften...: dx -6.7 dy -2.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 6,
+      "controls_office": 6
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Formformat": {
+    "groups": {
+     "Formen einfügen": {
+      "office": [
+       0.0,
+       0.0,
+       323.3,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       104.4,
+       96
+      ],
+      "diffs": [
+       "width 104.4 vs 323.3",
+       "Formen: dx 0.0 dy -1.0 dw -126.8 dh 0.7",
+       "control missing: Form bearbeiten",
+       "control missing: Textfeld",
+       "Formen: dx -146.7 dy -3.0 dw 22.5 dh 2.7",
+       "Formen: dx -2.0 dy -3.7 dw -97.5 dh -644.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 5
+     },
+     "Formenarten": {
+      "office": [
+       323.3,
+       0.0,
+       548.0,
+       96.0
+      ],
+      "ours": [
+       104.4,
+       0,
+       121.2,
+       96
+      ],
+      "diffs": [
+       "width 121.2 vs 548.0",
+       "left 104.4 vs 323.3",
+       "control missing: Schnellformatvorlagen",
+       "Fülleffekt: dx -423.4 dy 8.0 dw 2.9 dh 0.0",
+       "Formkontur: dx -423.4 dy 14.0 dw 1.9 dh 0.0",
+       "control missing: Formeffekte",
+       "control missing: Objekt formatieren...",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 7
+     },
+     "Anordnen": {
+      "office": [
+       1278.0,
+       0.0,
+       412.0,
+       96.0
+      ],
+      "ours": [
+       225.6,
+       0,
+       418.3,
+       96
+      ],
+      "diffs": [
+       "width 418.3 vs 412.0",
+       "left 225.6 vs 1278.0",
+       "control missing: Auswahlbereich...",
+       "Gruppieren: dx 3.1 dy -1.0 dw 1.7 dh 0.0",
+       "Drehen: dx 4.9 dy -1.0 dw 1.4 dh 0.0"
+      ],
+      "controls_ok": 3,
+      "controls_matched": 5,
+      "controls_office": 6
+     }
+    },
+    "missing_groups": [
+     "WordArt-Formate",
+     "Barrierefreiheit",
+     "Größe"
+    ],
+    "extra_groups": []
+   },
+   "Tabellenentwurf": {
+    "groups": {
+     "Eigenschaften": {
+      "office": [
+       0.0,
+       0.0,
+       162.7,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       162.8,
+       96
+      ],
+      "diffs": [
+       "Tabellenname: dx -0.7 dy -4.3 dw -0.3 dh 3.3",
+       "Tabellengröße ändern: dx 0.0 dy -3.0 dw 0.1 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 2
+     },
+     "Tools": {
+      "office": [
+       162.7,
+       0.0,
+       290.7,
+       95.3
+      ],
+      "ours": [
+       162.8,
+       0,
+       291.3,
+       96
+      ],
+      "diffs": [
+       "control missing: In Bereich konvertieren ",
+       "control missing: Datenschnitt einfügen..."
+      ],
+      "controls_ok": 2,
+      "controls_matched": 2,
+      "controls_office": 4
+     },
+     "Externe Tabellendaten": {
+      "office": [
+       453.3,
+       0.0,
+       310.7,
+       95.3
+      ],
+      "ours": [
+       454.1,
+       0,
+       313.6,
+       96
+      ],
+      "diffs": [
+       "width 313.6 vs 310.7",
+       "Eigenschaften: dx 3.6 dy -1.0 dw -0.5 dh 0.0",
+       "Im Browser öffnen: dx 3.6 dy -1.0 dw -1.9 dh 0.0",
+       "Verknüpfung aufheben: dx 3.6 dy -1.0 dw -0.7 dh 0.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 5,
+      "controls_office": 5
+     },
+     "Tabellenformatoptionen": {
+      "office": [
+       764.0,
+       0.0,
+       401.3,
+       95.3
+      ],
+      "ours": [
+       767.7,
+       0,
+       408.8,
+       96
+      ],
+      "diffs": [
+       "width 408.8 vs 401.3",
+       "left 767.7 vs 764.0",
+       "Gebänderte Zeilen: dx 0.0 dy -1.0 dw 2.9 dh 0.0",
+       "Erste Spalte: dx 2.9 dy -1.0 dw 1.1 dh 0.0",
+       "Letzte Spalte: dx 2.9 dy -1.0 dw 1.8 dh 0.0",
+       "Gebänderte Spalten: dx 2.9 dy -1.0 dw 1.9 dh 0.0",
+       "Schaltfläche \"Filter\": dx 4.8 dy -1.0 dw 2.8 dh 0.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 7,
+      "controls_office": 7
+     },
+     "Tabellenformatvorlagen": {
+      "office": [
+       1165.3,
+       0.0,
+       526.0,
+       95.3
+      ],
+      "ours": [
+       1176.5,
+       0,
+       531.6,
+       96
+      ],
+      "diffs": [
+       "width 531.6 vs 526.0",
+       "left 1176.5 vs 1165.3",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 0,
+      "controls_office": 3
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Diagrammentwurf": {
+    "groups": {
+     "Diagrammlayouts": {
+      "office": [
+       0.0,
+       0.0,
+       196.0,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       198.7,
+       96
+      ],
+      "diffs": [
+       "width 198.7 vs 196.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 2,
+      "controls_office": 2
+     },
+     "Diagrammformatvorlagen": {
+      "office": [
+       196.0,
+       0.0,
+       804.7,
+       95.3
+      ],
+      "ours": [
+       198.7,
+       0,
+       809.8,
+       96
+      ],
+      "diffs": [
+       "width 809.8 vs 804.7",
+       "left 198.7 vs 196.0",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 4
+     },
+     "Daten": {
+      "office": [
+       1000.7,
+       0.0,
+       144.7,
+       95.3
+      ],
+      "ours": [
+       1008.5,
+       0,
+       148.2,
+       96
+      ],
+      "diffs": [
+       "width 148.2 vs 144.7",
+       "left 1008.5 vs 1000.7",
+       "control missing: Daten auswählen..."
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 2
+     },
+     "Typ": {
+      "office": [
+       1145.3,
+       0.0,
+       94.7,
+       95.3
+      ],
+      "ours": [
+       1156.7,
+       0,
+       94.4,
+       96
+      ],
+      "diffs": [
+       "left 1156.7 vs 1145.3",
+       "control missing: Diagrammtyp ändern..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 0,
+      "controls_office": 1
+     },
+     "Ort": {
+      "office": [
+       1240.0,
+       0.0,
+       83.3,
+       95.3
+      ],
+      "ours": [
+       1251.1,
+       0,
+       84.9,
+       96
+      ],
+      "diffs": [
+       "left 1251.1 vs 1240.0",
+       "control missing: Diagramm verschieben..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 0,
+      "controls_office": 1
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Format": {
+    "groups": {
+     "Aktuelle Auswahl": {
+      "office": [
+       0.0,
+       0.0,
+       177.3,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       176,
+       96
+      ],
+      "diffs": [],
+      "controls_ok": 3,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Formen einfügen": {
+      "office": [
+       177.3,
+       0.0,
+       172.7,
+       96.0
+      ],
+      "ours": [
+       176,
+       0,
+       104.4,
+       96
+      ],
+      "diffs": [
+       "width 104.4 vs 172.7",
+       "Formen: dx 0.0 dy -1.0 dw -54.8 dh 0.7",
+       "Form ändern: dx -54.9 dy -1.0 dw -29.3 dh -52.0",
+       "Formen: dx -74.7 dy -3.0 dw 22.5 dh 2.7",
+       "Formen: dx -2.0 dy -3.7 dw -25.5 dh -1364.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 4
+     },
+     "Formenarten": {
+      "office": [
+       350.0,
+       0.0,
+       548.0,
+       96.0
+      ],
+      "ours": [
+       280.4,
+       0,
+       121.2,
+       96
+      ],
+      "diffs": [
+       "width 121.2 vs 548.0",
+       "left 280.4 vs 350.0",
+       "control missing: Schnellformatvorlagen",
+       "Fülleffekt: dx -423.3 dy -1.0 dw 2.9 dh 0.0",
+       "Formkontur: dx -423.3 dy -1.0 dw 1.9 dh 0.0",
+       "Formeffekte: dx -423.3 dy -1.0 dw -12.9 dh 0.0",
+       "control missing: Objekt formatieren...",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 7
+     },
+     "WordArt-Formate": {
+      "office": [
+       898.0,
+       0.0,
+       316.0,
+       96.0
+      ],
+      "ours": [
+       401.6,
+       0,
+       117,
+       96
+      ],
+      "diffs": [
+       "width 117 vs 316.0",
+       "left 401.6 vs 898.0",
+       "control missing: Schnellformatvorlagen",
+       "Textfüllung: dx -199.3 dy -1.0 dw 3.7 dh 0.0",
+       "Textkontur: dx -199.3 dy -1.0 dw -7.5 dh 0.0",
+       "Texteffekte: dx -199.3 dy -1.0 dw -11.4 dh 0.0",
+       "control missing: Texteffekte formatieren...",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 7
+     },
+     "Barrierefreiheit": {
+      "office": [
+       1214.0,
+       0.0,
+       90.7,
+       96.0
+      ],
+      "ours": [
+       518.6,
+       0,
+       93.4,
+       96
+      ],
+      "diffs": [
+       "width 93.4 vs 90.7",
+       "left 518.6 vs 1214.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Anordnen": {
+      "office": [
+       1304.7,
+       0.0,
+       412.0,
+       96.0
+      ],
+      "ours": [
+       612,
+       0,
+       418.3,
+       96
+      ],
+      "diffs": [
+       "width 418.3 vs 412.0",
+       "left 612 vs 1304.7",
+       "control missing: Auswahlbereich...",
+       "Gruppieren: dx 3.3 dy -1.0 dw 1.7 dh 0.0",
+       "Drehen: dx 5.0 dy -1.0 dw 1.4 dh 0.0"
+      ],
+      "controls_ok": 3,
+      "controls_matched": 5,
+      "controls_office": 6
+     },
+     "Größe": {
+      "office": [
+       1716.7,
+       0.0,
+       149.3,
+       96.0
+      ],
+      "ours": [
+       1030.3,
+       0,
+       150.5,
+       96
+      ],
+      "diffs": [
+       "left 1030.3 vs 1716.7",
+       "Mehr: dx 4.5 dy 1.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.5 dy 0.0 dw -3.3 dh -1.0",
+       "Mehr: dx 4.5 dy -31.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.5 dy -32.0 dw -3.3 dh -1.0",
+       "control missing: Größe und Eigenschaften..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 5
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   }
+  },
+  "write": {
+   "Bildformat": {
+    "groups": {
+     "Anpassen": {
+      "office": [
+       0.0,
+       0.0,
+       489.3,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       490.5,
+       96
+      ],
+      "diffs": [
+       "Freistellen: dx 0.0 dy -1.0 dw 2.2 dh -0.7",
+       "Korrekturen: dx 2.2 dy -1.0 dw 1.7 dh -0.7",
+       "Farbe: dx 3.9 dy -1.0 dw 0.0 dh -0.7",
+       "Künstlerische Effekte: dx 3.9 dy -1.0 dw 2.4 dh -0.7",
+       "Transparenz: dx 6.3 dy -1.0 dw 1.9 dh -0.7",
+       "control missing: Bilder komprimieren...",
+       "Bild ändern: dx 8.1 dy -1.0 dw 2.3 dh 0.0",
+       "Bild zurücksetzen: dx 8.1 dy -1.0 dw -8.0 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 7,
+      "controls_office": 8
+     },
+     "Bildformatvorlagen": {
+      "office": [
+       489.3,
+       0.0,
+       651.3,
+       96.0
+      ],
+      "ours": [
+       490.5,
+       0,
+       615.9,
+       96
+      ],
+      "diffs": [
+       "width 615.9 vs 651.3",
+       "control missing: Schnellformatvorlagen",
+       "Bildrahmen: dx -42.7 dy -1.0 dw 7.2 dh 0.0",
+       "Bildeffekte: dx -42.7 dy -1.0 dw 2.1 dh 0.0",
+       "Bildlayout: dx -42.7 dy -1.0 dw 1.8 dh 0.0",
+       "control missing: Bild...",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 7
+     },
+     "Barrierefreiheit": {
+      "office": [
+       1140.7,
+       0.0,
+       90.7,
+       96.0
+      ],
+      "ours": [
+       1106.4,
+       0,
+       93.4,
+       96
+      ],
+      "diffs": [
+       "width 93.4 vs 90.7",
+       "left 1106.4 vs 1140.7"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Anordnen": {
+      "office": [
+       1231.3,
+       0.0,
+       467.3,
+       96.0
+      ],
+      "ours": [
+       1199.8,
+       0,
+       474,
+       96
+      ],
+      "diffs": [
+       "width 474 vs 467.3",
+       "left 1199.8 vs 1231.3",
+       "Ebene nach vorne: dx 2.6 dy -1.0 dw 0.0 dh 0.0",
+       "Ebene nach hinten: dx 2.5 dy -1.0 dw 0.0 dh 0.0",
+       "control missing: Auswahlbereich...",
+       "Ausrichten: dx 4.3 dy -1.0 dw 2.2 dh 0.0",
+       "Gruppieren: dx 4.3 dy -1.0 dw 2.4 dh 0.0",
+       "Drehen: dx 4.3 dy -1.0 dw 2.0 dh 0.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 7,
+      "controls_office": 8
+     },
+     "Größe": {
+      "office": [
+       1698.7,
+       0.0,
+       222.7,
+       96.0
+      ],
+      "ours": [
+       1673.8,
+       0,
+       224,
+       96
+      ],
+      "diffs": [
+       "left 1673.8 vs 1698.7",
+       "Mehr: dx 4.7 dy 1.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.7 dy 0.0 dw -3.3 dh -1.0",
+       "Mehr: dx 4.7 dy -31.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.7 dy -32.0 dw -3.3 dh -1.0",
+       "control missing: Größe und Position..."
+      ],
+      "controls_ok": 1,
+      "controls_matched": 5,
+      "controls_office": 6
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Formformat": {
+    "groups": {
+     "Formen einfügen": {
+      "office": [
+       0.0,
+       0.0,
+       323.3,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       348.3,
+       96
+      ],
+      "diffs": [
+       "width 348.3 vs 323.3",
+       "control missing: Formen",
+       "Form bearbeiten: dx 23.3 dy 8.0 dw 1.7 dh 0.0",
+       "Textfeld erstellen: dx 23.3 dy 14.0 dw 1.0 dh 0.0",
+       "control missing: Formen",
+       "control missing: Formen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 5
+     },
+     "Formenarten": {
+      "office": [
+       323.3,
+       0.0,
+       324.0,
+       96.0
+      ],
+      "ours": [
+       348.3,
+       0,
+       524.4,
+       96
+      ],
+      "diffs": [
+       "width 524.4 vs 324.0",
+       "left 348.3 vs 323.3",
+       "control missing: Schnellformatvorlagen",
+       "Fülleffekt: dx 199.2 dy -1.0 dw 6.9 dh 0.0",
+       "Formkontur: dx 199.2 dy -1.0 dw 5.9 dh 0.0",
+       "Formeffekte: dx 199.2 dy -1.0 dw 1.1 dh 0.0",
+       "control missing: Objekt formatieren...",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 7
+     },
+     "WordArt-Formate": {
+      "office": [
+       647.3,
+       0.0,
+       316.0,
+       96.0
+      ],
+      "ours": [
+       872.7,
+       0,
+       205.8,
+       96
+      ],
+      "diffs": [
+       "width 205.8 vs 316.0",
+       "left 872.7 vs 647.3",
+       "Schnellformatvorlagen: dx 0.0 dy -5.7 dw -113.4 dh 13.3",
+       "Textfüllung: dx -113.6 dy -1.0 dw 6.7 dh 0.0",
+       "Textkontur: dx -113.6 dy -1.0 dw 6.5 dh 0.0",
+       "Texteffekte: dx -113.6 dy -1.0 dw 2.6 dh 0.0",
+       "control missing: Texteffekte formatieren...",
+       "Schnellformatvorlagen: dx -170.7 dy -8.3 dw 59.9 dh 16.0",
+       "Schnellformatvorlagen: dx -2.0 dy -10.3 dw -84.1 dh -204.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 6,
+      "controls_office": 7
+     },
+     "Text": {
+      "office": [
+       963.3,
+       0.0,
+       164.0,
+       96.0
+      ],
+      "ours": [
+       1078.5,
+       0,
+       164.2,
+       96
+      ],
+      "diffs": [
+       "left 1078.5 vs 963.3",
+       "Textrichtung: dx 0.0 dy -1.0 dw 3.1 dh 0.0",
+       "Text ausrichten: dx 0.0 dy -1.0 dw 3.5 dh 0.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Barrierefreiheit": {
+      "office": [
+       1127.3,
+       0.0,
+       90.7,
+       96.0
+      ],
+      "ours": [
+       1242.7,
+       0,
+       93.4,
+       96
+      ],
+      "diffs": [
+       "width 93.4 vs 90.7",
+       "left 1242.7 vs 1127.3"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Anordnen": {
+      "office": [
+       1218.0,
+       0.0,
+       398.0,
+       96.0
+      ],
+      "ours": [
+       1336.1,
+       0,
+       395.2,
+       96
+      ],
+      "diffs": [
+       "width 395.2 vs 398.0",
+       "left 1336.1 vs 1218.0",
+       "Ebene nach vorne: dx 2.6 dy -1.0 dw -8.7 dh 0.0",
+       "Ebene nach hinten: dx 2.6 dy -1.0 dw -7.8 dh 0.0",
+       "control missing: Auswahlbereich...",
+       "Ausrichten: dx -5.2 dy -1.0 dw 2.2 dh 0.0",
+       "Gruppieren: dx -5.2 dy -1.0 dw 2.4 dh 0.0",
+       "Drehen: dx -5.2 dy -1.0 dw 2.0 dh 0.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 7,
+      "controls_office": 8
+     },
+     "Größe": {
+      "office": [
+       1616.0,
+       0.0,
+       112.7,
+       96.0
+      ],
+      "ours": [
+       1731.3,
+       0,
+       150.5,
+       96
+      ],
+      "diffs": [
+       "width 150.5 vs 112.7",
+       "left 1731.3 vs 1616.0",
+       "Mehr: dx 41.2 dy 1.0 dw -3.3 dh -1.0",
+       "Weniger: dx 41.2 dy 0.0 dw -3.3 dh -1.0",
+       "Mehr: dx 41.2 dy -31.0 dw -3.3 dh -1.0",
+       "Weniger: dx 41.2 dy -32.0 dw -3.3 dh -1.0",
+       "control missing: Größe und Position..."
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 5
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Tabellenentwurf": {
+    "groups": {
+     "Tabellenformatoptionen": {
+      "office": [
+       0.0,
+       0.0,
+       272.0,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       276.8,
+       96
+      ],
+      "diffs": [
+       "width 276.8 vs 272.0",
+       "Gebänderte Zeilen: dx 0.0 dy -1.0 dw 2.9 dh 0.0",
+       "Erste Spalte: dx 2.9 dy -1.0 dw 1.1 dh 0.0",
+       "Letzte Spalte: dx 2.9 dy -1.0 dw 1.8 dh 0.0",
+       "Gebänderte Spalten: dx 2.9 dy -1.0 dw 1.9 dh 0.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 6,
+      "controls_office": 6
+     },
+     "Tabellenformatvorlagen": {
+      "office": [
+       272.0,
+       0.0,
+       1126.7,
+       96.0
+      ],
+      "ours": [
+       276.8,
+       0,
+       1190.6,
+       96
+      ],
+      "diffs": [
+       "width 1190.6 vs 1126.7",
+       "left 276.8 vs 272.0",
+       "control missing: Tabellenformatvorlagen",
+       "Schattierung: dx 25.3 dy -1.0 dw 38.7 dh -52.0",
+       "control missing: Tabellenformatvorlagen",
+       "control missing: Tabellenformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 1,
+      "controls_office": 4
+     },
+     "Rahmen": {
+      "office": [
+       1398.7,
+       0.0,
+       342.7,
+       96.0
+      ],
+      "ours": [
+       1467.4,
+       0,
+       349.7,
+       96
+      ],
+      "diffs": [
+       "width 349.7 vs 342.7",
+       "left 1467.4 vs 1398.7",
+       "control missing: Stiftart",
+       "control missing: Stiftstärke",
+       "Stiftfarbe: dx -0.1 dy -1.0 dw 2.5 dh 0.0",
+       "Rahmen: dx 6.6 dy -1.0 dw -0.9 dh 0.0",
+       "Rahmen übertragen: dx 5.6 dy -1.0 dw 1.5 dh 0.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 5,
+      "controls_office": 7
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Tabellenlayout": {
+    "groups": {
+     "Tabelle": {
+      "office": [
+       0.0,
+       0.0,
+       243.3,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       249.6,
+       96
+      ],
+      "diffs": [
+       "width 249.6 vs 243.3",
+       "Gitternetzlinien anzeigen: dx 1.2 dy -1.0 dw 3.6 dh 0.0",
+       "control missing: Eigenschaften..."
+      ],
+      "controls_ok": 1,
+      "controls_matched": 2,
+      "controls_office": 3
+     },
+     "Zeichnen": {
+      "office": [
+       243.3,
+       0.0,
+       117.3,
+       96.0
+      ],
+      "ours": [
+       249.6,
+       0,
+       121,
+       96
+      ],
+      "diffs": [
+       "width 121 vs 117.3",
+       "left 249.6 vs 243.3",
+       "Tabelle zeichnen: dx 0.0 dy -1.0 dw 2.1 dh 0.0",
+       "Radierer: dx 2.1 dy -1.0 dw 1.5 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 2,
+      "controls_office": 2
+     },
+     "Zeilen und Spalten": {
+      "office": [
+       360.7,
+       0.0,
+       334.0,
+       96.0
+      ],
+      "ours": [
+       370.5,
+       0,
+       340.1,
+       96
+      ],
+      "diffs": [
+       "width 340.1 vs 334.0",
+       "left 370.5 vs 360.7",
+       "Zeile unterhalb einfügen: dx 2.0 dy -1.0 dw 2.7 dh 0.0",
+       "Spalte Links: dx 4.7 dy -1.0 dw 0.0 dh 0.0",
+       "Spalte rechts einfügen: dx 4.8 dy -1.0 dw 1.3 dh 0.0"
+      ],
+      "controls_ok": 3,
+      "controls_matched": 6,
+      "controls_office": 6
+     },
+     "Zusammenführen": {
+      "office": [
+       694.7,
+       0.0,
+       160.7,
+       96.0
+      ],
+      "ours": [
+       710.6,
+       0,
+       162.9,
+       96
+      ],
+      "diffs": [
+       "width 162.9 vs 160.7",
+       "left 710.6 vs 694.7",
+       "control missing: Zellen teilen..."
+      ],
+      "controls_ok": 2,
+      "controls_matched": 2,
+      "controls_office": 3
+     },
+     "Zellengröße": {
+      "office": [
+       855.3,
+       0.0,
+       377.3,
+       96.0
+      ],
+      "ours": [
+       873.4,
+       0,
+       382.2,
+       96
+      ],
+      "diffs": [
+       "width 382.2 vs 377.3",
+       "left 873.4 vs 855.3",
+       "Mehr: dx 18.6 dy 1.0 dw -3.3 dh -1.0",
+       "Weniger: dx 18.6 dy 0.0 dw -3.3 dh -1.0",
+       "Mehr: dx 18.6 dy -31.0 dw -3.3 dh -1.0",
+       "Weniger: dx 18.6 dy -32.0 dw -3.3 dh -1.0",
+       "Zeilen verteilen: dx 4.5 dy 0.0 dw 1.4 dh 0.0",
+       "Spalten verteilen: dx 4.5 dy 0.0 dw 0.3 dh 0.0",
+       "control missing: Eigenschaften..."
+      ],
+      "controls_ok": 1,
+      "controls_matched": 7,
+      "controls_office": 8
+     },
+     "Ausrichtung": {
+      "office": [
+       1232.7,
+       0.0,
+       212.7,
+       96.0
+      ],
+      "ours": [
+       1255.6,
+       0,
+       215.6,
+       96
+      ],
+      "diffs": [
+       "width 215.6 vs 212.7",
+       "left 1255.6 vs 1232.7"
+      ],
+      "controls_ok": 11,
+      "controls_matched": 11,
+      "controls_office": 11
+     },
+     "Daten": {
+      "office": [
+       1445.3,
+       0.0,
+       262.7,
+       96.0
+      ],
+      "ours": [
+       1471.2,
+       0,
+       283.9,
+       96
+      ],
+      "diffs": [
+       "width 283.9 vs 262.7",
+       "left 1471.2 vs 1445.3",
+       "control missing: Sortieren...",
+       "In Text konvertieren...: dx 3.2 dy -1.0 dw 9.6 dh -0.7",
+       "Formel...: dx 12.8 dy -1.0 dw 8.4 dh -0.7"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 3,
+      "controls_office": 4
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Diagrammentwurf": {
+    "groups": {
+     "Diagrammlayouts": {
+      "office": [
+       0.0,
+       0.0,
+       196.0,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       198.7,
+       96
+      ],
+      "diffs": [
+       "width 198.7 vs 196.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 2,
+      "controls_office": 2
+     },
+     "Diagrammformatvorlagen": {
+      "office": [
+       196.0,
+       0.0,
+       804.7,
+       95.3
+      ],
+      "ours": [
+       198.7,
+       0,
+       811.8,
+       96
+      ],
+      "diffs": [
+       "width 811.8 vs 804.7",
+       "left 198.7 vs 196.0",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 4
+     },
+     "Daten": {
+      "office": [
+       1000.7,
+       0.0,
+       291.3,
+       95.3
+      ],
+      "ours": [
+       1010.5,
+       0,
+       305.6,
+       96
+      ],
+      "diffs": [
+       "width 305.6 vs 291.3",
+       "left 1010.5 vs 1000.7",
+       "Daten auswählen...: dx 2.1 dy -1.0 dw 9.3 dh 0.0",
+       "Daten bearbeiten: dx 11.4 dy -1.0 dw 0.6 dh 0.0",
+       "Daten aktualisieren: dx 12.0 dy -1.0 dw 2.4 dh 0.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 4,
+      "controls_office": 4
+     },
+     "Typ": {
+      "office": [
+       1292.0,
+       0.0,
+       94.7,
+       95.3
+      ],
+      "ours": [
+       1316.2,
+       0,
+       94.4,
+       96
+      ],
+      "diffs": [
+       "left 1316.2 vs 1292.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 1
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Format": {
+    "groups": {
+     "Aktuelle Auswahl": {
+      "office": [
+       0.0,
+       0.0,
+       177.3,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       176,
+       96
+      ],
+      "diffs": [],
+      "controls_ok": 3,
+      "controls_matched": 3,
+      "controls_office": 3
+     },
+     "Formen einfügen": {
+      "office": [
+       177.3,
+       0.0,
+       172.7,
+       96.0
+      ],
+      "ours": [
+       176,
+       0,
+       104.4,
+       96
+      ],
+      "diffs": [
+       "width 104.4 vs 172.7",
+       "Formen: dx 0.0 dy -1.0 dw -54.8 dh 0.7",
+       "Form ändern: dx -54.9 dy -1.0 dw -29.3 dh -52.0",
+       "Formen: dx -74.7 dy -3.0 dw 22.5 dh 2.7",
+       "Formen: dx -2.0 dy -3.7 dw -25.5 dh -1364.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 4
+     },
+     "Formenarten": {
+      "office": [
+       350.0,
+       0.0,
+       548.0,
+       96.0
+      ],
+      "ours": [
+       280.4,
+       0,
+       248.4,
+       96
+      ],
+      "diffs": [
+       "width 248.4 vs 548.0",
+       "left 280.4 vs 350.0",
+       "Schnellformatvorlagen: dx 0.0 dy -5.7 dw -296.1 dh 13.3",
+       "Fülleffekt: dx -296.2 dy -1.0 dw 2.9 dh 0.0",
+       "Formkontur: dx -296.2 dy -1.0 dw 1.9 dh 0.0",
+       "Formeffekte: dx -296.2 dy -1.0 dw -12.9 dh 0.0",
+       "Objekt formatieren...: dx -307.7 dy -2.0 dw 0.0 dh 0.0",
+       "Schnellformatvorlagen: dx -394.7 dy -8.3 dw 101.2 dh 16.0",
+       "Schnellformatvorlagen: dx -2.0 dy -10.3 dw -266.8 dh -540.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 7,
+      "controls_office": 7
+     },
+     "WordArt-Formate": {
+      "office": [
+       898.0,
+       0.0,
+       316.0,
+       96.0
+      ],
+      "ours": [
+       528.7,
+       0,
+       244.1,
+       96
+      ],
+      "diffs": [
+       "width 244.1 vs 316.0",
+       "left 528.7 vs 898.0",
+       "Schnellformatvorlagen: dx 0.0 dy -5.7 dw -72.1 dh 13.3",
+       "Textfüllung: dx -72.1 dy -1.0 dw 3.7 dh 0.0",
+       "Textkontur: dx -72.1 dy -1.0 dw -7.5 dh 0.0",
+       "Texteffekte: dx -72.1 dy -1.0 dw -11.4 dh 0.0",
+       "Texteffekte formatieren...: dx -79.8 dy -2.0 dw 0.0 dh 0.0",
+       "Schnellformatvorlagen: dx -170.7 dy -8.3 dw 101.2 dh 16.0",
+       "Schnellformatvorlagen: dx -2.0 dy -10.3 dw -42.8 dh -204.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 7,
+      "controls_office": 7
+     },
+     "Barrierefreiheit": {
+      "office": [
+       1214.0,
+       0.0,
+       90.7,
+       96.0
+      ],
+      "ours": [
+       772.9,
+       0,
+       93.4,
+       96
+      ],
+      "diffs": [
+       "width 93.4 vs 90.7",
+       "left 772.9 vs 1214.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Anordnen": {
+      "office": [
+       1304.7,
+       0.0,
+       467.3,
+       96.0
+      ],
+      "ours": [
+       866.3,
+       0,
+       474,
+       96
+      ],
+      "diffs": [
+       "width 474 vs 467.3",
+       "left 866.3 vs 1304.7",
+       "Ebene nach vorne: dx 2.6 dy -1.0 dw 0.0 dh 0.0",
+       "Ebene nach hinten: dx 2.5 dy -1.0 dw 0.0 dh 0.0",
+       "control missing: Auswahlbereich...",
+       "Ausrichten: dx 4.2 dy -1.0 dw 2.2 dh 0.0",
+       "Gruppieren: dx 4.2 dy -1.0 dw 2.4 dh 0.0",
+       "Drehen: dx 4.2 dy -1.0 dw 2.0 dh 0.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 7,
+      "controls_office": 8
+     },
+     "Größe": {
+      "office": [
+       1772.0,
+       0.0,
+       149.3,
+       96.0
+      ],
+      "ours": [
+       1340.3,
+       0,
+       150.5,
+       96
+      ],
+      "diffs": [
+       "left 1340.3 vs 1772.0",
+       "Mehr: dx 4.5 dy 1.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.5 dy 0.0 dw -3.3 dh -1.0",
+       "Mehr: dx 4.5 dy -31.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.5 dy -32.0 dw -3.3 dh -1.0",
+       "Größe und Position...: dx -6.8 dy -3.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   }
+  },
+  "present": {
+   "Bildformat": {
+    "groups": {
+     "Bearbeiten": {
+      "office": [
+       0.0,
+       0.0,
+       192.0,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       151.6,
+       96
+      ],
+      "diffs": [
+       "width 151.6 vs 192.0",
+       "control missing: Erase"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 2,
+      "controls_office": 3
+     },
+     "Anpassen": {
+      "office": [
+       192.0,
+       0.0,
+       419.3,
+       96.0
+      ],
+      "ours": [
+       151.6,
+       0,
+       418.3,
+       96
+      ],
+      "diffs": [
+       "left 151.6 vs 192.0",
+       "Künstlerische Effekte: dx 1.7 dy -1.0 dw 2.4 dh -0.7",
+       "Transparenz: dx 4.1 dy -1.0 dw 1.9 dh -0.7",
+       "control missing: Bildqualität",
+       "Bild ändern: dx 5.9 dy -1.0 dw 2.3 dh 0.0",
+       "Bild zurücksetzen: dx 5.9 dy -1.0 dw -8.0 dh 0.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 6,
+      "controls_office": 7
+     },
+     "Bildformatvorlagen": {
+      "office": [
+       611.3,
+       0.0,
+       595.3,
+       96.0
+      ],
+      "ours": [
+       569.9,
+       0,
+       611.9,
+       96
+      ],
+      "diffs": [
+       "width 611.9 vs 595.3",
+       "left 569.9 vs 611.3",
+       "control missing: Schnellformatvorlagen",
+       "Bildrahmen: dx 13.3 dy -1.0 dw 3.2 dh 0.0",
+       "Bildeffekte: dx 13.3 dy -1.0 dw 2.1 dh 0.0",
+       "Bildlayout: dx 13.3 dy -1.0 dw -12.2 dh 0.0",
+       "Bild...: dx 8.5 dy -2.0 dw 0.0 dh 0.0",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 7
+     },
+     "Barrierefreiheit": {
+      "office": [
+       1206.7,
+       0.0,
+       90.7,
+       96.0
+      ],
+      "ours": [
+       1181.8,
+       0,
+       93.4,
+       96
+      ],
+      "diffs": [
+       "width 93.4 vs 90.7",
+       "left 1181.8 vs 1206.7"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Anordnen": {
+      "office": [
+       1297.3,
+       0.0,
+       412.0,
+       96.0
+      ],
+      "ours": [
+       1275.2,
+       0,
+       418.3,
+       96
+      ],
+      "diffs": [
+       "width 418.3 vs 412.0",
+       "left 1275.2 vs 1297.3",
+       "Gruppieren: dx 3.2 dy -1.0 dw 1.7 dh 0.0",
+       "Drehen: dx 4.9 dy -1.0 dw 1.4 dh 0.0"
+      ],
+      "controls_ok": 4,
+      "controls_matched": 6,
+      "controls_office": 6
+     },
+     "Größe": {
+      "office": [
+       1709.3,
+       0.0,
+       222.7,
+       96.0
+      ],
+      "ours": [
+       1693.5,
+       0,
+       224,
+       96
+      ],
+      "diffs": [
+       "left 1693.5 vs 1709.3",
+       "Mehr: dx 4.6 dy 1.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.6 dy 0.0 dw -3.3 dh -1.0",
+       "Mehr: dx 4.6 dy -31.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.6 dy -32.0 dw -3.3 dh -1.0",
+       "Größe und Position...: dx -6.7 dy -2.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 6,
+      "controls_office": 6
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Formformat": {
+    "groups": {
+     "Formen einfügen": {
+      "office": [
+       0.0,
+       0.0,
+       371.3,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       372.1,
+       96
+      ],
+      "diffs": [
+       "Formen: dx -146.7 dy -2.0 dw 148.6 dh 2.0",
+       "Formen: dx -2.0 dy -2.7 dw 28.6 dh -620.7"
+      ],
+      "controls_ok": 4,
+      "controls_matched": 6,
+      "controls_office": 6
+     },
+     "Formenarten": {
+      "office": [
+       371.3,
+       0.0,
+       548.0,
+       96.0
+      ],
+      "ours": [
+       372.1,
+       0,
+       560.4,
+       96
+      ],
+      "diffs": [
+       "width 560.4 vs 548.0",
+       "control missing: Schnellformatvorlagen",
+       "Fülleffekt: dx 11.2 dy -1.0 dw 2.9 dh 0.0",
+       "Formkontur: dx 11.2 dy -1.0 dw 1.9 dh 0.0",
+       "Formeffekte: dx 11.2 dy -1.0 dw 1.1 dh 0.0",
+       "Objekt formatieren...: dx 4.4 dy -2.0 dw 0.0 dh 0.0",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 7
+     },
+     "WordArt-Formate": {
+      "office": [
+       919.3,
+       0.0,
+       316.0,
+       96.0
+      ],
+      "ours": [
+       932.5,
+       0,
+       310,
+       96
+      ],
+      "diffs": [
+       "width 310 vs 316.0",
+       "left 932.5 vs 919.3",
+       "control missing: Schnellformatvorlagen",
+       "Textfüllung: dx -8.8 dy -1.0 dw 3.7 dh 0.0",
+       "Textkontur: dx -8.8 dy -1.0 dw 3.5 dh 0.0",
+       "Texteffekte: dx -8.8 dy -1.0 dw 2.6 dh 0.0",
+       "Texteffekte formatieren...: dx -14.0 dy -2.0 dw 0.0 dh 0.0",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 7
+     },
+     "Barrierefreiheit": {
+      "office": [
+       1235.3,
+       0.0,
+       90.7,
+       96.0
+      ],
+      "ours": [
+       1242.5,
+       0,
+       93.4,
+       96
+      ],
+      "diffs": [
+       "width 93.4 vs 90.7",
+       "left 1242.5 vs 1235.3"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Anordnen": {
+      "office": [
+       1326.0,
+       0.0,
+       412.0,
+       96.0
+      ],
+      "ours": [
+       1335.9,
+       0,
+       418.3,
+       96
+      ],
+      "diffs": [
+       "width 418.3 vs 412.0",
+       "left 1335.9 vs 1326.0",
+       "Gruppieren: dx 3.2 dy -1.0 dw 1.7 dh 0.0",
+       "Drehen: dx 4.9 dy -1.0 dw 1.4 dh 0.0"
+      ],
+      "controls_ok": 4,
+      "controls_matched": 6,
+      "controls_office": 6
+     },
+     "Größe": {
+      "office": [
+       1738.0,
+       0.0,
+       149.3,
+       96.0
+      ],
+      "ours": [
+       1754.2,
+       0,
+       150.5,
+       96
+      ],
+      "diffs": [
+       "left 1754.2 vs 1738.0",
+       "Mehr: dx 4.6 dy 1.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.6 dy 0.0 dw -3.3 dh -1.0",
+       "Mehr: dx 4.6 dy -31.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.6 dy -32.0 dw -3.3 dh -1.0",
+       "Größe und Position...: dx -6.8 dy -3.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Tabellenentwurf": {
+    "groups": {
+     "Tabellenformatoptionen": {
+      "office": [
+       0.0,
+       0.0,
+       272.0,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       276.8,
+       96
+      ],
+      "diffs": [
+       "width 276.8 vs 272.0",
+       "Gebänderte Zeilen: dx 0.0 dy -1.0 dw 2.9 dh 0.0",
+       "Erste Spalte: dx 2.9 dy -1.0 dw 1.1 dh 0.0",
+       "Letzte Spalte: dx 2.9 dy -1.0 dw 1.8 dh 0.0",
+       "Gebänderte Spalten: dx 2.9 dy -1.0 dw 1.9 dh 0.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 6,
+      "controls_office": 6
+     },
+     "Tabellenformatvorlagen": {
+      "office": [
+       272.0,
+       0.0,
+       658.0,
+       96.0
+      ],
+      "ours": [
+       276.8,
+       0,
+       658.6,
+       96
+      ],
+      "diffs": [
+       "left 276.8 vs 272.0",
+       "control missing: Tabellenformate",
+       "Schattierung: dx -2.7 dy -1.0 dw 3.3 dh 0.0",
+       "Rahmen: dx -2.7 dy -1.0 dw -10.5 dh 0.0",
+       "Effekte: dx -2.7 dy -1.0 dw 1.5 dh 0.0",
+       "control missing: Tabellenformate",
+       "control missing: Tabellenformate"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 3,
+      "controls_office": 6
+     },
+     "WordArt-Formate": {
+      "office": [
+       930.0,
+       0.0,
+       164.0,
+       96.0
+      ],
+      "ours": [
+       935.4,
+       0,
+       157.6,
+       96
+      ],
+      "diffs": [
+       "width 157.6 vs 164.0",
+       "left 935.4 vs 930.0",
+       "Textfüllung: dx 0.8 dy -1.0 dw -8.3 dh 0.0",
+       "Textkontur: dx 0.8 dy -1.0 dw -8.3 dh 0.0",
+       "Texteffekte formatieren...: dx -14.5 dy -2.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 5,
+      "controls_office": 5
+     },
+     "Rahmenlinien zeichnen": {
+      "office": [
+       1094.0,
+       0.0,
+       216.7,
+       96.0
+      ],
+      "ours": [
+       1092.9,
+       0,
+       221.4,
+       96
+      ],
+      "diffs": [
+       "width 221.4 vs 216.7",
+       "Stiftart: dx 0.0 dy -1.0 dw -16.2 dh 0.0",
+       "Stiftfarbe: dx 0.0 dy -1.0 dw 2.5 dh 0.0",
+       "Tabelle zeichnen: dx 1.2 dy -1.0 dw 2.1 dh 0.0",
+       "Radierer: dx 3.3 dy -1.0 dw 1.5 dh 0.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 5,
+      "controls_office": 5
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Tabellenlayout": {
+    "groups": {
+     "Tabelle": {
+      "office": [
+       0.0,
+       0.0,
+       163.3,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       168,
+       96
+      ],
+      "diffs": [
+       "width 168 vs 163.3",
+       "Gitternetzlinien anzeigen: dx 1.2 dy -1.0 dw 3.6 dh 0.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 2,
+      "controls_office": 2
+     },
+     "Zeilen und Spalten": {
+      "office": [
+       163.3,
+       0.0,
+       334.0,
+       95.3
+      ],
+      "ours": [
+       168,
+       0,
+       340.1,
+       96
+      ],
+      "diffs": [
+       "width 340.1 vs 334.0",
+       "left 168 vs 163.3",
+       "Zeile unterhalb einfügen: dx 1.9 dy -1.0 dw 2.7 dh 0.0",
+       "Spalte Links: dx 4.7 dy -1.0 dw 0.0 dh 0.0",
+       "Spalte rechts einfügen: dx 4.7 dy -1.0 dw 1.3 dh 0.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 5,
+      "controls_office": 5
+     },
+     "Zusammenführen": {
+      "office": [
+       497.3,
+       0.0,
+       117.3,
+       95.3
+      ],
+      "ours": [
+       508.1,
+       0,
+       118.4,
+       96
+      ],
+      "diffs": [
+       "left 508.1 vs 497.3"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 2,
+      "controls_office": 2
+     },
+     "Zellengröße": {
+      "office": [
+       614.7,
+       0.0,
+       271.3,
+       95.3
+      ],
+      "ours": [
+       626.5,
+       0,
+       272.8,
+       96
+      ],
+      "diffs": [
+       "left 626.5 vs 614.7",
+       "Mehr: dx 4.5 dy 1.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.5 dy 0.0 dw -3.3 dh -1.0",
+       "Mehr: dx 4.5 dy -31.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.5 dy -32.0 dw -3.3 dh -1.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 6,
+      "controls_office": 6
+     },
+     "Ausrichtung": {
+      "office": [
+       886.0,
+       0.0,
+       276.7,
+       95.3
+      ],
+      "ours": [
+       899.3,
+       0,
+       281.9,
+       96
+      ],
+      "diffs": [
+       "width 281.9 vs 276.7",
+       "left 899.3 vs 886.0",
+       "Textrichtung: dx 0.0 dy -1.0 dw 2.4 dh 0.0",
+       "Zellenbegrenzungen: dx 2.4 dy -1.0 dw 2.8 dh 0.0"
+      ],
+      "controls_ok": 6,
+      "controls_matched": 8,
+      "controls_office": 8
+     },
+     "Tabellengröße": {
+      "office": [
+       1162.7,
+       0.0,
+       168.0,
+       95.3
+      ],
+      "ours": [
+       1181.1,
+       0,
+       170.7,
+       96
+      ],
+      "diffs": [
+       "width 170.7 vs 168.0",
+       "left 1181.1 vs 1162.7",
+       "Mehr: dx 6.7 dy 0.0 dw -3.3 dh -1.0",
+       "Weniger: dx 6.7 dy -1.0 dw -3.3 dh -1.0",
+       "Mehr: dx 6.7 dy -26.0 dw -3.3 dh -1.0",
+       "Weniger: dx 6.7 dy -27.0 dw -3.3 dh -1.0",
+       "Seitenverhältnis sperren: dx 0.0 dy -1.0 dw 2.7 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     },
+     "Anordnen": {
+      "office": [
+       1330.7,
+       0.0,
+       412.0,
+       95.3
+      ],
+      "ours": [
+       1351.8,
+       0,
+       418.3,
+       96
+      ],
+      "diffs": [
+       "width 418.3 vs 412.0",
+       "left 1351.8 vs 1330.7",
+       "Gruppieren: dx 3.3 dy -1.0 dw 1.7 dh 0.0",
+       "Drehen: dx 5.0 dy -1.0 dw 1.4 dh 0.0"
+      ],
+      "controls_ok": 4,
+      "controls_matched": 6,
+      "controls_office": 6
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Diagrammentwurf": {
+    "groups": {
+     "Diagrammlayouts": {
+      "office": [
+       0.0,
+       0.0,
+       196.0,
+       95.3
+      ],
+      "ours": [
+       0,
+       0,
+       198.7,
+       96
+      ],
+      "diffs": [
+       "width 198.7 vs 196.0"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 2,
+      "controls_office": 2
+     },
+     "Diagrammformatvorlagen": {
+      "office": [
+       196.0,
+       0.0,
+       804.7,
+       95.3
+      ],
+      "ours": [
+       198.7,
+       0,
+       811.8,
+       96
+      ],
+      "diffs": [
+       "width 811.8 vs 804.7",
+       "left 198.7 vs 196.0",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 4
+     },
+     "Daten": {
+      "office": [
+       1000.7,
+       0.0,
+       291.3,
+       95.3
+      ],
+      "ours": [
+       1010.5,
+       0,
+       287.5,
+       96
+      ],
+      "diffs": [
+       "width 287.5 vs 291.3",
+       "left 1010.5 vs 1000.7",
+       "Daten auswählen...: dx 2.1 dy -1.0 dw 1.5 dh 0.0",
+       "Daten bearbeiten: dx 3.6 dy -1.0 dw -9.7 dh 0.0",
+       "Daten aktualisieren: dx -6.1 dy -1.0 dw 2.4 dh 0.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 4,
+      "controls_office": 4
+     },
+     "Typ": {
+      "office": [
+       1292.0,
+       0.0,
+       94.7,
+       95.3
+      ],
+      "ours": [
+       1298.1,
+       0,
+       94.4,
+       96
+      ],
+      "diffs": [
+       "left 1298.1 vs 1292.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 1
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   },
+   "Format": {
+    "groups": {
+     "Aktuelle Auswahl": {
+      "office": [
+       0.0,
+       0.0,
+       177.3,
+       96.0
+      ],
+      "ours": [
+       0,
+       0,
+       175.3,
+       96
+      ],
+      "diffs": [
+       "Diagrammelemente: dx 0.0 dy -1.0 dw -10.7 dh 0.0",
+       "control missing: Auswahl formatieren"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 2,
+      "controls_office": 3
+     },
+     "Formen einfügen": {
+      "office": [
+       177.3,
+       0.0,
+       172.7,
+       96.0
+      ],
+      "ours": [
+       175.3,
+       0,
+       173.8,
+       96
+      ],
+      "diffs": [
+       "Formen: dx -74.7 dy -2.0 dw 76.6 dh 2.0",
+       "Formen: dx -2.0 dy -2.7 dw 28.6 dh -1460.7"
+      ],
+      "controls_ok": 2,
+      "controls_matched": 4,
+      "controls_office": 4
+     },
+     "Formenarten": {
+      "office": [
+       350.0,
+       0.0,
+       548.0,
+       96.0
+      ],
+      "ours": [
+       349.1,
+       0,
+       560.4,
+       96
+      ],
+      "diffs": [
+       "width 560.4 vs 548.0",
+       "control missing: Schnellformatvorlagen",
+       "Fülleffekt: dx 11.3 dy -1.0 dw 2.9 dh 0.0",
+       "Formkontur: dx 11.3 dy -1.0 dw 1.9 dh 0.0",
+       "Formeffekte: dx 11.3 dy -1.0 dw 1.1 dh 0.0",
+       "Objekt formatieren...: dx 4.4 dy -2.0 dw 0.0 dh 0.0",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 7
+     },
+     "WordArt-Formate": {
+      "office": [
+       898.0,
+       0.0,
+       316.0,
+       96.0
+      ],
+      "ours": [
+       909.5,
+       0,
+       310,
+       96
+      ],
+      "diffs": [
+       "width 310 vs 316.0",
+       "left 909.5 vs 898.0",
+       "control missing: Schnellformatvorlagen",
+       "Textfüllung: dx -8.7 dy -1.0 dw 3.7 dh 0.0",
+       "Textkontur: dx -8.7 dy -1.0 dw 3.5 dh 0.0",
+       "Texteffekte: dx -8.7 dy -1.0 dw 2.6 dh 0.0",
+       "Texteffekte formatieren...: dx -14.0 dy -2.0 dw 0.0 dh 0.0",
+       "control missing: Schnellformatvorlagen",
+       "control missing: Schnellformatvorlagen"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 4,
+      "controls_office": 7
+     },
+     "Barrierefreiheit": {
+      "office": [
+       1214.0,
+       0.0,
+       90.7,
+       96.0
+      ],
+      "ours": [
+       1219.5,
+       0,
+       93.4,
+       96
+      ],
+      "diffs": [
+       "width 93.4 vs 90.7",
+       "left 1219.5 vs 1214.0"
+      ],
+      "controls_ok": 1,
+      "controls_matched": 1,
+      "controls_office": 1
+     },
+     "Anordnen": {
+      "office": [
+       1304.7,
+       0.0,
+       412.0,
+       96.0
+      ],
+      "ours": [
+       1312.9,
+       0,
+       418.3,
+       96
+      ],
+      "diffs": [
+       "width 418.3 vs 412.0",
+       "left 1312.9 vs 1304.7",
+       "Gruppieren: dx 3.3 dy -1.0 dw 1.7 dh 0.0",
+       "Drehen: dx 5.0 dy -1.0 dw 1.4 dh 0.0"
+      ],
+      "controls_ok": 4,
+      "controls_matched": 6,
+      "controls_office": 6
+     },
+     "Größe": {
+      "office": [
+       1716.7,
+       0.0,
+       149.3,
+       96.0
+      ],
+      "ours": [
+       1731.2,
+       0,
+       150.5,
+       96
+      ],
+      "diffs": [
+       "left 1731.2 vs 1716.7",
+       "Mehr: dx 4.6 dy 1.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.6 dy 0.0 dw -3.3 dh -1.0",
+       "Mehr: dx 4.6 dy -31.0 dw -3.3 dh -1.0",
+       "Weniger: dx 4.6 dy -32.0 dw -3.3 dh -1.0",
+       "Größe und Position...: dx -6.8 dy -3.0 dw 0.0 dh 0.0"
+      ],
+      "controls_ok": 0,
+      "controls_matched": 5,
+      "controls_office": 5
+     }
+    },
+    "missing_groups": [],
+    "extra_groups": []
+   }
+  }
+ }
+}

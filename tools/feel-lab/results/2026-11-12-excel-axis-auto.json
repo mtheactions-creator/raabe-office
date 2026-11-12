@@ -1,0 +1,8713 @@
+{
+ "date": "2026-11-12",
+ "x": [
+  1,
+  2.5,
+  4,
+  7
+ ],
+ "data": {
+  "small": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "school": [
+   12,
+   47,
+   120,
+   83
+  ],
+  "negative": [
+   -5,
+   3,
+   8,
+   -2
+  ],
+  "allneg": [
+   -40,
+   -12,
+   -75,
+   -3
+  ],
+  "decimals": [
+   0.002,
+   0.009,
+   0.005,
+   0.0071
+  ],
+  "large": [
+   1000,
+   5000,
+   23000,
+   17250
+  ],
+  "narrow": [
+   101,
+   102,
+   104,
+   103
+  ],
+  "zero": [
+   0,
+   0,
+   0,
+   0
+  ],
+  "grades": [
+   1.7,
+   2.3,
+   3.0,
+   2.0
+  ],
+  "percent": [
+   0.12,
+   0.47,
+   0.3,
+   0.9
+  ]
+ },
+ "cases": [
+  {
+   "data": "small",
+   "kind": "column",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "column",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "column",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 5.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    209.63,
+    76.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "bar",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    323.9,
+    132.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "bar",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    443.9,
+    216.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "bar",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 5.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    207.35,
+    76.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "line",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "line",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "line",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 5.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    209.63,
+    76.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "lineMarkers",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "lineMarkers",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "lineMarkers",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 5.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    209.63,
+    76.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "area",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    320.45,
+    132.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "area",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    440.45,
+    216.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "area",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 5.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    207.35,
+    76.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "scatter",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    320.45,
+    155.79
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "scatter",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    440.45,
+    239.79
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "scatter",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 5.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    207.35,
+    99.79
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "scatterLines",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    320.45,
+    155.79
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "scatterLines",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    440.45,
+    239.79
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "scatterLines",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 5.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    207.35,
+    99.79
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "columnStacked",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "columnStacked",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "columnStacked",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 5.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    209.63,
+    76.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "columnStacked100",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    313.67,
+    132.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "columnStacked100",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    433.67,
+    216.92
+   ]
+  },
+  {
+   "data": "small",
+   "kind": "columnStacked100",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    193.67,
+    76.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "column",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    320.51,
+    132.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "column",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    440.51,
+    216.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "column",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 150.0,
+    "MajorUnit": 50.0,
+    "MinorUnit": 10.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    200.51,
+    76.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "bar",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    322.79,
+    132.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "bar",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    442.79,
+    216.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "bar",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 150.0,
+    "MajorUnit": 50.0,
+    "MinorUnit": 10.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    202.79,
+    76.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "line",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    320.51,
+    132.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "line",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    440.51,
+    216.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "line",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 150.0,
+    "MajorUnit": 50.0,
+    "MinorUnit": 10.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    200.51,
+    76.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "lineMarkers",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    320.51,
+    132.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "lineMarkers",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    440.51,
+    216.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "lineMarkers",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 150.0,
+    "MajorUnit": 50.0,
+    "MinorUnit": 10.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    200.51,
+    76.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "area",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    318.23,
+    132.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "area",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    438.23,
+    216.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "area",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 150.0,
+    "MajorUnit": 50.0,
+    "MinorUnit": 10.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    198.23,
+    76.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "scatter",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    318.23,
+    155.79
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "scatter",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    438.23,
+    239.79
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "scatter",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    198.23,
+    99.79
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "scatterLines",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    318.23,
+    155.79
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "scatterLines",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    438.23,
+    239.79
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "scatterLines",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    198.23,
+    99.79
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "columnStacked",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    320.51,
+    132.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "columnStacked",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 140.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    440.51,
+    216.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "columnStacked",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 150.0,
+    "MajorUnit": 50.0,
+    "MinorUnit": 10.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    200.51,
+    76.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "columnStacked100",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    313.67,
+    132.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "columnStacked100",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    433.67,
+    216.92
+   ]
+  },
+  {
+   "data": "school",
+   "kind": "columnStacked100",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    193.67,
+    76.92
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "column",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    325.07,
+    145.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "column",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    445.07,
+    229.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "column",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -10.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 5.0,
+    "MinorUnit": 1.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    202.32,
+    89.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "bar",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    10.66,
+    33.09,
+    329.78,
+    132.92
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "bar",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    10.66,
+    33.09,
+    449.78,
+    216.92
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "bar",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -10.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 5.0,
+    "MinorUnit": 1.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    12.94,
+    33.09,
+    207.5,
+    76.92
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "line",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    325.07,
+    145.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "line",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    445.07,
+    229.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "line",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -10.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 5.0,
+    "MinorUnit": 1.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    202.32,
+    89.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "lineMarkers",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    325.07,
+    145.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "lineMarkers",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    445.07,
+    229.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "lineMarkers",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -10.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 5.0,
+    "MinorUnit": 1.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    202.32,
+    89.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "area",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    322.79,
+    145.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "area",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    442.79,
+    229.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "area",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -10.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 5.0,
+    "MinorUnit": 1.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    200.04,
+    89.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "scatter",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    322.79,
+    167.91
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "scatter",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    442.79,
+    251.91
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "scatter",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    202.79,
+    111.91
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "scatterLines",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    322.79,
+    167.91
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "scatterLines",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    442.79,
+    251.91
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "scatterLines",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    202.79,
+    111.91
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "columnStacked",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    325.07,
+    145.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "columnStacked",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -6.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    19.93,
+    33.09,
+    445.07,
+    229.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "columnStacked",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -10.0,
+    "MaximumScale": 10.0,
+    "MajorUnit": 5.0,
+    "MinorUnit": 1.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    202.32,
+    89.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "columnStacked100",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -1.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    34.09,
+    33.09,
+    310.91,
+    145.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "columnStacked100",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -1.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    34.09,
+    33.09,
+    430.91,
+    229.03
+   ]
+  },
+  {
+   "data": "negative",
+   "kind": "columnStacked100",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -1.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    34.09,
+    33.09,
+    190.91,
+    89.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "column",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    322.32,
+    145.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "column",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    442.32,
+    229.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "column",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    202.32,
+    89.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "bar",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    12.94,
+    33.09,
+    329.78,
+    132.92
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "bar",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    12.94,
+    33.09,
+    449.78,
+    216.92
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "bar",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    12.94,
+    33.09,
+    209.78,
+    76.92
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "line",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    322.32,
+    145.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "line",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    442.32,
+    229.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "line",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    202.32,
+    89.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "lineMarkers",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    322.32,
+    145.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "lineMarkers",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    442.32,
+    229.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "lineMarkers",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    202.32,
+    89.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "area",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    320.04,
+    145.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "area",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    440.04,
+    229.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "area",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    200.04,
+    89.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "scatter",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    320.04,
+    167.91
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "scatter",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    440.04,
+    251.91
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "scatter",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    200.04,
+    111.91
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "scatterLines",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    320.04,
+    167.91
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "scatterLines",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    440.04,
+    251.91
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "scatterLines",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    200.04,
+    111.91
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "columnStacked",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    322.32,
+    145.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "columnStacked",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 10.0,
+    "MinorUnit": 2.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    442.32,
+    229.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "columnStacked",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -80.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 20.0,
+    "MinorUnit": 4.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.68,
+    33.09,
+    202.32,
+    89.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "columnStacked100",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": -1.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    34.09,
+    33.09,
+    310.91,
+    145.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "columnStacked100",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": -1.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    34.09,
+    33.09,
+    430.91,
+    229.03
+   ]
+  },
+  {
+   "data": "allneg",
+   "kind": "columnStacked100",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": -1.0,
+    "MaximumScale": 0.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    34.09,
+    33.09,
+    190.91,
+    89.03
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "column",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    313.61,
+    132.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "column",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    433.61,
+    216.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "column",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.002,
+    "MinorUnit": 0.0004,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    193.61,
+    76.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "bar",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.002,
+    "MinorUnit": 0.0004,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    321.62,
+    132.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "bar",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    441.62,
+    216.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "bar",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.002,
+    "MinorUnit": 0.0004,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    201.62,
+    76.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "line",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    313.61,
+    132.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "line",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    433.61,
+    216.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "line",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.002,
+    "MinorUnit": 0.0004,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    193.61,
+    76.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "lineMarkers",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    313.61,
+    132.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "lineMarkers",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    433.61,
+    216.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "lineMarkers",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.002,
+    "MinorUnit": 0.0004,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    193.61,
+    76.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "area",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    311.33,
+    132.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "area",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    431.33,
+    216.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "area",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.002,
+    "MinorUnit": 0.0004,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    191.33,
+    76.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "scatter",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    311.33,
+    155.79
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "scatter",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    431.33,
+    239.79
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "scatter",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.002,
+    "MinorUnit": 0.0004,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    191.33,
+    99.79
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "scatterLines",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    311.33,
+    155.79
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "scatterLines",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    431.33,
+    239.79
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "scatterLines",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.002,
+    "MinorUnit": 0.0004,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    191.33,
+    99.79
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "columnStacked",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    313.61,
+    132.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "columnStacked",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.001,
+    "MinorUnit": 0.0002,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    433.61,
+    216.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "columnStacked",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 0.01,
+    "MajorUnit": 0.002,
+    "MinorUnit": 0.0004,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    193.61,
+    76.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "columnStacked100",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    313.67,
+    132.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "columnStacked100",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    433.67,
+    216.92
+   ]
+  },
+  {
+   "data": "decimals",
+   "kind": "columnStacked100",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    193.67,
+    76.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "column",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    311.39,
+    132.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "column",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    431.39,
+    216.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "column",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    191.39,
+    76.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "bar",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    318.23,
+    132.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "bar",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    438.23,
+    216.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "bar",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    198.23,
+    76.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "line",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    311.39,
+    132.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "line",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    431.39,
+    216.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "line",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    191.39,
+    76.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "lineMarkers",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    311.39,
+    132.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "lineMarkers",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    431.39,
+    216.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "lineMarkers",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    191.39,
+    76.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "area",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    309.11,
+    132.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "area",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    429.11,
+    216.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "area",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    189.11,
+    76.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "scatter",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    309.11,
+    155.79
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "scatter",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    429.11,
+    239.79
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "scatter",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    189.11,
+    99.79
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "scatterLines",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    309.11,
+    155.79
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "scatterLines",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    429.11,
+    239.79
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "scatterLines",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    189.11,
+    99.79
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "columnStacked",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    311.39,
+    132.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "columnStacked",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    431.39,
+    216.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "columnStacked",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 25000.0,
+    "MajorUnit": 5000.0,
+    "MinorUnit": 1000.0,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    33.61,
+    33.09,
+    191.39,
+    76.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "columnStacked100",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    313.67,
+    132.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "columnStacked100",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    433.67,
+    216.92
+   ]
+  },
+  {
+   "data": "large",
+   "kind": "columnStacked100",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    193.67,
+    76.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "column",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 99.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    313.61,
+    132.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "column",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 99.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    433.61,
+    216.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "column",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 99.0,
+    "MaximumScale": 105.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    200.51,
+    76.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "bar",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 99.0,
+    "MaximumScale": 105.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    322.79,
+    132.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "bar",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 99.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    439.34,
+    216.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "bar",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 99.0,
+    "MaximumScale": 105.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    202.79,
+    76.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "line",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 99.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    313.61,
+    132.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "line",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 99.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    433.61,
+    216.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "line",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 99.0,
+    "MaximumScale": 105.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    200.51,
+    76.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "lineMarkers",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 99.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    313.61,
+    132.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "lineMarkers",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 99.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    433.61,
+    216.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "lineMarkers",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 99.0,
+    "MaximumScale": 105.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    200.51,
+    76.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "area",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 99.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    311.33,
+    132.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "area",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 99.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    431.33,
+    216.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "area",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 99.0,
+    "MaximumScale": 105.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    198.23,
+    76.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "scatter",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 100.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    311.33,
+    155.79
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "scatter",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 100.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    431.33,
+    239.79
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "scatter",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 100.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    191.33,
+    99.79
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "scatterLines",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 100.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    311.33,
+    155.79
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "scatterLines",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 100.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    431.33,
+    239.79
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "scatterLines",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 100.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    191.33,
+    99.79
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "columnStacked",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 99.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    313.61,
+    132.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "columnStacked",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 99.5,
+    "MaximumScale": 104.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.39,
+    33.09,
+    433.61,
+    216.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "columnStacked",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 99.0,
+    "MaximumScale": 105.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    24.49,
+    33.09,
+    200.51,
+    76.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "columnStacked100",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    313.67,
+    132.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "columnStacked100",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    433.67,
+    216.92
+   ]
+  },
+  {
+   "data": "narrow",
+   "kind": "columnStacked100",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    193.67,
+    76.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "column",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "column",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "column",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    202.73,
+    76.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "bar",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    327.35,
+    132.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "bar",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    447.35,
+    216.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "bar",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    207.35,
+    76.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "line",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "line",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "line",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    202.73,
+    76.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "lineMarkers",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "lineMarkers",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "lineMarkers",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    202.73,
+    76.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "area",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    320.45,
+    132.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "area",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    440.45,
+    216.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "area",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    200.45,
+    76.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "scatter",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    320.45,
+    155.79
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "scatter",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    440.45,
+    239.79
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "scatter",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    200.45,
+    99.79
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "scatterLines",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    320.45,
+    155.79
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "scatterLines",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    440.45,
+    239.79
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "scatterLines",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    200.45,
+    99.79
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "columnStacked",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "columnStacked",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "columnStacked",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    202.73,
+    76.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "columnStacked100",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    313.67,
+    132.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "columnStacked100",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    433.67,
+    216.92
+   ]
+  },
+  {
+   "data": "zero",
+   "kind": "columnStacked100",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    193.67,
+    76.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "column",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "column",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "column",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    209.63,
+    76.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "bar",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    323.9,
+    132.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "bar",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    443.9,
+    216.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "bar",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    207.35,
+    76.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "line",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "line",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "line",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    209.63,
+    76.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "lineMarkers",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "lineMarkers",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "lineMarkers",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    209.63,
+    76.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "area",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    320.45,
+    132.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "area",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    440.45,
+    216.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "area",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    207.35,
+    76.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "scatter",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    320.45,
+    155.79
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "scatter",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    440.45,
+    239.79
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "scatter",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    200.45,
+    99.79
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "scatterLines",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    320.45,
+    155.79
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "scatterLines",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    440.45,
+    239.79
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "scatterLines",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    200.45,
+    99.79
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "columnStacked",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "columnStacked",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 3.5,
+    "MajorUnit": 0.5,
+    "MinorUnit": 0.1,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "columnStacked",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 4.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    209.63,
+    76.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "columnStacked100",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    313.67,
+    132.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "columnStacked100",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    433.67,
+    216.92
+   ]
+  },
+  {
+   "data": "grades",
+   "kind": "columnStacked100",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    193.67,
+    76.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "column",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "column",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "column",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    202.73,
+    76.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "bar",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    327.35,
+    132.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "bar",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    447.35,
+    216.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "bar",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    15.37,
+    33.09,
+    207.35,
+    76.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "line",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "line",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "line",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    202.73,
+    76.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "lineMarkers",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "lineMarkers",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "lineMarkers",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    202.73,
+    76.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "area",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    320.45,
+    132.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "area",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    440.45,
+    216.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "area",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    200.45,
+    76.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "scatter",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    320.45,
+    155.79
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "scatter",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    440.45,
+    239.79
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "scatter",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    200.45,
+    99.79
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "scatterLines",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    320.45,
+    155.79
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "scatterLines",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 1.0,
+    "MinorUnit": 0.2,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    440.45,
+    239.79
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "scatterLines",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 8.0,
+    "MajorUnit": 2.0,
+    "MinorUnit": 0.4,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "legend": "none",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    200.45,
+    99.79
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "columnStacked",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    322.73,
+    132.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "columnStacked",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    442.73,
+    216.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "columnStacked",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    22.27,
+    33.09,
+    202.73,
+    76.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "columnStacked100",
+   "size": [
+    360,
+    216
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    313.67,
+    132.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "columnStacked100",
+   "size": [
+    480,
+    300
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.1,
+    "MinorUnit": 0.02,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    433.67,
+    216.92
+   ]
+  },
+  {
+   "data": "percent",
+   "kind": "columnStacked100",
+   "size": [
+    240,
+    160
+   ],
+   "val": {
+    "MinimumScale": 0.0,
+    "MaximumScale": 1.0,
+    "MajorUnit": 0.2,
+    "MinorUnit": 0.04,
+    "HasMajorGridlines": true,
+    "HasMinorGridlines": false
+   },
+   "cat": {
+    "MinimumScale": null,
+    "MaximumScale": null,
+    "MajorUnit": null,
+    "MinorUnit": null,
+    "HasMajorGridlines": false,
+    "HasMinorGridlines": false
+   },
+   "legend": "b",
+   "title": true,
+   "plot": [
+    31.33,
+    33.09,
+    193.67,
+    76.92
+   ]
+  }
+ ]
+}

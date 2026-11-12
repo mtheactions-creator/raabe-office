@@ -4,10 +4,10 @@
 // chart instead of the shape pane. The chart part is read into the chart engine's model, changed in place and written
 // back as one undo step (the slide and the chart part, as chartops.ts does).
 
-import { applyStyle, chartButtons, chartElements, chartStyles, elementName, formatPane, styleIndex, type ChartElement } from "@raabe/chart-ui";
+import { applyStyle, chartButtons, chartElements, chartStyles, choiceLabel, elementEntries, elementName, formatPane, styleIndex, type ChartElement } from "@raabe/chart-ui";
 import { renderChart, seriesName, type ChartModel } from "@raabe/charts";
 import { chartFromXml, chartToXml } from "@raabe/ooxml";
-import { TaskPane, h, showDialog, type Control } from "@raabe/shell";
+import { TaskPane, h, showDialog, type Control, type MenuEntry } from "@raabe/shell";
 import type { PresentApp } from "./app";
 
 const EMU_CM = 360000;
@@ -190,9 +190,36 @@ export function presentChartUi(app: PresentApp) {
     } as Control;
   }
 
+  /**
+   * Diagrammentwurf > Diagrammelement hinzufügen: the shared element list (Step 12), as RaabeCalc and RaabeWrite build
+   * it: every entry works, Gitternetzlinien with its four lines (horizontal and vertical, major and minor) each on its own.
+   */
+  function elementsMenu(): MenuEntry[] {
+    const m = selected();
+    if (!m) return [];
+    return elementEntries(m, true).map((e): MenuEntry => {
+      if (e.disabled && !e.choices.length) return { label: e.label, submenu: [], disabled: true };
+      return {
+        label: e.label, disabled: e.disabled,
+        submenu: () => {
+          const cur = selected() ?? m;
+          const items: MenuEntry[] = [];
+          if (e.none) items.push({ label: "Keine", checked: !e.on(cur), run: () => edit(cur, (x) => e.toggle(x, false)) });
+          for (const ch of e.choices) {
+            const isOn = ch.on(cur);
+            items.push({ label: choiceLabel(ch, true), checked: isOn, run: () => edit(cur, (x) => ch.set(x, ch.check ? !isOn : true)) });
+          }
+          items.push("-", { label: e.more, run: () => { element = e.pane(cur); showPane(cur); } });
+          return items;
+        },
+      };
+    });
+  }
+
   return {
     sync,
     styleTiles,
+    elementsMenu,
     /** Objekt formatieren... with a chart selected: the chart's Format pane (Diagrammbereich, or the chosen element). */
     openPane: (name?: string): boolean => {
       const m = selected();

@@ -14,7 +14,7 @@ import { boxControls, sizeSections, textSections } from "./panetext";
 /** A chart element as Excel's Diagrammelemente list names them. */
 export type ChartElement =
   | { kind: "chart" } | { kind: "plot" } | { kind: "title" } | { kind: "legend" }
-  | { kind: "valAxis" } | { kind: "catAxis" } | { kind: "valAxis2" } | { kind: "majorGrid" } | { kind: "minorGrid" } | { kind: "catGrid" }
+  | { kind: "valAxis" } | { kind: "catAxis" } | { kind: "valAxis2" } | { kind: "majorGrid" } | { kind: "minorGrid" } | { kind: "catGrid" } | { kind: "catMinorGrid" }
   | { kind: "axisTitle"; axis: "cat" | "val" } | { kind: "series"; index: number } | { kind: "point"; index: number; point: number } | { kind: "labels" }
   | { kind: "trend"; index: number } | { kind: "errorBars"; index: number };
 
@@ -31,7 +31,9 @@ export function elementName(m: ChartModel, e: ChartElement): string {
     case "valAxis2": return bar ? "Sekundär Horizontal (Wert) Achse" : "Sekundär Vertikal (Wert) Achse";
     case "majorGrid": return `${sc || !bar ? "Vertikal" : "Horizontal"} (Wert) Achse Hauptgitternetz`;
     case "minorGrid": return `${sc || !bar ? "Vertikal" : "Horizontal"} (Wert) Achse Hilfsgitternetz`;
-    case "catGrid": return `${bar ? "Vertikal" : "Horizontal"} (Kategorie) Achse Hauptgitternetz`;
+    // A scatter chart's X axis is a value axis: Excel names its gridlines "Horizontal (Wert) Achse ...".
+    case "catGrid": return sc ? "Horizontal (Wert) Achse Hauptgitternetz" : `${bar ? "Vertikal" : "Horizontal"} (Kategorie) Achse Hauptgitternetz`;
+    case "catMinorGrid": return sc ? "Horizontal (Wert) Achse Hilfsgitternetz" : `${bar ? "Vertikal" : "Horizontal"} (Kategorie) Achse Hilfsgitternetz`;
     case "axisTitle": return e.axis === "val" ? "Vertikal (Wert) Achse Titel" : "Horizontal (Kategorie) Achse Titel";
     case "series": return `Reihe "${seriesName(m.series[e.index], e.index)}"`;
     case "point": {
@@ -48,13 +50,13 @@ export function elementName(m: ChartModel, e: ChartElement): string {
 const PANE_TITLE: Record<ChartElement["kind"], string> = {
   chart: "Diagrammbereich formatieren", plot: "Zeichnungsfläche formatieren", title: "Diagrammtitel formatieren", legend: "Legende formatieren",
   valAxis: "Achse formatieren", catAxis: "Achse formatieren", valAxis2: "Achse formatieren", majorGrid: "Hauptgitternetz formatieren", minorGrid: "Hilfsgitternetz formatieren",
-  catGrid: "Hauptgitternetz formatieren", axisTitle: "Achsentitel formatieren", series: "Datenreihen formatieren", point: "Datenpunkt formatieren",
+  catGrid: "Hauptgitternetz formatieren", catMinorGrid: "Hilfsgitternetz formatieren", axisTitle: "Achsentitel formatieren", series: "Datenreihen formatieren", point: "Datenpunkt formatieren",
   labels: "Datenbeschriftungen formatieren", trend: "Trendlinie formatieren", errorBars: "Fehlerindikatoren formatieren",
 };
 
 const OPTIONS: Record<ChartElement["kind"], string> = {
   chart: "Diagrammoptionen", plot: "Zeichnungsflächenoptionen", title: "Titeloptionen", legend: "Legendenoptionen", valAxis: "Achsenoptionen",
-  catAxis: "Achsenoptionen", valAxis2: "Achsenoptionen", majorGrid: "Hauptgitternetz-Optionen", minorGrid: "Hilfsgitternetz-Optionen", catGrid: "Hauptgitternetz-Optionen",
+  catAxis: "Achsenoptionen", valAxis2: "Achsenoptionen", majorGrid: "Hauptgitternetz-Optionen", minorGrid: "Hilfsgitternetz-Optionen", catGrid: "Hauptgitternetz-Optionen", catMinorGrid: "Hilfsgitternetz-Optionen",
   axisTitle: "Titeloptionen", series: "Datenreihenoptionen", point: "Datenreihenoptionen", labels: "Beschriftungsoptionen", trend: "Trendlinienoptionen", errorBars: "Fehlerindikatoroptionen",
 };
 
@@ -82,6 +84,7 @@ export function chartElements(m: ChartModel): ChartElement[] {
     if (m.gridlines) out.push({ kind: "majorGrid" });
     if (m.format?.minorGrid?.show) out.push({ kind: "minorGrid" });
     if (m.format?.catGrid?.show) out.push({ kind: "catGrid" });
+    if (m.format?.catMinorGrid?.show) out.push({ kind: "catMinorGrid" });
   }
   return out;
 }
@@ -103,6 +106,7 @@ export function elementOfPart(part: string | undefined, current?: ChartElement):
     case "grid": return { kind: "majorGrid" };
     case "minorGrid": return { kind: "minorGrid" };
     case "catGrid": return { kind: "catGrid" };
+    case "catMinorGrid": return { kind: "catMinorGrid" };
     case "axisTitle": return { kind: "axisTitle", axis: a === "val" ? "val" : "cat" };
     case "series": {
       const index = Number(a);
@@ -167,6 +171,7 @@ export function slot(m: ChartModel, e: ChartElement, create: boolean): Fmt | und
     case "majorGrid": return get("majorGrid");
     case "minorGrid": return get("minorGrid");
     case "catGrid": return get("catGrid");
+    case "catMinorGrid": return get("catMinorGrid");
     case "labels": return get("dataLabels");
     case "axisTitle": {
       if (!f) return undefined;
@@ -249,7 +254,7 @@ export function formatPane(m: ChartModel, e: ChartElement, outer: PaneHost): Pan
   const sk = series?.kind ?? m.kind;
   const fam = kindInfo(sk).family;
   const lineKind = (fam === "line" && !kindInfo(sk).d3) || fam === "scatter" || (fam === "radar" && sk !== "radarFilled") || fam === "stock";
-  const isLine = ["valAxis", "catAxis", "valAxis2", "majorGrid", "minorGrid", "catGrid", "trend", "errorBars"].includes(e.kind) || ((e.kind === "series" || e.kind === "point") && lineKind);
+  const isLine = ["valAxis", "catAxis", "valAxis2", "majorGrid", "minorGrid", "catGrid", "catMinorGrid", "trend", "errorBars"].includes(e.kind) || ((e.kind === "series" || e.kind === "point") && lineKind);
   const auto = autoColor(m, e);
   const tabs: PaneTab[] = [{ id: "fill", label: "Füllung und Linie", icon: "pane-fill-line", sections: () => fillAndLine(m, e, host, target, isLine, lineKind, auto) }];
   // Effekte: Schatten, Leuchten and Weiche Kanten everywhere; 3D-Format on areas and axes (Excel's axis pane has it,

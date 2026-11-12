@@ -127,8 +127,9 @@ export function filterXml(xml: string, m: ChartModel, full: Map<string, string>)
       + `<c:txPr><a:bodyPr rot="0" spcFirstLastPara="1" vertOverflow="ellipsis" vert="horz" wrap="square" anchor="ctr" anchorCtr="1"/><a:lstStyle/><a:p><a:pPr><a:defRPr sz="900" b="0" i="0" u="none" strike="noStrike" kern="1200" baseline="0"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="65000"/><a:lumOff val="35000"/></a:schemeClr></a:solidFill><a:latin typeface="+mn-lt"/><a:ea typeface="+mn-ea"/><a:cs typeface="+mn-cs"/></a:defRPr></a:pPr><a:endParaRPr lang="de-DE"/></a:p></c:txPr></c:dTable>`;
     if (sp > 0 && endPlot > 0) xml = xml.slice(0, sp) + table + xml.slice(sp);
   }
-  // Primäres Hilfsgitter of the category axis.
-  if (m.format?.catMinorGrid?.show) {
+  // Primäres Hilfsgitter of the category axis: the writer puts it in now (with its own line); this only fills it in for
+  // XML that lacks it.
+  if (m.format?.catMinorGrid?.show && !/<c:catAx>(?:(?!<\/c:catAx>)[\s\S])*<c:minorGridlines>/.test(xml)) {
     xml = xml.replace(/(<c:catAx>[\s\S]*?<c:axPos val="\w"\/>(?:<c:majorGridlines>[\s\S]*?<\/c:majorGridlines>)?)/, (a) =>
       a + '<c:minorGridlines><c:spPr><a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="5000"/><a:lumOff val="95000"/></a:schemeClr></a:solidFill><a:round/></a:ln><a:effectLst/></c:spPr></c:minorGridlines>');
   }

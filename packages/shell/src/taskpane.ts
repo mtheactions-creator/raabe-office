@@ -17,6 +17,8 @@ export type PaneControl =
       type: "number"; label: string; value: () => number | null; set: (v: number) => void;
       /** Shown after the number ("%", " pt", "°"); the box shows it as Excel does. */
       unit?: string; min?: number; max?: number; step?: number; decimals?: number; disabled?: () => boolean;
+      /** The value unrounded, with at least this many decimals ("140,0" as Excel's axis bounds). */
+      exact?: number;
       /** A slider beside the box (Transparenz). */
       slider?: boolean;
       /** "Automatisch" / "Zurücksetzen" button beside the box (axis bounds). */
@@ -212,13 +214,19 @@ export class TaskPane {
       }
       case "number": {
         const v = c.value();
-        const fmt = (x: number | null) => (x === null ? "" : (c.decimals !== undefined ? x.toFixed(c.decimals) : String(Math.round(x * 100) / 100)).replace(".", ",") + (c.unit ?? ""));
+        const exactText = (x: number, d: number) => {
+          const s = String(Number(x.toPrecision(12)));
+          const dec = s.includes(".") ? s.split(".")[1].length : 0;
+          return s.includes("e") ? s : dec >= d ? s : x.toFixed(d);
+        };
+        const fmt = (x: number | null) => (x === null ? "" : (c.exact !== undefined ? exactText(x, c.exact) : c.decimals !== undefined ? x.toFixed(c.decimals) : String(Math.round(x * 100) / 100)).replace(".", ",") + (c.unit ?? ""));
         const input = h("input", { type: "text", class: "tp-num", value: fmt(v), disabled: dis }) as HTMLInputElement;
         const commit = () => {
           const n = parseFloat(input.value.replace(",", ".").replace(/[^\d.-]/g, ""));
           if (!Number.isFinite(n)) { input.value = fmt(c.value()); return; }
           // Enter commits, and Chromium fires change after it too: the same text is not set twice (one undo step).
-          if (input.dataset.done === input.value || n === c.value()) { input.value = fmt(n); return; }
+          // The shown automatic value typed in again fixes it (Excel: the bound is then set, "Zurücksetzen" appears).
+          if (input.dataset.done === input.value || (n === c.value() && !c.reset?.isAuto())) { input.value = fmt(n); return; }
           input.dataset.done = input.value;
           c.set(Math.max(c.min ?? -Infinity, Math.min(c.max ?? Infinity, n)));
           changed();

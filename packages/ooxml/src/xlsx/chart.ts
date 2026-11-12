@@ -246,7 +246,8 @@ const AX_CAT = 500000001, AX_VAL = 500000002, AX_CAT2 = 500000003, AX_VAL2 = 500
 
 function catAx(pos: string, titleText: string | undefined, f?: ChartFormat, id = AX_CAT, cross = AX_VAL, deleted = false): string {
   const o: AxisOptions | undefined = deleted ? { visible: false } : f?.catAxis;
-  const grid = f?.catGrid?.show ? gridXml("majorGridlines", f.catGrid, GRID_LINE) : "";
+  const grid = (f?.catGrid?.show ? gridXml("majorGridlines", f.catGrid, GRID_LINE) : "")
+    + (f?.catMinorGrid?.show ? gridXml("minorGridlines", f.catMinorGrid, MINOR_GRID_LINE) : "");
   const numFmt = o?.numFmt ? `<c:numFmt formatCode="${esc(o.numFmt)}" sourceLinked="0"/>` : '<c:numFmt formatCode="General" sourceLinked="1"/>';
   const date = o?.axisType === "date";
   const tag = date ? "c:dateAx" : "c:catAx";
@@ -266,9 +267,11 @@ function catAx(pos: string, titleText: string | undefined, f?: ChartFormat, id =
  * axis' own options, `crossing` those of the other axis (where this one crosses it), `f` the chart's format.
  */
 function valAx(fmt: string | null, id: number, cross: number, pos: string, titleText: string | undefined, between: "between" | "midCat", line: boolean, grid: boolean,
-  o?: AxisOptions, crossing?: AxisOptions, f?: ChartFormat, titleFmt?: ElementFormat, grids = true): string {
-  const majorGrid = grid ? gridXml("majorGridlines", grids ? f?.majorGrid : undefined, GRID_LINE) : "";
-  const minorGrid = grids && f?.minorGrid?.show ? gridXml("minorGridlines", f.minorGrid, MINOR_GRID_LINE) : "";
+  o?: AxisOptions, crossing?: AxisOptions, f?: ChartFormat, titleFmt?: ElementFormat, grids = true,
+  gridFmt?: { major?: ElementFormat; minor?: ElementFormat & { show?: boolean } }): string {
+  const majorGrid = grid ? gridXml("majorGridlines", gridFmt ? gridFmt.major : grids ? f?.majorGrid : undefined, GRID_LINE) : "";
+  const minorGrid = gridFmt ? (gridFmt.minor?.show ? gridXml("minorGridlines", gridFmt.minor, MINOR_GRID_LINE) : "")
+    : grids && f?.minorGrid?.show ? gridXml("minorGridlines", f.minorGrid, MINOR_GRID_LINE) : "";
   const autoLine = line ? `<a:ln w="9525" cap="flat" cmpd="sng" algn="ctr"><a:solidFill><a:schemeClr val="tx1"><a:lumMod val="25000"/><a:lumOff val="75000"/></a:schemeClr></a:solidFill><a:round/></a:ln>` : NONE_LINE;
   const numFmt = o?.numFmt ? `<c:numFmt formatCode="${esc(o.numFmt)}" sourceLinked="0"/>` : fmt === null ? "" : `<c:numFmt formatCode="${esc(fmt)}" sourceLinked="1"/>`;
   const units = (o?.majorUnit !== undefined ? `<c:majorUnit val="${o.majorUnit}"/>` : "") + (o?.minorUnit !== undefined ? `<c:minorUnit val="${o.minorUnit}"/>` : "");
@@ -358,7 +361,7 @@ function plotAreaGroups(m: ChartModel): string {
   if (main.family === "scatter" || main.family === "bubble") {
     const cat = m.series[0]?.cat;
     const xFmt = cat && cat.cache.some((v) => typeof v === "string") ? null : cat?.format ?? "General";
-    const primary = valAx(xFmt, AX_CAT, AX_VAL, "b", t.cat, "midCat", true, m.gridlines, f?.catAxis, f?.valAxis, f, at?.cat, false)
+    const primary = valAx(xFmt, AX_CAT, AX_VAL, "b", t.cat, "midCat", true, !!f?.catGrid?.show, f?.catAxis, f?.valAxis, f, at?.cat, false, { major: f?.catGrid, minor: f?.catMinorGrid })
       + valAx(vFmt, AX_VAL, AX_CAT, "l", t.val, "midCat", true, m.gridlines, f?.valAxis, f?.catAxis, f, at?.val);
     const g2 = groups.find((g) => g.secondary);
     if (!g2) return out + primary;
@@ -425,7 +428,7 @@ function plotArea(m: ChartModel): string {
       const style = m.kind === "scatterSmooth" ? "smoothMarker" : "lineMarker";
       // Scatter: the X axis is the category axis' options, the Y axis the value axis'.
       return `<c:scatterChart><c:scatterStyle val="${style}"/><c:varyColors val="0"/>${series}${groupLabels}${ax}</c:scatterChart>`
-        + valAx(xFmt, AX_CAT, AX_VAL, "b", t.cat, "midCat", true, m.gridlines, f?.catAxis, f?.valAxis, f, at?.cat, false)
+        + valAx(xFmt, AX_CAT, AX_VAL, "b", t.cat, "midCat", true, !!f?.catGrid?.show, f?.catAxis, f?.valAxis, f, at?.cat, false, { major: f?.catGrid, minor: f?.catMinorGrid })
         + valAx(vFmt, AX_VAL, AX_CAT, "l", t.val, "midCat", true, m.gridlines, f?.valAxis, f?.catAxis, f, at?.val);
     }
   }
@@ -1119,7 +1122,8 @@ function plainChartFromXml(xml: string, anchor?: { from: CellAnchor; to: CellAnc
       const mg = find(xml, ax, "c:majorGridlines"), ng = find(xml, ax, "c:minorGridlines");
       if (isVal && mg) { const g = readShape(rd, find(xml, mg, "c:spPr")); const l = g.line; if ((l && l.type !== "auto") || g.effects) put("majorGrid", { ...(l && l.type !== "auto" ? { line: l } : {}), ...(g.effects ? { effects: g.effects } : {}) }); }
       if (isVal && ng) put("minorGrid", { show: true, ...readShape(rd, find(xml, ng, "c:spPr")) });
-      if (!isVal && !scatter && mg) put("catGrid", { show: true, ...readShape(rd, find(xml, mg, "c:spPr")) });
+      if (!isVal && mg) put("catGrid", { show: true, ...readShape(rd, find(xml, mg, "c:spPr")) });
+      if (!isVal && ng) put("catMinorGrid", { show: true, ...readShape(rd, find(xml, ng, "c:spPr")) });
     }
     // Sekundärachse: the value axis on the right (bars: at the top) of a Verbund chart.
     const sec = !scatter && !volume ? axesEls.find((a) => a.name === "c:valAx" && ["r", "t"].includes(val(xml, find(xml, a, "c:axPos")) ?? "")) : undefined;
