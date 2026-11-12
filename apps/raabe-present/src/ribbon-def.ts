@@ -48,7 +48,7 @@ export interface RibbonContext {
     animStart: MenuEntry[]; colors: () => MenuEntry[]; fonts: () => MenuEntry[]; themeEffects: () => MenuEntry[]; underline: MenuEntry[];
     outlineWeight: MenuEntry[]; outlineDash: MenuEntry[]; effects: MenuEntry[]; quickStyles: () => MenuEntry[]; zoomFit: MenuEntry[]; equations: () => MenuEntry[]; sounds: () => MenuEntry[]; windows: () => MenuEntry[]; monitors: () => MenuEntry[]; smartArtConvert: () => MenuEntry[]; triggers: () => MenuEntry[]; zooms: () => MenuEntry[]; bgStyles: () => MenuEntry[]; inkAdd: () => MenuEntry[]; customShows: () => MenuEntry[];
   };
-  panels: { newSlide: Popup; layout: Popup; shapes: Popup; themes: Popup; transitions: Popup; animations: Popup; table: Popup; chart: Popup; addAnim: Popup; wordArt: Popup; quickStyles: Popup };
+  panels: { newSlide: Popup; layout: Popup; shapes: Popup; themes: Popup; variants: Popup; transitions: Popup; animations: Popup; table: Popup; chart: Popup; addAnim: Popup; wordArt: Popup; quickStyles: Popup };
   spin: {
     transDuration: { value(): string; commit(v: string): void; step(d: 1 | -1): void };
     transAfter: { value(): string; commit(v: string): void; step(d: 1 | -1): void };
@@ -163,7 +163,7 @@ export function ribbonTabs(ctx: RibbonContext): Tab[] {
       groups: [
         // PowerPoint shows the designs as a gallery in the ribbon and Anpassen as five large buttons (UI screenshot, D-072).
         { id: "themes", label: "Designs", key: "ZT", icon: "themes", controls: [ctx.designTiles()], smaller: [[panel("design.themes", "G", "large", p.themes)]] },
-        { id: "variants", label: "Anpassen", key: "ZV", icon: "colors", controls: [b("design.variants", "V", "large"), lazy("design.colors", "F", "large", m.colors), lazy("design.fonts", "6", "large", m.fonts), lazy("design.effects", "E", "large", m.themeEffects), lazy("design.background", "R", "large", m.bgStyles)] },
+        { id: "variants", label: "Anpassen", key: "ZV", icon: "colors", controls: [panel("design.variants", "V", "large", p.variants), lazy("design.colors", "F", "large", m.colors), lazy("design.fonts", "6", "large", m.fonts), lazy("design.effects", "E", "large", m.themeEffects), lazy("design.background", "R", "large", m.bgStyles)] },
         { id: "customize", label: "Folien", key: "ZA", icon: "page-size", controls: [panel("slide.layout", "OA", "large", p.layout), dd("design.slideSize", "Ö", "large", m.slideSize)] },
       ],
     },

@@ -48,7 +48,7 @@ export function selectedKind(app: PresentApp): ChartKind {
 }
 
 /** A Schnelllayout picture (D-164): sample data in the chart's type with the layout's title, legend, labels, gridlines. */
-export function layoutPicture(kind: ChartKind, n: number, w = 56, hh = 44): SVGSVGElement {
+export function layoutPicture(kind: ChartKind, n: number, w = 56, hh = 44, accents?: string[]): SVGSVGElement {
   const fam: Record<string, string> = { column: "column", columnStacked: "column", bar: "bar", barStacked: "bar", line: "line", lineMarkers: "lineMarkers", area: "area", pie: "pie", doughnut: "pie", scatter: "scatter" };
   const l = (QUICK_LAYOUTS[fam[kind] ?? "column"] ?? QUICK_LAYOUTS.column ?? [])[n - 1];
   const s = (name: string, v: number[]) => ({ name: { text: name }, cat: { cache: ["a", "b", "c"] }, val: { cache: v } });
@@ -61,7 +61,8 @@ export function layoutPicture(kind: ChartKind, n: number, w = 56, hh = 44): SVGS
     m.axisTitles = { ...(l.catTitle ? { cat: "Achse" } : {}), ...(l.valTitle ? { val: "Achse" } : {}) };
     m.gridlines = !!l.majorGrid;
   }
-  const svg = renderChart(m, w * 3, hh * 3);
+  // In the presentation's accents, as the charts on its slides (D-195).
+  const svg = renderChart(m, w * 3, hh * 3, accents ? { accents } : {});
   svg.setAttribute("viewBox", `0 0 ${w * 3} ${hh * 3}`);
   svg.setAttribute("width", String(w));
   svg.setAttribute("height", String(hh));

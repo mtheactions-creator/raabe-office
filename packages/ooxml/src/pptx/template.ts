@@ -29,6 +29,32 @@ export interface DesignSpec {
   titleColor?: string;
   /** Light text on the dark colours (colour map bg1 = dk1, tx1 = lt1). */
   dark?: boolean;
+  /** The theme's effect style (a:fmtScheme XML, D-190); Office's when missing. */
+  effects?: string;
+  /** Artwork of the Titelfolie and Abschnittsüberschrift layouts of our own designs (D-193). */
+  layouts?: { title?: LayoutDesign; section?: LayoutDesign };
+}
+
+/** A layout's own design: shapes behind its placeholders, the master's hidden, its own background and colour map. */
+export interface LayoutDesign {
+  deco?: string;
+  hideMaster?: boolean;
+  /** p:bg inner XML. */
+  background?: string;
+  /** "dark": light text on this layout (a colour map override bg1 = dk1, tx1 = lt1); "light" the other way round. */
+  colors?: "dark" | "light";
+}
+
+/** A layout's colour map element for a design's layout. */
+export function layoutClrMap(l: LayoutDesign | undefined): string {
+  if (!l?.colors) return "<p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr>";
+  const map = l.colors === "dark" ? 'bg1="dk1" tx1="lt1" bg2="dk2" tx2="lt2"' : 'bg1="lt1" tx1="dk1" bg2="lt2" tx2="dk2"';
+  return `<p:clrMapOvr><a:overrideClrMapping ${map} accent1="accent1" accent2="accent2" accent3="accent3" accent4="accent4" accent5="accent5" accent6="accent6" hlink="hlink" folHlink="folHlink"/></p:clrMapOvr>`;
+}
+
+/** Which of a design's layouts a layout type takes (title: Titelfolie, secHead: Abschnittsüberschrift). */
+export function layoutDesignOf(d: DesignSpec, type: string | null): LayoutDesign | undefined {
+  return type === "title" ? d.layouts?.title : type === "secHead" ? d.layouts?.section : undefined;
 }
 
 export const OFFICE_DESIGN: DesignSpec = { name: "Office", colors: OFFICE_2013_THEME, colorName: "Office", major: "Calibri Light", minor: "Calibri", fontName: "Office" };
@@ -161,24 +187,34 @@ export function masterXml(d: DesignSpec): string {
     `<a:lvl${i + 1}pPr marL="${marL}" indent="-228600" algn="l" defTabSz="914400" rtl="0" eaLnBrk="1" latinLnBrk="0" hangingPunct="1"><a:lnSpc><a:spcPct val="90000"/></a:lnSpc><a:spcBef><a:spcPts val="${i === 0 ? 1000 : 500}"/></a:spcBef><a:buFont typeface="Arial" panose="020B0604020202020204" pitchFamily="34" charset="0"/><a:buChar char="•"/>${rpr(BODY_SIZES[i], "mn")}</a:lvl${i + 1}pPr>`).join("") + "</p:bodyStyle>";
   const otherStyle = `<p:otherStyle><a:defPPr><a:defRPr lang="de-DE"/></a:defPPr>${otherLevels()}</p:otherStyle>`;
   const ids = LAYOUTS.map((_, i) => `<p:sldLayoutId id="${2147483649 + i}" r:id="rId${i + 1}"/>`).join("");
-  return `${XML_DECL}<p:sldMaster ${NSDECL}><p:cSld><p:bg>${d.background ?? '<p:bgRef idx="1001"><a:schemeClr val="bg1"/></p:bgRef>'}</p:bg>${spTree((d.masterDeco ?? "") + shapes)}</p:cSld>` +
+  return `${XML_DECL}<p:sldMaster ${NSDECL}><p:cSld><p:bg>${d.background ?? '<p:bgRef idx="1001"><a:schemeClr val="bg1"/></p:bgRef>'}</p:bg>${spTree(renumber(d.masterDeco ?? "", 20) + shapes)}</p:cSld>` +
     (d.dark ? `<p:clrMap bg1="dk1" tx1="lt1" bg2="dk2" tx2="lt2" accent1` : `<p:clrMap bg1="lt1" tx1="dk1" bg2="lt2" tx2="dk2" accent1`) + `="accent1" accent2="accent2" accent3="accent3" accent4="accent4" accent5="accent5" accent6="accent6" hlink="hlink" folHlink="folHlink"/>` +
     `<p:sldLayoutIdLst>${ids}</p:sldLayoutIdLst><p:txStyles>${titleStyle}${bodyStyle}${otherStyle}</p:txStyles></p:sldMaster>`;
 }
 
-function layoutXml(l: (typeof LAYOUTS)[number]): string {
+function layoutXml(l: (typeof LAYOUTS)[number], d: DesignSpec): string {
+  const own = layoutDesignOf(d, l.type);
   let id = 2;
   // PowerPoint numbers the footer placeholders on after the layout's other placeholders.
-  const own = l.ph.filter((p) => !FOOTERS.some((f) => f.type === p.type)).length;
-  const shapes = l.ph.map((p, i) => phXml(id++, FOOTERS.some((f) => f.type === p.type) ? { ...p, name: p.name.replace(/\d+$/, String(i + 1 > own ? i + 1 : own + 1)) } : p, false)).join("");
-  return `${XML_DECL}<p:sldLayout ${NSDECL} type="${l.type}"${l.preserve ? ' preserve="1"' : ""}><p:cSld name="${esc(l.name).split(String.fromCharCode(10)).join("&#xA;")}">${spTree(shapes)}</p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sldLayout>`;
+  const count = l.ph.filter((p) => !FOOTERS.some((f) => f.type === p.type)).length;
+  const shapes = l.ph.map((p, i) => phXml(id++, FOOTERS.some((f) => f.type === p.type) ? { ...p, name: p.name.replace(/\d+$/, String(i + 1 > count ? i + 1 : count + 1)) } : p, false)).join("");
+  // A design's own shapes go behind the placeholders, numbered after them.
+  const deco = own?.deco ? renumber(own.deco, 2 + l.ph.length) : "";
+  return `${XML_DECL}<p:sldLayout ${NSDECL} type="${l.type}"${l.preserve ? ' preserve="1"' : ""}${own?.hideMaster ? ' showMasterSp="0"' : ""}><p:cSld name="${esc(l.name).split(String.fromCharCode(10)).join("&#xA;")}">` +
+    `${own?.background ? `<p:bg>${own.background}</p:bg>` : ""}${spTree(deco + shapes)}</p:cSld>${layoutClrMap(own)}</p:sldLayout>`;
+}
+
+/** Shapes' ids (cNvPr id) numbered from `from` on, in order. */
+export function renumber(shapes: string, from: number): string {
+  let n = from;
+  return shapes.replace(/<p:cNvPr id="\d+"/g, () => `<p:cNvPr id="${n++}"`);
 }
 
 export const LAYOUT_NAMES = LAYOUTS.map((l) => l.name);
 
 /** A design's theme part. */
 export function designTheme(d: DesignSpec): string {
-  return themeXml({ majorFont: d.major, minorFont: d.minor, colors: d.colors as Record<string, string>, name: d.name, colorName: d.colorName ?? d.name, fontName: d.fontName ?? d.name });
+  return themeXml({ majorFont: d.major, minorFont: d.minor, colors: d.colors as Record<string, string>, name: d.name, colorName: d.colorName ?? d.name, fontName: d.fontName ?? d.name }, d.effects);
 }
 
 /** The parts of a new presentation (one Titelfolie), as a package. */
@@ -212,7 +248,7 @@ export function newPptxFiles(design: DesignSpec = OFFICE_DESIGN, now = new Date(
     "ppt/slides/_rels/slide1.xml.rels": `${XML_DECL}<Relationships xmlns="${RELS}"><Relationship Id="rId1" Type="${T}/slideLayout" Target="../slideLayouts/slideLayout1.xml"/></Relationships>`,
   };
   LAYOUTS.forEach((l, i) => {
-    files[`ppt/slideLayouts/slideLayout${i + 1}.xml`] = layoutXml(l);
+    files[`ppt/slideLayouts/slideLayout${i + 1}.xml`] = layoutXml(l, design);
     files[`ppt/slideLayouts/_rels/slideLayout${i + 1}.xml.rels`] = `${XML_DECL}<Relationships xmlns="${RELS}"><Relationship Id="rId1" Type="${T}/slideMaster" Target="../slideMasters/slideMaster1.xml"/></Relationships>`;
   });
   const out: Record<string, Uint8Array> = {};

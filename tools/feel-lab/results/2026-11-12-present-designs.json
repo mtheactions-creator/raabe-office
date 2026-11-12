@@ -1,0 +1,3212 @@
+{
+ "date": "2026-11-12",
+ "designs": [
+  {
+   "name": "Office",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 30642
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 30657
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 30658
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 30654
+    }
+   ],
+   "group": "Office"
+  },
+  {
+   "name": "Raabeschule",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31035
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31046
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31045
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31043
+    }
+   ],
+   "group": "Raabeschule"
+  },
+  {
+   "name": "Raabeschule Band",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31444
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31457
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31461
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31459
+    }
+   ],
+   "group": "Raabeschule"
+  },
+  {
+   "name": "Klar",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31006
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31026
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31024
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31020
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Tafel",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31422
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31434
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31435
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31444
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Wellenband",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31233
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31251
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31250
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31247
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Kreisbögen",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31019
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31031
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31033
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31031
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Keil",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31146
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31160
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31153
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31165
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Punkteraster",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31498
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31509
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31510
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31508
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Schräge Streifen",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31008
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31018
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31019
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31016
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Abendblau",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31858
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31870
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31870
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31884
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Stille",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31175
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31185
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31184
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31185
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Papier",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31509
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31519
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31517
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31542
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Kontrast",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31159
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31172
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31170
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31168
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Minimal",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31057
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31074
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31077
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31082
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Mitternacht",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31764
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31777
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31775
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31801
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Pastell",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 32886
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 32895
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 32897
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 32899
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Konfetti",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 34744
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 34755
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 34752
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 34752
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Mosaik",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 35150
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 35158
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 35163
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 35159
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Rahmen",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31079
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31100
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31092
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31099
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Grundformen",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31293
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31305
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31310
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31309
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Horizont",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31628
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31638
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31634
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31640
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Eckpunkt",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31411
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31426
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31426
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31428
+    }
+   ],
+   "group": "Allgemein"
+  },
+  {
+   "name": "Mathematik",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 33262
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 33275
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 33270
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 33276
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Deutsch",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31979
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31994
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31993
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31986
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Englisch",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31429
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31442
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31444
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31443
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Französisch",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31249
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31266
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31268
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31262
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Latein",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 36376
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 36387
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 36387
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 36395
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Geschichte",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31682
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31698
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31696
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31710
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Erdkunde",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 36096
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 36114
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 36111
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 36100
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Politik-Wirtschaft",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 32547
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 32560
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 32560
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 32563
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Biologie",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31842
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31856
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31857
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31858
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Chemie",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 32011
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 32022
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 32023
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 32030
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Physik",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 36433
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 36446
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 36446
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 36450
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Informatik",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 34921
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 34933
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 34932
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 34958
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Musik",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 32320
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 32331
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 32335
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 32335
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Kunst",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 33181
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 33193
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 33199
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 33202
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Sport",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31593
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31606
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31601
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31605
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Religion",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 32339
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 32352
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 32353
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 32353
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Werte und Normen",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31468
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31479
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31480
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31482
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Darstellendes Spiel",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31875
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31888
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31891
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31904
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Seminarfach",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31551
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31566
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31569
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31564
+    }
+   ],
+   "group": "Fächer"
+  },
+  {
+   "name": "Projektwoche",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31884
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31898
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31897
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31893
+    }
+   ],
+   "group": "Anlässe"
+  },
+  {
+   "name": "Klassenfahrt",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 32157
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 32170
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 32169
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 32170
+    }
+   ],
+   "group": "Anlässe"
+  },
+  {
+   "name": "Elternabend",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31336
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31351
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31349
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31354
+    }
+   ],
+   "group": "Anlässe"
+  },
+  {
+   "name": "Abitur",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31757
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31769
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31769
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31780
+    }
+   ],
+   "group": "Anlässe"
+  },
+  {
+   "name": "Tag der offenen Tür",
+   "variants": [
+    {
+     "variant": 1,
+     "slides": 4,
+     "bytes": 31771
+    },
+    {
+     "variant": 2,
+     "slides": 4,
+     "bytes": 31781
+    },
+    {
+     "variant": 3,
+     "slides": 4,
+     "bytes": 31776
+    },
+    {
+     "variant": 4,
+     "slides": 4,
+     "bytes": 31779
+    }
+   ],
+   "group": "Anlässe"
+  }
+ ],
+ "powerpoint": {
+  "files": [
+   {
+    "design": "Office",
+    "variant": 1,
+    "theme": "Office",
+    "fonts": [
+     "Calibri Light",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 5,
+    "title_layout_shapes": 5,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "4472C4"
+   },
+   {
+    "design": "Office",
+    "variant": 4,
+    "theme": "Office",
+    "fonts": [
+     "Calibri Light",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 5,
+    "title_layout_shapes": 5,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "4472C4"
+   },
+   {
+    "design": "Raabeschule",
+    "variant": 1,
+    "theme": "Raabeschule",
+    "fonts": [
+     "Calibri Light",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 6,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "B3141B"
+   },
+   {
+    "design": "Raabeschule",
+    "variant": 4,
+    "theme": "Raabeschule",
+    "fonts": [
+     "Calibri Light",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 6,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "CC6266"
+   },
+   {
+    "design": "Raabeschule Band",
+    "variant": 1,
+    "theme": "Raabeschule Band",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 7,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "B3141B"
+   },
+   {
+    "design": "Raabeschule Band",
+    "variant": 4,
+    "theme": "Raabeschule Band",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 7,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "BC3036"
+   },
+   {
+    "design": "Klar",
+    "variant": 1,
+    "theme": "Klar",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 6,
+    "title_layout_shapes": 7,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "2F5597"
+   },
+   {
+    "design": "Klar",
+    "variant": 4,
+    "theme": "Klar",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 6,
+    "title_layout_shapes": 7,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "40639F"
+   },
+   {
+    "design": "Tafel",
+    "variant": 1,
+    "theme": "Tafel",
+    "fonts": [
+     "Calibri Light",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 6,
+    "title_layout_shapes": 6,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "F2C14E"
+   },
+   {
+    "design": "Tafel",
+    "variant": 4,
+    "theme": "Tafel",
+    "fonts": [
+     "Calibri Light",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 6,
+    "title_layout_shapes": 6,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "8B6F2D"
+   },
+   {
+    "design": "Wellenband",
+    "variant": 1,
+    "theme": "Wellenband",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 6,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "1F77B4"
+   },
+   {
+    "design": "Wellenband",
+    "variant": 4,
+    "theme": "Wellenband",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 6,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "1F77B4"
+   },
+   {
+    "design": "Kreisbögen",
+    "variant": 1,
+    "theme": "Kreisbögen",
+    "fonts": [
+     "Calibri Light",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 6,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "EF476F"
+   },
+   {
+    "design": "Kreisbögen",
+    "variant": 4,
+    "theme": "Kreisbögen",
+    "fonts": [
+     "Calibri Light",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 6,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "EF476F"
+   },
+   {
+    "design": "Keil",
+    "variant": 1,
+    "theme": "Keil",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 7,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "00897B"
+   },
+   {
+    "design": "Keil",
+    "variant": 4,
+    "theme": "Keil",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 7,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "00897B"
+   },
+   {
+    "design": "Punkteraster",
+    "variant": 1,
+    "theme": "Punkteraster",
+    "fonts": [
+     "Calibri Light",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 27,
+    "title_layout_shapes": 23,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "B5651D"
+   },
+   {
+    "design": "Punkteraster",
+    "variant": 4,
+    "theme": "Punkteraster",
+    "fonts": [
+     "Calibri Light",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 27,
+    "title_layout_shapes": 23,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "B5651D"
+   },
+   {
+    "design": "Schräge Streifen",
+    "variant": 1,
+    "theme": "Schräge Streifen",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 11,
+    "title_layout_shapes": 5,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "7B2CBF"
+   },
+   {
+    "design": "Schräge Streifen",
+    "variant": 4,
+    "theme": "Schräge Streifen",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 11,
+    "title_layout_shapes": 5,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "863DC4"
+   },
+   {
+    "design": "Abendblau",
+    "variant": 1,
+    "theme": "Abendblau",
+    "fonts": [
+     "Calibri Light",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 6,
+    "title_layout_shapes": 21,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "4FC3F7"
+   },
+   {
+    "design": "Abendblau",
+    "variant": 4,
+    "theme": "Abendblau",
+    "fonts": [
+     "Calibri Light",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 6,
+    "title_layout_shapes": 21,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "327D9E"
+   },
+   {
+    "design": "Stille",
+    "variant": 1,
+    "theme": "Stille",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 7,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "5B7F6E"
+   },
+   {
+    "design": "Stille",
+    "variant": 4,
+    "theme": "Stille",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 7,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "5B7F6E"
+   },
+   {
+    "design": "Papier",
+    "variant": 1,
+    "theme": "Papier",
+    "fonts": [
+     "Georgia",
+     "Georgia"
+    ],
+    "layouts": 11,
+    "master_shapes": 9,
+    "title_layout_shapes": 8,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "9C4A2F"
+   },
+   {
+    "design": "Papier",
+    "variant": 4,
+    "theme": "Papier",
+    "fonts": [
+     "Georgia",
+     "Georgia"
+    ],
+    "layouts": 11,
+    "master_shapes": 9,
+    "title_layout_shapes": 8,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "B3745F"
+   },
+   {
+    "design": "Kontrast",
+    "variant": 1,
+    "theme": "Kontrast",
+    "fonts": [
+     "Bahnschrift",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 7,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "FFD400"
+   },
+   {
+    "design": "Kontrast",
+    "variant": 4,
+    "theme": "Kontrast",
+    "fonts": [
+     "Bahnschrift",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 7,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "1A1A1A"
+   },
+   {
+    "design": "Minimal",
+    "variant": 1,
+    "theme": "Minimal",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 6,
+    "title_layout_shapes": 6,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "2B6CB0"
+   },
+   {
+    "design": "Minimal",
+    "variant": 4,
+    "theme": "Minimal",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 6,
+    "title_layout_shapes": 6,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "2B6CB0"
+   },
+   {
+    "design": "Mitternacht",
+    "variant": 1,
+    "theme": "Mitternacht",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 11,
+    "title_layout_shapes": 12,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "7FD1FF"
+   },
+   {
+    "design": "Mitternacht",
+    "variant": 4,
+    "theme": "Mitternacht",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 11,
+    "title_layout_shapes": 12,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "497893"
+   },
+   {
+    "design": "Pastell",
+    "variant": 1,
+    "theme": "Pastell",
+    "fonts": [
+     "Trebuchet MS",
+     "Trebuchet MS"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 9,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "F4A6B7"
+   },
+   {
+    "design": "Pastell",
+    "variant": 4,
+    "theme": "Pastell",
+    "fonts": [
+     "Trebuchet MS",
+     "Trebuchet MS"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 9,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "F4A6B7"
+   },
+   {
+    "design": "Konfetti",
+    "variant": 1,
+    "theme": "Konfetti",
+    "fonts": [
+     "Trebuchet MS",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 27,
+    "title_layout_shapes": 75,
+    "section_layout_shapes": 39,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "E63946"
+   },
+   {
+    "design": "Konfetti",
+    "variant": 4,
+    "theme": "Konfetti",
+    "fonts": [
+     "Trebuchet MS",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 27,
+    "title_layout_shapes": 75,
+    "section_layout_shapes": 39,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "E63946"
+   },
+   {
+    "design": "Mosaik",
+    "variant": 1,
+    "theme": "Mosaik",
+    "fonts": [
+     "Bahnschrift",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 30,
+    "title_layout_shapes": 88,
+    "section_layout_shapes": 98,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "1B998B"
+   },
+   {
+    "design": "Mosaik",
+    "variant": 4,
+    "theme": "Mosaik",
+    "fonts": [
+     "Bahnschrift",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 30,
+    "title_layout_shapes": 88,
+    "section_layout_shapes": 98,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "1B998B"
+   },
+   {
+    "design": "Rahmen",
+    "variant": 1,
+    "theme": "Rahmen",
+    "fonts": [
+     "Constantia",
+     "Constantia"
+    ],
+    "layouts": 11,
+    "master_shapes": 11,
+    "title_layout_shapes": 8,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "1F4E79"
+   },
+   {
+    "design": "Rahmen",
+    "variant": 4,
+    "theme": "Rahmen",
+    "fonts": [
+     "Constantia",
+     "Constantia"
+    ],
+    "layouts": 11,
+    "master_shapes": 11,
+    "title_layout_shapes": 8,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "3A6389"
+   },
+   {
+    "design": "Grundformen",
+    "variant": 1,
+    "theme": "Grundformen",
+    "fonts": [
+     "Bahnschrift",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 9,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "D7263D"
+   },
+   {
+    "design": "Grundformen",
+    "variant": 4,
+    "theme": "Grundformen",
+    "fonts": [
+     "Bahnschrift",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 9,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "D7263D"
+   },
+   {
+    "design": "Horizont",
+    "variant": 1,
+    "theme": "Horizont",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 8,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "2E86AB"
+   },
+   {
+    "design": "Horizont",
+    "variant": 4,
+    "theme": "Horizont",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 8,
+    "section_layout_shapes": 5,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "2E86AB"
+   },
+   {
+    "design": "Eckpunkt",
+    "variant": 1,
+    "theme": "Eckpunkt",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 9,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "D90429"
+   },
+   {
+    "design": "Eckpunkt",
+    "variant": 4,
+    "theme": "Eckpunkt",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 9,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "D90429"
+   },
+   {
+    "design": "Mathematik",
+    "variant": 1,
+    "theme": "Mathematik",
+    "fonts": [
+     "Cambria",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 12,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "1F5AA6"
+   },
+   {
+    "design": "Mathematik",
+    "variant": 4,
+    "theme": "Mathematik",
+    "fonts": [
+     "Cambria",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 12,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "5381BB"
+   },
+   {
+    "design": "Deutsch",
+    "variant": 1,
+    "theme": "Deutsch",
+    "fonts": [
+     "Constantia",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 14,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "8E1B2C"
+   },
+   {
+    "design": "Deutsch",
+    "variant": 4,
+    "theme": "Deutsch",
+    "fonts": [
+     "Constantia",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 14,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "B36571"
+   },
+   {
+    "design": "Englisch",
+    "variant": 1,
+    "theme": "Englisch",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 8,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "1D3F72"
+   },
+   {
+    "design": "Englisch",
+    "variant": 4,
+    "theme": "Englisch",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 8,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "677EA0"
+   },
+   {
+    "design": "Französisch",
+    "variant": 1,
+    "theme": "Französisch",
+    "fonts": [
+     "Candara",
+     "Candara"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 10,
+    "section_layout_shapes": 8,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "2B4C9B"
+   },
+   {
+    "design": "Französisch",
+    "variant": 4,
+    "theme": "Französisch",
+    "fonts": [
+     "Candara",
+     "Candara"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 10,
+    "section_layout_shapes": 8,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "6981B9"
+   },
+   {
+    "design": "Latein",
+    "variant": 1,
+    "theme": "Latein",
+    "fonts": [
+     "Palatino Linotype",
+     "Palatino Linotype"
+    ],
+    "layouts": 11,
+    "master_shapes": 6,
+    "title_layout_shapes": 21,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "9A3B26"
+   },
+   {
+    "design": "Latein",
+    "variant": 4,
+    "theme": "Latein",
+    "fonts": [
+     "Palatino Linotype",
+     "Palatino Linotype"
+    ],
+    "layouts": 11,
+    "master_shapes": 6,
+    "title_layout_shapes": 21,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "B56F5F"
+   },
+   {
+    "design": "Geschichte",
+    "variant": 1,
+    "theme": "Geschichte",
+    "fonts": [
+     "Georgia",
+     "Georgia"
+    ],
+    "layouts": 11,
+    "master_shapes": 14,
+    "title_layout_shapes": 21,
+    "section_layout_shapes": 11,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "8B5A2B"
+   },
+   {
+    "design": "Geschichte",
+    "variant": 4,
+    "theme": "Geschichte",
+    "fonts": [
+     "Georgia",
+     "Georgia"
+    ],
+    "layouts": 11,
+    "master_shapes": 14,
+    "title_layout_shapes": 21,
+    "section_layout_shapes": 11,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "A27B55"
+   },
+   {
+    "design": "Erdkunde",
+    "variant": 1,
+    "theme": "Erdkunde",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 9,
+    "title_layout_shapes": 18,
+    "section_layout_shapes": 11,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "2E7D32"
+   },
+   {
+    "design": "Erdkunde",
+    "variant": 4,
+    "theme": "Erdkunde",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 9,
+    "title_layout_shapes": 18,
+    "section_layout_shapes": 11,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "4F9253"
+   },
+   {
+    "design": "Politik-Wirtschaft",
+    "variant": 1,
+    "theme": "Politik-Wirtschaft",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 10,
+    "title_layout_shapes": 55,
+    "section_layout_shapes": 10,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "1F4E79"
+   },
+   {
+    "design": "Politik-Wirtschaft",
+    "variant": 4,
+    "theme": "Politik-Wirtschaft",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 10,
+    "title_layout_shapes": 55,
+    "section_layout_shapes": 10,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "6182A1"
+   },
+   {
+    "design": "Biologie",
+    "variant": 1,
+    "theme": "Biologie",
+    "fonts": [
+     "Candara",
+     "Candara"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 12,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "2F7038"
+   },
+   {
+    "design": "Biologie",
+    "variant": 4,
+    "theme": "Biologie",
+    "fonts": [
+     "Candara",
+     "Candara"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 12,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "598D60"
+   },
+   {
+    "design": "Chemie",
+    "variant": 1,
+    "theme": "Chemie",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 10,
+    "title_layout_shapes": 17,
+    "section_layout_shapes": 9,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "5A3E9B"
+   },
+   {
+    "design": "Chemie",
+    "variant": 4,
+    "theme": "Chemie",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 10,
+    "title_layout_shapes": 17,
+    "section_layout_shapes": 9,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "8570B5"
+   },
+   {
+    "design": "Physik",
+    "variant": 1,
+    "theme": "Physik",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 6,
+    "title_layout_shapes": 11,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "0B5394"
+   },
+   {
+    "design": "Physik",
+    "variant": 4,
+    "theme": "Physik",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 6,
+    "title_layout_shapes": 11,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "4A80B0"
+   },
+   {
+    "design": "Informatik",
+    "variant": 1,
+    "theme": "Informatik",
+    "fonts": [
+     "Consolas",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 26,
+    "title_layout_shapes": 65,
+    "section_layout_shapes": 29,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "3DDC97"
+   },
+   {
+    "design": "Informatik",
+    "variant": 4,
+    "theme": "Informatik",
+    "fonts": [
+     "Consolas",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 26,
+    "title_layout_shapes": 65,
+    "section_layout_shapes": 29,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "25865C"
+   },
+   {
+    "design": "Musik",
+    "variant": 1,
+    "theme": "Musik",
+    "fonts": [
+     "Constantia",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 14,
+    "title_layout_shapes": 20,
+    "section_layout_shapes": 14,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "6A2C70"
+   },
+   {
+    "design": "Musik",
+    "variant": 4,
+    "theme": "Musik",
+    "fonts": [
+     "Constantia",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 14,
+    "title_layout_shapes": 20,
+    "section_layout_shapes": 14,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "9B719F"
+   },
+   {
+    "design": "Kunst",
+    "variant": 1,
+    "theme": "Kunst",
+    "fonts": [
+     "Segoe Print",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 11,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "E63946"
+   },
+   {
+    "design": "Kunst",
+    "variant": 4,
+    "theme": "Kunst",
+    "fonts": [
+     "Segoe Print",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 11,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "E63946"
+   },
+   {
+    "design": "Sport",
+    "variant": 1,
+    "theme": "Sport",
+    "fonts": [
+     "Bahnschrift",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 9,
+    "title_layout_shapes": 14,
+    "section_layout_shapes": 11,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "E4572E"
+   },
+   {
+    "design": "Sport",
+    "variant": 4,
+    "theme": "Sport",
+    "fonts": [
+     "Bahnschrift",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 9,
+    "title_layout_shapes": 14,
+    "section_layout_shapes": 11,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "E4572E"
+   },
+   {
+    "design": "Religion",
+    "variant": 1,
+    "theme": "Religion",
+    "fonts": [
+     "Constantia",
+     "Corbel"
+    ],
+    "layouts": 11,
+    "master_shapes": 13,
+    "title_layout_shapes": 16,
+    "section_layout_shapes": 14,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "5B3E8E"
+   },
+   {
+    "design": "Religion",
+    "variant": 4,
+    "theme": "Religion",
+    "fonts": [
+     "Constantia",
+     "Corbel"
+    ],
+    "layouts": 11,
+    "master_shapes": 13,
+    "title_layout_shapes": 16,
+    "section_layout_shapes": 14,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "8C77B0"
+   },
+   {
+    "design": "Werte und Normen",
+    "variant": 1,
+    "theme": "Werte und Normen",
+    "fonts": [
+     "Corbel",
+     "Corbel"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 10,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "2F6F8F"
+   },
+   {
+    "design": "Werte und Normen",
+    "variant": 4,
+    "theme": "Werte und Normen",
+    "fonts": [
+     "Corbel",
+     "Corbel"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 10,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "5086A1"
+   },
+   {
+    "design": "Darstellendes Spiel",
+    "variant": 1,
+    "theme": "Darstellendes Spiel",
+    "fonts": [
+     "Constantia",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 15,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "E0A458"
+   },
+   {
+    "design": "Darstellendes Spiel",
+    "variant": 4,
+    "theme": "Darstellendes Spiel",
+    "fonts": [
+     "Constantia",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 15,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "966E3B"
+   },
+   {
+    "design": "Seminarfach",
+    "variant": 1,
+    "theme": "Seminarfach",
+    "fonts": [
+     "Cambria",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 10,
+    "title_layout_shapes": 13,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "2C5F7C"
+   },
+   {
+    "design": "Seminarfach",
+    "variant": 4,
+    "theme": "Seminarfach",
+    "fonts": [
+     "Cambria",
+     "Calibri"
+    ],
+    "layouts": 11,
+    "master_shapes": 10,
+    "title_layout_shapes": 13,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "5C8499"
+   },
+   {
+    "design": "Projektwoche",
+    "variant": 1,
+    "theme": "Projektwoche",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 12,
+    "title_layout_shapes": 23,
+    "section_layout_shapes": 13,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "F25F5C"
+   },
+   {
+    "design": "Projektwoche",
+    "variant": 4,
+    "theme": "Projektwoche",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 12,
+    "title_layout_shapes": 23,
+    "section_layout_shapes": 13,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "F25F5C"
+   },
+   {
+    "design": "Klassenfahrt",
+    "variant": 1,
+    "theme": "Klassenfahrt",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 11,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "457B9D"
+   },
+   {
+    "design": "Klassenfahrt",
+    "variant": 4,
+    "theme": "Klassenfahrt",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 11,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "457B9D"
+   },
+   {
+    "design": "Elternabend",
+    "variant": 1,
+    "theme": "Elternabend",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 9,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "3E6680"
+   },
+   {
+    "design": "Elternabend",
+    "variant": 4,
+    "theme": "Elternabend",
+    "fonts": [
+     "Segoe UI Light",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 8,
+    "title_layout_shapes": 9,
+    "section_layout_shapes": 7,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "466C85"
+   },
+   {
+    "design": "Abitur",
+    "variant": 1,
+    "theme": "Abitur",
+    "fonts": [
+     "Palatino Linotype",
+     "Corbel"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 22,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "D4AF37"
+   },
+   {
+    "design": "Abitur",
+    "variant": 4,
+    "theme": "Abitur",
+    "fonts": [
+     "Palatino Linotype",
+     "Corbel"
+    ],
+    "layouts": 11,
+    "master_shapes": 7,
+    "title_layout_shapes": 22,
+    "section_layout_shapes": 6,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "887023"
+   },
+   {
+    "design": "Tag der offenen Tür",
+    "variant": 1,
+    "theme": "Tag der offenen Tür",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 9,
+    "title_layout_shapes": 14,
+    "section_layout_shapes": 11,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "E76F51"
+   },
+   {
+    "design": "Tag der offenen Tür",
+    "variant": 4,
+    "theme": "Tag der offenen Tür",
+    "fonts": [
+     "Segoe UI Semibold",
+     "Segoe UI"
+    ],
+    "layouts": 11,
+    "master_shapes": 9,
+    "title_layout_shapes": 14,
+    "section_layout_shapes": 11,
+    "slides": 4,
+    "slide_shapes": [
+     2,
+     2,
+     2,
+     3
+    ],
+    "accent1": "E76F51"
+   }
+  ],
+  "opened": 94,
+  "failed": 0,
+  "close": {
+   "closed": 0,
+   "quit": true,
+   "left_open": 0
+  }
+ }
+}

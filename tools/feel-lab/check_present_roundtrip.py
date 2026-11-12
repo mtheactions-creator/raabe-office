@@ -106,6 +106,8 @@ SCENARIOS: dict[str, str] = {
     "transition": """p.newDoc(); const a = p.app; const m = await import('/src/transitions.ts'); a.panel.selected = new Set([0]); m.setTransition(a, 'fade');""",
     "animation": """p.setupCase({layout:'Leer', shapes:[{kind:'rect',box:[100,100,200,100]}]}); const a = p.app; a.editor.select([2]); const m = await import('/src/animations.ts'); m.addAnimation(a, 'entr', m.ANIMATION_GROUPS[0].items[2], false);""",
     "design raabe": """p.newDoc(); const a = p.app; const d = await import('/src/designs.ts'); a.applyDesign(d.RAABE_DESIGN); await new Promise(r => setTimeout(r, 300));""",
+    # A design with layout artwork and a colour-map override, in its dark variant, applied to an open presentation (D-193).
+    "design variant": """p.newDoc(); const a = p.app; const d = await import('/src/designs.ts'); a.applyDesign(d.variantOf(d.DESIGNS.find(x => x.name === 'Raabeschule Band'), 3)); await new Promise(r => setTimeout(r, 300));""",
     "picture": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));""",
     "picture effects": f"""p.newDoc(); const a = p.app; a.deck.setLayout([0], a.deck.layouts()[6].path); const bin = atob('{PNG}'); const b = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i); a.insertPictureBytes(b, 'image/png'); await new Promise(r => setTimeout(r, 500));
         const v = a.deck.view(a.slidePath()).shapes.find(s => s.kind === 'pic'); a.editor.select([v.id]); const m = await import('/src/picfx.ts');
@@ -399,6 +401,8 @@ def check(name: str, r: dict, ours: dict) -> list[str]:
         want(s0["animations"] == 1, f"animations {s0['animations']}")
     elif name == "design raabe":
         want(r["accent1"] == 0x1B14B3, f"accent1 {r['accent1']:06X}")
+    elif name == "design variant":
+        want(r["design"] == "Raabeschule Band", f"design {r['design']}")
     elif name == "picture":
         want(any(x["type"] == 13 for x in sh), f"types {[x['type'] for x in sh]}")
     elif name == "picture effects":

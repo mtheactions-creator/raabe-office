@@ -6,7 +6,11 @@ import { chartFromXml, type Pptx } from "@raabe/ooxml";
 
 const cache = new Map<string, { xml: string; model: ReturnType<typeof chartFromXml> }>();
 
-export function renderChart(pptx: Pptx, path: string, w: number, h: number, accents?: string[]): HTMLElement {
+/**
+ * A chart part drawn in the slide's design: the theme's accents (Farbig and Farben ändern follow them) and, on a
+ * slide, the design's background and text colours (D-195).
+ */
+export function renderChart(pptx: Pptx, path: string, w: number, h: number, accents?: string[], surface?: { background: string; text: string }): HTMLElement {
   const box = document.createElement("div");
   box.style.cssText = `position:absolute;left:0;top:0;width:${w}px;height:${h}px`;
   const xml = pptx.text(path);
@@ -14,7 +18,7 @@ export function renderChart(pptx: Pptx, path: string, w: number, h: number, acce
   try {
     let hit = cache.get(path);
     if (!hit || hit.xml !== xml) { hit = { xml, model: chartFromXml(xml) }; cache.set(path, hit); }
-    box.append(drawChart(hit.model, w, h, accents ? { accents } : {}));
+    box.append(drawChart(hit.model, w, h, { ...(accents ? { accents } : {}), ...(surface ? { surface } : {}) }));
   } catch {
     box.style.background = "#f2f2f2";
   }

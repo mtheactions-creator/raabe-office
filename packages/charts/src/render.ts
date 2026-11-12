@@ -31,6 +31,19 @@ export interface RenderOptions {
   format?: NumberFormatter;
   /** Text width in pt of `text` at `sizePt`; default: the browser's canvas, else Calibri's metrics. */
   measure?: Measure;
+  /**
+   * The design's background and text colours ("#RRGGBB") where the chart stands (a slide of a dark design, D-195):
+   * the chart area without a fill of its own takes the background, its texts and lines the text colour's tints, as
+   * Office's chart style 201 does (tx1 65 %, gridlines tx1 15 %). Default: Excel's white chart with grey texts.
+   */
+  surface?: { background: string; text: string };
+}
+
+/** `a` mixed with `b` (share t of b), "#RRGGBB". */
+function blend(a: string, b: string, t: number): string {
+  const p = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const x = p(a), y = p(b);
+  return "#" + x.map((v, i) => Math.round(v + (y[i] - v) * t).toString(16).padStart(2, "0")).join("").toUpperCase();
 }
 
 /** Stroke details beyond colour and width (Anschlusstyp, Pfeile, Verbundtyp) and an effect filter. */
@@ -132,6 +145,12 @@ export interface Ctx {
 export function chartScene(full: ChartModel, W: number, H: number, opts: RenderOptions = {}): Scene {
   const defs = beginDefs();
   setBaseText(full.format?.chart?.text);
+  // A dark or tinted slide: the default looks follow its colours while this chart is built.
+  const saved = { ...LOOK };
+  if (opts.surface) {
+    const { background: bg, text: tx } = opts.surface;
+    Object.assign(LOOK, { text: blend(bg, tx, 0.65), dataLabel: blend(bg, tx, 0.75), gridline: blend(bg, tx, 0.15), border: blend(bg, tx, 0.15), valueAxisLine: blend(bg, tx, 0.25) });
+  }
   try {
     const scene = buildScene(full, W, H, opts);
     if (defs.list.length) scene.defs = defs.list;
@@ -139,6 +158,7 @@ export function chartScene(full: ChartModel, W: number, H: number, opts: RenderO
   } finally {
     endDefs();
     setBaseText(undefined);
+    Object.assign(LOOK, saved);
   }
 }
 
@@ -183,7 +203,7 @@ function buildScene(full: ChartModel, W: number, H: number, opts: RenderOptions)
   const ca = m.format?.chart;
   const caLine = linePaint(ca?.line, { color: LOOK.border, width: 0.75 });
   const inset = (caLine?.sw ?? 0) / 2;
-  c.prims.push({ t: "rect", x: inset, y: inset, w: W - 2 * inset, h: H - 2 * inset, fill: fillPaint(ca?.fill, "#FFFFFF"), ...strokeOf(caLine),
+  c.prims.push({ t: "rect", x: inset, y: inset, w: W - 2 * inset, h: H - 2 * inset, fill: fillPaint(ca?.fill, opts.surface?.background ?? "#FFFFFF"), ...strokeOf(caLine),
     ...(ca?.roundedCorners ? { rx: Math.min(W, H) * 0.05 } : {}), ...(ca?.effects ? { filter: effectFilter(ca.effects) } : {}), part: "chart" });
   const hist = m.kind === "histogram";
   // Excel 2016's chart engine (chartex types) puts the title a little higher.

@@ -4958,3 +4958,112 @@ fallback collapsed groups from the right, so the wider Anordnen of D-186 cost Gr
 every group down to its smallest layout, from the right, and only then collapses groups; tabs with a recorded sequence
 (Word's, Excel's) keep it. Measured afterwards: RaabeWrite's chart checks 79/79, RaabeCalc's 126/126, RaabePresent's
 11/11; the ribbon comparison unchanged (main and contextual tabs).
+## D-190 Many designs of our own: Raabeschule, Allgemein, Fächer, Anlässe (Step 12, 2026-11-12)
+
+The owner asked for "a broad mix and a lot of subject-specific designs". RaabePresent now offers 47 designs: Office's
+(as before) and 46 of our own, 37 of them new, in four groups:
+- **Raabeschule:** Raabeschule, Raabeschule Band (new: the title and section slides in dark Raabe red).
+- **Allgemein:** Klar, Tafel, Wellenband, Kreisbögen, Keil, Punkteraster, Schräge Streifen, Abendblau (existing) and
+  Stille, Papier, Kontrast, Minimal, Mitternacht, Pastell, Konfetti, Mosaik, Rahmen, Grundformen, Horizont, Eckpunkt.
+- **Fächer:** Mathematik, Deutsch, Englisch, Französisch, Latein, Geschichte, Erdkunde, Politik-Wirtschaft, Biologie,
+  Chemie, Physik, Informatik, Musik, Kunst, Sport, Religion, Werte und Normen, Darstellendes Spiel, Seminarfach.
+- **Anlässe:** Projektwoche, Klassenfahrt, Elternabend, Abitur, Tag der offenen Tür.
+
+The theme part of each (colours, heading and body font, effect style, four variants) is data shared by all three apps
+(`packages/shell/src/school-designs.ts`); the artwork is RaabePresent's (`apps/raabe-present/src/designs.ts`): plain
+DrawingML shapes drawn in code (rectangles, ellipses, presets such as callouts and hexagons, and custom paths: waves,
+contour lines, a staff, leaves, a meander, curtains, mountains, circuit lines …), in the design's scheme colours, so
+files open in PowerPoint unchanged and every variant recolours the artwork. Names, pictures and looks are our own;
+none of PowerPoint's designs, artwork or names is copied (D-078). Subject designs use neutral motifs (no flags, no
+religious symbols: Religion has rays of light, Werte und Normen interlinked rings and a balance).
+Small fixes to the existing designs on the way: links of Kreisbögen, Keil, Punkteraster and Schräge Streifen were
+below 4.5:1 on white and are darker now; Keil's wedges and Schräge Streifen's stripes reached into the title and are
+narrower or lower; Abendblau's gradient uses the scheme colours (so its variants work).
+
+## D-191 Fonts of the designs: Windows fonts, Calibri as the fallback (2026-11-12)
+
+The designs use only fonts that come with Windows 10 itself (not Office-only fonts such as Gill Sans MT, Century Gothic
+or Rockwell, and not Office's cloud fonts, D-089): Calibri (Light), Cambria, Candara, Constantia, Corbel, Consolas,
+Georgia, Palatino Linotype, Trebuchet MS, Segoe UI (Light, Semibold), Segoe Print, Bahnschrift. Where a font is
+missing (the iPad lacks most of them), RaabePresent's renderer falls back to Calibri/Carlito and sans-serif as for any
+other font, and PowerPoint uses its own substitution. Georgia, Trebuchet MS and Palatino are on the iPad too.
+
+## D-192 Varianten: four per design, readable by rule (2026-11-12)
+
+PowerPoint shows four variants per design ("Office Variante #1" … in Entwurf > Varianten, recorded in the inventory of
+2026-11-06). Ours, derived in `designVariants`:
+1. the design itself;
+2. and 3. the accents turned by one and by three places (accent 2 or accent 4 leads: the title colour, the artwork and
+   the charts change together);
+4. the opposite brightness: a light design gets a dark background (a deep shade of its dark 2), a dark design white.
+Designs may set their own variants (Raabeschule keeps its red in all four; Kontrast's light variant is black and red).
+Every variant is made readable after deriving it: titles and links at least 4.5:1 against the background (WCAG AA),
+the accents at least 3:1 when the brightness changed. Body text is at least 7:1 (AAA, for projectors) in all 184
+variants, the second text colour and text on the second background at least 4.5:1, and dark 1 on light 1 at least 7:1
+(the light use in RaabeCalc and RaabeWrite); unit tests check all of it.
+Entwurf > Varianten (it was a button without function) now opens the four variants of the presentation's design as
+pictures; choosing one applies the design in that variant (colours, brightness, the design's fonts) in one undo step.
+For a design not of ours (a file from PowerPoint) the gallery offers three colour variants derived from the file's
+own theme colours, applied as a colour set. The variant's colour scheme is named "<Design> Variante <n>".
+
+## D-193 Artwork on the Titelfolie and Abschnittsüberschrift layouts (2026-11-12)
+
+Besides the master's shapes, a design can give its Titelfolie and Abschnittsüberschrift layouts shapes of their own,
+hide the master's graphics there (showMasterSp="0"), a background of their own and a colour-map override (light text
+on a dark layout: Raabeschule Band). The placeholders keep Office's places, so the artwork stays out of the text areas
+or is faint where it reaches in. Applying a design to an open presentation now also renews the layouts: the old design
+shapes leave all layouts of the master (as PowerPoint replaces the layouts with a design), the two layouts get the new
+ones, their background and colour map. The artwork names only mapped scheme colours (tx1, tx2, bg1, bg2) and accents,
+never dk1/lt1/dk2/lt2, which our renderer reads through the colour map (a test checks it).
+
+## D-194 Effect styles of the designs (2026-11-12)
+
+A design names its effect style by one of PowerPoint's effect schemes (Entwurf > Effekte, recorded as format data,
+D-104): most use Office's, calm ones Subtile Körper, the night designs Milchglas. The theme part is written with that
+a:fmtScheme, so Formenarten and the Effekte gallery's check mark follow. Effect schemes with Office's pictures
+(Grunge-Muster) are not used.
+
+## D-195 Charts on slides follow the design (2026-11-12)
+
+Found while checking: charts on slides were drawn in Office 2013's accents whatever the design (the slide renderer did
+not pass the theme), and always on a white chart area. Now a chart on a slide is drawn with the slide's accents (Farbig
+and every Farben ändern scheme follow them) and, where the chart area has no fill of its own, on the slide's
+background with its texts and lines in the slide's text colour at Office's tints (65 % texts, 15 % gridlines), as
+PowerPoint's chart style does on a dark design. The chart part we write already refers to bg1/tx1, so PowerPoint draws
+the same. Table styles were theme-based already (accent and tx1/bg1 references) and follow without change; RaabeCalc's
+and RaabeWrite's charts take their workbook's or document's accents already. Left: the chart thumbnail in
+`chartops.ts` (another session's file this night) still uses the default accents.
+
+## D-196 Our designs in RaabeCalc and RaabeWrite (2026-11-12)
+
+Seitenlayout > Designs (RaabeCalc) and Entwurf > Designs (RaabeWrite) list our 46 designs after Office's, under the
+headings Raabeschule, Allgemein, Fächer and Anlässe. Choosing one sets the theme's colours and heading and body fonts
+(with the theme's name, as for Office's designs), so tables, charts and cells in design colours take the same school
+design as the slides. Variants and artwork stay RaabePresent's.
+
+## D-197 The Designs gallery with headings (2026-11-12)
+
+PowerPoint groups its full Designs gallery under headings. Ours: "Diese Präsentation" (the current design), then
+Office, Raabeschule, Allgemein, Fächer and Anlässe, five pictures per row, scrolling; pictures are drawn once and
+cached. The ribbon's inline gallery shows them in the same order. Datei > Startseite shows only the blank
+presentation, the Raabeschule designs and the templates; Datei > Neu shows all designs under the same headings.
+
+## D-198 How the designs were checked (2026-11-12)
+
+`tools/feel-lab/check_present_designs.py` makes every design in all four variants through RaabePresent (headless Edge
+on its own dev server; title, content, section and a table-and-chart slide), draws a contact sheet with our renderer
+(TEMP/raabe-designs/sheet-*.png; judged by eye, the fixes it led to are in D-190 and D-193) and, when no PowerPoint
+runs, opens variants 1 and 4 of each in an own invisible PowerPoint, reads what it sees and exports its pictures
+(TEMP/raabe-designs/ppt-sheet-*.png). Results (results/2026-11-12-present-designs.json):
+- PowerPoint opened all 94 files (47 designs, variants 1 and 4) without a repair message, read each design's own name,
+  fonts and accent 1, its 11 layouts, the master's and the two layouts' design shapes and the four slides with their
+  shapes (title, text, chart and table).
+- PowerPoint's pictures showed one real fault: dark designs had a black background there (Tafel, Abendblau, every
+  dark variant) and Papier's cream was white. Our theme part wrote dark 1 and light 1 always as the system colours
+  windowText/window with the design's colour as lastClr, and PowerPoint draws the system colour. They are now written
+  as RGB unless they are black and white (`themeColorXml`, also in Entwurf > Farben); the second run: again all 94 opened, and PowerPoint's pictures now show the same backgrounds as ours.
+- The round trip (`check_present_roundtrip.py`, scenarios design raabe, the new design variant (Raabeschule Band,
+  variant 4, applied to an open presentation), title text, table style): 4/4 the same in PowerPoint.
+- Lines on the slides drawn by our renderer and by PowerPoint agree in place and colour in the pictures; PowerPoint
+  draws the chart's axis lines a little stronger on dark slides.
+D-199 was reserved and not used.
