@@ -3,7 +3,7 @@
 // read from Word: tools/feel-lab/probe_word_design.py, design-data.gen.ts). The thumbnails are
 // RaabeWrite's own, drawn from each entry's colours and fonts.
 
-import { h, hoverPreview, icon, showDialog, type MenuEntry } from "@raabe/shell";
+import { DESIGN_GROUPS, SCHOOL_DESIGNS, h, hoverPreview, icon, showDialog, type MenuEntry } from "@raabe/shell";
 import { readThemeFile } from "@raabe/ooxml";
 import { OFFICE_2013_COLORS, StyleSheet, defaultStyleSheet, type CharProps, type Editor, type ParaProps, type Theme } from "@raabe/text-engine";
 import type { AppApi } from "./api";
@@ -72,12 +72,16 @@ export function designFeature(api: AppApi) {
   const themesPanel = (close: () => void) => {
     const e = ed();
     const cur = e ? themeOf(e) : OFFICE_2013;
-    const set = (t: (typeof THEMES)[number]) => (x: Editor) => x.setTheme({ majorFont: t.major, minorFont: t.minor, colors: t.colors, name: t.name, colorName: t.name, fontName: t.name });
+    type T = { name: string; colors: Readonly<Record<string, string>>; major: string; minor: string };
+    const set = (t: T) => (x: Editor) => x.setTheme({ majorFont: t.major, minorFont: t.minor, colors: t.colors, name: t.name, colorName: t.name, fontName: t.name });
     const grid = h("div", { class: "dz-grid" }, ...THEMES.map((t) => live(themeTile(t, cur.name === t.name || (cur.name === undefined && t.name.startsWith("Office 2013") && sameColors(cur.colors, t.colors)),
       () => { close(); apply(set(t)); }), set(t))));
+    // Our own designs (D-196): the colours and fonts of RaabePresent's designs, under their gallery headings.
+    const own = DESIGN_GROUPS.flatMap((g) => [h("div", { class: "title" }, g),
+      h("div", { class: "dz-grid" }, ...SCHOOL_DESIGNS.filter((t) => t.group === g).map((t) => live(themeTile(t, cur.name === t.name, () => { close(); apply(set(t)); }), set(t))))]);
     const item = (label: string, ic: string | null, run: () => void, disabled = false, tip?: string) =>
       h("button", { class: "dz-cmd", disabled, onclick: () => { close(); run(); }, ...(tip ? { "data-tip": tip } : {}) }, ic ? icon(ic) : h("span", { class: "dz-noicon" }), label);
-    return h("div", { class: "rpanel designpanel" }, h("div", { class: "title" }, "Office"), grid, h("hr"),
+    return h("div", { class: "rpanel designpanel" }, h("div", { class: "title" }, "Office"), grid, ...own, h("hr"),
       item("Auf das Design aus der Vorlage zurücksetzen", null, () => apply((x) => x.setTheme(OFFICE_2013))),
       item("Nach Designs suchen...", "themes", () => void browseTheme()),
       item("Aktuelles Design speichern...", "save", () => {}, true, "Aktuelles Design speichern\nRaabeWrite speichert keine Designdateien."));

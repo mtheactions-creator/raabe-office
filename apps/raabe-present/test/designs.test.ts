@@ -44,6 +44,8 @@ describe("designs", () => {
       // The artwork uses scheme colours only, so the variants recolour it.
       for (const part of ["ppt/slideMasters/slideMaster1.xml", "ppt/slideLayouts/slideLayout1.xml", "ppt/slideLayouts/slideLayout3.xml"]) {
         if (d.name !== "Office") expect(strFromU8(files[part]), `${d.name} ${part}`).not.toMatch(/srgbClr/);
+        // Only mapped names (tx1, bg2 …) and accents: dk1/lt1/dk2/lt2 are read differently by viewers.
+        expect(strFromU8(files[part]), `${d.name} ${part}`).not.toMatch(/schemeClr val="(dk|lt)[12]"/);
       }
     }
   });

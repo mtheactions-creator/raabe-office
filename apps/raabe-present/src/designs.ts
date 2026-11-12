@@ -315,8 +315,8 @@ const ART: Record<string, Art> = {
   Papier: {
     master: rect("Linie", 88, 180, 1104, 1.5, "accent1") + rect("Linie fein", 88, 184, 1104, 0.75, "accent1", { alpha: 0.5 }) +
       poly("Eselsohr", [[1226, 720], [1280, 666], [1280, 720]], "bg2", { lumMod: 85 }) + poly("Eselsohr Schatten", [[1226, 720], [1226, 680], [1280, 666]], "tx1", { alpha: 0.12 }),
-    title: { deco: rect("Zierlinie links", 470, 373, 150, 1.25, "accent1") + sp("Raute", 632, 366, 16, 16, prst("diamond"), fill("accent1")) + rect("Zierlinie rechts", 660, 373, 150, 1.25, "accent1") },
-    section: { deco: sp("Anführung", 40, 150, 50, 60, path(600, 1000, QUOTE), fill("accent1", { alpha: 0.35 }), { rot: 180 }) },
+    title: { hideMaster: true, deco: rect("Zierlinie links", 470, 373, 150, 1.25, "accent1") + sp("Raute", 632, 366, 16, 16, prst("diamond"), fill("accent1")) + rect("Zierlinie rechts", 660, 373, 150, 1.25, "accent1") },
+    section: { hideMaster: true, deco: sp("Anführung", 40, 150, 50, 60, path(600, 1000, QUOTE), fill("accent1", { alpha: 0.35 }), { rot: 180 }) },
   },
   Kontrast: {
     master: rect("Block", 0, 0, 16, 720, "accent1") + rect("Titelstrich", 98, 178, 140, 8, "accent1"),
@@ -392,7 +392,7 @@ const ART: Record<string, Art> = {
   Deutsch: {
     master: rect("Heftrand", 68, 0, 2, 720, "accent1", { alpha: 0.5 }) +
       sp("Anführung 1", 1186, 18, 30, 50, path(600, 1000, QUOTE), fill("accent1", { alpha: 0.3 }), { rot: 180 }) + sp("Anführung 2", 1222, 18, 30, 50, path(600, 1000, QUOTE), fill("accent1", { alpha: 0.3 }), { rot: 180 }),
-    title: { deco: Array.from({ length: 6 }, (_, i) => rect(`Zeile ${i + 1}`, 0, 580 + i * 22, 1280, 1, "accent4", { alpha: 0.3 })).join("") + rect("Heftrand", 90, 0, 2, 720, "accent1", { alpha: 0.5 }) +
+    title: { hideMaster: true, deco: Array.from({ length: 6 }, (_, i) => rect(`Zeile ${i + 1}`, 0, 580 + i * 22, 1280, 1, "accent4", { alpha: 0.3 })).join("") + rect("Heftrand", 90, 0, 2, 720, "accent1", { alpha: 0.5 }) +
       sp("Anführung 1", 30, 120, 45, 75, path(600, 1000, QUOTE), fill("accent1", { alpha: 0.35 }), { rot: 180 }) + sp("Anführung 2", 84, 120, 45, 75, path(600, 1000, QUOTE), fill("accent1", { alpha: 0.35 }), { rot: 180 }) },
     section: { deco: sp("Anführung 1", 92, 60, 45, 75, path(600, 1000, QUOTE), fill("accent1", { alpha: 0.35 }), { rot: 180 }) + sp("Anführung 2", 146, 60, 45, 75, path(600, 1000, QUOTE), fill("accent1", { alpha: 0.35 }), { rot: 180 }) },
   },
@@ -414,12 +414,12 @@ const ART: Record<string, Art> = {
   },
   Latein: {
     master: meander(0, 1280, 706, "accent2", 0.8),
-    title: { deco: columnShape(40, 120, 70, 480, "accent2") + columnShape(1170, 120, 70, 480, "accent2") + meander(0, 1280, 640, "accent2", 0.8) + meander(0, 1280, 20, "accent2", 0.8) },
+    title: { hideMaster: true, deco: columnShape(40, 120, 70, 480, "accent2") + columnShape(1170, 120, 70, 480, "accent2") + meander(0, 1280, 640, "accent2", 0.8) + meander(0, 1280, 20, "accent2", 0.8) },
     section: { deco: meander(0, 1280, 120, "accent2", 0.8) },
   },
   Geschichte: {
     master: rect("Zeitstrahl", 0, 712, 1280, 2, "accent1", { alpha: 0.7 }) + Array.from({ length: 8 }, (_, i) => oval(`Ereignis ${i + 1}`, 80 + i * 160 - 5, 708, 10, 10, i === 5 ? "accent3" : "accent1")).join(""),
-    title: { deco: rect("Zeitstrahl", 40, 612, 1180, 3, "accent1") + sp("Pfeil", 1214, 603, 22, 22, prst("triangle"), fill("accent1"), { rot: 90 }) +
+    title: { hideMaster: true, deco: rect("Zeitstrahl", 40, 612, 1180, 3, "accent1") + sp("Pfeil", 1214, 603, 22, 22, prst("triangle"), fill("accent1"), { rot: 90 }) +
       Array.from({ length: 11 }, (_, i) => rect(`Strich ${i + 1}`, 80 + i * 105, i % 5 === 0 ? 596 : 604, 2, i % 5 === 0 ? 34 : 18, "accent1")).join("") +
       oval("Ereignis 1", 285 - 9, 604, 18, 18, "accent3") + oval("Ereignis 2", 705 - 9, 604, 18, 18, "accent2") + oval("Ereignis 3", 915 - 9, 604, 18, 18, "accent3") },
     section: { deco: rect("Zeitstrahl", 50, 60, 3, 600, "accent1") + Array.from({ length: 5 }, (_, i) => oval(`Ereignis ${i + 1}`, 44.5, 90 + i * 130, 14, 14, i === 2 ? "accent3" : "accent1")).join("") },
@@ -472,7 +472,7 @@ const ART: Record<string, Art> = {
   },
   Musik: {
     master: staff(0, 1280, 696, 4, "accent1", 0.35) + note("Note 1", 1050, 701, 6, "accent1") + note("Note 2", 1110, 695, 6, "accent2"),
-    title: { deco: staff(0, 1280, 578, 14, "accent1", 0.45, 22) + note("Note 1", 200, 580, 16, "accent1") + note("Note 2", 300, 607, 16, "accent2") + note("Note 3", 1000, 590, 16, "accent1") + note("Note 4", 1080, 566, 16, "accent2", false) +
+    title: { hideMaster: true, deco: staff(0, 1280, 578, 14, "accent1", 0.45, 22) + note("Note 1", 200, 580, 16, "accent1") + note("Note 2", 300, 607, 16, "accent2") + note("Note 3", 1000, 590, 16, "accent1") + note("Note 4", 1080, 566, 16, "accent2", false) +
       oval("Ton", 1140, 60, 70, 70, "accent3", { alpha: 0.35 }) + oval("Ton 2", 1190, 100, 40, 40, "accent2", { alpha: 0.35 }) },
     section: { deco: staff(0, 1280, 90, 12, "accent1", 0.45, 14) + note("Note 1", 1050, 100, 14, "accent1") + note("Note 2", 1120, 116, 14, "accent2") },
   },
@@ -482,7 +482,7 @@ const ART: Record<string, Art> = {
     title: { deco: blob("Farbfleck 1", -60, -40, 250, 200, 107, "accent1", { alpha: 0.85 }) + blob("Farbfleck 2", 120, 40, 110, 90, 109, "accent3", { alpha: 0.85 }) +
       blob("Farbfleck 3", 1060, 540, 260, 210, 113, "accent2", { alpha: 0.85 }) + blob("Farbfleck 4", 1000, 600, 90, 80, 127, "accent5", { alpha: 0.8 }) + blob("Farbfleck 5", 1180, 40, 80, 70, 131, "accent4", { alpha: 0.85 }) +
       sp("Pinselstrich", 280, 590, 700, 50, path(1000, 1000, "M 0 600 C 200 100 500 300 700 200 C 850 120 950 250 1000 300 C 930 600 800 700 600 650 C 400 600 200 900 0 800 Z"), fill("accent6", { alpha: 0.6 })) },
-    section: { deco: sp("Pinselstrich", 60, 470, 600, 40, path(1000, 1000, "M 0 600 C 200 100 500 300 700 200 C 850 120 950 250 1000 300 C 930 600 800 700 600 650 C 400 600 200 900 0 800 Z"), fill("accent1", { alpha: 0.45 })) +
+    section: { deco: sp("Pinselstrich", 60, 645, 600, 30, path(1000, 1000, "M 0 600 C 200 100 500 300 700 200 C 850 120 950 250 1000 300 C 930 600 800 700 600 650 C 400 600 200 900 0 800 Z"), fill("accent1", { alpha: 0.45 })) +
       blob("Farbfleck", 1100, 30, 140, 110, 137, "accent3", { alpha: 0.85 }) },
   },
   Sport: {
@@ -493,7 +493,7 @@ const ART: Record<string, Art> = {
   },
   Religion: {
     master: rays(0, 0, 7, 8, 82, 420, "accent2", 0.1) + oval("Licht", -60, -60, 120, 120, "accent2", { alpha: 0.35 }),
-    title: { deco: rays(640, -60, 13, 25, 155, 900, "accent2", 0.08) + oval("Licht", 560, -140, 160, 160, "accent2", { alpha: 0.4 }) + rect("Linie", 560, 372, 160, 2, "accent2") },
+    title: { hideMaster: true, deco: rays(640, -60, 9, 30, 150, 900, "accent2", 0.07) + oval("Licht", 560, -140, 160, 160, "accent2", { alpha: 0.4 }) + rect("Linie", 560, 372, 160, 2, "accent2") },
     section: { deco: rays(0, 360, 9, -60, 60, 700, "accent2", 0.07) },
   },
   "Werte und Normen": {
@@ -531,8 +531,8 @@ const ART: Record<string, Art> = {
   Klassenfahrt: {
     master: mountains(676, 44, "accent1", "accent3", 0.3, 0.35),
     title: { deco: oval("Sonne", 1080, 60, 110, 110, "accent4", { alpha: 0.85 }) + mountains(560, 160, "accent1", "accent3", 0.35, 0.45) +
-      curve("Route", [[120, 520], [260, 470], [420, 500], [560, 440]], "accent2", 2.5, undefined, "dash") +
-      sp("Ortsmarke", 548, 392, 30, 30, prst("teardrop"), fill("accent2"), { rot: 135 }) + oval("Ortsmarke Punkt", 557, 401, 12, 12, "bg1") },
+      curve("Route", [[90, 610], [220, 572], [360, 596], [490, 548]], "accent2", 2.5, undefined, "dash") +
+      sp("Ortsmarke", 478, 504, 30, 30, prst("teardrop"), fill("accent2"), { rot: 135 }) + oval("Ortsmarke Punkt", 487, 513, 12, 12, "bg1") },
     section: { deco: curve("Route", [[98, 120], [300, 70], [520, 110], [740, 60]], "accent2", 2.5, undefined, "dash") + sp("Ortsmarke", 728, 22, 26, 26, prst("teardrop"), fill("accent2"), { rot: 135 }) },
   },
   Elternabend: {

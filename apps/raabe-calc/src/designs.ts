@@ -139,7 +139,7 @@ export function designsFeature(app: CalcApp) {
     }, h("span", { class: "dz-aa", style: `font-family:'${d.major}';color:#${d.colors.dk2}` }, "Aa"),
     h("span", { class: "dz-bars" }, ...["accent1", "accent2", "accent3", "accent4"].map((k) => sw(d.colors[k as keyof typeof d.colors]))));
     const groups = DESIGN_GROUPS.flatMap((g) => [h("div", { class: "palette-title" }, g), h("div", { class: "dz-tiles" }, ...SCHOOL_DESIGNS.filter((d) => d.group === g).map(tile))]);
-    return h("div", { class: "tile-panel dz-panel dz-scroll" }, h("div", { class: "palette-title" }, "Office"), h("div", { class: "dz-tiles" }, ...OFFICE_DESIGNS.map(tile)), ...groups);
+    return h("div", { class: "tile-panel dz-panel" }, h("div", { class: "palette-title" }, "Office"), h("div", { class: "dz-tiles" }, ...OFFICE_DESIGNS.map(tile)), ...groups);
   }
 
   /** Farben: one row per colour set (its eight colours and its name). */
