@@ -6,8 +6,8 @@ what is not in the other docs. Read in this order:
 2. This file.
 3. `docs/ROADMAP.md`: steps 10, 10b and 11 are the latest.
 4. The last report: `docs/reports/2026-11-11-step11-night.md` (and `2026-11-09-night.md` before it).
-5. `docs/DECISIONS.md`, from D-080 on. The latest decisions are D-156 to D-189 (D-167 to D-169, D-174 to D-179 and D-184
-   were reserved and not used); the next free number is **D-190**.
+5. `docs/DECISIONS.md`, from D-080 on. The latest decisions are D-156 to D-202 (D-167 to D-169, D-174 to D-179, D-184 and D-199
+   were reserved and not used); the next free number is **D-203**.
 
 ## State
 
@@ -43,6 +43,12 @@ Next step as usual: the owner tries the apps and sends a list of differences; di
 - The housekeeping deletes (old worktrees, branches, target folders; see the report). The automatic permission check
   refused them although the owner had allowed them; ask the owner to run them or allow them.
 - Cleaning three October result files that hold an Office instruction sentence (see the report).
+
+## Step 12 (2026-11-12, owner's requests after Step 11): done
+
+- Gridlines: horizontal and vertical, major and minor, each on its own in every chart and app (D-201); the axis options show Excel's automatic Grenzen and Einheiten, our scaling checked against 270 recorded Excel cases (D-200, `packages/charts/test/axis-auto.test.ts`); the ribbon reduces groups before collapsing any (D-202).
+- Designs: 46 of our own (Raabeschule, Allgemein, 19 Fächer, Anlässe) with four Varianten each, in RaabePresent and as Designs in RaabeCalc and RaabeWrite; slide charts follow the design (D-190 to D-198). Lasting check: `check_present_designs.py` (PowerPoint opens each design); `check_present_roundtrip.py` 22/22 + 58/58.
+- Next: the owner tries the designs and charts and sends differences.
 
 ## Other open items (details in the 2026-11-09 night report, "Still open")
 
