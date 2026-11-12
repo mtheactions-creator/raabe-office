@@ -1823,7 +1823,9 @@ export class PresentApp implements EditorHost, PanelHost {
         const hex = colors[c.localName];
         if (!hex) continue;
         while (c.firstChild) c.firstChild.remove();
-        c.append(c.localName === "dk1" ? make(c.ownerDocument, "a:sysClr", { val: "windowText", lastClr: hex }) : c.localName === "lt1" ? make(c.ownerDocument, "a:sysClr", { val: "window", lastClr: hex }) : make(c.ownerDocument, "a:srgbClr", { val: hex }));
+        // Black and white as the system's colours, others as RGB (PowerPoint draws a sysClr in the system's colour, D-198).
+        const sys = (c.localName === "dk1" && hex.toUpperCase() === "000000") || (c.localName === "lt1" && hex.toUpperCase() === "FFFFFF");
+        c.append(sys ? make(c.ownerDocument, "a:sysClr", { val: c.localName === "dk1" ? "windowText" : "window", lastClr: hex }) : make(c.ownerDocument, "a:srgbClr", { val: hex }));
       }
     });
   }
