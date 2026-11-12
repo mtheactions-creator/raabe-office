@@ -79,6 +79,11 @@ body.painting .editor { cursor: copy; }
 .layout-item:hover { border-color: #c6c6c6; background: #f3f3f3; }
 .layout-thumb { position: relative; overflow: hidden; border: 1px solid #c6c6c6; background: #fff; }
 .theme-label { position: absolute; left: 6px; bottom: 4px; font: 600 16px "Calibri Light", Calibri, sans-serif; }
+.design-grid { grid-template-columns: repeat(5, auto); }
+.layout-item.current .layout-thumb, .layout-item.current .variant-swatch { outline: 2px solid var(--accent, #b7472a); outline-offset: 1px; }
+.variant-grid { grid-template-columns: repeat(4, auto); }
+.variant-swatch { width: 120px; height: 68px; border: 1px solid #c6c6c6; display: flex; align-items: flex-end; gap: 2px; padding: 6px; box-sizing: border-box; }
+.variant-swatch i { flex: 1; height: 24px; }
 .shape-gallery-wrap { max-height: 560px; overflow-y: auto; width: 340px; }
 .shape-gallery { display: grid; grid-template-columns: repeat(12, 26px); gap: 1px; padding: 2px 8px 6px; color: #444; }
 .shape-gallery button { width: 26px; height: 26px; border: 1px solid transparent; background: none; padding: 2px; display: flex; align-items: center; justify-content: center; }

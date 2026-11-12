@@ -1003,14 +1003,14 @@ const DOCUMENT_RELS = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </Relationships>`;
 
 /** A theme part: the document's colours and fonts with Office's format matrix. */
-export function themeXml(t: Theme): string {
+export function themeXml(t: Theme, fmtScheme = OFFICE_FMT_SCHEME): string {
   const c: Record<string, string> = { ...OFFICE_2013_COLORS, ...(t.colors ?? {}) };
   const clr = (name: string) => name === "dk1" ? `<a:sysClr val="windowText" lastClr="${c.dk1}"/>` : name === "lt1" ? `<a:sysClr val="window" lastClr="${c.lt1}"/>` : `<a:srgbClr val="${c[name]}"/>`;
   const names = ["dk1", "lt1", "dk2", "lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hlink", "folHlink"];
   const font = (face: string) => `<a:latin typeface="${esc(face)}"/><a:ea typeface=""/><a:cs typeface=""/>`;
   return `${XML_HEAD}<a:theme xmlns:a="${NS_A}" name="${esc(t.name ?? "Office")}"><a:themeElements><a:clrScheme name="${esc(t.colorName ?? "Office 2013 - 2022")}">${names.map((n) => `<a:${n}>${clr(n)}</a:${n}>`).join("")}</a:clrScheme>` +
     `<a:fontScheme name="${esc(t.fontName ?? "Office 2013 - 2022")}"><a:majorFont>${font(t.majorFont)}</a:majorFont><a:minorFont>${font(t.minorFont)}</a:minorFont></a:fontScheme>` +
-    `${OFFICE_FMT_SCHEME}</a:themeElements><a:objectDefaults/><a:extraClrSchemeLst/></a:theme>`;
+    `${fmtScheme}</a:themeElements><a:objectDefaults/><a:extraClrSchemeLst/></a:theme>`;
 }
 
 /** Word's WordArt shape type for watermarks (VML), as it writes it. */

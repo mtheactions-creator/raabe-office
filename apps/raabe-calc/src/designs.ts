@@ -3,7 +3,7 @@
 // palette's Designfarben or read so from a file) and whose fonts are the theme's (Textkörper, Überschriften)
 // follow, as do table styles, which are drawn from the theme already.
 
-import { OFFICE_COLOR_SETS, OFFICE_DESIGNS, OFFICE_FONT_SETS, h } from "@raabe/shell";
+import { DESIGN_GROUPS, OFFICE_COLOR_SETS, OFFICE_DESIGNS, OFFICE_FONT_SETS, SCHOOL_DESIGNS, h } from "@raabe/shell";
 import { THEME_KEYS, type CellStyle, type Sheet, type ThemeRef } from "@raabe/sheet-engine";
 import { resolveXlsxColor } from "@raabe/ooxml";
 import type { CalcApp } from "./app";
@@ -98,8 +98,11 @@ export function designsFeature(app: CalcApp) {
 
   const withHash = (c: Readonly<Record<string, string>>) => Object.fromEntries(THEME_KEYS.map((k) => [k, "#" + (c[k] ?? "000000").replace("#", "").toUpperCase()]));
 
+  /** Office's designs and our own (the school's, D-196: the same colours and fonts as RaabePresent's designs). */
+  const ALL_DESIGNS = [...OFFICE_DESIGNS, ...SCHOOL_DESIGNS];
+
   function applyDesign(name: string): void {
-    const d = OFFICE_DESIGNS.find((x) => x.name === name);
+    const d = ALL_DESIGNS.find((x) => x.name === name);
     if (!d) return;
     setDesign("Design", () => {
       app.wb.theme = withHash(d.colors);
@@ -128,14 +131,15 @@ export function designsFeature(app: CalcApp) {
 
   const sw = (hex: string) => h("i", { class: "dz-sw", style: `background:#${hex.replace("#", "")}` });
 
-  /** Designs: a tile per design ("Aa" in its heading font over its accent colours). */
+  /** Designs: a tile per design ("Aa" in its heading font over its accent colours); Office's, then ours by group. */
   function designsPanel(close: () => void): HTMLElement {
-    const tiles = OFFICE_DESIGNS.map((d) => h("button", {
+    const tile = (d: (typeof ALL_DESIGNS)[number]) => h("button", {
       class: "dz-tile" + (d.name === app.wb.themeNames.theme ? " on" : ""), "data-tip": d.name, "aria-label": d.name,
       onclick: () => { close(); applyDesign(d.name); },
     }, h("span", { class: "dz-aa", style: `font-family:'${d.major}';color:#${d.colors.dk2}` }, "Aa"),
-    h("span", { class: "dz-bars" }, ...["accent1", "accent2", "accent3", "accent4"].map((k) => sw(d.colors[k])))));
-    return h("div", { class: "tile-panel dz-panel" }, h("div", { class: "palette-title" }, "Office"), h("div", { class: "dz-tiles" }, ...tiles));
+    h("span", { class: "dz-bars" }, ...["accent1", "accent2", "accent3", "accent4"].map((k) => sw(d.colors[k as keyof typeof d.colors]))));
+    const groups = DESIGN_GROUPS.flatMap((g) => [h("div", { class: "palette-title" }, g), h("div", { class: "dz-tiles" }, ...SCHOOL_DESIGNS.filter((d) => d.group === g).map(tile))]);
+    return h("div", { class: "tile-panel dz-panel dz-scroll" }, h("div", { class: "palette-title" }, "Office"), h("div", { class: "dz-tiles" }, ...OFFICE_DESIGNS.map(tile)), ...groups);
   }
 
   /** Farben: one row per colour set (its eight colours and its name). */

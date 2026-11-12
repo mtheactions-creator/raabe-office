@@ -24,6 +24,8 @@ export interface RenderOptions {
   pptx: Pptx;
   /** The slide's theme colours (set by renderSlide; text gradients and warps resolve their colours with them). */
   themeColors?: Record<string, string>;
+  /** The slide's design for charts (set by renderSlide, D-195): accents, background and text colour. */
+  design?: { accents: string[]; surface: { background: string; text: string } };
 }
 
 export interface Rendered {
@@ -70,7 +72,10 @@ export function renderSlide(v: SlideView, size: { cx: number; cy: number }, o: R
     else if (url) el.style.background = `url("${url}") center / cover no-repeat`;
   }
   const shapes = new Map<number, HTMLElement>();
-  o = { ...o, themeColors: v.theme.colors };
+  const tc = v.theme.colors;
+  const bgFill = v.background.fill;
+  const bgHex = bgFill.kind === "solid" ? bgFill.color : bgFill.kind === "gradient" && bgFill.stops.length ? bgFill.stops[Math.floor(bgFill.stops.length / 2)].color : tc.bg1 ?? "FFFFFF";
+  o = { ...o, themeColors: tc, design: { accents: [1, 2, 3, 4, 5, 6].map((i) => `#${tc[`accent${i}`] ?? "000000"}`), surface: { background: `#${bgHex}`, text: `#${tc.tx1 ?? "000000"}` } } };
   for (const s of v.behind) if (!s.hidden) el.append(renderShape(s, { ...o, editing: false, selection: null }, null));
   for (const s of v.shapes) {
     if (s.hidden) continue;
@@ -113,7 +118,7 @@ export function renderShape(s: ShapeView, o: RenderOptions, map: Map<number, HTM
     else box.append(placeholderBox(w, h));
   } else if (s.kind === "graphicFrame") {
     if (s.frame === "table") box.append(renderTable(s, o));
-    else if (s.frame === "chart" && s.chart) box.append(renderChart(o.pptx, s.chart, w, h));
+    else if (s.frame === "chart" && s.chart) box.append(renderChart(o.pptx, s.chart, w, h, o.design?.accents, o.design?.surface));
     else if (s.frame === "zoom" && s.zoom?.tiles) {
       // Zusammenfassungszoom: each section's tile at its place in the frame (scaled with the frame).
       const sx = s.w ? w / (s.w / EMU_PX) : 1, sy = s.h ? h / (s.h / EMU_PX) : 1;

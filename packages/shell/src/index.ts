@@ -26,3 +26,4 @@ export function isTauri(): boolean {
   return "__TAURI_INTERNALS__" in window;
 }
 export { OFFICE_DESIGNS, OFFICE_COLOR_SETS, OFFICE_FONT_SETS } from "./office-designs.gen";
+export { SCHOOL_DESIGNS, DESIGN_GROUPS, designVariants, contrast, luminance, mix, readable, surfaces, schemeHex, MIN_CONTRAST, COLOR_KEYS, type SchoolDesign, type DesignGroup, type DesignVariant, type Colors, type ColorKey } from "./school-designs";

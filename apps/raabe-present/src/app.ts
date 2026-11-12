@@ -7,7 +7,7 @@ import { onFontAlias, setCloudFonts } from "@raabe/text-engine";
 import { colorXml, specHex } from "./colors";
 import { colorWord } from "./quickstyles";
 import { Pptx, newPptx, PptxDom, phOf, type ShapeView, type DesignSpec } from "@raabe/ooxml";
-import { pictures, pictureMenu, entryKind, weightMenu, dashMenu, arrowStyleMenu, Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, HIGHLIGHTS, highlightHex, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup, type BackstageEntry, type Control, type Group, type MenuEntry, type Platform, type Tab,  } from "@raabe/shell";
+import { pictures, pictureMenu, entryKind, weightMenu, dashMenu, arrowStyleMenu, Backstage, Commands, Keytips, Ribbon, TitleBar, baseName, colorGrid, HIGHLIGHTS, highlightHex, h, icon, installTooltips, messageBox, showDialog, showMenu, showPopup, closePopup, type BackstageEntry, type Control, type Group, type MenuEntry, type Platform, type Tab, COLOR_KEYS, designVariants, type Colors } from "@raabe/shell";
 import { SHAPE_GALLERY, shapeIcon, type GalleryEntry } from "@raabe/text-engine";
 import { COMMANDS } from "./command-list";
 import { ribbonTabs, type RibbonContext } from "./ribbon-def";
@@ -26,7 +26,7 @@ import { EMU_PX } from "./render/text";
 import { DEFAULT_TABLE_STYLE_ID, DEFAULT_TABLE_STYLE_XML } from "./render/table";
 import * as T from "./textops";
 import * as S from "./shapeops";
-import { DESIGNS } from "./designs";
+import { DESIGNS, DESIGN_HEADINGS, variantsOf, type PresentDesign } from "./designs";
 import { PRESENT_TEMPLATES, templateDeck } from "./templates";
 import { TRANSITION_GROUPS } from "./transitions";
 import { ANIMATION_GROUPS } from "./animations";
@@ -1907,23 +1907,49 @@ export class PresentApp implements EditorHost, PanelHost {
     });
   }
 
-  /** Entwurf > Designs: the theme's colours and fonts and the master's design shapes of `d`. */
-  applyDesign(d: DesignSpec): void {
+  /**
+   * Entwurf > Designs (and Varianten): the theme's colours, fonts and effect style, the master's design shapes,
+   * background, colour map and title colour of `d`, and the design shapes, background and colour map of its
+   * Titelfolie and Abschnittsüberschrift layouts (D-193). Placeholders stay; one undo step.
+   */
+  applyDesign(d: DesignSpec, label = "Design"): void {
     const pptx = this.deck.pptx;
     const master = pptx.masters()[0];
     const theme = master ? pptx.themeOf(master) : undefined;
     if (!master || !theme) return;
-    import("@raabe/ooxml").then(({ designTheme, masterXml }) => {
-      this.deck.change("Design", [theme, master], () => {
+    const layouts = pptx.layouts(master);
+    import("@raabe/ooxml").then(({ designTheme, masterXml, layoutClrMap, layoutDesignOf, renumber }) => {
+      this.deck.change(label, [theme, master, ...layouts], () => {
         pptx.put(theme, PptxDom.parseXml(designTheme(d)));
         // The master's design shapes (non-placeholders) and background are replaced; placeholders stay.
         const mdoc = pptx.doc(master);
         const fresh = PptxDom.parseXml(masterXml(d));
         const tree = S.treeOf(mdoc);
         for (const e of S.shapeEls(tree)) if (!at(e, "nvSpPr/nvPr/ph")) e.remove();
-        const decos = S.shapeEls(S.treeOf(fresh)).filter((e) => !at(e, "nvSpPr/nvPr/ph"));
+        // The design's shapes are numbered after the placeholders the master keeps.
+        const decos = S.shapeEls(PptxDom.parseXml(renumber(new XMLSerializer().serializeToString(fresh), S.maxId(tree) + 1)).documentElement.getElementsByTagNameNS(PptxDom.NS_P, "spTree")[0]).filter((e) => !at(e, "nvSpPr/nvPr/ph"));
         const firstPh = S.shapeEls(tree)[0] ?? null;
         for (const e of decos) tree.insertBefore(mdoc.importNode(e, true), firstPh);
+        // Layouts: the old design's shapes go (as when PowerPoint changes the design); Titelfolie and
+        // Abschnittsüberschrift get the new design's own shapes, background and colour map.
+        for (const lp of layouts) {
+          const ldoc = pptx.doc(lp);
+          const root = ldoc.documentElement;
+          const own = layoutDesignOf(d, root.getAttribute("type"));
+          const ltree = S.treeOf(ldoc);
+          for (const e of S.shapeEls(ltree)) if (!at(e, "nvSpPr/nvPr/ph")) e.remove();
+          if (own?.deco) {
+            const frag = PptxDom.parseXml(`<r xmlns:p="${PptxDom.NS_P}" xmlns:a="${PptxDom.NS_A}">${renumber(own.deco, S.maxId(ltree) + 1)}</r>`).documentElement;
+            const first = S.shapeEls(ltree)[0] ?? null;
+            for (const e of Array.from(frag.children)) ltree.insertBefore(ldoc.importNode(e, true), first);
+          }
+          if (own?.hideMaster) root.setAttribute("showMasterSp", "0"); else root.removeAttribute("showMasterSp");
+          const csld = kid(root, "cSld")!;
+          kid(csld, "bg")?.remove();
+          if (own?.background) csld.insertBefore(ldoc.importNode(PptxDom.parseXml(`<p:bg xmlns:p="${PptxDom.NS_P}" xmlns:a="${PptxDom.NS_A}">${own.background}</p:bg>`).documentElement, true), csld.firstElementChild);
+          const ov = kid(root, "clrMapOvr"), nov = PptxDom.parseXml(layoutClrMap(own).replace("<p:clrMapOvr>", `<p:clrMapOvr xmlns:p="${PptxDom.NS_P}" xmlns:a="${PptxDom.NS_A}">`)).documentElement;
+          if (ov) ov.replaceWith(ldoc.importNode(nov, true)); else csld.after(ldoc.importNode(nov, true));
+        }
         const bg = at(mdoc.documentElement, "cSld/bg"), nbg = at(fresh.documentElement, "cSld/bg");
         if (bg && nbg) bg.replaceWith(mdoc.importNode(nbg, true));
         const cm = kid(mdoc.documentElement, "clrMap"), ncm = kid(fresh.documentElement, "clrMap");
@@ -2454,22 +2480,73 @@ export class PresentApp implements EditorHost, PanelHost {
     };
   }
 
-  private themesGallery(close: () => void): HTMLElement {
-    const wrap = h("div", { class: "theme-gallery" }, h("div", { class: "gal-head" }, "Office"));
-    const grid = h("div", { class: "layout-grid" });
-    for (const d of DESIGNS) {
+  /** A design's title slide drawn small (width tw px), with "Aa" in its heading font; cached per design and variant. */
+  private designPics = new Map<string, HTMLElement>();
+  private designPic(d: PresentDesign, tw: number): HTMLElement {
+    const key = `${d.name}|${d.colorName ?? ""}|${tw}`;
+    let pic = this.designPics.get(key);
+    if (!pic) {
       const sample = new Deck(newPptx(d));
       const size = sample.pptx.slideSize;
-      const tw = 120, s = tw / (size.cx / EMU_PX);
-      const thumb = h("div", { class: "layout-thumb", style: `width:${tw}px;height:${(size.cy / EMU_PX) * s}px` });
+      const s = tw / (size.cx / EMU_PX);
+      pic = h("div", { class: "layout-thumb", style: `width:${tw}px;height:${Math.round((size.cy / EMU_PX) * s)}px` });
       const r = renderSlide(sample.view(sample.slides[0].path), size, { editing: false, image: () => undefined, pptx: sample.pptx });
       r.el.style.transform = `scale(${s})`; r.el.style.transformOrigin = "0 0";
-      const label = h("div", { class: "theme-label", style: `color:#${d.colors.accent1}` }, "Aa");
-      thumb.append(r.el, label);
-      grid.append(h("button", { class: "layout-item", "data-tip": d.name === "Office" ? "Office-Design" : d.name, "aria-label": d.name, onclick: () => { close(); this.applyDesign(d); } }, thumb, h("span", null, d.name === "Office" ? "Office-Design" : d.name)));
+      const v = d.dark ? d.colors.lt1 : d.colors.dk1;
+      const aa = d.titleColor && /^accent/.test(d.titleColor) ? d.colors[d.titleColor] : d.titleColor === "tx2" ? (d.dark ? d.colors.lt2 : d.colors.dk2) : v;
+      pic.append(r.el, h("div", { class: "theme-label", style: `color:#${aa};font-family:"${d.major}", "Calibri Light", Calibri, sans-serif` }, "Aa"));
+      this.designPics.set(key, pic);
     }
-    wrap.append(grid);
+    return pic.cloneNode(true) as HTMLElement;
+  }
+
+  /**
+   * The full Designs gallery: Diese Präsentation, then our designs under headings (Office, Raabeschule, Allgemein,
+   * Fächer, Anlässe; D-197) as PowerPoint groups its gallery under headings.
+   */
+  private themesGallery(close: () => void): HTMLElement {
+    const wrap = h("div", { class: "theme-gallery" });
+    const cur = this.designName();
+    const item = (d: PresentDesign) => {
+      const label = d.name === "Office" ? "Office-Design" : d.name;
+      return h("button", { class: "layout-item" + (d.name === cur ? " current" : ""), "data-tip": label, "aria-label": label, onclick: () => { close(); this.applyDesign(d); } }, this.designPic(d, 120), h("span", null, label));
+    };
+    const own = DESIGNS.find((d) => d.name === cur);
+    if (own) wrap.append(h("div", { class: "gal-head" }, "Diese Präsentation"), h("div", { class: "layout-grid" }, item(own)));
+    for (const g of DESIGN_HEADINGS) {
+      const list = DESIGNS.filter((d) => d.group === g);
+      if (list.length) wrap.append(h("div", { class: "gal-head" }, g), h("div", { class: "layout-grid design-grid" }, ...list.map(item)));
+    }
     return wrap;
+  }
+
+  /**
+   * Entwurf > Varianten: four variants of the presentation's design (PowerPoint's "<Design> Variante #n"): our
+   * designs with their colours and brightness (the artwork follows, D-192); any other design gets variants derived
+   * from its own colours, applied as a colour set.
+   */
+  private variantsGallery(close: () => void): HTMLElement {
+    const theme = this.deck.pptx.themeOf(this.deck.pptx.masters()[0] ?? "");
+    const tdoc = theme ? this.deck.pptx.doc(theme) : null;
+    const scheme = tdoc?.getElementsByTagNameNS(PptxDom.NS_A, "clrScheme")[0]?.getAttribute("name") ?? "";
+    const d = this.ownDesign() as PresentDesign | undefined;
+    const grid = h("div", { class: "layout-grid variant-grid" });
+    if (d) {
+      variantsOf(d).forEach((v, i) => {
+        const label = `${d.name === "Office" ? "Office" : d.name} Variante #${i + 1}`;
+        grid.append(h("button", { class: "layout-item" + ((v.colorName ?? v.name) === scheme ? " current" : ""), "data-tip": label, "aria-label": label, onclick: () => { close(); this.applyDesign(v, "Variante"); } }, this.designPic(v, 120)));
+      });
+    } else {
+      const colors = this.paletteTheme()?.colors ?? {};
+      const name = tdoc?.documentElement.getAttribute("name") ?? "Design";
+      const base = Object.fromEntries(COLOR_KEYS.map((k) => [k, (colors[k] ?? "000000").replace("#", "").toUpperCase()])) as Colors;
+      designVariants({ name, group: "Allgemein", major: "", minor: "", effects: "Office", colors: base }).slice(0, 3).forEach((v, i) => {
+        const label = `${name} Variante #${i + 1}`;
+        const sw = h("div", { class: "variant-swatch", style: `background:#${v.colors.lt1}` }, ...["accent1", "accent2", "accent3", "accent4", "accent5", "accent6"].map((k) => h("i", { style: `background:#${v.colors[k as keyof Colors]}` })));
+        grid.append(h("button", { class: "layout-item" + (v.colorName === scheme ? " current" : ""), "data-tip": label, "aria-label": label, onclick: () => { close(); this.applyColorSet(v.colorName, { ...v.colors }); } }, sw));
+      });
+    }
+    return h("div", { class: "theme-gallery variants-gallery" }, grid);
   }
 
   // ----- context menus --------------------------------------------------------------------------------------
@@ -3475,6 +3552,7 @@ export class PresentApp implements EditorHost, PanelHost {
         layout: (close) => this.layoutGallery(close, (p) => this.deck.setLayout([...this.panel.selected], p), this.designName()),
         shapes: (close) => this.shapeGallery(close),
         themes: (close) => this.themesGallery(close),
+        variants: (close) => this.variantsGallery(close),
         transitions: (close) => this.transitions.gallery(close),
         animations: (close) => this.animations.gallery(close, false),
         addAnim: (close) => this.animations.gallery(close, true),
@@ -3844,16 +3922,15 @@ export class PresentApp implements EditorHost, PanelHost {
 
   private backstageEntries(): BackstageEntry[] {
     const greeting = () => { const hr = new Date().getHours(); return hr < 11 ? "Guten Morgen" : hr < 18 ? "Guten Tag" : "Guten Abend"; };
-    const designs = () => h("div", { class: "templates" }, ...DESIGNS.map((d, i) => {
-      const sample = new Deck(newPptx(d));
-      const size = sample.pptx.slideSize;
-      const tw = 176, s = tw / (size.cx / EMU_PX);
-      const thumb = h("div", { class: "thumb present-thumb", style: `width:${tw}px;height:${(size.cy / EMU_PX) * s}px;position:relative;overflow:hidden` });
-      const r = renderSlide(sample.view(sample.slides[0].path), size, { editing: false, image: () => undefined, pptx: sample.pptx });
-      r.el.style.transform = `scale(${s})`; r.el.style.transformOrigin = "0 0";
-      thumb.append(r.el);
+    // Startseite shows a row (the blank presentation, the Raabeschule's designs, the templates); Neu shows every
+    // design under the gallery's headings (D-197).
+    const designTile = (d: PresentDesign, i: number) => {
+      const thumb = this.designPic(d, 176);
+      thumb.className = "thumb present-thumb layout-thumb";
+      thumb.querySelector(".theme-label")?.remove();
       return h("button", { class: "template", onclick: () => { this.backstage.close(); this.newDoc(i === 0 ? undefined : d); } }, thumb, h("span", null, i === 0 ? "Leere Präsentation" : d.name));
-    }), ...PRESENT_TEMPLATES.map((t) => {
+    };
+    const designs = (all = false) => h("div", null, h("div", { class: "templates" }, ...DESIGNS.map((d, i) => [d, i] as const).filter(([d, i]) => i === 0 || d.group === "Raabeschule").map(([d, i]) => designTile(d, i)), ...PRESENT_TEMPLATES.map((t) => {
       const sample = templateDeck(t);
       const size = sample.pptx.slideSize;
       const tw = 176, s = tw / (size.cx / EMU_PX);
@@ -3862,10 +3939,11 @@ export class PresentApp implements EditorHost, PanelHost {
       r.el.style.transform = `scale(${s})`; r.el.style.transformOrigin = "0 0";
       thumb.append(r.el);
       return h("button", { class: "template", onclick: () => { this.backstage.close(); this.untitled++; const doc = this.makeDoc(templateDeck(t), `${t.name}${this.untitled}`, null); this.docs.push(doc); this.activate(doc); } }, thumb, h("span", null, t.name));
-    }));
+    })), ...(all ? DESIGN_HEADINGS.filter((g) => g !== "Office" && g !== "Raabeschule").map((g) => h("div", null, h("h2", null, g),
+      h("div", { class: "templates" }, ...DESIGNS.map((d, i) => [d, i] as const).filter(([d]) => d.group === g).map(([d, i]) => designTile(d, i))))) : []));
     return [
       { id: "home", label: "Startseite", icon: "home", page: () => h("div", null, h("h1", null, greeting()), h("h2", null, "Neu"), designs(), h("h2", null, "Zuletzt verwendet"), this.recentTable()) },
-      { id: "new", label: "Neu", icon: "new", page: () => h("div", null, h("h1", null, "Neu"), designs()) },
+      { id: "new", label: "Neu", icon: "new", page: () => h("div", null, h("h1", null, "Neu"), designs(true)) },
       { id: "open", label: "Öffnen", icon: "open", page: () => h("div", null, h("h1", null, "Öffnen"), h("button", { class: "bigbtn", onclick: () => void this.openDialog() }, icon("open", "l"), "Durchsuchen"), h("h2", null, "Zuletzt verwendet"), this.recentTable()) },
       { id: "info", label: "Informationen", icon: "info", divider: true, page: () => this.infoPage() },
       { id: "save", label: "Speichern", icon: "save", cmd: "file.save" },

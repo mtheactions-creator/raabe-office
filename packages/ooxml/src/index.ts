@@ -12,7 +12,7 @@ export { resolveColor as resolveXlsxColor } from "./xlsx/colors";
 export { defaultSparkColors, readSparklines, sparklineGroupXml, sparklinesExt } from "./xlsx/sheetparts";
 export { Pptx, RT as PPTX_RT, CT_PPTX, relTarget, type SlideRef } from "./pptx/package";
 export * as PptxDom from "./pptx/dom";
-export { newPptx, newPptxFiles, OFFICE_DESIGN, LAYOUT_NAMES, masterXml, designTheme, type DesignSpec } from "./pptx/template";
+export { newPptx, newPptxFiles, OFFICE_DESIGN, LAYOUT_NAMES, masterXml, designTheme, layoutClrMap, layoutDesignOf, renumber, type DesignSpec, type LayoutDesign } from "./pptx/template";
 export {
   SlideResolver, slideView, colorList, readThemeInfo, readText, allShapes, alternateShapes, readBodyProps, levelProps, matchPlaceholder, phOf, spTreeOf, pathKind, GroupMap, PROMPTS,
   type SlideView, type ShapeView, type TextInfo, type TextPara, type TextRun, type RunStyle, type ParaStyle, type BodyProps, type Bullet, type ThemeInfo, type PicInfo, type TextContext,
