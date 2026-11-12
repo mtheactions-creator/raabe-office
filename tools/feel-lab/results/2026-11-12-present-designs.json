@@ -225,7 +225,7 @@
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31510
+     "bytes": 31509
     },
     {
      "variant": 4,
@@ -241,17 +241,17 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 31008
+     "bytes": 31007
     },
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 31018
+     "bytes": 31017
     },
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31019
+     "bytes": 31018
     },
     {
      "variant": 4,
@@ -282,7 +282,7 @@
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 31884
+     "bytes": 31883
     }
    ],
    "group": "Allgemein"
@@ -293,22 +293,22 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 31175
+     "bytes": 31174
     },
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 31185
+     "bytes": 31184
     },
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31184
+     "bytes": 31183
     },
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 31185
+     "bytes": 31184
     }
    ],
    "group": "Allgemein"
@@ -319,7 +319,7 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 31509
+     "bytes": 31508
     },
     {
      "variant": 2,
@@ -464,7 +464,7 @@
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 34752
+     "bytes": 34753
     }
    ],
    "group": "Allgemein"
@@ -475,7 +475,7 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 35150
+     "bytes": 35151
     },
     {
      "variant": 2,
@@ -485,7 +485,7 @@
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 35163
+     "bytes": 35164
     },
     {
      "variant": 4,
@@ -511,12 +511,12 @@
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31092
+     "bytes": 31093
     },
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 31099
+     "bytes": 31100
     }
    ],
    "group": "Allgemein"
@@ -532,12 +532,12 @@
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 31305
+     "bytes": 31306
     },
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31310
+     "bytes": 31311
     },
     {
      "variant": 4,
@@ -553,7 +553,7 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 31628
+     "bytes": 31629
     },
     {
      "variant": 2,
@@ -605,22 +605,22 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 33262
+     "bytes": 33261
     },
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 33275
+     "bytes": 33274
     },
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 33270
+     "bytes": 33269
     },
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 33276
+     "bytes": 33275
     }
    ],
    "group": "Fächer"
@@ -631,7 +631,7 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 31979
+     "bytes": 31978
     },
     {
      "variant": 2,
@@ -667,7 +667,7 @@
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31444
+     "bytes": 31443
     },
     {
      "variant": 4,
@@ -688,7 +688,7 @@
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 31266
+     "bytes": 31265
     },
     {
      "variant": 3,
@@ -698,7 +698,7 @@
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 31262
+     "bytes": 31261
     }
    ],
    "group": "Fächer"
@@ -709,22 +709,22 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 36376
+     "bytes": 36377
     },
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 36387
+     "bytes": 36388
     },
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 36387
+     "bytes": 36388
     },
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 36395
+     "bytes": 36396
     }
    ],
    "group": "Fächer"
@@ -745,7 +745,7 @@
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31696
+     "bytes": 31697
     },
     {
      "variant": 4,
@@ -761,22 +761,22 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 36096
+     "bytes": 36097
     },
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 36114
+     "bytes": 36115
     },
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 36111
+     "bytes": 36112
     },
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 36100
+     "bytes": 36101
     }
    ],
    "group": "Fächer"
@@ -787,7 +787,7 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 32547
+     "bytes": 32548
     },
     {
      "variant": 2,
@@ -802,7 +802,7 @@
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 32563
+     "bytes": 32564
     }
    ],
    "group": "Fächer"
@@ -818,7 +818,7 @@
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 31856
+     "bytes": 31857
     },
     {
      "variant": 3,
@@ -828,7 +828,7 @@
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 31858
+     "bytes": 31859
     }
    ],
    "group": "Fächer"
@@ -839,22 +839,22 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 32011
+     "bytes": 32012
     },
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 32022
+     "bytes": 32024
     },
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 32023
+     "bytes": 32025
     },
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 32030
+     "bytes": 32031
     }
    ],
    "group": "Fächer"
@@ -865,12 +865,12 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 36433
+     "bytes": 36434
     },
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 36446
+     "bytes": 36447
     },
     {
      "variant": 3,
@@ -880,7 +880,7 @@
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 36450
+     "bytes": 36451
     }
    ],
    "group": "Fächer"
@@ -896,12 +896,12 @@
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 34933
+     "bytes": 34934
     },
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 34932
+     "bytes": 34933
     },
     {
      "variant": 4,
@@ -917,12 +917,12 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 32320
+     "bytes": 32321
     },
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 32331
+     "bytes": 32332
     },
     {
      "variant": 3,
@@ -953,12 +953,12 @@
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 33199
+     "bytes": 33200
     },
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 33202
+     "bytes": 33203
     }
    ],
    "group": "Fächer"
@@ -969,7 +969,7 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 31593
+     "bytes": 31594
     },
     {
      "variant": 2,
@@ -1026,7 +1026,7 @@
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 31479
+     "bytes": 31478
     },
     {
      "variant": 3,
@@ -1047,7 +1047,7 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 31875
+     "bytes": 31874
     },
     {
      "variant": 2,
@@ -1057,7 +1057,7 @@
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31891
+     "bytes": 31890
     },
     {
      "variant": 4,
@@ -1078,12 +1078,12 @@
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 31566
+     "bytes": 31567
     },
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31569
+     "bytes": 31570
     },
     {
      "variant": 4,
@@ -1099,7 +1099,7 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 31884
+     "bytes": 31885
     },
     {
      "variant": 2,
@@ -1109,7 +1109,7 @@
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31897
+     "bytes": 31898
     },
     {
      "variant": 4,
@@ -1140,7 +1140,7 @@
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 32170
+     "bytes": 32171
     }
    ],
    "group": "Anlässe"
@@ -1151,22 +1151,22 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 31336
+     "bytes": 31337
     },
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 31351
+     "bytes": 31352
     },
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31349
+     "bytes": 31350
     },
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 31354
+     "bytes": 31355
     }
    ],
    "group": "Anlässe"
@@ -1177,7 +1177,7 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 31757
+     "bytes": 31758
     },
     {
      "variant": 2,
@@ -1187,12 +1187,12 @@
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31769
+     "bytes": 31770
     },
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 31780
+     "bytes": 31781
     }
    ],
    "group": "Anlässe"
@@ -1203,22 +1203,22 @@
     {
      "variant": 1,
      "slides": 4,
-     "bytes": 31771
+     "bytes": 31772
     },
     {
      "variant": 2,
      "slides": 4,
-     "bytes": 31781
+     "bytes": 31782
     },
     {
      "variant": 3,
      "slides": 4,
-     "bytes": 31776
+     "bytes": 31777
     },
     {
      "variant": 4,
      "slides": 4,
-     "bytes": 31779
+     "bytes": 31780
     }
    ],
    "group": "Anlässe"

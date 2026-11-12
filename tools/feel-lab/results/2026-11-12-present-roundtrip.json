@@ -1,0 +1,309 @@
+{
+ "date": "2026-11-12",
+ "fixtures": {
+  "pptx-blank": {
+   "result": "same"
+  },
+  "pptx-layouts": {
+   "result": "same"
+  },
+  "pptx-bullets": {
+   "result": "same"
+  },
+  "pptx-textbox": {
+   "result": "same"
+  },
+  "pptx-shapes": {
+   "result": "same"
+  },
+  "pptx-group": {
+   "result": "same"
+  },
+  "pptx-picture": {
+   "result": "same"
+  },
+  "pptx-table": {
+   "result": "same"
+  },
+  "pptx-autofit": {
+   "result": "same"
+  },
+  "pptx-show": {
+   "result": "same"
+  },
+  "pptx-equation": {
+   "result": "same"
+  },
+  "pptx-office-blank": {
+   "result": "same"
+  },
+  "pptx-office-layouts": {
+   "result": "same"
+  },
+  "pptx-office-bullets": {
+   "result": "same"
+  },
+  "pptx-office-textbox": {
+   "result": "same"
+  },
+  "pptx-office-shapes": {
+   "result": "same"
+  },
+  "pptx-office-group": {
+   "result": "same"
+  },
+  "pptx-office-picture": {
+   "result": "same"
+  },
+  "pptx-office-table": {
+   "result": "same"
+  },
+  "pptx-office-autofit": {
+   "result": "same"
+  },
+  "pptx-office-show": {
+   "result": "same"
+  },
+  "pptx-office-equation": {
+   "result": "same"
+  }
+ },
+ "scenarios": {
+  "title text": {
+   "result": "same",
+   "diff": []
+  },
+  "bullets levels": {
+   "result": "same",
+   "diff": []
+  },
+  "shapes": {
+   "result": "same",
+   "diff": []
+  },
+  "rotate flip": {
+   "result": "same",
+   "diff": []
+  },
+  "bold part": {
+   "result": "same",
+   "diff": []
+  },
+  "size color": {
+   "result": "same",
+   "diff": []
+  },
+  "align center": {
+   "result": "same",
+   "diff": []
+  },
+  "table": {
+   "result": "same",
+   "diff": []
+  },
+  "table merge": {
+   "result": "same",
+   "diff": []
+  },
+  "table split": {
+   "result": "same",
+   "diff": []
+  },
+  "equation": {
+   "result": "same",
+   "diff": []
+  },
+  "equation typed": {
+   "result": "same",
+   "diff": []
+  },
+  "table style": {
+   "result": "same",
+   "diff": []
+  },
+  "motion path": {
+   "result": "same",
+   "diff": []
+  },
+  "custom path": {
+   "result": "same",
+   "diff": []
+  },
+  "freeform": {
+   "result": "same",
+   "diff": []
+  },
+  "zoom": {
+   "result": "same",
+   "diff": []
+  },
+  "section zoom": {
+   "result": "same",
+   "diff": []
+  },
+  "summary zoom": {
+   "result": "same",
+   "diff": []
+  },
+  "file pptm": {
+   "result": "same",
+   "diff": []
+  },
+  "file ppsx": {
+   "result": "same",
+   "diff": []
+  },
+  "file potx": {
+   "result": "same",
+   "diff": []
+  },
+  "shape effects": {
+   "result": "same",
+   "diff": []
+  },
+  "action button": {
+   "result": "same",
+   "diff": []
+  },
+  "fills and background": {
+   "result": "same",
+   "diff": []
+  },
+  "table shading": {
+   "result": "same",
+   "diff": []
+  },
+  "table effects": {
+   "result": "same",
+   "diff": []
+  },
+  "narration": {
+   "result": "same",
+   "diff": []
+  },
+  "texture": {
+   "result": "same",
+   "diff": []
+  },
+  "transition sound": {
+   "result": "same",
+   "diff": []
+  },
+  "smartart": {
+   "result": "same",
+   "diff": []
+  },
+  "effects pane": {
+   "result": "same",
+   "diff": []
+  },
+  "sketch": {
+   "result": "same",
+   "diff": []
+  },
+  "table pen": {
+   "result": "same",
+   "diff": []
+  },
+  "action": {
+   "result": "same",
+   "diff": []
+  },
+  "animation copy": {
+   "result": "same",
+   "diff": []
+  },
+  "trigger": {
+   "result": "same",
+   "diff": []
+  },
+  "group": {
+   "result": "same",
+   "diff": []
+  },
+  "notes": {
+   "result": "same",
+   "diff": []
+  },
+  "hidden slide": {
+   "result": "same",
+   "diff": []
+  },
+  "sections": {
+   "result": "same",
+   "diff": []
+  },
+  "move duplicate delete": {
+   "result": "same",
+   "diff": []
+  },
+  "layout change": {
+   "result": "same",
+   "diff": []
+  },
+  "transition": {
+   "result": "same",
+   "diff": []
+  },
+  "animation": {
+   "result": "same",
+   "diff": []
+  },
+  "design raabe": {
+   "result": "same",
+   "diff": []
+  },
+  "design variant": {
+   "result": "same",
+   "diff": []
+  },
+  "picture": {
+   "result": "same",
+   "diff": []
+  },
+  "picture effects": {
+   "result": "same",
+   "diff": []
+  },
+  "background removal": {
+   "result": "same",
+   "diff": []
+  },
+  "reuse slides": {
+   "result": "same",
+   "diff": []
+  },
+  "picture crop": {
+   "result": "same",
+   "diff": []
+  },
+  "picture effects removed": {
+   "result": "same",
+   "diff": []
+  },
+  "custom show": {
+   "result": "same",
+   "diff": []
+  },
+  "chart": {
+   "result": "same",
+   "diff": []
+  },
+  "chart area": {
+   "result": "same",
+   "diff": []
+  },
+  "comment": {
+   "result": "same",
+   "diff": []
+  },
+  "undo redo": {
+   "result": "same",
+   "diff": []
+  }
+ },
+ "summary": {
+  "fixtures": "22/22",
+  "scenarios": "58/58"
+ }
+}
